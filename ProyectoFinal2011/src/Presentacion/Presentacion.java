@@ -7,8 +7,8 @@ package Presentacion;
 
 /**
  *
- * @author Ivan
+ * @author Rodrigo
  */
-public class Presentacio {
+public class Presentacion {
 
 }
