@@ -3,12 +3,12 @@
  * and open the template in the editor.
  */
 
-package Presentacion;
+package Negocio;
 
 /**
  *
- * @author Ivan
+ * @author Rodrigo
  */
-public class Presentacio {
+public class Negocio {
 
 }
