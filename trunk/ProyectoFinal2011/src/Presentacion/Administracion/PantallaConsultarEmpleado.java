@@ -52,7 +52,6 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
         btnBaja = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(null);
 
         btnBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
         btnBuscar.setLayout(null);
@@ -79,11 +78,11 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
 
         jButton1.setText("Buscar");
         btnBuscar.add(jButton1);
-        jButton1.setBounds(616, 95, 65, 23);
+        jButton1.setBounds(270, 40, 65, 23);
 
-        chkMostrarTodos.setText("Mostrar todos");
+        chkMostrarTodos.setText("Mostrar vigentes");
         btnBuscar.add(chkMostrarTodos);
-        chkMostrarTodos.setBounds(16, 174, 93, 23);
+        chkMostrarTodos.setBounds(16, 174, 110, 23);
 
         chkMostrarDadosBaja.setText("Mostrar dados de baja");
         btnBuscar.add(chkMostrarDadosBaja);
@@ -94,9 +93,6 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
         jLabel4.setBounds(59, 70, 36, 14);
         btnBuscar.add(txtLegajo);
         txtLegajo.setBounds(110, 70, 90, 20);
-
-        getContentPane().add(btnBuscar);
-        btnBuscar.setBounds(20, 20, 570, 200);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Empleados"));
 
@@ -158,8 +154,25 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(20, 240, 570, 170);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
