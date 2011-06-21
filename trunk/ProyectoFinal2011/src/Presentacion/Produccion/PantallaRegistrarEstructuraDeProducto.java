@@ -144,7 +144,7 @@ public class PantallaRegistrarEstructuraDeProducto extends javax.swing.JDialog {
         jTextField3.setText("horasMaquina2");
 
         jList5.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Cortadora de mano" };
+            String[] strings = { "Cortadora de mano", "Sensitiva" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
