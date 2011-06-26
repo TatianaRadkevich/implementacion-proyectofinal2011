@@ -13,5 +13,5 @@ public class Pedido {
 
     private Cliente cliente;
     private boolean entregaMaterial;
-    private 
+    private int numero;
 }
