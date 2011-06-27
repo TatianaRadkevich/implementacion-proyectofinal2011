@@ -9,12 +9,14 @@ package Negocio.Ventas;
  *
  * @author Rodrigo
  */
-class TipoCliente extends Tipo{
+class TipoPedido extends Tipo {
 
-    public TipoCliente(String nombre, String descripcion) {
-        super(nombre, descripcion);
+    public TipoPedido(String nombre, String descripcion) {
+        super(nombre,descripcion);
     }
 
-    public TipoCliente() {
+
+    public TipoPedido() {
     }
+
 }
