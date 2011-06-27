@@ -5,6 +5,8 @@
 
 package Negocio.Ventas;
 
+import Negocio.Tipo;
+
 /**
  *
  * @author Rodrigo
