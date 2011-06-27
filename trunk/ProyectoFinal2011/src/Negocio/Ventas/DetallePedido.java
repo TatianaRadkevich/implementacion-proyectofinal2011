@@ -18,7 +18,7 @@ class DetallePedido {
 
     public DetallePedido(int cantidad, Producto producto) {
         this.cantidad = cantidad;
-        this.producto = producto;
+        this.setProducto(producto);
     }
 
     public DetallePedido() {
@@ -48,6 +48,7 @@ class DetallePedido {
 
     public void setProducto(Producto producto) {
         this.producto = producto;
+        setPrecio(producto.getPrecioUnit());
     }
 
 
