@@ -4,11 +4,102 @@
  */
 
 package Negocio.Ventas;
+import Negocio.UbicacionGeografica.Domicilio;
 
 /**
  *
  * @author Ivan
  */
-public class Cliente {
+public class Cliente
+{
+    private String correoElectronico;
+    private int cuil;
+    private Domicilio domicilio;
+    private Pedido[] pedidos;
+    private String razonSocial;
+    private Responsable[] responsables;
+    private TipoCliente tipo;
+    private ClienteWeb usuario;
+
+    public Cliente() {
+    }
+
+    public Cliente(int cuil, String razonSocial) {
+        this.cuil = cuil;
+        this.razonSocial = razonSocial;
+    }
+
+    public Cliente(String correoElectronico, int cuil, Domicilio domicilio, String razonSocial, TipoCliente tipo) {
+        this.correoElectronico = correoElectronico;
+        this.cuil = cuil;
+        this.domicilio = domicilio;
+        this.razonSocial = razonSocial;
+        this.tipo = tipo;
+    }
+
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+
+    public int getCuil() {
+        return cuil;
+    }
+
+    public void setCuil(int cuil) {
+        this.cuil = cuil;
+    }
+
+    public Domicilio getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(Domicilio domicilio) {
+        this.domicilio = domicilio;
+    }
+
+    public Pedido[] getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Pedido[] pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+
+    public Responsable[] getResponsables() {
+        return responsables;
+    }
+
+    public void setResponsables(Responsable[] responsables) {
+        this.responsables = responsables;
+    }
+
+    public TipoCliente getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoCliente tipo) {
+        this.tipo = tipo;
+    }
+
+    public ClienteWeb getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(ClienteWeb usuario) {
+        this.usuario = usuario;
+    }
+
 
 }
