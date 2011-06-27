@@ -5,12 +5,13 @@
 
 package Negocio.Ventas;
 import Negocio.UbicacionGeografica.Domicilio;
+import java.io.Serializable;
 
 /**
  *
  * @author Ivan
  */
-public class Cliente
+public class Cliente implements Serializable
 {
     private String correoElectronico;
     private int cuil;

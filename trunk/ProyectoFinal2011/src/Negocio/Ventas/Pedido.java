@@ -6,6 +6,7 @@
 package Negocio.Ventas;
 
 import Negocio.Produccion.Producto;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,7 +14,7 @@ import java.util.Date;
  *
  * @author Ivan
  */
-public class Pedido {
+public class Pedido implements Serializable{
 
     private Cliente cliente;
     private ArrayList<DetallePedido> detalle;
@@ -28,6 +29,10 @@ public class Pedido {
 
     public Pedido() {
         detalle=new ArrayList<DetallePedido>();
+    }
+
+    public Pedido(int numero) {
+        this.numero = numero;
     }
 
     public Pedido(Cliente cliente, ArrayList<DetallePedido> detalle, boolean entregaMaterial, int numero, int prioridad, Date fechaGeneracion, TipoPedido tipo) {
@@ -122,6 +127,16 @@ public class Pedido {
         this.tipo = tipo;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Pedido)
+        {
+            Pedido aux=(Pedido) obj;
+            if(numero==aux.getNumero())
+                return true;
+        }
 
+        return false;
+    }
 
 }
