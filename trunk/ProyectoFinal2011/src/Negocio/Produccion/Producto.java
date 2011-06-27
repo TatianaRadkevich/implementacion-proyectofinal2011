@@ -103,4 +103,11 @@ public class Producto {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return codigo+"|"+nombre;
+    }
+    
+
+
 }
