@@ -11,16 +11,39 @@
 
 package Presentacion.Ventas;
 
+import Negocio.Produccion.Producto;
+import Negocio.Ventas.DetallePedido;
+import javax.swing.JComboBox;
+
 /**
  *
  * @author Heber Parrucci
  */
 public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
 
+    private boolean ok;
+    private DetallePedido detalle;
+
     /** Creates new form PantallaRegistrarDetallePedido */
     public PantallaRegistrarDetallePedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+    }
+
+    private void cargarComboProducto(Object[] data)
+    {
+        cmbTipoProducto.setModel(new javax.swing.DefaultComboBoxModel(data));
+    }
+
+    public boolean isOK()
+    {
+        return ok;
+    }
+
+   private void cargarComboTipoProducto(Object[] data)
+    {
+        cmbTipoProducto.setModel(new javax.swing.DefaultComboBoxModel(data));
     }
 
     /** This method is called from within the constructor to
@@ -33,31 +56,31 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
     private void initComponents() {
 
         paneCargar = new javax.swing.JPanel();
-        jComboBox3 = new javax.swing.JComboBox();
-        jComboBox4 = new javax.swing.JComboBox();
-        jTextField8 = new javax.swing.JTextField();
+        cmbTipoProducto = new javax.swing.JComboBox();
+        cmbProducto = new javax.swing.JComboBox();
+        txtCantidad = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         paneCargar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTipoProducto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+        cmbProducto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox4ActionPerformed(evt);
+                cmbProductoActionPerformed(evt);
             }
         });
 
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        txtCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                txtCantidadActionPerformed(evt);
             }
         });
 
@@ -67,17 +90,17 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
 
         jLabel12.setText("Cantidad:");
 
-        jButton5.setText("Aceptar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnAceptarActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Cancelar");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -89,9 +112,9 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(paneCargarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(paneCargarLayout.createSequentialGroup()
-                        .addComponent(jButton5)
+                        .addComponent(btnAceptar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton6))
+                        .addComponent(btnCancelar))
                     .addGroup(paneCargarLayout.createSequentialGroup()
                         .addGroup(paneCargarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel12)
@@ -99,9 +122,9 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
                             .addComponent(jLabel10))
                         .addGap(18, 18, 18)
                         .addGroup(paneCargarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField8)
-                            .addComponent(jComboBox4, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.TRAILING, 0, 107, Short.MAX_VALUE))))
+                            .addComponent(txtCantidad)
+                            .addComponent(cmbProducto, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbTipoProducto, javax.swing.GroupLayout.Alignment.TRAILING, 0, 107, Short.MAX_VALUE))))
                 .addGap(271, 271, 271))
         );
         paneCargarLayout.setVerticalGroup(
@@ -110,19 +133,19 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(paneCargarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(paneCargarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(paneCargarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(paneCargarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
-                    .addComponent(jButton5))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnAceptar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -146,22 +169,28 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-}//GEN-LAST:event_jButton5ActionPerformed
+        detalle=new DetallePedido(Integer.parseInt(txtCantidad.getText()), (Producto) cmbProducto.getSelectedItem());
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-        //cambio();
-}//GEN-LAST:event_jButton6ActionPerformed
+        ok=true;
+        this.setVisible(false);
+}//GEN-LAST:event_btnAceptarActionPerformed
 
-    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox4ActionPerformed
+        detalle=null;
+        ok=false;
+        this.setVisible(false);
+}//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void cmbProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_cmbProductoActionPerformed
+
+    private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadActionPerformed
 
     /**
     * @param args the command line arguments
@@ -181,15 +210,15 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JComboBox jComboBox4;
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JComboBox cmbProducto;
+    private javax.swing.JComboBox cmbTipoProducto;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JPanel paneCargar;
+    private javax.swing.JTextField txtCantidad;
     // End of variables declaration//GEN-END:variables
 
 }

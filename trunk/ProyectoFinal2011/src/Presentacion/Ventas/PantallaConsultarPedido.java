@@ -11,16 +11,29 @@
 
 package Presentacion.Ventas;
 
+import BaseDeDatos.PedidoBD;
+import Negocio.Ventas.Pedido;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Rodrigo
  */
 public class PantallaConsultarPedido extends javax.swing.JDialog {
 
+    private ArrayList<Pedido> data;
+    private DefaultTableModel tabla;
+    private PantallaRegistrarPedido regPedido;
     /** Creates new form PantallaConsultarPedido */
     public PantallaConsultarPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        tabla=(DefaultTableModel) tbPedidos.getModel();
+        data=PedidoBD.getPedidos();
+        regPedido=new PantallaRegistrarPedido();
     }
 
     /** This method is called from within the constructor to
@@ -32,31 +45,31 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnBuscar = new javax.swing.JPanel();
+        pnlBuscar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
+        txtRazonSocial = new javax.swing.JTextField();
         chkMostrarTodos = new javax.swing.JCheckBox();
         chkMostrarDadosBaja = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
-        txtCodigo = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        txtCUIL = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        txtCodigo1 = new javax.swing.JTextField();
+        txtNroPedido = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        dtcFechaGeneracionDesde = new com.toedter.calendar.JDateChooser();
+        dtcFechaGeneracionHasta = new com.toedter.calendar.JDateChooser();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbEmpleados = new javax.swing.JTable();
+        tbPedidos = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnBaja = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        btnBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
+        pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
 
         jLabel1.setText("Razon Social:");
 
@@ -66,7 +79,12 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
         jLabel4.setText("CUIL:");
 
-        jButton2.setText("Buscar");
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Nro. Pedido:");
 
@@ -86,8 +104,8 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dtcFechaGeneracionDesde, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dtcFechaGeneracionHasta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -95,69 +113,69 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dtcFechaGeneracionDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dtcFechaGeneracionHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout btnBuscarLayout = new javax.swing.GroupLayout(btnBuscar);
-        btnBuscar.setLayout(btnBuscarLayout);
-        btnBuscarLayout.setHorizontalGroup(
-            btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnBuscarLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnlBuscarLayout = new javax.swing.GroupLayout(pnlBuscar);
+        pnlBuscar.setLayout(pnlBuscarLayout);
+        pnlBuscarLayout.setHorizontalGroup(
+            pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBuscarLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(btnBuscarLayout.createSequentialGroup()
+                .addGroup(pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlBuscarLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(btnBuscarLayout.createSequentialGroup()
+                        .addComponent(txtNroPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBuscarLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(btnBuscarLayout.createSequentialGroup()
+                        .addComponent(txtCUIL, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBuscarLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(40, 40, 40)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(164, 164, 164)
-                .addGroup(btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chkMostrarTodos)
                     .addComponent(chkMostrarDadosBaja)
-                    .addComponent(jButton2))
+                    .addComponent(btnBuscar))
                 .addGap(10, 10, 10))
         );
-        btnBuscarLayout.setVerticalGroup(
-            btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnBuscarLayout.createSequentialGroup()
-                .addGroup(btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, btnBuscarLayout.createSequentialGroup()
-                        .addGroup(btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        pnlBuscarLayout.setVerticalGroup(
+            pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBuscarLayout.createSequentialGroup()
+                .addGroup(pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlBuscarLayout.createSequentialGroup()
+                        .addGroup(pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
                             .addComponent(chkMostrarTodos))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCUIL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
                             .addComponent(chkMostrarDadosBaja))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(jButton2)
-                            .addComponent(txtCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnBuscar)
+                            .addComponent(txtNroPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Producto"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Pedidos"));
 
-        tbEmpleados.setModel(new javax.swing.table.DefaultTableModel(
+        tbPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -183,9 +201,14 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tbEmpleados);
+        jScrollPane1.setViewportView(tbPedidos);
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
 
@@ -227,14 +250,14 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE))
+                    .addComponent(pnlBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -242,6 +265,48 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+
+        updateTabla();
+        
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void limpiarTabla()
+    {
+        while(tabla.getRowCount()>0)
+            tabla.removeRow(0);
+    }
+
+    private void addPedidoTabla(Pedido pedido)
+    {
+
+        Date auxFecha=pedido.getFechaGeneracion();
+        Object[] fila=
+        {pedido.getCliente().getRazonSocial(),
+         pedido.getCliente().getCuil(),
+         pedido.getNumero(),
+         auxFecha.getDate()+"/"+auxFecha.getMonth()+"/"+auxFecha.getYear()
+        };
+        tabla.addRow(fila);
+    }
+
+    private void updateTabla()
+    {
+        limpiarTabla();
+        for(int i=0;i<data.size();i++)
+        {
+            addPedidoTabla(data.get(i));
+        }
+
+    }
 
     /**
     * @param args the command line arguments
@@ -262,14 +327,13 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaja;
-    private javax.swing.JPanel btnBuscar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JCheckBox chkMostrarDadosBaja;
     private javax.swing.JCheckBox chkMostrarTodos;
-    private javax.swing.JButton jButton2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser dtcFechaGeneracionDesde;
+    private com.toedter.calendar.JDateChooser dtcFechaGeneracionHasta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -278,10 +342,11 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbEmpleados;
-    private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtCodigo1;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JPanel pnlBuscar;
+    private javax.swing.JTable tbPedidos;
+    private javax.swing.JTextField txtCUIL;
+    private javax.swing.JTextField txtNroPedido;
+    private javax.swing.JTextField txtRazonSocial;
     // End of variables declaration//GEN-END:variables
 
 }

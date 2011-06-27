@@ -93,7 +93,7 @@
                           <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                  <Component id="dtcFechaEstimada" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -102,8 +102,8 @@
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="fechaSol" alignment="0" pref="125" max="32767" attributes="1"/>
-                              <Component id="jDateChooser2" max="32767" attributes="1"/>
+                              <Component id="dtcFechaSolicitud" alignment="0" pref="125" max="32767" attributes="1"/>
+                              <Component id="txtFechaEstimada" max="32767" attributes="1"/>
                           </Group>
                       </Group>
                       <Component id="jPanel2" alignment="1" max="32767" attributes="0"/>
@@ -123,11 +123,11 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel3" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTextField2" min="-2" pref="102" max="-2" attributes="0"/>
+                          <Component id="txtFecha" min="-2" pref="102" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTextField4" min="-2" pref="57" max="-2" attributes="0"/>
+                          <Component id="txtHora" min="-2" pref="57" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -138,10 +138,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtFecha" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtHora" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -161,7 +161,7 @@
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -172,14 +172,11 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="dtcFechaEstimada" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtFechaEstimada" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="1">
-                          <Component id="fechaSol" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jDateChooser2" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="dtcFechaSolicitud" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="38" max="32767" attributes="0"/>
               </Group>
@@ -223,7 +220,7 @@
             <Property name="text" type="java.lang.String" value="Razon Social:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="txtFecha">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
@@ -238,7 +235,7 @@
             <Property name="text" type="java.lang.String" value="Hora:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField4">
+        <Component class="javax.swing.JTextField" name="txtHora">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
@@ -282,10 +279,10 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha Solicitadal:"/>
+            <Property name="text" type="java.lang.String" value="Fecha Solicitada:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel9">
+        <Component class="javax.swing.JLabel" name="dtcFechaEstimada">
           <Properties>
             <Property name="text" type="java.lang.String" value="Fecha Estimada:"/>
           </Properties>
@@ -457,9 +454,12 @@
             </Container>
           </SubComponents>
         </Container>
-        <Component class="com.toedter.calendar.JDateChooser" name="fechaSol">
+        <Component class="com.toedter.calendar.JDateChooser" name="dtcFechaSolicitud">
         </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
+        <Component class="javax.swing.JTextField" name="txtFechaEstimada">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
