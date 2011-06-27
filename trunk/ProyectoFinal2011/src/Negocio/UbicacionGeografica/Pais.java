@@ -17,9 +17,11 @@ class Pais {
     private ArrayList<Provincia> provincias;
 
     public Pais() {
+        provincias=new ArrayList<Provincia>();
     }
 
     public Pais(String nombre, String descripcion) {
+        this();
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
