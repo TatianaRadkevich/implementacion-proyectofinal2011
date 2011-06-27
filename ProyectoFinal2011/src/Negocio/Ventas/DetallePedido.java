@@ -11,7 +11,7 @@ import Negocio.Produccion.Producto;
  *
  * @author Rodrigo
  */
-class DetallePedido {
+public class DetallePedido {
     private int cantidad;
     private Producto producto;
     private float precio;
