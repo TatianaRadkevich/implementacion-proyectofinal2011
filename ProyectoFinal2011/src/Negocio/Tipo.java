@@ -3,13 +3,13 @@
  * and open the template in the editor.
  */
 
-package Negocio.Ventas;
+package Negocio;
 
 /**
  *
  * @author Rodrigo
  */
-class Tipo {
+public class Tipo {
 
     private String nombre;
     private String descripcion;

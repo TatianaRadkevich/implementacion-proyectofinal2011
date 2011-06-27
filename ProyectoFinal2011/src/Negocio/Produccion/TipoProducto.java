@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package Negocio.Ventas;
+package Negocio.Produccion;
 
 import Negocio.Tipo;
 
@@ -11,12 +11,13 @@ import Negocio.Tipo;
  *
  * @author Rodrigo
  */
-class TipoCliente extends Tipo{
+class TipoProducto extends Tipo{
 
-    public TipoCliente(String nombre, String descripcion) {
+    public TipoProducto(String nombre, String descripcion) {
         super(nombre, descripcion);
     }
 
-    public TipoCliente() {
+    public TipoProducto() {
     }
+    
 }
