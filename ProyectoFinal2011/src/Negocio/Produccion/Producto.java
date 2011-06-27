@@ -18,6 +18,7 @@ public class Producto {
     private ArrayList<EtapaProduccion> etapasProduccion;
     private String nombre;
     private TipoProducto tipo;
+    private float precioUnit;
 
     public Producto() {
         detalleProducto=new ArrayList<DetalleProducto>();
@@ -30,6 +31,14 @@ public class Producto {
         this.descripcion = descripcion;
         this.nombre = nombre;
         this.tipo = tipo;
+    }
+
+    public float getPrecioUnit() {
+        return precioUnit;
+    }
+
+    public void setPrecioUnit(float precioUnit) {
+        this.precioUnit = precioUnit;
     }
 
 
