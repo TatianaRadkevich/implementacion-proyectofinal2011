@@ -22,6 +22,8 @@ public class Cliente
     private ClienteWeb usuario;
 
     public Cliente() {
+        razonSocial="";
+        cuil=0;
     }
 
     public Cliente(int cuil, String razonSocial) {
@@ -99,6 +101,23 @@ public class Cliente
 
     public void setUsuario(ClienteWeb usuario) {
         this.usuario = usuario;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Cliente)
+        {
+            Cliente aux=(Cliente) obj;
+            if(razonSocial.compareToIgnoreCase(aux.getRazonSocial())==0)
+                return true;
+
+            if(cuil == aux.getCuil())
+                return true;
+
+        }
+
+        return false;
     }
 
 
