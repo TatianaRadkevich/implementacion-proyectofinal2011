@@ -18,9 +18,11 @@ class Localidad {
     private ArrayList<Barrio> barrios;
 
     public Localidad() {
+        barrios=new ArrayList<Barrio>();
     }
 
     public Localidad(String nombre, String descripcion) {
+        this();
         this.nombre = nombre;
         this.descripcion = descripcion;
     }

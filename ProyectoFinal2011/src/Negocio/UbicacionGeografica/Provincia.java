@@ -17,9 +17,11 @@ class Provincia {
     private ArrayList<Localidad> localidades;
 
     public Provincia() {
+        localidades=new ArrayList<Localidad>();
     }
 
     public Provincia(String nombre, String descripcion) {
+        this();
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
