@@ -25,12 +25,13 @@ public class Producto {
         etapasProduccion=new ArrayList<EtapaProduccion>();
     }
 
-    public Producto(int codigo, String descripcion, String nombre, TipoProducto tipo) {
+    public Producto(int codigo, String descripcion, String nombre,float precioUnit, TipoProducto tipo) {
         this();
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.nombre = nombre;
         this.tipo = tipo;
+        this.precioUnit=precioUnit;
     }
 
     public float getPrecioUnit() {
