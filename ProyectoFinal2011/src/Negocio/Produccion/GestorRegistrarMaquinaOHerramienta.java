@@ -22,8 +22,9 @@ private ArrayList<TipoMaquinaOHerramienta> tipoMaquinasYHerramientas;
 
     public ArrayList<TipoMaquinaOHerramienta> buscarMaquinasYHerramientas()
     {
-        TipoMaquinaOHerramienta tipo1 = new TipoMaquinaOHerramienta("cortadora", true, "corta pvc");
-        TipoMaquinaOHerramienta tipo2 = new TipoMaquinaOHerramienta("Moldeadora", true, "moldea los caños");
+        TipoMaquinaOHerramienta tipo1 = new TipoMaquinaOHerramienta("Cortadora", true, "corta pvc");
+        TipoMaquinaOHerramienta tipo2 = new TipoMaquinaOHerramienta("Amoladoras", true, "moldea los caños");
+        TipoMaquinaOHerramienta tipo3 = new TipoMaquinaOHerramienta("Perforadora", true, "perfora los caños");
 
         tipoMaquinasYHerramientas.add(tipo1);
         tipoMaquinasYHerramientas.add(tipo2);
