@@ -26,14 +26,21 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
     private ArrayList<Pedido> data;
     private DefaultTableModel tabla;
-    private PantallaRegistrarPedido regPedido;
+    
     /** Creates new form PantallaConsultarPedido */
     public PantallaConsultarPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        tabla=(DefaultTableModel) tbPedidos.getModel();
+        tabla=(DefaultTableModel) tbPedidos.getModel();       
+        
+
+        cargarTabla();
+    }
+
+    private void cargarTabla()
+    {
         data=PedidoBD.getPedidos();
-        regPedido=new PantallaRegistrarPedido();
+        updateTabla();
     }
 
     /** This method is called from within the constructor to
@@ -66,8 +73,10 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnBaja = new javax.swing.JButton();
+        btnSalir1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Gestionar Pedido");
 
         pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
 
@@ -78,6 +87,17 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
         chkMostrarDadosBaja.setText("Mostrar dados de baja");
 
         jLabel4.setText("CUIL:");
+
+        txtCUIL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCUILActionPerformed(evt);
+            }
+        });
+        txtCUIL.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCUILKeyPressed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -167,8 +187,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                         .addGroup(pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(btnBuscar)
-                            .addComponent(txtNroPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE))
+                            .addComponent(txtNroPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -214,6 +233,13 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
         btnBaja.setText("Baja");
 
+        btnSalir1.setText("Imprimir");
+        btnSalir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalir1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -222,11 +248,12 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnModificar)
-                    .addComponent(btnBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                    .addComponent(btnSalir1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,7 +264,9 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBaja))
+                        .addComponent(btnBaja)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSalir1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -276,8 +305,24 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-
+        PantallaRegistrarPedido regPedido;
+        regPedido=new PantallaRegistrarPedido(null,true);
+        regPedido.setVisible(true);
+        cargarTabla();
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void txtCUILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCUILActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCUILActionPerformed
+
+    private void txtCUILKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCUILKeyPressed
+        // TODO add your handling code here:
+        try{Integer.parseInt(txtCUIL.getText());}catch(Exception ex){evt.consume();}
+    }//GEN-LAST:event_txtCUILKeyPressed
+
+    private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
+        // TODO add your handling code here:
+}//GEN-LAST:event_btnSalir1ActionPerformed
 
     private void limpiarTabla()
     {
@@ -330,6 +375,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnSalir1;
     private javax.swing.JCheckBox chkMostrarDadosBaja;
     private javax.swing.JCheckBox chkMostrarTodos;
     private com.toedter.calendar.JDateChooser dtcFechaGeneracionDesde;
