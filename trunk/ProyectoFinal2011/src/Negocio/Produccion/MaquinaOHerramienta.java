@@ -11,17 +11,19 @@ package Negocio.Produccion;
  */
 public class MaquinaOHerramienta {
 
-private String codigo;
+private int codigo;
+private int numeroSerie;
 private String Nombre;
 private String caracteristicas;
 private float capacidadProductiva;
 private String modelo;
 private String observaciones;
 private TipoMaquinaOHerramienta tipoMaqOHerr;
-private EstadoMaquina estado;
+private String estado;
 
-    public MaquinaOHerramienta(String codigo, String Nombre, String caracteristicas, float capacidadProductiva, String modelo, String observaciones, TipoMaquinaOHerramienta tipoMaqOHerr, EstadoMaquina estado) {
+    public MaquinaOHerramienta(int codigo,int numeroSerie, String Nombre, String caracteristicas, float capacidadProductiva, String modelo, String observaciones, TipoMaquinaOHerramienta tipoMaqOHerr, String estado) {
         this.codigo = codigo;
+        this.numeroSerie= numeroSerie;
         this.Nombre = Nombre;
         this.caracteristicas = caracteristicas;
         this.capacidadProductiva = capacidadProductiva;
@@ -55,19 +57,19 @@ private EstadoMaquina estado;
         this.caracteristicas = caracteristicas;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
-    public EstadoMaquina getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoMaquina estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -95,10 +97,19 @@ private EstadoMaquina estado;
         this.tipoMaqOHerr = tipoMaqOHerr;
     }
 
+    public int getNumeroSerie() {
+        return numeroSerie;
+    }
+
+    public void setNumeroSerie(int numeroSerie) {
+        this.numeroSerie = numeroSerie;
+    }
+
     @Override
     public String toString() {
-        return "MaquinaOHerramienta{" + "codigo=" + codigo + "Nombre=" + Nombre + "caracteristicas=" + caracteristicas + "capacidadProductiva=" + capacidadProductiva + "modelo=" + modelo + "observaciones=" + observaciones + "tipoMaqOHerr=" + tipoMaqOHerr.toString() + "estado=" + estado.toString() + '}';
+        return "MaquinaOHerramienta{" + "codigo=" + codigo + "numeroSerie=" + numeroSerie + "Nombre=" + Nombre + "caracteristicas=" + caracteristicas + "capacidadProductiva=" + capacidadProductiva + "modelo=" + modelo + "observaciones=" + observaciones + "tipoMaqOHerr=" + tipoMaqOHerr + "estado=" + estado + '}';
     }
+
 
 
 
