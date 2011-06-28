@@ -11,8 +11,11 @@
 
 package Presentacion.Ventas;
 
+import BaseDeDatos.ProductoBD;
+import BaseDeDatos.TipoBD;
 import Negocio.Produccion.Producto;
 import Negocio.Ventas.DetallePedido;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 /**
@@ -28,7 +31,29 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
     public PantallaRegistrarDetallePedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        cargarComboProducto();
+        cargarComboTipoProducto();
+    }
+    
+    private void cargarComboProducto()
+    {
+
+        DefaultComboBoxModel combo=new DefaultComboBoxModel(ProductoBD.getProductos().toArray());
+         cmbProducto.setModel(combo);
+
+    }
+
+    private void cargarComboTipoProducto()
+    {
+
+        DefaultComboBoxModel combo=new DefaultComboBoxModel(TipoBD.getTipoProducto().toArray());
+         cmbTipoProducto.setModel(combo);
+
+    }
+
+    public DetallePedido getResultado()
+    {
+        return detalle;
     }
 
     private void cargarComboProducto(Object[] data)
