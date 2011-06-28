@@ -11,7 +11,7 @@ import Negocio.Tipo;
  *
  * @author Rodrigo
  */
-class TipoPedido extends Tipo {
+public class TipoPedido extends Tipo {
 
     public TipoPedido(String nombre, String descripcion) {
         super(nombre,descripcion);
