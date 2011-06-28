@@ -11,7 +11,9 @@
 
 package Presentacion.Ventas;
 
+import BaseDeDatos.ClientesBD;
 import BaseDeDatos.PedidoBD;
+import BaseDeDatos.TipoBD;
 import Negocio.Ventas.*;
 import Negocio.Ventas.Pedido;
 import java.util.ArrayList;
@@ -20,7 +22,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Random;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,32 +34,103 @@ import javax.swing.JOptionPane;
 public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
     /** Creates new form PantallaRegistrarPedido */
+    private DefaultTableModel tabla;
     private Pedido pedido;
     private Cliente cliente;
     private ArrayList<DetallePedido> detalle;
     private PantallaRegistrarDetallePedido pantDetPed;
+    private boolean ok;
+    private Date fechaEstimada;
 
     public PantallaRegistrarPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
+        detalle=new ArrayList<DetallePedido>();
+        tabla=(DefaultTableModel) tbDetalle.getModel();
         pantDetPed=new PantallaRegistrarDetallePedido(null, true);
         Calendar cal=GregorianCalendar.getInstance();
         txtFecha.setText(cal.get(cal.DATE)+"/"+cal.get(cal.MONTH)+"/"+cal.get(cal.YEAR));
         txtHora.setText(cal.get(cal.HOUR)+":"+cal.get(cal.MINUTE));
+        //Precargas///
+        cargarComboTipoPedido();
+        cargarListaCliente(ClientesBD.getClientes());
+        cargarComboPrioridad();
         //System.out.println(cal.getTime());
        // paneCargar.setVisible(false);
     }
 
-    PantallaRegistrarPedido() {
-
+    public boolean isOk() {
+        return ok;
     }
 
-    private void cambio()
+    @Override
+    public void setVisible(boolean b) {
+        ok=false;
+        super.setVisible(b);
+    }
+
+    private void cargarListaCliente(ArrayList<Cliente> Clientes)
     {
-       // paneCargar.setVisible(!paneCargar.isVisible());
-        PaneDetalle.setVisible(!PaneDetalle.isVisible());
+        DefaultListModel list=new DefaultListModel();
+        for(int i=0;i<Clientes.size();i++)
+        {
+            list.add(i, Clientes.get(i));
+        }
+
+        listaClientes.setModel(list);
     }
+
+    private void cargarComboPrioridad()
+    {
+        Object[] items=new String[] { "Muy Alta", "Alta", "Media", "Baja" };
+        DefaultComboBoxModel combo=new DefaultComboBoxModel(items);
+        
+         cmbPrioridad.setModel(combo);
+
+    }
+
+    private void cargarComboTipoPedido()
+    {
+
+        DefaultComboBoxModel combo=new DefaultComboBoxModel(TipoBD.getTipoPedido().toArray());
+         cmbTipoPedido.setModel(combo);
+
+    }
+
+        private void limpiarTabla()
+    {
+        while(tabla.getRowCount()>0)
+            tabla.removeRow(0);
+    }
+
+    private void addDetalleTabla(DetallePedido det)
+    {
+
+       
+        Object[] fila=
+        {det.getProducto().getCodigo(),
+         det.getProducto().getDescripcion(),
+         det.getProducto().getPrecioUnit(),         
+         det.getCantidad(),
+         det.getProducto().getPrecioUnit()*det.getCantidad()
+        };
+        tabla.addRow(fila);
+    }
+
+    private void updateTabla()
+    {
+        limpiarTabla();
+        int aux=0;
+        for(int i=0;i<detalle.size();i++)
+        {
+            aux+=detalle.get(i).getPrecio()*detalle.get(i).getCantidad();
+            addDetalleTabla(detalle.get(i));
+        }
+        txtSubTotal.setText(aux+"");
+
+    }
+    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -70,34 +146,41 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         txtRazonSocial = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jTextField3 = new javax.swing.JTextField();
+        listaClientes = new javax.swing.JList();
+        txtCUIL = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtFecha = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtHora = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox();
+        cmbPrioridad = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        cmbTipoPedido = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         dtcFechaEstimada = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         PaneDetalle = new javax.swing.JPanel();
-        jTextField5 = new javax.swing.JTextField();
+        txtSubTotal = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbDetalle = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         dtcFechaSolicitud = new com.toedter.calendar.JDateChooser();
         txtFechaEstimada = new javax.swing.JTextField();
+        btnCliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nuevo Pedido");
 
         jButton3.setText("Cancelar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Aceptar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -108,12 +191,17 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Pedidos"));
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        listaClientes.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Cliente 1", "Cliente 2", "Cliente 3", "Cliente 4", "Cliente 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        listaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                listaClientesMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listaClientes);
 
         jLabel1.setText("CUIT:");
 
@@ -127,10 +215,10 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
         txtHora.setEditable(false);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cmbPrioridad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPrioridad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cmbPrioridadActionPerformed(evt);
             }
         });
 
@@ -138,7 +226,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
         jLabel7.setText("Tipo pedido:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTipoPedido.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel8.setText("Fecha Solicitada:");
 
@@ -150,7 +238,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
         jLabel5.setText("Total($):");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbDetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -161,9 +249,14 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                 "Codigo", "Descripción", "Precio Unit.($)", "Cantidad", "Sub Total($)"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tbDetalle);
 
         jButton2.setText("-");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("+");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -182,10 +275,10 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneDetalleLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18))
                     .addGroup(PaneDetalleLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
                         .addGap(18, 18, 18)))
                 .addGroup(PaneDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
@@ -205,7 +298,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(PaneDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))))
                 .addContainerGap())
         );
@@ -227,7 +320,20 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        dtcFechaSolicitud.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dtcFechaSolicitudMouseClicked(evt);
+            }
+        });
+
         txtFechaEstimada.setEditable(false);
+
+        btnCliente.setText("Agregar");
+        btnCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -241,10 +347,10 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                             .addComponent(jLabel7)
                             .addComponent(jLabel6))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(107, 107, 107)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmbPrioridad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbTipoPedido, 0, 209, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(dtcFechaEstimada)
@@ -258,12 +364,15 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField3)
-                            .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtCUIL)
+                                    .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)))
+                            .addComponent(btnCliente))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -292,8 +401,10 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                             .addComponent(jLabel2))
                         .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)))
+                            .addComponent(txtCUIL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCliente))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -302,11 +413,11 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbTipoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)
                             .addComponent(dtcFechaEstimada)
                             .addComponent(txtFechaEstimada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -343,13 +454,13 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cmbPrioridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPrioridadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cmbPrioridadActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-
+ok=true;
         pedido=new Pedido();
         pedido.setNumero(PedidoBD.generarNro());
         pedido.setCliente(cliente);
@@ -357,7 +468,8 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
         pedido.setFechaEntrega(dtcFechaSolicitud.getDate());
         pedido.setFechaEstimada(dtcFechaSolicitud.getDate());
         pedido.setFechaGeneracion(GregorianCalendar.getInstance().getTime());
-
+PedidoBD.addPedido(pedido);
+this.setVisible(false);
 
         //JOptionPane.showMessageDialog(this, "El pedido Nro: XX ha sido registrado correctamente","Informacion",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -365,9 +477,50 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         pantDetPed.setVisible(true);
+        if(pantDetPed.isOK())
+            detalle.add(pantDetPed.getResultado());
+        updateTabla();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+        ok=false;
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void listaClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaClientesMousePressed
+        // TODO add your handling code here:
+        setCliente((Cliente) listaClientes.getSelectedValue());
+
+    }//GEN-LAST:event_listaClientesMousePressed
+
+    private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
+        // TODO add your handling code here:
+        PantallaAMBCliente pant=new PantallaAMBCliente(null,true);
+        pant.setVisible(true);
+        cargarListaCliente(ClientesBD.getClientes());
+    }//GEN-LAST:event_btnClienteActionPerformed
+
+    private void dtcFechaSolicitudMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dtcFechaSolicitudMouseClicked
+        // TODO add your handling code here:
+        fechaEstimada=dtcFechaSolicitud.getDate();
+        
+        txtFechaEstimada.setText("");
+    }//GEN-LAST:event_dtcFechaSolicitudMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void setCliente(Cliente cli)
+    {
+        cliente=cli;
+        txtRazonSocial.setText(cliente.getRazonSocial());
+        txtCUIL.setText(cliente.getCuil()+"");
+    }
     /**
     * @param args the command line arguments
     */
@@ -387,14 +540,15 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PaneDetalle;
+    private javax.swing.JButton btnCliente;
+    private javax.swing.JComboBox cmbPrioridad;
+    private javax.swing.JComboBox cmbTipoPedido;
     private javax.swing.JLabel dtcFechaEstimada;
     private com.toedter.calendar.JDateChooser dtcFechaSolicitud;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -403,18 +557,18 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JList listaClientes;
+    private javax.swing.JTable tbDetalle;
+    private javax.swing.JTextField txtCUIL;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtFechaEstimada;
     private javax.swing.JTextField txtHora;
     private javax.swing.JTextField txtRazonSocial;
+    private javax.swing.JTextField txtSubTotal;
     // End of variables declaration//GEN-END:variables
 
 }
