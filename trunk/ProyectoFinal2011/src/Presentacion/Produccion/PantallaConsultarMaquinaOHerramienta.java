@@ -11,16 +11,59 @@
 
 package Presentacion.Produccion;
 
+import BaseDeDatos.MaquinaOHerramientaBD;
+import Negocio.Produccion.MaquinaOHerramienta;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Heber Parrucci
  */
 public class PantallaConsultarMaquinaOHerramienta extends javax.swing.JDialog {
+    private ArrayList<MaquinaOHerramienta> data;
+    private DefaultTableModel tabla;
+    private PantallaABMMaquinaOHerramienta pantAlta;
 
     /** Creates new form consultarMaquinaOHerramienta */
     public PantallaConsultarMaquinaOHerramienta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        tabla=(DefaultTableModel) tbMaquinasYHerramientas.getModel();
+        data=MaquinaOHerramientaBD.getMaquinasYHerramientas();
+        pantAlta = new PantallaABMMaquinaOHerramienta(parent, modal);
+    }
+
+     private void limpiarTabla()
+    {
+        while(tabla.getRowCount()>0)
+            tabla.removeRow(0);
+    }
+
+    private void addMaquinaTabla(MaquinaOHerramienta maq)
+    {
+
+
+        Object[] fila=
+        {maq.getNumeroSerie(),
+         maq.getNombre(),
+         maq.getModelo(),
+         maq.getEstado()
+        };
+        tabla.addRow(fila);
+    }
+
+    private void updateTabla()
+    {
+       
+        limpiarTabla();
+         data=MaquinaOHerramientaBD.getMaquinasYHerramientas();
+        for(int i=0;i<data.size();i++)
+        {
+            addMaquinaTabla(data.get(i));
+        }
+
     }
 
     /** This method is called from within the constructor to
@@ -50,6 +93,7 @@ public class PantallaConsultarMaquinaOHerramienta extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Gestión de Máquinas y Herramientas");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Máquinas Y Herramientas"));
 
@@ -67,6 +111,11 @@ public class PantallaConsultarMaquinaOHerramienta extends javax.swing.JDialog {
         jScrollPane3.setViewportView(tbMaquinasYHerramientas);
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
 
@@ -110,6 +159,11 @@ public class PantallaConsultarMaquinaOHerramienta extends javax.swing.JDialog {
         jLabel3.setText("Modelo:");
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         chkMostrarTodos.setText("Mostrar vigentes");
 
@@ -126,7 +180,7 @@ public class PantallaConsultarMaquinaOHerramienta extends javax.swing.JDialog {
                     .addGroup(panelBusquedaLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(chkMostrarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
+                        .addGap(29, 29, 29)
                         .addComponent(chkMostrarDadosBaja))
                     .addGroup(panelBusquedaLayout.createSequentialGroup()
                         .addGap(45, 45, 45)
@@ -161,7 +215,7 @@ public class PantallaConsultarMaquinaOHerramienta extends javax.swing.JDialog {
                             .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addGap(48, 48, 48)
-                        .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(chkMostrarTodos)
                             .addComponent(chkMostrarDadosBaja)))
                     .addComponent(btnBuscar)))
@@ -174,7 +228,7 @@ public class PantallaConsultarMaquinaOHerramienta extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
@@ -190,6 +244,15 @@ public class PantallaConsultarMaquinaOHerramienta extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        updateTabla();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+       pantAlta.setVisible(true);
+       this.updateTabla();
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
     /**
     * @param args the command line arguments
