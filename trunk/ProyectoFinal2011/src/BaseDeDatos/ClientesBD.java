@@ -17,9 +17,15 @@ public class ClientesBD {
     private static String nombre="Clientes";
     private static  ArrayList<Cliente> info=new ArrayList<Cliente>();
 
+    static{
+        info.add(new Cliente(434564, "Promesa"));
+        info.add(new Cliente(024657, "Hernan Herramientas"));
+        info.add(new Cliente(987324, "Carlos Accesorios"));
+    }
+
     private static void grabar()
     {
-        BaseDatos.Grabar(nombre, info);
+        //BaseDatos.Grabar(nombre, info);
     }
 
     public static void addCliente(Cliente cliente)
