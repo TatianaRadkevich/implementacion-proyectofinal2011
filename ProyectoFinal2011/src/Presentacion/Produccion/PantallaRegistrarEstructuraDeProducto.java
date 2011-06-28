@@ -64,6 +64,7 @@ public class PantallaRegistrarEstructuraDeProducto extends javax.swing.JDialog {
         btnBajar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nueva Estructura");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Codo 90''", "Item 2", "Item 3", "Item 4" }));
 
