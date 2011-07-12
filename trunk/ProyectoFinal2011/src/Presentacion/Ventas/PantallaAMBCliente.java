@@ -243,7 +243,7 @@ public class PantallaAMBCliente extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Cliente aux=new Cliente(Integer.parseInt(txtCUIL.getText()), txtRazonSocial.getText());
+        Cliente aux=new Cliente(Long.parseLong(txtCUIL.getText()), txtRazonSocial.getText());
         aux.setCorreoElectronico(txtCorreoElectronico.getText());
         aux.setTipo((TipoCliente) cmbTipoCliente.getSelectedItem());
         ClientesBD.addCliente(aux);

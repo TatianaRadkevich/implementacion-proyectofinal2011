@@ -230,8 +230,18 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnBaja.setText("Baja");
+        btnBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBajaActionPerformed(evt);
+            }
+        });
 
         btnSalir1.setText("Imprimir");
         btnSalir1.addActionListener(new java.awt.event.ActionListener() {
@@ -253,7 +263,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
                     .addComponent(btnSalir1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,6 +334,24 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
         // TODO add your handling code here:
 }//GEN-LAST:event_btnSalir1ActionPerformed
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        PantallaRegistrarPedido regPedido;
+        regPedido=new PantallaRegistrarPedido(null,true,data.get(tbPedidos.getSelectedRow()));
+        regPedido.setVisible(true);
+        cargarTabla();
+
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
+        // TODO add your handling code here:
+
+         
+
+        PedidoBD.eliminar((Integer)tabla.getValueAt(tbPedidos.getSelectedRow(), 2));
+        cargarTabla();
+    }//GEN-LAST:event_btnBajaActionPerformed
+
     private void limpiarTabla()
     {
         while(tabla.getRowCount()>0)
@@ -333,6 +361,8 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
     private void addPedidoTabla(Pedido pedido)
     {
 
+      
+        
         Date auxFecha=pedido.getFechaGeneracion();
         Object[] fila=
         {pedido.getCliente().getRazonSocial(),

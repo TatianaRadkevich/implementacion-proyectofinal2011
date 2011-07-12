@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class Cliente implements Serializable
 {
     private String correoElectronico;
-    private int cuil;
+    private long cuil;
     private Domicilio domicilio;
     private Pedido[] pedidos;
     private String razonSocial;
@@ -27,7 +27,7 @@ public class Cliente implements Serializable
         cuil=0;
     }
 
-    public Cliente(int cuil, String razonSocial) {
+    public Cliente(long cuil, String razonSocial) {
         this.cuil = cuil;
         this.razonSocial = razonSocial;
     }
@@ -48,11 +48,11 @@ public class Cliente implements Serializable
         this.correoElectronico = correoElectronico;
     }
 
-    public int getCuil() {
+    public long getCuil() {
         return cuil;
     }
 
-    public void setCuil(int cuil) {
+    public void setCuil(long cuil) {
         this.cuil = cuil;
     }
 
