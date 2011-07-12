@@ -16,6 +16,7 @@ import BaseDeDatos.PedidoBD;
 import BaseDeDatos.TipoBD;
 import Negocio.Ventas.*;
 import Negocio.Ventas.Pedido;
+import Presentacion.ValidarTexbox;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,15 +40,59 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
     private Cliente cliente;
     private ArrayList<DetallePedido> detalle;
     private PantallaRegistrarDetallePedido pantDetPed;
-    private boolean ok;
+    private boolean modificar;    
     private Date fechaEstimada;
 
     public PantallaRegistrarPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();
+        iniciar();
+        modificar=false;
+        //System.out.println(cal.getTime());
+       // paneCargar.setVisible(false);
+    }
 
-        detalle=new ArrayList<DetallePedido>();
+    public PantallaRegistrarPedido(java.awt.Frame parent,boolean modal,Pedido pedido) {
+        super(parent, modal);
+        iniciar();
+        cargar(pedido);
+        this.pedido=pedido;
+        modificar=true;
+        //System.out.println(cal.getTime());
+       // paneCargar.setVisible(false);
+    }
+
+     private void cargar(Pedido pedido) {
+        txtCUIL.setText(pedido.getCliente().getCuil()+"");
+        txtRazonSocial.setText(pedido.getCliente().getRazonSocial());
+        cliente=pedido.getCliente();
+
+        txtFechaEstimada.setText(parseDate(pedido.getFechaEstimada()));
+        dtcFechaSolicitud.setDate(pedido.getFechaEntrega());
+
+        detalle=pedido.getDetalle();
+        updateTabla();
+        cmbPrioridad.setSelectedIndex(pedido.getPrioridad());
+        cmbTipoPedido.setSelectedItem(pedido.getTipo());
+        
+    }
+
+     private String parseDate(Date fecha)
+     {
+         if(fecha==null)
+             return "";
+         return fecha.getDay()+"/"+fecha.getMonth()+"/"+fecha.getYear();
+     }
+
+
+
+    private void iniciar()
+    {
+        initComponents();
+        
+        detalle=new ArrayList<DetallePedido>();       
         tabla=(DefaultTableModel) tbDetalle.getModel();
+        updateTabla();
+        
         pantDetPed=new PantallaRegistrarDetallePedido(null, true);
         Calendar cal=GregorianCalendar.getInstance();
         txtFecha.setText(cal.get(cal.DATE)+"/"+cal.get(cal.MONTH)+"/"+cal.get(cal.YEAR));
@@ -56,17 +101,18 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
         cargarComboTipoPedido();
         cargarListaCliente(ClientesBD.getClientes());
         cargarComboPrioridad();
-        //System.out.println(cal.getTime());
-       // paneCargar.setVisible(false);
+
+
+
+        ValidarTexbox.validarLong(txtCUIL);
+
     }
 
-    public boolean isOk() {
-        return ok;
-    }
+
 
     @Override
     public void setVisible(boolean b) {
-        ok=false;
+     
         super.setVisible(b);
     }
 
@@ -159,7 +205,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         cmbTipoPedido = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
-        dtcFechaEstimada = new javax.swing.JLabel();
+        labelFechaEstimada = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         PaneDetalle = new javax.swing.JPanel();
         txtSubTotal = new javax.swing.JTextField();
@@ -230,11 +276,13 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
         jLabel8.setText("Fecha Solicitada:");
 
-        dtcFechaEstimada.setText("Fecha Estimada:");
+        labelFechaEstimada.setText("Fecha Estimada:");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle"));
 
         PaneDetalle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        txtSubTotal.setEditable(false);
 
         jLabel5.setText("Total($):");
 
@@ -353,7 +401,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(dtcFechaEstimada)
+                                .addComponent(labelFechaEstimada)
                                 .addGap(22, 22, 22))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
@@ -419,7 +467,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbTipoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)
-                            .addComponent(dtcFechaEstimada)
+                            .addComponent(labelFechaEstimada)
                             .addComponent(txtFechaEstimada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(dtcFechaSolicitud, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(38, Short.MAX_VALUE))
@@ -460,16 +508,26 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-ok=true;
-        pedido=new Pedido();
+
+        if(modificar==false)
+            pedido=new Pedido();
+
         pedido.setNumero(PedidoBD.generarNro());
         pedido.setCliente(cliente);
         pedido.setDetalle(detalle);
         pedido.setFechaEntrega(dtcFechaSolicitud.getDate());
         pedido.setFechaEstimada(dtcFechaSolicitud.getDate());
-        pedido.setFechaGeneracion(GregorianCalendar.getInstance().getTime());
-PedidoBD.addPedido(pedido);
-this.setVisible(false);
+
+        if(modificar==false)
+            pedido.setFechaGeneracion(GregorianCalendar.getInstance().getTime());
+
+        pedido.setPrioridad(cmbPrioridad.getSelectedIndex());
+        pedido.setTipo((TipoPedido) cmbTipoPedido.getSelectedItem());
+        
+        if(modificar==false)
+            PedidoBD.addPedido(pedido);
+
+        this.setVisible(false);
 
         //JOptionPane.showMessageDialog(this, "El pedido Nro: XX ha sido registrado correctamente","Informacion",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -486,7 +544,7 @@ this.setVisible(false);
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        ok=false;
+      
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void listaClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaClientesMousePressed
@@ -511,7 +569,8 @@ this.setVisible(false);
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-
+        detalle.remove(tbDetalle.getSelectedRow());
+        updateTabla();
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -543,7 +602,6 @@ this.setVisible(false);
     private javax.swing.JButton btnCliente;
     private javax.swing.JComboBox cmbPrioridad;
     private javax.swing.JComboBox cmbTipoPedido;
-    private javax.swing.JLabel dtcFechaEstimada;
     private com.toedter.calendar.JDateChooser dtcFechaSolicitud;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -561,6 +619,7 @@ this.setVisible(false);
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel labelFechaEstimada;
     private javax.swing.JList listaClientes;
     private javax.swing.JTable tbDetalle;
     private javax.swing.JTextField txtCUIL;
@@ -570,5 +629,7 @@ this.setVisible(false);
     private javax.swing.JTextField txtRazonSocial;
     private javax.swing.JTextField txtSubTotal;
     // End of variables declaration//GEN-END:variables
+
+
 
 }
