@@ -1,0 +1,18 @@
+Nomenclatura de tablas:
+
+- Todas las tablas comienzan con: T_ (t y guión bajo, eso da comienzo al nombre de la misma).
+
+- Todos los estados y tipos son abreviados de la suguiente manera: T_TPEDIDO (Tabla tipo de pedido), T_EPEDIDO (Tabla estado de pedido).
+
+- Siempre el primer nombre luego de T_ es plural, el resto singular. Por ejemplo: T_DETALLES_PEDIDO, T_PEDIDOS. Excepto en las
+abreviaciones de tipos y estado (Como esta citado en el segundo items).
+
+- Las PK (Las claves primarias) tienen el mismo nombre que las tablas. Por ejemplo: ID_EPEDIDO, de la tabla T_EPEDIDO.
+Aunque son siempre singular, por ejemplo: La tabla T_PLANES_PRODUCCION, su PK es ID_PLAN_PRODUCCION.
+
+- Los campos se nombran de la siguiente manera: 
+     
+      * Cada palabra separada por guion bajo, ejemplo: TIPO_PERSONA, CORREO_ELECTRONICO.
+
+      * Las fechas comienzan con FEC_ y luego se completa el nombre. Por ejemplo: FEC_NACIMIENTO.
+
