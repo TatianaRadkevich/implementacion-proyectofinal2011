@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="BaseDeDatos.TMateriales" table="T_MATERIALES" schema="dbo" catalog="Ramaty">
+        <id name="idMaterial" type="short">
+            <column name="ID_MATERIAL" precision="3" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="50" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="200" />
+        </property>
+        <property name="diametro" type="java.lang.Integer">
+            <column name="DIAMETRO" precision="6" scale="0" />
+        </property>
+        <property name="esMateriaPrima" type="boolean">
+            <column name="ES_MATERIA_PRIMA" not-null="true" />
+        </property>
+        <property name="logitud" type="java.lang.Short">
+            <column name="LOGITUD" precision="3" scale="0" />
+        </property>
+        <property name="fecBaja" type="timestamp">
+            <column name="FEC_BAJA" length="23" />
+        </property>
+        <property name="motivoBaja" type="string">
+            <column name="MOTIVO_BAJA" length="200" />
+        </property>
+        <property name="stockActual" type="short">
+            <column name="STOCK_ACTUAL" precision="3" scale="0" not-null="true" />
+        </property>
+        <property name="stockMinimo" type="short">
+            <column name="STOCK_MINIMO" precision="3" scale="0" not-null="true" />
+        </property>
+        <property name="stockReservado" type="short">
+            <column name="STOCK_RESERVADO" precision="3" scale="0" not-null="true" />
+        </property>
+        <property name="codigo" type="string">
+            <column name="CODIGO" length="2" not-null="true" />
+        </property>
+        <set name="TDetallesProductos" inverse="true">
+            <key>
+                <column name="ID_MATERIAL" precision="3" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="BaseDeDatos.TDetallesProducto" />
+        </set>
+        <set name="TDetallesEtapas" inverse="true">
+            <key>
+                <column name="ID_MATERIAL" precision="3" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="BaseDeDatos.TDetallesEtapa" />
+        </set>
+        <set name="TMaterialesXProveedors" inverse="true">
+            <key>
+                <column name="ID_MATERIAL" precision="3" scale="0" />
+            </key>
+            <one-to-many class="BaseDeDatos.TMaterialesXProveedor" />
+        </set>
+        <set name="TFaltanteses" inverse="true">
+            <key>
+                <column name="ID_MATERIAL" precision="3" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="BaseDeDatos.TFaltantes" />
+        </set>
+        <set name="TDetallesOrdenCompras" inverse="true">
+            <key>
+                <column name="ID_MATERIAL" precision="3" scale="0" />
+            </key>
+            <one-to-many class="BaseDeDatos.TDetallesOrdenCompra" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="BaseDeDatos.TFacturas" table="T_FACTURAS" schema="dbo" catalog="Ramaty">
+        <id name="idFactura" type="int">
+            <column name="ID_FACTURA" precision="8" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="TEmpleados" class="BaseDeDatos.TEmpleados" fetch="select">
+            <column name="ID_EMPLEADO" precision="5" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="descuento" type="big_decimal">
+            <column name="DESCUENTO" precision="6" scale="4" />
+        </property>
+        <property name="fecFactura" type="timestamp">
+            <column name="FEC_FACTURA" length="23" not-null="true" />
+        </property>
+        <property name="numero" type="int">
+            <column name="NUMERO" precision="8" scale="0" not-null="true" />
+        </property>
+        <property name="recargo" type="big_decimal">
+            <column name="RECARGO" precision="6" scale="4" />
+        </property>
+        <set name="TDetallesFacturas" inverse="true">
+            <key>
+                <column name="ID_FACTURA" precision="8" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="BaseDeDatos.TDetallesFactura" />
+        </set>
+        <set name="TCobroses" inverse="true">
+            <key>
+                <column name="ID_FACTURA" precision="8" scale="0" />
+            </key>
+            <one-to-many class="BaseDeDatos.TCobros" />
+        </set>
+    </class>
+</hibernate-mapping>

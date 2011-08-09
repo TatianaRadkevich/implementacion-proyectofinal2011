@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="BaseDeDatos.TReclamos" table="T_RECLAMOS" schema="dbo" catalog="Ramaty">
+        <id name="idReclamo" type="short">
+            <column name="ID_RECLAMO" precision="3" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="TOrdenesCompra" class="BaseDeDatos.TOrdenesCompra" fetch="select">
+            <column name="ID_ORDEN_COMPRA" precision="8" scale="0" />
+        </many-to-one>
+        <many-to-one name="TEreclamo" class="BaseDeDatos.TEreclamo" fetch="select">
+            <column name="ID_ERECLAMO" precision="2" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="200" not-null="true" />
+        </property>
+        <property name="fecReclamo" type="timestamp">
+            <column name="FEC_RECLAMO" length="23" not-null="true" />
+        </property>
+        <property name="motivo" type="string">
+            <column name="MOTIVO" length="200" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

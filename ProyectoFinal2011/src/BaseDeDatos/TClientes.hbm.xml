@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="BaseDeDatos.TClientes" table="T_CLIENTES" schema="dbo" catalog="Ramaty">
+        <id name="idCliente" type="int">
+            <column name="ID_CLIENTE" precision="5" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="TDomicilios" class="BaseDeDatos.TDomicilios" fetch="select">
+            <column name="ID_DOMICILIO" precision="3" scale="0" />
+        </many-to-one>
+        <many-to-one name="TClientesWeb" class="BaseDeDatos.TClientesWeb" fetch="select">
+            <column name="ID_CLIENTE_WEB" precision="5" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="TUsuarios" class="BaseDeDatos.TUsuarios" fetch="select">
+            <column name="ID_USUARIO" precision="5" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="TTcliente" class="BaseDeDatos.TTcliente" fetch="select">
+            <column name="ID_TCLIENTE" precision="2" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="correoElectronico" type="string">
+            <column name="CORREO_ELECTRONICO" length="50" />
+        </property>
+        <property name="cuil" type="long">
+            <column name="CUIL" precision="11" scale="0" not-null="true" />
+        </property>
+        <property name="razonSocial" type="string">
+            <column name="RAZON_SOCIAL" length="50" not-null="true" />
+        </property>
+        <property name="nombreResponsable" type="string">
+            <column name="NOMBRE_RESPONSABLE" length="50" not-null="true" />
+        </property>
+        <property name="apellidoResponsable" type="string">
+            <column name="APELLIDO_RESPONSABLE" length="50" not-null="true" />
+        </property>
+        <property name="telefonoResponsable" type="long">
+            <column name="TELEFONO_RESPONSABLE" precision="13" scale="0" not-null="true" />
+        </property>
+        <set name="TPedidoses" inverse="true">
+            <key>
+                <column name="ID_CLIENTE" precision="5" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="BaseDeDatos.TPedidos" />
+        </set>
+    </class>
+</hibernate-mapping>
