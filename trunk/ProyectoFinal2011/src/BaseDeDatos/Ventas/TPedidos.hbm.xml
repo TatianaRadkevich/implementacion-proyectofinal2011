@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="Ramaty" name="BaseDeDatos.TPedidos" schema="dbo" table="T_PEDIDOS">
+    <id name="idPedido" type="int">
+      <column name="ID_PEDIDO" precision="8" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="BaseDeDatos.TTpedido" fetch="select" name="TTpedido">
+      <column name="ID_TPEDIDO" not-null="true" precision="2" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.Ventas.TClientes" fetch="select" name="TClientes">
+      <column name="ID_CLIENTE" not-null="true" precision="5" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.Ventas.TEpedido" fetch="select" name="TEpedido">
+      <column name="ID_EPEDIDO" not-null="true" precision="2" scale="0"/>
+    </many-to-one>
+    <property name="entregaMaterial" type="java.lang.Boolean">
+      <column name="ENTREGA_MATERIAL"/>
+    </property>
+    <property name="fecHoraEstimadaEntrega" type="timestamp">
+      <column length="23" name="FEC_HORA_ESTIMADA_ENTREGA" not-null="true"/>
+    </property>
+    <property name="fecHoraGeneracion" type="timestamp">
+      <column length="23" name="FEC_HORA_GENERACION" not-null="true"/>
+    </property>
+    <property name="fecHoraRealEntrega" type="timestamp">
+      <column length="23" name="FEC_HORA_REAL_ENTREGA" not-null="true"/>
+    </property>
+    <property name="fecSolicitada" type="timestamp">
+      <column length="23" name="FEC_SOLICITADA" not-null="true"/>
+    </property>
+    <property name="prioridad" type="byte">
+      <column name="PRIORIDAD" not-null="true" precision="2" scale="0"/>
+    </property>
+    <set inverse="true" name="TPlanesProduccions">
+      <key>
+        <column name="ID_PEDIDO" not-null="true" precision="8" scale="0"/>
+      </key>
+      <one-to-many class="BaseDeDatos.Produccion.TPlanesProduccion"/>
+    </set>
+    <set inverse="true" name="TDetallesPedidos">
+      <key>
+        <column name="ID_PEDIDO" not-null="true" precision="8" scale="0"/>
+      </key>
+      <one-to-many class="BaseDeDatos.TDetallesPedido"/>
+    </set>
+  </class>
+</hibernate-mapping>

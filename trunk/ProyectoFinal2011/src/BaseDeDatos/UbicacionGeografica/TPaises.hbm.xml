@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="Ramaty" name="BaseDeDatos.UbicacionGeografica.TPaises" schema="dbo" table="T_PAISES">
+    <id name="idPais" type="short">
+      <column name="ID_PAIS" precision="3" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="nombre" type="string">
+      <column length="50" name="NOMBRE" not-null="true"/>
+    </property>
+    <property name="descripcion" type="string">
+      <column length="200" name="DESCRIPCION"/>
+    </property>
+    <set inverse="true" name="TDomicilioses">
+      <key>
+        <column name="ID_PAIS" not-null="true" precision="3" scale="0"/>
+      </key>
+      <one-to-many class="BaseDeDatos.UbicacionGeografica.TDomicilios"/>
+    </set>
+    <set inverse="true" name="TProvinciases">
+      <key>
+        <column name="ID_PAIS" not-null="true" precision="3" scale="0"/>
+      </key>
+      <one-to-many class="BaseDeDatos.UbicacionGeografica.TProvincias"/>
+    </set>
+  </class>
+</hibernate-mapping>

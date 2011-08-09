@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="Ramaty" name="BaseDeDatos.Produccion.TEtapasProduccionEspecifica" schema="dbo" table="T_ETAPAS_PRODUCCION_ESPECIFICA">
+    <id name="idEtapaProduccionEspecifica" type="int">
+      <column name="ID_ETAPA_PRODUCCION_ESPECIFICA" precision="5" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="BaseDeDatos.Administracion.TCargos" fetch="select" name="TCargos">
+      <column name="ID_CARGO" not-null="true" precision="2" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.Produccion.TEtapasProduccion" fetch="select" name="TEtapasProduccion">
+      <column name="ID_ETAPA_PRODUCCION" not-null="true" precision="3" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.TProductos" fetch="select" name="TProductos">
+      <column name="ID_PRODUCTO" not-null="true" precision="5" scale="0"/>
+    </many-to-one>
+    <property name="descripcionEspecifica" type="string">
+      <column length="200" name="DESCRIPCION_ESPECIFICA" not-null="true"/>
+    </property>
+    <property name="horasHombre" type="big_decimal">
+      <column name="HORAS_HOMBRE" not-null="true" precision="6"/>
+    </property>
+    <property name="numeroOrden" type="byte">
+      <column name="NUMERO_ORDEN" not-null="true" precision="2" scale="0"/>
+    </property>
+    <set inverse="true" name="TDetallesEtapas">
+      <key>
+        <column name="ID_ETAPA_PRODUCCION_ESPECIFICA" not-null="true" precision="5" scale="0"/>
+      </key>
+      <one-to-many class="BaseDeDatos.Produccion.TDetallesEtapa"/>
+    </set>
+    <set inverse="true" name="TTmaquinaHerramientas">
+      <key>
+        <column name="ID_ETAPA_PRODUCCION_ESPECIFICA" not-null="true" precision="5" scale="0"/>
+      </key>
+      <one-to-many class="BaseDeDatos.TTmaquinaHerramienta"/>
+    </set>
+    <set inverse="true" name="TDetallesPlans">
+      <key>
+        <column name="ID_ETAPA_PRODUCCION_ESPECIFICA" not-null="true" precision="5" scale="0"/>
+      </key>
+      <one-to-many class="BaseDeDatos.Produccion.TDetallesPlan"/>
+    </set>
+  </class>
+</hibernate-mapping>

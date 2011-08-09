@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="Ramaty" name="BaseDeDatos.TClientesWeb" schema="dbo" table="T_CLIENTES_WEB">
+    <id name="idClienteWeb" type="int">
+      <column name="ID_CLIENTE_WEB" precision="5" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="usuario" type="string">
+      <column length="20" name="USUARIO" not-null="true"/>
+    </property>
+    <property name="contrasenia" type="string">
+      <column length="20" name="CONTRASENIA" not-null="true"/>
+    </property>
+    <set inverse="true" name="TClienteses">
+      <key>
+        <column name="ID_CLIENTE_WEB" not-null="true" precision="5" scale="0"/>
+      </key>
+      <one-to-many class="BaseDeDatos.Ventas.TClientes"/>
+    </set>
+  </class>
+</hibernate-mapping>

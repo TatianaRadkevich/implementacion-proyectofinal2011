@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="Ramaty" name="BaseDeDatos.Administracion.TDetallesFactura" schema="dbo" table="T_DETALLES_FACTURA">
+    <id name="idDetalleFactura" type="int">
+      <column name="ID_DETALLE_FACTURA" precision="8" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="BaseDeDatos.TFacturas" fetch="select" name="TFacturas">
+      <column name="ID_FACTURA" not-null="true" precision="8" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.TDetallesPedido" fetch="select" name="TDetallesPedido">
+      <column name="ID_DETALLE_PEDIDO" not-null="true" precision="8" scale="0"/>
+    </many-to-one>
+    <property name="cantidad" type="int">
+      <column name="CANTIDAD" not-null="true" precision="5" scale="0"/>
+    </property>
+    <property name="precio" type="big_decimal">
+      <column name="PRECIO" not-null="true" precision="6"/>
+    </property>
+  </class>
+</hibernate-mapping>

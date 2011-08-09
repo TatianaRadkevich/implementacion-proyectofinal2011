@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="Ramaty" name="BaseDeDatos.Produccion.TDetallesPlan" schema="dbo" table="T_DETALLES_PLAN">
+    <id name="idDetallePlan" type="int">
+      <column name="ID_DETALLE_PLAN" precision="8" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="BaseDeDatos.Produccion.TEtapasProduccionEspecifica" fetch="select" name="TEtapasProduccionEspecifica">
+      <column name="ID_ETAPA_PRODUCCION_ESPECIFICA" not-null="true" precision="5" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.Administracion.TEmpleados" fetch="select" name="TEmpleados">
+      <column name="ID_OPERARIO" not-null="true" precision="5" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.Produccion.TPlanesProduccion" fetch="select" name="TPlanesProduccion">
+      <column name="ID_PLAN_PRODUCCION" not-null="true" precision="8" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.TMaquinasHerramientaParticular" fetch="select" name="TMaquinasHerramientaParticular">
+      <column name="ID_MAQUINA_HERRAMIENTA_PARTICULAR" not-null="true" precision="3" scale="0"/>
+    </many-to-one>
+    <property name="cantidad" type="int">
+      <column name="CANTIDAD" not-null="true" precision="5" scale="0"/>
+    </property>
+    <property name="fecHoraPrevistaFin" type="timestamp">
+      <column length="23" name="FEC_HORA_PREVISTA_FIN" not-null="true"/>
+    </property>
+    <property name="fecHoraPrevistaInicio" type="timestamp">
+      <column length="23" name="FEC_HORA_PREVISTA_INICIO" not-null="true"/>
+    </property>
+    <property name="fecHoraRealInicio" type="timestamp">
+      <column length="23" name="FEC_HORA_REAL_INICIO" not-null="true"/>
+    </property>
+    <property name="fecHoraRealFin" type="timestamp">
+      <column length="23" name="FEC_HORA_REAL_FIN" not-null="true"/>
+    </property>
+    <set inverse="true" name="TFaltanteses">
+      <key>
+        <column name="ID_DETALLE_PLAN" precision="8" scale="0"/>
+      </key>
+      <one-to-many class="BaseDeDatos.TFaltantes"/>
+    </set>
+  </class>
+</hibernate-mapping>
