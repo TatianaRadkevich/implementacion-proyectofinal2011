@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="Ramaty" name="BaseDeDatos.Administracion.TCobros" schema="dbo" table="T_COBROS">
+    <id name="idCobro" type="int">
+      <column name="ID_COBRO" precision="8" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="BaseDeDatos.TFacturas" fetch="select" name="TFacturas">
+      <column name="ID_FACTURA" precision="8" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.Administracion.TFormasPago" fetch="select" name="TFormasPago">
+      <column name="ID_FORMA_PAGO" not-null="true" precision="2" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.Administracion.TEmpleados" fetch="select" name="TEmpleados">
+      <column name="ID_ENCARGADO" not-null="true" precision="5" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.Administracion.TCheques" fetch="select" name="TCheques">
+      <column name="ID_CHEQUE" precision="5" scale="0"/>
+    </many-to-one>
+    <property name="fecCobro" type="timestamp">
+      <column length="23" name="FEC_COBRO" not-null="true"/>
+    </property>
+    <property name="importe" type="big_decimal">
+      <column name="IMPORTE" not-null="true" precision="6" scale="4"/>
+    </property>
+    <property name="observaciones" type="string">
+      <column length="200" name="OBSERVACIONES"/>
+    </property>
+  </class>
+</hibernate-mapping>

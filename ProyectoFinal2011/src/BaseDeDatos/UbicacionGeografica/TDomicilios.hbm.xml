@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="Ramaty" name="BaseDeDatos.UbicacionGeografica.TDomicilios" schema="dbo" table="T_DOMICILIOS">
+    <id name="idDomicilio" type="short">
+      <column name="ID_DOMICILIO" precision="3" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="BaseDeDatos.TLocalidades" fetch="select" name="TLocalidades">
+      <column name="ID_LOCALIDAD" precision="3" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.UbicacionGeografica.TBarrios" fetch="select" name="TBarrios">
+      <column name="ID_BARRIO" precision="3" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.UbicacionGeografica.TProvincias" fetch="select" name="TProvincias">
+      <column name="ID_PROVINCIA" precision="5" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.UbicacionGeografica.TPaises" fetch="select" name="TPaises">
+      <column name="ID_PAIS" not-null="true" precision="3" scale="0"/>
+    </many-to-one>
+    <property name="calle" type="string">
+      <column length="20" name="CALLE" not-null="true"/>
+    </property>
+    <property name="depto" type="java.lang.Short">
+      <column name="DEPTO" precision="3" scale="0"/>
+    </property>
+    <property name="numero" type="int">
+      <column name="NUMERO" not-null="true" precision="5" scale="0"/>
+    </property>
+    <property name="piso" type="java.lang.Byte">
+      <column name="PISO" precision="2" scale="0"/>
+    </property>
+    <set inverse="true" name="TProveedoreses">
+      <key>
+        <column name="ID_DOMICILIO" not-null="true" precision="3" scale="0"/>
+      </key>
+      <one-to-many class="BaseDeDatos.TProveedores"/>
+    </set>
+    <set inverse="true" name="TEmpleadoses">
+      <key>
+        <column name="ID_DOMICILIO" not-null="true" precision="3" scale="0"/>
+      </key>
+      <one-to-many class="BaseDeDatos.Administracion.TEmpleados"/>
+    </set>
+    <set inverse="true" name="TClienteses">
+      <key>
+        <column name="ID_DOMICILIO" precision="3" scale="0"/>
+      </key>
+      <one-to-many class="BaseDeDatos.Ventas.TClientes"/>
+    </set>
+  </class>
+</hibernate-mapping>

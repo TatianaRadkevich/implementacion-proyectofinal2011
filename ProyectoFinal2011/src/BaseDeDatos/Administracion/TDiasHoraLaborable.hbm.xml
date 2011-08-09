@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="Ramaty" name="BaseDeDatos.Administracion.TDiasHoraLaborable" schema="dbo" table="T_DIAS_HORA_LABORABLE">
+    <id name="idDiaHoraLaborable" type="short">
+      <column name="ID_DIA_HORA_LABORABLE" precision="4" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="BaseDeDatos.Administracion.TEmpleados" fetch="select" name="TEmpleados">
+      <column name="ID_EMPLEADO" not-null="true" precision="5" scale="0"/>
+    </many-to-one>
+    <property name="dia" type="string">
+      <column length="20" name="DIA" not-null="true"/>
+    </property>
+    <property name="horaInicio" type="string">
+      <column length="20" name="HORA_INICIO" not-null="true"/>
+    </property>
+    <property name="horaFin" type="string">
+      <column length="20" name="HORA_FIN"/>
+    </property>
+  </class>
+</hibernate-mapping>

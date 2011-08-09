@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="Ramaty" name="BaseDeDatos.TMaterialesXProveedor" schema="dbo" table="T_MATERIALES_X_PROVEEDOR">
+    <id name="idMaterialXProveedor" type="short">
+      <column name="ID_MATERIAL_X_PROVEEDOR" precision="3" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="BaseDeDatos.TProveedores" fetch="select" name="TProveedores">
+      <column name="ID_PROVEEDOR" precision="3" scale="0"/>
+    </many-to-one>
+    <many-to-one class="BaseDeDatos.TMateriales" fetch="select" name="TMateriales">
+      <column name="ID_MATERIAL" precision="3" scale="0"/>
+    </many-to-one>
+  </class>
+</hibernate-mapping>
