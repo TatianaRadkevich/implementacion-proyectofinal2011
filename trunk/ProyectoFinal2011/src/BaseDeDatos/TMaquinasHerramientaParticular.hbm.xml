@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="BaseDeDatos.TMaquinasHerramientaParticular" table="T_MAQUINAS_HERRAMIENTA_PARTICULAR" schema="dbo" catalog="Ramaty">
+        <id name="idMaquinaHerramientaParticular" type="short">
+            <column name="ID_MAQUINA_HERRAMIENTA_PARTICULAR" precision="3" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="TTmaquinaHerramienta" class="BaseDeDatos.TTmaquinaHerramienta" fetch="select">
+            <column name="ID_TMAQUINA_HERRAMIENTA" precision="2" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="TEmaquina" class="BaseDeDatos.TEmaquina" fetch="select">
+            <column name="ID_EMAQUINA" precision="2" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="capacidadProductiva" type="int">
+            <column name="CAPACIDAD_PRODUCTIVA" precision="5" scale="0" not-null="true" />
+        </property>
+        <property name="caracteristicas" type="string">
+            <column name="CARACTERISTICAS" length="200" not-null="true" />
+        </property>
+        <property name="modelo" type="string">
+            <column name="MODELO" length="50" not-null="true" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="50" not-null="true" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="OBSERVACIONES" length="200" />
+        </property>
+        <property name="codigo" type="string">
+            <column name="CODIGO" length="2" not-null="true" />
+        </property>
+        <set name="TDetallesPlans" inverse="true">
+            <key>
+                <column name="ID_MAQUINA_HERRAMIENTA_PARTICULAR" precision="3" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="BaseDeDatos.TDetallesPlan" />
+        </set>
+    </class>
+</hibernate-mapping>

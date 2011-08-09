@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="BaseDeDatos.TFaltantes" table="T_FALTANTES" schema="dbo" catalog="Ramaty">
+        <id name="idFaltante" type="short">
+            <column name="ID_FALTANTE" precision="4" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="TDetallesPlan" class="BaseDeDatos.TDetallesPlan" fetch="select">
+            <column name="ID_DETALLE_PLAN" precision="8" scale="0" />
+        </many-to-one>
+        <many-to-one name="TDetallesOrdenCompra" class="BaseDeDatos.TDetallesOrdenCompra" fetch="select">
+            <column name="ID_DETALLE_ORDEN_COMPRA" precision="8" scale="0" />
+        </many-to-one>
+        <many-to-one name="TMateriales" class="BaseDeDatos.TMateriales" fetch="select">
+            <column name="ID_MATERIAL" precision="3" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="cantidad" type="big_decimal">
+            <column name="CANTIDAD" precision="5" not-null="true" />
+        </property>
+        <property name="fecGeneracion" type="timestamp">
+            <column name="FEC_GENERACION" length="23" not-null="true" />
+        </property>
+        <property name="fecNecesidad" type="timestamp">
+            <column name="FEC_NECESIDAD" length="23" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

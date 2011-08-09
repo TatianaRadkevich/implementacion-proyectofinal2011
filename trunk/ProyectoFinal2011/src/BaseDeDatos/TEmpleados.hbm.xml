@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="BaseDeDatos.TEmpleados" table="T_EMPLEADOS" schema="dbo" catalog="Ramaty">
+        <id name="idEmpleado" type="int">
+            <column name="ID_EMPLEADO" precision="5" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="TDomicilios" class="BaseDeDatos.TDomicilios" fetch="select">
+            <column name="ID_DOMICILIO" precision="3" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="TTdocumento" class="BaseDeDatos.TTdocumento" fetch="select">
+            <column name="ID_TDOCUMENTO" precision="2" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="TUsuarios" class="BaseDeDatos.TUsuarios" fetch="select">
+            <column name="ID_USUARIO" precision="5" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="TSexos" class="BaseDeDatos.TSexos" fetch="select">
+            <column name="ID_SEXO" precision="2" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="100" not-null="true" />
+        </property>
+        <property name="apellido" type="string">
+            <column name="APELLIDO" length="100" not-null="true" />
+        </property>
+        <property name="celular" type="java.lang.Long">
+            <column name="CELULAR" precision="13" scale="0" />
+        </property>
+        <property name="correoElectronico" type="string">
+            <column name="CORREO_ELECTRONICO" length="50" />
+        </property>
+        <property name="fecNacimiento" type="timestamp">
+            <column name="FEC_NACIMIENTO" length="23" not-null="true" />
+        </property>
+        <property name="numeroDocumento" type="int">
+            <column name="NUMERO_DOCUMENTO" precision="8" scale="0" not-null="true" />
+        </property>
+        <property name="telefono" type="java.lang.Long">
+            <column name="TELEFONO" precision="11" scale="0" />
+        </property>
+        <property name="legajo" type="java.lang.Integer">
+            <column name="LEGAJO" precision="5" scale="0" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="OBSERVACIONES" length="200" />
+        </property>
+        <property name="idAsistenciaEmpleado" type="java.lang.Integer">
+            <column name="ID_ASISTENCIA_EMPLEADO" precision="5" scale="0" />
+        </property>
+        <property name="idDiasHorasLaborables" type="java.lang.Short">
+            <column name="ID_DIAS_HORAS_LABORABLES" precision="3" scale="0" />
+        </property>
+        <set name="TDetallesPlans" inverse="true">
+            <key>
+                <column name="ID_OPERARIO" precision="5" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="BaseDeDatos.TDetallesPlan" />
+        </set>
+        <set name="TCargoses" inverse="true">
+            <key>
+                <column name="ID_EMPLEADO" precision="5" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="BaseDeDatos.TCargos" />
+        </set>
+        <set name="TDiasHoraLaborables" inverse="true">
+            <key>
+                <column name="ID_EMPLEADO" precision="5" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="BaseDeDatos.TDiasHoraLaborable" />
+        </set>
+        <set name="TCobroses" inverse="true">
+            <key>
+                <column name="ID_ENCARGADO" precision="5" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="BaseDeDatos.TCobros" />
+        </set>
+        <set name="TAsistenciasEmpleados" inverse="true">
+            <key>
+                <column name="ID_EMPLEADO" precision="5" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="BaseDeDatos.TAsistenciasEmpleado" />
+        </set>
+        <set name="TFacturases" inverse="true">
+            <key>
+                <column name="ID_EMPLEADO" precision="5" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="BaseDeDatos.TFacturas" />
+        </set>
+        <set name="TPlanesProduccions" inverse="true">
+            <key>
+                <column name="ID_ENCARGADO" precision="5" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="BaseDeDatos.TPlanesProduccion" />
+        </set>
+    </class>
+</hibernate-mapping>
