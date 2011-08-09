@@ -2,7 +2,7 @@
                          /* SCRIPT DE CREACIÓN RAMATY */
 
 CREATE TABLE T_ASISTENCIAS_EMPLEADO (
-       ID_ASISTENCIA_EMPLEADO numeric(4) NOT NULL,
+       ID_ASISTENCIA_EMPLEADO numeric(4) IDENTITY,
        FEC_ASISTENCIA       datetime NOT NULL,
        HORA_INGRESO         varchar(20) NOT NULL,
        FEC_EGRESO           datetime NULL,
@@ -18,7 +18,7 @@ go
 
 
 CREATE TABLE T_BARRIOS (
-       ID_BARRIO            numeric(3) NOT NULL,
+       ID_BARRIO            numeric(3) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL,
        ID_LOCALIDAD         numeric(3) NOT NULL
@@ -32,7 +32,7 @@ go
 
 
 CREATE TABLE T_CARGOS (
-       ID_CARGO             numeric(2) NOT NULL,
+       ID_CARGO             numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL,
        FEC_BAJA             datetime NULL,
@@ -48,7 +48,7 @@ go
 
 
 CREATE TABLE T_CHEQUES (
-       ID_CHEQUE            numeric(5) NOT NULL,
+       ID_CHEQUE            numeric(5) IDENTITY,
        FEC_EMISION          datetime NOT NULL,
        FEC_VENCIMIENTO      datetime NOT NULL,
        MONTO                numeric(6,4) NOT NULL,
@@ -64,15 +64,17 @@ go
 
 
 CREATE TABLE T_CLIENTES (
-       ID_CLIENTE           numeric(5) NOT NULL,
+       ID_CLIENTE           numeric(5) IDENTITY,
        CORREO_ELECTRONICO   varchar(50) NULL,
        CUIL                 numeric(11) NOT NULL,
        RAZON_SOCIAL         varchar(50) NOT NULL,
        ID_DOMICILIO         numeric(3) NULL,
-       ID_RESPONSABLE       numeric(5) NOT NULL,
        ID_TCLIENTE          numeric(2) NOT NULL,
        ID_CLIENTE_WEB       numeric(5) NOT NULL,
-       ID_USUARIO           numeric(5) NOT NULL
+       ID_USUARIO           numeric(5) NOT NULL,
+       NOMBRE_RESPONSABLE   varchar(50) NOT NULL,
+       APELLIDO_RESPONSABLE varchar(50) NOT NULL,
+       TELEFONO_RESPONSABLE numeric(13) NOT NULL
 )
 go
 
@@ -83,7 +85,7 @@ go
 
 
 CREATE TABLE T_CLIENTES_WEB (
-       ID_CLIENTE_WEB       numeric(5) NOT NULL,
+       ID_CLIENTE_WEB       numeric(5) IDENTITY,
        USUARIO              varchar(20) NOT NULL,
        CONTRASEÑA           varchar(20) NOT NULL
 )
@@ -96,7 +98,7 @@ go
 
 
 CREATE TABLE T_COBROS (
-       ID_COBRO             numeric(8) NOT NULL,
+       ID_COBRO             numeric(8) IDENTITY,
        ID_ENCARGADO         numeric(5) NOT NULL,
        FEC_COBRO            datetime NOT NULL,
        IMPORTE              numeric(6,4) NOT NULL,
@@ -128,7 +130,7 @@ go
 
 
 CREATE TABLE T_DETALLES_FACTURA (
-       ID_DETALLE_FACTURA   numeric(8) NOT NULL,
+       ID_DETALLE_FACTURA   numeric(8) IDENTITY,
        CANTIDAD             numeric(5) NOT NULL,
        ID_DETALLE_PEDIDO    numeric(8) NOT NULL,
        PRECIO               numeric(6,2) NOT NULL,
@@ -143,7 +145,7 @@ go
 
 
 CREATE TABLE T_DETALLES_ORDEN_COMPRA (
-       ID_DETALLE_ORDEN_COMPRA numeric(8) NOT NULL,
+       ID_DETALLE_ORDEN_COMPRA numeric(8) IDENTITY,
        CANTIDAD_PEDIDA      numeric(3) NOT NULL,
        CANTIDAD_RECIBIDA    numeric(3) NOT NULL,
        ID_ORDEN_COMPRA      numeric(8) NOT NULL,
@@ -158,7 +160,7 @@ go
 
 
 CREATE TABLE T_DETALLES_PEDIDO (
-       ID_DETALLE_PEDIDO    numeric(8) NOT NULL,
+       ID_DETALLE_PEDIDO    numeric(8) IDENTITY,
        CANTIDAD             numeric(5) NOT NULL,
        PRECIO               numeric(6,2) NOT NULL,
        ID_PEDIDO            numeric(8) NOT NULL,
@@ -173,7 +175,7 @@ go
 
 
 CREATE TABLE T_DETALLES_PLAN (
-       ID_DETALLE_PLAN      numeric(8) NOT NULL,
+       ID_DETALLE_PLAN      numeric(8) IDENTITY,
        CANTIDAD             numeric(5) NOT NULL,
        FEC_HORA_PREVISTA_FIN datetime NOT NULL,
        FEC_HORA_PREVISTA_INICIO datetime NOT NULL,
@@ -207,7 +209,7 @@ go
 
 
 CREATE TABLE T_DIAS_HORA_LABORABLE (
-       ID_DIA_HORA_LABORABLE numeric(4) NOT NULL,
+       ID_DIA_HORA_LABORABLE numeric(4) IDENTITY,
        DIA                  varchar(20) NOT NULL,
        HORA_INICIO          varchar(20) NOT NULL,
        HORA_FIN             varchar(20) NULL,
@@ -222,14 +224,14 @@ go
 
 
 CREATE TABLE T_DOMICILIOS (
-       ID_DOMICILIO         numeric(3) NOT NULL,
+       ID_DOMICILIO         numeric(3) IDENTITY,
        CALLE                varchar(20) NOT NULL,
        DEPTO                numeric(3) NULL,
        NUMERO               numeric(5) NOT NULL,
        PISO                 numeric(2) NULL,
        ID_PAIS              numeric(3) NOT NULL,
        ID_LOCALIDAD         numeric(3) NULL,
-       ID_PROVINCIAS        numeric(5) NULL,
+       ID_PROVINCIA         numeric(5) NULL,
        ID_BARRIO            numeric(3) NULL
 )
 go
@@ -241,7 +243,7 @@ go
 
 
 CREATE TABLE T_EMAQUINA (
-       ID_EMAQUINA          numeric(2) NOT NULL,
+       ID_EMAQUINA          numeric(2) IDENTITY,
        NOMBRE               nvarchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL
 )
@@ -253,8 +255,34 @@ ALTER TABLE T_EMAQUINA
 go
 
 
+CREATE TABLE T_EMPLEADOS (
+       ID_EMPLEADO          numeric(5) IDENTITY,
+       NOMBRE               varchar(100) NOT NULL,
+       APELLIDO             varchar(100) NOT NULL,
+       CELULAR              numeric(13) NULL,
+       CORREO_ELECTRONICO   varchar(50) NULL,
+       FEC_NACIMIENTO       datetime NOT NULL,
+       NUMERO_DOCUMENTO     numeric(8) NOT NULL,
+       TELEFONO             numeric(11) NULL,
+       ID_TDOCUMENTO        numeric(2) NOT NULL,
+       ID_SEXO              numeric(2) NOT NULL,
+       ID_DOMICILIO         numeric(3) NOT NULL,
+       LEGAJO               numeric(5) NULL,
+       OBSERVACIONES        varchar(200) NULL,
+       ID_ASISTENCIA_EMPLEADO numeric(5) NULL,
+       ID_DIAS_HORAS_LABORABLES numeric(3) NULL,
+       ID_USUARIO           numeric(5) NOT NULL
+)
+go
+
+
+ALTER TABLE T_EMPLEADOS
+       ADD PRIMARY KEY (ID_EMPLEADO ASC)
+go
+
+
 CREATE TABLE T_EORDEN_COMPRA (
-       ID_EORDEN_COMPRA     numeric(2) NOT NULL,
+       ID_EORDEN_COMPRA     numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL
 )
@@ -267,7 +295,7 @@ go
 
 
 CREATE TABLE T_EPEDIDO (
-       ID_EPEDIDO           numeric(2) NOT NULL,
+       ID_EPEDIDO           numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL
 )
@@ -280,7 +308,7 @@ go
 
 
 CREATE TABLE T_ERECLAMO (
-       ID_ERECLAMO          numeric(2) NOT NULL,
+       ID_ERECLAMO          numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL
 )
@@ -293,7 +321,7 @@ go
 
 
 CREATE TABLE T_ETAPAS_PRODUCCION (
-       ID_ETAPA_PRODUCCION  numeric(3) NOT NULL,
+       ID_ETAPA_PRODUCCION  numeric(3) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL,
        FEC_BAJA             datetime NULL,
@@ -308,7 +336,7 @@ go
 
 
 CREATE TABLE T_ETAPAS_PRODUCCION_ESPECIFICA (
-       ID_ETAPA_PRODUCCION_ESPECIFICA numeric(5) NOT NULL,
+       ID_ETAPA_PRODUCCION_ESPECIFICA numeric(5) IDENTITY,
        DESCRIPCION_ESPECIFICA varchar(200) NOT NULL,
        HORAS_HOMBRE         numeric(6,2) NOT NULL,
        NUMERO_ORDEN         numeric(2) NOT NULL,
@@ -325,7 +353,7 @@ go
 
 
 CREATE TABLE T_FACTURAS (
-       ID_FACTURA           numeric(8) NOT NULL,
+       ID_FACTURA           numeric(8) IDENTITY,
        DESCUENTO            numeric(6,4) NULL,
        FEC_FACTURA          datetime NOT NULL,
        NUMERO               numeric(8) NOT NULL,
@@ -341,7 +369,7 @@ go
 
 
 CREATE TABLE T_FALTANTES (
-       ID_FALTANTE          numeric(4) NOT NULL,
+       ID_FALTANTE          numeric(4) IDENTITY,
        CANTIDAD             numeric(5,2) NOT NULL,
        FEC_GENERACION       datetime NOT NULL,
        FEC_NECESIDAD        datetime NOT NULL,
@@ -358,7 +386,7 @@ go
 
 
 CREATE TABLE T_FORMAS_PAGO (
-       ID_FORMA_PAGO        numeric(2) NOT NULL,
+       ID_FORMA_PAGO        numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL
 )
@@ -371,10 +399,10 @@ go
 
 
 CREATE TABLE T_LOCALIDADES (
-       ID_LOCALIDAD         numeric(3) NOT NULL,
+       ID_LOCALIDAD         numeric(3) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL,
-       ID_PROVINCIAS        numeric(5) NOT NULL
+       ID_PROVINCIA         numeric(5) NOT NULL
 )
 go
 
@@ -385,7 +413,7 @@ go
 
 
 CREATE TABLE T_MAQUINAS_HERRAMIENTA_PARTICULAR (
-       ID_MAQUINA_HERRAMIENTA_PARTICULAR numeric(3) NOT NULL,
+       ID_MAQUINA_HERRAMIENTA_PARTICULAR numeric(3) IDENTITY,
        CAPACIDAD_PRODUCTIVA numeric(5) NOT NULL,
        CARACTERISTICAS      varchar(200) NOT NULL,
        MODELO               varchar(50) NOT NULL,
@@ -404,7 +432,7 @@ go
 
 
 CREATE TABLE T_MATERIALES (
-       ID_MATERIAL          numeric(3) NOT NULL,
+       ID_MATERIAL          numeric(3) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL,
        DIAMETRO             numeric(6) NULL,
@@ -426,7 +454,7 @@ go
 
 
 CREATE TABLE T_MATERIALES_X_PROVEEDOR (
-       ID_MATERIAL_X_PROVEEDOR numeric(3) NOT NULL,
+       ID_MATERIAL_X_PROVEEDOR numeric(3) IDENTITY,
        ID_PROVEEDOR         numeric(3) NULL,
        ID_MATERIAL          numeric(3) NULL
 )
@@ -439,7 +467,7 @@ go
 
 
 CREATE TABLE T_ORDENES_COMPRA (
-       ID_ORDEN_COMPRA      numeric(8) NOT NULL,
+       ID_ORDEN_COMPRA      numeric(8) IDENTITY,
        CODIGO               varchar(2) NOT NULL,
        FEC_GENERACION       datetime NOT NULL,
        FEC_RECEPCION        datetime NOT NULL,
@@ -455,7 +483,7 @@ go
 
 
 CREATE TABLE T_PAISES (
-       ID_PAIS              numeric(3) NOT NULL,
+       ID_PAIS              numeric(3) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL
 )
@@ -468,8 +496,8 @@ go
 
 
 CREATE TABLE T_PEDIDOS (
-       ID_PEDIDO            numeric(8) NOT NULL,
-       ENTREGA_MATERIAL     char(18) NULL,
+       ID_PEDIDO            numeric(8) IDENTITY,
+       ENTREGA_MATERIAL     bit NULL,
        FEC_HORA_ESTIMADA_ENTREGA datetime NOT NULL,
        FEC_HORA_GENERACION  datetime NOT NULL,
        FEC_HORA_REAL_ENTREGA datetime NOT NULL,
@@ -484,33 +512,6 @@ go
 
 ALTER TABLE T_PEDIDOS
        ADD PRIMARY KEY (ID_PEDIDO ASC)
-go
-
-
-CREATE TABLE T_PERSONAS (
-       ID_PERSONA           numeric(5) NOT NULL,
-       NOMBRE               varchar(100) NOT NULL,
-       APELLIDO             varchar(100) NOT NULL,
-       CELULAR              numeric(13) NULL,
-       CORREO_ELECTRONICO   varchar(50) NULL,
-       FEC_NACIMIENTO       datetime NOT NULL,
-       NUMERO_DOCUMENTO     numeric(8) NOT NULL,
-       TELEFONO             numeric(11) NULL,
-       ID_TDOCUMENTO        numeric(2) NOT NULL,
-       ID_SEXO              numeric(2) NOT NULL,
-       TIPO_PERSONA         varchar(20) NOT NULL,
-       ID_DOMICILIO         numeric(3) NOT NULL,
-       LEGAJO               numeric(5) NULL,
-       OBSERVACIONES        varchar(200) NULL,
-       ID_ASISTENCIA_EMPLEADO numeric(5) NULL,
-       ID_DIAS_HORAS_LABORABLES numeric(3) NULL,
-       ID_USUARIO           numeric(5) NOT NULL
-)
-go
-
-
-ALTER TABLE T_PERSONAS
-       ADD PRIMARY KEY (ID_PERSONA ASC)
 go
 
 
@@ -535,7 +536,7 @@ go
 
 
 CREATE TABLE T_PRODUCTOS (
-       ID_PRODUCTO          numeric(5) NOT NULL,
+       ID_PRODUCTO          numeric(5) IDENTITY,
        DESCRIPCION          varchar(200) NULL,
        NOMBRE               varchar(50) NOT NULL,
        PRECIO_UNITARIO      numeric(4,2) NOT NULL,
@@ -551,12 +552,13 @@ go
 
 
 CREATE TABLE T_PROVEEDORES (
-       ID_PROVEEDOR         numeric(3) NOT NULL,
+       ID_PROVEEDOR         numeric(3) IDENTITY,
        NOMBRE               varchar(100) NOT NULL,
        PAGINA_WEB           varchar(50) NULL,
        TELEFONO             varchar(20) NULL,
        CORREO_ELECTRONICO   varchar(50) NULL,
-       ID_DOMICILIO         numeric(3) NOT NULL
+       ID_DOMICILIO         numeric(3) NOT NULL,
+       APELLIDO             varchar(100) NOT NULL
 )
 go
 
@@ -567,7 +569,7 @@ go
 
 
 CREATE TABLE T_PROVINCIAS (
-       ID_PROVINCIAS        numeric(5) NOT NULL,
+       ID_PROVINCIA         numeric(5) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL,
        ID_PAIS              numeric(3) NOT NULL
@@ -576,12 +578,12 @@ go
 
 
 ALTER TABLE T_PROVINCIAS
-       ADD PRIMARY KEY (ID_PROVINCIAS ASC)
+       ADD PRIMARY KEY (ID_PROVINCIA ASC)
 go
 
 
 CREATE TABLE T_RECLAMOS (
-       ID_RECLAMO           numeric(3) NOT NULL,
+       ID_RECLAMO           numeric(3) IDENTITY,
        DESCRIPCION          varchar(200) NOT NULL,
        FEC_RECLAMO          datetime NOT NULL,
        ID_ORDEN_COMPRA      numeric(8) NULL,
@@ -596,22 +598,8 @@ ALTER TABLE T_RECLAMOS
 go
 
 
-CREATE TABLE T_REPLANIFICACIONES (
-       ID_REPLANIFICACION   numeric(5) NOT NULL,
-       FEC_REPLANIFICACION  datetime NOT NULL,
-       OBSERVACIONES        varchar(200) NULL,
-       ID_PLAN_PRODUCCION   numeric(8) NOT NULL
-)
-go
-
-
-ALTER TABLE T_REPLANIFICACIONES
-       ADD PRIMARY KEY (ID_REPLANIFICACION ASC)
-go
-
-
 CREATE TABLE T_SEXOS (
-       ID_SEXO              numeric(2) NOT NULL,
+       ID_SEXO              numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL
 )
@@ -624,7 +612,7 @@ go
 
 
 CREATE TABLE T_TCLIENTE (
-       ID_TCLIENTE          numeric(2) NOT NULL,
+       ID_TCLIENTE          numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL
 )
@@ -637,7 +625,7 @@ go
 
 
 CREATE TABLE T_TDOCUMENTO (
-       ID_TDOCUMENTO        numeric(2) NOT NULL,
+       ID_TDOCUMENTO        numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL
 )
@@ -650,7 +638,7 @@ go
 
 
 CREATE TABLE T_TMAQUINA_HERRAMIENTA (
-       ID_TMAQUINA_HERRAMIENTA numeric(2) NOT NULL,
+       ID_TMAQUINA_HERRAMIENTA numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        ES_HERRAMIENTA       bit NOT NULL,
        ID_ETAPA_PRODUCCION_ESPECIFICA numeric(5) NOT NULL
@@ -664,7 +652,7 @@ go
 
 
 CREATE TABLE T_TPEDIDO (
-       ID_TPEDIDO           numeric(2) NOT NULL,
+       ID_TPEDIDO           numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL
 )
@@ -690,7 +678,7 @@ go
 
 
 CREATE TABLE T_USUARIOS (
-       ID_USUARIO           numeric(5) NOT NULL,
+       ID_USUARIO           numeric(5) IDENTITY,
        NOMBRE_USUARIO       varchar(50) NOT NULL,
        CONTRASEÑA           varchar(50) NOT NULL
 )
@@ -704,7 +692,7 @@ go
 
 ALTER TABLE T_ASISTENCIAS_EMPLEADO
        ADD FOREIGN KEY (ID_EMPLEADO)
-                             REFERENCES T_PERSONAS  (ID_PERSONA)
+                             REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -720,7 +708,7 @@ go
 
 ALTER TABLE T_CARGOS
        ADD FOREIGN KEY (ID_EMPLEADO)
-                             REFERENCES T_PERSONAS  (ID_PERSONA)
+                             REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -746,14 +734,6 @@ go
 ALTER TABLE T_CLIENTES
        ADD FOREIGN KEY (ID_TCLIENTE)
                              REFERENCES T_TCLIENTE  (ID_TCLIENTE)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_CLIENTES
-       ADD FOREIGN KEY (ID_RESPONSABLE)
-                             REFERENCES T_PERSONAS  (ID_PERSONA)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -793,7 +773,7 @@ go
 
 ALTER TABLE T_COBROS
        ADD FOREIGN KEY (ID_ENCARGADO)
-                             REFERENCES T_PERSONAS  (ID_PERSONA)
+                             REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -877,7 +857,7 @@ go
 
 ALTER TABLE T_DETALLES_PLAN
        ADD FOREIGN KEY (ID_OPERARIO)
-                             REFERENCES T_PERSONAS  (ID_PERSONA)
+                             REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -919,7 +899,7 @@ go
 
 ALTER TABLE T_DIAS_HORA_LABORABLE
        ADD FOREIGN KEY (ID_EMPLEADO)
-                             REFERENCES T_PERSONAS  (ID_PERSONA)
+                             REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -934,8 +914,8 @@ go
 
 
 ALTER TABLE T_DOMICILIOS
-       ADD FOREIGN KEY (ID_PROVINCIAS)
-                             REFERENCES T_PROVINCIAS  (ID_PROVINCIAS)
+       ADD FOREIGN KEY (ID_PROVINCIA)
+                             REFERENCES T_PROVINCIAS  (ID_PROVINCIA)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -952,6 +932,38 @@ go
 ALTER TABLE T_DOMICILIOS
        ADD FOREIGN KEY (ID_PAIS)
                              REFERENCES T_PAISES  (ID_PAIS)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_EMPLEADOS
+       ADD FOREIGN KEY (ID_USUARIO)
+                             REFERENCES T_USUARIOS  (ID_USUARIO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_EMPLEADOS
+       ADD FOREIGN KEY (ID_DOMICILIO)
+                             REFERENCES T_DOMICILIOS  (ID_DOMICILIO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_EMPLEADOS
+       ADD FOREIGN KEY (ID_SEXO)
+                             REFERENCES T_SEXOS  (ID_SEXO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_EMPLEADOS
+       ADD FOREIGN KEY (ID_TDOCUMENTO)
+                             REFERENCES T_TDOCUMENTO  (ID_TDOCUMENTO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -984,7 +996,7 @@ go
 
 ALTER TABLE T_FACTURAS
        ADD FOREIGN KEY (ID_EMPLEADO)
-                             REFERENCES T_PERSONAS  (ID_PERSONA)
+                             REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -1017,8 +1029,8 @@ go
 
 
 ALTER TABLE T_LOCALIDADES
-       ADD FOREIGN KEY (ID_PROVINCIAS)
-                             REFERENCES T_PROVINCIAS  (ID_PROVINCIAS)
+       ADD FOREIGN KEY (ID_PROVINCIA)
+                             REFERENCES T_PROVINCIAS  (ID_PROVINCIA)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -1098,38 +1110,6 @@ ALTER TABLE T_PEDIDOS
 go
 
 
-ALTER TABLE T_PERSONAS
-       ADD FOREIGN KEY (ID_USUARIO)
-                             REFERENCES T_USUARIOS  (ID_USUARIO)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_PERSONAS
-       ADD FOREIGN KEY (ID_DOMICILIO)
-                             REFERENCES T_DOMICILIOS  (ID_DOMICILIO)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_PERSONAS
-       ADD FOREIGN KEY (ID_SEXO)
-                             REFERENCES T_SEXOS  (ID_SEXO)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_PERSONAS
-       ADD FOREIGN KEY (ID_TDOCUMENTO)
-                             REFERENCES T_TDOCUMENTO  (ID_TDOCUMENTO)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
 ALTER TABLE T_PLANES_PRODUCCION
        ADD FOREIGN KEY (ID_PEDIDO)
                              REFERENCES T_PEDIDOS  (ID_PEDIDO)
@@ -1140,7 +1120,7 @@ go
 
 ALTER TABLE T_PLANES_PRODUCCION
        ADD FOREIGN KEY (ID_ENCARGADO)
-                             REFERENCES T_PERSONAS  (ID_PERSONA)
+                             REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -1182,15 +1162,6 @@ ALTER TABLE T_RECLAMOS
        ADD FOREIGN KEY (ID_ORDEN_COMPRA)
                              REFERENCES T_ORDENES_COMPRA  (
               ID_ORDEN_COMPRA)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_REPLANIFICACIONES
-       ADD FOREIGN KEY (ID_PLAN_PRODUCCION)
-                             REFERENCES T_PLANES_PRODUCCION  (
-              ID_PLAN_PRODUCCION)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
