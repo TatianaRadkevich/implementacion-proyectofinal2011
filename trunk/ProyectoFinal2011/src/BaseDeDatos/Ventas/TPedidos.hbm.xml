@@ -2,12 +2,12 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="Ramaty" name="BaseDeDatos.TPedidos" schema="dbo" table="T_PEDIDOS">
+  <class catalog="Ramaty" name="BaseDeDatos.Ventas.TPedidos" schema="dbo" table="T_PEDIDOS">
     <id name="idPedido" type="int">
       <column name="ID_PEDIDO" precision="8" scale="0"/>
       <generator class="assigned"/>
     </id>
-    <many-to-one class="BaseDeDatos.TTpedido" fetch="select" name="TTpedido">
+    <many-to-one class="BaseDeDatos.Ventas.TTpedido" fetch="select" name="TTpedido">
       <column name="ID_TPEDIDO" not-null="true" precision="2" scale="0"/>
     </many-to-one>
     <many-to-one class="BaseDeDatos.Ventas.TClientes" fetch="select" name="TClientes">
@@ -44,7 +44,7 @@
       <key>
         <column name="ID_PEDIDO" not-null="true" precision="8" scale="0"/>
       </key>
-      <one-to-many class="BaseDeDatos.TDetallesPedido"/>
+      <one-to-many class="BaseDeDatos.Ventas.TDetallesPedido"/>
     </set>
   </class>
 </hibernate-mapping>

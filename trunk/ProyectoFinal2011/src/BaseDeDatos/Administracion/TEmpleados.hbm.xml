@@ -16,7 +16,7 @@
     <many-to-one class="BaseDeDatos.Web.TUsuarios" fetch="select" name="TUsuarios">
       <column name="ID_USUARIO" not-null="true" precision="5" scale="0"/>
     </many-to-one>
-    <many-to-one class="BaseDeDatos.TSexos" fetch="select" name="TSexos">
+    <many-to-one class="BaseDeDatos.Administracion.TSexos" fetch="select" name="TSexos">
       <column name="ID_SEXO" not-null="true" precision="2" scale="0"/>
     </many-to-one>
     <property name="nombre" type="string">
@@ -86,7 +86,7 @@
       <key>
         <column name="ID_EMPLEADO" not-null="true" precision="5" scale="0"/>
       </key>
-      <one-to-many class="BaseDeDatos.TFacturas"/>
+      <one-to-many class="BaseDeDatos.Administracion.TFacturas"/>
     </set>
     <set inverse="true" name="TPlanesProduccions">
       <key>

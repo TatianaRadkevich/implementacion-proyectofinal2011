@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="Ramaty" name="BaseDeDatos.TMateriales" schema="dbo" table="T_MATERIALES">
+  <class catalog="Ramaty" name="BaseDeDatos.Compras.TMateriales" schema="dbo" table="T_MATERIALES">
     <id name="idMaterial" type="short">
       <column name="ID_MATERIAL" precision="3" scale="0"/>
       <generator class="assigned"/>
@@ -56,19 +56,19 @@
       <key>
         <column name="ID_MATERIAL" precision="3" scale="0"/>
       </key>
-      <one-to-many class="BaseDeDatos.TMaterialesXProveedor"/>
+      <one-to-many class="BaseDeDatos.Compras.TMaterialesXProveedor"/>
     </set>
     <set inverse="true" name="TFaltanteses">
       <key>
         <column name="ID_MATERIAL" not-null="true" precision="3" scale="0"/>
       </key>
-      <one-to-many class="BaseDeDatos.TFaltantes"/>
+      <one-to-many class="BaseDeDatos.Deposito.TFaltantes"/>
     </set>
     <set inverse="true" name="TDetallesOrdenCompras">
       <key>
         <column name="ID_MATERIAL" precision="3" scale="0"/>
       </key>
-      <one-to-many class="BaseDeDatos.TDetallesOrdenCompra"/>
+      <one-to-many class="BaseDeDatos.Compras.TDetallesOrdenCompra"/>
     </set>
   </class>
 </hibernate-mapping>

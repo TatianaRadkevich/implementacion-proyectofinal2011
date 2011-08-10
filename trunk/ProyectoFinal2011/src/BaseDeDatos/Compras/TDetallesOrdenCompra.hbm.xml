@@ -2,15 +2,15 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="Ramaty" name="BaseDeDatos.TDetallesOrdenCompra" schema="dbo" table="T_DETALLES_ORDEN_COMPRA">
+  <class catalog="Ramaty" name="BaseDeDatos.Compras.TDetallesOrdenCompra" schema="dbo" table="T_DETALLES_ORDEN_COMPRA">
     <id name="idDetalleOrdenCompra" type="int">
       <column name="ID_DETALLE_ORDEN_COMPRA" precision="8" scale="0"/>
       <generator class="assigned"/>
     </id>
-    <many-to-one class="BaseDeDatos.TOrdenesCompra" fetch="select" name="TOrdenesCompra">
+    <many-to-one class="BaseDeDatos.Compras.TOrdenesCompra" fetch="select" name="TOrdenesCompra">
       <column name="ID_ORDEN_COMPRA" not-null="true" precision="8" scale="0"/>
     </many-to-one>
-    <many-to-one class="BaseDeDatos.TMateriales" fetch="select" name="TMateriales">
+    <many-to-one class="BaseDeDatos.Compras.TMateriales" fetch="select" name="TMateriales">
       <column name="ID_MATERIAL" precision="3" scale="0"/>
     </many-to-one>
     <property name="cantidadPedida" type="short">
@@ -23,7 +23,7 @@
       <key>
         <column name="ID_DETALLE_ORDEN_COMPRA" precision="8" scale="0"/>
       </key>
-      <one-to-many class="BaseDeDatos.TFaltantes"/>
+      <one-to-many class="BaseDeDatos.Deposito.TFaltantes"/>
     </set>
   </class>
 </hibernate-mapping>

@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="Ramaty" name="BaseDeDatos.TTmaquinaHerramienta" schema="dbo" table="T_TMAQUINA_HERRAMIENTA">
+  <class catalog="Ramaty" name="BaseDeDatos.Produccion.TTmaquinaHerramienta" schema="dbo" table="T_TMAQUINA_HERRAMIENTA">
     <id name="idTmaquinaHerramienta" type="byte">
       <column name="ID_TMAQUINA_HERRAMIENTA" precision="2" scale="0"/>
       <generator class="assigned"/>
@@ -20,7 +20,7 @@
       <key>
         <column name="ID_TMAQUINA_HERRAMIENTA" not-null="true" precision="2" scale="0"/>
       </key>
-      <one-to-many class="BaseDeDatos.TMaquinasHerramientaParticular"/>
+      <one-to-many class="BaseDeDatos.Produccion.TMaquinasHerramientaParticular"/>
     </set>
   </class>
 </hibernate-mapping>

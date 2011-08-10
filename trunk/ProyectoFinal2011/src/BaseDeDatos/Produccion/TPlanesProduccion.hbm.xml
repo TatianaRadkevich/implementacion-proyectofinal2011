@@ -10,7 +10,7 @@
     <many-to-one class="BaseDeDatos.Administracion.TEmpleados" fetch="select" name="TEmpleados">
       <column name="ID_ENCARGADO" not-null="true" precision="5" scale="0"/>
     </many-to-one>
-    <many-to-one class="BaseDeDatos.TPedidos" fetch="select" name="TPedidos">
+    <many-to-one class="BaseDeDatos.Ventas.TPedidos" fetch="select" name="TPedidos">
       <column name="ID_PEDIDO" not-null="true" precision="8" scale="0"/>
     </many-to-one>
     <property name="fecGeneracion" type="timestamp">

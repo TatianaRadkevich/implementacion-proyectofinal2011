@@ -7,10 +7,10 @@
       <column name="ID_DETALLE_PRODUCTO" precision="5" scale="0"/>
       <generator class="assigned"/>
     </id>
-    <many-to-one class="BaseDeDatos.TMateriales" fetch="select" name="TMateriales">
+    <many-to-one class="BaseDeDatos.Compras.TMateriales" fetch="select" name="TMateriales">
       <column name="ID_MATERIAL" not-null="true" precision="3" scale="0"/>
     </many-to-one>
-    <many-to-one class="BaseDeDatos.TProductos" fetch="select" name="TProductos">
+    <many-to-one class="BaseDeDatos.Produccion.TProductos" fetch="select" name="TProductos">
       <column name="ID_PRODUCTO" not-null="true" precision="5" scale="0"/>
     </many-to-one>
     <property name="longitud" type="short">

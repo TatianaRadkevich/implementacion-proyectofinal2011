@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="Ramaty" name="BaseDeDatos.TFacturas" schema="dbo" table="T_FACTURAS">
+  <class catalog="Ramaty" name="BaseDeDatos.Administracion.TFacturas" schema="dbo" table="T_FACTURAS">
     <id name="idFactura" type="int">
       <column name="ID_FACTURA" precision="8" scale="0"/>
       <generator class="assigned"/>

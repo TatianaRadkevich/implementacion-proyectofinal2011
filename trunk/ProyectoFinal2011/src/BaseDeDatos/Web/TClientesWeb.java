@@ -1,4 +1,4 @@
-package Presentacion.Web;
+package BaseDeDatos.Web;
 // Generated 09/08/2011 13:12:12 by Hibernate Tools 3.2.1.GA
 
 
