@@ -1,6 +1,7 @@
 
                          /* SCRIPT DE CREACIÓN RAMATY */
 
+
 CREATE TABLE T_ASISTENCIAS_EMPLEADO (
        ID_ASISTENCIA_EMPLEADO numeric(4) IDENTITY,
        FEC_ASISTENCIA       datetime NOT NULL,
@@ -87,7 +88,7 @@ go
 CREATE TABLE T_CLIENTES_WEB (
        ID_CLIENTE_WEB       numeric(5) IDENTITY,
        USUARIO              varchar(20) NOT NULL,
-       CONTRASEÑA           varchar(20) NOT NULL
+       CONTRASENIA          varchar(20) NOT NULL
 )
 go
 
@@ -680,7 +681,7 @@ go
 CREATE TABLE T_USUARIOS (
        ID_USUARIO           numeric(5) IDENTITY,
        NOMBRE_USUARIO       varchar(50) NOT NULL,
-       CONTRASEÑA           varchar(50) NOT NULL
+       CONTRASENIA          varchar(50) NOT NULL
 )
 go
 
@@ -715,14 +716,6 @@ go
 
 
 ALTER TABLE T_CLIENTES
-       ADD FOREIGN KEY (ID_USUARIO)
-                             REFERENCES T_USUARIOS  (ID_USUARIO)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_CLIENTES
        ADD FOREIGN KEY (ID_CLIENTE_WEB)
                              REFERENCES T_CLIENTES_WEB  (
               ID_CLIENTE_WEB)
@@ -732,8 +725,8 @@ go
 
 
 ALTER TABLE T_CLIENTES
-       ADD FOREIGN KEY (ID_TCLIENTE)
-                             REFERENCES T_TCLIENTE  (ID_TCLIENTE)
+       ADD FOREIGN KEY (ID_USUARIO)
+                             REFERENCES T_USUARIOS  (ID_USUARIO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -742,6 +735,14 @@ go
 ALTER TABLE T_CLIENTES
        ADD FOREIGN KEY (ID_DOMICILIO)
                              REFERENCES T_DOMICILIOS  (ID_DOMICILIO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_CLIENTES
+       ADD FOREIGN KEY (ID_TCLIENTE)
+                             REFERENCES T_TCLIENTE  (ID_TCLIENTE)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -756,16 +757,16 @@ go
 
 
 ALTER TABLE T_COBROS
-       ADD FOREIGN KEY (ID_CHEQUE)
-                             REFERENCES T_CHEQUES  (ID_CHEQUE)
+       ADD FOREIGN KEY (ID_FORMA_PAGO)
+                             REFERENCES T_FORMAS_PAGO  (ID_FORMA_PAGO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
 
 
 ALTER TABLE T_COBROS
-       ADD FOREIGN KEY (ID_FORMA_PAGO)
-                             REFERENCES T_FORMAS_PAGO  (ID_FORMA_PAGO)
+       ADD FOREIGN KEY (ID_CHEQUE)
+                             REFERENCES T_CHEQUES  (ID_CHEQUE)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -797,14 +798,6 @@ go
 
 
 ALTER TABLE T_DETALLES_FACTURA
-       ADD FOREIGN KEY (ID_FACTURA)
-                             REFERENCES T_FACTURAS  (ID_FACTURA)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_DETALLES_FACTURA
        ADD FOREIGN KEY (ID_DETALLE_PEDIDO)
                              REFERENCES T_DETALLES_PEDIDO  (
               ID_DETALLE_PEDIDO)
@@ -813,9 +806,9 @@ ALTER TABLE T_DETALLES_FACTURA
 go
 
 
-ALTER TABLE T_DETALLES_ORDEN_COMPRA
-       ADD FOREIGN KEY (ID_MATERIAL)
-                             REFERENCES T_MATERIALES  (ID_MATERIAL)
+ALTER TABLE T_DETALLES_FACTURA
+       ADD FOREIGN KEY (ID_FACTURA)
+                             REFERENCES T_FACTURAS  (ID_FACTURA)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -825,6 +818,14 @@ ALTER TABLE T_DETALLES_ORDEN_COMPRA
        ADD FOREIGN KEY (ID_ORDEN_COMPRA)
                              REFERENCES T_ORDENES_COMPRA  (
               ID_ORDEN_COMPRA)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_DETALLES_ORDEN_COMPRA
+       ADD FOREIGN KEY (ID_MATERIAL)
+                             REFERENCES T_MATERIALES  (ID_MATERIAL)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -847,15 +848,6 @@ go
 
 
 ALTER TABLE T_DETALLES_PLAN
-       ADD FOREIGN KEY (ID_PLAN_PRODUCCION)
-                             REFERENCES T_PLANES_PRODUCCION  (
-              ID_PLAN_PRODUCCION)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_DETALLES_PLAN
        ADD FOREIGN KEY (ID_OPERARIO)
                              REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
                              ON DELETE NO ACTION
@@ -867,6 +859,15 @@ ALTER TABLE T_DETALLES_PLAN
        ADD FOREIGN KEY (ID_MAQUINA_HERRAMIENTA_PARTICULAR)
                              REFERENCES T_MAQUINAS_HERRAMIENTA_PARTICULAR  (
               ID_MAQUINA_HERRAMIENTA_PARTICULAR)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_DETALLES_PLAN
+       ADD FOREIGN KEY (ID_PLAN_PRODUCCION)
+                             REFERENCES T_PLANES_PRODUCCION  (
+              ID_PLAN_PRODUCCION)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -906,6 +907,14 @@ go
 
 
 ALTER TABLE T_DOMICILIOS
+       ADD FOREIGN KEY (ID_LOCALIDAD)
+                             REFERENCES T_LOCALIDADES  (ID_LOCALIDAD)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_DOMICILIOS
        ADD FOREIGN KEY (ID_BARRIO)
                              REFERENCES T_BARRIOS  (ID_BARRIO)
                              ON DELETE NO ACTION
@@ -922,32 +931,8 @@ go
 
 
 ALTER TABLE T_DOMICILIOS
-       ADD FOREIGN KEY (ID_LOCALIDAD)
-                             REFERENCES T_LOCALIDADES  (ID_LOCALIDAD)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_DOMICILIOS
        ADD FOREIGN KEY (ID_PAIS)
                              REFERENCES T_PAISES  (ID_PAIS)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_EMPLEADOS
-       ADD FOREIGN KEY (ID_USUARIO)
-                             REFERENCES T_USUARIOS  (ID_USUARIO)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_EMPLEADOS
-       ADD FOREIGN KEY (ID_DOMICILIO)
-                             REFERENCES T_DOMICILIOS  (ID_DOMICILIO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -969,10 +954,17 @@ ALTER TABLE T_EMPLEADOS
 go
 
 
-ALTER TABLE T_ETAPAS_PRODUCCION_ESPECIFICA
-       ADD FOREIGN KEY (ID_ETAPA_PRODUCCION)
-                             REFERENCES T_ETAPAS_PRODUCCION  (
-              ID_ETAPA_PRODUCCION)
+ALTER TABLE T_EMPLEADOS
+       ADD FOREIGN KEY (ID_DOMICILIO)
+                             REFERENCES T_DOMICILIOS  (ID_DOMICILIO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_EMPLEADOS
+       ADD FOREIGN KEY (ID_USUARIO)
+                             REFERENCES T_USUARIOS  (ID_USUARIO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -994,9 +986,27 @@ ALTER TABLE T_ETAPAS_PRODUCCION_ESPECIFICA
 go
 
 
+ALTER TABLE T_ETAPAS_PRODUCCION_ESPECIFICA
+       ADD FOREIGN KEY (ID_ETAPA_PRODUCCION)
+                             REFERENCES T_ETAPAS_PRODUCCION  (
+              ID_ETAPA_PRODUCCION)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
 ALTER TABLE T_FACTURAS
        ADD FOREIGN KEY (ID_EMPLEADO)
                              REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_FALTANTES
+       ADD FOREIGN KEY (ID_DETALLE_ORDEN_COMPRA)
+                             REFERENCES T_DETALLES_ORDEN_COMPRA  (
+              ID_DETALLE_ORDEN_COMPRA)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -1019,26 +1029,9 @@ ALTER TABLE T_FALTANTES
 go
 
 
-ALTER TABLE T_FALTANTES
-       ADD FOREIGN KEY (ID_DETALLE_ORDEN_COMPRA)
-                             REFERENCES T_DETALLES_ORDEN_COMPRA  (
-              ID_DETALLE_ORDEN_COMPRA)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
 ALTER TABLE T_LOCALIDADES
        ADD FOREIGN KEY (ID_PROVINCIA)
                              REFERENCES T_PROVINCIAS  (ID_PROVINCIA)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_MAQUINAS_HERRAMIENTA_PARTICULAR
-       ADD FOREIGN KEY (ID_EMAQUINA)
-                             REFERENCES T_EMAQUINA  (ID_EMAQUINA)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -1053,6 +1046,22 @@ ALTER TABLE T_MAQUINAS_HERRAMIENTA_PARTICULAR
 go
 
 
+ALTER TABLE T_MAQUINAS_HERRAMIENTA_PARTICULAR
+       ADD FOREIGN KEY (ID_EMAQUINA)
+                             REFERENCES T_EMAQUINA  (ID_EMAQUINA)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_MATERIALES_X_PROVEEDOR
+       ADD FOREIGN KEY (ID_PROVEEDOR)
+                             REFERENCES T_PROVEEDORES  (ID_PROVEEDOR)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
 ALTER TABLE T_MATERIALES_X_PROVEEDOR
        ADD FOREIGN KEY (ID_MATERIAL)
                              REFERENCES T_MATERIALES  (ID_MATERIAL)
@@ -1061,7 +1070,7 @@ ALTER TABLE T_MATERIALES_X_PROVEEDOR
 go
 
 
-ALTER TABLE T_MATERIALES_X_PROVEEDOR
+ALTER TABLE T_ORDENES_COMPRA
        ADD FOREIGN KEY (ID_PROVEEDOR)
                              REFERENCES T_PROVEEDORES  (ID_PROVEEDOR)
                              ON DELETE NO ACTION
@@ -1078,22 +1087,6 @@ ALTER TABLE T_ORDENES_COMPRA
 go
 
 
-ALTER TABLE T_ORDENES_COMPRA
-       ADD FOREIGN KEY (ID_PROVEEDOR)
-                             REFERENCES T_PROVEEDORES  (ID_PROVEEDOR)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_PEDIDOS
-       ADD FOREIGN KEY (ID_CLIENTE)
-                             REFERENCES T_CLIENTES  (ID_CLIENTE)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
 ALTER TABLE T_PEDIDOS
        ADD FOREIGN KEY (ID_TPEDIDO)
                              REFERENCES T_TPEDIDO  (ID_TPEDIDO)
@@ -1105,6 +1098,14 @@ go
 ALTER TABLE T_PEDIDOS
        ADD FOREIGN KEY (ID_EPEDIDO)
                              REFERENCES T_EPEDIDO  (ID_EPEDIDO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_PEDIDOS
+       ADD FOREIGN KEY (ID_CLIENTE)
+                             REFERENCES T_CLIENTES  (ID_CLIENTE)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -1151,17 +1152,17 @@ go
 
 
 ALTER TABLE T_RECLAMOS
-       ADD FOREIGN KEY (ID_ERECLAMO)
-                             REFERENCES T_ERECLAMO  (ID_ERECLAMO)
+       ADD FOREIGN KEY (ID_ORDEN_COMPRA)
+                             REFERENCES T_ORDENES_COMPRA  (
+              ID_ORDEN_COMPRA)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
 
 
 ALTER TABLE T_RECLAMOS
-       ADD FOREIGN KEY (ID_ORDEN_COMPRA)
-                             REFERENCES T_ORDENES_COMPRA  (
-              ID_ORDEN_COMPRA)
+       ADD FOREIGN KEY (ID_ERECLAMO)
+                             REFERENCES T_ERECLAMO  (ID_ERECLAMO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
