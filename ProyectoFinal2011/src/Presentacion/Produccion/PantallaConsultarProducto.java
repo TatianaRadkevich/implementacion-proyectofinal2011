@@ -11,15 +11,20 @@
 
 package Presentacion.Produccion;
 
+import Negocio.Produccion.GestorRegistrarProducto;
+import gui.GUILocal;
+
 /**
  *
  * @author Ivan
  */
 public class PantallaConsultarProducto extends javax.swing.JDialog {
 
+
     /** Creates new form PantallaConsultarProducto */
     public PantallaConsultarProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        GUILocal.establecerGUILocal(this);
         initComponents();
     }
 
@@ -66,6 +71,11 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tbEmpleados);
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
 
@@ -131,14 +141,14 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
 
         jButton2.setText("Buscar");
         btnBuscar.add(jButton2);
-        jButton2.setBounds(240, 30, 65, 23);
+        jButton2.setBounds(240, 30, 70, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -156,6 +166,14 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        GestorRegistrarProducto gestor=new GestorRegistrarProducto();
+        gestor.nuevoProducto(this);
+
+
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
     /**
     * @param args the command line arguments
