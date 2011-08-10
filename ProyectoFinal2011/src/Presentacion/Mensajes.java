@@ -28,5 +28,17 @@ public class Mensajes
         return false;
     }
 
+     public void mensajeErrorGuardar(String elemento)
+    {
+        String mensaje="Error: no se puedo guardar  "+elemento;
+       JOptionPane.showMessageDialog(null, mensaje,"Error",JOptionPane.ERROR_MESSAGE);
+      
+    }
 
+      public void mensajeErrorGenerico(String elemento)
+    {
+        String mensaje="Error: "+elemento;
+       JOptionPane.showMessageDialog(null, mensaje,"Error",JOptionPane.ERROR_MESSAGE);
+
+    }
 }
