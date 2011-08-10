@@ -2,12 +2,12 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="Ramaty" name="BaseDeDatos.TMaquinasHerramientaParticular" schema="dbo" table="T_MAQUINAS_HERRAMIENTA_PARTICULAR">
+  <class catalog="Ramaty" name="BaseDeDatos.Produccion.TMaquinasHerramientaParticular" schema="dbo" table="T_MAQUINAS_HERRAMIENTA_PARTICULAR">
     <id name="idMaquinaHerramientaParticular" type="short">
       <column name="ID_MAQUINA_HERRAMIENTA_PARTICULAR" precision="3" scale="0"/>
       <generator class="assigned"/>
     </id>
-    <many-to-one class="BaseDeDatos.TTmaquinaHerramienta" fetch="select" name="TTmaquinaHerramienta">
+    <many-to-one class="BaseDeDatos.Produccion.TTmaquinaHerramienta" fetch="select" name="TTmaquinaHerramienta">
       <column name="ID_TMAQUINA_HERRAMIENTA" not-null="true" precision="2" scale="0"/>
     </many-to-one>
     <many-to-one class="BaseDeDatos.Produccion.TEmaquina" fetch="select" name="TEmaquina">

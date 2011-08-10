@@ -2,15 +2,15 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="Ramaty" name="BaseDeDatos.TDetallesPedido" schema="dbo" table="T_DETALLES_PEDIDO">
+  <class catalog="Ramaty" name="BaseDeDatos.Ventas.TDetallesPedido" schema="dbo" table="T_DETALLES_PEDIDO">
     <id name="idDetallePedido" type="int">
       <column name="ID_DETALLE_PEDIDO" precision="8" scale="0"/>
       <generator class="assigned"/>
     </id>
-    <many-to-one class="BaseDeDatos.TPedidos" fetch="select" name="TPedidos">
+    <many-to-one class="BaseDeDatos.Ventas.TPedidos" fetch="select" name="TPedidos">
       <column name="ID_PEDIDO" not-null="true" precision="8" scale="0"/>
     </many-to-one>
-    <many-to-one class="BaseDeDatos.TProductos" fetch="select" name="TProductos">
+    <many-to-one class="BaseDeDatos.Produccion.TProductos" fetch="select" name="TProductos">
       <column name="ID_PRODUCTO" not-null="true" precision="5" scale="0"/>
     </many-to-one>
     <property name="cantidad" type="int">

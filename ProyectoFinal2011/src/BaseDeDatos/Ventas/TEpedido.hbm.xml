@@ -17,7 +17,7 @@
       <key>
         <column name="ID_EPEDIDO" not-null="true" precision="2" scale="0"/>
       </key>
-      <one-to-many class="BaseDeDatos.TPedidos"/>
+      <one-to-many class="BaseDeDatos.Ventas.TPedidos"/>
     </set>
   </class>
 </hibernate-mapping>

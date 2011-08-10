@@ -7,7 +7,7 @@
       <column name="ID_COBRO" precision="8" scale="0"/>
       <generator class="assigned"/>
     </id>
-    <many-to-one class="BaseDeDatos.TFacturas" fetch="select" name="TFacturas">
+    <many-to-one class="BaseDeDatos.Administracion.TFacturas" fetch="select" name="TFacturas">
       <column name="ID_FACTURA" precision="8" scale="0"/>
     </many-to-one>
     <many-to-one class="BaseDeDatos.Administracion.TFormasPago" fetch="select" name="TFormasPago">

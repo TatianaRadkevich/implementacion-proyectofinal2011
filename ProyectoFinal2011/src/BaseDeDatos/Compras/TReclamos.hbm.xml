@@ -7,7 +7,7 @@
       <column name="ID_RECLAMO" precision="3" scale="0"/>
       <generator class="assigned"/>
     </id>
-    <many-to-one class="BaseDeDatos.TOrdenesCompra" fetch="select" name="TOrdenesCompra">
+    <many-to-one class="BaseDeDatos.Compras.TOrdenesCompra" fetch="select" name="TOrdenesCompra">
       <column name="ID_ORDEN_COMPRA" precision="8" scale="0"/>
     </many-to-one>
     <many-to-one class="BaseDeDatos.Compras.TEreclamo" fetch="select" name="TEreclamo">

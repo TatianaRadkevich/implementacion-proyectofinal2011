@@ -20,7 +20,7 @@
       <key>
         <column name="ID_PROVINCIA" not-null="true" precision="5" scale="0"/>
       </key>
-      <one-to-many class="BaseDeDatos.TLocalidades"/>
+      <one-to-many class="BaseDeDatos.UbicacionGeografica.TLocalidades"/>
     </set>
     <set inverse="true" name="TDomicilioses">
       <key>

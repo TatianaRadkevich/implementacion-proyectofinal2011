@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="Ramaty" name="BaseDeDatos.TProveedores" schema="dbo" table="T_PROVEEDORES">
+  <class catalog="Ramaty" name="BaseDeDatos.Compras.TProveedores" schema="dbo" table="T_PROVEEDORES">
     <id name="idProveedor" type="short">
       <column name="ID_PROVEEDOR" precision="3" scale="0"/>
       <generator class="assigned"/>
@@ -29,13 +29,13 @@
       <key>
         <column name="ID_PROVEEDOR" not-null="true" precision="3" scale="0"/>
       </key>
-      <one-to-many class="BaseDeDatos.TOrdenesCompra"/>
+      <one-to-many class="BaseDeDatos.Compras.TOrdenesCompra"/>
     </set>
     <set inverse="true" name="TMaterialesXProveedors">
       <key>
         <column name="ID_PROVEEDOR" precision="3" scale="0"/>
       </key>
-      <one-to-many class="BaseDeDatos.TMaterialesXProveedor"/>
+      <one-to-many class="BaseDeDatos.Compras.TMaterialesXProveedor"/>
     </set>
   </class>
 </hibernate-mapping>

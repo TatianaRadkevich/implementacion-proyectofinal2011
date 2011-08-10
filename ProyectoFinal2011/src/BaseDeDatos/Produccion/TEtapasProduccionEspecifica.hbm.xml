@@ -13,7 +13,7 @@
     <many-to-one class="BaseDeDatos.Produccion.TEtapasProduccion" fetch="select" name="TEtapasProduccion">
       <column name="ID_ETAPA_PRODUCCION" not-null="true" precision="3" scale="0"/>
     </many-to-one>
-    <many-to-one class="BaseDeDatos.TProductos" fetch="select" name="TProductos">
+    <many-to-one class="BaseDeDatos.Produccion.TProductos" fetch="select" name="TProductos">
       <column name="ID_PRODUCTO" not-null="true" precision="5" scale="0"/>
     </many-to-one>
     <property name="descripcionEspecifica" type="string">
@@ -35,7 +35,7 @@
       <key>
         <column name="ID_ETAPA_PRODUCCION_ESPECIFICA" not-null="true" precision="5" scale="0"/>
       </key>
-      <one-to-many class="BaseDeDatos.TTmaquinaHerramienta"/>
+      <one-to-many class="BaseDeDatos.Produccion.TTmaquinaHerramienta"/>
     </set>
     <set inverse="true" name="TDetallesPlans">
       <key>

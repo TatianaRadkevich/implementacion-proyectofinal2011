@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 09/08/2011 13:12:13 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="Ramaty" name="BaseDeDatos.TFaltantes" schema="dbo" table="T_FALTANTES">
+  <class catalog="Ramaty" name="BaseDeDatos.Deposito.TFaltantes" schema="dbo" table="T_FALTANTES">
     <id name="idFaltante" type="short">
       <column name="ID_FALTANTE" precision="4" scale="0"/>
       <generator class="assigned"/>
@@ -10,10 +10,10 @@
     <many-to-one class="BaseDeDatos.Produccion.TDetallesPlan" fetch="select" name="TDetallesPlan">
       <column name="ID_DETALLE_PLAN" precision="8" scale="0"/>
     </many-to-one>
-    <many-to-one class="BaseDeDatos.TDetallesOrdenCompra" fetch="select" name="TDetallesOrdenCompra">
+    <many-to-one class="BaseDeDatos.Compras.TDetallesOrdenCompra" fetch="select" name="TDetallesOrdenCompra">
       <column name="ID_DETALLE_ORDEN_COMPRA" precision="8" scale="0"/>
     </many-to-one>
-    <many-to-one class="BaseDeDatos.TMateriales" fetch="select" name="TMateriales">
+    <many-to-one class="BaseDeDatos.Compras.TMateriales" fetch="select" name="TMateriales">
       <column name="ID_MATERIAL" not-null="true" precision="3" scale="0"/>
     </many-to-one>
     <property name="cantidad" type="big_decimal">

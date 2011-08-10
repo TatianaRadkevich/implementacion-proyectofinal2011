@@ -16,7 +16,7 @@
     <many-to-one class="BaseDeDatos.Produccion.TPlanesProduccion" fetch="select" name="TPlanesProduccion">
       <column name="ID_PLAN_PRODUCCION" not-null="true" precision="8" scale="0"/>
     </many-to-one>
-    <many-to-one class="BaseDeDatos.TMaquinasHerramientaParticular" fetch="select" name="TMaquinasHerramientaParticular">
+    <many-to-one class="BaseDeDatos.Produccion.TTmaquinaHerramienta" fetch="select" name="TMaquinasHerramientaParticular">
       <column name="ID_MAQUINA_HERRAMIENTA_PARTICULAR" not-null="true" precision="3" scale="0"/>
     </many-to-one>
     <property name="cantidad" type="int">
@@ -38,7 +38,7 @@
       <key>
         <column name="ID_DETALLE_PLAN" precision="8" scale="0"/>
       </key>
-      <one-to-many class="BaseDeDatos.TFaltantes"/>
+      <one-to-many class="BaseDeDatos.Deposito.TFaltantes"/>
     </set>
   </class>
 </hibernate-mapping>

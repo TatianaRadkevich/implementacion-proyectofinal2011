@@ -2,7 +2,7 @@ package BaseDeDatos.Ventas;
 // Generated 09/08/2011 13:12:12 by Hibernate Tools 3.2.1.GA
 
 
-import Presentacion.Web.TClientesWeb;
+import BaseDeDatos.Web.TClientesWeb;
 import BaseDeDatos.UbicacionGeografica.TDomicilios;
 import BaseDeDatos.Ventas.TTcliente;
 import BaseDeDatos.Web.TUsuarios;
