@@ -5,9 +5,9 @@
 
 package Negocio.Produccion;
 
+import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Produccion.TProductos;
-import java.math.BigDecimal;
-import java.util.Set;
+import org.hibernate.Session;
 
 /**
  *
@@ -15,11 +15,23 @@ import java.util.Set;
  */
 public class Producto extends TProductos{
 
+   
     public Producto() {
+
     }
-
-  
-
+    public static TProductos guardar(TProductos producto){
+        try{
+            Session sesion= HibernateUtil.getSessionFactory().getCurrentSession();
+            sesion.beginTransaction();
+            sesion.save(producto);
+            sesion.getTransaction().commit();
+        }catch(ExceptionInInitializerError ex){
+//            throw new ExceptionGestor("No se pudo inciar ");
+        }catch(Exception e){
+//            throw new ExceptionGestor("");
+      }
+         return producto;
+    }
 
 
    

@@ -5,13 +5,12 @@
 
 package Negocio.Produccion;
 
-import BaseDeDatos.HibernateUtil;
+import BaseDeDatos.Produccion.TProductos;
+import BaseDeDatos.Produccion.TTproducto;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Produccion.PantallaABMProducto;
 import java.awt.Dialog;
-import javax.swing.JDialog;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
+import java.util.List;
 
 /**
  *
@@ -27,20 +26,13 @@ public class GestorRegistrarProducto extends GestorProducto{
     }
 
     @Override
-    public void ejectarOperacion(Producto producto) throws ExceptionGestor {
-      try{
-          Session sesion= HibernateUtil.getSessionFactory().getCurrentSession();
-        sesion.beginTransaction();
-        sesion.save(producto);
-        sesion.getTransaction().commit();
-     }catch(ExceptionInInitializerError ex){
-          throw new ExceptionGestor("No se pudo inciar ");
-       }catch(Exception e){
-          throw new ExceptionGestor("");
-      }
-     
-        
-        
+    public List<TTproducto> traerTiposProductos() throws ExceptionGestor{        
+          return TipoProducto.listarTiposProductos();
+    }
+    
+    
+    public TProductos ejecutarOperacion(TProductos producto) throws ExceptionGestor{
+        return Producto.guardar(producto);
     }
 
 }
