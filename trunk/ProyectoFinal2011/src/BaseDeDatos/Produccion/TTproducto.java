@@ -52,7 +52,7 @@ public class TTproducto  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    public Set getTProductoses() {
+    protected Set getTProductoses() {
         return this.TProductoses;
     }
     
