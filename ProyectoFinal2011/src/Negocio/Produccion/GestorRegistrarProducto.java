@@ -5,11 +5,9 @@
 
 package Negocio.Produccion;
 import BaseDeDatos.Produccion.ProductoBD;
-import BaseDeDatos.Produccion.TipoProductoBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Produccion.PantallaABMProducto;
 import java.awt.Dialog;
-import java.util.List;
 
 /**
  *
@@ -22,12 +20,7 @@ public class GestorRegistrarProducto extends GestorProducto{
         PantallaABMProducto producto=new PantallaABMProducto(parent, true, this);
         producto.nuevo();
         producto.setVisible(true);
-    }
-
-    @Override
-    public List<TipoProducto> traerTiposProductos() throws ExceptionGestor {
-        return TipoProductoBD.listarTiposProductos();
-    }
+    }    
 
     @Override
     public Producto ejecutarOperacion(Producto producto) throws ExceptionGestor {
