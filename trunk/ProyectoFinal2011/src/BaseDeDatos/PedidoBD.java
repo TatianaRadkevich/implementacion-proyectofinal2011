@@ -22,8 +22,8 @@ public class PedidoBD {
 
     static
     {
-        Pedido p=new Pedido(new Cliente(432432432,"Proa"), null, true, 585, 2, new Date(2010,5,16), null);
-        info.add(p);
+//        Pedido p=new Pedido(new Cliente(432432432,"Proa"), null, true, 585, 2, new Date(2010,5,16), null);
+//        info.add(p);
     }
 
     private static void grabar()
@@ -40,7 +40,7 @@ public class PedidoBD {
 
     public static void eliminar(int nro)
     {
-        info.remove(new Pedido(nro));
+//        info.remove(new Pedido(nro));
         grabar();
     }
 

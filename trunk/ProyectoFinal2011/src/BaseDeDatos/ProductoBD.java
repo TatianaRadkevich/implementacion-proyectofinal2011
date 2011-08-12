@@ -5,8 +5,7 @@
 
 package BaseDeDatos;
 
-import Negocio.Produccion.Producto;
-import Negocio.Produccion.TipoProducto;
+import BaseDeDatos.Produccion.TipoProductoBD;
 import java.util.ArrayList;
 
 /**
@@ -15,14 +14,14 @@ import java.util.ArrayList;
  */
 public class ProductoBD {
         private static String nombre="Productos";
-    private static  ArrayList<Producto> info=new ArrayList<Producto>();
+    private static  ArrayList<ProductoBD> info=new ArrayList<ProductoBD>();
     private static int ultimoNro=0;
 
     static
     {
-        Producto p=new Producto(423, "Algo es mejor es nada", "Super Caño Pvc",6, new TipoProducto("Codo",""));
+//        Producto p=new Producto(423, "Algo es mejor es nada", "Super Caño Pvc",6, new TipoProducto("Codo",""));
 
-        info.add(p);
+//        info.add(p);
     }
 
     private static void grabar()
@@ -30,24 +29,24 @@ public class ProductoBD {
         //BaseDatos.Grabar(nombre, info);
     }
 
-    public static void addProducto(Producto pedido)
+    public static void addProducto(ProductoBD pedido)
     {
-        info.add(pedido);
+//        info.add(pedido);
         grabar();
     }
 
 
     public static void eliminar(int nro)
     {
-        Producto aux=new Producto();
-        aux.setCodigo(nro);
+        ProductoBD aux=new ProductoBD();
+//        aux.setCodigo(nro);
         info.remove(aux);
         grabar();
     }
 
-    public static ArrayList<Producto> getProductos()
+    public static ArrayList<ProductoBD> getProductos()
     {
-        return (ArrayList<Producto>) info.clone();
+        return (ArrayList<ProductoBD>) info.clone();
     }
     public static int generarNro()
     {

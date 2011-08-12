@@ -5,10 +5,24 @@
 
 package Negocio.Ventas;
 
+import Presentacion.Ventas.PantallaRegistrarPedido;
+
 /**
  *
  * @author Ivan
  */
-public class GestorRegistrarPedido {
+public class GestorRegistrarPedido extends GestorPedido
+{
+
+    @Override
+    public void iniciar() {
+        interfaz=new PantallaRegistrarPedido(null, true);
+    }
+
+    @Override
+    public void ejecutar(Pedido p) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 
 }

@@ -363,14 +363,14 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
       
         
-        Date auxFecha=pedido.getFechaGeneracion();
-        Object[] fila=
-        {pedido.getCliente().getRazonSocial(),
-         pedido.getCliente().getCuil(),
-         pedido.getNumero(),
-         auxFecha.getDate()+"/"+auxFecha.getMonth()+"/"+auxFecha.getYear()
-        };
-        tabla.addRow(fila);
+//        Date auxFecha=pedido.getFechaGeneracion();
+//        Object[] fila=
+//        {pedido.getCliente().getRazonSocial(),
+//         pedido.getCliente().getCuil(),
+//         pedido.getNumero(),
+//         auxFecha.getDate()+"/"+auxFecha.getMonth()+"/"+auxFecha.getYear()
+//        };
+//        tabla.addRow(fila);
     }
 
     private void updateTabla()

@@ -13,8 +13,7 @@ package Presentacion.Produccion;
 
 import BaseDeDatos.MaquinaOHerramientaBD;
 import Negocio.Produccion.GestorRegistrarMaquinaOHerramienta;
-import Negocio.Produccion.MaquinaOHerramienta;
-import Negocio.Produccion.TipoMaquinaOHerramienta;
+import Negocio.Produccion.MaquinaHerramientaParticular;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -219,11 +218,19 @@ public class PantallaABMMaquinaOHerramienta extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
 //        MaquinaOHerramientaBD maqoherr= new MaquinaOHerramientaBD();
 
-        MaquinaOHerramienta maq = new MaquinaOHerramienta(MaquinaOHerramientaBD.generarCodigo(),Integer.parseInt(txtNumeroSerie.getText()), txtNombre.getText(), txtCaracteristicas.getText(),Float.parseFloat(txtCapacidadProductiva.getText()) ,txtModelo.getText(), txtObservaciones.getText(),(TipoMaquinaOHerramienta)cmbTipoMaquinaOHerramienta.getSelectedItem() , "Disponible");
-        MaquinaOHerramientaBD.addMaquinaOHerramienta(maq);
-
-        JOptionPane.showMessageDialog(this, "Se registró con éxito", "Mensaje", JOptionPane.INFORMATION_MESSAGE);// TODO add your handling code here:
-        this.dispose();
+//        MaquinaHerramientaParticular maq =
+//                new MaquinaHerramientaParticular(
+//                MaquinaOHerramientaBD.generarCodigo(),
+//                Integer.parseInt(txtNumeroSerie.getText()),
+//                txtNombre.getText(), txtCaracteristicas.getText(),
+//                Float.parseFloat(txtCapacidadProductiva.getText()) ,
+//                txtModelo.getText(), txtObservaciones.getText(),
+//                cmbTipoMaquinaOHerramienta.getSelectedItem() ,
+////                "Disponible");
+//        MaquinaOHerramientaBD.addMaquinaOHerramienta(maq);
+//
+//        JOptionPane.showMessageDialog(this, "Se registró con éxito", "Mensaje", JOptionPane.INFORMATION_MESSAGE);// TODO add your handling code here:
+//        this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**

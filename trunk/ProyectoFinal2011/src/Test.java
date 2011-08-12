@@ -1,16 +1,10 @@
 
-import BaseDeDatos.BaseDatos;
 import BaseDeDatos.HibernateUtil;
-import BaseDeDatos.Ventas.TTpedido;
-import Negocio.Ventas.Cliente;
-import Negocio.Ventas.Pedido;
+import Negocio.Ventas.TipoCliente;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.Scanner;
 import org.hibernate.Session;
 
 /*
@@ -28,10 +22,10 @@ public class Test {
     public static void main(String[] arg) throws Exception
     {
 
-        Session ss=HibernateUtil.getSessionFactory().openSession();
+        Session ss=HibernateUtil.getNewSession();
         ss.beginTransaction();
-        TTpedido tp=(TTpedido) ss.get(TTpedido.class, (byte)1);
-        System.out.println(tp.getNombre());            
+        ss.save(new TipoCliente(0, "Moroso"));
+        ss.getTransaction().commit();
 
     }
 

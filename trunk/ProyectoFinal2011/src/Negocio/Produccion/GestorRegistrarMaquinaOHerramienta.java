@@ -13,21 +13,21 @@ import java.util.ArrayList;
  */
 public class GestorRegistrarMaquinaOHerramienta {
     
-private ArrayList<TipoMaquinaOHerramienta> tipoMaquinasYHerramientas;
+private ArrayList<TipoMaquinaHerramienta> tipoMaquinasYHerramientas;
 
     public GestorRegistrarMaquinaOHerramienta() {
-        this.tipoMaquinasYHerramientas = new ArrayList<TipoMaquinaOHerramienta>();
+        this.tipoMaquinasYHerramientas = new ArrayList<TipoMaquinaHerramienta>();
 
     }
 
-    public ArrayList<TipoMaquinaOHerramienta> buscarMaquinasYHerramientas()
+    public ArrayList<TipoMaquinaHerramienta> buscarMaquinasYHerramientas()
     {
-        TipoMaquinaOHerramienta tipo1 = new TipoMaquinaOHerramienta("Cortadora", true, "corta pvc");
-        TipoMaquinaOHerramienta tipo2 = new TipoMaquinaOHerramienta("Amoladoras", true, "moldea los caños");
-        TipoMaquinaOHerramienta tipo3 = new TipoMaquinaOHerramienta("Perforadora", true, "perfora los caños");
-
-        tipoMaquinasYHerramientas.add(tipo1);
-        tipoMaquinasYHerramientas.add(tipo2);
+//        TipoMaquinaHerramienta tipo1 = new TipoMaquinaHerramienta("Cortadora", true, "corta pvc");
+//        TipoMaquinaHerramienta tipo2 = new TipoMaquinaHerramienta("Amoladoras", true, "moldea los caños");
+//        TipoMaquinaHerramienta tipo3 = new TipoMaquinaHerramienta("Perforadora", true, "perfora los caños");
+//
+//        tipoMaquinasYHerramientas.add(tipo1);
+//        tipoMaquinasYHerramientas.add(tipo2);
         
         return tipoMaquinasYHerramientas;
     }

@@ -13,7 +13,6 @@ package Presentacion.Ventas;
 
 import BaseDeDatos.ProductoBD;
 import BaseDeDatos.TipoBD;
-import Negocio.Produccion.Producto;
 import Negocio.Ventas.DetallePedido;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -196,7 +195,7 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-        detalle=new DetallePedido(Integer.parseInt(txtCantidad.getText()), (Producto) cmbProducto.getSelectedItem());
+//        detalle=new DetallePedido(Integer.parseInt(txtCantidad.getText()), (Producto) cmbProducto.getSelectedItem());
 
         ok=true;
         this.setVisible(false);
