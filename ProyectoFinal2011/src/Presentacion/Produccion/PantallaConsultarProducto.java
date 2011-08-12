@@ -184,7 +184,8 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         GestorModificarProducto gestor=new GestorModificarProducto();
-        gestor.modificarProducto(this,new Producto());
+        int id=0;
+        gestor.modificarProducto(this,id);
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**

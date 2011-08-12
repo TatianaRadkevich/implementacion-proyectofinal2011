@@ -24,9 +24,9 @@ public class GestorModificarProducto extends GestorProducto{
         return ProductoBD.guardar(producto);
     }
 
-    void modificarProducto(Dialog parent, Producto producto) {
+    void modificarProducto(Dialog parent,int id) {
         PantallaABMProducto pantalla_producto=new PantallaABMProducto(parent, true, this);
-        pantalla_producto.modificar(producto);
+        pantalla_producto.modificar(ProductoBD.traerProducto(id));
         pantalla_producto.setVisible(true);
     }
 
