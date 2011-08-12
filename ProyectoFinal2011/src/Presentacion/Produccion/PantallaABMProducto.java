@@ -10,12 +10,10 @@
  */
 
 package Presentacion.Produccion;
-
-import BaseDeDatos.Produccion.TProductos;
-import BaseDeDatos.Produccion.TTproducto;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Produccion.GestorProducto;
 import Negocio.Produccion.Producto;
+import Negocio.Produccion.TipoProducto;
 import gui.GUILocal;
 import java.awt.Dialog;
 import java.math.BigDecimal;
@@ -48,7 +46,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     private void cargarTipoProductos(){
         try {
             cmbTipoProducto.removeAll();
-            List<TTproducto> tipo = gestor.traerTiposProductos();
+            List<Producto> tipo = gestor.traerTiposProductos();
             for(int i=0;i<tipo.size();i++){
                 cmbTipoProducto.addItem(tipo.get(i));
             }
@@ -224,11 +222,11 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
         if(validar()){
 
-            TProductos producto=new Producto();
+            Producto producto=new Producto();
             producto.setNombre(txtNombre.getText());
             producto.setDescripcion(txtAreaDescripcion.getText());
             producto.setPrecioUnitario(new BigDecimal(txtPrecio.getText()));
-            producto.setTTproducto((TTproducto) cmbTipoProducto.getSelectedItem());
+            producto.setTTproducto((TipoProducto) cmbTipoProducto.getSelectedItem());
             producto.setCodigo("P");
             
             

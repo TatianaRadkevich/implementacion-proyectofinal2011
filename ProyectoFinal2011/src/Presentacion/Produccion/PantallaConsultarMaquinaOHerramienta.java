@@ -12,7 +12,7 @@
 package Presentacion.Produccion;
 
 import BaseDeDatos.MaquinaOHerramientaBD;
-import Negocio.Produccion.MaquinaOHerramienta;
+import Negocio.Produccion.MaquinaHerramientaParticular;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Heber Parrucci
  */
 public class PantallaConsultarMaquinaOHerramienta extends javax.swing.JDialog {
-    private ArrayList<MaquinaOHerramienta> data;
+    private ArrayList<MaquinaHerramientaParticular> data;
     private DefaultTableModel tabla;
     private PantallaABMMaquinaOHerramienta pantAlta;
 
@@ -41,15 +41,14 @@ public class PantallaConsultarMaquinaOHerramienta extends javax.swing.JDialog {
             tabla.removeRow(0);
     }
 
-    private void addMaquinaTabla(MaquinaOHerramienta maq)
+    private void addMaquinaTabla(MaquinaHerramientaParticular maq)
     {
 
 
         Object[] fila=
-        {maq.getNumeroSerie(),
-         maq.getNombre(),
+        {maq.getCodigo(),
          maq.getModelo(),
-         maq.getEstado()
+         maq.getTEmaquina()
         };
         tabla.addRow(fila);
     }

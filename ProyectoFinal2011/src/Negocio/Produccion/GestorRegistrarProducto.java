@@ -4,9 +4,6 @@
  */
 
 package Negocio.Produccion;
-
-import BaseDeDatos.Produccion.TProductos;
-import BaseDeDatos.Produccion.TTproducto;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Produccion.PantallaABMProducto;
 import java.awt.Dialog;
@@ -26,13 +23,14 @@ public class GestorRegistrarProducto extends GestorProducto{
     }
 
     @Override
-    public List<TTproducto> traerTiposProductos() throws ExceptionGestor{        
-          return TipoProducto.listarTiposProductos();
+    public List<Producto> traerTiposProductos() throws ExceptionGestor {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-    
-    
-    public TProductos ejecutarOperacion(TProductos producto) throws ExceptionGestor{
-        return Producto.guardar(producto);
+
+    @Override
+    public Producto ejecutarOperacion(Producto producto) throws ExceptionGestor {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
+
 
 }

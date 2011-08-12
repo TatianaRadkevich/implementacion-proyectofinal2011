@@ -62,18 +62,18 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
     }
 
      private void cargar(Pedido pedido) {
-        txtCUIL.setText(pedido.getCliente().getCuil()+"");
-        txtRazonSocial.setText(pedido.getCliente().getRazonSocial());
-        cliente=pedido.getCliente();
-
-        txtFechaEstimada.setText(parseDate(pedido.getFechaEstimada()));
-        dtcFechaSolicitud.setDate(pedido.getFechaEntrega());
-
-        detalle=pedido.getDetalle();
-        updateTabla();
-        cmbPrioridad.setSelectedIndex(pedido.getPrioridad());
-        cmbTipoPedido.setSelectedItem(pedido.getTipo());
-        
+//        txtCUIL.setText(pedido.getCliente().getCuil()+"");
+//        txtRazonSocial.setText(pedido.getCliente().getRazonSocial());
+//        cliente=pedido.getCliente();
+//
+//        txtFechaEstimada.setText(parseDate(pedido.getFechaEstimada()));
+//        dtcFechaSolicitud.setDate(pedido.getFechaEntrega());
+//
+//        detalle=pedido.getDetalle();
+//        updateTabla();
+//        cmbPrioridad.setSelectedIndex(pedido.getPrioridad());
+//        cmbTipoPedido.setSelectedItem(pedido.getTipo());
+//
     }
 
      private String parseDate(Date fecha)
@@ -153,15 +153,15 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
     private void addDetalleTabla(DetallePedido det)
     {
 
-       
-        Object[] fila=
-        {det.getProducto().getCodigo(),
-         det.getProducto().getDescripcion(),
-         det.getProducto().getPrecioUnit(),         
-         det.getCantidad(),
-         det.getProducto().getPrecioUnit()*det.getCantidad()
-        };
-        tabla.addRow(fila);
+//
+//        Object[] fila=
+//        {det.getProducto().getCodigo(),
+//         det.getProducto().getDescripcion(),
+//         det.getProducto().getPrecioUnit(),
+//         det.getCantidad(),
+//         det.getProducto().getPrecioUnit()*det.getCantidad()
+//        };
+//        tabla.addRow(fila);
     }
 
     private void updateTabla()
@@ -170,8 +170,8 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
         int aux=0;
         for(int i=0;i<detalle.size();i++)
         {
-            aux+=detalle.get(i).getPrecio()*detalle.get(i).getCantidad();
-            addDetalleTabla(detalle.get(i));
+//            aux+=detalle.get(i).getPrecio()*detalle.get(i).getCantidad();
+//            addDetalleTabla(detalle.get(i));
         }
         txtSubTotal.setText(aux+"");
 
@@ -512,17 +512,17 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
         if(modificar==false)
             pedido=new Pedido();
 
-        pedido.setNumero(PedidoBD.generarNro());
-        pedido.setCliente(cliente);
-        pedido.setDetalle(detalle);
-        pedido.setFechaEntrega(dtcFechaSolicitud.getDate());
-        pedido.setFechaEstimada(dtcFechaSolicitud.getDate());
-
-        if(modificar==false)
-            pedido.setFechaGeneracion(GregorianCalendar.getInstance().getTime());
-
-        pedido.setPrioridad(cmbPrioridad.getSelectedIndex());
-        pedido.setTipo((TipoPedido) cmbTipoPedido.getSelectedItem());
+//        pedido.setNumero(PedidoBD.generarNro());
+//        pedido.setCliente(cliente);
+//        pedido.setDetalle(detalle);
+//        pedido.setFechaEntrega(dtcFechaSolicitud.getDate());
+//        pedido.setFechaEstimada(dtcFechaSolicitud.getDate());
+//
+//        if(modificar==false)
+//            pedido.setFechaGeneracion(GregorianCalendar.getInstance().getTime());
+//
+//        pedido.setPrioridad(cmbPrioridad.getSelectedIndex());
+//        pedido.setTipo((TipoPedido) cmbTipoPedido.getSelectedItem());
         
         if(modificar==false)
             PedidoBD.addPedido(pedido);

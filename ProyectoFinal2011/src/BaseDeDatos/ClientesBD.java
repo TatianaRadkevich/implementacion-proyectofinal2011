@@ -18,9 +18,9 @@ public class ClientesBD {
     private static  ArrayList<Cliente> info=new ArrayList<Cliente>();
 
     static{
-        info.add(new Cliente(434564, "Promesa"));
-        info.add(new Cliente(024657, "Hernan Herramientas"));
-        info.add(new Cliente(987324, "Carlos Accesorios"));
+//        info.add(new Cliente(434564, "Promesa"));
+//        info.add(new Cliente(024657, "Hernan Herramientas"));
+//        info.add(new Cliente(987324, "Carlos Accesorios"));
     }
 
     private static void grabar()
@@ -36,13 +36,13 @@ public class ClientesBD {
 
     public static void eliminar(String RazonSocial)
     {
-        info.remove(new Cliente(0, RazonSocial));
+//        info.remove(new Cliente(0, RazonSocial));
         grabar();
     }
 
     public static void eliminar(int CUIT)
     {
-        info.remove(new Cliente(CUIT, ""));
+//        info.remove(new Cliente(CUIT, ""));
         grabar();
     }
 
