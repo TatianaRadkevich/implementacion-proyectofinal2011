@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 public class PantallaABMProducto extends javax.swing.JDialog {
 
     private GestorProducto gestor;
+    private Producto producto;;
     /** Creates new form PantallaABMProducto */
     public PantallaABMProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -41,6 +42,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         GUILocal.establecerGUILocal(this);
         initComponents();
         this.gestor=gestor;
+        producto=new Producto();
        cargarTipoProductos();
     }
     private void cargarTipoProductos(){
@@ -58,6 +60,18 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     public void nuevo(){
         this.txtCodigo.setVisible(false);
         this.lbl_codigo.setVisible(false);
+    }
+
+    public void modificar(Producto producto){
+        this.txtCodigo.setVisible(true);
+        this.lbl_codigo.setVisible(true);
+        this.txtCodigo.setEditable(false);
+        this.txtCodigo.setText(producto.getCodigo()+"-"+producto.getIdProducto());
+        this.txtNombre.setText(producto.getNombre());
+        this.txtAreaDescripcion.setText(producto.getDescripcion());
+        this.txtPrecio.setText(producto.getPrecioUnitario()+"");
+        this.cmbTipoProducto.setSelectedItem(producto.getTTproducto());
+        this.producto=producto;
     }
 
     /** This method is called from within the constructor to
@@ -220,7 +234,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
         if(validar()){
 
-            Producto producto=new Producto();
+            producto=new Producto();
             producto.setNombre(txtNombre.getText());
             producto.setDescripcion(txtAreaDescripcion.getText());
             producto.setPrecioUnitario(new BigDecimal(txtPrecio.getText()));

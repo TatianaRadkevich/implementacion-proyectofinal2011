@@ -12,6 +12,7 @@
 package Presentacion.Produccion;
 
 import Negocio.Produccion.GestorRegistrarProducto;
+import Negocio.Produccion.Producto;
 import gui.GUILocal;
 
 /**
@@ -78,6 +79,11 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnBaja.setText("Baja");
 
@@ -174,6 +180,12 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
 
 
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        GestorModificarProducto gestor=new GestorModificarProducto();
+        gestor.modificarProducto(this,new Producto());
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
     * @param args the command line arguments
