@@ -52,7 +52,7 @@ public class TipoCliente  implements java.io.Serializable {
         return this.idTcliente;
     }
     
-    public void setIdTcliente(int idTcliente) {
+    private void setIdTcliente(int idTcliente) {
         this.idTcliente = idTcliente;
     }
     
@@ -61,7 +61,7 @@ public class TipoCliente  implements java.io.Serializable {
         return this.nombre;
     }
     
-    public void setNombre(String nombre) {
+    private void setNombre(String nombre) {
         this.nombre = nombre;
     }
     
