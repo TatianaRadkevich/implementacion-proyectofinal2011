@@ -13,7 +13,8 @@ import org.hibernate.Session;
  *
  * @author Rodrigo
  */
-public class Producto extends TProductos{
+public class Producto{
+
 
    
     public Producto() {
