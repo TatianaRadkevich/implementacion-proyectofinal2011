@@ -5,14 +5,12 @@
 
 package Negocio.Produccion;
 
-import BaseDeDatos.HibernateUtil;
+
 import BaseDeDatos.Produccion.TTproducto;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 /**
  *
@@ -31,7 +29,7 @@ public class TipoProducto extends TTproducto{
 //            usuario=HibernateUtil.getSessionFactory().openSession();
             usuario=HibernateUtil.getsession();
             usuario.beginTransaction();
-            result = usuario.createQuery("from T_TProducto").list();
+            result = usuario.createQuery("from TTproducto").list();
             usuario.getTransaction().commit();
                 usuario.close();
         }catch(Exception  ex) {
