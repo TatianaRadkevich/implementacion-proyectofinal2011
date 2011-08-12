@@ -13,7 +13,7 @@ import java.util.List;
  */
 public abstract class GestorProducto {
 
-    public abstract List<Producto> traerTiposProductos() throws ExceptionGestor;
+    public abstract List<TipoProducto> traerTiposProductos() throws ExceptionGestor;
     public abstract Producto ejecutarOperacion(Producto producto) throws ExceptionGestor;
 
 }

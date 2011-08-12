@@ -46,7 +46,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     private void cargarTipoProductos(){
         try {
             cmbTipoProducto.removeAll();
-            List<Producto> tipo = gestor.traerTiposProductos();
+            List<TipoProducto> tipo = gestor.traerTiposProductos();
             for(int i=0;i<tipo.size();i++){
                 cmbTipoProducto.addItem(tipo.get(i));
             }
@@ -112,8 +112,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         jLabel3.setText("Precio:  $");
 
         jLabel4.setText("Tipo:");
-
-        cmbTipoProducto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
