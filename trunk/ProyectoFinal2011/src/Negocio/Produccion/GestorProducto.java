@@ -4,6 +4,7 @@
  */
 
 package Negocio.Produccion;
+import BaseDeDatos.Produccion.TipoProductoBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import java.util.List;
 
@@ -13,7 +14,10 @@ import java.util.List;
  */
 public abstract class GestorProducto {
 
-    public abstract List<TipoProducto> traerTiposProductos() throws ExceptionGestor;
+    public List<TipoProducto> traerTiposProductos() throws ExceptionGestor {
+        return TipoProductoBD.listarTiposProductos();
+    }
+
     public abstract Producto ejecutarOperacion(Producto producto) throws ExceptionGestor;
 
 }
