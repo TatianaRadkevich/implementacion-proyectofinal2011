@@ -21,7 +21,6 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     public PantallaABMEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        lista.setData(new String[]{"director","Empleado","Secretaria"});
         
     }
 
