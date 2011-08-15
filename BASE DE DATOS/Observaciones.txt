@@ -1,0 +1,11 @@
+OBSERVACIONES:
+
+
+- CU Consultar proveedores:
+
+tabla proveedores agregue el campo fec_baja, motivo baja.
+
+
+- CU Registrar entrega de materiales a produccion
+
+Agregue la tabla T_EGRESOS.
