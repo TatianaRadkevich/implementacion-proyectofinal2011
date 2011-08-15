@@ -239,7 +239,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
             producto.setDescripcion(txtAreaDescripcion.getText());
             producto.setPrecioUnitario(new BigDecimal(txtPrecio.getText()));
             producto.setTTproducto((TipoProducto) cmbTipoProducto.getSelectedItem());
-            producto.setCodigo("P");
+          
             
             
             try {
