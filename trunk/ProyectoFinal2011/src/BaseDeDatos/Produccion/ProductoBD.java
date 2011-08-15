@@ -7,6 +7,7 @@ package BaseDeDatos.Produccion;
 
 import BaseDeDatos.HibernateUtil;
 import Negocio.Produccion.Producto;
+import Negocio.Ventas.TipoPedido;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -56,6 +57,11 @@ public class ProductoBD{
            
 
         return result;
+    }
+
+    public static List<Producto> listarProductos(TipoPedido tp){
+        String hql="from Producto as pd where pd.TTproducto.idTproducto="+tp.getIdTipoPedido();
+        return HibernateUtil.ejecutarConsulta(hql);
     }
 
     public static Producto traerProducto(int id){
