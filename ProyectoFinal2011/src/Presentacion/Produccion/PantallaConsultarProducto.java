@@ -11,9 +11,12 @@
 
 package Presentacion.Produccion;
 
+import Negocio.Produccion.GestorProducto;
 import Negocio.Produccion.GestorRegistrarProducto;
 import Negocio.Produccion.Producto;
 import gui.GUILocal;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -27,6 +30,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         super(parent, modal);
         GUILocal.establecerGUILocal(this);
         initComponents();
+//        tabla_montecarlo.setModel(new ModelerProducto(new LinkedList<Producto>()));
     }
 
     /** This method is called from within the constructor to
@@ -39,15 +43,14 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbEmpleados = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnBaja = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabla_producto = new javax.swing.JTable();
         btnBuscar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         chkMostrarTodos = new javax.swing.JCheckBox();
         chkMostrarDadosBaja = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
@@ -57,19 +60,6 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Producto"));
-
-        tbEmpleados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Número Orden", "Código", "Nombre ", "Descripción"
-            }
-        ));
-        jScrollPane1.setViewportView(tbEmpleados);
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -87,35 +77,72 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
 
         btnBaja.setText("Baja");
 
+        tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11));
+        tabla_producto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tabla_producto.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabla_producto.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                tabla_productoComponentShown(evt);
+            }
+        });
+        tabla_producto.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                tabla_productoComponentAdded(evt);
+            }
+        });
+        tabla_producto.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tabla_productoAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane2.setViewportView(tabla_producto);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(542, 542, 542)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(126, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(btnNuevo)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBaja)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(btnNuevo)
+                .addGap(18, 18, 18)
+                .addComponent(btnModificar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBaja)
+                .addContainerGap(98, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(54, Short.MAX_VALUE)))
         );
 
         btnBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
@@ -126,10 +153,6 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         jLabel1.setBounds(60, 40, 41, 14);
         btnBuscar.add(txtNombre);
         txtNombre.setBounds(110, 40, 90, 20);
-
-        jButton1.setText("Buscar");
-        btnBuscar.add(jButton1);
-        jButton1.setBounds(616, 95, 65, 23);
 
         chkMostrarTodos.setText("Mostrar todos");
         btnBuscar.add(chkMostrarTodos);
@@ -146,6 +169,11 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         txtCodigo.setBounds(110, 70, 90, 20);
 
         jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         btnBuscar.add(jButton2);
         jButton2.setBounds(240, 30, 70, 23);
 
@@ -155,10 +183,10 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,9 +212,26 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         GestorModificarProducto gestor=new GestorModificarProducto();
-        int id=0;
-        gestor.modificarProducto(this,id);
+        
+        gestor.modificarProducto(this, (String) tabla_producto.getValueAt(tabla_producto.getSelectedRow(),0));
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void tabla_productoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabla_productoComponentShown
+
+}//GEN-LAST:event_tabla_productoComponentShown
+
+    private void tabla_productoComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabla_productoComponentAdded
+
+}//GEN-LAST:event_tabla_productoComponentAdded
+
+    private void tabla_productoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tabla_productoAncestorAdded
+
+}//GEN-LAST:event_tabla_productoAncestorAdded
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+         tabla_montecarlo.setModel(new ModelerProducto(GestorProducto.listarProductos()));
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
     * @param args the command line arguments
@@ -212,13 +257,14 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JCheckBox chkMostrarDadosBaja;
     private javax.swing.JCheckBox chkMostrarTodos;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbEmpleados;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tabla_montecarlo;
+    private javax.swing.JTable tabla_producto;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
