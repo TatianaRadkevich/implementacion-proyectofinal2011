@@ -73,12 +73,13 @@ public class TipoCliente  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+    
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TTcliente")
-    public Set<Cliente> getTClienteses() {
+    private Set<Cliente> getTClienteses() {
         return this.TClienteses;
     }
     
-    public void setTClienteses(Set<Cliente> TClienteses) {
+    private void setTClienteses(Set<Cliente> TClienteses) {
         this.TClienteses = TClienteses;
     }
 
