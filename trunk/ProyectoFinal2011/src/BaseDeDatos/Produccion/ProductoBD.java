@@ -7,7 +7,7 @@ package BaseDeDatos.Produccion;
 
 import BaseDeDatos.HibernateUtil;
 import Negocio.Produccion.Producto;
-import Negocio.Produccion.ProductoLista;
+
 import java.util.List;
 import java.util.logging.Level;
 import org.hibernate.Session;
@@ -40,10 +40,10 @@ public class ProductoBD{
     } 
 
 
-    public static List<ProductoLista> listarProductos()throws ExceptionInInitializerError{
+    public static List<Producto> listarProductos()throws ExceptionInInitializerError{
 
          Session usuario = null;
-        List<ProductoLista> result=null;
+        List<Producto> result=null;
 
         try{           
             usuario=HibernateUtil.getNewSession();
@@ -71,4 +71,11 @@ public class ProductoBD{
 
         return producto;
     }
+
+    public static Producto traerProducto(String codigo){
+        String id_codigo=codigo.split("-")[1];
+        int id=Integer.parseInt(id_codigo);
+        return traerProducto(id);
+    }
+
 }
