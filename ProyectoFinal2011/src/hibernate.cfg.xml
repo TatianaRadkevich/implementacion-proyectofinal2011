@@ -41,7 +41,6 @@
     <mapping class="Negocio.Produccion.MaquinaHerramientaParticular"/>
     <mapping class="Negocio.Produccion.PlanProduccion"/>
     <mapping class="Negocio.Produccion.Producto"/>
-    <mapping class="Negocio.Produccion.ProductoLista"/>
     <mapping class="Negocio.Produccion.TipoMaquinaHerramienta"/>
     <mapping class="Negocio.Produccion.TipoProducto"/>
 
