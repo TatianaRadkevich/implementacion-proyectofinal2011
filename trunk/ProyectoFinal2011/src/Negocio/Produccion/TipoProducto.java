@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class TipoProducto  implements java.io.Serializable {
 
 
-     private byte idTproducto;
+     private int idTproducto;
      private String nombre;
      private String descripcion;
     // private Set<Producto> TProductoses = new HashSet<Producto>(0);
@@ -27,12 +27,17 @@ public class TipoProducto  implements java.io.Serializable {
     public TipoProducto() {
     }
 
+    public TipoProducto(String nombre) {
+        this.nombre = nombre;
+    }
+
+
 	
-    public TipoProducto(byte idTproducto, String nombre) {
+    public TipoProducto(int idTproducto, String nombre) {
         this.idTproducto = idTproducto;
         this.nombre = nombre;
     }
-    public TipoProducto(byte idTproducto, String nombre, String descripcion/**, Set<Producto> TProductoses**/) {
+    public TipoProducto(int idTproducto, String nombre, String descripcion/**, Set<Producto> TProductoses**/) {
        this.idTproducto = idTproducto;
        this.nombre = nombre;
        this.descripcion = descripcion;
@@ -42,11 +47,11 @@ public class TipoProducto  implements java.io.Serializable {
      @Id 
     @GeneratedValue
     @Column(name="ID_TPRODUCTO", unique=true, nullable=false, precision=2, scale=0)
-    public byte getIdTproducto() {
+    public int getIdTproducto() {
         return this.idTproducto;
     }
     
-    public void setIdTproducto(byte idTproducto) {
+    public void setIdTproducto(int idTproducto) {
         this.idTproducto = idTproducto;
     }
     
