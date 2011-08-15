@@ -6,6 +6,7 @@
 package BaseDeDatos;
 
 
+import java.util.List;
 import javax.persistence.Entity;
 import org.hibernate.Session;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -60,5 +61,23 @@ public class HibernateUtil {
     public static Session getNewSession()
     {
         return sessionFactory.openSession();
+    }
+
+    public static void guardarObjeto(Object o)
+    {
+        Session ss=getNewSession();
+        ss.beginTransaction();
+        ss.save(o);
+        ss.getTransaction().commit();
+    }
+
+    public static List ejecutarConsulta(String HQL)
+    {
+        List salida;
+        Session ss=getNewSession();
+        ss.beginTransaction();
+        salida=ss.createQuery(HQL).list();
+        ss.getTransaction().commit();
+        return salida;
     }
 }
