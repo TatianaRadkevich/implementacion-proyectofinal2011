@@ -33,7 +33,7 @@ public class Producto  implements java.io.Serializable {
      private String descripcion;
      private String nombre;
      private BigDecimal precioUnitario;
-     private String codigo;
+    
      private Set<EtapaProduccionEspecifica> TEtapasProduccionEspecificas = new HashSet<EtapaProduccionEspecifica>(0);
      private Set<DetallePedido> TDetallesPedidos = new HashSet<DetallePedido>(0);
      private Set<DetalleProducto> TDetallesProductos = new HashSet<DetalleProducto>(0);
@@ -42,20 +42,19 @@ public class Producto  implements java.io.Serializable {
     }
 
 	
-    public Producto(int idProducto, TipoProducto TTproducto, String nombre, BigDecimal precioUnitario, String codigo) {
+    public Producto(int idProducto, TipoProducto TTproducto, String nombre, BigDecimal precioUnitario) {
         this.idProducto = idProducto;
         this.TTproducto = TTproducto;
         this.nombre = nombre;
         this.precioUnitario = precioUnitario;
-        this.codigo = codigo;
+      
     }
     public Producto(int idProducto, TipoProducto TTproducto, String descripcion, String nombre, BigDecimal precioUnitario, String codigo, Set<EtapaProduccionEspecifica> TEtapasProduccionEspecificas, Set<DetallePedido> TDetallesPedidos, Set<DetalleProducto> TDetallesProductos) {
        this.idProducto = idProducto;
        this.TTproducto = TTproducto;
        this.descripcion = descripcion;
        this.nombre = nombre;
-       this.precioUnitario = precioUnitario;
-       this.codigo = codigo;
+       this.precioUnitario = precioUnitario;      
        this.TEtapasProduccionEspecificas = TEtapasProduccionEspecificas;
        this.TDetallesPedidos = TDetallesPedidos;
        this.TDetallesProductos = TDetallesProductos;
@@ -108,14 +107,12 @@ public class Producto  implements java.io.Serializable {
         this.precioUnitario = precioUnitario;
     }
     
-    @Column(name="CODIGO", nullable=false, length=2)
+    
     public String getCodigo() {
-        return this.codigo;
+        return this.getTTproducto().getCodigo()+"-"+this.getIdProducto();
     }
     
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
+   
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TProductos")
     public Set<EtapaProduccionEspecifica> getTEtapasProduccionEspecificas() {
         return this.TEtapasProduccionEspecificas;
@@ -140,7 +137,21 @@ public class Producto  implements java.io.Serializable {
     public void setTDetallesProductos(Set<DetalleProducto> TDetallesProductos) {
         this.TDetallesProductos = TDetallesProductos;
     }
+  
 
+    public Object getInfoColumna(int columnIndex) {
+         switch (columnIndex){
+             case 0:
+                return this.getCodigo();
+             case 1:
+                return this.getNombre();
+             case 2:
+                 return this.getTTproducto().getNombre();
+
+
+                 }
+        return null;
+    }
 
 
 
