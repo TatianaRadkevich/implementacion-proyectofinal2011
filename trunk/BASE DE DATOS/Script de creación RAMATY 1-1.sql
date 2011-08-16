@@ -1,6 +1,6 @@
 
-                         /* SCRIPT DE CREACIÓN RAMATY - Versión 1-0 */
-
+                    /* SCRIPT DE CREACIÓN RAMATY - Versión 1-1*/
+                    
 
 CREATE TABLE T_ASISTENCIAS_EMPLEADO (
        ID_ASISTENCIA_EMPLEADO numeric(4) IDENTITY,
@@ -71,11 +71,11 @@ CREATE TABLE T_CLIENTES (
        RAZON_SOCIAL         varchar(50) NOT NULL,
        ID_DOMICILIO         numeric(3) NULL,
        ID_TCLIENTE          numeric(2) NOT NULL,
-       ID_CLIENTE_WEB       numeric(5) NOT NULL,
-       ID_USUARIO           numeric(5) NOT NULL,
+       ID_CLIENTE_WEB       numeric(5) NULL,
+       ID_USUARIO           numeric(5) NULL,
        NOMBRE_RESPONSABLE   varchar(50) NOT NULL,
        APELLIDO_RESPONSABLE varchar(50) NOT NULL,
-       TELEFONO_RESPONSABLE numeric(13) NOT NULL
+       TELEFONO_RESPONSABLE numeric(13) NULL
 )
 go
 
@@ -240,6 +240,20 @@ go
 
 ALTER TABLE T_DOMICILIOS
        ADD PRIMARY KEY (ID_DOMICILIO ASC)
+go
+
+
+CREATE TABLE T_EGRESOS (
+       ID_EGRESO            numeric(8) NOT NULL,
+       FEC_HORA_EGRESO      datetime NOT NULL,
+       CANTIDAD             numeric(5) NOT NULL,
+       ID_MATERIAL          numeric(3) NOT NULL
+)
+go
+
+
+ALTER TABLE T_EGRESOS
+       ADD PRIMARY KEY (ID_EGRESO ASC)
 go
 
 
@@ -559,7 +573,9 @@ CREATE TABLE T_PROVEEDORES (
        TELEFONO             varchar(20) NULL,
        CORREO_ELECTRONICO   varchar(50) NULL,
        ID_DOMICILIO         numeric(3) NOT NULL,
-       APELLIDO             varchar(100) NOT NULL
+       APELLIDO             varchar(100) NOT NULL,
+       FEC_BAJA             datetime NULL,
+       MOTIVO_BAJA          varchar(100) NULL
 )
 go
 
@@ -938,6 +954,14 @@ ALTER TABLE T_DOMICILIOS
 go
 
 
+ALTER TABLE T_EGRESOS
+       ADD FOREIGN KEY (ID_MATERIAL)
+                             REFERENCES T_MATERIALES  (ID_MATERIAL)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
 ALTER TABLE T_EMPLEADOS
        ADD FOREIGN KEY (ID_SEXO)
                              REFERENCES T_SEXOS  (ID_SEXO)
@@ -1178,3 +1202,4 @@ go
 
 
 
+                    
