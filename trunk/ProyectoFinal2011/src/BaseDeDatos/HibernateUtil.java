@@ -78,6 +78,7 @@ public class HibernateUtil {
         ss.beginTransaction();
         salida=ss.createQuery(HQL).list();
         ss.getTransaction().commit();
+        ss.close();
         return salida;
     }
 }
