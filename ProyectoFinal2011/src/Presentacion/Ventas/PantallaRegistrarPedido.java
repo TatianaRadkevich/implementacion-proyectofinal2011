@@ -8,14 +8,17 @@
  *
  * Created on 14/06/2011, 05:18:55
  */
-
 package Presentacion.Ventas;
 
-import BaseDeDatos.ClientesBD;
-import BaseDeDatos.PedidoBD;
+import BaseDeDatos.Ventas.ClientesBD;
+import BaseDeDatos.Ventas.PedidoBD;
 import BaseDeDatos.TipoBD;
+import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Ventas.*;
 import Negocio.Ventas.Pedido;
+import Presentacion.Mensajes;
+import Presentacion.TablaManager;
+import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,6 +26,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -35,148 +39,94 @@ import javax.swing.table.DefaultTableModel;
 public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
     /** Creates new form PantallaRegistrarPedido */
-    private DefaultTableModel tabla;
-    private Pedido pedido;
+    private GestorPedido gestor;
     private Cliente cliente;
-    private ArrayList<DetallePedido> detalle;
-    private PantallaRegistrarDetallePedido pantDetPed;
-    private boolean modificar;    
-    private Date fechaEstimada;
+    private TablaManager<DetallePedido> tablaDetalle;    
 
-    public PantallaRegistrarPedido(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+
+    public PantallaRegistrarPedido(java.awt.Frame parent, boolean modal, GestorPedido gestor) {
+        this.gestor=gestor;
         iniciar();
-        modificar=false;
-        //System.out.println(cal.getTime());
-       // paneCargar.setVisible(false);
     }
 
-    public PantallaRegistrarPedido(java.awt.Frame parent,boolean modal,Pedido pedido) {
-        super(parent, modal);
-        iniciar();
-        cargar(pedido);
-        this.pedido=pedido;
-        modificar=true;
-        //System.out.println(cal.getTime());
-       // paneCargar.setVisible(false);
-    }
-
-     private void cargar(Pedido pedido) {
-//        txtCUIL.setText(pedido.getCliente().getCuil()+"");
-//        txtRazonSocial.setText(pedido.getCliente().getRazonSocial());
-//        cliente=pedido.getCliente();
-//
-//        txtFechaEstimada.setText(parseDate(pedido.getFechaEstimada()));
-//        dtcFechaSolicitud.setDate(pedido.getFechaEntrega());
-//
-//        detalle=pedido.getDetalle();
-//        updateTabla();
-//        cmbPrioridad.setSelectedIndex(pedido.getPrioridad());
-//        cmbTipoPedido.setSelectedItem(pedido.getTipo());
-//
-    }
-
-     private String parseDate(Date fecha)
-     {
-         if(fecha==null)
-             return "";
-         return fecha.getDay()+"/"+fecha.getMonth()+"/"+fecha.getYear();
-     }
-
-
-
-    private void iniciar()
-    {
+    private void iniciar() {
         initComponents();
+        //Seteo de variables//
+        tablaDetalle = new TablaManager<DetallePedido>(tbDetalle) {
+
+            @Override
+            public Vector ObjetoFila(DetallePedido elemento) {
+                Vector fila = new Vector();
+                fila.add(elemento.getProducto().getCodigo());
+                fila.add(elemento.getProducto().getDescripcion());
+                fila.add(elemento.getProducto().getPrecioUnitario());
+                fila.add(elemento.getCantidad());
+                fila.add(elemento.getProducto().getPrecioUnitario().floatValue() * elemento.getCantidad());
+                return fila;
+            }
+
+            @Override
+            public Vector getCabecera() {
+                Vector cabecera = new Vector();
+                cabecera.add("Codigo");
+                cabecera.add("Descripcion");
+                cabecera.add("Precio Unit.($)");
+                cabecera.add("Cantidad");
+                cabecera.add("Sub Total($)");
+                return cabecera;
+            }
+        };
         
-        detalle=new ArrayList<DetallePedido>();       
-        tabla=(DefaultTableModel) tbDetalle.getModel();
-        updateTabla();
-        
-        pantDetPed=new PantallaRegistrarDetallePedido(null, true);
-        Calendar cal=GregorianCalendar.getInstance();
-        txtFecha.setText(cal.get(cal.DATE)+"/"+cal.get(cal.MONTH)+"/"+cal.get(cal.YEAR));
-        txtHora.setText(cal.get(cal.HOUR)+":"+cal.get(cal.MINUTE));
-        //Precargas///
+        Calendar cal = GregorianCalendar.getInstance();
+        txtFecha.setText(cal.get(cal.DATE) + "/" + cal.get(cal.MONTH) + "/" + cal.get(cal.YEAR));
+        txtHora.setText(cal.get(cal.HOUR) + ":" + cal.get(cal.MINUTE));
+        //Precargas Combos//
         cargarComboTipoPedido();
         cargarListaCliente(ClientesBD.getClientes());
         cargarComboPrioridad();
-
-
-
+        //Validaciones//
         ValidarTexbox.validarLong(txtCUIL);
 
     }
 
-
-
-    @Override
-    public void setVisible(boolean b) {
-     
-        super.setVisible(b);
+    public void cargar(Pedido pedido) {
+        setCliente(pedido.getCliente());
+        txtFechaEstimada.setText(Utilidades.parseDate(pedido.getFechaEstimadaEntrega()));
+        dtcFechaSolicitud.setDate(pedido.getFechaSolicitada());
+        tablaDetalle.setDatos(pedido.getDetallePedido());
+        cmbPrioridad.setSelectedIndex(pedido.getPrioridad());
+        cmbTipoPedido.setSelectedItem(pedido.getTipoPedido());
     }
 
-    private void cargarListaCliente(ArrayList<Cliente> Clientes)
-    {
-        DefaultListModel list=new DefaultListModel();
-        for(int i=0;i<Clientes.size();i++)
-        {
+    private void setCliente(Cliente cli) {
+        cliente = cli;
+        txtRazonSocial.setText(cliente.getRazonSocial());
+        txtCUIL.setText(cliente.getCuil() + "");
+    }
+
+    private void cargarListaCliente(ArrayList<Cliente> Clientes) {
+        DefaultListModel list = new DefaultListModel();
+        for (int i = 0; i < Clientes.size(); i++) {
             list.add(i, Clientes.get(i));
         }
 
         listaClientes.setModel(list);
     }
 
-    private void cargarComboPrioridad()
-    {
-        Object[] items=new String[] { "Muy Alta", "Alta", "Media", "Baja" };
-        DefaultComboBoxModel combo=new DefaultComboBoxModel(items);
-        
-         cmbPrioridad.setModel(combo);
+    private void cargarComboPrioridad() {
+        Object[] items = new String[]{"Muy Alta", "Alta", "Media", "Baja"};
+        DefaultComboBoxModel combo = new DefaultComboBoxModel(items);
+
+        cmbPrioridad.setModel(combo);
 
     }
 
-    private void cargarComboTipoPedido()
-    {
+    private void cargarComboTipoPedido() {
 
-        DefaultComboBoxModel combo=new DefaultComboBoxModel(TipoBD.getTipoPedido().toArray());
-         cmbTipoPedido.setModel(combo);
-
-    }
-
-        private void limpiarTabla()
-    {
-        while(tabla.getRowCount()>0)
-            tabla.removeRow(0);
-    }
-
-    private void addDetalleTabla(DetallePedido det)
-    {
-
-//
-//        Object[] fila=
-//        {det.getProducto().getCodigo(),
-//         det.getProducto().getDescripcion(),
-//         det.getProducto().getPrecioUnit(),
-//         det.getCantidad(),
-//         det.getProducto().getPrecioUnit()*det.getCantidad()
-//        };
-//        tabla.addRow(fila);
-    }
-
-    private void updateTabla()
-    {
-        limpiarTabla();
-        int aux=0;
-        for(int i=0;i<detalle.size();i++)
-        {
-//            aux+=detalle.get(i).getPrecio()*detalle.get(i).getCantidad();
-//            addDetalleTabla(detalle.get(i));
-        }
-        txtSubTotal.setText(aux+"");
+        DefaultComboBoxModel combo = new DefaultComboBoxModel(TipoBD.getTipoPedido().toArray());
+        cmbTipoPedido.setModel(combo);
 
     }
-    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -210,10 +160,10 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
         PaneDetalle = new javax.swing.JPanel();
         txtSubTotal = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbDetalle = new javax.swing.JTable();
         dtcFechaSolicitud = new com.toedter.calendar.JDateChooser();
         txtFechaEstimada = new javax.swing.JTextField();
         btnCliente = new javax.swing.JButton();
@@ -286,19 +236,6 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
         jLabel5.setText("Total($):");
 
-        tbDetalle.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Codigo", "Descripción", "Precio Unit.($)", "Cantidad", "Sub Total($)"
-            }
-        ));
-        jScrollPane2.setViewportView(tbDetalle);
-
         jButton2.setText("-");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -313,6 +250,9 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
             }
         });
 
+        tbDetalle.setModel(new javax.swing.table.DefaultTableModel());
+        jScrollPane2.setViewportView(tbDetalle);
+
         javax.swing.GroupLayout PaneDetalleLayout = new javax.swing.GroupLayout(PaneDetalle);
         PaneDetalle.setLayout(PaneDetalleLayout);
         PaneDetalleLayout.setHorizontalGroup(
@@ -323,13 +263,11 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneDetalleLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
-                    .addGroup(PaneDetalleLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)))
-                .addGroup(PaneDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                        .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PaneDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -342,12 +280,11 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneDetalleLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(PaneDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PaneDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addContainerGap())
         );
 
@@ -390,25 +327,6 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cmbPrioridad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbTipoPedido, 0, 209, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelFechaEstimada)
-                                .addGap(22, 22, 22))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(dtcFechaSolicitud, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                            .addComponent(txtFechaEstimada)))
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -422,7 +340,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                                     .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)))
                             .addComponent(btnCliente))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -430,7 +348,26 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmbPrioridad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbTipoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(labelFechaEstimada)
+                                .addGap(22, 22, 22))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dtcFechaSolicitud, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                            .addComponent(txtFechaEstimada))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -456,7 +393,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -470,7 +407,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                             .addComponent(labelFechaEstimada)
                             .addComponent(txtFechaEstimada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(dtcFechaSolicitud, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -492,10 +429,10 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4)
+                    .addComponent(jButton3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -508,43 +445,39 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        Pedido pedido = gestor.getPedido();
+        pedido.setCliente(cliente);
+        pedido.setDetallePedido(tablaDetalle.getDatos());
+        pedido.setFechaSolicitada(dtcFechaSolicitud.getDate());
+        pedido.setFechaEstimadaEntrega(dtcFechaSolicitud.getDate());
+        pedido.setPrioridad((byte) cmbPrioridad.getSelectedIndex());
+        pedido.setTipoPedido((TipoPedido) cmbTipoPedido.getSelectedItem());
+        try {
+            gestor.ejecutar(pedido);
+            this.setVisible(false);
+        } catch (ExceptionGestor ex) {
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+        }
 
-        if(modificar==false)
-            pedido=new Pedido();
-
-//        pedido.setNumero(PedidoBD.generarNro());
-//        pedido.setCliente(cliente);
-//        pedido.setDetalle(detalle);
-//        pedido.setFechaEntrega(dtcFechaSolicitud.getDate());
-//        pedido.setFechaEstimada(dtcFechaSolicitud.getDate());
-//
-//        if(modificar==false)
-//            pedido.setFechaGeneracion(GregorianCalendar.getInstance().getTime());
-//
-//        pedido.setPrioridad(cmbPrioridad.getSelectedIndex());
-//        pedido.setTipo((TipoPedido) cmbTipoPedido.getSelectedItem());
-        
-        if(modificar==false)
-            PedidoBD.addPedido(pedido);
-
-        this.setVisible(false);
 
         //JOptionPane.showMessageDialog(this, "El pedido Nro: XX ha sido registrado correctamente","Informacion",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        pantDetPed.setVisible(true);
-        if(pantDetPed.isOK())
-            detalle.add(pantDetPed.getResultado());
-        updateTabla();
-        
+
+        PantallaRegistrarDetallePedido panDet=new PantallaRegistrarDetallePedido(null,true,gestor);
+        panDet.setVisible(true);
+        if(panDet.isOk())
+            tablaDetalle.add(panDet.getDetalle());
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-      
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void listaClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaClientesMousePressed
@@ -555,39 +488,34 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
         // TODO add your handling code here:
-        PantallaAMBCliente pant=new PantallaAMBCliente(null,true);
+        PantallaAMBCliente pant = new PantallaAMBCliente(null, true);
         pant.setVisible(true);
         cargarListaCliente(ClientesBD.getClientes());
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void dtcFechaSolicitudMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dtcFechaSolicitudMouseClicked
         // TODO add your handling code here:
-        fechaEstimada=dtcFechaSolicitud.getDate();
-        
-        txtFechaEstimada.setText("");
+
+        txtFechaEstimada.setText(Utilidades.parseDate(dtcFechaSolicitud.getDate()));
     }//GEN-LAST:event_dtcFechaSolicitudMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        detalle.remove(tbDetalle.getSelectedRow());
-        updateTabla();
+        tablaDetalle.removeSelectedRow();
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void setCliente(Cliente cli)
-    {
-        cliente=cli;
-        txtRazonSocial.setText(cliente.getRazonSocial());
-        txtCUIL.setText(cliente.getCuil()+"");
-    }
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
-                PantallaRegistrarPedido dialog = new PantallaRegistrarPedido(new javax.swing.JFrame(), true);
+                PantallaRegistrarPedido dialog = new PantallaRegistrarPedido(new javax.swing.JFrame(), true,new GestorRegistrarPedido());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
@@ -596,7 +524,6 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PaneDetalle;
     private javax.swing.JButton btnCliente;
@@ -629,7 +556,4 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
     private javax.swing.JTextField txtRazonSocial;
     private javax.swing.JTextField txtSubTotal;
     // End of variables declaration//GEN-END:variables
-
-
-
 }

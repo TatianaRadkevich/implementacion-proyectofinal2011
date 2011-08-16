@@ -11,7 +11,7 @@
 
 package Presentacion.Ventas;
 
-import BaseDeDatos.ClientesBD;
+import BaseDeDatos.Ventas.ClientesBD;
 import BaseDeDatos.TipoBD;
 import Negocio.UbicacionGeografica.Domicilio;
 import Negocio.Ventas.Cliente;

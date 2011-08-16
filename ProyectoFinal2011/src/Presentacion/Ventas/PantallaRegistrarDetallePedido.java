@@ -13,7 +13,13 @@ package Presentacion.Ventas;
 
 import BaseDeDatos.ProductoBD;
 import BaseDeDatos.TipoBD;
+import Negocio.Produccion.Producto;
+import Negocio.Produccion.TipoProducto;
 import Negocio.Ventas.DetallePedido;
+import Negocio.Ventas.GestorPedido;
+import Presentacion.ValidarTexbox;
+import java.math.BigDecimal;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
@@ -23,52 +29,46 @@ import javax.swing.JComboBox;
  */
 public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
 
-    private boolean ok;
+    private boolean ok;// si salio por el boton aceptar
+    private GestorPedido gestor;
     private DetallePedido detalle;
 
     /** Creates new form PantallaRegistrarDetallePedido */
-    public PantallaRegistrarDetallePedido(java.awt.Frame parent, boolean modal) {
+    public PantallaRegistrarDetallePedido(java.awt.Frame parent, boolean modal,GestorPedido gp) {
         super(parent, modal);
         initComponents();
-        cargarComboProducto();
-        cargarComboTipoProducto();
+        gestor=gp;
+        ok=false;
+        cargarCombo(gestor.getTipoProductos(),cmbTipoProducto);
+        
+        ValidarTexbox.validarInt(txtCantidad);
+
     }
     
-    private void cargarComboProducto()
+    private void cargarCombo(List cont,JComboBox combo)
     {
+        //try{
+        combo.removeAllItems();
+        if(cont.isEmpty())
+            return;
 
-        DefaultComboBoxModel combo=new DefaultComboBoxModel(ProductoBD.getProductos().toArray());
-         cmbProducto.setModel(combo);
+        for(Object o:cont)
+            combo.addItem(o);
 
+        combo.setSelectedIndex(0);
+       // }catch (Exception e){}
     }
 
-    private void cargarComboTipoProducto()
-    {
-
-        DefaultComboBoxModel combo=new DefaultComboBoxModel(TipoBD.getTipoProducto().toArray());
-         cmbTipoProducto.setModel(combo);
-
-    }
-
-    public DetallePedido getResultado()
-    {
-        return detalle;
-    }
-
-    private void cargarComboProducto(Object[] data)
-    {
-        cmbTipoProducto.setModel(new javax.swing.DefaultComboBoxModel(data));
-    }
-
-    public boolean isOK()
-    {
+    public boolean isOk() {
         return ok;
     }
 
-   private void cargarComboTipoProducto(Object[] data)
-    {
-        cmbTipoProducto.setModel(new javax.swing.DefaultComboBoxModel(data));
+    public DetallePedido getDetalle() {
+        return detalle;
     }
+
+
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -91,20 +91,11 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        paneCargar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        paneCargar.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle"));
 
-        cmbTipoProducto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cmbProducto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbProducto.addActionListener(new java.awt.event.ActionListener() {
+        cmbTipoProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbProductoActionPerformed(evt);
-            }
-        });
-
-        txtCantidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCantidadActionPerformed(evt);
+                cmbTipoProductoActionPerformed(evt);
             }
         });
 
@@ -195,43 +186,30 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-//        detalle=new DetallePedido(Integer.parseInt(txtCantidad.getText()), (Producto) cmbProducto.getSelectedItem());
-
+        Producto prod= (Producto) cmbProducto.getSelectedItem();
+        detalle=new DetallePedido();
+        detalle.setCantidad(Integer.parseInt(txtCantidad.getText()));
+        detalle.setProducto(prod);
+        detalle.setPrecio(prod.getPrecioUnitario().floatValue());
         ok=true;
         this.setVisible(false);
+    
 }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        detalle=null;
         ok=false;
         this.setVisible(false);
+
 }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void cmbProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductoActionPerformed
+    private void cmbTipoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoProductoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cmbProductoActionPerformed
+         cargarCombo(gestor.getProductos((TipoProducto) cmbTipoProducto.getSelectedItem()),cmbProducto);
 
-    private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCantidadActionPerformed
+    }//GEN-LAST:event_cmbTipoProductoActionPerformed
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                PantallaRegistrarDetallePedido dialog = new PantallaRegistrarDetallePedido(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
