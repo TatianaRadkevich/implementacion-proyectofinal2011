@@ -11,7 +11,7 @@
 
 package Presentacion.Ventas;
 
-import BaseDeDatos.PedidoBD;
+import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Ventas.Pedido;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
     private void cargarTabla()
     {
-        data=PedidoBD.getPedidos();
+        //data=PedidoBD.getPedidos();
         updateTabla();
     }
 
@@ -315,10 +315,10 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        PantallaRegistrarPedido regPedido;
-        regPedido=new PantallaRegistrarPedido(null,true);
-        regPedido.setVisible(true);
-        cargarTabla();
+//        PantallaRegistrarPedido regPedido;
+//        regPedido=new PantallaRegistrarPedido(null,true);
+//        regPedido.setVisible(true);
+//        cargarTabla();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void txtCUILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCUILActionPerformed
@@ -336,10 +336,10 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        PantallaRegistrarPedido regPedido;
-        regPedido=new PantallaRegistrarPedido(null,true,data.get(tbPedidos.getSelectedRow()));
-        regPedido.setVisible(true);
-        cargarTabla();
+//        PantallaRegistrarPedido regPedido;
+//        regPedido=new PantallaRegistrarPedido(null,true,data.get(tbPedidos.getSelectedRow()));
+//        regPedido.setVisible(true);
+//        cargarTabla();
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -348,7 +348,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
          
 
-        PedidoBD.eliminar((Integer)tabla.getValueAt(tbPedidos.getSelectedRow(), 2));
+        //PedidoBD.eliminar((Integer)tabla.getValueAt(tbPedidos.getSelectedRow(), 2));
         cargarTabla();
     }//GEN-LAST:event_btnBajaActionPerformed
 
