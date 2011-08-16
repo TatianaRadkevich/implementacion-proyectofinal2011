@@ -70,7 +70,7 @@ public class Producto  implements java.io.Serializable {
     public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
     }
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="ID_TPRODUCTO", nullable=false)
     public TipoProducto getTTproducto() {
         return this.TTproducto;
@@ -108,7 +108,7 @@ public class Producto  implements java.io.Serializable {
     }
     
     
-    public String getCodigo() {
+    public String codigoMerge() {
         return this.getTTproducto().getCodigo()+"-"+this.getIdProducto();
     }
     
@@ -142,7 +142,7 @@ public class Producto  implements java.io.Serializable {
     public Object getInfoColumna(int columnIndex) {
          switch (columnIndex){
              case 0:
-                return this.getCodigo();
+                return this.codigoMerge();
              case 1:
                 return this.getNombre();
              case 2:

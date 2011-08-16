@@ -75,7 +75,7 @@ public class TipoProducto  implements java.io.Serializable {
     }
 
 
-       @Column(name="CODIGO", nullable=false, length=4)
+    @Column(name="CODIGO", nullable=false, length=4)
     public String getCodigo() {
         return this.codigo;
     }
