@@ -22,6 +22,7 @@ public class TipoProducto  implements java.io.Serializable {
      private int idTproducto;
      private String nombre;
      private String descripcion;
+     private String codigo;
     // private Set<Producto> TProductoses = new HashSet<Producto>(0);
 
     public TipoProducto() {
@@ -37,11 +38,11 @@ public class TipoProducto  implements java.io.Serializable {
         this.idTproducto = idTproducto;
         this.nombre = nombre;
     }
-    public TipoProducto(int idTproducto, String nombre, String descripcion/**, Set<Producto> TProductoses**/) {
+    public TipoProducto(int idTproducto, String nombre, String descripcion,String codigo) {
        this.idTproducto = idTproducto;
        this.nombre = nombre;
        this.descripcion = descripcion;
-      // this.TProductoses = TProductoses;
+      this.codigo=codigo;
     }
    
      @Id 
@@ -72,14 +73,18 @@ public class TipoProducto  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-//@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TTproducto")
-//    public Set<Producto> getTProductoses() {
-//        return this.TProductoses;
-//    }
-//
-//    public void setTProductoses(Set<Producto> TProductoses) {
-//        this.TProductoses = TProductoses;
-//    }
+
+
+       @Column(name="CODIGO", nullable=false, length=4)
+    public String getCodigo() {
+        return this.codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+
 
     @Override
         public String toString(){
