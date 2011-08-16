@@ -1,7 +1,6 @@
 
                     /* SCRIPT DE CREACIÓN RAMATY - Versión 1-1*/
                     
-
 CREATE TABLE T_ASISTENCIAS_EMPLEADO (
        ID_ASISTENCIA_EMPLEADO numeric(4) IDENTITY,
        FEC_ASISTENCIA       datetime NOT NULL,
@@ -37,8 +36,7 @@ CREATE TABLE T_CARGOS (
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL,
        FEC_BAJA             datetime NULL,
-       MOTIVO_BAJA          varchar(200) NULL,
-       ID_EMPLEADO          numeric(5) NOT NULL
+       MOTIVO_BAJA          varchar(200) NULL
 )
 go
 
@@ -165,7 +163,8 @@ CREATE TABLE T_DETALLES_PEDIDO (
        CANTIDAD             numeric(5) NOT NULL,
        PRECIO               numeric(6,2) NOT NULL,
        ID_PEDIDO            numeric(8) NOT NULL,
-       ID_PRODUCTO          numeric(5) NOT NULL
+       ID_PRODUCTO          numeric(5) NOT NULL,
+       ID_SEQ_EDETALLE_PEDIDO numeric(2) NOT NULL
 )
 go
 
@@ -243,6 +242,19 @@ ALTER TABLE T_DOMICILIOS
 go
 
 
+CREATE TABLE T_EDETALLE_PEDIDO (
+       ID_SEQ_EDETALLE_PEDIDO numeric(2) IDENTITY,
+       NOMBRE               varchar(50) NOT NULL,
+       DESCRIPCION          varchar(200) NULL
+)
+go
+
+
+ALTER TABLE T_EDETALLE_PEDIDO
+       ADD PRIMARY KEY (ID_SEQ_EDETALLE_PEDIDO ASC)
+go
+
+
 CREATE TABLE T_EGRESOS (
        ID_EGRESO            numeric(8) NOT NULL,
        FEC_HORA_EGRESO      datetime NOT NULL,
@@ -282,7 +294,6 @@ CREATE TABLE T_EMPLEADOS (
        ID_TDOCUMENTO        numeric(2) NOT NULL,
        ID_SEXO              numeric(2) NOT NULL,
        ID_DOMICILIO         numeric(3) NOT NULL,
-       LEGAJO               numeric(5) NULL,
        OBSERVACIONES        varchar(200) NULL,
        ID_ASISTENCIA_EMPLEADO numeric(5) NULL,
        ID_DIAS_HORAS_LABORABLES numeric(3) NULL,
@@ -293,6 +304,19 @@ go
 
 ALTER TABLE T_EMPLEADOS
        ADD PRIMARY KEY (ID_EMPLEADO ASC)
+go
+
+
+CREATE TABLE T_EMPLEADOS_X_CARGO (
+       ID_EMPLEADO_X_CARGO  numeric(5) IDENTITY,
+       ID_CARGO             numeric(2) NOT NULL,
+       ID_EMPLEADO          numeric(5) NOT NULL
+)
+go
+
+
+ALTER TABLE T_EMPLEADOS_X_CARGO
+       ADD PRIMARY KEY (ID_EMPLEADO_X_CARGO ASC)
 go
 
 
@@ -319,6 +343,19 @@ go
 
 ALTER TABLE T_EPEDIDO
        ADD PRIMARY KEY (ID_EPEDIDO ASC)
+go
+
+
+CREATE TABLE T_EPRODUCTO_TERMINADO (
+       ID_EPRODUCTO_TERMINADO numeric(2) IDENTITY,
+       DESCRIPCION          varchar(200) NULL,
+       NOMBRE               varchar(50) NOT NULL
+)
+go
+
+
+ALTER TABLE T_EPRODUCTO_TERMINADO
+       ADD PRIMARY KEY (ID_EPRODUCTO_TERMINADO ASC)
 go
 
 
@@ -555,14 +592,28 @@ CREATE TABLE T_PRODUCTOS (
        DESCRIPCION          varchar(200) NULL,
        NOMBRE               varchar(50) NOT NULL,
        PRECIO_UNITARIO      numeric(4,2) NOT NULL,
-       ID_TPRODUCTO         numeric(2) NOT NULL,
-       CODIGO               varchar(2) NOT NULL
+       ID_TPRODUCTO         numeric(2) NOT NULL
 )
 go
 
 
 ALTER TABLE T_PRODUCTOS
        ADD PRIMARY KEY (ID_PRODUCTO ASC)
+go
+
+
+CREATE TABLE T_PRODUCTOS_TERMINADO (
+       ID_PRODUCTO_TERMINADO numeric(8) IDENTITY,
+       FEC_HORA_ALMACENAMIENTO datetime NOT NULL,
+       ID_DETALLE_PEDIDO    numeric(8) NOT NULL,
+       ID_EPRODUCTO_TERMINADO numeric(2) NOT NULL,
+       CANTIDAD             numeric(5) NOT NULL
+)
+go
+
+
+ALTER TABLE T_PRODUCTOS_TERMINADO
+       ADD PRIMARY KEY (ID_PRODUCTO_TERMINADO ASC)
 go
 
 
@@ -684,7 +735,8 @@ go
 CREATE TABLE T_TPRODUCTO (
        ID_TPRODUCTO         numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
-       DESCRIPCION          varchar(200) NULL
+       DESCRIPCION          varchar(200) NULL,
+       CODIGO               varchar(4) NOT NULL
 )
 go
 
@@ -718,14 +770,6 @@ go
 ALTER TABLE T_BARRIOS
        ADD FOREIGN KEY (ID_LOCALIDAD)
                              REFERENCES T_LOCALIDADES  (ID_LOCALIDAD)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_CARGOS
-       ADD FOREIGN KEY (ID_EMPLEADO)
-                             REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -842,6 +886,15 @@ go
 ALTER TABLE T_DETALLES_ORDEN_COMPRA
        ADD FOREIGN KEY (ID_MATERIAL)
                              REFERENCES T_MATERIALES  (ID_MATERIAL)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_DETALLES_PEDIDO
+       ADD FOREIGN KEY (ID_SEQ_EDETALLE_PEDIDO)
+                             REFERENCES T_EDETALLE_PEDIDO  (
+              ID_SEQ_EDETALLE_PEDIDO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -989,6 +1042,22 @@ go
 ALTER TABLE T_EMPLEADOS
        ADD FOREIGN KEY (ID_USUARIO)
                              REFERENCES T_USUARIOS  (ID_USUARIO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_EMPLEADOS_X_CARGO
+       ADD FOREIGN KEY (ID_EMPLEADO)
+                             REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_EMPLEADOS_X_CARGO
+       ADD FOREIGN KEY (ID_CARGO)
+                             REFERENCES T_CARGOS  (ID_CARGO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -1159,6 +1228,24 @@ ALTER TABLE T_PRODUCTOS
 go
 
 
+ALTER TABLE T_PRODUCTOS_TERMINADO
+       ADD FOREIGN KEY (ID_EPRODUCTO_TERMINADO)
+                             REFERENCES T_EPRODUCTO_TERMINADO  (
+              ID_EPRODUCTO_TERMINADO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_PRODUCTOS_TERMINADO
+       ADD FOREIGN KEY (ID_DETALLE_PEDIDO)
+                             REFERENCES T_DETALLES_PEDIDO  (
+              ID_DETALLE_PEDIDO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
 ALTER TABLE T_PROVEEDORES
        ADD FOREIGN KEY (ID_DOMICILIO)
                              REFERENCES T_DOMICILIOS  (ID_DOMICILIO)
@@ -1202,4 +1289,3 @@ go
 
 
 
-                    
