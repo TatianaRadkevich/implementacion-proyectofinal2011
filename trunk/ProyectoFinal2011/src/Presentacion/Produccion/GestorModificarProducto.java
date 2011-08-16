@@ -21,7 +21,7 @@ public class GestorModificarProducto extends GestorProducto{
 
     @Override
     public Producto ejecutarOperacion(Producto producto) throws ExceptionGestor {
-        return ProductoBD.guardar(producto);
+        return ProductoBD.modificar(producto);
     }
 
     void modificarProducto(Dialog parent,String codigo) {

@@ -14,6 +14,7 @@ package Presentacion.Produccion;
 import Negocio.Produccion.GestorProducto;
 import Negocio.Produccion.GestorRegistrarProducto;
 import Negocio.Produccion.Producto;
+import Presentacion.Mensajes;
 import gui.GUILocal;
 import java.util.LinkedList;
 import java.util.List;
@@ -77,7 +78,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
 
         btnBaja.setText("Baja");
 
-        tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11));
+        tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         tabla_producto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -90,6 +91,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             }
         ));
         tabla_producto.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabla_producto.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabla_producto.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 tabla_productoComponentShown(evt);
@@ -213,7 +215,13 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
         GestorModificarProducto gestor=new GestorModificarProducto();
         
-        gestor.modificarProducto(this, (String) tabla_producto.getValueAt(tabla_producto.getSelectedRow(),0));
+        if(tabla_producto.getSelectedRow()==-1){
+            Mensajes.mensajeErrorGenerico("Debe seleccion un producto");
+            return;
+        }
+
+            gestor.modificarProducto(this, (String) tabla_producto.getValueAt(tabla_producto.getSelectedRow(),0));
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void tabla_productoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabla_productoComponentShown
@@ -230,7 +238,8 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-         tabla_montecarlo.setModel(new ModelerProducto(GestorProducto.listarProductos()));
+         tabla_producto.setModel(new ModelerProducto(GestorProducto.listarProductos()));
+         tabla_producto.updateUI();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -261,9 +270,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tabla_montecarlo;
     private javax.swing.JTable tabla_producto;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNombre;
