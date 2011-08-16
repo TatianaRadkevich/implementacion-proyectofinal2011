@@ -34,6 +34,7 @@ public abstract class TablaManager <E>
         };
         tabla.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         estructura.setColumnIdentifiers(getCabecera());
+        tabla.setModel(estructura);
     }
 
     public abstract Vector ObjetoFila(E elemento);
