@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.logging.Level;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
 
 /**
  *
@@ -50,7 +49,7 @@ public class ProductoBD{
             usuario=HibernateUtil.getNewSession();
             usuario.beginTransaction();
 
-            result = usuario.createQuery("from ProductoLista").list();
+            result = usuario.createQuery("from Producto").list();
             usuario.getTransaction().commit();
                 usuario.close();
         }catch(Exception  ex) {}
