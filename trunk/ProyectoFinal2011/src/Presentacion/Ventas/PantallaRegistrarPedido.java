@@ -57,7 +57,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(DetallePedido elemento) {
                 Vector fila = new Vector();
-                fila.add(elemento.getProducto().getCodigo());
+                fila.add(elemento.getProducto().codigoMerge());
                 fila.add(elemento.getProducto().getDescripcion());
                 fila.add(elemento.getProducto().getPrecioUnitario());
                 fila.add(elemento.getCantidad());
