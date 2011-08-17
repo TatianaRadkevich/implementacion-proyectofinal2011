@@ -11,6 +11,8 @@
 
 package Presentacion.Produccion;
 
+import gui.GUILocal;
+
 /**
  *
  * @author Ivan
@@ -20,11 +22,13 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
     /** Creates new form AdministrarTipoProducto */
     public PantallaABMTipoProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        GUILocal.establecerGUILocal(this);
         initComponents();
 
-        pnlBaja.setEnabled(false);
-        pnlCargo.setEnabled(false);
-        pnlDisponible.setEnabled(false);
+       this.activarCargo(false);
+       this.activarBaja(false);
+       this.activarDisponible(false);
+       this.activarBotones(true, true, true, false, false, true);
     }
 
     private void activarCargo(boolean flag){
@@ -47,6 +51,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         this.btnBaja.setEnabled(baja);
         this.btnAceptar.setEnabled(aceptar);
         this.btnCancelar.setEnabled(cancelar);
+        this.btnAlta.setEnabled(alta);
     }
     /** This method is called from within the constructor to
      * initialize the form.
@@ -71,7 +76,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         txtFechaBaja = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtMotivoBaja = new javax.swing.JTextArea();
-        jButton6 = new javax.swing.JButton();
+        btnAlta = new javax.swing.JButton();
         pnlDisponible = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         cmbDisponible = new javax.swing.JList();
@@ -105,7 +110,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         txtMotivoBaja.setRows(5);
         jScrollPane3.setViewportView(txtMotivoBaja);
 
-        jButton6.setText("Alta");
+        btnAlta.setText("Alta");
 
         javax.swing.GroupLayout pnlBajaLayout = new javax.swing.GroupLayout(pnlBaja);
         pnlBaja.setLayout(pnlBajaLayout);
@@ -121,7 +126,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
                     .addGroup(pnlBajaLayout.createSequentialGroup()
                         .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -132,7 +137,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6))
+                    .addComponent(btnAlta))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
@@ -295,12 +300,12 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnAlta;
     private javax.swing.JButton btnBaja;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JList cmbDisponible;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
