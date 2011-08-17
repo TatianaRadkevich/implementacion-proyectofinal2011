@@ -11,6 +11,7 @@
 
 package Presentacion;
 
+import Presentacion.Produccion.PantallaABMTipoProducto;
 import Presentacion.Produccion.PantallaConsultarProducto;
 
 /**
@@ -55,6 +56,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem1);
 
         jMenuItem2.setText("Tipo producto");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuBar1.add(jMenu2);
@@ -80,6 +86,12 @@ public class Principal extends javax.swing.JFrame {
         PantallaConsultarProducto pantalla=new PantallaConsultarProducto(this, true);
         pantalla.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        PantallaABMTipoProducto pantalla=new PantallaABMTipoProducto(this, true);
+        pantalla.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
     * @param args the command line arguments
