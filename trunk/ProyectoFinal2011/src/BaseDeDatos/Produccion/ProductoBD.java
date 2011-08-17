@@ -7,6 +7,7 @@ package BaseDeDatos.Produccion;
 
 import BaseDeDatos.HibernateUtil;
 import Negocio.Produccion.Producto;
+import Negocio.Produccion.TipoProducto;
 import Negocio.Ventas.TipoPedido;
 
 import java.util.List;
@@ -39,27 +40,29 @@ public class ProductoBD{
         return producto;
     } 
 
+    public static Producto modificar(Producto producto){
+        Session usuario = null;
+        try{
+            usuario= HibernateUtil.getNewSession();
+            usuario.beginTransaction();
+
+            usuario.update(producto);
+            usuario.getTransaction().commit();
+            usuario.close();
+        }catch(Exception  ex) {  }
+
+        return producto;
+    }
+
 
     public static List<Producto> listarProductos()throws ExceptionInInitializerError{
 
-         Session usuario = null;
-        List<Producto> result=null;
-
-        try{           
-            usuario=HibernateUtil.getNewSession();
-            usuario.beginTransaction();
-
-            result = usuario.createQuery("from Producto").list();
-            usuario.getTransaction().commit();
-                usuario.close();
-        }catch(Exception  ex) {}
-           
-
-        return result;
+        List<Producto> var=HibernateUtil.ejecutarConsulta("from Producto");
+        return var;
     }
 
-    public static List<Producto> listarProductos(TipoPedido tp){
-        String hql="from Producto as pd where pd.TTproducto.idTproducto="+tp.getIdTipoPedido();
+    public static List<Producto> listarProductos(TipoProducto tp){
+        String hql="from Producto as pd where pd.TTproducto.idTproducto="+tp.getIdTproducto();
         return HibernateUtil.ejecutarConsulta(hql);
     }
 
@@ -72,8 +75,6 @@ public class ProductoBD{
             producto =(Producto) usuario.get(Producto.class,id);
             usuario.close();
         }catch(Exception  ex) {}
-
-
         return producto;
     }
 
