@@ -63,15 +63,26 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     }
 
     public void modificar(Producto producto){
+        this.producto=producto;
         this.txtCodigo.setVisible(true);
         this.lbl_codigo.setVisible(true);
         this.txtCodigo.setEditable(false);
-        this.txtCodigo.setText(producto.getCodigo()+"-"+producto.getIdProducto());
-        this.txtNombre.setText(producto.getNombre());
-        this.txtAreaDescripcion.setText(producto.getDescripcion());
-        this.txtPrecio.setText(producto.getPrecioUnitario()+"");
+        this.txtCodigo.setText(this.producto.codigoMerge());
+        this.txtNombre.setText(this.producto.getNombre());
+        this.txtAreaDescripcion.setText(this.producto.getDescripcion());
+        this.txtPrecio.setText(this.producto.getPrecioUnitario()+"");
+
+        TipoProducto tipo=null;
+        for(int i=0; i<cmbTipoProducto.getItemCount();i++){
+            tipo=(TipoProducto) cmbTipoProducto.getItemAt(i);
+            if(tipo.getNombre().compareTo(this.producto.getTTproducto().getNombre())==0){
+                cmbTipoProducto.setSelectedIndex(i);
+                break;
+            }
+
+        }
         this.cmbTipoProducto.setSelectedItem(producto.getTTproducto());
-        this.producto=producto;
+        
     }
 
     /** This method is called from within the constructor to
@@ -232,9 +243,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-        if(validar()){
-
-            producto=new Producto();
+        if(validar()){            
             producto.setNombre(txtNombre.getText());
             producto.setDescripcion(txtAreaDescripcion.getText());
             producto.setPrecioUnitario(new BigDecimal(txtPrecio.getText()));
