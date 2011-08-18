@@ -74,7 +74,9 @@ CREATE TABLE T_CLIENTES (
        ID_USUARIO           numeric(5) NULL,
        NOMBRE_RESPONSABLE   varchar(50) NOT NULL,
        APELLIDO_RESPONSABLE varchar(50) NOT NULL,
-       TELEFONO_RESPONSABLE numeric(13) NULL
+       TELEFONO_RESPONSABLE numeric(13) NULL,
+       FEC_BAJA             datetime NULL,
+       MOTIVO_BAJA          varchar(100) NULL
 )
 go
 
@@ -298,7 +300,9 @@ CREATE TABLE T_EMPLEADOS (
        OBSERVACIONES        varchar(200) NULL,
        ID_ASISTENCIA_EMPLEADO numeric(5) NULL,
        ID_DIAS_HORAS_LABORABLES numeric(3) NULL,
-       ID_USUARIO           numeric(5) NOT NULL
+       ID_USUARIO           numeric(5) NOT NULL,
+       FEC_BAJA             datetime NULL,
+       MOTIVO_BAJA          varchar(100) NULL
 )
 go
 
@@ -474,7 +478,9 @@ CREATE TABLE T_MAQUINAS_HERRAMIENTA_PARTICULAR (
        OBSERVACIONES        varchar(200) NULL,
        ID_TMAQUINA_HERRAMIENTA numeric(2) NOT NULL,
        ID_EMAQUINA          numeric(2) NOT NULL,
-       CODIGO               varchar(2) NOT NULL
+       CODIGO               varchar(2) NOT NULL,
+       FEC_BAJA             datetime NULL,
+       MOTIVO_BAJA          varchar(100) NULL
 )
 go
 
@@ -558,7 +564,9 @@ CREATE TABLE T_PEDIDOS (
        PRIORIDAD            numeric(2) NOT NULL,
        ID_EPEDIDO           numeric(2) NOT NULL,
        ID_TPEDIDO           numeric(2) NOT NULL,
-       ID_CLIENTE           numeric(5) NOT NULL
+       ID_CLIENTE           numeric(5) NOT NULL,
+       FEC_BAJA             datetime NULL,
+       MOTIVO_BAJA          varchar(100) NULL
 )
 go
 
@@ -712,7 +720,9 @@ CREATE TABLE T_TMAQUINA_HERRAMIENTA (
        ID_TMAQUINA_HERRAMIENTA numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        ES_HERRAMIENTA       bit NOT NULL,
-       ID_ETAPA_PRODUCCION_ESPECIFICA numeric(5) NOT NULL
+       ID_ETAPA_PRODUCCION_ESPECIFICA numeric(5) NOT NULL,
+       FEC_BAJA             datetime NULL,
+       MOTIVO_BAJA          varchar(100) NULL
 )
 go
 
