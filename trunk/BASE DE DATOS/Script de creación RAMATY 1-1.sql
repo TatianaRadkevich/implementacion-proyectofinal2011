@@ -1,6 +1,7 @@
 
                     /* SCRIPT DE CREACIÓN RAMATY - Versión 1-1*/
                     
+
 CREATE TABLE T_ASISTENCIAS_EMPLEADO (
        ID_ASISTENCIA_EMPLEADO numeric(4) IDENTITY,
        FEC_ASISTENCIA       datetime NOT NULL,
@@ -592,7 +593,9 @@ CREATE TABLE T_PRODUCTOS (
        DESCRIPCION          varchar(200) NULL,
        NOMBRE               varchar(50) NOT NULL,
        PRECIO_UNITARIO      numeric(4,2) NOT NULL,
-       ID_TPRODUCTO         numeric(2) NOT NULL
+       ID_TPRODUCTO         numeric(2) NOT NULL,
+       FEC_BAJA             datetime NULL,
+       MOTIVO_BAJA          varchar(100) NULL
 )
 go
 
@@ -736,7 +739,9 @@ CREATE TABLE T_TPRODUCTO (
        ID_TPRODUCTO         numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
        DESCRIPCION          varchar(200) NULL,
-       CODIGO               varchar(4) NOT NULL
+       CODIGO               varchar(4) NOT NULL,
+       FEC_BAJA             datetime NULL,
+       MOTIVO_BAJA          varchar(100) NULL
 )
 go
 
