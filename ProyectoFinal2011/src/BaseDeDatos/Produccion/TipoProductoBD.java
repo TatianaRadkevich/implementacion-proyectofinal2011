@@ -27,10 +27,8 @@ public class TipoProductoBD{
          Session usuario = null;
         List<TipoProducto> result=null;
         
-        try{
-            AnnotationConfiguration conf=new AnnotationConfiguration().configure();
-            SessionFactory factory= conf.buildSessionFactory();
-            usuario= factory.openSession();
+        try{            
+            usuario= HibernateUtil.getNewSession();
             usuario.beginTransaction();       
            
             result = usuario.createQuery("from TipoProducto").list();
@@ -42,11 +40,42 @@ public class TipoProductoBD{
         return result;
     }
 
+    public static List<TipoProducto> listarTiposProductosAlta() {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
     public TipoProductoBD() {
         super();
     }
 
-   
+    public static TipoProducto guardar(TipoProducto tipoProducto){
+        Session usuario = null;
+        try{
+            usuario= HibernateUtil.getNewSession();
+            usuario.beginTransaction();
+
+            usuario.save(tipoProducto);
+            usuario.getTransaction().commit();
+            usuario.close();
+        }catch(Exception  ex) {  }
+
+        return tipoProducto;
+    }
+
+    public static TipoProducto modificar(TipoProducto tipoProducto){
+        Session usuario = null;
+        try{
+            usuario= HibernateUtil.getNewSession();
+            usuario.beginTransaction();
+
+            usuario.update(tipoProducto);
+            usuario.getTransaction().commit();
+            usuario.close();
+        }catch(Exception  ex) {  }
+
+        return tipoProducto;
+    }
+
 
 
  
