@@ -17,6 +17,7 @@ import Negocio.Ventas.Pedido;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -87,6 +88,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
     }
 
     private void cargarValidaciones() {
+        ((JTextFieldDateEditor)dtcFechaSolicitud.getDateEditor()).setEditable(false);
         dtcFechaSolicitud.setMinSelectableDate(Utilidades.getFechaActual());
     }
 

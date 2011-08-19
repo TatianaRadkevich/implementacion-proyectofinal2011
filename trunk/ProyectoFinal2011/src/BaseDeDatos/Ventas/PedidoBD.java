@@ -40,8 +40,8 @@ public class PedidoBD
 
     public static List<Pedido> getPedidos(String RazonSocial,String CUIL,String NroPedido,Date desde,Date hasta)
     {
-        String auxDesde=Utilidades.parseFecha(Utilidades.agregarFecha(desde, -1, 0, 0));
-        String auxHasta=Utilidades.parseFecha(Utilidades.agregarFecha(hasta, 1, 0, 0));
+        String auxDesde=Utilidades.parseFecha(Utilidades.agregarTiempoFecha(desde, -1, 0, 0));
+        String auxHasta=Utilidades.parseFecha(Utilidades.agregarTiempoFecha(hasta, 1, 0, 0));
 
         String HQL=String.format(
                 "FROM Pedido as p "

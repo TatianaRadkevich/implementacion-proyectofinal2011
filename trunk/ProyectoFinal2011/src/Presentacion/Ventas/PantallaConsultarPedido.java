@@ -16,6 +16,7 @@ import Negocio.Ventas.Pedido;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -70,10 +71,18 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
         ValidarTexbox.validarLong(txtCUIL);
         ValidarTexbox.validarLongitud(txtCUIL, 11);
         ValidarTexbox.validarLongitud(txtRazonSocial, 50);
-        
+
+        ((JTextFieldDateEditor)dtcFechaGeneracionHasta.getDateEditor()).setEditable(false);
+        ((JTextFieldDateEditor)dtcFechaGeneracionDesde.getDateEditor()).setEditable(false);
+
         dtcFechaGeneracionHasta.setMaxSelectableDate(Utilidades.getFechaActual());
-        dtcFechaGeneracionHasta.setDate(Utilidades.getFechaActual());   
+        dtcFechaGeneracionDesde.setMaxSelectableDate(Utilidades.getFechaActual());
+
+        dtcFechaGeneracionHasta.setDate(Utilidades.getFechaActual());
+        dtcFechaGeneracionDesde.setDate(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 0, -1, 0));
         
+        //**********************Validacion de valores********************//
+
         dtcFechaGeneracionHasta.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 dtcFechaGeneracionDesde.setMaxSelectableDate(dtcFechaGeneracionHasta.getDate());
@@ -84,12 +93,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 dtcFechaGeneracionHasta.setMinSelectableDate(dtcFechaGeneracionDesde.getDate());
             }
-        });
-        //**********************Pre-carga de valores********************//
-        dtcFechaGeneracionDesde.setMaxSelectableDate(Utilidades.getFechaActual());
-        Calendar d=GregorianCalendar.getInstance();
-        d.add(Calendar.MONTH, -1);
-        dtcFechaGeneracionDesde.setDate(d.getTime());
+        });   
     }
 
     /** This method is called from within the constructor to
