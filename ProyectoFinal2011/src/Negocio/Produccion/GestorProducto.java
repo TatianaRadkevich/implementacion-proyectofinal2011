@@ -16,7 +16,7 @@ import java.util.List;
 public abstract class GestorProducto {
 
     public List<TipoProducto> traerTiposProductos() throws ExceptionGestor {
-        return TipoProductoBD.listarTiposProductos();
+        return GestorTipoProducto.listarTiposProductoAlta();
     }
 
     public abstract Producto ejecutarOperacion(Producto producto) throws ExceptionGestor;
