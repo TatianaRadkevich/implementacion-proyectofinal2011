@@ -25,6 +25,20 @@ public class Utilidades {
         return String.format("%s/%s/%s", c.get(Calendar.DATE),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR));
     }
 
+    public static Date agregarFecha(Date fecha,int dia,int mes,int año)
+    {
+        if(fecha==null)
+            return null;
+
+        Calendar c=GregorianCalendar.getInstance();
+        c.setTime(fecha);
+        c.add(Calendar.DATE, dia);
+        c.add(Calendar.MONTH, mes);
+        c.add(Calendar.YEAR, año);
+
+        return c.getTime();
+    }
+
     public static Date getFechaActual()
     {
         return GregorianCalendar.getInstance().getTime();
