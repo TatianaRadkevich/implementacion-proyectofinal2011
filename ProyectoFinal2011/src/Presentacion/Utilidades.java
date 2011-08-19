@@ -36,7 +36,7 @@ public class Utilidades {
                 c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE));
     }
 
-    public static Date agregarFecha(Date fecha,int dia,int mes,int año)
+    public static Date agregarTiempoFecha(Date fecha,int dia,int mes,int año)
     {
         if(fecha==null)
             return null;
