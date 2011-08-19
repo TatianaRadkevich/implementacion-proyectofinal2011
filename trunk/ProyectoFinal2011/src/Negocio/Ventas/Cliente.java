@@ -186,4 +186,11 @@ public class Cliente implements java.io.Serializable {
     public void setPedidos(Set<Pedido> pedidos) {
         this.TPedidoses = pedidos;
     }
+
+    @Override
+    public String toString() {
+        return this.razonSocial;//+"("+this.cuil+")";
+    }
+
+
 }
