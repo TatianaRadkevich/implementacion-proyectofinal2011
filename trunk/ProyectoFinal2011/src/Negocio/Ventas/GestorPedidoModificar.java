@@ -16,13 +16,22 @@ import java.util.GregorianCalendar;
  *
  * @author Ivan
  */
-public class GestorRegistrarPedido extends GestorPedido
+public class GestorPedidoModificar extends GestorPedido
 {
+
+
+    public GestorPedidoModificar(Pedido p)
+    {
+        pedido=p;
+    }
 
     @Override
     public void iniciar() {
+         if(pedido==null)
+            throw new RuntimeException("GestorPedidoModificar: Se debe definir el pedido a modificar");
+
         interfaz=new PantallaRegistrarPedido(this);
-        pedido=new Pedido();
+        interfaz.cargar(pedido);
         interfaz.setVisible(true);
     }
 
@@ -40,11 +49,9 @@ public class GestorRegistrarPedido extends GestorPedido
     }
 
     @Override
-    public void ejecutar(Pedido p) throws ExceptionGestor {        
-        p.setEstadoPedido(PedidoBD.getEstoadoPedido(PedidoBD.EP_AutorizadoPendiente));
-        p.setFechaGeneracion(Utilidades.getFechaActual());
+    public void ejecutar(Pedido p) throws ExceptionGestor {       
         validar(p);
-        PedidoBD.guardar(p);
+        PedidoBD.modificar(p);
     }
 
 

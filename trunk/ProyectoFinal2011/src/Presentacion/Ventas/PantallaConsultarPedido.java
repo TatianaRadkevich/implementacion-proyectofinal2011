@@ -57,7 +57,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                 fila.add(elemento.getCliente().getRazonSocial());//col 1
                 fila.add(elemento.getCliente().getCuil());//col 2
                 fila.add(elemento.getIdPedido());//col 3
-                fila.add(Utilidades.parseDate(elemento.getFechaGeneracion()));//col 4
+                fila.add(Utilidades.parseFecha(elemento.getFechaGeneracion()));//col 4
                 return fila;
             }
         };

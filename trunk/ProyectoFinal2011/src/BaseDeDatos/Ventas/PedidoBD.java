@@ -28,10 +28,20 @@ public class PedidoBD
         HibernateUtil.guardarObjeto(p);
     }
 
+    public static void modificar(Pedido p)
+    {
+        HibernateUtil.guardarObjeto(p);
+    }
+
+     public static Pedido getPedido(int id)
+    {
+         return (Pedido) HibernateUtil.getObjeto(Pedido.class, id);
+     }
+
     public static List<Pedido> getPedidos(String RazonSocial,String CUIL,String NroPedido,Date desde,Date hasta)
     {
-        String auxDesde=Utilidades.parseDate(Utilidades.agregarFecha(desde, -1, 0, 0));
-        String auxHasta=Utilidades.parseDate(Utilidades.agregarFecha(hasta, 1, 0, 0));
+        String auxDesde=Utilidades.parseFecha(Utilidades.agregarFecha(desde, -1, 0, 0));
+        String auxHasta=Utilidades.parseFecha(Utilidades.agregarFecha(hasta, 1, 0, 0));
 
         String HQL=String.format(
                 "FROM Pedido as p "
@@ -44,7 +54,11 @@ public class PedidoBD
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 
+    public static final String EP_NoAutorizado="No Autorizado";
     public static final String EP_AutorizadoPendiente="Autorizado-Pendiente";
+    public static final String EP_Planificado="Planificado";
+    public static final String EP_Cancelado="Cancelado";
+
     public static EstadoPedido getEstoadoPedido(String nombre)
     {
         String HQL=String.format("FROM EstadoPedido as ep WHERE LOWER(ep.nombre) = LOWER('%s')", nombre);

@@ -4,6 +4,7 @@
  */
 package BaseDeDatos;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
 import org.hibernate.Session;
@@ -65,6 +66,20 @@ public class HibernateUtil {
         session.beginTransaction();
         session.save(o);
         session.getTransaction().commit();
+    }
+
+    public static Object getObjeto(Class type, Serializable srlzbl) {
+        Object salida;
+        session.beginTransaction();
+        salida=session.get(type, srlzbl);
+        session.getTransaction().commit();
+        return salida;
+    }
+
+    public static void modificarObjeto(Object o) {
+        session.beginTransaction();
+        session.update(o);
+        session.getTransaction().commit();        
     }
 
     public static List ejecutarConsulta(String HQL) {
