@@ -6,6 +6,7 @@
 package BaseDeDatos.Ventas;
 
 import BaseDeDatos.HibernateUtil;
+import Negocio.Ventas.TipoPedido;
 import java.util.List;
 
 /**
@@ -14,9 +15,8 @@ import java.util.List;
  */
 public class TipoPedidoBD {
 
-    public static List<TipoPedidoBD> getTipoPedidos()
+    public static List<TipoPedido> getTipoPedidos()
     {
-
         return HibernateUtil.ejecutarConsulta("from TipoPedido");
     }
 }

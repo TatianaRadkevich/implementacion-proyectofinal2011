@@ -2,9 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package BaseDeDatos;
-
 
 import java.util.List;
 import javax.persistence.Entity;
@@ -21,12 +19,15 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
  * @author Rodrigo
  */
 public class HibernateUtil {
+
     private static final SessionFactory sessionFactory;
+    private static Session session;
 
     static {
         try {
             // Create the SessionFactory from standard
             sessionFactory = addClases(new AnnotationConfiguration()).configure().buildSessionFactory();
+            session = sessionFactory.openSession();
 
         } catch (Throwable ex) {
             // Log the exception.
@@ -35,17 +36,15 @@ public class HibernateUtil {
         }
     }
 
-    private static AnnotationConfiguration addClases(AnnotationConfiguration ac) throws Exception
-    {
+    private static AnnotationConfiguration addClases(AnnotationConfiguration ac) throws Exception {
         //metodo super groso mapea automaticamente todas las clases del proyecto con @entity
         // the following will detect all classes that are annotated as @Entity
         ClassPathScanningCandidateComponentProvider scanner =
-                  new ClassPathScanningCandidateComponentProvider(false);
+                new ClassPathScanningCandidateComponentProvider(false);
         scanner.addIncludeFilter(new AnnotationTypeFilter(Entity.class));
 
         // only register classes within "com.fooPackage" package
-        for (BeanDefinition bd : scanner.findCandidateComponents(""))
-        {
+        for (BeanDefinition bd : scanner.findCandidateComponents("")) {
             String name = bd.getBeanClassName();
             // register detected classes with AnnotationSessionFactoryBean
             ac.addAnnotatedClass(Class.forName(name));
@@ -58,28 +57,22 @@ public class HibernateUtil {
         return sessionFactory;
     }
 
-    public static Session getNewSession()
-    {
+    public static Session getNewSession() {
         return sessionFactory.openSession();
     }
 
-    public static void guardarObjeto(Object o)
-    {
-        Session ss=getNewSession();
-        ss.beginTransaction();
-        ss.save(o);
-        ss.getTransaction().commit();
-    
+    public static void guardarObjeto(Object o) {
+        session.beginTransaction();
+        session.save(o);
+        session.getTransaction().commit();
     }
 
-    public static List ejecutarConsulta(String HQL)
-    {
+    public static List ejecutarConsulta(String HQL) {
         List salida;
-        Session ss=getNewSession();
-        ss.beginTransaction();
-        salida=ss.createQuery(HQL).list();
-        ss.getTransaction().commit();
-      
+        session.beginTransaction();
+        salida = session.createQuery(HQL).list();
+        session.getTransaction().commit();
+
         return salida;
     }
 }
