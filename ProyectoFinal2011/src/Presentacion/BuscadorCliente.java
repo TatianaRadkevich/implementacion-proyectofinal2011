@@ -56,6 +56,16 @@ public class BuscadorCliente extends javax.swing.JPanel {
         pnlBuscador.repaint();
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        btnBuscar.setEnabled(enabled);
+        txtBuscar.setEditable(enabled);
+        rdbCUIL.setEnabled(enabled);
+        rdbRazonSocial.setEnabled(enabled);
+        super.setEnabled(enabled);
+    }
+
+
     private class Item {
 
         public Cliente cliente;

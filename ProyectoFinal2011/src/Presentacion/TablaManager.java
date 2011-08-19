@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,24 +36,28 @@ public abstract class TablaManager <E>
         };
         tabla.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         estructura.setColumnIdentifiers(getCabecera());
-        tabla.setModel(estructura);
+        tabla.setModel(estructura);        
     }
 
     public abstract Vector ObjetoFila(E elemento);
 
     public abstract Vector getCabecera();
 
+    public void addTablaListener(TableModelListener tml)
+    {
+        tabla.getModel().addTableModelListener(tml);
+    }
 
     public void add(E objeto)
     {
-        estructura.addRow(ObjetoFila(objeto));
         contenido.add(objeto);
+        estructura.addRow(ObjetoFila(objeto));
     }
 
     public void add(int index,E objeto)
     {
-        estructura.insertRow(index,ObjetoFila(objeto));
         contenido.add(index,objeto);
+        estructura.insertRow(index,ObjetoFila(objeto));        
     }
 
     public void removeSelectedRow()
@@ -60,18 +66,18 @@ public abstract class TablaManager <E>
     }
 
     public void removeRow(int index)
-    {     
-        estructura.removeRow(index);
+    {
         contenido.remove(index);
+        estructura.removeRow(index);        
     }
 
-    public void replaceSelectedRow(E objeto)
+    public void replaceRow(int index,E objeto)
     {
-        contenido.set(tabla.getSelectedRow(), objeto);
+        contenido.set(index, objeto);
         updateTabla();
     }
 
-    private void updateTabla()
+    public void updateTabla()
     {        
         estructura.setRowCount(0);
         for(E obj:contenido)
