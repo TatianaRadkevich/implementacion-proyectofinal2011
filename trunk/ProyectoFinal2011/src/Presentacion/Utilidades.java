@@ -44,4 +44,9 @@ public class Utilidades {
         return GregorianCalendar.getInstance().getTime();
     }
 
+    public Calendar getFechaCalendar()
+    {
+        return GregorianCalendar.getInstance();
+    }
+
 }

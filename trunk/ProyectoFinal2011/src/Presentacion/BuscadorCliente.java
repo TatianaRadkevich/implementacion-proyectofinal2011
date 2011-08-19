@@ -4,6 +4,7 @@ package Presentacion;
 import BaseDeDatos.HibernateUtil;
 import Negocio.Ventas.Cliente;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
@@ -36,7 +37,13 @@ public class BuscadorCliente extends javax.swing.JPanel {
         return cliente;
     }
 
-
+    public void setCliente(Cliente c)
+    {
+        ArrayList<Cliente> lst=new ArrayList<Cliente>();
+        lst.add(c);
+        cargarCombo(lst);
+        cmbBuscar.setSelectedIndex(0);
+    }
 
     private void cargarCombo(List<Cliente> lst) {
         cmbBuscar.setPopupVisible(false);

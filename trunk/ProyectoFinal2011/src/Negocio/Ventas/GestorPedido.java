@@ -8,6 +8,7 @@ package Negocio.Ventas;
 import BaseDeDatos.Produccion.*;
 import BaseDeDatos.Ventas.*;
 import Negocio.Exceptiones.ExceptionGestor;
+import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
 import Presentacion.Ventas.PantallaRegistrarPedido;
 import java.util.ArrayList;
@@ -29,20 +30,30 @@ public abstract class GestorPedido {
         return pedido;
     }
 
-    public List getTipoProductos() {
+    public List<TipoProducto> getTipoProductos() {
         return TipoProductoBD.listarTiposProductos();
     }
 
-     public List getTipoPedidos() {
+     public List<TipoPedido> getTipoPedidos() {
         return TipoPedidoBD.getTipoPedidos();
     }
 
-     public List getProductos(TipoProducto tp)
+     public List<Producto> getProductos(TipoProducto tp)
     {
          if(tp==null)
              return new ArrayList();
          return BaseDeDatos.Produccion.ProductoBD.listarProductos(tp);
      }
+
+    public List getPrioridades()
+    {
+        ArrayList salida=new ArrayList();
+        salida.add("Muy Alta");
+        salida.add("Alta");
+        salida.add("Media");
+        salida.add("Baja");
+        return salida;
+    }
      
 
 }
