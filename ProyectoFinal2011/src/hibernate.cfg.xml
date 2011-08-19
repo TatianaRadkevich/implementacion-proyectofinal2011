@@ -13,12 +13,11 @@
     <mapping class="Negocio.Administracion.Cobro"/>
     <mapping class="Negocio.Administracion.DetalleFactura"/>
     <mapping class="Negocio.Administracion.DiaHoraLaborable"/>
-    <mapping class="Negocio.Administracion.Empleado"/>    
+    <mapping class="Negocio.Administracion.Empleado"/>
     <mapping class="Negocio.Administracion.Factura"/>
     <mapping class="Negocio.Administracion.FormaPago"/>
     <mapping class="Negocio.Administracion.Sexo"/>
     <mapping class="Negocio.Administracion.TipoDocumento"/>
-
     <mapping class="Negocio.Compras.DetalleOrdenCompra"/>
     <mapping class="Negocio.Compras.EstadoOrdenCompra"/>
     <mapping class="Negocio.Compras.EstadoReclamo"/>
@@ -27,11 +26,8 @@
     <mapping class="Negocio.Compras.OrdenCompra"/>
     <mapping class="Negocio.Compras.Proveedor"/>
     <mapping class="Negocio.Compras.Reclamo"/>
-
     <mapping class="Negocio.Deposito.Faltante"/>
-
     <mapping class="Negocio.GestionUsuario.Usuario"/>
-
     <mapping class="Negocio.Produccion.DetalleEtapaProduccion"/>
     <mapping class="Negocio.Produccion.DetallePlanProduccion"/>
     <mapping class="Negocio.Produccion.DetalleProducto"/>
@@ -41,25 +37,22 @@
     <mapping class="Negocio.Produccion.MaquinaHerramientaParticular"/>
     <mapping class="Negocio.Produccion.PlanProduccion"/>
     <mapping class="Negocio.Produccion.Producto"/>
+    <mapping class="Negocio.Produccion.ProductoLista"/>
     <mapping class="Negocio.Produccion.TipoMaquinaHerramienta"/>
     <mapping class="Negocio.Produccion.TipoProducto"/>
-
     
     <mapping class="Negocio.UbicacionGeografica.Barrio"/>
     <mapping class="Negocio.UbicacionGeografica.Domicilio"/>
     <mapping class="Negocio.UbicacionGeografica.Localidad"/>
     <mapping class="Negocio.UbicacionGeografica.Pais"/>
     <mapping class="Negocio.UbicacionGeografica.Provincia"/>
-
-   <mapping class="Negocio.Ventas.Cliente"/>
-   <mapping class="Negocio.Ventas.DetallePedido"/>
-   <mapping class="Negocio.Ventas.EstadoPedido"/>
-   <mapping class="Negocio.Ventas.Pedido"/>
-   <mapping class="Negocio.Ventas.TipoCliente"/>
-   <mapping class="Negocio.Ventas.TipoPedido"/>
-
-   <mapping class="Negocio.Web.ClienteWeb"/>
-
+    <mapping class="Negocio.Ventas.Cliente"/>
+    <mapping class="Negocio.Ventas.DetallePedido"/>
+    <mapping class="Negocio.Ventas.EstadoPedido"/>
+    <mapping class="Negocio.Ventas.Pedido"/>
+    <mapping class="Negocio.Ventas.TipoCliente"/>
+    <mapping class="Negocio.Ventas.TipoPedido"/>
+    <mapping class="Negocio.Web.ClienteWeb"/>
 
   </session-factory>
 </hibernate-configuration>
