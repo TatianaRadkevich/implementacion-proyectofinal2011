@@ -8,15 +8,23 @@
  *
  * Created on 27/06/2011, 15:24:35
  */
-
 package Presentacion.Ventas;
 
+import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Ventas.Pedido;
+import Presentacion.TablaManager;
+import Presentacion.Utilidades;
+import Presentacion.ValidarTexbox;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
+import org.hibernate.Hibernate;
 
 /**
  *
@@ -24,23 +32,64 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PantallaConsultarPedido extends javax.swing.JDialog {
 
-    private ArrayList<Pedido> data;
-    private DefaultTableModel tabla;
-    
+    private TablaManager<Pedido> tablita;
+
     /** Creates new form PantallaConsultarPedido */
     public PantallaConsultarPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        tabla=(DefaultTableModel) tbPedidos.getModel();       
-        
+        HibernateUtil.getSessionFactory();
+        tablita = new TablaManager<Pedido>(tbPedidos) {
 
-        cargarTabla();
+            @Override
+            public Vector getCabecera() {
+                Vector cabcera = new Vector();
+                cabcera.add("Razon Social");//col 1
+                cabcera.add("CUIL");//col 2
+                cabcera.add("Nro. Pedido");//col 3
+                cabcera.add("Fecha Generacion");//col 4
+                return cabcera;
+            }
+
+            @Override
+            public Vector ObjetoFila(Pedido elemento) {
+                Vector fila = new Vector();
+                fila.add(elemento.getCliente().getRazonSocial());//col 1
+                fila.add(elemento.getCliente().getCuil());//col 2
+                fila.add(elemento.getIdPedido());//col 3
+                fila.add(Utilidades.parseDate(elemento.getFechaGeneracion()));//col 4
+                return fila;
+            }
+        };
+        cargarValidaciones();
     }
 
-    private void cargarTabla()
-    {
-        //data=PedidoBD.getPedidos();
-        updateTabla();
+    private void cargarValidaciones() {
+        ValidarTexbox.validarInt(txtNroPedido);
+        ValidarTexbox.validarLongitud(txtNroPedido, 8);
+        ValidarTexbox.validarLong(txtCUIL);
+        ValidarTexbox.validarLongitud(txtCUIL, 11);
+        ValidarTexbox.validarLongitud(txtRazonSocial, 50);
+        
+        dtcFechaGeneracionHasta.setMaxSelectableDate(Utilidades.getFechaActual());
+        dtcFechaGeneracionHasta.setDate(Utilidades.getFechaActual());   
+        
+        dtcFechaGeneracionHasta.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dtcFechaGeneracionDesde.setMaxSelectableDate(dtcFechaGeneracionHasta.getDate());
+            }
+        });
+
+        dtcFechaGeneracionDesde.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dtcFechaGeneracionHasta.setMinSelectableDate(dtcFechaGeneracionDesde.getDate());
+            }
+        });
+        //**********************Pre-carga de valores********************//
+        dtcFechaGeneracionDesde.setMaxSelectableDate(Utilidades.getFechaActual());
+        Calendar d=GregorianCalendar.getInstance();
+        d.add(Calendar.MONTH, -1);
+        dtcFechaGeneracionDesde.setDate(d.getTime());
     }
 
     /** This method is called from within the constructor to
@@ -119,26 +168,30 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dtcFechaGeneracionDesde, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dtcFechaGeneracionHasta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(12, 12, 12)
+                        .addComponent(dtcFechaGeneracionHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(10, 10, 10)
+                        .addComponent(dtcFechaGeneracionDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(dtcFechaGeneracionDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(dtcFechaGeneracionHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(dtcFechaGeneracionHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(dtcFechaGeneracionDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlBuscarLayout = new javax.swing.GroupLayout(pnlBuscar);
@@ -263,7 +316,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
                     .addComponent(btnSalir1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,7 +330,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                         .addComponent(btnBaja)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSalir1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -307,18 +360,19 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-
-        updateTabla();
-        
+      tablita.setDatos(
+              PedidoBD.getPedidos(
+              txtRazonSocial.getText(),
+              txtCUIL.getText(),
+              txtNroPedido.getText(),
+              dtcFechaGeneracionDesde.getDate(),
+              dtcFechaGeneracionHasta.getDate())
+              );       
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-//        PantallaRegistrarPedido regPedido;
-//        regPedido=new PantallaRegistrarPedido(null,true);
-//        regPedido.setVisible(true);
-//        cargarTabla();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void txtCUILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCUILActionPerformed
@@ -327,7 +381,6 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
     private void txtCUILKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCUILKeyPressed
         // TODO add your handling code here:
-        try{Integer.parseInt(txtCUIL.getText());}catch(Exception ex){evt.consume();}
     }//GEN-LAST:event_txtCUILKeyPressed
 
     private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
@@ -336,61 +389,22 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-//        PantallaRegistrarPedido regPedido;
-//        regPedido=new PantallaRegistrarPedido(null,true,data.get(tbPedidos.getSelectedRow()));
-//        regPedido.setVisible(true);
-//        cargarTabla();
-
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
         // TODO add your handling code here:
-
-         
-
-        //PedidoBD.eliminar((Integer)tabla.getValueAt(tbPedidos.getSelectedRow(), 2));
-        cargarTabla();
     }//GEN-LAST:event_btnBajaActionPerformed
 
-    private void limpiarTabla()
-    {
-        while(tabla.getRowCount()>0)
-            tabla.removeRow(0);
-    }
-
-    private void addPedidoTabla(Pedido pedido)
-    {
-
-      
-        
-//        Date auxFecha=pedido.getFechaGeneracion();
-//        Object[] fila=
-//        {pedido.getCliente().getRazonSocial(),
-//         pedido.getCliente().getCuil(),
-//         pedido.getNumero(),
-//         auxFecha.getDate()+"/"+auxFecha.getMonth()+"/"+auxFecha.getYear()
-//        };
-//        tabla.addRow(fila);
-    }
-
-    private void updateTabla()
-    {
-        limpiarTabla();
-        for(int i=0;i<data.size();i++)
-        {
-            addPedidoTabla(data.get(i));
-        }
-
-    }
-
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 PantallaConsultarPedido dialog = new PantallaConsultarPedido(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
@@ -399,7 +413,6 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaja;
     private javax.swing.JButton btnBuscar;
@@ -424,5 +437,4 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
     private javax.swing.JTextField txtNroPedido;
     private javax.swing.JTextField txtRazonSocial;
     // End of variables declaration//GEN-END:variables
-
 }
