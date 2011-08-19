@@ -1,11 +1,10 @@
 
 import BaseDeDatos.HibernateUtil;
-import Negocio.Ventas.TipoCliente;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import org.hibernate.Session;
+import java.util.List;
 
 /*
  * To change this template, choose Tools | Templates
@@ -22,11 +21,10 @@ public class Test {
     public static void main(String[] arg) throws Exception
     {
 
-        Session ss=HibernateUtil.getNewSession();
-        ss.beginTransaction();
-        ss.save(new TipoCliente(0, "Moroso"));
-        ss.getTransaction().commit();
 
+       List p=HibernateUtil.ejecutarConsulta("from Producto");
+      int var=0;
+       //System.out.println(p.codigoMerge());
     }
 
 
