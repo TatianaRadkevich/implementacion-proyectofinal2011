@@ -69,6 +69,7 @@ public class HibernateUtil {
         ss.beginTransaction();
         ss.save(o);
         ss.getTransaction().commit();
+    
     }
 
     public static List ejecutarConsulta(String HQL)
@@ -78,7 +79,7 @@ public class HibernateUtil {
         ss.beginTransaction();
         salida=ss.createQuery(HQL).list();
         ss.getTransaction().commit();
-        ss.close();
+      
         return salida;
     }
 }
