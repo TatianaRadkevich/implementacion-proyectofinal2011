@@ -72,12 +72,10 @@ public abstract class TablaManager <E>
     }
 
     private void updateTabla()
-    {
-        int index=tabla.getSelectedRow();
+    {        
         estructura.setRowCount(0);
         for(E obj:contenido)
-            estructura.addRow(ObjetoFila(obj));
-        tabla.setRowSelectionInterval(index, index);
+            estructura.addRow(ObjetoFila(obj));      
     }
 
     public void limpiar()
