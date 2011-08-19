@@ -7,6 +7,7 @@ package BaseDeDatos.Ventas;
 
 import BaseDeDatos.HibernateUtil;
 import Negocio.Ventas.Cliente;
+import Negocio.Ventas.EstadoPedido;
 import Negocio.Ventas.Pedido;
 import Presentacion.Utilidades;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import org.hibernate.Session;
  */
 public class PedidoBD
 {
+
     public static void guardar(Pedido p)
     {
         HibernateUtil.guardarObjeto(p);
@@ -40,6 +42,16 @@ public class PedidoBD
                 + ((hasta==null)?"":"AND p.fecHoraGeneracion <= '%5$s' ")
                 ,RazonSocial,CUIL,NroPedido,auxDesde,auxHasta);       
         return HibernateUtil.ejecutarConsulta(HQL);
+    }
+
+    public static final String EP_AutorizadoPendiente="Autorizado-Pendiente";
+    public static EstadoPedido getEstoadoPedido(String nombre)
+    {
+        String HQL=String.format("FROM EstadoPedido as ep WHERE LOWER(ep.nombre) = LOWER('%s')", nombre);
+        List<EstadoPedido> lst=HibernateUtil.ejecutarConsulta(HQL);
+        if(lst.isEmpty())
+            throw new RuntimeException("No existe un \"estado de pedido\" con el nombre de : "+nombre);
+        return lst.get(0);
     }
   
 }

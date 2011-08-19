@@ -7,6 +7,7 @@ package Negocio.Ventas;
 
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Exceptiones.ExceptionGestor;
+import Presentacion.Utilidades;
 import Presentacion.Ventas.PantallaRegistrarPedido;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -39,9 +40,10 @@ public class GestorRegistrarPedido extends GestorPedido
     }
 
     @Override
-    public void ejecutar(Pedido p) throws ExceptionGestor {
+    public void ejecutar(Pedido p) throws ExceptionGestor {        
+        p.setEstadoPedido(PedidoBD.getEstoadoPedido(PedidoBD.EP_AutorizadoPendiente));
+        p.setFechaGeneracion(Utilidades.getFechaActual());
         validar(p);
-        p.setEstadoPedido(PedidoBD.getEstoadoPedido(""));
         PedidoBD.guardar(p);
     }
 
