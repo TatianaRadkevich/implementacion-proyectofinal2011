@@ -20,7 +20,7 @@ public class GestorPedidoRegistrar extends GestorPedido
 {
 
     @Override
-    public void iniciar() {
+    public void iniciarCU() {
         interfaz=new PantallaRegistrarPedido(this);
         pedido=new Pedido();
         interfaz.setVisible(true);
@@ -40,7 +40,7 @@ public class GestorPedidoRegistrar extends GestorPedido
     }
 
     @Override
-    public void ejecutar(Pedido p) throws ExceptionGestor {        
+    public void ejecutarCU(Pedido p) throws ExceptionGestor {
         p.setEstadoPedido(PedidoBD.getEstoadoPedido(PedidoBD.EP_AutorizadoPendiente));
         p.setFechaGeneracion(Utilidades.getFechaActual());
         validar(p);

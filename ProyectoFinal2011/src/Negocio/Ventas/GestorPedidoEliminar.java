@@ -7,6 +7,7 @@ package Negocio.Ventas;
 
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Exceptiones.ExceptionGestor;
+import Presentacion.PantallaEliminar;
 import Presentacion.Utilidades;
 import Presentacion.Ventas.PantallaRegistrarPedido;
 import java.util.Calendar;
@@ -25,7 +26,7 @@ public class GestorPedidoEliminar extends GestorPedido
     }
 
     @Override
-    public void iniciar() {
+    public void iniciarCU() {
         if(pedido==null)
             throw new RuntimeException("GestorPedidoEliminar: Se debe definir el pedido a eliminar");
         
@@ -43,16 +44,24 @@ public class GestorPedidoEliminar extends GestorPedido
         if(!(auxEstado.equals(PedidoBD.EP_AutorizadoPendiente)||
                 auxEstado.equals(PedidoBD.EP_NoAutorizado)||
                 auxEstado.equals(PedidoBD.EP_Planificado)))
-            mensage+="\nNo es posible cancelar un pedido con el estado "+auxEstado;
+            mensage+="\nNo es posible cancelar un pedido con el estado de "+auxEstado;
 
         if(mensage.isEmpty()==false)
             throw new ExceptionGestor("Problemas:"+mensage);
     }
 
     @Override
-    public void ejecutar(Pedido p) throws ExceptionGestor {
+    public void ejecutarCU(Pedido p) throws ExceptionGestor {
         validar(p);
+        
+        PantallaEliminar pe=new PantallaEliminar();
+        pe.setVisible(true);
+        if(pe.isOk()==false)
+            finalizarCU();
+
+        p.setMotivoBaja(pe.getMotivo());
         p.setEstadoPedido(PedidoBD.getEstoadoPedido(PedidoBD.EP_Cancelado));
+        p.setFecBaja(Utilidades.getFechaActual());
         PedidoBD.modificar(p);
     }
 
