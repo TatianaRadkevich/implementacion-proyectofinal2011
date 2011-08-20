@@ -8,7 +8,7 @@ package Negocio.Ventas;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Utilidades;
-import Presentacion.Ventas.PantallaRegistrarPedido;
+import Presentacion.Ventas.PantallaPedidoABM;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -30,7 +30,7 @@ public class GestorPedidoModificar extends GestorPedido
          if(pedido==null)
             throw new RuntimeException("GestorPedidoModificar: Se debe definir el pedido a modificar");
 
-        interfaz=new PantallaRegistrarPedido(this);
+        interfaz=new PantallaPedidoABM(this);
         interfaz.cargar(pedido);
         interfaz.setVisible(true);
     }

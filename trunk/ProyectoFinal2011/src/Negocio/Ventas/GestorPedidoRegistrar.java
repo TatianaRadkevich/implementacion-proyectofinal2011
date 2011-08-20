@@ -8,7 +8,7 @@ package Negocio.Ventas;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Utilidades;
-import Presentacion.Ventas.PantallaRegistrarPedido;
+import Presentacion.Ventas.PantallaPedidoABM;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -21,7 +21,7 @@ public class GestorPedidoRegistrar extends GestorPedido
 
     @Override
     public void iniciarCU() {
-        interfaz=new PantallaRegistrarPedido(this);
+        interfaz=new PantallaPedidoABM(this);
         pedido=new Pedido();
         interfaz.setVisible(true);
     }
