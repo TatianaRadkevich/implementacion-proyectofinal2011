@@ -43,12 +43,12 @@ import org.hibernate.Hibernate;
  *
  * @author Rodrigo
  */
-public class PantallaConsultarPedido extends javax.swing.JDialog {
+public class PantallaPedidoConsultar extends javax.swing.JDialog {
 
     private TablaManager<Pedido> tablita;
 
     /** Creates new form PantallaConsultarPedido */
-    public PantallaConsultarPedido(java.awt.Frame parent, boolean modal) {
+    public PantallaPedidoConsultar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         HibernateUtil.getSessionFactory();
@@ -447,7 +447,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                PantallaConsultarPedido dialog = new PantallaConsultarPedido(new javax.swing.JFrame(), true);
+                PantallaPedidoConsultar dialog = new PantallaPedidoConsultar(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     public void windowClosing(java.awt.event.WindowEvent e) {

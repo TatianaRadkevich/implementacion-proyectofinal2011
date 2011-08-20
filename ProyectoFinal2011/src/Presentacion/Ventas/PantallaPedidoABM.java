@@ -31,13 +31,13 @@ import javax.swing.event.TableModelListener;
  *
  * @author Ivan
  */
-public class PantallaRegistrarPedido extends javax.swing.JDialog {
+public class PantallaPedidoABM extends javax.swing.JDialog {
 
     /** Creates new form PantallaRegistrarPedido */
     private GestorPedido gestor;
     private TablaManager<DetallePedido> tablaDetalle;
 
-    public PantallaRegistrarPedido(GestorPedido gestor) {
+    public PantallaPedidoABM(GestorPedido gestor) {
         super((JDialog) null, true);
         this.gestor = gestor;
         initComponents();
@@ -419,7 +419,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
     private void btnDetalleAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleAgregarActionPerformed
         // TODO add your handling code here:
 
-        PantallaRegistrarDetallePedido panDet = new PantallaRegistrarDetallePedido(null, true, gestor);
+        PantallaPedidoDetalleABM panDet = new PantallaPedidoDetalleABM(null, true, gestor);
         panDet.setVisible(true);
         if (panDet.isOk()) {
             DetallePedido objeto = panDet.getDetalle();
