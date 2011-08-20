@@ -71,4 +71,12 @@ public class Utilidades {
             return null;
         }
     }
+
+    public static String parseString(Object value) {
+        try {
+            return value.toString();
+        } catch (Exception ex) {
+            return "";
+        }
+    }
 }
