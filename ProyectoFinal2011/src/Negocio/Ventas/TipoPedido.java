@@ -75,5 +75,12 @@ public class TipoPedido implements java.io.Serializable {
         return this.nombre;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        TipoPedido p=(TipoPedido) obj;
+        return this.nombre.equals(p.nombre);
+    }
+
+
 
 }

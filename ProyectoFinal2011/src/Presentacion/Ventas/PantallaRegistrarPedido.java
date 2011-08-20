@@ -66,11 +66,14 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
                 return cabecera;
             }
         };
-        tablaDetalle.addTablaListener(new TableModelListener() {
+        tablaDetalle.addListenerModificacionTabla(new TableModelListener() {
 
             public void tableChanged(TableModelEvent e) {
-
-                recalcularTotal();
+                float total = 0;
+                for (DetallePedido dp : tablaDetalle.getDatos()) {
+                    total += dp.getPrecio() * dp.getCantidad();
+                }
+                txtSubTotal.setText(total + "");
             }
         });
 
@@ -79,16 +82,8 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
         pnlInfo.setVisible(false);
     }
 
-    private void recalcularTotal() {
-        float total = 0;
-        for (DetallePedido dp : tablaDetalle.getDatos()) {
-            total += dp.getPrecio() * dp.getCantidad();
-        }
-        txtSubTotal.setText(total + "");
-    }
-
     private void cargarValidaciones() {
-        ((JTextFieldDateEditor)dtcFechaSolicitud.getDateEditor()).setEditable(false);
+        ((JTextFieldDateEditor) dtcFechaSolicitud.getDateEditor()).setEditable(false);
         dtcFechaSolicitud.setMinSelectableDate(Utilidades.getFechaActual());
     }
 
@@ -99,7 +94,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
     public void habilitarTodo(boolean valor) {
         pnlCliente.setEnabled(valor);
-        
+
         btnDetalleAgregar.setEnabled(valor);
         btnDetalleElminar.setEnabled(valor);
         tbDetalle.setEnabled(valor);
@@ -159,11 +154,6 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nuevo Pedido");
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-        });
 
         jButton3.setText("Cancelar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -416,7 +406,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
         pedido.setPrioridad((byte) cmbPrioridad.getSelectedIndex());
         pedido.setTipoPedido((TipoPedido) cmbTipoPedido.getSelectedItem());
         try {
-            gestor.ejecutar(pedido);
+            gestor.ejecutarCU(pedido);
             this.setVisible(false);
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
@@ -432,14 +422,14 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
         PantallaRegistrarDetallePedido panDet = new PantallaRegistrarDetallePedido(null, true, gestor);
         panDet.setVisible(true);
         if (panDet.isOk()) {
-            DetallePedido objeto=panDet.getDetalle();
-             for (DetallePedido dp : tablaDetalle.getDatos()) {
-                    if (dp.getProducto().getNombre().equals(objeto.getProducto().getNombre())) {
-                        dp.setCantidad(dp.getCantidad() + objeto.getCantidad());
-                        tablaDetalle.updateTabla();
-                        return;
-                    }
+            DetallePedido objeto = panDet.getDetalle();
+            for (DetallePedido dp : tablaDetalle.getDatos()) {
+                if (dp.getProducto().getNombre().equals(objeto.getProducto().getNombre())) {
+                    dp.setCantidad(dp.getCantidad() + objeto.getCantidad());
+                    tablaDetalle.updateTabla();
+                    return;
                 }
+            }
             tablaDetalle.add(objeto);
         }
 
@@ -448,7 +438,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        setVisible(false);
+        gestor.finalizarCU();
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -460,16 +450,11 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
 
     private void btnDetalleElminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleElminarActionPerformed
         // TODO add your handling code here:
-        if(tbDetalle.getSelectedRow()!=-1)
+        if (tbDetalle.getSelectedRow() != -1) {
             tablaDetalle.removeSelectedRow();
+        }
 
     }//GEN-LAST:event_btnDetalleElminarActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-        this.dispose();
-        System.exit(0);
-    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -478,7 +463,7 @@ public class PantallaRegistrarPedido extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new GestorPedidoRegistrar().iniciar();
+                new GestorPedidoRegistrar().iniciarCU();
                 //new GestorPedidoModificar(PedidoBD.getPedido(9)).iniciar();
                 //new GestorPedidoEliminar(PedidoBD.getPedido(6)).iniciar();
             }
