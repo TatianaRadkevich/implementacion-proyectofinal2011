@@ -9,7 +9,7 @@ import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.PantallaEliminar;
 import Presentacion.Utilidades;
-import Presentacion.Ventas.PantallaRegistrarPedido;
+import Presentacion.Ventas.PantallaPedidoABM;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -30,7 +30,7 @@ public class GestorPedidoEliminar extends GestorPedido
         if(pedido==null)
             throw new RuntimeException("GestorPedidoEliminar: Se debe definir el pedido a eliminar");
         
-        interfaz=new PantallaRegistrarPedido(this);
+        interfaz=new PantallaPedidoABM(this);
         interfaz.cargar(pedido);
         interfaz.habilitarTodo(false);
         interfaz.setVisible(true);

@@ -10,7 +10,7 @@ import BaseDeDatos.Ventas.*;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
-import Presentacion.Ventas.PantallaRegistrarPedido;
+import Presentacion.Ventas.PantallaPedidoABM;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public abstract class GestorPedido {
 
-    protected PantallaRegistrarPedido interfaz;
+    protected PantallaPedidoABM interfaz;
     protected Pedido pedido;
 
     public abstract void iniciarCU();
