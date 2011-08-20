@@ -12,7 +12,12 @@ package Presentacion.Ventas;
 
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
+import Negocio.Ventas.Cliente;
+import Negocio.Ventas.GestorPedidoEliminar;
+import Negocio.Ventas.GestorPedidoModificar;
+import Negocio.Ventas.GestorPedidoRegistrar;
 import Negocio.Ventas.Pedido;
+import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
@@ -24,6 +29,13 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.plaf.basic.BasicListUI.ListSelectionHandler;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Hibernate;
 
@@ -62,38 +74,57 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                 return fila;
             }
         };
-        cargarValidaciones();
+        cargarValidaciones();        
     }
 
     private void cargarValidaciones() {
+        //**********************Validacion de textBox********************//
         ValidarTexbox.validarInt(txtNroPedido);
         ValidarTexbox.validarLongitud(txtNroPedido, 8);
         ValidarTexbox.validarLong(txtCUIL);
         ValidarTexbox.validarLongitud(txtCUIL, 11);
         ValidarTexbox.validarLongitud(txtRazonSocial, 50);
-
-        ((JTextFieldDateEditor)dtcFechaGeneracionHasta.getDateEditor()).setEditable(false);
-        ((JTextFieldDateEditor)dtcFechaGeneracionDesde.getDateEditor()).setEditable(false);
+        
+        //**********************Validacion de Fecha********************//
+        ((JTextFieldDateEditor) dtcFechaGeneracionHasta.getDateEditor()).setEditable(false);
+        ((JTextFieldDateEditor) dtcFechaGeneracionDesde.getDateEditor()).setEditable(false);
 
         dtcFechaGeneracionHasta.setMaxSelectableDate(Utilidades.getFechaActual());
         dtcFechaGeneracionDesde.setMaxSelectableDate(Utilidades.getFechaActual());
 
         dtcFechaGeneracionHasta.setDate(Utilidades.getFechaActual());
         dtcFechaGeneracionDesde.setDate(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 0, -1, 0));
-        
-        //**********************Validacion de valores********************//
+
+        //**********************Validacion de Fecha parte2********************//
 
         dtcFechaGeneracionHasta.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 dtcFechaGeneracionDesde.setMaxSelectableDate(dtcFechaGeneracionHasta.getDate());
             }
         });
 
         dtcFechaGeneracionDesde.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 dtcFechaGeneracionHasta.setMinSelectableDate(dtcFechaGeneracionDesde.getDate());
             }
-        });   
+        });
+
+        /************************Validacion de botones **********************************/
+        btnBaja.setEnabled(false);
+        btnModificar.setEnabled(false);
+        tablita.addListener(new ListSelectionListener() {
+
+            public void valueChanged(ListSelectionEvent e) {
+                boolean var = false;
+                if (tbPedidos.getSelectedRow() >= 0)
+                    var = true;
+                
+                btnBaja.setEnabled(var);
+                btnModificar.setEnabled(var);
+            }
+        });
     }
 
     /** This method is called from within the constructor to
@@ -364,19 +395,19 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-      tablita.setDatos(
-              PedidoBD.getPedidos(
-              txtRazonSocial.getText(),
-              txtCUIL.getText(),
-              txtNroPedido.getText(),
-              dtcFechaGeneracionDesde.getDate(),
-              dtcFechaGeneracionHasta.getDate())
-              );       
+        tablita.setDatos(
+                PedidoBD.getPedidos(
+                txtRazonSocial.getText(),
+                txtCUIL.getText(),
+                txtNroPedido.getText(),
+                dtcFechaGeneracionDesde.getDate(),
+                dtcFechaGeneracionHasta.getDate()));
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
+        new GestorPedidoRegistrar().iniciarCU();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void txtCUILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCUILActionPerformed
@@ -388,15 +419,25 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCUILKeyPressed
 
     private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:     
 }//GEN-LAST:event_btnSalir1ActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        try {
+            new GestorPedidoModificar(tablita.getSeletedObject()).iniciarCU();
+        } catch (Exception ex) {
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+        }
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        // TODO add your handling code here:
+        try {
+            new GestorPedidoEliminar(tablita.getSeletedObject()).iniciarCU();
+        } catch (Exception ex) {
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+        }
+
     }//GEN-LAST:event_btnBajaActionPerformed
 
     /**

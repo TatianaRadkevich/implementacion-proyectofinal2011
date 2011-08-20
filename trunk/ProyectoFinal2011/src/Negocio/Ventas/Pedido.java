@@ -216,4 +216,11 @@ public class Pedido implements java.io.Serializable {
     public void setMotivoBaja(String motivoBaja) {
         this.motivoBaja = motivoBaja;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+
 }

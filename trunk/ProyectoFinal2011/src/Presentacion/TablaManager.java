@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -43,9 +44,14 @@ public abstract class TablaManager <E>
 
     public abstract Vector getCabecera();
 
-    public void addTablaListener(TableModelListener tml)
+    public void addListenerModificacionTabla(TableModelListener tml)
     {
         tabla.getModel().addTableModelListener(tml);
+    }
+
+    public void addListener(ListSelectionListener lst)
+    {
+        tabla.getSelectionModel().addListSelectionListener(lst);
     }
 
     public void add(E objeto)
@@ -74,7 +80,9 @@ public abstract class TablaManager <E>
     public void replaceRow(int index,E objeto)
     {
         contenido.set(index, objeto);
-        updateTabla();
+        Vector fila = ObjetoFila(objeto);
+        for(int i=0;i<fila.size();i++)
+            estructura.setValueAt(fila.get(i), index, i);
     }
 
     public void updateTabla()
@@ -94,6 +102,13 @@ public abstract class TablaManager <E>
     {
         contenido=data;
         updateTabla();
+    }
+
+    public E getSeletedObject() throws Exception
+    {
+        if(tabla.getSelectedRow()==-1)
+            throw new Exception("Selecione un fila");
+        return contenido.get(tabla.getSelectedRow());
     }
 
     public List<E> getDatos()

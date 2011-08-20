@@ -8,16 +8,20 @@
  *
  * Created on 21/06/2011, 11:33:42
  */
-
 package Presentacion.Ventas;
 
 import BaseDeDatos.ProductoBD;
 import BaseDeDatos.TipoBD;
+import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.GestorPedido;
+import Negocio.Ventas.GestorPedidoRegistrar;
+import Negocio.Ventas.Pedido;
 import Presentacion.ValidarTexbox;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -34,29 +38,31 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
     private DetallePedido detalle;
 
     /** Creates new form PantallaRegistrarDetallePedido */
-    public PantallaRegistrarDetallePedido(java.awt.Frame parent, boolean modal,GestorPedido gp) {
+    public PantallaRegistrarDetallePedido(java.awt.Frame parent, boolean modal, GestorPedido gp) {
         super(parent, modal);
         initComponents();
-        gestor=gp;
-        ok=false;
-        cargarCombo(gestor.getTipoProductos(),cmbTipoProducto);
-        
+        gestor = gp;
+        ok = false;
+        detalle = new DetallePedido();
+
         ValidarTexbox.validarInt(txtCantidad);
-
+        ValidarTexbox.validarLongitud(txtCantidad, 5);
+        cargarCombos();
     }
-    
-    private void cargarCombo(List cont,JComboBox combo)
-    {
-        //try{
-        combo.removeAllItems();
-        if(cont.isEmpty())
-            return;
 
-        for(Object o:cont)
-            combo.addItem(o);
+    public PantallaRegistrarDetallePedido(GestorPedido gp) {
+        this(null, true, gp);
+    }
 
-        combo.setSelectedIndex(0);
-       // }catch (Exception e){}
+    public void cargarCombos() {
+        cmbTipoProducto.setModel(new DefaultComboBoxModel(gestor.getTipoProductos().toArray()));
+        cmbTipoProducto.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                TipoProducto tp = (TipoProducto) cmbTipoProducto.getSelectedItem();
+                cmbProducto.setModel(new DefaultComboBoxModel(gestor.getProductos(tp).toArray()));
+            }
+        });
     }
 
     public boolean isOk() {
@@ -67,8 +73,14 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
         return detalle;
     }
 
+    public void setDetalle(DetallePedido dp)
+    {
+        detalle=dp;
+        txtCantidad.setText(dp.getCantidad()+"");
+        cmbTipoProducto.setSelectedItem(dp.getProducto().getTTproducto());
+        cmbProducto.setSelectedItem(dp.getProducto());
 
-
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -92,12 +104,6 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         paneCargar.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle"));
-
-        cmbTipoProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbTipoProductoActionPerformed(evt);
-            }
-        });
 
         jLabel10.setText("Tipo Producto:");
 
@@ -186,31 +192,31 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-        Producto prod= (Producto) cmbProducto.getSelectedItem();
-        detalle=new DetallePedido();
+        Producto prod = (Producto) cmbProducto.getSelectedItem();
+        
         detalle.setCantidad(Integer.parseInt(txtCantidad.getText()));
         detalle.setProducto(prod);
         detalle.setPrecio(prod.getPrecioUnitario().floatValue());
-        ok=true;
+        ok = true;
         this.setVisible(false);
-    
+
 }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        ok=false;
+        ok = false;
         this.setVisible(false);
-
 }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void cmbTipoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoProductoActionPerformed
-        // TODO add your handling code here:
-         cargarCombo(gestor.getProductos((TipoProducto) cmbTipoProducto.getSelectedItem()),cmbProducto);
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
 
-    }//GEN-LAST:event_cmbTipoProductoActionPerformed
+            public void run() {
+                new PantallaRegistrarDetallePedido(new GestorPedidoRegistrar()).setVisible(true);
 
- 
-
+            }
+        });
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
@@ -222,5 +228,4 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
     private javax.swing.JPanel paneCargar;
     private javax.swing.JTextField txtCantidad;
     // End of variables declaration//GEN-END:variables
-
 }
