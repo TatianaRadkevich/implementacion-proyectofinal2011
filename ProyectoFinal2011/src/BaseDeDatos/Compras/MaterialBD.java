@@ -22,4 +22,11 @@ public class MaterialBD {
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 
+    public static void guardar(Material m) {
+       HibernateUtil.guardarObjeto(m);
+    }
+
+     public static void modificar(Material m) {
+       HibernateUtil.modificarObjeto(m);
+    }
 }
