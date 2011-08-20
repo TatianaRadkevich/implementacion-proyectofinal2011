@@ -13,6 +13,10 @@ import Negocio.Exceptiones.ExceptionGestor;
  */
 public class GestorMaterialModificar extends GestorMaterial{
 
+    public GestorMaterialModificar(Material seletedObject) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
     @Override
     public void iniciarCU() {
         throw new UnsupportedOperationException("Not supported yet.");
