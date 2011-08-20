@@ -26,7 +26,7 @@ public class GestorPedidoModificar extends GestorPedido
     }
 
     @Override
-    public void iniciar() {
+    public void iniciarCU() {
          if(pedido==null)
             throw new RuntimeException("GestorPedidoModificar: Se debe definir el pedido a modificar");
 
@@ -38,6 +38,13 @@ public class GestorPedidoModificar extends GestorPedido
     private void validar(Pedido p) throws ExceptionGestor
     {
         String mensage="";
+        String auxEstado=p.getEstadoPedido().getNombre();
+
+        if(!(auxEstado.equals(PedidoBD.EP_AutorizadoPendiente)||
+                auxEstado.equals(PedidoBD.EP_NoAutorizado)||
+                auxEstado.equals(PedidoBD.EP_Planificado)))
+            mensage+="\nNo es posible modificar un pedido con el estado de "+auxEstado;
+
         if(p.getCliente()==null)
             mensage+="\n no se asigno un cliente al pedido";
         if(p.getDetallePedido().isEmpty())
@@ -49,7 +56,7 @@ public class GestorPedidoModificar extends GestorPedido
     }
 
     @Override
-    public void ejecutar(Pedido p) throws ExceptionGestor {       
+    public void ejecutarCU(Pedido p) throws ExceptionGestor {
         validar(p);
         PedidoBD.modificar(p);
     }

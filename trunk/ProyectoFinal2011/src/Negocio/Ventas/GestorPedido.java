@@ -23,8 +23,14 @@ public abstract class GestorPedido {
     protected PantallaRegistrarPedido interfaz;
     protected Pedido pedido;
 
-    public abstract void iniciar();
-    public abstract void ejecutar(Pedido p) throws ExceptionGestor;
+    public abstract void iniciarCU();
+    public abstract void ejecutarCU(Pedido p) throws ExceptionGestor;
+
+    public void finalizarCU()
+    {
+        interfaz.setVisible(false);
+        interfaz.dispose();
+    }
 
     public Pedido getPedido() {
         return pedido;

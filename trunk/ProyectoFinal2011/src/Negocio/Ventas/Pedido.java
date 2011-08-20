@@ -57,8 +57,12 @@ public class Pedido implements java.io.Serializable {
     private Date fecSolicitada;
     @Column(name = "PRIORIDAD")
     private byte prioridad;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")
-   // @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="FEC_BAJA")
+    private Date fecBaja;
+    @Column(name="MOTIVO_BAJA", length=100)
+    private String motivoBaja;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")   
     private Set<PlanProduccion> TPlanesProduccions = new HashSet<PlanProduccion>(0);    
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
@@ -195,5 +199,21 @@ public class Pedido implements java.io.Serializable {
             TDetallesPedidos.add(dt);
         }
         
+    }
+
+    public Date getFecBaja() {
+        return this.fecBaja;
+    }
+
+    public void setFecBaja(Date fecBaja) {
+        this.fecBaja = fecBaja;
+    }
+
+    public String getMotivoBaja() {
+        return this.motivoBaja;
+    }
+
+    public void setMotivoBaja(String motivoBaja) {
+        this.motivoBaja = motivoBaja;
     }
 }
