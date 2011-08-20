@@ -63,6 +63,17 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         ValidarTexbox.validarLongitud(txtDescripcion, 200);
     }
 
+      public void habilitarTodo(boolean b) {
+        txtCodigo.setEditable(b);
+        txtDescripcion.setEditable(b);
+        txtDiametro.setEditable(b);
+        txtLongitud.setEditable(b);
+        txtNombre.setEditable(b);
+        txtStockActual.setEditable(b);
+        txtStockMinimo.setEditable(b);
+        rdbMateriaPrima.setEnabled(b);
+        rdbInsumo.setEnabled(b);
+    }
  
 
     /** This method is called from within the constructor to
@@ -324,4 +335,6 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     private javax.swing.JTextField txtStockActual;
     private javax.swing.JTextField txtStockMinimo;
     // End of variables declaration//GEN-END:variables
+
+
 }
