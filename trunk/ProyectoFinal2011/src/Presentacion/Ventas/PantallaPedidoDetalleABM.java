@@ -31,14 +31,14 @@ import javax.swing.JComboBox;
  *
  * @author Heber Parrucci
  */
-public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
+public class PantallaPedidoDetalleABM extends javax.swing.JDialog {
 
     private boolean ok;// si salio por el boton aceptar
     private GestorPedido gestor;
     private DetallePedido detalle;
 
     /** Creates new form PantallaRegistrarDetallePedido */
-    public PantallaRegistrarDetallePedido(java.awt.Frame parent, boolean modal, GestorPedido gp) {
+    public PantallaPedidoDetalleABM(java.awt.Frame parent, boolean modal, GestorPedido gp) {
         super(parent, modal);
         initComponents();
         gestor = gp;
@@ -50,7 +50,7 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
         cargarCombos();
     }
 
-    public PantallaRegistrarDetallePedido(GestorPedido gp) {
+    public PantallaPedidoDetalleABM(GestorPedido gp) {
         this(null, true, gp);
     }
 
@@ -212,7 +212,7 @@ public class PantallaRegistrarDetallePedido extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new PantallaRegistrarDetallePedido(new GestorPedidoRegistrar()).setVisible(true);
+                new PantallaPedidoDetalleABM(new GestorPedidoRegistrar()).setVisible(true);
 
             }
         });
