@@ -5,6 +5,7 @@
 package Presentacion;
 
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -78,7 +79,7 @@ public class ValidarTexbox {
         });
     }
 
-    public static void validarLongitud(final JTextField txt,final int longitud) {
+    public static void validarLongitud(final JTextComponent txt,final int longitud) {
         txt.addKeyListener(new java.awt.event.KeyAdapter() {
 
             public void keyTyped(java.awt.event.KeyEvent evt) {
