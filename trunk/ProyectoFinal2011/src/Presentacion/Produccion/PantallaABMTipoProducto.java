@@ -11,14 +11,28 @@
 
 package Presentacion.Produccion;
 
+import Negocio.Exceptiones.ExceptionGestor;
+import Negocio.Produccion.GestorTipoProducto;
+import Negocio.Produccion.TipoProducto;
+import Presentacion.Mensajes;
+import Presentacion.Operacion;
 import gui.GUILocal;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Formatter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 /**
  *
- * @author Ivan
+ * @author Ivanz
  */
 public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
+    private int operacion;
+    private TipoProducto tipo_actual=null;
     /** Creates new form AdministrarTipoProducto */
     public PantallaABMTipoProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -27,10 +41,29 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
        this.activarCargo(false);
        this.activarBaja(false);
-       this.activarDisponible(false);
+       this.activarDisponible(true);
        this.activarBotones(true, true, true, false, false, true);
+       this.cargarTipoProductos();
+
     }
 
+     private void cargarTipoProductos(){
+        try {
+            lstDisponible.removeAll();
+            DefaultListModel modelo = new DefaultListModel();
+            
+            List<TipoProducto> tipo = GestorTipoProducto.listarTipoProducto();
+            for(int i=0;i<tipo.size();i++){
+                modelo.addElement(tipo.get(i));
+                
+            lstDisponible.setModel(modelo);
+                
+                
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void activarCargo(boolean flag){
         this.txtCodigo.setEnabled(flag);
         this.txtNombre.setEnabled(flag);
@@ -42,7 +75,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
     }
     private void activarDisponible(boolean  flag)
     {
-        this.cmbDisponible.setEnabled(flag);
+        this.lstDisponible.setEnabled(flag);
     }
 
     private void activarBotones(boolean nuevo, boolean modificar, boolean baja, boolean alta, boolean aceptar, boolean cancelar){
@@ -79,7 +112,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         btnAlta = new javax.swing.JButton();
         pnlDisponible = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        cmbDisponible = new javax.swing.JList();
+        lstDisponible = new javax.swing.JList();
         btnBaja = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
@@ -192,11 +225,21 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
         pnlDisponible.setBorder(javax.swing.BorderFactory.createTitledBorder("Disponible"));
 
-        jScrollPane2.setViewportView(cmbDisponible);
+        jScrollPane2.setViewportView(lstDisponible);
 
         btnBaja.setText("Baja");
+        btnBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBajaActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlDisponibleLayout = new javax.swing.GroupLayout(pnlDisponible);
         pnlDisponible.setLayout(pnlDisponibleLayout);
@@ -232,6 +275,11 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnAceptar.setText("Aceptar");
 
@@ -279,8 +327,61 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
+        this.activarDisponible(false);
+        this.activarBaja(false);
+        this.activarCargo(true);
+        this.activarBotones(false, false, false, false, true, true);
+        this.operacion=Operacion.nuevo;
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+       this.activarCargo(false);
+       this.activarBaja(false);
+       this.activarDisponible(true);
+       this.activarBotones(true, true, true, false, false, true);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        if(lstDisponible.getSelectedIndex()==-1){
+            Mensajes.mensajeErrorGenerico("Debe seleccionar un tipo de producto que desea modificar");
+            return;
+        }
+        tipo_actual=(TipoProducto) lstDisponible.getSelectedValue();
+        this.cargarDatos(tipo_actual);
+
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
+        // TODO add your handling code here:
+        if(lstDisponible.getSelectedIndex()==-1){
+            Mensajes.mensajeErrorGenerico("Debe seleccionar un tipo de producto que desea dar de baja");
+            return;
+        }
+    }//GEN-LAST:event_btnBajaActionPerformed
+
+    private void cargarDatos(TipoProducto tipo){
+        this.txtCodigo.setText(tipo.getCodigo());
+        this.txtDescripcion.setText(tipo.getDescripcion());
+        this.txtNombre.setText(tipo.getNombre());
+
+        if(tipo.getFecBaja()==null)
+            this.txtFechaBaja.setText("");
+        else
+        {
+            Format formato=new SimpleDateFormat("dd/MM/yyyy");
+            String fecha=formato.format(tipo.getFecBaja());
+            this.txtFechaBaja.setText(fecha);
+        }
+
+        if(tipo.getMotivoBaja()==null)
+            this.txtMotivoBaja.setText("");
+        else
+            this.txtMotivoBaja.setText(tipo.getMotivoBaja());
+
+          
+    }
     /**
     * @param args the command line arguments
     */
@@ -305,7 +406,6 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JList cmbDisponible;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -314,6 +414,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList lstDisponible;
     private javax.swing.JPanel pnlBaja;
     private javax.swing.JPanel pnlCargo;
     private javax.swing.JPanel pnlDisponible;
