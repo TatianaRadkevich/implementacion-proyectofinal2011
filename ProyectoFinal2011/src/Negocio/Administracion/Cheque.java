@@ -34,8 +34,7 @@ public class Cheque  implements java.io.Serializable {
      private BigDecimal monto;
      private String nombreBanco;
      private int nroSucursal;
-     private Set<Cobro> TCobroses = new HashSet<Cobro>(0);
-
+     
     public Cheque() {
     }
 
@@ -48,15 +47,7 @@ public class Cheque  implements java.io.Serializable {
         this.nombreBanco = nombreBanco;
         this.nroSucursal = nroSucursal;
     }
-    public Cheque(int idCheque, Date fecEmision, Date fecVencimiento, BigDecimal monto, String nombreBanco, int nroSucursal, Set<Cobro> TCobroses) {
-       this.idCheque = idCheque;
-       this.fecEmision = fecEmision;
-       this.fecVencimiento = fecVencimiento;
-       this.monto = monto;
-       this.nombreBanco = nombreBanco;
-       this.nroSucursal = nroSucursal;
-       this.TCobroses = TCobroses;
-    }
+    
    
      @Id 
     
@@ -112,14 +103,6 @@ public class Cheque  implements java.io.Serializable {
     
     public void setNroSucursal(int nroSucursal) {
         this.nroSucursal = nroSucursal;
-    }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TCheques")
-    public Set<Cobro> getTCobroses() {
-        return this.TCobroses;
-    }
-    
-    public void setTCobroses(Set<Cobro> TCobroses) {
-        this.TCobroses = TCobroses;
     }
 
 

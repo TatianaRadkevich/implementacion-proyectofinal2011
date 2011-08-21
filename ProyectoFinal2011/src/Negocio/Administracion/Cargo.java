@@ -35,7 +35,6 @@ public class Cargo  implements java.io.Serializable {
      private String descripcion;
      private Date fecBaja;
      private String motivoBaja;
-     private Set<EtapaProduccionEspecifica> TEtapasProduccionEspecificas = new HashSet<EtapaProduccionEspecifica>(0);
 
     public Cargo() {
     }
@@ -46,14 +45,13 @@ public class Cargo  implements java.io.Serializable {
         this.TEmpleados = TEmpleados;
         this.nombre = nombre;
     }
-    public Cargo(byte idCargo, Empleado TEmpleados, String nombre, String descripcion, Date fecBaja, String motivoBaja, Set<EtapaProduccionEspecifica> TEtapasProduccionEspecificas) {
+    public Cargo(byte idCargo, Empleado TEmpleados, String nombre, String descripcion, Date fecBaja, String motivoBaja) {
        this.idCargo = idCargo;
        this.TEmpleados = TEmpleados;
        this.nombre = nombre;
        this.descripcion = descripcion;
        this.fecBaja = fecBaja;
        this.motivoBaja = motivoBaja;
-       this.TEtapasProduccionEspecificas = TEtapasProduccionEspecificas;
     }
    
      @Id 
@@ -110,14 +108,6 @@ public class Cargo  implements java.io.Serializable {
     
     public void setMotivoBaja(String motivoBaja) {
         this.motivoBaja = motivoBaja;
-    }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TCargos")
-    public Set<EtapaProduccionEspecifica> getTEtapasProduccionEspecificas() {
-        return this.TEtapasProduccionEspecificas;
-    }
-    
-    public void setTEtapasProduccionEspecificas(Set<EtapaProduccionEspecifica> TEtapasProduccionEspecificas) {
-        this.TEtapasProduccionEspecificas = TEtapasProduccionEspecificas;
     }
 
 

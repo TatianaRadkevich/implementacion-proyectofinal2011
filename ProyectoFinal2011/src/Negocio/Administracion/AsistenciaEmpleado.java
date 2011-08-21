@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 public class AsistenciaEmpleado  implements java.io.Serializable {
 
 
-     private short idAsistenciaEmpleado;
+     private int idAsistenciaEmpleado;
      private Empleado TEmpleados;
      private Date fecAsistencia;
      private String horaIngreso;
@@ -35,7 +35,7 @@ public class AsistenciaEmpleado  implements java.io.Serializable {
     }
 
 	
-    public AsistenciaEmpleado(short idAsistenciaEmpleado, Empleado TEmpleados, Date fecAsistencia, String horaIngreso) {
+    public AsistenciaEmpleado(int idAsistenciaEmpleado, Empleado TEmpleados, Date fecAsistencia, String horaIngreso) {
         this.idAsistenciaEmpleado = idAsistenciaEmpleado;
         this.TEmpleados = TEmpleados;
         this.fecAsistencia = fecAsistencia;
@@ -53,19 +53,19 @@ public class AsistenciaEmpleado  implements java.io.Serializable {
      @Id 
     
     @Column(name="ID_ASISTENCIA_EMPLEADO", unique=true, nullable=false, precision=4, scale=0)
-    public short getIdAsistenciaEmpleado() {
+    public int getIdAsistenciaEmpleado() {
         return this.idAsistenciaEmpleado;
     }
     
-    public void setIdAsistenciaEmpleado(short idAsistenciaEmpleado) {
+    public void setIdAsistenciaEmpleado(int idAsistenciaEmpleado) {
         this.idAsistenciaEmpleado = idAsistenciaEmpleado;
     }
-@ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="ID_EMPLEADO", nullable=false)
     public Empleado getTEmpleados() {
         return this.TEmpleados;
     }
-    
+
     public void setTEmpleados(Empleado TEmpleados) {
         this.TEmpleados = TEmpleados;
     }
