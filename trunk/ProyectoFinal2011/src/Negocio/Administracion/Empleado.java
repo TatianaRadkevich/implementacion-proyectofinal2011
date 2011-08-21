@@ -1,8 +1,10 @@
 package Negocio.Administracion;
-// Generated 17/08/2011 17:29:51 by Hibernate Tools 3.2.1.GA
+// Generated 19/08/2011 20:33:26 by Hibernate Tools 3.2.1.GA
 
 
 import Negocio.GestionUsuario.Usuario;
+import Negocio.Produccion.DetallePlanProduccion;
+import Negocio.Produccion.PlanProduccion;
 import Negocio.UbicacionGeografica.Domicilio;
 import java.util.Date;
 import java.util.HashSet;
@@ -45,13 +47,15 @@ public class Empleado  implements java.io.Serializable {
      private String observaciones;
      private Integer idAsistenciaEmpleado;
      private Short idDiasHorasLaborables;
-     private Set TCobroses = new HashSet(0);
-     private Set TFacturases = new HashSet(0);
-     private Set TDetallesPlans = new HashSet(0);
-     private Set TPlanesProduccions = new HashSet(0);
-     private Set TDiasHoraLaborables = new HashSet(0);
-     private Set TAsistenciasEmpleados = new HashSet(0);
-     private Set TEmpleadosXCargos = new HashSet(0);
+     private Date fecBaja;
+     private String motivoBaja;
+     private Set<Cobro> TCobroses = new HashSet(0);
+     private Set <Factura> TFacturases = new HashSet(0);
+     private Set<DetallePlanProduccion> TDetallesPlans = new HashSet(0);
+     private Set <PlanProduccion> TPlanesProduccions = new HashSet(0);
+     private Set<DiaHoraLaborable> TDiasHoraLaborables = new HashSet(0);
+     private Set<AsistenciaEmpleado> TAsistenciasEmpleados = new HashSet(0);
+     private Set<TEmpleadosXCargo> TEmpleadosXCargos = new HashSet(0);
 
     public Empleado() {
     }
@@ -68,7 +72,7 @@ public class Empleado  implements java.io.Serializable {
         this.fecNacimiento = fecNacimiento;
         this.numeroDocumento = numeroDocumento;
     }
-    public Empleado(int idEmpleado, Domicilio TDomicilios, TipoDocumento TTdocumento, Usuario TUsuarios, Sexo TSexos, String nombre, String apellido, Long celular, String correoElectronico, Date fecNacimiento, int numeroDocumento, Long telefono, String observaciones, Integer idAsistenciaEmpleado, Short idDiasHorasLaborables, Set TCobroses, Set TFacturases, Set TDetallesPlans, Set TPlanesProduccions, Set TDiasHoraLaborables, Set TAsistenciasEmpleados, Set TEmpleadosXCargos) {
+    public Empleado(int idEmpleado, Domicilio TDomicilios, TipoDocumento TTdocumento, Usuario TUsuarios, Sexo TSexos, String nombre, String apellido, Long celular, String correoElectronico, Date fecNacimiento, int numeroDocumento, Long telefono, String observaciones, Integer idAsistenciaEmpleado, Short idDiasHorasLaborables, Date fecBaja, String motivoBaja, Set TCobroses, Set TFacturases, Set TDetallesPlans, Set TPlanesProduccions, Set TDiasHoraLaborables, Set<AsistenciaEmpleado> TAsistenciasEmpleados, Set TEmpleadosXCargos) {
        this.idEmpleado = idEmpleado;
        this.TDomicilios = TDomicilios;
        this.TTdocumento = TTdocumento;
@@ -84,6 +88,8 @@ public class Empleado  implements java.io.Serializable {
        this.observaciones = observaciones;
        this.idAsistenciaEmpleado = idAsistenciaEmpleado;
        this.idDiasHorasLaborables = idDiasHorasLaborables;
+       this.fecBaja = fecBaja;
+       this.motivoBaja = motivoBaja;
        this.TCobroses = TCobroses;
        this.TFacturases = TFacturases;
        this.TDetallesPlans = TDetallesPlans;
@@ -229,61 +235,83 @@ public class Empleado  implements java.io.Serializable {
     public void setIdDiasHorasLaborables(Short idDiasHorasLaborables) {
         this.idDiasHorasLaborables = idDiasHorasLaborables;
     }
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="FEC_BAJA", length=23)
+    public Date getFecBaja() {
+        return this.fecBaja;
+    }
+
+    public void setFecBaja(Date fecBaja) {
+        this.fecBaja = fecBaja;
+    }
+
+    @Column(name="MOTIVO_BAJA", length=100)
+    public String getMotivoBaja() {
+        return this.motivoBaja;
+    }
+
+    public void setMotivoBaja(String motivoBaja) {
+        this.motivoBaja = motivoBaja;
+    }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEmpleados")
-    public Set getTCobroses() {
+    public Set<Cobro> getTCobroses() {
         return this.TCobroses;
     }
 
-    public void setTCobroses(Set TCobroses) {
+    public void setTCobroses(Set<Cobro> TCobroses) {
         this.TCobroses = TCobroses;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEmpleados")
-    public Set getTFacturases() {
+    public Set <Factura> getTFacturases() {
         return this.TFacturases;
     }
 
-    public void setTFacturases(Set TFacturases) {
+    public void setTFacturases(Set <Factura> TFacturases) {
         this.TFacturases = TFacturases;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEmpleados")
-    public Set getTDetallesPlans() {
+    public Set<DetallePlanProduccion> getTDetallesPlans() {
         return this.TDetallesPlans;
     }
 
-    public void setTDetallesPlans(Set TDetallesPlans) {
+    public void setTDetallesPlans(Set<DetallePlanProduccion> TDetallesPlans) {
         this.TDetallesPlans = TDetallesPlans;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEmpleados")
-    public Set getTPlanesProduccions() {
+    public Set <PlanProduccion> getTPlanesProduccions() {
         return this.TPlanesProduccions;
     }
 
-    public void setTPlanesProduccions(Set TPlanesProduccions) {
+    public void setTPlanesProduccions(Set <PlanProduccion> TPlanesProduccions) {
         this.TPlanesProduccions = TPlanesProduccions;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEmpleados")
-    public Set getTDiasHoraLaborables() {
+    public Set<DiaHoraLaborable> getTDiasHoraLaborables() {
         return this.TDiasHoraLaborables;
     }
 
-    public void setTDiasHoraLaborables(Set TDiasHoraLaborables) {
+    public void setTDiasHoraLaborables(Set<DiaHoraLaborable> TDiasHoraLaborables) {
         this.TDiasHoraLaborables = TDiasHoraLaborables;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEmpleados")
-    public Set getTAsistenciasEmpleados() {
+    public Set<AsistenciaEmpleado> getTAsistenciasEmpleados() {
         return this.TAsistenciasEmpleados;
     }
 
-    public void setTAsistenciasEmpleados(Set TAsistenciasEmpleados) {
+    public void setTAsistenciasEmpleados(Set<AsistenciaEmpleado> TAsistenciasEmpleados) {
         this.TAsistenciasEmpleados = TAsistenciasEmpleados;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEmpleados")
-    public Set getTEmpleadosXCargos() {
+    public Set<TEmpleadosXCargo> getTEmpleadosXCargos() {
         return this.TEmpleadosXCargos;
     }
 
-    public void setTEmpleadosXCargos(Set TEmpleadosXCargos) {
+    public void setTEmpleadosXCargos(Set<TEmpleadosXCargo> TEmpleadosXCargos) {
         this.TEmpleadosXCargos = TEmpleadosXCargos;
     }
 
+
+
+
 }
+

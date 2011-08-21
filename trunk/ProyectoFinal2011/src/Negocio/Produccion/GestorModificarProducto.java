@@ -7,8 +7,6 @@ package Negocio.Produccion;
 
 import BaseDeDatos.Produccion.ProductoBD;
 import Negocio.Exceptiones.ExceptionGestor;
-import Negocio.Produccion.GestorProducto;
-import Negocio.Produccion.Producto;
 import Presentacion.Produccion.PantallaABMProducto;
 import java.awt.Dialog;
 
@@ -25,7 +23,7 @@ public class GestorModificarProducto extends GestorProducto{
         return ProductoBD.modificar(producto);
     }
 
-    void modificarProducto(Dialog parent,String codigo) {
+    public void modificarProducto(Dialog parent,String codigo) {
         PantallaABMProducto pantalla_producto=new PantallaABMProducto(parent, true, this);
         pantalla_producto.modificar(ProductoBD.traerProducto(codigo));
         pantalla_producto.setVisible(true);
