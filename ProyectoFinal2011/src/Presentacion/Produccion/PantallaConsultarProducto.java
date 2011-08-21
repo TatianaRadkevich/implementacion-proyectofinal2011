@@ -11,6 +11,7 @@
 
 package Presentacion.Produccion;
 
+import Negocio.Produccion.GestorModificarProducto;
 import Negocio.Produccion.GestorProducto;
 import Negocio.Produccion.GestorRegistrarProducto;
 import Negocio.Produccion.Producto;
