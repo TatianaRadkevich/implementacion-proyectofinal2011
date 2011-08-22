@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -50,8 +51,8 @@ public class EstadoEtapaProduccion  implements java.io.Serializable {
        this.TEtapasProduccionEspecificas = TEtapasProduccionEspecificas;
     }
    
-     @Id 
-    
+    @Id 
+    @GeneratedValue
     @Column(name="ID_ETAPA_PRODUCCION", unique=true, nullable=false, precision=3, scale=0)
     public short getIdEtapaProduccion() {
         return this.idEtapaProduccion;
@@ -105,8 +106,9 @@ public class EstadoEtapaProduccion  implements java.io.Serializable {
         this.TEtapasProduccionEspecificas = TEtapasProduccionEspecificas;
     }
 
-
-
+    public String toString(){
+        return this.getNombre();
+    }
 
 }
 
