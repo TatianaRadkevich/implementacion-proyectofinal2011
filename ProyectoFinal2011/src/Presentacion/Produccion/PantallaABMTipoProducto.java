@@ -11,7 +11,6 @@
 
 package Presentacion.Produccion;
 
-import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Produccion.GestorTipoProducto;
 import Negocio.Produccion.TipoProducto;
 import Presentacion.Mensajes;
@@ -19,7 +18,7 @@ import Presentacion.Operacion;
 import gui.GUILocal;
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.Formatter;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +32,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
     private int operacion;
     private TipoProducto tipo_actual=null;
+    private GestorTipoProducto gestor=new GestorTipoProducto();
     /** Creates new form AdministrarTipoProducto */
     public PantallaABMTipoProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -45,47 +45,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
        this.activarBotones(true, true, true, false, false, true);
        this.cargarTipoProductos();
 
-    }
-
-     private void cargarTipoProductos(){
-        try {
-            lstDisponible.removeAll();
-            DefaultListModel modelo = new DefaultListModel();
-            
-            List<TipoProducto> tipo = GestorTipoProducto.listarTipoProducto();
-            for(int i=0;i<tipo.size();i++){
-                modelo.addElement(tipo.get(i));
-                
-            lstDisponible.setModel(modelo);
-                
-                
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    private void activarCargo(boolean flag){
-        this.txtCodigo.setEnabled(flag);
-        this.txtNombre.setEnabled(flag);
-        this.txtDescripcion.setEnabled(flag);
-    }
-    private void activarBaja(boolean flag){
-        this.txtFechaBaja.setEnabled(flag);
-        this.txtMotivoBaja.setEnabled(flag);
-    }
-    private void activarDisponible(boolean  flag)
-    {
-        this.lstDisponible.setEnabled(flag);
-    }
-
-    private void activarBotones(boolean nuevo, boolean modificar, boolean baja, boolean alta, boolean aceptar, boolean cancelar){
-        this.btnNuevo.setEnabled(nuevo);
-        this.btnModificar.setEnabled(modificar);
-        this.btnBaja.setEnabled(baja);
-        this.btnAceptar.setEnabled(aceptar);
-        this.btnCancelar.setEnabled(cancelar);
-        this.btnAlta.setEnabled(alta);
-    }
+    }   
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -282,6 +242,11 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         });
 
         btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -336,10 +301,13 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-       this.activarCargo(false);
-       this.activarBaja(false);
-       this.activarDisponible(true);
-       this.activarBotones(true, true, true, false, false, true);
+
+        if(!btnAceptar.isEnabled()){
+            this.dispose();
+            return;
+        }
+
+       this.cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -348,8 +316,14 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
             Mensajes.mensajeErrorGenerico("Debe seleccionar un tipo de producto que desea modificar");
             return;
         }
+        this.activarDisponible(false);
+        this.activarBaja(false);
+        this.activarCargo(true);
+        this.activarBotones(false, false, false, false, true, true);
+
         tipo_actual=(TipoProducto) lstDisponible.getSelectedValue();
         this.cargarDatos(tipo_actual);
+        this.operacion=Operacion.modificar;
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -358,30 +332,65 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         if(lstDisponible.getSelectedIndex()==-1){
             Mensajes.mensajeErrorGenerico("Debe seleccionar un tipo de producto que desea dar de baja");
             return;
-        }
+        }      
+        
+        tipo_actual=(TipoProducto) lstDisponible.getSelectedValue();
+        this.cargarDatos(tipo_actual);
+        Format formato=new SimpleDateFormat("dd/MM/yyyy");
+        String fecha=formato.format(new Date());
+        this.txtFechaBaja.setText(fecha);
+        this.activarBaja(true);
+        this.activarCargo(false);
+        this.activarDisponible(false);
+        this.activarBotones(false, false, false, false, true, true);
+        txtMotivoBaja.requestFocus();
+        this.operacion=Operacion.baja;
     }//GEN-LAST:event_btnBajaActionPerformed
 
-    private void cargarDatos(TipoProducto tipo){
-        this.txtCodigo.setText(tipo.getCodigo());
-        this.txtDescripcion.setText(tipo.getDescripcion());
-        this.txtNombre.setText(tipo.getNombre());
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        // TODO add your handling code here:
+        if(validar()){
+           
+        }
+      if(operacion==Operacion.nuevo){
+            TipoProducto tipo=new TipoProducto();
+            tipo.setNombre(txtNombre.getText());
+            tipo.setCodigo(txtCodigo.getText().toUpperCase());
+            tipo.setDescripcion(txtDescripcion.getText());
 
-        if(tipo.getFecBaja()==null)
-            this.txtFechaBaja.setText("");
-        else
-        {
-            Format formato=new SimpleDateFormat("dd/MM/yyyy");
-            String fecha=formato.format(tipo.getFecBaja());
-            this.txtFechaBaja.setText(fecha);
+            gestor.guardar(tipo);
+            Mensajes.mensajeConfirmacion("El tipo de producto "+tipo.getNombre()+"\n ha sido guardado exitosamente");
+            this.vaciar();
+            cancelar();
+            return;
         }
 
-        if(tipo.getMotivoBaja()==null)
-            this.txtMotivoBaja.setText("");
-        else
-            this.txtMotivoBaja.setText(tipo.getMotivoBaja());
+        if(operacion==Operacion.modificar){
+            tipo_actual.setNombre(txtNombre.getText());
+            tipo_actual.setCodigo(txtCodigo.getText().toUpperCase());
+            tipo_actual.setDescripcion(txtDescripcion.getText());
+            gestor.modificar(tipo_actual);
+            tipo_actual=null;
+            Mensajes.mensajeConfirmacion("El tipo de producto "+tipo_actual.getNombre()+"\n ha sido modificado exitosamente");
+            this.vaciar();
+            cancelar();
+            return;
+        }
+         if(operacion==Operacion.baja){
+             tipo_actual.setFecBaja(new Date());
+            tipo_actual.setMotivoBaja(txtMotivoBaja.getText());
+            gestor.modificar(tipo_actual);
+            
+            Mensajes.mensajeConfirmacion("El tipo de producto "+tipo_actual.getNombre()+"\n ha sido dado de baja exitosamente");
+            this.vaciar();
+            tipo_actual=null;
+            cancelar();
+            return;
+        }
 
-          
-    }
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+   
     /**
     * @param args the command line arguments
     */
@@ -424,5 +433,92 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
     private javax.swing.JTextArea txtMotivoBaja;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+
+
+    //---------------------------------------------------------------------------
+
+    private void cargarTipoProductos(){
+        try {
+            lstDisponible.removeAll();
+            DefaultListModel modelo = new DefaultListModel();
+
+            List<TipoProducto> tipo = GestorTipoProducto.listarTipoProducto();
+            for(int i=0;i<tipo.size();i++){
+                modelo.addElement(tipo.get(i));
+
+            lstDisponible.setModel(modelo);
+
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void activarCargo(boolean flag){
+        this.txtCodigo.setEnabled(flag);
+        this.txtNombre.setEnabled(flag);
+        this.txtDescripcion.setEnabled(flag);
+    }
+    private void activarBaja(boolean flag){
+        this.txtFechaBaja.setEnabled(false);
+        this.txtMotivoBaja.setEnabled(flag);
+    }
+    private void activarDisponible(boolean  flag)
+    {
+        this.lstDisponible.setEnabled(flag);
+    }
+
+    private void activarBotones(boolean nuevo, boolean modificar, boolean baja, boolean alta, boolean aceptar, boolean cancelar){
+        this.btnNuevo.setEnabled(nuevo);
+        this.btnModificar.setEnabled(modificar);
+        this.btnBaja.setEnabled(baja);
+        this.btnAceptar.setEnabled(aceptar);
+        this.btnCancelar.setEnabled(cancelar);
+        this.btnAlta.setEnabled(alta);
+    }
+
+    //--------------------------------
+     private void vaciar(){
+        this.txtCodigo.setText("");
+        this.txtDescripcion.setText("");
+        this.txtNombre.setText("");
+        this.txtFechaBaja.setText("");
+        this.txtMotivoBaja.setText("");
+
+    }
+    private boolean validar(){
+        return true;
+    }
+    private void cargarDatos(TipoProducto tipo){
+
+        this.txtCodigo.setText(tipo.getCodigo());
+        this.txtDescripcion.setText(tipo.getDescripcion());
+        this.txtNombre.setText(tipo.getNombre());
+
+        if(tipo.getFecBaja()==null)
+            this.txtFechaBaja.setText("");
+        else
+        {
+            Format formato=new SimpleDateFormat("dd/MM/yyyy");
+            String fecha=formato.format(tipo.getFecBaja());
+            this.txtFechaBaja.setText(fecha);
+        }
+
+        if(tipo.getMotivoBaja()==null)
+            this.txtMotivoBaja.setText("");
+        else
+            this.txtMotivoBaja.setText(tipo.getMotivoBaja());
+
+
+    }
+
+    private void cancelar(){
+         this.activarCargo(false);
+       this.activarBaja(false);
+       this.activarDisponible(true);
+       this.activarBotones(true, true, true, false, false, true);
+       this.vaciar();
+    }
+
 
 }
