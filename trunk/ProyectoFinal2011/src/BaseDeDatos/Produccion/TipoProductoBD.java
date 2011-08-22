@@ -7,15 +7,12 @@ package BaseDeDatos.Produccion;
 
 
 import BaseDeDatos.HibernateUtil;
-import BaseDeDatos.Produccion.ProductoBD;
 import Negocio.Produccion.GestorProducto;
 import Negocio.Produccion.TipoProducto;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
 
 /**
  *
@@ -28,12 +25,13 @@ public class TipoProductoBD{
         List<TipoProducto> result=null;
         
         try{            
-            usuario= HibernateUtil.getNewSession();
-            usuario.beginTransaction();       
-           
-            result = usuario.createQuery("from TipoProducto").list();
-            usuario.getTransaction().commit();
-                usuario.close();
+//            usuario= HibernateUtil.getSessionFactory().getCurrentSession();
+//            usuario.beginTransaction();
+//
+//            result = usuario.createQuery("from TipoProducto").list();
+//            usuario.getTransaction().commit();
+            result = HibernateUtil.ejecutarConsulta("from TipoProducto");
+               
         }catch(Exception  ex) {
             Logger.getLogger(GestorProducto.class.getName()).log(Level.SEVERE, null, ex);}
         
@@ -41,7 +39,11 @@ public class TipoProductoBD{
     }
 
     public static List<TipoProducto> listarTiposProductosAlta() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        
+        List<TipoProducto> result=null;
+        result = HibernateUtil.ejecutarConsulta("from TipoProducto as p where p.fecBaja=null");
+        return result;
+
     }
 
     public TipoProductoBD() {
@@ -49,29 +51,31 @@ public class TipoProductoBD{
     }
 
     public static TipoProducto guardar(TipoProducto tipoProducto){
-        Session usuario = null;
-        try{
-            usuario= HibernateUtil.getNewSession();
-            usuario.beginTransaction();
+//        Session usuario = null;
+//        try{
+//            usuario= HibernateUtil.getNewSession();
+//            usuario.beginTransaction();
+//
+//            usuario.save(tipoProducto);
+//            usuario.getTransaction().commit();
+//            usuario.close();
+//        }catch(Exception  ex) {  }
 
-            usuario.save(tipoProducto);
-            usuario.getTransaction().commit();
-            usuario.close();
-        }catch(Exception  ex) {  }
-
+        HibernateUtil.guardarObjeto(tipoProducto);
         return tipoProducto;
     }
 
     public static TipoProducto modificar(TipoProducto tipoProducto){
-        Session usuario = null;
-        try{
-            usuario= HibernateUtil.getNewSession();
-            usuario.beginTransaction();
-
-            usuario.update(tipoProducto);
-            usuario.getTransaction().commit();
-            usuario.close();
-        }catch(Exception  ex) {  }
+        HibernateUtil.modificarObjeto(tipoProducto);
+//        Session usuario = null;
+//        try{
+//            usuario= HibernateUtil.getNewSession();
+//            usuario.beginTransaction();
+//
+//            usuario.update(tipoProducto);
+//            usuario.getTransaction().commit();
+//            usuario.close();
+//        }catch(Exception  ex) {  }
 
         return tipoProducto;
     }
