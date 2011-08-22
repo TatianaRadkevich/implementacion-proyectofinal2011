@@ -13,6 +13,7 @@ package Presentacion.Produccion;
 
 import Negocio.Produccion.GestorTipoProducto;
 import Negocio.Produccion.TipoProducto;
+import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.Operacion;
 import gui.GUILocal;
@@ -44,8 +45,11 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
        this.activarDisponible(true);
        this.activarBotones(true, true, true, false, false, true);
        this.cargarTipoProductos();
+       IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
 
-    }   
+    }
+
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -81,7 +85,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        pnlCargo.setBorder(javax.swing.BorderFactory.createTitledBorder("Cargo"));
+        pnlCargo.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo producto"));
 
         jLabel1.setText("Nombre:");
 
@@ -104,6 +108,11 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         jScrollPane3.setViewportView(txtMotivoBaja);
 
         btnAlta.setText("Alta");
+        btnAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAltaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBajaLayout = new javax.swing.GroupLayout(pnlBaja);
         pnlBaja.setLayout(pnlBajaLayout);
@@ -117,8 +126,8 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBajaLayout.createSequentialGroup()
-                        .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
+                        .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
                 .addContainerGap())
@@ -291,12 +300,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        // TODO add your handling code here:
-        this.activarDisponible(false);
-        this.activarBaja(false);
-        this.activarCargo(true);
-        this.activarBotones(false, false, false, false, true, true);
-        this.operacion=Operacion.nuevo;
+        nuevo();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -323,6 +327,9 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
         tipo_actual=(TipoProducto) lstDisponible.getSelectedValue();
         this.cargarDatos(tipo_actual);
+        if(tipo_actual.getFecBaja()!=null){
+            this.btnAlta.setEnabled(true);
+        }
         this.operacion=Operacion.modificar;
 
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -389,6 +396,16 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
+        // TODO add your handling code here:
+
+        this.tipo_actual.setMotivoBaja(null);
+        this.tipo_actual.setFecBaja(null);
+        this.txtFechaBaja.setText("");
+        this.txtMotivoBaja.setText("");
+
+    }//GEN-LAST:event_btnAltaActionPerformed
 
    
     /**
@@ -520,5 +537,13 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
        this.vaciar();
     }
 
+     public void nuevo() {
+        // TODO add your handling code here:
+        this.activarDisponible(false);
+        this.activarBaja(false);
+        this.activarCargo(true);
+        this.activarBotones(false, false, false, false, true, true);
+        this.operacion = Operacion.nuevo;
+    }
 
 }
