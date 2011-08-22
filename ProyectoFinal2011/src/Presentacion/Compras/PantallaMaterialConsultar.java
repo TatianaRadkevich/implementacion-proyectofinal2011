@@ -69,7 +69,7 @@ public class PantallaMaterialConsultar extends javax.swing.JDialog {
         /************************Validacion de botones **********************************/
         btnBaja.setEnabled(false);
         btnModificar.setEnabled(false);
-        tablita.addListener(new ListSelectionListener() {
+        tablita.addListenerModificaionSelecion(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
                 boolean var = false;
