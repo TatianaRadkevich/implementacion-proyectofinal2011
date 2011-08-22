@@ -6,15 +6,11 @@
 package BaseDeDatos.Ventas;
 
 import BaseDeDatos.HibernateUtil;
-import Negocio.Ventas.Cliente;
 import Negocio.Ventas.EstadoPedido;
 import Negocio.Ventas.Pedido;
 import Presentacion.Utilidades;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.rmi.CORBA.Util;
-import org.hibernate.Session;
 
 /**
  *
