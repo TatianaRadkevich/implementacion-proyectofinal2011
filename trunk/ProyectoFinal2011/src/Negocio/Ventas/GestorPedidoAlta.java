@@ -14,7 +14,7 @@ import Presentacion.Ventas.PantallaPedidoABM;
  *
  * @author Ivan
  */
-public class GestorPedidoRegistrar extends GestorPedido
+public class GestorPedidoAlta extends GestorPedido
 {
 
     @Override

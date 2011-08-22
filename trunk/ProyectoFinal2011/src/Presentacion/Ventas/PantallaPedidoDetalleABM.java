@@ -17,7 +17,7 @@ import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.GestorPedido;
-import Negocio.Ventas.GestorPedidoRegistrar;
+import Negocio.Ventas.GestorPedidoAlta;
 import Negocio.Ventas.Pedido;
 import Presentacion.ValidarTexbox;
 import java.awt.event.ActionEvent;
@@ -212,7 +212,7 @@ public class PantallaPedidoDetalleABM extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new PantallaPedidoDetalleABM(new GestorPedidoRegistrar()).setVisible(true);
+                new PantallaPedidoDetalleABM(new GestorPedidoAlta()).setVisible(true);
 
             }
         });

@@ -17,10 +17,10 @@ import java.util.GregorianCalendar;
  *
  * @author Ivan
  */
-public class GestorPedidoEliminar extends GestorPedido
+public class GestorPedidoBaja extends GestorPedido
 {
 
-    public GestorPedidoEliminar(Pedido p)
+    public GestorPedidoBaja(Pedido p)
     {
         pedido=p;
     }
