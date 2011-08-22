@@ -311,7 +311,28 @@ public class Empleado  implements java.io.Serializable {
     }
 
 
+    public Object getInfoColumna(int columnIndex) {
 
+         switch (columnIndex){
+             case 0:
+                return this.getIdEmpleado();
+            case 1:
+                return this.getNombre();
+            case 2:
+                return this.getApellido();
+            case 3:
+                return this.getTSexos().getNombre();
+             case 4:
+                return this.getTTdocumento().getNombre();
+            case 5:
+                return this.getNumeroDocumento();
+            case 6:
+                 return this.getTelefono();
+             case 7:
+                 return this.getCorreoElectronico();
+                 }
+        return null;
+        }    
 
 }
 
