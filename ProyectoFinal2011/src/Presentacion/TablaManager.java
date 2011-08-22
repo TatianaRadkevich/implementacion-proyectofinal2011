@@ -49,7 +49,7 @@ public abstract class TablaManager <E>
         tabla.getModel().addTableModelListener(tml);
     }
 
-    public void addListener(ListSelectionListener lst)
+    public void addListenerModificaionSelecion(ListSelectionListener lst)
     {
         tabla.getSelectionModel().addListSelectionListener(lst);
     }
