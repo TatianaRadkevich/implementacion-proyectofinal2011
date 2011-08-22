@@ -5,8 +5,8 @@
 
 package Negocio.Produccion;
 import BaseDeDatos.Produccion.ProductoBD;
-import BaseDeDatos.Produccion.TipoProductoBD;
 import Negocio.Exceptiones.ExceptionGestor;
+import Presentacion.Produccion.PantallaABMProducto;
 import java.util.List;
 
 /**
@@ -25,4 +25,7 @@ public abstract class GestorProducto {
         return ProductoBD.listarProductos();
     }
 
+    public abstract String mensajeResultado(String nombreProducto);
+
+    public abstract void reiniciar(PantallaABMProducto aThis) ;
 }
