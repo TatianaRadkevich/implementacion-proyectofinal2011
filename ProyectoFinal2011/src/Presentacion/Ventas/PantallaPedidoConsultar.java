@@ -12,32 +12,18 @@ package Presentacion.Ventas;
 
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
-import Negocio.Ventas.Cliente;
-import Negocio.Ventas.GestorPedidoEliminar;
+import Negocio.Ventas.GestorPedidoBaja;
 import Negocio.Ventas.GestorPedidoModificar;
-import Negocio.Ventas.GestorPedidoRegistrar;
+import Negocio.Ventas.GestorPedidoAlta;
 import Negocio.Ventas.Pedido;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import com.toedter.calendar.JTextFieldDateEditor;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.plaf.basic.BasicListUI.ListSelectionHandler;
-import javax.swing.table.DefaultTableModel;
-import org.hibernate.Hibernate;
 
 /**
  *
@@ -407,7 +393,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        new GestorPedidoRegistrar().iniciarCU();
+        new GestorPedidoAlta().iniciarCU();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void txtCUILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCUILActionPerformed
@@ -433,7 +419,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
         try {
-            new GestorPedidoEliminar(tablita.getSeletedObject()).iniciarCU();
+            new GestorPedidoBaja(tablita.getSeletedObject()).iniciarCU();
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }

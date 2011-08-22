@@ -463,7 +463,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new GestorPedidoRegistrar().iniciarCU();
+                new GestorPedidoAlta().iniciarCU();
                 //new GestorPedidoModificar(PedidoBD.getPedido(9)).iniciar();
                 //new GestorPedidoEliminar(PedidoBD.getPedido(6)).iniciar();
             }
