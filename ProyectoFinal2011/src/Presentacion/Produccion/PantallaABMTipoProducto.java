@@ -361,26 +361,27 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         }
       if(operacion==Operacion.nuevo){
             TipoProducto tipo=new TipoProducto();
-            tipo.setNombre(txtNombre.getText());
+            tipo.setNombre(txtNombre.getText().toUpperCase());
             tipo.setCodigo(txtCodigo.getText().toUpperCase());
             tipo.setDescripcion(txtDescripcion.getText());
 
             gestor.guardar(tipo);
-            Mensajes.mensajeConfirmacion("El tipo de producto "+tipo.getNombre()+"\n ha sido guardado exitosamente");
+            Mensajes.mensajeInformacion("El tipo de producto "+tipo.getNombre()+"\n ha sido guardado exitosamente");
             this.vaciar();
             cancelar();
+            this.cargarTipoProductos();
             return;
         }
 
         if(operacion==Operacion.modificar){
-            tipo_actual.setNombre(txtNombre.getText());
+            tipo_actual.setNombre(txtNombre.getText().toUpperCase());
             tipo_actual.setCodigo(txtCodigo.getText().toUpperCase());
             tipo_actual.setDescripcion(txtDescripcion.getText());
-            gestor.modificar(tipo_actual);
-            tipo_actual=null;
-            Mensajes.mensajeConfirmacion("El tipo de producto "+tipo_actual.getNombre()+"\n ha sido modificado exitosamente");
+            gestor.modificar(tipo_actual);            
+            Mensajes.mensajeInformacion("El tipo de producto "+tipo_actual.getNombre()+"\n ha sido modificado exitosamente");
             this.vaciar();
             cancelar();
+            tipo_actual=null;
             return;
         }
          if(operacion==Operacion.baja){
@@ -388,7 +389,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
             tipo_actual.setMotivoBaja(txtMotivoBaja.getText());
             gestor.modificar(tipo_actual);
             
-            Mensajes.mensajeConfirmacion("El tipo de producto "+tipo_actual.getNombre()+"\n ha sido dado de baja exitosamente");
+            Mensajes.mensajeInformacion("El tipo de producto "+tipo_actual.getNombre()+"\n ha sido dado de baja exitosamente");
             this.vaciar();
             tipo_actual=null;
             cancelar();
