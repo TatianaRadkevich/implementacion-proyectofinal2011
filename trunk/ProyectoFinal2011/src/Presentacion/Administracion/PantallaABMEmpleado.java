@@ -11,18 +11,37 @@
 
 package Presentacion.Administracion;
 
+import Negocio.Administracion.Empleado;
+import Negocio.Administracion.GestorEmpleado;
+import Presentacion.IniciadorDeVentanas;
+import gui.GUILocal;
+import java.awt.Dialog;
+
 /**
  *
  * @author Heber Parrucci
  */
 public class PantallaABMEmpleado extends javax.swing.JDialog {
 
+    private GestorEmpleado gestor;
+    private Empleado empleado=null;
     /** Creates new form PantallaABMEmpleado */
     public PantallaABMEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
     }
+
+    public PantallaABMEmpleado(Dialog owner, boolean modal, GestorEmpleado gestor) {
+        super(owner, modal);
+        GUILocal.establecerGUILocal(this);
+        initComponents();
+        this.gestor=gestor;
+
+       cargarTipoProductos();
+       IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+    }
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -439,5 +458,44 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     private javax.swing.JTextField txtPiso;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+
+
+     private void cargarDatos(Empleado empleado){
+
+       
+    }
+
+     private void cargarTipoProductos(){
+      
+    }
+
+    public void nuevo(){
+       
+    }
+
+    public void modificar(Empleado emp){
+       
+    }
+
+    public void baja(Empleado emp) {
+       
+        }
+
+    public void vaciar(){
+      
+    }
+
+    private void activarProducto(boolean flag){
+        
+    }
+
+    private void activarBaja(boolean flag){
+        
+    }
+
+    private void activarBotones(boolean aceptar,boolean cancelar, boolean alta){
+      
+    }
+
 
 }
