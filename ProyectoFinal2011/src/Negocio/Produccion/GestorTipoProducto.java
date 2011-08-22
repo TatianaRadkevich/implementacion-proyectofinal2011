@@ -19,6 +19,11 @@ public class GestorTipoProducto {
 
     public static void administarTipoProducto(Dialog parent){
         PantallaABMTipoProducto tipoProducto=new PantallaABMTipoProducto(null, true);
+        tipoProducto.setVisible(true);        
+    }
+    public static void administarTipoProductoAgregar(Dialog parent){
+        PantallaABMTipoProducto tipoProducto=new PantallaABMTipoProducto(null, true);
+        tipoProducto.nuevo();
         tipoProducto.setVisible(true);
     }
 

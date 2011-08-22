@@ -27,5 +27,15 @@ public class GestorRegistrarProducto extends GestorProducto{
         return ProductoBD.guardar(producto);
     }
 
+    @Override
+    public String mensajeResultado(String nombreProducto) {
+        return "El producto "+nombreProducto+ "\nha sido dado de registrado exitosamente";
+    }
+
+    @Override
+    public void reiniciar(PantallaABMProducto aThis) {
+        aThis.nuevo();
+    }
+
 
 }

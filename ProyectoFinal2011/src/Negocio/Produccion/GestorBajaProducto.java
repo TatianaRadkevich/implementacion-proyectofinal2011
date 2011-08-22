@@ -14,30 +14,26 @@ import java.awt.Dialog;
  *
  * @author Ivan
  */
-public class GestorModificarProducto extends GestorProducto{
-
-   
+public class GestorBajaProducto extends GestorProducto{
 
     @Override
     public Producto ejecutarOperacion(Producto producto) throws ExceptionGestor {
         return ProductoBD.modificar(producto);
     }
 
-    public void modificarProducto(Dialog parent,String codigo) {
+    public void bajaProducto(Dialog parent,String codigo) {
         PantallaABMProducto pantalla_producto=new PantallaABMProducto(parent, true, this);
-        pantalla_producto.modificar(ProductoBD.traerProducto(codigo));
+        pantalla_producto.baja(ProductoBD.traerProducto(codigo));
         pantalla_producto.setVisible(true);
     }
 
     @Override
     public String mensajeResultado(String nombreProducto) {
-        return "El producto "+nombreProducto+ "\nha sido modificado exitosamente";
+        return "El producto "+nombreProducto+ "\nha sido dado de baja exitosamente";
     }
 
     @Override
     public void reiniciar(PantallaABMProducto aThis) {
-        aThis.dispose();
+       aThis.dispose();
     }
-
-
 }
