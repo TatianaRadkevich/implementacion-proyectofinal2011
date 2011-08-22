@@ -33,7 +33,7 @@ public class GestorTipoMaquinaHerramientaModificar extends GestorTipoMaquinaHerr
 
 
         interfaz.cargar(tipoMaquinaHerramienta);
-        interfaz.habilitarCarga(false);
+        interfaz.habilitarCarga(true);
 
     }
 
@@ -55,6 +55,7 @@ public class GestorTipoMaquinaHerramientaModificar extends GestorTipoMaquinaHerr
     public void ejecutarCU(TipoMaquinaHerramienta tmh) throws ExceptionGestor {
          validar(tmh);
         TipoMaquinaHerramientaBD.modificar(tmh);
+        finalizarCU();
     }
 
   

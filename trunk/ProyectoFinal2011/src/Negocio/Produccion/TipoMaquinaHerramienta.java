@@ -31,7 +31,7 @@ public class TipoMaquinaHerramienta implements java.io.Serializable {
     @Column(name = "ID_TMAQUINA_HERRAMIENTA", unique = true, nullable = false, precision = 2, scale = 0)
     private int idTmaquinaHerramienta;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_ETAPA_PRODUCCION_ESPECIFICA", nullable = false)
+    @JoinColumn(name = "ID_ETAPA_PRODUCCION_ESPECIFICA")//, nullable = false)
     private EtapaProduccionEspecifica TEtapasProduccionEspecifica;
     @Column(name = "NOMBRE", nullable = false, length = 50)
     private String nombre;
