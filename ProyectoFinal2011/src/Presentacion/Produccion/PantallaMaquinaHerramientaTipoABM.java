@@ -18,6 +18,7 @@ import Negocio.Produccion.GestorTipoMaquinaHerramientaModificar;
 import Negocio.Produccion.TipoMaquinaHerramienta;
 import Presentacion.Mensajes;
 import Presentacion.ValidarTexbox;
+import gui.GUILocal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -36,7 +37,10 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
     public PantallaMaquinaHerramientaTipoABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        //GUILocal.establecerGUILocal(this);
+        lstDisponible.setModel(new DefaultListModel());
         cargarValidaciones();
+        gestor=new GestorTipoMaquinaHerramienta();
         lstDisponible.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
@@ -72,9 +76,7 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
 
     public void cargarLista()
     {
-        DefaultListModel model=(DefaultListModel) lstDisponible.getModel();
-        
-        lstDisponible.setModel(null);
+        DefaultListModel model=(DefaultListModel) lstDisponible.getModel();        
         model.removeAllElements();
         for(TipoMaquinaHerramienta tmh:gestor.listarTipoMaquinaHerramienta())
             model.addElement(tmh);
@@ -85,13 +87,14 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
     public void limpiar() {
         txtNombre.setText("");
         txtDescripcion.setText("");
-        rdbHerramienta.setSelected(true);
+        rdbHerramienta.setSelected(true);        
     }
 
     public void cargar(TipoMaquinaHerramienta tmh) {
         txtNombre.setText(tmh.getNombre());
         txtDescripcion.setText(tmh.getDescripcion());
         rdbHerramienta.setSelected(tmh.isEsHerramienta());
+        rdbMaquina.setSelected(!tmh.isEsHerramienta());
     }
 
     public void habilitarCarga(boolean b) {
@@ -100,6 +103,7 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
         btnModificar.setEnabled(!b);
         btnNuevo.setEnabled(!b);
         btnBaja.setEnabled(!b);
+        lstDisponible.setEnabled(!b);
 
         btnAceptar.setEnabled(b);
         btnCancelar.setEnabled(b);
@@ -174,24 +178,24 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
             .addGroup(pnlDisponibleLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDisponibleLayout.createSequentialGroup()
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnNuevo)
                         .addGap(18, 18, 18)
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnModificar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnBaja)))
                 .addContainerGap())
         );
         pnlDisponibleLayout.setVerticalGroup(
             pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDisponibleLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNuevo)
+                    .addComponent(btnBaja)
                     .addComponent(btnModificar)
-                    .addComponent(btnBaja))
+                    .addComponent(btnNuevo))
                 .addContainerGap())
         );
 
@@ -233,25 +237,24 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
         pnlCargoLayout.setHorizontalGroup(
             pnlCargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCargoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlCargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCargoLayout.createSequentialGroup()
-                        .addContainerGap(147, Short.MAX_VALUE)
-                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnAceptar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelar))
                     .addGroup(pnlCargoLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(pnlCargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlCargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
                             .addGroup(pnlCargoLayout.createSequentialGroup()
                                 .addComponent(rdbHerramienta)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(rdbMaquina))
-                            .addComponent(jScrollPane1)
                             .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -269,11 +272,11 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(pnlCargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlCargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnAceptar))
                 .addContainerGap())
         );
 

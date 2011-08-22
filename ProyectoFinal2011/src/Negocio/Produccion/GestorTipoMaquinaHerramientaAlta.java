@@ -49,7 +49,7 @@ public class GestorTipoMaquinaHerramientaAlta extends GestorTipoMaquinaHerramien
         validar(tmh);
         //mh.setEstadoMaquina(null);
         TipoMaquinaHerramientaBD.guardar(tmh);
-        interfaz.limpiar();
+        finalizarCU();
     }
 
 

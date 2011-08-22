@@ -64,6 +64,7 @@ public class GestorTipoMaquinaHerramientaBaja extends GestorTipoMaquinaHerramien
         tmh.setMotivoBaja(pe.getMotivo());        
         tmh.setFechaBaja(Utilidades.getFechaActual());
         TipoMaquinaHerramientaBD.modificar(tmh);
+        finalizarCU();
     }
 
 

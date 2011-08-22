@@ -15,14 +15,14 @@ import java.util.List;
  *
  * @author Rodrigo
  */
-public abstract class GestorTipoMaquinaHerramienta {
+public class GestorTipoMaquinaHerramienta {
 
     protected PantallaMaquinaHerramientaTipoABM interfaz;
     protected TipoMaquinaHerramienta tipoMaquinaHerramienta;
 
-    public abstract void iniciarCU();
-    public abstract void ejecutarCU(TipoMaquinaHerramienta p) throws ExceptionGestor;
-    public abstract void validar(TipoMaquinaHerramienta p) throws ExceptionGestor;
+    public void iniciarCU(){}
+    public void ejecutarCU(TipoMaquinaHerramienta p) throws ExceptionGestor{}
+    public void validar(TipoMaquinaHerramienta p) throws ExceptionGestor{}
 
     public void finalizarCU()
     {
