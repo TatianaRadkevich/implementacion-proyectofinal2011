@@ -19,6 +19,12 @@ public class Mensajes
         JOptionPane.showMessageDialog(null, mensaje,"Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    public static void mensajeGuardoCorrectamente()
+    {
+        String mensaje="El elemento se ha registrado satisfactoriamente";
+        JOptionPane.showMessageDialog(null, mensaje,"Informacion", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     public static boolean mensajeConfirmacion(String elemento)
     {
         String mensaje="¿Desea agregar un nuevo "+elemento+"?";
@@ -43,6 +49,6 @@ public class Mensajes
     }
 
       public static void mensajeInformacion(String mensaje){
-        JOptionPane.showMessageDialog(null, mensaje,"Error",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, mensaje,"Informacion",JOptionPane.INFORMATION_MESSAGE);
       }
 }
