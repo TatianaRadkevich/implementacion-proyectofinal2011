@@ -12,6 +12,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -26,6 +27,7 @@ import javax.persistence.TemporalType;
 public class Material implements java.io.Serializable {
 
     @Id
+    @GeneratedValue
     @Column(name = "ID_MATERIAL", unique = true, nullable = false, precision = 3, scale = 0)
     private Short idMaterial;
     @Column(name = "NOMBRE", nullable = false, length = 50)
