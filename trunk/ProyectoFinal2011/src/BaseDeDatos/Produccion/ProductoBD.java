@@ -8,12 +8,9 @@ package BaseDeDatos.Produccion;
 import BaseDeDatos.HibernateUtil;
 import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
-import Negocio.Ventas.TipoPedido;
 
 import java.util.List;
-import java.util.logging.Level;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 /**
  *
@@ -27,30 +24,32 @@ public class ProductoBD{
 
     }
     public static Producto guardar(Producto producto){
-        Session usuario = null;
-        try{
-            usuario= HibernateUtil.getNewSession();
-            usuario.beginTransaction();
-
-            usuario.save(producto);
-            usuario.getTransaction().commit();
-            usuario.close();
-        }catch(Exception  ex) {  }
+//        Session usuario = null;
+//        try{
+//            usuario= HibernateUtil.getNewSession();
+//            usuario.beginTransaction();
+//
+//            usuario.save(producto);
+//            usuario.getTransaction().commit();
+//            usuario.close();
+//        }catch(Exception  ex) {  }
+        HibernateUtil.guardarObjeto(producto);
 
         return producto;
     } 
 
     public static Producto modificar(Producto producto){
-        Session usuario = null;
-        try{
-            usuario= HibernateUtil.getNewSession();
-            usuario.beginTransaction();
+//        Session usuario = null;
+//        try{
+//            usuario= HibernateUtil.getNewSession();
+//            usuario.beginTransaction();
+//
+//            usuario.update(producto);
+//            usuario.getTransaction().commit();
+//            usuario.close();
+//        }catch(Exception  ex) {  }
 
-            usuario.update(producto);
-            usuario.getTransaction().commit();
-            usuario.close();
-        }catch(Exception  ex) {  }
-
+        HibernateUtil.modificarObjeto(producto);
         return producto;
     }
 
@@ -81,7 +80,7 @@ public class ProductoBD{
     public static Producto traerProducto(String codigo){
         String id_codigo=codigo.split("-")[1];
         int id=Integer.parseInt(id_codigo);
-        return traerProducto(id);
+        return (Producto) HibernateUtil.getObjeto(Producto.class, id);
     }
 
 }
