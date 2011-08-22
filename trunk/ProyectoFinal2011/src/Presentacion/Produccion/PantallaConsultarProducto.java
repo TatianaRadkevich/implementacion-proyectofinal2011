@@ -11,14 +11,15 @@
 
 package Presentacion.Produccion;
 
+import Negocio.Produccion.GestorBajaProducto;
 import Negocio.Produccion.GestorModificarProducto;
 import Negocio.Produccion.GestorProducto;
 import Negocio.Produccion.GestorRegistrarProducto;
 import Negocio.Produccion.Producto;
+import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import gui.GUILocal;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -32,7 +33,8 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         super(parent, modal);
         GUILocal.establecerGUILocal(this);
         initComponents();
-//        tabla_montecarlo.setModel(new ModelerProducto(new LinkedList<Producto>()));
+        tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
     }
 
     /** This method is called from within the constructor to
@@ -50,14 +52,14 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         btnBaja = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla_producto = new javax.swing.JTable();
-        btnBuscar = new javax.swing.JPanel();
+        pnlBuscar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         chkMostrarTodos = new javax.swing.JCheckBox();
         chkMostrarDadosBaja = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -78,8 +80,13 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         });
 
         btnBaja.setText("Baja");
+        btnBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBajaActionPerformed(evt);
+            }
+        });
 
-        tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11));
         tabla_producto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -119,11 +126,15 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(542, 542, 542)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(542, 542, 542)
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(545, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -136,11 +147,11 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(btnNuevo)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnModificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBaja)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(110, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -148,37 +159,37 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
                     .addContainerGap(54, Short.MAX_VALUE)))
         );
 
-        btnBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
-        btnBuscar.setLayout(null);
+        pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
+        pnlBuscar.setLayout(null);
 
         jLabel1.setText("Nombre:");
-        btnBuscar.add(jLabel1);
+        pnlBuscar.add(jLabel1);
         jLabel1.setBounds(60, 40, 41, 14);
-        btnBuscar.add(txtNombre);
+        pnlBuscar.add(txtNombre);
         txtNombre.setBounds(110, 40, 90, 20);
 
         chkMostrarTodos.setText("Mostrar todos");
-        btnBuscar.add(chkMostrarTodos);
+        pnlBuscar.add(chkMostrarTodos);
         chkMostrarTodos.setBounds(60, 100, 93, 23);
 
         chkMostrarDadosBaja.setText("Mostrar dados de baja");
-        btnBuscar.add(chkMostrarDadosBaja);
+        pnlBuscar.add(chkMostrarDadosBaja);
         chkMostrarDadosBaja.setBounds(180, 100, 133, 23);
 
         jLabel4.setText("Código:");
-        btnBuscar.add(jLabel4);
+        pnlBuscar.add(jLabel4);
         jLabel4.setBounds(60, 70, 37, 14);
-        btnBuscar.add(txtCodigo);
+        pnlBuscar.add(txtCodigo);
         txtCodigo.setBounds(110, 70, 90, 20);
 
-        jButton2.setText("Buscar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
-        btnBuscar.add(jButton2);
-        jButton2.setBounds(240, 30, 70, 23);
+        pnlBuscar.add(btnBuscar);
+        btnBuscar.setBounds(240, 30, 70, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -188,14 +199,14 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE))
+                    .addComponent(pnlBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -208,20 +219,21 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
         GestorRegistrarProducto gestor=new GestorRegistrarProducto();
         gestor.nuevoProducto(this);
-
+        tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
+        tabla_producto.updateUI();
 
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        GestorModificarProducto gestor=new GestorModificarProducto();
-        
         if(tabla_producto.getSelectedRow()==-1){
             Mensajes.mensajeErrorGenerico("Debe seleccion un producto");
             return;
         }
-
-            gestor.modificarProducto(this, (String) tabla_producto.getValueAt(tabla_producto.getSelectedRow(),0));
+        GestorModificarProducto gestor=new GestorModificarProducto();
+        gestor.modificarProducto(this, (String) tabla_producto.getValueAt(tabla_producto.getSelectedRow(),0));
+        tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
+        tabla_producto.updateUI();
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -237,11 +249,23 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
 
 }//GEN-LAST:event_tabla_productoAncestorAdded
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
          tabla_producto.setModel(new ModelerProducto(GestorProducto.listarProductos()));
          tabla_producto.updateUI();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
+        // TODO add your handling code here:
+        if(tabla_producto.getSelectedRow()==-1){
+            Mensajes.mensajeErrorGenerico("Debe seleccion un producto");
+            return;
+        }
+        GestorBajaProducto gestor=new GestorBajaProducto();
+        gestor.bajaProducto(this, (String) tabla_producto.getValueAt(tabla_producto.getSelectedRow(),0));
+        tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
+        tabla_producto.updateUI();
+    }//GEN-LAST:event_btnBajaActionPerformed
 
     /**
     * @param args the command line arguments
@@ -262,19 +286,23 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaja;
-    private javax.swing.JPanel btnBuscar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JCheckBox chkMostrarDadosBaja;
     private javax.swing.JCheckBox chkMostrarTodos;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel pnlBuscar;
     private javax.swing.JTable tabla_producto;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
+
+    private void baja(){
+
+    }
 }

@@ -12,11 +12,17 @@
 package Presentacion.Produccion;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Produccion.GestorProducto;
+import Negocio.Produccion.GestorTipoProducto;
 import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
+import Presentacion.IniciadorDeVentanas;
+import Presentacion.Mensajes;
 import gui.GUILocal;
 import java.awt.Dialog;
 import java.math.BigDecimal;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,13 +34,14 @@ import java.util.logging.Logger;
 public class PantallaABMProducto extends javax.swing.JDialog {
 
     private GestorProducto gestor;
-    private Producto producto;;
+    private Producto producto=null;
     /** Creates new form PantallaABMProducto */
     public PantallaABMProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         GUILocal.establecerGUILocal(this);
 
         initComponents();
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
     }
 
     public PantallaABMProducto(Dialog owner, boolean modal, GestorProducto gestor) {
@@ -42,48 +49,11 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         GUILocal.establecerGUILocal(this);
         initComponents();
         this.gestor=gestor;
-        producto=new Producto();
-       cargarTipoProductos();
-    }
-    private void cargarTipoProductos(){
-        try {
-            cmbTipoProducto.removeAll();
-            List<TipoProducto> tipo = gestor.traerTiposProductos();
-            for(int i=0;i<tipo.size();i++){
-                cmbTipoProducto.addItem(tipo.get(i));
-            }
-        } catch (ExceptionGestor ex) {
-            Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void nuevo(){
-        this.txtCodigo.setVisible(false);
-        this.lbl_codigo.setVisible(false);
-    }
-
-    public void modificar(Producto producto){
-        this.producto=producto;
-        this.txtCodigo.setVisible(true);
-        this.lbl_codigo.setVisible(true);
-        this.txtCodigo.setEditable(false);
-        this.txtCodigo.setText(this.producto.codigoMerge());
-        this.txtNombre.setText(this.producto.getNombre());
-        this.txtAreaDescripcion.setText(this.producto.getDescripcion());
-        this.txtPrecio.setText(this.producto.getPrecioUnitario()+"");
-
-        TipoProducto tipo=null;
-        for(int i=0; i<cmbTipoProducto.getItemCount();i++){
-            tipo=(TipoProducto) cmbTipoProducto.getItemAt(i);
-            if(tipo.getNombre().compareTo(this.producto.getTTproducto().getNombre())==0){
-                cmbTipoProducto.setSelectedIndex(i);
-                break;
-            }
-
-        }
-        this.cmbTipoProducto.setSelectedItem(producto.getTTproducto());
         
+       cargarTipoProductos();
+       IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
     }
+   
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -107,12 +77,20 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         txtPrecio = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         cmbTipoProducto = new javax.swing.JComboBox();
+        jButton2 = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        pnlBaja = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtFechaBaja = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtMotivoBaja = new javax.swing.JTextArea();
+        btnAlta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Producto"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Producto"));
 
         jLabel1.setText("Nombre:");
 
@@ -137,6 +115,13 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         jLabel3.setText("Precio:  $");
 
         jLabel4.setText("Tipo:");
+
+        jButton2.setText("Agregar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -168,7 +153,10 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                             .addComponent(txtNombre)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(cmbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2)))))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -193,7 +181,8 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -208,18 +197,73 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
         btnCancelar.setText("Cancelar");
 
+        pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder("Baja"));
+
+        jLabel5.setText("Fecha:");
+
+        jLabel6.setText("Motivo:");
+
+        txtMotivoBaja.setColumns(20);
+        txtMotivoBaja.setRows(5);
+        jScrollPane3.setViewportView(txtMotivoBaja);
+
+        btnAlta.setText("Alta");
+        btnAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAltaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlBajaLayout = new javax.swing.GroupLayout(pnlBaja);
+        pnlBaja.setLayout(pnlBajaLayout);
+        pnlBajaLayout.setHorizontalGroup(
+            pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBajaLayout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBajaLayout.createSequentialGroup()
+                        .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
+                .addGap(51, 51, 51))
+        );
+        pnlBajaLayout.setVerticalGroup(
+            pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBajaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBajaLayout.createSequentialGroup()
+                        .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAlta))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6))
+                    .addGroup(pnlBajaLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(pnlBaja, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -228,10 +272,12 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(pnlBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -244,21 +290,46 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
         if(validar()){            
-            producto.setNombre(txtNombre.getText());
+            producto.setNombre(txtNombre.getText().toUpperCase());
             producto.setDescripcion(txtAreaDescripcion.getText());
             producto.setPrecioUnitario(new BigDecimal(txtPrecio.getText()));
             producto.setTTproducto((TipoProducto) cmbTipoProducto.getSelectedItem());
-          
-            
-            
+
+            if(txtFechaBaja.getText().compareTo("")!=0){
+                producto.setFecBaja(new Date());
+                producto.setMotivoBaja(txtMotivoBaja.getText());
+            }
+
+           
             try {
                 gestor.ejecutarOperacion(producto);
+                Mensajes.mensajeInformacion(gestor.mensajeResultado(producto.getNombre()));
+                this.vaciar();
+                gestor.reiniciar(this);
+
             } catch (ExceptionGestor ex) {
                 Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
+        // TODO add your handling code here:
+
+        this.producto.setMotivoBaja(null);
+        this.producto.setFecBaja(null);
+        this.txtFechaBaja.setText("");
+        this.txtMotivoBaja.setText("");
+        this.btnAlta.setEnabled(false);
+}//GEN-LAST:event_btnAltaActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:       
+        GestorTipoProducto.administarTipoProductoAgregar(this);
+        
+        this.cargarTipoProductos();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public boolean validar(){
         return true;
@@ -282,20 +353,140 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnAlta;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox cmbTipoProducto;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lbl_codigo;
+    private javax.swing.JPanel pnlBaja;
     private javax.swing.JTextArea txtAreaDescripcion;
     private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtFechaBaja;
+    private javax.swing.JTextArea txtMotivoBaja;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 
+
+    private void cargarDatos(Producto prod){
+
+        this.txtCodigo.setText(prod.codigoMerge());
+        this.txtNombre.setText(prod.getNombre());
+        this.txtPrecio.setText(prod.getPrecioUnitario()+"");
+        this.txtAreaDescripcion.setText(prod.getDescripcion());
+
+         if(prod.getFecBaja()==null)
+            this.txtFechaBaja.setText("");
+        else
+        {
+            Format formato=new SimpleDateFormat("dd/MM/yyyy");
+            String fecha=formato.format(prod.getFecBaja());
+            this.txtFechaBaja.setText(fecha);
+        }
+
+        if(prod.getMotivoBaja()==null)
+            this.txtMotivoBaja.setText("");
+        else
+            this.txtMotivoBaja.setText(prod.getMotivoBaja());
+
+    }
+
+     private void cargarTipoProductos(){
+        try {
+            cmbTipoProducto.removeAll();
+            List<TipoProducto> tipo = gestor.traerTiposProductos();
+            for(int i=0;i<tipo.size();i++){
+                cmbTipoProducto.addItem(tipo.get(i));
+            }
+        } catch (ExceptionGestor ex) {
+            Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void nuevo(){
+        this.txtCodigo.setVisible(false);
+        this.lbl_codigo.setVisible(false);
+        producto=new Producto();
+        activarBaja(false);
+        activarProducto(true);
+        this.activarBotones(true, true, false);
+        this.txtNombre.requestFocus();
+    }
+
+    public void modificar(Producto producto){
+        this.producto=producto;
+        this.cargarDatos(producto);
+
+        this.activarProducto(true);
+        this.activarBaja(false);
+        this.activarBotones(true, true, false);
+        
+        TipoProducto tipo=null;
+        for(int i=0; i<cmbTipoProducto.getItemCount();i++){
+            tipo=(TipoProducto) cmbTipoProducto.getItemAt(i);
+            if(tipo.getNombre().compareTo(this.producto.getTTproducto().getNombre())==0){
+                cmbTipoProducto.setSelectedIndex(i);
+                break;
+            }
+        }
+        if(producto.getFecBaja()!=null){
+            this.btnAlta.setEnabled(true);
+         }
+        
+        this.txtNombre.requestFocus();
+    }
+
+    public void baja(Producto prod) {
+        this.cargarDatos(prod);
+        Format formato=new SimpleDateFormat("dd/MM/yyyy");
+        String fecha=formato.format(new Date());
+        this.txtFechaBaja.setText(fecha);
+        this.producto=prod;
+        this.activarProducto(false);
+        this.activarBaja(true);
+        this.activarBotones(true, true, false);
+        this.txtMotivoBaja.requestFocus();
+        }
+
+    public void vaciar(){
+        this.txtCodigo.setText("");
+        this.txtNombre.setText("");
+        this.txtAreaDescripcion.setText("");
+        this.txtPrecio.setText("");
+        this.txtFechaBaja.setText("");
+        this.txtMotivoBaja.setText("");
+        this.cmbTipoProducto.setSelectedIndex(1);
+    }
+    
+    private void activarProducto(boolean flag){
+        this.txtCodigo.setEnabled(flag);
+        this.txtNombre.setEnabled(flag);
+        this.txtAreaDescripcion.setEnabled(flag);
+        this.txtPrecio.setEnabled(flag);
+        
+    }
+    
+    private void activarBaja(boolean flag){
+        this.txtFechaBaja.setEnabled(false);
+        this.txtMotivoBaja.setEnabled(flag);
+    }
+
+    private void activarBotones(boolean aceptar,boolean cancelar, boolean alta){
+        this.btnAceptar.setEnabled(aceptar);
+        this.btnCancelar.setEnabled(cancelar);
+        this.btnAlta.setEnabled(alta);
+    }
+    
+    
+    
 }
