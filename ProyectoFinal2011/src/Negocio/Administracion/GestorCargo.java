@@ -21,10 +21,10 @@ public class GestorCargo {
         cargo.setVisible(true);
     }
 
-    public static List<Cargo> listarTiposProductoAlta(){
+    public static List<Cargo> listarCargosAlta(){
         return CargoBD.listarCargosAlta();
     }
-    public static List<Cargo> listarTipoProducto(){
+    public static List<Cargo> listarCargos(){
         return CargoBD.listarCargos();
     }
     public Cargo guardar(Cargo cargo){

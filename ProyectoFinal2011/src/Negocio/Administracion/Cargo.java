@@ -30,8 +30,7 @@ import javax.persistence.TemporalType;
 public class Cargo  implements java.io.Serializable {
 
 
-     private byte idCargo;
-     private Empleado TEmpleados;
+     private int idCargo;
      private String nombre;
      private String descripcion;
      private Date fecBaja;
@@ -41,14 +40,12 @@ public class Cargo  implements java.io.Serializable {
     }
 
 	
-    public Cargo(byte idCargo, Empleado TEmpleados, String nombre) {
-        this.idCargo = idCargo;
-        this.TEmpleados = TEmpleados;
+    public Cargo(int idCargo, String nombre) {
+        this.idCargo = idCargo;        
         this.nombre = nombre;
     }
-    public Cargo(byte idCargo, Empleado TEmpleados, String nombre, String descripcion, Date fecBaja, String motivoBaja) {
-       this.idCargo = idCargo;
-       this.TEmpleados = TEmpleados;
+    public Cargo(int idCargo, Empleado TEmpleados, String nombre, String descripcion, Date fecBaja, String motivoBaja) {
+       this.idCargo = idCargo;       
        this.nombre = nombre;
        this.descripcion = descripcion;
        this.fecBaja = fecBaja;
@@ -58,22 +55,14 @@ public class Cargo  implements java.io.Serializable {
      @Id 
     @GeneratedValue
     @Column(name="ID_CARGO", unique=true, nullable=false, precision=2, scale=0)
-    public byte getIdCargo() {
+    public int getIdCargo() {
         return this.idCargo;
     }
     
-    public void setIdCargo(byte idCargo) {
+    public void setIdCargo(int idCargo) {
         this.idCargo = idCargo;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_EMPLEADO", nullable=false)
-    public Empleado getTEmpleados() {
-        return this.TEmpleados;
-    }
-    
-    public void setTEmpleados(Empleado TEmpleados) {
-        this.TEmpleados = TEmpleados;
-    }
+
     
     @Column(name="NOMBRE", nullable=false, length=50)
     public String getNombre() {
@@ -114,6 +103,9 @@ public class Cargo  implements java.io.Serializable {
 
 
 
+    public String toString(){
+        return this.getNombre();
+    }
 }
 
 
