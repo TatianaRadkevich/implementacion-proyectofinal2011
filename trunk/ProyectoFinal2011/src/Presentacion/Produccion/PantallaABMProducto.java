@@ -77,7 +77,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         txtPrecio = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         cmbTipoProducto = new javax.swing.JComboBox();
-        jButton2 = new javax.swing.JButton();
+        btnAgregarTipo = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         pnlBaja = new javax.swing.JPanel();
@@ -117,10 +117,10 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
         jLabel4.setText("Tipo:");
 
-        jButton2.setText("Agregar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarTipo.setText("Agregar");
+        btnAgregarTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnAgregarTipoActionPerformed(evt);
             }
         });
 
@@ -157,7 +157,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(cmbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2)))))
+                                .addComponent(btnAgregarTipo)))))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -183,7 +183,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jButton2))
+                    .addComponent(btnAgregarTipo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addContainerGap(26, Short.MAX_VALUE))
@@ -268,7 +268,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                         .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                    .addComponent(pnlBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -281,9 +281,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                 .addComponent(pnlBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addComponent(btnCancelar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAceptar)
                         .addComponent(jButton3)))
@@ -334,12 +332,12 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         this.btnAlta.setEnabled(false);
 }//GEN-LAST:event_btnAltaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnAgregarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTipoActionPerformed
         // TODO add your handling code here:       
         GestorTipoProducto.administarTipoProductoAgregar(this);
         
         this.cargarTipoProductos();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnAgregarTipoActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -368,11 +366,11 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnAgregarTipo;
     private javax.swing.JButton btnAlta;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox cmbTipoProducto;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -415,6 +413,15 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         else
             this.txtMotivoBaja.setText(prod.getMotivoBaja());
 
+
+         TipoProducto tipo=null;
+        for(int i=0; i<cmbTipoProducto.getItemCount();i++){
+            tipo=(TipoProducto) cmbTipoProducto.getItemAt(i);
+            if(tipo.getNombre().compareTo(this.producto.getTTproducto().getNombre())==0){
+                cmbTipoProducto.setSelectedIndex(i);
+                break;
+            }
+        }
     }
 
      private void cargarTipoProductos(){
@@ -440,26 +447,19 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     }
 
     public void modificar(Producto producto){
-        this.producto=producto;
-        this.cargarDatos(producto);
+        this.producto=producto;  
 
         this.activarProducto(true);
         this.activarBaja(false);
         this.activarBotones(true, true, false);
         
-        TipoProducto tipo=null;
-        for(int i=0; i<cmbTipoProducto.getItemCount();i++){
-            tipo=(TipoProducto) cmbTipoProducto.getItemAt(i);
-            if(tipo.getNombre().compareTo(this.producto.getTTproducto().getNombre())==0){
-                cmbTipoProducto.setSelectedIndex(i);
-                break;
-            }
-        }
+       
         if(producto.getFecBaja()!=null){
             this.btnAlta.setEnabled(true);
          }
         
         this.txtNombre.requestFocus();
+        this.cargarDatos(this.producto);
     }
 
     public void baja(Producto prod) {
