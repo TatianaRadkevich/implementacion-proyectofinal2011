@@ -8,6 +8,7 @@ package BaseDeDatos.Administracion;
 import BaseDeDatos.HibernateUtil;
 import Negocio.Administracion.Cargo;
 import Negocio.Produccion.GestorProducto;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,7 @@ public class CargoBD {
 
      public static List<Cargo> listarCargos() throws ExceptionInInitializerError{
        
-        List<Cargo> result=null;
+        List<Cargo> result=new ArrayList<Cargo>(0);
 
         try{
             result = HibernateUtil.ejecutarConsulta("from Cargo");
