@@ -12,7 +12,11 @@
 package Presentacion.Administracion;
 
 import Negocio.Administracion.Empleado;
+import Negocio.Administracion.GestorBajaEmpleado;
+import Negocio.Administracion.GestorModificarEmpleado;
+import Negocio.Administracion.GestorRegistrarEmpleado;
 import Presentacion.IniciadorDeVentanas;
+import Presentacion.Mensajes;
 import gui.GUILocal;
 import java.util.ArrayList;
 
@@ -134,10 +138,25 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tbEmpleados);
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnBaja.setText("Baja");
+        btnBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBajaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -175,11 +194,9 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -194,6 +211,41 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        GestorRegistrarEmpleado gestor=new GestorRegistrarEmpleado();
+        gestor.nuevoEmpleado(this);
+        tbEmpleados.setModel(new ModelerEmpleado(new ArrayList<Empleado>(0)));
+        tbEmpleados.updateUI();
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+         if(tbEmpleados.getSelectedRow()==-1){
+            Mensajes.mensajeErrorGenerico("Debe seleccion un producto");
+            return;
+        }
+        GestorModificarEmpleado gestor=new GestorModificarEmpleado();
+        String temp=(String) tbEmpleados.getValueAt(tbEmpleados.getSelectedRow(),0);
+        gestor.modificarEmpleado(this, Integer.parseInt((temp)));
+        tbEmpleados.setModel(new ModelerEmpleado(new ArrayList<Empleado>(0)));
+        tbEmpleados.updateUI();
+
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
+        // TODO add your handling code here:
+          if(tbEmpleados.getSelectedRow()==-1){
+            Mensajes.mensajeErrorGenerico("Debe seleccion un producto");
+            return;
+        }
+        GestorBajaEmpleado gestor=new GestorBajaEmpleado();
+        String temp=(String) tbEmpleados.getValueAt(tbEmpleados.getSelectedRow(),0);
+        gestor.bajaProducto(this,Integer.parseInt(temp));
+        tbEmpleados.setModel(new ModelerEmpleado(new ArrayList<Empleado>(0)));
+        tbEmpleados.updateUI();
+    }//GEN-LAST:event_btnBajaActionPerformed
 
  /**
     * @param args the command line arguments

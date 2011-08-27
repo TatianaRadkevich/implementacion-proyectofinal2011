@@ -497,5 +497,20 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
       
     }
 
+    private void cargarPais(){
+
+    }
+    private void cargarProvicias(){
+
+    }
+    private void cargarLocalidades(){
+
+    }
+
+    private void cargarBarrio(){
+        
+    }
+
+
 
 }
