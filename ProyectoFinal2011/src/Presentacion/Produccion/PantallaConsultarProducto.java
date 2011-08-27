@@ -80,7 +80,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             }
         });
 
-        btnBaja.setText("Baja");
+        btnBaja.setText("Eliminar");
         btnBaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBajaActionPerformed(evt);
@@ -123,6 +123,11 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         jScrollPane2.setViewportView(tabla_producto);
 
         btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -157,9 +162,9 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
                 .addComponent(btnModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBaja)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(41, 41, 41)
                 .addComponent(btnConsultar)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -275,6 +280,10 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         tabla_producto.updateUI();
     }//GEN-LAST:event_btnBajaActionPerformed
 
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -314,4 +323,6 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     private void baja(){
 
     }
+
+    
 }
