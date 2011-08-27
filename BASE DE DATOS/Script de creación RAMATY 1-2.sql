@@ -21,9 +21,9 @@ CREATE TABLE T_ASISTENCIAS_EMPLEADO (
        ID_ASISTENCIA_EMPLEADO numeric(4) IDENTITY,
        FEC_ASISTENCIA       datetime NOT NULL,
        HORA_INGRESO         varchar(20) NOT NULL,
-       FEC_EGRESO           datetime NULL,
        OBSERVACIONES        varchar(200) NULL,
-       ID_EMPLEADO          numeric(5) NOT NULL
+       ID_EMPLEADO          numeric(5) NOT NULL,
+       HORA_EGRESO          varchar(20) NULL
 )
 go
 
