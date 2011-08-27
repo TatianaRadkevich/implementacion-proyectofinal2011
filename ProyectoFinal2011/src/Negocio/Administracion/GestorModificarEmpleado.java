@@ -23,7 +23,7 @@ public class GestorModificarEmpleado extends GestorEmpleado{
         return EmpleadoBD.modificar(empleado);
     }
 
-    public void modificarProducto(Dialog parent,int legajo) {
+    public void modificarEmpleado(Dialog parent,int legajo) {
         PantallaABMEmpleado pantalla_producto=new PantallaABMEmpleado(parent, true, this);
         pantalla_producto.modificar(EmpleadoBD.traerEmpleado(legajo));
         pantalla_producto.setVisible(true);
