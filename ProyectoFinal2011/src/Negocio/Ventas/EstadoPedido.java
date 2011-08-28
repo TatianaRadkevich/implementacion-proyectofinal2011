@@ -71,4 +71,11 @@ public class EstadoPedido implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    @Override
+    public boolean equals(Object obj) {        
+        return ((EstadoPedido)obj).getNombre().equals(this.getNombre());
+    }
+
+
 }

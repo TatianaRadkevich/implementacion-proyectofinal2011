@@ -5,7 +5,8 @@
 
 package Negocio.Ventas;
 
-import BaseDeDatos.Ventas.PedidoBD;
+
+import BaseDeDatos.Ventas.*;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Utilidades;
 import Presentacion.Ventas.PantallaPedidoABM;
@@ -21,6 +22,7 @@ public class GestorPedidoAlta extends GestorPedido
     public void iniciarCU() {
         interfaz=new PantallaPedidoABM(this);
         pedido=new Pedido();
+        interfaz.setTitle("Registrar nuevo pedido");
         interfaz.setVisible(true);
     }
 
@@ -39,7 +41,10 @@ public class GestorPedidoAlta extends GestorPedido
 
     @Override
     public void ejecutarCU(Pedido p) throws ExceptionGestor {
-        p.setEstadoPedido(PedidoBD.getEstoadoPedido(PedidoBD.EP_AutorizadoPendiente));
+        p.setEstadoPedido(EstadoPedidoBD.getEstadoAutorizadoPendiente());
+        for(DetallePedido dp:p.getDetallePedido())
+            dp.setEstadoDetallePedido(EstadoDetallePedidoBD.getEstadoPendiente());
+
         p.setFechaGeneracion(Utilidades.getFechaActual());
         validar(p);
         PedidoBD.guardar(p);

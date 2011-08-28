@@ -5,6 +5,7 @@
 
 package Negocio.Ventas;
 
+import BaseDeDatos.Ventas.EstadoPedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.PantallaEliminar;
@@ -33,6 +34,7 @@ public class GestorPedidoBaja extends GestorPedido
         interfaz=new PantallaPedidoABM(this);
         interfaz.cargar(pedido);
         interfaz.habilitarTodo(false);
+        interfaz.setTitle("Eliminar pedido");
         interfaz.setVisible(true);
     }
 
@@ -40,11 +42,11 @@ public class GestorPedidoBaja extends GestorPedido
     {
         String mensage="";
 
-        String auxEstado=p.getEstadoPedido().getNombre();
-        if(!(auxEstado.equals(PedidoBD.EP_AutorizadoPendiente)||
-                auxEstado.equals(PedidoBD.EP_NoAutorizado)||
-                auxEstado.equals(PedidoBD.EP_Planificado)))
-            mensage+="\nNo es posible cancelar un pedido con el estado de "+auxEstado;
+        EstadoPedido ep=p.getEstadoPedido();
+        if(!(ep.equals(EstadoPedidoBD.getEstadoPlanificado())||
+                ep.equals(EstadoPedidoBD.getEstadoAutorizadoPendiente())||
+                ep.equals(EstadoPedidoBD.getEstadoNoAutorizado())))
+            mensage+="\nNo es posible cancelar un pedido con el estado de "+ep.getNombre();
 
         if(mensage.isEmpty()==false)
             throw new ExceptionGestor("Problemas:"+mensage);
@@ -60,7 +62,7 @@ public class GestorPedidoBaja extends GestorPedido
             finalizarCU();
 
         p.setMotivoBaja(pe.getMotivo());
-        p.setEstadoPedido(PedidoBD.getEstoadoPedido(PedidoBD.EP_Cancelado));
+        p.setEstadoPedido(EstadoPedidoBD.getEstadoCancelado());
         p.setFecBaja(Utilidades.getFechaActual());
         PedidoBD.modificar(p);
     }
