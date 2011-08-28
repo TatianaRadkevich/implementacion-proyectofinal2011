@@ -34,11 +34,16 @@ public class PedidoBD
          return (Pedido) HibernateUtil.getObjeto(Pedido.class, id);
      }
 
-    public static List<Pedido> getPedidos(String RazonSocial,String CUIL,String NroPedido,Date desde,Date hasta)
-    {
+    public static List<Pedido> getPedidos(
+            String RazonSocial,String CUIL,String NroPedido,
+            Date desde,Date hasta,boolean vigentes,boolean cancelados){
+
+        if(vigentes==false&&cancelados==false)
+            return new ArrayList<Pedido>(0);
+
+
         String auxDesde=Utilidades.parseFecha(Utilidades.agregarTiempoFecha(desde, -1, 0, 0));
         String auxHasta=Utilidades.parseFecha(Utilidades.agregarTiempoFecha(hasta, 1, 0, 0));
-
         String HQL=String.format(
                 "FROM Pedido as p "
                 + "WHERE LOWER(p.TClientes.razonSocial) like  LOWER('%s%%') "
@@ -46,22 +51,20 @@ public class PedidoBD
                 + "AND p.idPedido like '%s%%' "
                 + ((desde==null)?"":"AND p.fecHoraGeneracion >= '%4$s' ")
                 + ((hasta==null)?"":"AND p.fecHoraGeneracion <= '%5$s' ")
-                ,RazonSocial,CUIL,NroPedido,auxDesde,auxHasta);       
+                ,RazonSocial,CUIL,NroPedido,auxDesde,auxHasta);
+
+        if(vigentes==true&&cancelados==true)
+            return HibernateUtil.ejecutarConsulta(HQL);
+        
+        if(vigentes==true&&cancelados==false)
+            HQL+="AND p.fecBaja IS NULL ";
+        
+        if(vigentes==false&&cancelados==true)
+            HQL+="AND p.fecBaja IS NOT NULL ";
+             
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 
-    public static final String EP_NoAutorizado="No Autorizado";
-    public static final String EP_AutorizadoPendiente="Autorizado-Pendiente";
-    public static final String EP_Planificado="Planificado";
-    public static final String EP_Cancelado="Cancelado";
-
-    public static EstadoPedido getEstoadoPedido(String nombre)
-    {
-        String HQL=String.format("FROM EstadoPedido as ep WHERE LOWER(ep.nombre) = LOWER('%s')", nombre);
-        List<EstadoPedido> lst=HibernateUtil.ejecutarConsulta(HQL);
-        if(lst.isEmpty())
-            throw new RuntimeException("No existe un \"estado de pedido\" con el nombre de : "+nombre);
-        return lst.get(0);
-    }
+ 
   
 }
