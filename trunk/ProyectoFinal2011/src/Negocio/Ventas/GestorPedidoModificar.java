@@ -5,6 +5,8 @@
 
 package Negocio.Ventas;
 
+import BaseDeDatos.Ventas.EstadoDetallePedidoBD;
+import BaseDeDatos.Ventas.EstadoPedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Utilidades;
@@ -32,18 +34,19 @@ public class GestorPedidoModificar extends GestorPedido
 
         interfaz=new PantallaPedidoABM(this);
         interfaz.cargar(pedido);
+        interfaz.setTitle("Modificar pedido");
         interfaz.setVisible(true);
     }
 
     private void validar(Pedido p) throws ExceptionGestor
     {
         String mensage="";
-        String auxEstado=p.getEstadoPedido().getNombre();
+        EstadoPedido ep=p.getEstadoPedido();
+        if(!(ep.equals(EstadoPedidoBD.getEstadoPlanificado())||
+                ep.equals(EstadoPedidoBD.getEstadoAutorizadoPendiente())||
+                ep.equals(EstadoPedidoBD.getEstadoNoAutorizado())))
+            mensage+="\nNo es posible cancelar un pedido con el estado de "+ep.getNombre();
 
-        if(!(auxEstado.equals(PedidoBD.EP_AutorizadoPendiente)||
-                auxEstado.equals(PedidoBD.EP_NoAutorizado)||
-                auxEstado.equals(PedidoBD.EP_Planificado)))
-            mensage+="\nNo es posible modificar un pedido con el estado de "+auxEstado;
 
         if(p.getCliente()==null)
             mensage+="\n no se asigno un cliente al pedido";
@@ -57,6 +60,10 @@ public class GestorPedidoModificar extends GestorPedido
 
     @Override
     public void ejecutarCU(Pedido p) throws ExceptionGestor {
+        for(DetallePedido dp:p.getDetallePedido())
+            if(dp.getEstadoDetallePedido()==null)
+            dp.setEstadoDetallePedido(EstadoDetallePedidoBD.getEstadoPendiente());
+
         validar(p);
         PedidoBD.modificar(p);
     }

@@ -52,7 +52,7 @@ public class Cliente implements java.io.Serializable {
     @Column(name = "APELLIDO_RESPONSABLE")
     private String apellidoResponsable;
     @Column(name = "TELEFONO_RESPONSABLE")
-    private long telefonoResponsable;
+    private Long telefonoResponsable;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TClientes")
     private Set<Pedido> TPedidoses = new HashSet<Pedido>(0);
 
@@ -64,7 +64,7 @@ public class Cliente implements java.io.Serializable {
         this.razonSocial = razonSocial;
     }
 
-    public Cliente(int idCliente, ClienteWeb TClientesWeb, Usuario TUsuarios, TipoCliente TTcliente, long cuil, String razonSocial, String nombreResponsable, String apellidoResponsable, long telefonoResponsable) {
+    public Cliente(int idCliente, ClienteWeb TClientesWeb, Usuario TUsuarios, TipoCliente TTcliente, long cuil, String razonSocial, String nombreResponsable, String apellidoResponsable, Long telefonoResponsable) {
         this.idCliente = idCliente;
         this.TClientesWeb = TClientesWeb;
         this.TUsuarios = TUsuarios;
@@ -76,7 +76,7 @@ public class Cliente implements java.io.Serializable {
         this.telefonoResponsable = telefonoResponsable;
     }
 
-    public Cliente(int idCliente, Domicilio TDomicilios, ClienteWeb TClientesWeb, Usuario TUsuarios, TipoCliente TTcliente, String correoElectronico, long cuil, String razonSocial, String nombreResponsable, String apellidoResponsable, long telefonoResponsable, Set<Pedido> TPedidoses) {
+    public Cliente(int idCliente, Domicilio TDomicilios, ClienteWeb TClientesWeb, Usuario TUsuarios, TipoCliente TTcliente, String correoElectronico, long cuil, String razonSocial, String nombreResponsable, String apellidoResponsable, Long telefonoResponsable, Set<Pedido> TPedidoses) {
         this.idCliente = idCliente;
         this.TDomicilios = TDomicilios;
         this.TClientesWeb = TClientesWeb;
@@ -171,11 +171,11 @@ public class Cliente implements java.io.Serializable {
         this.apellidoResponsable = apellidoResponsable;
     }
 
-    public long getTelefonoResponsable() {
+    public Long getTelefonoResponsable() {
         return this.telefonoResponsable;
     }
 
-    public void setTelefonoResponsable(long telefonoResponsable) {
+    public void setTelefonoResponsable(Long telefonoResponsable) {
         this.telefonoResponsable = telefonoResponsable;
     }
 
