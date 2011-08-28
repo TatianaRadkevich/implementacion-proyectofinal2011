@@ -34,6 +34,14 @@ public class Mensajes
         return false;
     }
 
+    public static boolean mensajeConfirmacionGenerico(String mensaje)
+    {
+        int salida=JOptionPane.showConfirmDialog(null, mensaje,"Pregunta",JOptionPane.YES_NO_OPTION ,JOptionPane.QUESTION_MESSAGE);
+        if(salida==JOptionPane.YES_OPTION)
+            return true;
+        return false;
+    }
+
      public static void mensajeErrorGuardar(String elemento)
     {
         String mensaje="Error: no se puedo guardar  "+elemento;

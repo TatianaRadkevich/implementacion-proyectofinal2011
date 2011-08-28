@@ -8,7 +8,6 @@
  *
  * Created on 06/06/2011, 15:42:46
  */
-
 package Presentacion;
 
 import java.awt.Component;
@@ -16,23 +15,25 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
-import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
 /**
  *
  * @author Rodrigo
  */
-public class JCheckList <E> extends javax.swing.JPanel {
+public class JCheckList<E> extends javax.swing.JPanel {
+
+    private DefaultListModel listaModel;
 
     /** Creates new form JCheckList */
     public JCheckList() {
         initComponents();
+        listaModel = new DefaultListModel();
+        lista.setModel(listaModel);
         iniciar();
     }
 
@@ -54,89 +55,96 @@ public class JCheckList <E> extends javax.swing.JPanel {
 
         add(jScrollPane1);
     }// </editor-fold>//GEN-END:initComponents
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList lista;
     // End of variables declaration//GEN-END:variables
 
-    public void setData(E[] item)
-    {
-        Vector<CheckListItem> aux=new Vector<CheckListItem>();        
-        for(int i=0;i<item.length;i++)        
-            aux.add(new CheckListItem(item[i]));
-        lista.setListData(aux);
+    public void setData(List<E> items) {
+        listaModel.removeAllElements();
+        for (E algo : items) {
+            listaModel.addElement(new CheckListItem(algo));
+            
+        }
     }
-    
-    public E[] getSelectedItems()
-    {
-        ListModel modelo=lista.getModel();
-        Vector salida=new Vector();
-        
-        for(int i=0;i<modelo.getSize();i++)
+
+    public List<E> getSelectedItems() {
+        ArrayList<E> salida=new ArrayList<E>();
+        CheckListItem item;
+        for(int i=0;i<listaModel.getSize();i++)
         {
-            CheckListItem item=(CheckListItem) modelo.getElementAt(i);
+            item=(CheckListItem) listaModel.get(i);
             if(item.isSelected)
                 salida.add(item.getContenido());
         }
-        return (E[]) salida.toArray();
+        return salida;
     }
 
-    private void iniciar()
-    {
-      // Use a CheckListRenderer (see below)
-      // to renderer list cells
+    public void setSelectedItems(List<E> selection) {
 
-      lista.setCellRenderer(new CheckListRenderer());
-      lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        for (int i = 0; i < listaModel.getSize(); i++)
+            ((CheckListItem) listaModel.get(i)).setSelected(false);
 
-      // Add a mouse listener to handle changing selection
+        for (E item : selection)
+            for (int i = 0; i < listaModel.getSize(); i++)
+                if (((CheckListItem) listaModel.get(i)).equals(item))
+                {
+                    ((CheckListItem) listaModel.get(i)).setSelected(true);
+                    break;
+                }
 
-      lista.addMouseListener(new MouseAdapter()
-      {
-         public void mouseClicked(MouseEvent event)
-         {
-            JList list = (JList) event.getSource();
-
-            // Get index of item clicked
-            int index = list.locationToIndex(event.getPoint());
-            CheckListItem item = (CheckListItem)list.getModel().getElementAt(index);
-
-            // Toggle selected state
-            item.setSelected(! item.isSelected());
-
-            // Repaint cell
-            list.repaint(list.getCellBounds(index, index));
-         }
-      });
+        this.repaint();
     }
 
-    private class CheckListItem
-    {
-       private String  label;
-       private boolean isSelected = false;
-       private E contenido=null;
+    private void iniciar() {
+        // Use a CheckListRenderer (see below)
+        // to renderer list cells
 
-       public CheckListItem(String label)
-       {
-          this.label = label;
-       }
+        lista.setCellRenderer(new CheckListRenderer());
+        lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-       public CheckListItem(E contenido)
-       {
-          this.contenido=contenido;
-          this.label=contenido.toString();
-       }
+        // Add a mouse listener to handle changing selection
 
-       public CheckListItem(String label,E contenido)
-       {
-           this.label = label;
-          this.contenido=contenido;
-       }
+        lista.addMouseListener(new MouseAdapter() {
 
-        private CheckListItem()
-        {
+            public void mouseClicked(MouseEvent event) {
+                JList list = (JList) event.getSource();
+
+                // Get index of item clicked
+                int index = list.locationToIndex(event.getPoint());
+                CheckListItem item = (CheckListItem) list.getModel().getElementAt(index);
+
+                // Toggle selected state
+                item.setSelected(!item.isSelected());
+
+                // Repaint cell
+                list.repaint(list.getCellBounds(index, index));
+            }
+        });
+
+    }
+
+    private class CheckListItem {
+
+        private String label;
+        private boolean isSelected = false;
+        private E contenido = null;
+
+        public CheckListItem(String label) {
+            this.label = label;
+        }
+
+        public CheckListItem(E contenido) {
+            this.contenido = contenido;
+            this.label = contenido.toString();
+        }
+
+        public CheckListItem(String label, E contenido) {
+            this.label = label;
+            this.contenido = contenido;
+        }
+
+        private CheckListItem() {
         }
 
         public E getContenido() {
@@ -147,38 +155,37 @@ public class JCheckList <E> extends javax.swing.JPanel {
             this.contenido = contenido;
         }
 
+        public boolean isSelected() {
+            return isSelected;
+        }
 
-       public boolean isSelected()
-       {
-          return isSelected;
-       }
+        public void setSelected(boolean isSelected) {
+            this.isSelected = isSelected;
+        }
 
-       public void setSelected(boolean isSelected)
-       {
-          this.isSelected = isSelected;
-       }
+        public String toString() {
+            return label;
+        }
 
-       public String toString()
-       {
-          return label;
-       }
+        @Override
+        public boolean equals(Object obj) {
+            return contenido.equals(obj);
+        }
     }
 
 // Handles rendering cells in the list using a check box
-private class CheckListRenderer extends JCheckBox   implements ListCellRenderer
-    {
+    private class CheckListRenderer extends JCheckBox implements ListCellRenderer {
+
         public Component getListCellRendererComponent(
                 JList list, Object value, int index,
-                boolean isSelected, boolean hasFocus)
-       {
+                boolean isSelected, boolean hasFocus) {
             setEnabled(list.isEnabled());
-            setSelected(((CheckListItem)value).isSelected());
+            setSelected(((CheckListItem) value).isSelected());
             setFont(list.getFont());
             setBackground(list.getBackground());
             setForeground(list.getForeground());
             setText(value.toString());
             return this;
-       }
+        }
     }
-
 }
