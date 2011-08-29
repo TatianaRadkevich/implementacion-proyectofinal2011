@@ -13,7 +13,15 @@ package Presentacion.Administracion;
 
 import Negocio.Administracion.Empleado;
 import Negocio.Administracion.GestorEmpleado;
+import Negocio.Administracion.Sexo;
+import Negocio.Administracion.TipoDocumento;
+import Negocio.UbicacionGeografica.Barrio;
+import Negocio.UbicacionGeografica.Domicilio;
+import Negocio.UbicacionGeografica.Localidad;
+import Negocio.UbicacionGeografica.Pais;
+import Negocio.UbicacionGeografica.Provincia;
 import Presentacion.IniciadorDeVentanas;
+import Presentacion.Mensajes;
 import gui.GUILocal;
 import java.awt.Dialog;
 
@@ -62,9 +70,9 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
         txtNumeroDocumento = new javax.swing.JTextField();
-        txSexo = new javax.swing.JTextField();
-        txtFechaNacimiento = new javax.swing.JTextField();
         cmbTipoDocumento = new javax.swing.JComboBox();
+        cmbSexo = new javax.swing.JComboBox();
+        dtcFechaNacimiento = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -74,10 +82,10 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        btnBarrio = new javax.swing.JComboBox();
-        btnLocalidad = new javax.swing.JComboBox();
-        btnProvincia = new javax.swing.JComboBox();
-        btnPais = new javax.swing.JComboBox();
+        cmbBarrio = new javax.swing.JComboBox();
+        cmbLocalidad = new javax.swing.JComboBox();
+        cmbProvincia = new javax.swing.JComboBox();
+        cmbPais = new javax.swing.JComboBox();
         txtDepto = new javax.swing.JTextField();
         txtPiso = new javax.swing.JTextField();
         txtNumero = new javax.swing.JTextField();
@@ -128,6 +136,14 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
 
         cmbTipoDocumento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        cmbSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        dtcFechaNacimiento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dtcFechaNacimientoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -145,11 +161,11 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cmbTipoDocumento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtNumeroDocumento)
-                    .addComponent(txSexo)
-                    .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                     .addComponent(txtNombre)
-                    .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
-                .addContainerGap(66, Short.MAX_VALUE))
+                    .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                    .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,14 +186,14 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
-                    .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
 
@@ -216,21 +232,21 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         jPanel2.add(jLabel12);
         jLabel12.setBounds(250, 230, 23, 14);
 
-        btnBarrio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(btnBarrio);
-        btnBarrio.setBounds(74, 141, 120, 20);
+        cmbBarrio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(cmbBarrio);
+        cmbBarrio.setBounds(74, 141, 120, 20);
 
-        btnLocalidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(btnLocalidad);
-        btnLocalidad.setBounds(74, 108, 120, 20);
+        cmbLocalidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(cmbLocalidad);
+        cmbLocalidad.setBounds(74, 108, 120, 20);
 
-        btnProvincia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(btnProvincia);
-        btnProvincia.setBounds(73, 74, 120, 20);
+        cmbProvincia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(cmbProvincia);
+        cmbProvincia.setBounds(73, 74, 120, 20);
 
-        btnPais.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(btnPais);
-        btnPais.setBounds(73, 40, 120, 20);
+        cmbPais.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(cmbPais);
+        cmbPais.setBounds(73, 40, 120, 20);
 
         txtDepto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -263,6 +279,11 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         btnAgregarBarrio.setBounds(210, 140, 71, 23);
 
         btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
 
@@ -340,21 +361,18 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(1, 1, 1)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -394,6 +412,60 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoActionPerformed
 
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        // TODO add your handling code here:
+
+          if(validar()){
+           empleado.setNombre(txtNombre.getText().toUpperCase());
+           empleado.setApellido(txtApellido.getText().toUpperCase());
+           empleado.setTTdocumento((TipoDocumento) cmbTipoDocumento.getSelectedItem());
+           empleado.setNumeroDocumento(Integer.parseInt(txtNumeroDocumento.getText()));
+           empleado.setFecNacimiento(dtcFechaNacimiento.getDate());
+           empleado.setTSexos((Sexo) cmbSexo.getSelectedItem());
+           empleado.setTelefono(Long.parseLong(txtTelefono.getText()));
+           empleado.setCelular(Long.parseLong(txtCelular.getText()));
+           empleado.setCorreoElectronico(txtEmail.getText());
+
+
+           Domicilio domicilio=empleado.getTDomicilios();
+           domicilio.setTPaises((Pais) cmbPais.getSelectedItem());
+           domicilio.setTProvincias((Provincia) cmbProvincia.getSelectedItem());
+           domicilio.setTLocalidades((Localidad) cmbLocalidad.getSelectedItem());
+           domicilio.setTBarrios((Barrio) cmbBarrio.getSelectedItem());
+           domicilio.setCalle(txtCalle.getText());
+           domicilio.setNumero(Integer.parseInt(txtNumero.getText()));
+           domicilio.setDepto(txtDepto.getText());
+           domicilio.setPiso(Short.parseShort(txtPiso.getText()));
+
+
+
+
+           
+
+            if(txtFechaBaja.getText().compareTo("")!=0){
+                producto.setFecBaja(new Date());
+                producto.setMotivoBaja(txtMotivoBaja.getText());
+            }
+
+
+            try {
+                gestor.ejecutarOperacion(empleado);
+                Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido()+", "+empleado.getNombre()));
+                this.vaciar();
+                gestor.reiniciar(this);
+
+            } catch (ExceptionGestor ex) {
+                Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void dtcFechaNacimientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dtcFechaNacimientoMouseClicked
+        // TODO add your handling code here:
+
+        txtFechaEstimada.setText(Utilidades.parseFecha(dtcFechaNacimiento.getDate()));
+}//GEN-LAST:event_dtcFechaNacimientoMouseClicked
+
     /**
     * @param args the command line arguments
     */
@@ -418,12 +490,14 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     private javax.swing.JButton btnAgregarLocalidad;
     private javax.swing.JButton btnAgregarPais;
     private javax.swing.JButton btnAgregarProvincia;
-    private javax.swing.JComboBox btnBarrio;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox btnLocalidad;
-    private javax.swing.JComboBox btnPais;
-    private javax.swing.JComboBox btnProvincia;
+    private javax.swing.JComboBox cmbBarrio;
+    private javax.swing.JComboBox cmbLocalidad;
+    private javax.swing.JComboBox cmbPais;
+    private javax.swing.JComboBox cmbProvincia;
+    private javax.swing.JComboBox cmbSexo;
     private javax.swing.JComboBox cmbTipoDocumento;
+    private com.toedter.calendar.JDateChooser dtcFechaNacimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -445,13 +519,11 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private Presentacion.JCheckList lista;
-    private javax.swing.JTextField txSexo;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCalle;
     private javax.swing.JTextField txtCelular;
     private javax.swing.JTextField txtDepto;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtFechaNacimiento;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtNumeroDocumento;
@@ -462,7 +534,70 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
 
      private void cargarDatos(Empleado empleado){
 
-       
+         this.txtNombre.setText(empleado.getNombre());
+         this.txtApellido.setText(empleado.getApellido());
+         TipoDocumento tipo=null;
+        for(int i=0; i<cmbTipoDocumento.getItemCount();i++){
+            tipo=(TipoDocumento) cmbTipoDocumento.getItemAt(i);
+            if(tipo.getNombre().compareTo(this.empleado.getTTdocumento().getNombre())==0){
+                cmbTipoDocumento.setSelectedIndex(i);
+                break;
+            }
+         }
+
+         this.txtNumeroDocumento.setText(empleado.getNumeroDocumento()+"");
+         this.txtTelefono.setText(empleado.getTelefono()+"");
+         this.txtCelular.setText(empleado.getCelular()+"");
+         this.txtEmail.setText(empleado.getCorreoElectronico());
+
+         Pais pais=null;
+        for(int i=0; i<cmbPais.getItemCount();i++){
+            pais=(Pais) cmbPais.getItemAt(i);
+            if(pais.getNombre().compareTo(this.empleado.getTDomicilios().getTPaises().getNombre())==0){
+                cmbPais.setSelectedIndex(i);
+                break;
+            }
+         }
+
+         this.cargarProvicias(pais);
+
+
+          Provincia provincia=null;
+        for(int i=0; i<cmbProvincia.getItemCount();i++){
+            provincia=(Provincia) cmbProvincia.getItemAt(i);
+            if(provincia.getNombre().compareTo(this.empleado.getTDomicilios().getTProvincias().getNombre())==0){
+                cmbProvincia.setSelectedIndex(i);
+                break;
+            }
+         }
+
+          this.cargarLocalidades(provincia);
+
+            Localidad localidad=null;
+        for(int i=0; i<cmbLocalidad.getItemCount();i++){
+            localidad=(Localidad) cmbLocalidad.getItemAt(i);
+            if(localidad.getNombre().compareTo(this.empleado.getTDomicilios().getTLocalidades().getNombre())==0){
+                cmbLocalidad.setSelectedIndex(i);
+                break;
+            }
+         }
+
+            this.cargarBarrio(localidad);
+
+             Barrio barrio=null;
+        for(int i=0; i<cmbBarrio.getItemCount();i++){
+            barrio=(Barrio) cmbBarrio.getItemAt(i);
+            if(barrio.getNombre().compareTo(this.empleado.getTDomicilios().getTBarrios().getNombre())==0){
+                cmbBarrio.setSelectedIndex(i);
+                break;
+            }
+         }
+
+          this.txtCalle.setText(empleado.getTDomicilios().getCalle());
+          this.txtPiso.setText(empleado.getTDomicilios().getPiso()+"");
+          this.txtNumero.setText(empleado.getTDomicilios().getNumero()+"");
+          this.txtDepto.setText(empleado.getTDomicilios().getDepto());
+
     }
 
      private void cargarTipoProductos(){
@@ -500,17 +635,25 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     private void cargarPais(){
 
     }
-    private void cargarProvicias(){
+    private void cargarProvicias(Pais pais){
 
     }
-    private void cargarLocalidades(){
+    private void cargarLocalidades(Provincia provincia){
 
     }
 
-    private void cargarBarrio(){
+    private void cargarBarrio(Localidad localidad){
         
     }
 
 
+
+    private void activarDomicilio(boolean pais,boolean provincia, boolean localidad, boolean barrio){
+        this.cmbPais.setEnabled(pais);
+        this.cmbProvincia.setEnabled(provincia);
+        this.cmbLocalidad.setEnabled(localidad);
+        this.cmbBarrio.setEnabled(barrio);
+        
+    }
 
 }
