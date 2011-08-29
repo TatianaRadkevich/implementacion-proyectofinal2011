@@ -30,7 +30,7 @@ public class Provincia  implements java.io.Serializable {
      private String nombre;
      private String descripcion;
      private Set<Localidad> TLocalidadeses = new HashSet<Localidad>(0);
-     private Set<Domicilio> TDomicilioses = new HashSet<Domicilio>(0);
+    
 
     public Provincia() {
     }
@@ -41,13 +41,13 @@ public class Provincia  implements java.io.Serializable {
         this.TPaises = TPaises;
         this.nombre = nombre;
     }
-    public Provincia(int idProvincia, Pais TPaises, String nombre, String descripcion, Set<Localidad> TLocalidadeses, Set<Domicilio> TDomicilioses) {
+    public Provincia(int idProvincia, Pais TPaises, String nombre, String descripcion, Set<Localidad> TLocalidadeses ) {
        this.idProvincia = idProvincia;
        this.TPaises = TPaises;
        this.nombre = nombre;
        this.descripcion = descripcion;
        this.TLocalidadeses = TLocalidadeses;
-       this.TDomicilioses = TDomicilioses;
+       
     }
    
      @Id 
@@ -95,14 +95,7 @@ public class Provincia  implements java.io.Serializable {
     public void setTLocalidadeses(Set<Localidad> TLocalidadeses) {
         this.TLocalidadeses = TLocalidadeses;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TProvincias")
-    public Set<Domicilio> getTDomicilioses() {
-        return this.TDomicilioses;
-    }
-    
-    public void setTDomicilioses(Set<Domicilio> TDomicilioses) {
-        this.TDomicilioses = TDomicilioses;
-    }
+
 
 
 

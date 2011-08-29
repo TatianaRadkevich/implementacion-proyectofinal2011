@@ -25,8 +25,7 @@ public class Pais  implements java.io.Serializable {
 
      private short idPais;
      private String nombre;
-     private String descripcion;
-     private Set<Domicilio> TDomicilioses = new HashSet<Domicilio>(0);
+     private String descripcion;     
      private Set<Provincia> TProvinciases = new HashSet<Provincia>(0);
 
     public Pais() {
@@ -37,11 +36,10 @@ public class Pais  implements java.io.Serializable {
         this.idPais = idPais;
         this.nombre = nombre;
     }
-    public Pais(short idPais, String nombre, String descripcion, Set<Domicilio> TDomicilioses, Set<Provincia> TProvinciases) {
+    public Pais(short idPais, String nombre, String descripcion,  Set<Provincia> TProvinciases) {
        this.idPais = idPais;
        this.nombre = nombre;
        this.descripcion = descripcion;
-       this.TDomicilioses = TDomicilioses;
        this.TProvinciases = TProvinciases;
     }
    
@@ -73,14 +71,7 @@ public class Pais  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TPaises")
-    public Set<Domicilio> getTDomicilioses() {
-        return this.TDomicilioses;
-    }
-    
-    public void setTDomicilioses(Set<Domicilio> TDomicilioses) {
-        this.TDomicilioses = TDomicilioses;
-    }
+
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TPaises")
     public Set<Provincia> getTProvinciases() {
         return this.TProvinciases;
