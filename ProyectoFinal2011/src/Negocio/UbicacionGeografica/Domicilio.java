@@ -34,12 +34,10 @@ public class Domicilio  implements java.io.Serializable {
      private Provincia TProvincias;
      private Pais TPaises;
      private String calle;
-     private Short depto;
+     private String depto;
      private int numero;
-     private Byte piso;
-     private Set<Proveedor> TProveedoreses = new HashSet<Proveedor>(0);
-     private Set<Empleado> TEmpleadoses = new HashSet<Empleado>(0);
-     private Set<Cliente> TClienteses = new HashSet<Cliente>(0);
+     private short piso;
+    
 
     public Domicilio() {
     }
@@ -51,7 +49,7 @@ public class Domicilio  implements java.io.Serializable {
         this.calle = calle;
         this.numero = numero;
     }
-    public Domicilio(short idDomicilio, Localidad TLocalidades, Barrio TBarrios, Provincia TProvincias, Pais TPaises, String calle, Short depto, int numero, Byte piso, Set<Proveedor> TProveedoreses, Set<Empleado> TEmpleadoses, Set<Cliente> TClienteses) {
+    public Domicilio(short idDomicilio, Localidad TLocalidades, Barrio TBarrios, Provincia TProvincias, Pais TPaises, String calle, String depto, int numero, short piso) {
        this.idDomicilio = idDomicilio;
        this.TLocalidades = TLocalidades;
        this.TBarrios = TBarrios;
@@ -61,9 +59,7 @@ public class Domicilio  implements java.io.Serializable {
        this.depto = depto;
        this.numero = numero;
        this.piso = piso;
-       this.TProveedoreses = TProveedoreses;
-       this.TEmpleadoses = TEmpleadoses;
-       this.TClienteses = TClienteses;
+      
     }
    
      @Id 
@@ -123,11 +119,11 @@ public class Domicilio  implements java.io.Serializable {
     }
     
     @Column(name="DEPTO", precision=3, scale=0)
-    public Short getDepto() {
+    public String getDepto() {
         return this.depto;
     }
     
-    public void setDepto(Short depto) {
+    public void setDepto(String depto) {
         this.depto = depto;
     }
     
@@ -141,41 +137,12 @@ public class Domicilio  implements java.io.Serializable {
     }
     
     @Column(name="PISO", precision=2, scale=0)
-    public Byte getPiso() {
+    public short getPiso() {
         return this.piso;
     }
     
-    public void setPiso(Byte piso) {
+    public void setPiso(short piso) {
         this.piso = piso;
-    }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TDomicilios")
-    public Set<Proveedor> getTProveedoreses() {
-        return this.TProveedoreses;
-    }
-    
-    public void setTProveedoreses(Set<Proveedor> TProveedoreses) {
-        this.TProveedoreses = TProveedoreses;
-    }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TDomicilios")
-    public Set<Empleado> getTEmpleadoses() {
-        return this.TEmpleadoses;
-    }
-    
-    public void setTEmpleadoses(Set<Empleado> TEmpleadoses) {
-        this.TEmpleadoses = TEmpleadoses;
-    }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TDomicilios")
-    public Set<Cliente> getTClienteses() {
-        return this.TClienteses;
-    }
-    
-    public void setTClienteses(Set<Cliente> TClienteses) {
-        this.TClienteses = TClienteses;
-    }
-
-
-
-
-}
+    }}
 
 
