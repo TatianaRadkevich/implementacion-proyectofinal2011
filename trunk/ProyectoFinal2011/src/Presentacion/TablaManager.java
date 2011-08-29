@@ -104,10 +104,10 @@ public abstract class TablaManager <E>
         updateTabla();
     }
 
-    public E getSeletedObject() throws Exception
+    public E getSeletedObject()
     {
         if(tabla.getSelectedRow()==-1)
-            throw new Exception("Selecione un fila");
+            return null;
         return contenido.get(tabla.getSelectedRow());
     }
 
