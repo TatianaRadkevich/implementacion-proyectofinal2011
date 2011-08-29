@@ -64,7 +64,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
         ValidarTexbox.validarLongitud(txtNombre,50);
         ValidarTexbox.validarLongitud(txtCodigo,2);
         /************************Validacion de botones **********************************/
-        btnBaja.setEnabled(false);
+        btnEliminar.setEnabled(false);
         btnModificar.setEnabled(false);
         tablita.addListenerModificaionSelecion(new ListSelectionListener() {
 
@@ -73,7 +73,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
                 if (tbMaquinaHerramienta.getSelectedRow() >= 0)
                     var = true;
 
-                btnBaja.setEnabled(var);
+                btnEliminar.setEnabled(var);
                 btnModificar.setEnabled(var);
             }
         });
@@ -94,14 +94,14 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
         tbMaquinaHerramienta = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        btnBaja = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         panelBusqueda = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         txtModelo = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        chkMostrarTodos = new javax.swing.JCheckBox();
-        chkMostrarDadosBaja = new javax.swing.JCheckBox();
+        chkMostrarVigentes = new javax.swing.JCheckBox();
+        chkMostrarEliminados = new javax.swing.JCheckBox();
         txtNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -135,10 +135,10 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
             }
         });
 
-        btnBaja.setText("Baja");
-        btnBaja.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBajaActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -148,12 +148,12 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -166,8 +166,8 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBaja))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
+                        .addComponent(btnEliminar))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -182,9 +182,10 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
             }
         });
 
-        chkMostrarTodos.setText("Mostrar vigentes");
+        chkMostrarVigentes.setSelected(true);
+        chkMostrarVigentes.setText("Mostrar vigentes");
 
-        chkMostrarDadosBaja.setText("Mostrar dados de baja");
+        chkMostrarEliminados.setText("Mostrar eliminados");
 
         jLabel2.setText("Nombre:");
 
@@ -201,25 +202,29 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
-                    .addComponent(txtModelo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelBusquedaLayout.createSequentialGroup()
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                        .addGap(230, 230, 230)))
-                .addGap(31, 31, 31)
                 .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(chkMostrarTodos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chkMostrarDadosBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnBuscar))
-                .addContainerGap())
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                    .addComponent(txtModelo, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(18, 18, 18)
+                .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(chkMostrarEliminados, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBuscar)
+                    .addComponent(chkMostrarVigentes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBusquedaLayout.setVerticalGroup(
             panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBusquedaLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBusquedaLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addComponent(chkMostrarVigentes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(chkMostrarEliminados)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscar))
+                    .addGroup(panelBusquedaLayout.createSequentialGroup()
                         .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -230,14 +235,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)))
-                    .addGroup(panelBusquedaLayout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(btnBuscar))
-                    .addGroup(panelBusquedaLayout.createSequentialGroup()
-                        .addComponent(chkMostrarDadosBaja)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(chkMostrarTodos)))
+                            .addComponent(jLabel3))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -248,8 +246,8 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelBusqueda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panelBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -257,7 +255,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -272,7 +270,9 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
         tablita.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(
                 txtCodigo.getText(),
                 txtModelo.getText(),
-                txtNombre.getText()));
+                txtNombre.getText(),
+                chkMostrarVigentes.isSelected(),
+                chkMostrarEliminados.isSelected()));
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -294,7 +294,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
                              try {
             new GestorMaquinaHerramientaBaja(tablita.getSeletedObject()).iniciarCU();
@@ -303,7 +303,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
         }
 
 
-    }//GEN-LAST:event_btnBajaActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
     * @param args the command line arguments
@@ -323,12 +323,12 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBaja;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JCheckBox chkMostrarDadosBaja;
-    private javax.swing.JCheckBox chkMostrarTodos;
+    private javax.swing.JCheckBox chkMostrarEliminados;
+    private javax.swing.JCheckBox chkMostrarVigentes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

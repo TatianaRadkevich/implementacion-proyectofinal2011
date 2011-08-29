@@ -34,8 +34,8 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
     private GestorTipoMaquinaHerramienta gestor;
 
     /** Creates new form PantallaMaquinaHerramientaTipoABM */
-    public PantallaMaquinaHerramientaTipoABM(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public PantallaMaquinaHerramientaTipoABM() {
+        super((java.awt.Frame)null, true);
         initComponents();
         //GUILocal.establecerGUILocal(this);
         lstDisponible.setModel(new DefaultListModel());
@@ -369,7 +369,7 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                PantallaMaquinaHerramientaTipoABM dialog = new PantallaMaquinaHerramientaTipoABM(new javax.swing.JFrame(), true);
+                PantallaMaquinaHerramientaTipoABM dialog = new PantallaMaquinaHerramientaTipoABM();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     public void windowClosing(java.awt.event.WindowEvent e) {

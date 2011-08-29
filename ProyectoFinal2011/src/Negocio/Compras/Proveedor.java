@@ -27,7 +27,7 @@ public class Proveedor implements java.io.Serializable {
     @Column(name = "ID_PROVEEDOR", unique = true, nullable = false, precision = 3, scale = 0)
     private short idProveedor;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_DOMICILIO", nullable = false)
+    @JoinColumn(name = "ID_DOMICILIO")//, nullable = false)
     private Domicilio TDomicilios;
     @Column(name = "NOMBRE", nullable = false, length = 100)
     private String nombre;
@@ -37,7 +37,7 @@ public class Proveedor implements java.io.Serializable {
     private String telefono;
     @Column(name = "CORREO_ELECTRONICO", length = 50)
     private String correoElectronico;
-    @Column(name = "APELLIDO", nullable = false, length = 100)
+    @Column(name = "APELLIDO")//, nullable = false, length = 100)
     private String apellido;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TProveedores")
     private Set<OrdenCompra> TOrdenesCompras = new HashSet<OrdenCompra>(0);
@@ -137,4 +137,11 @@ public class Proveedor implements java.io.Serializable {
     public void setTMaterialesXProveedors(Set<MaterialesXProveedor> TMaterialesXProveedors) {
         this.TMaterialesXProveedors = TMaterialesXProveedors;
     }
+
+    @Override
+    public String toString() {
+        return getNombre();
+    }
+
+
 }

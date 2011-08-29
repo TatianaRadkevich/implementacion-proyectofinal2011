@@ -16,7 +16,7 @@ import java.util.List;
 public class ProveedorBD {
 
     public static List<Proveedor> listarProveedores() {
-        return HibernateUtil.ejecutarConsulta("from Proveedor");
+        return HibernateUtil.ejecutarConsulta("FROM Proveedor");
     }
 
 }

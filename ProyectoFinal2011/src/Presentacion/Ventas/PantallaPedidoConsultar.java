@@ -98,7 +98,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
         });
 
         /************************Validacion de botones **********************************/
-        btnEliminar.setEnabled(false);
+        btnCancelar.setEnabled(false);
         btnModificar.setEnabled(false);
         tablita.addListenerModificaionSelecion(new ListSelectionListener() {
 
@@ -107,7 +107,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                 if (tbPedidos.getSelectedRow() >= 0)
                     var = true;
                 
-                btnEliminar.setEnabled(var);
+                btnCancelar.setEnabled(var);
                 btnModificar.setEnabled(var);
             }
         });
@@ -142,7 +142,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
         tbPedidos = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -287,10 +287,10 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
             }
         });
 
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -313,7 +313,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
                         .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
                     .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -326,7 +326,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminar)
+                        .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                         .addComponent(btnSalir))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
@@ -385,14 +385,14 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         try {
             new GestorPedidoBaja(tablita.getSeletedObject()).iniciarCU();
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
 
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
@@ -420,7 +420,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;

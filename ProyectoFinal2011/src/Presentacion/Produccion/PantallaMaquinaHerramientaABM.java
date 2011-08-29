@@ -40,6 +40,12 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
 
         /////////// Precargas Necesarias //////////
         cargarValidaciones();
+        recargarComboTipoMaquina();
+        
+    }
+
+    private void recargarComboTipoMaquina()
+    {
         cmbTipoMaquinaHerramienta.setModel(new DefaultComboBoxModel(gestor.getTipoMaquinaHerramienta().toArray()));
     }
 
@@ -102,6 +108,7 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtCaracteristicas = new javax.swing.JTextArea();
+        btnAgregarTipo = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -134,6 +141,13 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
         txtCaracteristicas.setWrapStyleWord(true);
         jScrollPane2.setViewportView(txtCaracteristicas);
 
+        btnAgregarTipo.setText("...");
+        btnAgregarTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarTipoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -149,9 +163,12 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cmbTipoMaquinaHerramienta, javax.swing.GroupLayout.Alignment.LEADING, 0, 154, Short.MAX_VALUE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbTipoMaquinaHerramienta, javax.swing.GroupLayout.Alignment.LEADING, 0, 154, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAgregarTipo))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -173,7 +190,8 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(cmbTipoMaquinaHerramienta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbTipoMaquinaHerramienta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarTipo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -193,11 +211,11 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -269,6 +287,12 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
         gestor.finalizarCU();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnAgregarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTipoActionPerformed
+        // TODO add your handling code here:
+        new PantallaMaquinaHerramientaTipoABM().setVisible(true);
+        recargarComboTipoMaquina();
+    }//GEN-LAST:event_btnAgregarTipoActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -288,6 +312,7 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnAgregarTipo;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox cmbTipoMaquinaHerramienta;
     private javax.swing.JLabel jLabel1;
