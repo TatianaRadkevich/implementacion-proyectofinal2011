@@ -33,7 +33,8 @@ public class GestorPedidoBaja extends GestorPedido
         
         interfaz=new PantallaPedidoABM(this);
         interfaz.cargar(pedido);
-        interfaz.habilitarTodo(false);
+        interfaz.habilitarBaja(true, true, Utilidades.getFechaActual(), "");
+        interfaz.habilitarCarga(false);
         interfaz.setTitle("Eliminar pedido");
         interfaz.setVisible(true);
     }
@@ -53,17 +54,10 @@ public class GestorPedidoBaja extends GestorPedido
     }
 
     @Override
-    public void ejecutarCU(Pedido p) throws ExceptionGestor {
+    public void ejecutarCU(Pedido p) throws ExceptionGestor {        
         validar(p);
-        
-        PantallaEliminar pe=new PantallaEliminar();
-        pe.setVisible(true);
-        if(pe.isOk()==false)
-            finalizarCU();
-
-        p.setMotivoBaja(pe.getMotivo());
-        p.setEstadoPedido(EstadoPedidoBD.getEstadoCancelado());
         p.setFecBaja(Utilidades.getFechaActual());
+        p.setEstadoPedido(EstadoPedidoBD.getEstadoCancelado());
         PedidoBD.modificar(p);
     }
 

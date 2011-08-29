@@ -41,8 +41,8 @@ public class Pedido implements java.io.Serializable {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EPEDIDO")//, nullable=false)
     private EstadoPedido TEpedido;
-    @Column(name = "ENTREGA_MATERIAL")
-    private Boolean entregaMaterial;
+//    @Column(name = "ENTREGA_MATERIAL")
+//    private Boolean entregaMaterial;
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_ESTIMADA_ENTREGA")
     private Date fecHoraEstimadaEntrega;
@@ -83,12 +83,12 @@ public class Pedido implements java.io.Serializable {
         this.prioridad = prioridad;
     }
 
-    public Pedido(int idPedido, TipoPedido TTpedido, Cliente TClientes, EstadoPedido TEpedido, Boolean entregaMaterial, Date fecHoraEstimadaEntrega, Date fecHoraGeneracion, Date fecHoraRealEntrega, Date fecSolicitada, byte prioridad, Set<PlanProduccion> TPlanesProduccions, Set<DetallePedido> TDetallesPedidos) {
+    public Pedido(int idPedido, TipoPedido TTpedido, Cliente TClientes, EstadoPedido TEpedido, Date fecHoraEstimadaEntrega, Date fecHoraGeneracion, Date fecHoraRealEntrega, Date fecSolicitada, byte prioridad, Set<PlanProduccion> TPlanesProduccions, Set<DetallePedido> TDetallesPedidos) {
         this.idPedido = idPedido;
         this.TTpedido = TTpedido;
         this.TClientes = TClientes;
         this.TEpedido = TEpedido;
-        this.entregaMaterial = entregaMaterial;
+        
         this.fecHoraEstimadaEntrega = fecHoraEstimadaEntrega;
         this.fecHoraGeneracion = fecHoraGeneracion;
         this.fecHoraRealEntrega = fecHoraRealEntrega;
@@ -131,13 +131,7 @@ public class Pedido implements java.io.Serializable {
         this.TEpedido = estado;
     }
 
-    public Boolean getEntregaMaterial() {
-        return this.entregaMaterial;
-    }
 
-    public void setEntregaMaterial(Boolean entregaMaterial) {
-        this.entregaMaterial = entregaMaterial;
-    }
 
     public Date getFechaEstimadaEntrega() {
         return this.fecHoraEstimadaEntrega;
