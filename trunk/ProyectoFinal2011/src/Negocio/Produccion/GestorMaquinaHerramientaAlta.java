@@ -5,6 +5,7 @@
 
 package Negocio.Produccion;
 
+import BaseDeDatos.Produccion.EstadoMaquinaBD;
 import BaseDeDatos.Produccion.MaquinaHerramientaBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Produccion.PantallaMaquinaHerramientaABM;
@@ -40,6 +41,7 @@ public class GestorMaquinaHerramientaAlta extends GestorMaquinaHerramienta
 
     @Override
     public void ejecutarCU(MaquinaHerramientaParticular mh) throws ExceptionGestor {
+        mh.setEstadoMaquina(EstadoMaquinaBD.getEstadoDisponible());
         validar(mh);
         //mh.setEstadoMaquina(null);
         MaquinaHerramientaBD.guardar(mh);

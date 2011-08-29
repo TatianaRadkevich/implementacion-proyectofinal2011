@@ -46,18 +46,18 @@ public class JCheckList<E> extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollPane = new javax.swing.JScrollPane();
         lista = new javax.swing.JList();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
-        jScrollPane1.setViewportView(lista);
+        scrollPane.setViewportView(lista);
 
-        add(jScrollPane1);
+        add(scrollPane);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList lista;
+    private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
 
     public void setData(List<E> items) {
@@ -96,6 +96,14 @@ public class JCheckList<E> extends javax.swing.JPanel {
         this.repaint();
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        lista.setEnabled(enabled);
+    }
+
+
+
     private void iniciar() {
         // Use a CheckListRenderer (see below)
         // to renderer list cells
@@ -107,7 +115,12 @@ public class JCheckList<E> extends javax.swing.JPanel {
 
         lista.addMouseListener(new MouseAdapter() {
 
+            @Override
             public void mouseClicked(MouseEvent event) {
+
+                if(lista.isEnabled()==false)
+                    return;
+
                 JList list = (JList) event.getSource();
 
                 // Get index of item clicked

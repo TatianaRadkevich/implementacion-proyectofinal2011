@@ -25,7 +25,7 @@ public class EstadoMaquina implements java.io.Serializable {
     @Column(name = "ID_EMAQUINA", unique = true, nullable = false, precision = 2, scale = 0)
     private int idEmaquina;
     @Column(name = "NOMBRE", nullable = false)
-    private Serializable nombre;
+    private String nombre;
     @Column(name = "DESCRIPCION", length = 200)
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEmaquina")
@@ -34,12 +34,12 @@ public class EstadoMaquina implements java.io.Serializable {
     public EstadoMaquina() {
     }
 
-    public EstadoMaquina(int idEmaquina, Serializable nombre) {
+    public EstadoMaquina(int idEmaquina, String nombre) {
         this.idEmaquina = idEmaquina;
         this.nombre = nombre;
     }
 
-    public EstadoMaquina(int idEmaquina, Serializable nombre, String descripcion, Set<MaquinaHerramientaParticular> TMaquinasHerramientaParticulars) {
+    public EstadoMaquina(int idEmaquina, String nombre, String descripcion, Set<MaquinaHerramientaParticular> TMaquinasHerramientaParticulars) {
         this.idEmaquina = idEmaquina;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -54,11 +54,11 @@ public class EstadoMaquina implements java.io.Serializable {
         this.idEmaquina = idEmaquina;
     }
 
-    public Serializable getNombre() {
+    public String getNombre() {
         return this.nombre;
     }
 
-    public void setNombre(Serializable nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 

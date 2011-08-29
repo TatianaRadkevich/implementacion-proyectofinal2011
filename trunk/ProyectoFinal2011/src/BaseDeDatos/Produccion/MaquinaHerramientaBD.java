@@ -9,6 +9,7 @@ import BaseDeDatos.HibernateUtil;
 import Negocio.Produccion.EstadoMaquina;
 import Negocio.Produccion.MaquinaHerramientaParticular;
 import Negocio.Produccion.TipoMaquinaHerramienta;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,13 +28,26 @@ public class MaquinaHerramientaBD {
         return HibernateUtil.ejecutarConsulta("FROM TipoMaquinaHerramienta");
     }
 
-    public static List<MaquinaHerramientaParticular> getMaquinasHerramientas(String codigo,String modelo ,String nombre) {
+    public static List<MaquinaHerramientaParticular> getMaquinasHerramientas(String codigo,String modelo ,String nombre,boolean vigentes,boolean eliminados) {
         String HQL=String.format(
                 "FROM MaquinaHerramientaParticular as mh "
                 + "WHERE LOWER(mh.nombre) LIKE LOWER('%s%%') "
                 + "AND LOWER(mh.modelo) LIKE LOWER('%s%%') "
                 + "AND LOWER(mh.codigo) LIKE LOWER('%s%%')",
                 nombre, modelo, codigo);
+
+         if(vigentes==false&&eliminados==false)
+            return new ArrayList<MaquinaHerramientaParticular>(0);
+
+         if(vigentes==true&&eliminados==true)
+            return HibernateUtil.ejecutarConsulta(HQL);
+
+        if(vigentes==true&&eliminados==false)
+            HQL+="AND mh.fecBaja IS NULL ";
+
+        if(vigentes==false&&eliminados==true)
+            HQL+="AND mh.fecBaja IS NOT NULL ";
+
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 

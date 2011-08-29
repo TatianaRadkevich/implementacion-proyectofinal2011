@@ -29,12 +29,13 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     private PantallaMaterialABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cargarValidaciones();
+        cargarValidaciones();        
     }
 
     public PantallaMaterialABM(GestorMaterial gm) {
         this(null, true);
         gestor = gm;
+        lstProveedores.setData(gestor.getProveedores());
     }
 
     public void cargar(Material m)
@@ -47,6 +48,9 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         txtStockActual.setText(Utilidades.parseString(m.getStockActual()));
         txtStockMinimo.setText(Utilidades.parseString(m.getStockMinimo()));
         rdbMateriaPrima.setSelected(m.isMateriaPrima());
+        rdbInsumo.setSelected(!m.isMateriaPrima());
+        lstProveedores.setSelectedItems(m.getProveedores());
+
     }
 
     private void cargarValidaciones() {
@@ -63,7 +67,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         ValidarTexbox.validarLongitud(txtDescripcion, 200);
     }
 
-      public void habilitarTodo(boolean b) {
+    public void habilitarTodo(boolean b) {
         txtCodigo.setEditable(b);
         txtDescripcion.setEditable(b);
         txtDiametro.setEditable(b);
@@ -73,6 +77,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         txtStockMinimo.setEditable(b);
         rdbMateriaPrima.setEnabled(b);
         rdbInsumo.setEnabled(b);
+        lstProveedores.setEnabled(b);
     }
  
 
@@ -87,8 +92,6 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
 
         btgTipoMaterial = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        lista = new javax.swing.JList();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
@@ -108,14 +111,13 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         txtLongitud = new javax.swing.JTextField();
         txtDiametro = new javax.swing.JTextField();
+        lstProveedores = new Presentacion.JCheckList();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Material"));
-
-        jScrollPane2.setViewportView(lista);
 
         jLabel4.setText("Descripcion:");
 
@@ -163,21 +165,21 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lstProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(txtStockActual)
                         .addComponent(txtStockMinimo, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
                         .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtDiametro, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rdbMateriaPrima, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtLongitud, javax.swing.GroupLayout.Alignment.LEADING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(rdbInsumo))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -215,11 +217,11 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(lstProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -277,6 +279,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         material.setStockActual(Utilidades.parseShort(txtStockActual.getText()));
         material.setStockMinimo(Utilidades.parseShort(txtStockMinimo.getText()));
         material.setEsMateriaPrima(rdbMateriaPrima.isSelected());
+        material.setProveedores(lstProveedores.getSelectedItems());
         try {
             gestor.ejecutarCU(material);
             this.setVisible(false);
@@ -323,8 +326,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList lista;
+    private Presentacion.JCheckList lstProveedores;
     private javax.swing.JRadioButton rdbInsumo;
     private javax.swing.JRadioButton rdbMateriaPrima;
     private javax.swing.JTextField txtCodigo;

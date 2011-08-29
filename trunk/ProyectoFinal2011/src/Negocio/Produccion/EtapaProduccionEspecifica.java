@@ -139,14 +139,16 @@ public class EtapaProduccionEspecifica  implements java.io.Serializable {
     public void setTDetallesEtapas(Set<DetalleEtapaProduccion> TDetallesEtapas) {
         this.TDetallesEtapas = TDetallesEtapas;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEtapasProduccionEspecifica")
-    public Set<TipoMaquinaHerramienta> getTTmaquinaHerramientas() {
-        return this.TTmaquinaHerramientas;
-    }
-    
-    public void setTTmaquinaHerramientas(Set<TipoMaquinaHerramienta> TTmaquinaHerramientas) {
-        this.TTmaquinaHerramientas = TTmaquinaHerramientas;
-    }
+
+//@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEtapasProduccionEspecifica")
+//    public Set<TipoMaquinaHerramienta> getTTmaquinaHerramientas() {
+//        return this.TTmaquinaHerramientas;
+//    }
+//
+//    public void setTTmaquinaHerramientas(Set<TipoMaquinaHerramienta> TTmaquinaHerramientas) {
+//        this.TTmaquinaHerramientas = TTmaquinaHerramientas;
+//    }
+
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEtapasProduccionEspecifica")
     public Set<DetallePlanProduccion> getTDetallesPlans() {
         return this.TDetallesPlans;

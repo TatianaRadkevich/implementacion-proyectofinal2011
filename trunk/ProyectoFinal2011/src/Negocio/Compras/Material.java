@@ -56,18 +56,18 @@ public class Material implements java.io.Serializable {
     private Short stockReservado;
     @Column(name = "CODIGO", nullable = false, length = 2)
     private String codigo;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
-    private Set<DetalleProducto> TDetallesProductos = new HashSet<DetalleProducto>(0);
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
-    private Set<DetalleEtapaProduccion> TDetallesEtapas = new HashSet<DetalleEtapaProduccion>(0);
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<MaterialesXProveedor> TMaterialesXProveedors = new HashSet<MaterialesXProveedor>(0);
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
-    private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
-    private Set<DetalleOrdenCompra> TDetallesOrdenCompras = new HashSet<DetalleOrdenCompra>(0);
+
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
+//    private Set<DetalleProducto> TDetallesProductos = new HashSet<DetalleProducto>(0);
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
+//    private Set<DetalleEtapaProduccion> TDetallesEtapas = new HashSet<DetalleEtapaProduccion>(0);
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
+//    private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
+//    private Set<DetalleOrdenCompra> TDetallesOrdenCompras = new HashSet<DetalleOrdenCompra>(0);
 
     public Material() {
     }
@@ -82,7 +82,7 @@ public class Material implements java.io.Serializable {
         this.codigo = codigo;
     }
 
-    public Material(Short idMaterial, String nombre, String descripcion, Integer diametro, boolean esMateriaPrima, Short logitud, Date fecBaja, String motivoBaja, Short stockActual, Short stockMinimo, Short stockReservado, String codigo, Set<DetalleProducto> TDetallesProductos, Set<DetalleEtapaProduccion> TDetallesEtapas, Set<MaterialesXProveedor> TMaterialesXProveedors, Set<Faltante> TFaltanteses, Set<DetalleOrdenCompra> TDetallesOrdenCompras) {
+    public Material(Short idMaterial, String nombre, String descripcion, Integer diametro, boolean esMateriaPrima, Short logitud, Date fecBaja, String motivoBaja, Short stockActual, Short stockMinimo, Short stockReservado, String codigo, Set<MaterialesXProveedor> TMaterialesXProveedors) {
         this.idMaterial = idMaterial;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -95,11 +95,7 @@ public class Material implements java.io.Serializable {
         this.stockMinimo = stockMinimo;
         this.stockReservado = stockReservado;
         this.codigo = codigo;
-        this.TDetallesProductos = TDetallesProductos;
-        this.TDetallesEtapas = TDetallesEtapas;
         this.TMaterialesXProveedors = TMaterialesXProveedors;
-        this.TFaltanteses = TFaltanteses;
-        this.TDetallesOrdenCompras = TDetallesOrdenCompras;
     }
 
     public Short getIdMaterial() {
@@ -198,22 +194,6 @@ public class Material implements java.io.Serializable {
         this.codigo = codigo;
     }
 
-    public Set<DetalleProducto> getDetalleProducto() {
-        return this.TDetallesProductos;
-    }
-
-    public void setDetalleProducto(Set<DetalleProducto> detalleProducto) {
-        this.TDetallesProductos = detalleProducto;
-    }
-
-    public Set<DetalleEtapaProduccion> getDetalleEtapaProduccion() {
-        return this.TDetallesEtapas;
-    }
-
-    public void setDetalleEtapaProduccion(Set<DetalleEtapaProduccion> detalleEtapaProduccion) {
-        this.TDetallesEtapas = detalleEtapaProduccion;
-    }
-
     public List<Proveedor> getProveedores() {
         ArrayList<Proveedor> salida=new ArrayList<Proveedor>(TMaterialesXProveedors.size());
         for(MaterialesXProveedor mxp:this.TMaterialesXProveedors)
@@ -225,21 +205,5 @@ public class Material implements java.io.Serializable {
         TMaterialesXProveedors.clear();
         for(Proveedor p:proveedores)
             TMaterialesXProveedors.add(new MaterialesXProveedor(p,this));
-    }
-
-    public Set<Faltante> getFaltantes() {
-        return this.TFaltanteses;
-    }
-
-    public void setFaltantes(Set<Faltante> TFaltanteses) {
-        this.TFaltanteses = TFaltanteses;
-    }
-
-    public Set<DetalleOrdenCompra> getDetalleOrdenCompra() {
-        return this.TDetallesOrdenCompras;
-    }
-
-    public void setDetalleOrdenCompra(Set<DetalleOrdenCompra> detalleOrdenCompra) {
-        this.TDetallesOrdenCompras = detalleOrdenCompra;
     }
 }

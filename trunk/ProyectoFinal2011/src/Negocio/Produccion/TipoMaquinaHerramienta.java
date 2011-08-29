@@ -30,36 +30,35 @@ public class TipoMaquinaHerramienta implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_TMAQUINA_HERRAMIENTA", unique = true, nullable = false, precision = 2, scale = 0)
     private int idTmaquinaHerramienta;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_ETAPA_PRODUCCION_ESPECIFICA")//, nullable = false)
-    private EtapaProduccionEspecifica TEtapasProduccionEspecifica;
     @Column(name = "NOMBRE", nullable = false, length = 50)
     private String nombre;
-    @Column(name="DESCRIPCION", length=200)
+    @Column(name = "DESCRIPCION", length = 200)
     private String descripcion;
     @Column(name = "ES_HERRAMIENTA", nullable = false)
     private boolean esHerramienta;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="FEC_BAJA")
+    @Column(name = "FEC_BAJA")
     private Date fecBaja;
-    @Column(name="MOTIVO_BAJA", length=100)
+    @Column(name = "MOTIVO_BAJA", length = 100)
     private String motivoBaja;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TTmaquinaHerramienta")
     private Set<MaquinaHerramientaParticular> TMaquinasHerramientaParticulars = new HashSet<MaquinaHerramientaParticular>(0);
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "ID_ETAPA_PRODUCCION_ESPECIFICA")//, nullable = false)
+//    private EtapaProduccionEspecifica TEtapasProduccionEspecifica;
 
     public TipoMaquinaHerramienta() {
     }
 
-    public TipoMaquinaHerramienta(int idTmaquinaHerramienta, EtapaProduccionEspecifica TEtapasProduccionEspecifica, String nombre, boolean esHerramienta) {
+    public TipoMaquinaHerramienta(int idTmaquinaHerramienta, String nombre, boolean esHerramienta) {
         this.idTmaquinaHerramienta = idTmaquinaHerramienta;
-        this.TEtapasProduccionEspecifica = TEtapasProduccionEspecifica;
         this.nombre = nombre;
         this.esHerramienta = esHerramienta;
     }
 
-    public TipoMaquinaHerramienta(int idTmaquinaHerramienta, EtapaProduccionEspecifica TEtapasProduccionEspecifica, String nombre, boolean esHerramienta, Set<MaquinaHerramientaParticular> TMaquinasHerramientaParticulars) {
+    public TipoMaquinaHerramienta(int idTmaquinaHerramienta, String nombre, boolean esHerramienta, Set<MaquinaHerramientaParticular> TMaquinasHerramientaParticulars) {
         this.idTmaquinaHerramienta = idTmaquinaHerramienta;
-        this.TEtapasProduccionEspecifica = TEtapasProduccionEspecifica;
+
         this.nombre = nombre;
         this.esHerramienta = esHerramienta;
         this.TMaquinasHerramientaParticulars = TMaquinasHerramientaParticulars;
@@ -71,14 +70,6 @@ public class TipoMaquinaHerramienta implements java.io.Serializable {
 
     public void setId(int idTmaquinaHerramienta) {
         this.idTmaquinaHerramienta = idTmaquinaHerramienta;
-    }
-
-    public EtapaProduccionEspecifica getEtapaProduccionEspecifica() {
-        return this.TEtapasProduccionEspecifica;
-    }
-
-    public void setEtapaProduccionEspecifica(EtapaProduccionEspecifica etapaProduccionEspecifica) {
-        this.TEtapasProduccionEspecifica = etapaProduccionEspecifica;
     }
 
     public String getNombre() {
@@ -112,7 +103,8 @@ public class TipoMaquinaHerramienta implements java.io.Serializable {
     public void setMaquinaHerramientaParticular(Set<MaquinaHerramientaParticular> maquinaHerramientaParticular) {
         this.TMaquinasHerramientaParticulars = maquinaHerramientaParticular;
     }
-           public Date getFechaBaja() {
+
+    public Date getFechaBaja() {
         return fecBaja;
     }
 
@@ -130,9 +122,7 @@ public class TipoMaquinaHerramienta implements java.io.Serializable {
 
     @Override
     public String toString() {
-        String maqHer=(this.esHerramienta)?"Herramienta":"Maquina";
-        return this.nombre+"("+maqHer+")";
+        String maqHer = (this.esHerramienta) ? "Herramienta" : "Maquina";
+        return this.nombre + "(" + maqHer + ")";
     }
-
-
 }

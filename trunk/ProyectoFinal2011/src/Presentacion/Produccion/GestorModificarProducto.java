@@ -30,5 +30,15 @@ public class GestorModificarProducto extends GestorProducto{
         pantalla_producto.setVisible(true);
     }
 
+    @Override
+    public String mensajeResultado(String nombreProducto) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void reiniciar(PantallaABMProducto aThis) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 
 }
