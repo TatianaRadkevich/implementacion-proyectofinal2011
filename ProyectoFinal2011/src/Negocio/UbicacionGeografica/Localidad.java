@@ -32,7 +32,6 @@ public class Localidad  implements java.io.Serializable {
      private Provincia TProvincias;
      private String nombre;
      private String descripcion;
-     private Set<Domicilio> TDomicilioses = new HashSet<Domicilio>(0);
      private Set<Barrio> TBarrioses = new HashSet<Barrio>(0);
 
     public Localidad() {
@@ -44,12 +43,11 @@ public class Localidad  implements java.io.Serializable {
         this.TProvincias = TProvincias;
         this.nombre = nombre;
     }
-    public Localidad(short idLocalidad, Provincia TProvincias, String nombre, String descripcion, Set<Domicilio> TDomicilioses, Set<Barrio> TBarrioses) {
+    public Localidad(short idLocalidad, Provincia TProvincias, String nombre, String descripcion,  Set<Barrio> TBarrioses) {
        this.idLocalidad = idLocalidad;
        this.TProvincias = TProvincias;
        this.nombre = nombre;
        this.descripcion = descripcion;
-       this.TDomicilioses = TDomicilioses;
        this.TBarrioses = TBarrioses;
     }
    
@@ -90,14 +88,7 @@ public class Localidad  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TLocalidades")
-    public Set<Domicilio> getTDomicilioses() {
-        return this.TDomicilioses;
-    }
-    
-    public void setTDomicilioses(Set<Domicilio> TDomicilioses) {
-        this.TDomicilioses = TDomicilioses;
-    }
+
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TLocalidades")
     public Set<Barrio> getTBarrioses() {
         return this.TBarrioses;

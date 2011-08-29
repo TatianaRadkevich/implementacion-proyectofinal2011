@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -29,7 +28,7 @@ public class Barrio  implements java.io.Serializable {
      private Localidad TLocalidades;
      private String nombre;
      private String descripcion;
-     private Set<Domicilio> TDomicilioses = new HashSet<Domicilio>(0);
+     
 
     public Barrio() {
     }
@@ -40,12 +39,12 @@ public class Barrio  implements java.io.Serializable {
         this.TLocalidades = TLocalidades;
         this.nombre = nombre;
     }
-    public Barrio(short idBarrio, Localidad TLocalidades, String nombre, String descripcion, Set<Domicilio> TDomicilioses) {
+    public Barrio(short idBarrio, Localidad TLocalidades, String nombre, String descripcion) {
        this.idBarrio = idBarrio;
        this.TLocalidades = TLocalidades;
        this.nombre = nombre;
        this.descripcion = descripcion;
-       this.TDomicilioses = TDomicilioses;
+       
     }
    
      @Id 
@@ -85,17 +84,6 @@ public class Barrio  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TBarrios")
-    public Set<Domicilio> getTDomicilioses() {
-        return this.TDomicilioses;
-    }
-    
-    public void setTDomicilioses(Set<Domicilio> TDomicilioses) {
-        this.TDomicilioses = TDomicilioses;
-    }
-
-
-
 
 }
 
