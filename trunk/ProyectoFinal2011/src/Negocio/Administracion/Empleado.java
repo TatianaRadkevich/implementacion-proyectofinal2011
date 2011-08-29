@@ -58,6 +58,7 @@ public class Empleado  implements java.io.Serializable {
      private Set<TEmpleadosXCargo> TEmpleadosXCargos = new HashSet(0);
 
     public Empleado() {
+        this.TDomicilios= new Domicilio();
     }
 
 
