@@ -26,19 +26,22 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jPanel1" alignment="0" max="32767" attributes="1"/>
-                          <Component id="pnlEtapaSeleccionada" alignment="1" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jPanel1" alignment="0" max="32767" attributes="1"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jPanel2" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="pnlEtapaSeleccionada" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="btnAceptar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -50,14 +53,13 @@
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="pnlEtapaSeleccionada" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnAceptar" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnCancelar" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Component id="pnlEtapaSeleccionada" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -91,8 +93,8 @@
                           <Component id="jScrollPane4" min="-2" pref="125" max="-2" attributes="1"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="btnAgregarMaterial" pref="154" max="32767" attributes="1"/>
-                              <Component id="btnQuitarMaterial" alignment="1" pref="154" max="32767" attributes="1"/>
+                              <Component id="btnAgregarMaterial" pref="279" max="32767" attributes="1"/>
+                              <Component id="btnQuitarMaterial" alignment="1" pref="279" max="32767" attributes="1"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -102,8 +104,8 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="btnAgregarMaquina" pref="154" max="32767" attributes="1"/>
-                              <Component id="btnQuitarMaquina" pref="154" max="32767" attributes="1"/>
+                              <Component id="btnAgregarMaquina" pref="279" max="32767" attributes="1"/>
+                              <Component id="btnQuitarMaquina" pref="279" max="32767" attributes="1"/>
                           </Group>
                       </Group>
                   </Group>
@@ -413,7 +415,7 @@
                       <Component id="btnBajarEtapa" min="0" pref="0" max="32767" attributes="1"/>
                       <Component id="btnSubirEtapa" alignment="0" min="-2" max="-2" attributes="1"/>
                   </Group>
-                  <EmptySpace pref="221" max="32767" attributes="0"/>
+                  <EmptySpace pref="356" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -435,7 +437,7 @@
                           <Component id="btnBajarEtapa" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="99" max="32767" attributes="0"/>
+                  <EmptySpace pref="41" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
