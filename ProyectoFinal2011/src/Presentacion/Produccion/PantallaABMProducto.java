@@ -38,7 +38,8 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     /** Creates new form PantallaABMProducto */
     public PantallaABMProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        GUILocal.establecerGUILocal(this);
+        //GUILocal.establecerGUILocal(this);
+      //  GUILocal.establecerGUISyntheticaClassy(this);
 
         initComponents();
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
@@ -46,7 +47,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
     public PantallaABMProducto(Dialog owner, boolean modal, GestorProducto gestor) {
         super(owner, modal);
-        GUILocal.establecerGUILocal(this);
+//        GUILocal.establecerGUILocal(this);
         initComponents();
         this.gestor=gestor;
         
@@ -115,6 +116,8 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         jLabel3.setText("Precio:  $");
 
         jLabel4.setText("Tipo:");
+
+        cmbTipoProducto.setForeground(new java.awt.Color(255, 255, 255));
 
         btnAgregarTipo.setText("Agregar");
         btnAgregarTipo.addActionListener(new java.awt.event.ActionListener() {
