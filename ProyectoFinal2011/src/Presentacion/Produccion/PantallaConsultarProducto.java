@@ -31,7 +31,9 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     /** Creates new form PantallaConsultarProducto */
     public PantallaConsultarProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        GUILocal.establecerGUILocal(this);
+//        GUILocal.establecerGUILocal(this);
+        GUILocal.establecerGUISyntheticaClassy(this);
+//        GUILocal.establecerGUISyntheticaGreenDreamLookAndFeel(this);
         initComponents();
         tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
@@ -63,6 +65,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Producto"));
 
