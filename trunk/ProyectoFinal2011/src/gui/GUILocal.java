@@ -5,12 +5,15 @@
 
 package gui;
 
+import de.javasoft.plaf.synthetica.SyntheticaClassyLookAndFeel;
+import de.javasoft.plaf.synthetica.SyntheticaGreenDreamLookAndFeel;
 import java.awt.Frame;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
 
 /**
  *
@@ -33,6 +36,38 @@ public class GUILocal {
             Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public static void establecerGUISyntheticaClassy(Object frame){
+      try
+    {
+
+      UIManager.setLookAndFeel(new SyntheticaClassyLookAndFeel());
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+
+
+    }
+
+
+    public static void establecerGUISyntheticaGreenDreamLookAndFeel(Object frame){
+      try
+    {
+
+      UIManager.setLookAndFeel(new SyntheticaGreenDreamLookAndFeel());
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+
+
+    }
+
+
+    
     
     
     
