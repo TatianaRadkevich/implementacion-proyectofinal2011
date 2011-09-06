@@ -16,11 +16,13 @@ import Negocio.Ventas.GestorPedidoBaja;
 import Negocio.Ventas.GestorPedidoModificar;
 import Negocio.Ventas.GestorPedidoAlta;
 import Negocio.Ventas.Pedido;
+import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import com.toedter.calendar.JTextFieldDateEditor;
+import gui.GUILocal;
 import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -36,6 +38,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
     /** Creates new form PantallaConsultarPedido */
     public PantallaPedidoConsultar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        GUILocal.establecerGUILocal(this);
         initComponents();
         HibernateUtil.getSessionFactory();
         tablita = new TablaManager<Pedido>(tbPedidos) {
@@ -50,6 +53,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                 cabcera.add("CUIL");//col 2                
                 
                 return cabcera;
+           
             }
 
             @Override
@@ -63,7 +67,8 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                 return fila;
             }
         };
-        cargarValidaciones();        
+        cargarValidaciones();
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
     }
 
     private void cargarValidaciones() {
