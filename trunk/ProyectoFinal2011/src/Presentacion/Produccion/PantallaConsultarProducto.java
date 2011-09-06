@@ -32,7 +32,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     public PantallaConsultarProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
 //        GUILocal.establecerGUILocal(this);
-        GUILocal.establecerGUISyntheticaClassy(this);
+//        GUILocal.establecerGUISyntheticaClassy(this);
 //        GUILocal.establecerGUISyntheticaGreenDreamLookAndFeel(this);
         initComponents();
         tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
@@ -55,6 +55,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla_producto = new javax.swing.JTable();
         btnConsultar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         pnlBuscar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
@@ -63,8 +64,13 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtCodigo1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Consultar Producto");
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Producto"));
@@ -132,71 +138,83 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setText("Reactivar");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(548, 548, 548)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(551, Short.MAX_VALUE)
+                        .addContainerGap(553, Short.MAX_VALUE)
+                        .addComponent(btnConsultar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(553, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(547, Short.MAX_VALUE)
-                        .addComponent(btnConsultar)))
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(554, 554, 554)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(132, Short.MAX_VALUE)))
+                    .addContainerGap(138, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap()
                 .addComponent(btnNuevo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBaja)
-                .addGap(41, 41, 41)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addGap(24, 24, 24)
                 .addComponent(btnConsultar)
                 .addContainerGap(46, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(54, Short.MAX_VALUE)))
+                    .addContainerGap(55, Short.MAX_VALUE)))
         );
 
         pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
         pnlBuscar.setLayout(null);
 
-        jLabel1.setText("Nombre:");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Tipo de producto:");
         pnlBuscar.add(jLabel1);
-        jLabel1.setBounds(60, 40, 41, 14);
+        jLabel1.setBounds(20, 90, 120, 14);
         pnlBuscar.add(txtNombre);
-        txtNombre.setBounds(110, 40, 90, 20);
+        txtNombre.setBounds(160, 50, 110, 20);
 
-        chkMostrarTodos.setText("Mostrar todos");
+        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkMostrarTodos.setText("Mostrar vigentes");
         pnlBuscar.add(chkMostrarTodos);
-        chkMostrarTodos.setBounds(60, 100, 93, 23);
+        chkMostrarTodos.setBounds(370, 20, 130, 23);
 
+        chkMostrarDadosBaja.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkMostrarDadosBaja.setText("Mostrar dados de baja");
         pnlBuscar.add(chkMostrarDadosBaja);
-        chkMostrarDadosBaja.setBounds(180, 100, 133, 23);
+        chkMostrarDadosBaja.setBounds(370, 50, 170, 23);
 
-        jLabel4.setText("Código:");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("-");
         pnlBuscar.add(jLabel4);
-        jLabel4.setBounds(60, 70, 37, 14);
+        jLabel4.setBounds(200, 20, 20, 17);
         pnlBuscar.add(txtCodigo);
-        txtCodigo.setBounds(110, 70, 90, 20);
+        txtCodigo.setBounds(220, 20, 50, 20);
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -205,7 +223,25 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             }
         });
         pnlBuscar.add(btnBuscar);
-        btnBuscar.setBounds(240, 30, 70, 23);
+        btnBuscar.setBounds(560, 110, 80, 23);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel5.setText("Código:");
+        pnlBuscar.add(jLabel5);
+        jLabel5.setBounds(50, 20, 80, 14);
+        pnlBuscar.add(txtCodigo1);
+        txtCodigo1.setBounds(160, 20, 40, 20);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("Nombre:");
+        pnlBuscar.add(jLabel2);
+        jLabel2.setBounds(50, 50, 80, 14);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        pnlBuscar.add(jComboBox1);
+        jComboBox1.setBounds(160, 90, 150, 20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -312,13 +348,18 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JCheckBox chkMostrarDadosBaja;
     private javax.swing.JCheckBox chkMostrarTodos;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pnlBuscar;
     private javax.swing.JTable tabla_producto;
     private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtCodigo1;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
