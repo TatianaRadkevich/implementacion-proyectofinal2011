@@ -64,6 +64,14 @@ public class Utilidades {
         }
     }
 
+    public static Long parseLong(String value) {
+        try {
+            return new Long(value);
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
     public static Short parseShort(String value) {
         try {
             return new Short(value);
