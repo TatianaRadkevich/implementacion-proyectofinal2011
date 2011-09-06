@@ -48,10 +48,12 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     public PantallaABMProducto(Dialog owner, boolean modal, GestorProducto gestor) {
         super(owner, modal);
 //        GUILocal.establecerGUILocal(this);
-        initComponents();
+
+        initComponents();        
         this.gestor=gestor;
-        
-       cargarTipoProductos();
+        cargarTipoProductos();
+         GUILocal.establecerGUISyntheticaGreenDreamLookAndFeel(this);
+       
        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
     }
    
@@ -79,6 +81,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         cmbTipoProducto = new javax.swing.JComboBox();
         btnAgregarTipo = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         pnlBaja = new javax.swing.JPanel();
@@ -90,11 +93,16 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         btnAlta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("ABM Producto");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Producto"));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Nombre:");
 
+        lbl_codigo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lbl_codigo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_codigo.setText("Código:");
 
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -105,19 +113,24 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
         txtCodigo.setText("Xxxxxx");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Descripción:");
 
         txtAreaDescripcion.setColumns(20);
+        txtAreaDescripcion.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         txtAreaDescripcion.setRows(5);
         jScrollPane1.setViewportView(txtAreaDescripcion);
 
         jButton1.setText("Registrar estructura");
 
-        jLabel3.setText("Precio:  $");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("Precio:");
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Tipo:");
-
-        cmbTipoProducto.setForeground(new java.awt.Color(255, 255, 255));
 
         btnAgregarTipo.setText("Agregar");
         btnAgregarTipo.addActionListener(new java.awt.event.ActionListener() {
@@ -125,6 +138,10 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                 btnAgregarTipoActionPerformed(evt);
             }
         });
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel7.setText("$");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -139,9 +156,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(26, 26, 26)
-                                        .addComponent(jLabel3))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(16, 16, 16)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(lbl_codigo)
@@ -150,17 +164,24 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                                 .addGap(10, 10, 10))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addGap(18, 18, 18)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombre)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cmbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtNombre)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(cmbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btnAgregarTipo)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnAgregarTipo)))))
-                .addContainerGap(57, Short.MAX_VALUE))
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +197,8 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -188,7 +210,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                     .addComponent(btnAgregarTipo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         btnAceptar.setText("Aceptar");
@@ -202,11 +224,16 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
         pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder("Baja"));
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Fecha:");
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Motivo:");
 
         txtMotivoBaja.setColumns(20);
+        txtMotivoBaja.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         txtMotivoBaja.setRows(5);
         jScrollPane3.setViewportView(txtMotivoBaja);
 
@@ -222,10 +249,10 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         pnlBajaLayout.setHorizontalGroup(
             pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBajaLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(21, 21, 21)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBajaLayout.createSequentialGroup()
@@ -233,20 +260,20 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(btnAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41))
+                .addGap(96, 96, 96))
         );
         pnlBajaLayout.setVerticalGroup(
             pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBajaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
                     .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAlta))
+                    .addComponent(btnAlta)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -261,7 +288,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                         .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                    .addComponent(pnlBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -313,6 +340,12 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+    private void btnAgregarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTipoActionPerformed
+        // TODO add your handling code here:       
+        GestorTipoProducto.administarTipoProductoAgregar(this);        
+        this.cargarTipoProductos();
+    }//GEN-LAST:event_btnAgregarTipoActionPerformed
+
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
         // TODO add your handling code here:
 
@@ -322,13 +355,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         this.txtMotivoBaja.setText("");
         this.btnAlta.setEnabled(false);
 }//GEN-LAST:event_btnAltaActionPerformed
-
-    private void btnAgregarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTipoActionPerformed
-        // TODO add your handling code here:       
-        GestorTipoProducto.administarTipoProductoAgregar(this);
-        
-        this.cargarTipoProductos();
-    }//GEN-LAST:event_btnAgregarTipoActionPerformed
 
     public boolean validar(){
         return true;
@@ -363,6 +389,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
@@ -411,7 +438,10 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
      private void cargarTipoProductos(){
         try {
-            cmbTipoProducto.removeAll();
+            for(int i=0;i<cmbTipoProducto.getItemCount();i++){
+                cmbTipoProducto.remove(i);
+            }
+            
             List<TipoProducto> tipo = gestor.traerTiposProductos();
             for(int i=0;i<tipo.size();i++){
                 cmbTipoProducto.addItem(tipo.get(i));
@@ -419,6 +449,8 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         } catch (ExceptionGestor ex) {
             Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
+        cmbTipoProducto.setSelectedIndex(2);
+        cmbTipoProducto.repaint();
     }
 
     public void nuevo(){
