@@ -35,6 +35,7 @@ public class GestorTipoMaquinaHerramientaBaja extends GestorTipoMaquinaHerramien
         
         interfaz.cargar(tipoMaquinaHerramienta);
         interfaz.habilitarCarga(false);
+        interfaz.habilitarBaja(true, Utilidades.getFechaActual(), "");
         
     }
 
@@ -54,14 +55,7 @@ public class GestorTipoMaquinaHerramientaBaja extends GestorTipoMaquinaHerramien
 
     @Override
     public void ejecutarCU(TipoMaquinaHerramienta tmh) throws ExceptionGestor {
-         validar(tmh);
-        
-        PantallaEliminar pe=new PantallaEliminar();
-        pe.setVisible(true);
-        if(pe.isOk()==false)
-            finalizarCU();
-
-        tmh.setMotivoBaja(pe.getMotivo());        
+         validar(tmh);            
         tmh.setFechaBaja(Utilidades.getFechaActual());
         TipoMaquinaHerramientaBD.modificar(tmh);
         finalizarCU();
