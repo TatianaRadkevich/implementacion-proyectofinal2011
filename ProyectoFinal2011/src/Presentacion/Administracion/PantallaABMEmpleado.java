@@ -442,28 +442,28 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
 
            
 
-            if(txtFechaBaja.getText().compareTo("")!=0){
-                producto.setFecBaja(new Date());
-                producto.setMotivoBaja(txtMotivoBaja.getText());
-            }
-
-
-            try {
-                gestor.ejecutarOperacion(empleado);
-                Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido()+", "+empleado.getNombre()));
-                this.vaciar();
-                gestor.reiniciar(this);
-
-            } catch (ExceptionGestor ex) {
-                Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            if(txtFechaBaja.getText().compareTo("")!=0){
+//                producto.setFecBaja(new Date());
+//                producto.setMotivoBaja(txtMotivoBaja.getText());
+//            }
+//
+//
+//            try {
+//                gestor.ejecutarOperacion(empleado);
+//                Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido()+", "+empleado.getNombre()));
+//                this.vaciar();
+//                gestor.reiniciar(this);
+//
+//            } catch (ExceptionGestor ex) {
+//                Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void dtcFechaNacimientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dtcFechaNacimientoMouseClicked
         // TODO add your handling code here:
 
-        txtFechaEstimada.setText(Utilidades.parseFecha(dtcFechaNacimiento.getDate()));
+      //  txtFechaEstimada.setText(Utilidades.parseFecha(dtcFechaNacimiento.getDate()));
 }//GEN-LAST:event_dtcFechaNacimientoMouseClicked
 
     /**
@@ -531,6 +531,10 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 
+
+    private boolean validar(){
+        return true;
+    }
 
      private void cargarDatos(Empleado empleado){
 
