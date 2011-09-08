@@ -1,7 +1,7 @@
 
 
                     /* SCRIPT DE CREACIÓN RAMATY - Versión 1-2*/
-
+                    
 CREATE TABLE T_ALMACENAMIENTOS_PRODUCTO_TERMINADO (
        ID_ALMACENAMIENTO_PRODUCTO_TERMINADO numeric(8) IDENTITY,
        FEC_HORA_ALMACENAMIENTO datetime NOT NULL,
@@ -82,7 +82,6 @@ go
 CREATE TABLE T_CLIENTES (
        ID_CLIENTE           numeric(5) IDENTITY,
        CORREO_ELECTRONICO   varchar(50) NULL,
-       CUIL                 numeric(11) NOT NULL,
        RAZON_SOCIAL         varchar(50) NOT NULL,
        ID_DOMICILIO         numeric(3) NULL,
        ID_TCLIENTE          numeric(2) NOT NULL,
@@ -92,7 +91,8 @@ CREATE TABLE T_CLIENTES (
        APELLIDO_RESPONSABLE varchar(50) NOT NULL,
        TELEFONO_RESPONSABLE numeric(13) NULL,
        FEC_BAJA             datetime NULL,
-       MOTIVO_BAJA          varchar(100) NULL
+       MOTIVO_BAJA          varchar(100) NULL,
+       CUIT                 varchar(20) NOT NULL
 )
 go
 
@@ -153,7 +153,9 @@ CREATE TABLE T_DETALLES_ETAPA (
        CANTIDAD_NECESARIA   numeric(6,2) NOT NULL,
        ID_MATERIAL          numeric(3) NOT NULL,
        ID_ETAPA_PRODUCCION_ESPECIFICA numeric(5) NOT NULL,
-       ID_TMAQUINA_HERRAMIENTA numeric(2) NULL
+       ID_TMAQUINA_HERRAMIENTA numeric(2) NULL,
+       CANTIDAD_REPETICIONES numeric(6,2) NOT NULL,
+       HORAS_MAQUINA        numeric(6,2) NOT NULL
 )
 go
 
@@ -375,7 +377,8 @@ CREATE TABLE T_EMPLEADOS (
        ID_DIAS_HORAS_LABORABLES numeric(3) NULL,
        ID_USUARIO           numeric(5) NOT NULL,
        FEC_BAJA             datetime NULL,
-       MOTIVO_BAJA          varchar(100) NULL
+       MOTIVO_BAJA          varchar(100) NULL,
+       ID_ESTADO_EMPLEADO   numeric(2) NOT NULL
 )
 go
 
@@ -460,6 +463,19 @@ go
 
 ALTER TABLE T_ERECLAMO
        ADD PRIMARY KEY (ID_ERECLAMO ASC)
+go
+
+
+CREATE TABLE T_ESTADOS_EMPLEADO (
+       ID_ESTADO_EMPLEADO   numeric(2) IDENTITY,
+       NOMBRE               varchar(50) NOT NULL,
+       DESCRIPCION          varchar(200) NULL
+)
+go
+
+
+ALTER TABLE T_ESTADOS_EMPLEADO
+       ADD PRIMARY KEY (ID_ESTADO_EMPLEADO ASC)
 go
 
 
@@ -601,7 +617,8 @@ CREATE TABLE T_MATERIALES (
        STOCK_ACTUAL         numeric(3) NOT NULL,
        STOCK_MINIMO         numeric(3) NOT NULL,
        STOCK_RESERVADO      numeric(3) NOT NULL,
-       CODIGO               varchar(2) NOT NULL
+       CODIGO               varchar(2) NOT NULL,
+       ID_UNIDAD_MEDIDA     numeric(5) NOT NULL
 )
 go
 
@@ -718,7 +735,8 @@ CREATE TABLE T_PRODUCTOS (
        PRECIO_UNITARIO      numeric(4,2) NOT NULL,
        ID_TPRODUCTO         numeric(2) NOT NULL,
        FEC_BAJA             datetime NULL,
-       MOTIVO_BAJA          varchar(100) NULL
+       MOTIVO_BAJA          varchar(100) NULL,
+       ID_UNIDAD_MEDIDA     numeric(5) NOT NULL
 )
 go
 
@@ -737,7 +755,8 @@ CREATE TABLE T_PROVEEDORES (
        ID_DOMICILIO         numeric(3) NOT NULL,
        APELLIDO             varchar(100) NOT NULL,
        FEC_BAJA             datetime NULL,
-       MOTIVO_BAJA          varchar(100) NULL
+       MOTIVO_BAJA          varchar(100) NULL,
+       RAZON_SOCIAL         varchar(50) NOT NULL
 )
 go
 
@@ -858,6 +877,19 @@ go
 
 ALTER TABLE T_TPRODUCTO
        ADD PRIMARY KEY (ID_TPRODUCTO ASC)
+go
+
+
+CREATE TABLE T_UNIDADES_MEDIDA (
+       ID_UNIDAD_MEDIDA     numeric(5) IDENTITY,
+       NOMBRE               varchar(50) NOT NULL,
+       DESCRIPCION          varchar(200) NULL
+)
+go
+
+
+ALTER TABLE T_UNIDADES_MEDIDA
+       ADD PRIMARY KEY (ID_UNIDAD_MEDIDA ASC)
 go
 
 
@@ -1200,6 +1232,15 @@ go
 
 
 ALTER TABLE T_EMPLEADOS
+       ADD FOREIGN KEY (ID_ESTADO_EMPLEADO)
+                             REFERENCES T_ESTADOS_EMPLEADO  (
+              ID_ESTADO_EMPLEADO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_EMPLEADOS
        ADD FOREIGN KEY (ID_SEXO)
                              REFERENCES T_SEXOS  (ID_SEXO)
                              ON DELETE NO ACTION
@@ -1349,6 +1390,15 @@ ALTER TABLE T_MAQUINAS_HERRAMIENTA_PARTICULAR
 go
 
 
+ALTER TABLE T_MATERIALES
+       ADD FOREIGN KEY (ID_UNIDAD_MEDIDA)
+                             REFERENCES T_UNIDADES_MEDIDA  (
+              ID_UNIDAD_MEDIDA)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
 ALTER TABLE T_MATERIALES_X_PROVEEDOR
        ADD FOREIGN KEY (ID_PROVEEDOR)
                              REFERENCES T_PROVEEDORES  (ID_PROVEEDOR)
@@ -1452,6 +1502,15 @@ go
 ALTER TABLE T_PLANES_PRODUCCION
        ADD FOREIGN KEY (ID_ENCARGADO)
                              REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_PRODUCTOS
+       ADD FOREIGN KEY (ID_UNIDAD_MEDIDA)
+                             REFERENCES T_UNIDADES_MEDIDA  (
+              ID_UNIDAD_MEDIDA)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
