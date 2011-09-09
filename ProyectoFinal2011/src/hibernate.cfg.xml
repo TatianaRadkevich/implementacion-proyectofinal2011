@@ -18,6 +18,8 @@
     <mapping class="Negocio.Administracion.FormaPago"/>
     <mapping class="Negocio.Administracion.Sexo"/>
     <mapping class="Negocio.Administracion.TipoDocumento"/>
+    <mapping class="Negocio.Administracion.TEmpleadosXCargo"/>
+
     <mapping class="Negocio.Compras.DetalleOrdenCompra"/>
     <mapping class="Negocio.Compras.EstadoOrdenCompra"/>
     <mapping class="Negocio.Compras.EstadoReclamo"/>
@@ -36,10 +38,10 @@
     <mapping class="Negocio.Produccion.EtapaProduccionEspecifica"/>
     <mapping class="Negocio.Produccion.MaquinaHerramientaParticular"/>
     <mapping class="Negocio.Produccion.PlanProduccion"/>
-    <mapping class="Negocio.Produccion.Producto"/>
-    <mapping class="Negocio.Produccion.ProductoLista"/>
+    <mapping class="Negocio.Produccion.Producto"/>  
     <mapping class="Negocio.Produccion.TipoMaquinaHerramienta"/>
     <mapping class="Negocio.Produccion.TipoProducto"/>
+    <mapping class="Negocio.Produccion.UnidadMedida"/>
     
     <mapping class="Negocio.UbicacionGeografica.Barrio"/>
     <mapping class="Negocio.UbicacionGeografica.Domicilio"/>
