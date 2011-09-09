@@ -48,7 +48,7 @@ public class TipoCliente implements java.io.Serializable {
         return this.idTcliente;
     }
 
-    private void setIdTcliente(int idTcliente) {
+    public void setIdTcliente(int idTcliente) {
         this.idTcliente = idTcliente;
     }
 
@@ -56,7 +56,7 @@ public class TipoCliente implements java.io.Serializable {
         return this.nombre;
     }
 
-    private void setNombre(String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
@@ -76,7 +76,7 @@ public class TipoCliente implements java.io.Serializable {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof TipoCliente) {
-            TipoCliente aux = (TipoCliente) obj;
+            TipoCliente aux = (TipoCliente) obj;      
             if (aux.nombre.trim().equals(this.nombre.trim())) {
                 return true;
             }
