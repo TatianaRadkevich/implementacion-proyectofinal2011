@@ -33,6 +33,7 @@ public class GestorMaquinaHerramientaBaja extends GestorMaquinaHerramienta
         interfaz=new PantallaMaquinaHerramientaABM(this);
         interfaz.cargar(maquinaHerramienta);
         interfaz.habilitarTodo(false);
+        interfaz.habilitarBaja(true, true, Utilidades.getFechaActual(), "");
         interfaz.setVisible(true);
     }
 
@@ -54,12 +55,6 @@ public class GestorMaquinaHerramientaBaja extends GestorMaquinaHerramienta
     public void ejecutarCU(MaquinaHerramientaParticular mh) throws ExceptionGestor {
         validar(mh);
         
-        PantallaEliminar pe=new PantallaEliminar();
-        pe.setVisible(true);
-        if(pe.isOk()==false)
-            finalizarCU();
-
-        mh.setMotivoBaja(pe.getMotivo());
         mh.setEstadoMaquina(null);
         mh.setFechaBaja(Utilidades.getFechaActual());
         MaquinaHerramientaBD.modificar(mh);

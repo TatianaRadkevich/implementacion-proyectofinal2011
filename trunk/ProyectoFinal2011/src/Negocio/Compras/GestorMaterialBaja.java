@@ -29,19 +29,14 @@ public class GestorMaterialBaja extends GestorMaterial{
         interfaz=new PantallaMaterialABM(this);
         interfaz.cargar(material);
         interfaz.habilitarTodo(false);
+        interfaz.habilitarBaja(true, true, Utilidades.getFechaActual(), "");
         interfaz.setVisible(true);
     }
 
     @Override
     public void ejecutarCU(Material p) throws ExceptionGestor {
-        validar(p);
+        validar(p);   
         
-        PantallaEliminar pe=new PantallaEliminar();
-        pe.setVisible(true);
-        if(pe.isOk()==false)
-            finalizarCU();
-
-        p.setMotivoBaja(pe.getMotivo());       
         p.setFechaBaja(Utilidades.getFechaActual());
         MaterialBD.modificar(p);
     }
