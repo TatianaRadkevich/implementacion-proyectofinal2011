@@ -46,6 +46,7 @@ public GestorClienteBaja(Cliente p)
     @Override
     public void ejecutarCU(Cliente p) throws ExceptionGestor {
         validar(p);
+        p.setFecBaja(Utilidades.getFechaActual());
         ClienteBD.modificar(p);
     }
 

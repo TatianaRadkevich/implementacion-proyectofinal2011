@@ -76,10 +76,12 @@ public class TipoCliente implements java.io.Serializable {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof TipoCliente) {
-            TipoCliente aux = (TipoCliente) obj;      
-            if (aux.nombre.trim().equals(this.nombre.trim())) {
-                return true;
-            }
+            TipoCliente aux = (TipoCliente) obj;
+            //if (aux.nombre != null && this.nombre != null) {
+                if (aux.getNombre().trim().equals(this.getNombre().trim())) {
+                    return true;
+                }
+            //}
         }
         return false;
     }

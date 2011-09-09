@@ -94,6 +94,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
     public void habilitarBaja(boolean visible,boolean edittable, Date fecha,String motivo)
     {
        // pnlBaja.setVisible(visible);
+        scrollBaja.setEnabled(edittable);
         txtMotivoBaja.setEnabled(edittable);
         txtMotivoBaja.setText(Utilidades.parseString(motivo));
         txtFechaBaja.setText(Utilidades.parseFecha(fecha));
@@ -133,7 +134,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txtFechaBaja = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        scrollBaja = new javax.swing.JScrollPane();
         txtMotivoBaja = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -271,9 +272,11 @@ public class PantallaClienteABM extends javax.swing.JDialog {
 
         txtFechaBaja.setEditable(false);
 
+        scrollBaja.setEnabled(false);
+
         txtMotivoBaja.setLineWrap(true);
         txtMotivoBaja.setWrapStyleWord(true);
-        jScrollPane3.setViewportView(txtMotivoBaja);
+        scrollBaja.setViewportView(txtMotivoBaja);
 
         javax.swing.GroupLayout pnlBajaLayout = new javax.swing.GroupLayout(pnlBaja);
         pnlBaja.setLayout(pnlBajaLayout);
@@ -287,7 +290,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3))
+                    .addComponent(scrollBaja))
                 .addContainerGap())
         );
         pnlBajaLayout.setVerticalGroup(
@@ -299,7 +302,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
+                    .addComponent(scrollBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -344,6 +347,8 @@ public class PantallaClienteABM extends javax.swing.JDialog {
      cli.setRazonSocial(txtRazonSocial.getText());
      cli.setTelefonoResponsable(Utilidades.parseLong(txtTelefono.getText()));
      cli.setTipoCliente((TipoCliente) cmbTipoCliente.getSelectedItem());
+     cli.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
+     cli.setMotivoBaja(null);
       
         try {
             gestor.ejecutarCU(cli);
@@ -383,10 +388,10 @@ public class PantallaClienteABM extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel pnlBaja;
     private javax.swing.JPanel pnlCliente;
     private javax.swing.JPanel pnlResponsable;
+    private javax.swing.JScrollPane scrollBaja;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCUIT;
     private javax.swing.JTextField txtCorreoElectronico;
