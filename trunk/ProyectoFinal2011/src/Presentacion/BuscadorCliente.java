@@ -3,6 +3,7 @@ package Presentacion;
 
 import BaseDeDatos.HibernateUtil;
 import Negocio.Ventas.Cliente;
+import Negocio.Ventas.GestorClienteAlta;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,7 @@ public class BuscadorCliente extends javax.swing.JPanel {
         @Override
         public String toString() {
             if (rdbCUIL.isSelected()) {
-                return cliente.getCuil() + " | " + cliente.getRazonSocial();
+                return cliente.getCuit() + " | " + cliente.getRazonSocial();
             }
             if (rdbRazonSocial.isSelected()) {
                 return cliente.getRazonSocial();
@@ -277,11 +278,11 @@ public class BuscadorCliente extends javax.swing.JPanel {
             return;
         }
         cliente = ((Item) cmbBuscar.getSelectedItem()).cliente;
-        txtCUIL.setText(""+cliente.getCuil());
+        txtCUIL.setText(""+cliente.getCuit());
         txtRazonSocial.setText(""+cliente.getRazonSocial());
 
         if (rdbCUIL.isSelected()) 
-            txtBuscar.setText(cliente.getCuil() + "");
+            txtBuscar.setText(cliente.getCuit() + "");
         
         if (rdbRazonSocial.isSelected()) 
             txtBuscar.setText(cliente.getRazonSocial() + "");
@@ -335,7 +336,7 @@ public class BuscadorCliente extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-
+        new GestorClienteAlta().iniciarCU();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
