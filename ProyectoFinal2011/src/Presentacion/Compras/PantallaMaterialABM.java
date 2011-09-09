@@ -16,6 +16,7 @@ import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Mensajes;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
+import java.util.Date;
 
 /**
  *
@@ -29,7 +30,8 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     private PantallaMaterialABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cargarValidaciones();        
+        cargarValidaciones();
+        pnlBaja.setVisible(false);
     }
 
     public PantallaMaterialABM(GestorMaterial gm) {
@@ -51,6 +53,13 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         rdbInsumo.setSelected(!m.isMateriaPrima());
         lstProveedores.setSelectedItems(m.getProveedores());
 
+        if(m.getFechaBaja()!=null)
+        {
+            pnlBaja.setVisible(true);
+            txtFechaBaja.setText(Utilidades.parseFecha(m.getFechaBaja()));
+            txtMotivoBaja.setText(Utilidades.parseString(m.getMotivoBaja()));
+        }
+
     }
 
     private void cargarValidaciones() {
@@ -65,6 +74,15 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         ValidarTexbox.validarInt(txtLongitud);
         ValidarTexbox.validarLongitud(txtLongitud, 3);//ummmmmmmmm....
         ValidarTexbox.validarLongitud(txtDescripcion, 200);
+    }
+
+    public void habilitarBaja(boolean visible,boolean edittable, Date fecha,String motivo)
+    {
+        pnlBaja.setVisible(visible);
+        txtMotivoBaja.setEditable(edittable);
+        txtMotivoBaja.setText(Utilidades.parseString(motivo));
+        txtFechaBaja.setText(Utilidades.parseFecha(fecha));
+
     }
 
     public void habilitarTodo(boolean b) {
@@ -114,6 +132,12 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         lstProveedores = new Presentacion.JCheckList();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        pnlBaja = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txtFechaBaja = new javax.swing.JTextField();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtMotivoBaja = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -166,7 +190,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lstProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                    .addComponent(lstProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(txtStockActual)
                         .addComponent(txtStockMinimo, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
@@ -179,7 +203,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
                             .addComponent(txtLongitud, javax.swing.GroupLayout.Alignment.LEADING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(rdbInsumo))
-                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -217,11 +241,11 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(lstProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
+                    .addComponent(lstProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -239,6 +263,46 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
             }
         });
 
+        pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder("Cancelación"));
+
+        jLabel12.setText("Fecha:");
+
+        jLabel13.setText("Motivo:");
+
+        txtFechaBaja.setEditable(false);
+
+        txtMotivoBaja.setLineWrap(true);
+        txtMotivoBaja.setWrapStyleWord(true);
+        jScrollPane4.setViewportView(txtMotivoBaja);
+
+        javax.swing.GroupLayout pnlBajaLayout = new javax.swing.GroupLayout(pnlBaja);
+        pnlBaja.setLayout(pnlBajaLayout);
+        pnlBajaLayout.setHorizontalGroup(
+            pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBajaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
+                .addGap(18, 18, 18)
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4))
+                .addContainerGap())
+        );
+        pnlBajaLayout.setVerticalGroup(
+            pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBajaLayout.createSequentialGroup()
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel13)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,7 +310,8 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnAceptar)
                         .addGap(18, 18, 18)
@@ -259,6 +324,8 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
@@ -280,6 +347,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         material.setStockMinimo(Utilidades.parseShort(txtStockMinimo.getText()));
         material.setEsMateriaPrima(rdbMateriaPrima.isSelected());
         material.setProveedores(lstProveedores.getSelectedItems());
+        material.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
         try {
             gestor.ejecutarCU(material);
             this.setVisible(false);
@@ -316,6 +384,8 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -326,13 +396,17 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane4;
     private Presentacion.JCheckList lstProveedores;
+    private javax.swing.JPanel pnlBaja;
     private javax.swing.JRadioButton rdbInsumo;
     private javax.swing.JRadioButton rdbMateriaPrima;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtDiametro;
+    private javax.swing.JTextField txtFechaBaja;
     private javax.swing.JTextField txtLongitud;
+    private javax.swing.JTextArea txtMotivoBaja;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtStockActual;
     private javax.swing.JTextField txtStockMinimo;
