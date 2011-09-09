@@ -47,7 +47,7 @@ public class PedidoBD
         String HQL=String.format(
                 "FROM Pedido as p "
                 + "WHERE LOWER(p.TClientes.razonSocial) like  LOWER('%s%%') "
-                + "AND  p.TClientes.cuil  like '%s%%' "
+                + "AND  p.TClientes.cuit  like '%s%%' "
                 + "AND p.idPedido like '%s%%' "
                 + ((desde==null)?"":"AND p.fecHoraGeneracion >= '%4$s' ")
                 + ((hasta==null)?"":"AND p.fecHoraGeneracion <= '%5$s' ")
