@@ -26,10 +26,9 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="pnlBaja" alignment="0" max="32767" attributes="1"/>
                   <Component id="pnlPedido" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="pnlBaja" max="32767" attributes="1"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jButton4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jButton3" min="-2" max="-2" attributes="0"/>
@@ -44,15 +43,11 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="pnlPedido" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="pnlBaja" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                      <Component id="jButton4" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton3" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
+              <Component id="pnlBaja" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton3" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -100,8 +95,8 @@
                           </Group>
                           <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="cmbPrioridad" pref="220" max="32767" attributes="2"/>
-                              <Component id="cmbTipoPedido" alignment="0" pref="220" max="32767" attributes="2"/>
+                              <Component id="cmbPrioridad" pref="208" max="32767" attributes="2"/>
+                              <Component id="cmbTipoPedido" alignment="0" pref="208" max="32767" attributes="2"/>
                           </Group>
                           <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
@@ -115,11 +110,11 @@
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtFechaEstimada" pref="129" max="32767" attributes="2"/>
-                              <Component id="dtcFechaNecesidad" pref="129" max="32767" attributes="2"/>
+                              <Component id="txtFechaEstimada" pref="118" max="32767" attributes="2"/>
+                              <Component id="dtcFechaNecesidad" pref="118" max="32767" attributes="2"/>
                           </Group>
                       </Group>
-                      <Component id="pnlCliente" alignment="0" pref="547" max="32767" attributes="0"/>
+                      <Component id="pnlCliente" alignment="0" pref="524" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -242,7 +237,7 @@
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="txtSubTotal" min="-2" pref="82" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jScrollPane2" pref="424" max="32767" attributes="0"/>
+                              <Component id="jScrollPane2" pref="390" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
@@ -263,7 +258,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="btnDetalleElminar" min="-2" pref="23" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jScrollPane2" pref="69" max="32767" attributes="0"/>
+                              <Component id="jScrollPane2" pref="94" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -341,11 +336,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtFecha" pref="167" max="32767" attributes="0"/>
+                      <Component id="txtFecha" pref="156" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtEstado" pref="180" max="32767" attributes="0"/>
+                      <Component id="txtEstado" pref="168" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -436,7 +431,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" pref="72" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="50" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
