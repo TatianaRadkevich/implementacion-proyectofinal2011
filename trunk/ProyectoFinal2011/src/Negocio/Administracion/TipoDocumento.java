@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,7 +25,7 @@ import javax.persistence.Table;
 public class TipoDocumento  implements java.io.Serializable {
 
 
-     private byte idTdocumento;
+     private short idTdocumento;
      private String nombre;
      private String descripcion;
      private Set<Empleado> TEmpleadoses = new HashSet<Empleado>(0);
@@ -33,11 +34,11 @@ public class TipoDocumento  implements java.io.Serializable {
     }
 
 	
-    public TipoDocumento(byte idTdocumento, String nombre) {
+    public TipoDocumento(short idTdocumento, String nombre) {
         this.idTdocumento = idTdocumento;
         this.nombre = nombre;
     }
-    public TipoDocumento(byte idTdocumento, String nombre, String descripcion, Set<Empleado> TEmpleadoses) {
+    public TipoDocumento(short idTdocumento, String nombre, String descripcion, Set<Empleado> TEmpleadoses) {
        this.idTdocumento = idTdocumento;
        this.nombre = nombre;
        this.descripcion = descripcion;
@@ -45,13 +46,13 @@ public class TipoDocumento  implements java.io.Serializable {
     }
    
      @Id 
-    
+    @GeneratedValue
     @Column(name="ID_TDOCUMENTO", unique=true, nullable=false, precision=2, scale=0)
-    public byte getIdTdocumento() {
+    public short getIdTdocumento() {
         return this.idTdocumento;
     }
     
-    public void setIdTdocumento(byte idTdocumento) {
+    public void setIdTdocumento(short idTdocumento) {
         this.idTdocumento = idTdocumento;
     }
     
@@ -79,6 +80,10 @@ public class TipoDocumento  implements java.io.Serializable {
     
     public void setTEmpleadoses(Set<Empleado> TEmpleadoses) {
         this.TEmpleadoses = TEmpleadoses;
+    }
+
+    public String toString(){
+        return this.getNombre();
     }
 
 
