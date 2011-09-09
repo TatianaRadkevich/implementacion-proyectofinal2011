@@ -10,16 +10,18 @@
  */
 package Presentacion.Ventas;
 
-import BaseDeDatos.Ventas.ClientesBD;
+import BaseDeDatos.Ventas.ClienteBD;
 import BaseDeDatos.TipoBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.UbicacionGeografica.Domicilio;
 import Negocio.Ventas.Cliente;
 import Negocio.Ventas.GestorCliente;
+import Negocio.Ventas.GestorClienteAlta;
 import Negocio.Ventas.TipoCliente;
 import Presentacion.Mensajes;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -41,6 +43,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         gestor = g;
 
         /////////// Precargas Necesarias //////////
+        pnlBaja.setVisible(false);
         cargarValidaciones();
         recargarComboTipoCleinte();        
     }
@@ -56,22 +59,26 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         ValidarTexbox.validarLongitud(txtNombre, 50);
         ValidarTexbox.validarLongitud(txtApellido, 200);
         ValidarTexbox.validarLongitud(txtCorreoElectronico, 50);
-        ValidarTexbox.validarLongitud(txtRazonSocial, 50);        
-        
-
+        ValidarTexbox.validarLongitud(txtRazonSocial, 50);
     }
 
     public void cargar(Cliente c) {
         txtApellido.setText(c.getApellidoResponsable());
-        txtCUIT.setText(c.getCuil()+"");
+        txtCUIT.setText(c.getCuit()+"");
         txtCorreoElectronico.setText(c.getCorreoElectronico());
         txtNombre.setText(c.getNombreResponsable());
         txtRazonSocial.setText(c.getRazonSocial());
         txtTelefono.setText(c.getTelefonoResponsable()+"");
         cmbTipoCliente.setSelectedItem(c.getTipoCliente());
+        if(c.getFecBaja()!=null)
+        {
+            pnlBaja.setVisible(true);
+            txtFechaBaja.setText(Utilidades.parseFecha(c.getFecBaja()));
+            txtMotivoBaja.setText(Utilidades.parseString(c.getMotivoBaja()));
+        }
     }
 
-    public void habilitarTodo(boolean b) {
+    public void habilitarCarga(boolean b) {
         txtApellido.setEditable(b);
         txtCUIT.setEditable(b);
         txtCorreoElectronico.setEditable(b);
@@ -81,6 +88,15 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         txtTelefono.setEditable(b);
         cmbTipoCliente.setEditable(b);
         
+    }
+
+    public void habilitarBaja(boolean visible,boolean edittable, Date fecha,String motivo)
+    {
+        pnlBaja.setVisible(visible);
+        txtMotivoBaja.setEditable(edittable);
+        txtMotivoBaja.setText(Utilidades.parseString(motivo));
+        txtFechaBaja.setText(Utilidades.parseFecha(fecha));
+
     }
 
     /** This method is called from within the constructor to
@@ -112,6 +128,12 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        pnlBaja = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtFechaBaja = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtMotivoBaja = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nuevo CLiente");
@@ -164,9 +186,9 @@ public class PantallaClienteABM extends javax.swing.JDialog {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlResponsableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-                    .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                    .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlResponsableLayout.setVerticalGroup(
@@ -187,6 +209,46 @@ public class PantallaClienteABM extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder("Cancelación"));
+
+        jLabel9.setText("Fecha:");
+
+        jLabel10.setText("Motivo:");
+
+        txtFechaBaja.setEditable(false);
+
+        txtMotivoBaja.setLineWrap(true);
+        txtMotivoBaja.setWrapStyleWord(true);
+        jScrollPane3.setViewportView(txtMotivoBaja);
+
+        javax.swing.GroupLayout pnlBajaLayout = new javax.swing.GroupLayout(pnlBaja);
+        pnlBaja.setLayout(pnlBajaLayout);
+        pnlBajaLayout.setHorizontalGroup(
+            pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBajaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10))
+                .addGap(18, 18, 18)
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3))
+                .addContainerGap())
+        );
+        pnlBajaLayout.setVerticalGroup(
+            pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBajaLayout.createSequentialGroup()
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout pnlClienteLayout = new javax.swing.GroupLayout(pnlCliente);
         pnlCliente.setLayout(pnlClienteLayout);
         pnlClienteLayout.setHorizontalGroup(
@@ -204,12 +266,13 @@ public class PantallaClienteABM extends javax.swing.JDialog {
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCUIT, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                            .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                            .addComponent(cmbTipoCliente, 0, 249, Short.MAX_VALUE)
-                            .addComponent(txtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                            .addComponent(txtCorreoElectronico, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)))
-                    .addComponent(pnlResponsable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtCUIT, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                            .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                            .addComponent(cmbTipoCliente, 0, 364, Short.MAX_VALUE)
+                            .addComponent(txtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                            .addComponent(txtCorreoElectronico, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)))
+                    .addComponent(pnlResponsable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlClienteLayout.setVerticalGroup(
@@ -237,6 +300,8 @@ public class PantallaClienteABM extends javax.swing.JDialog {
                     .addComponent(txtCorreoElectronico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pnlResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -273,7 +338,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
      Cliente cli = gestor.getCliente();
      cli.setApellidoResponsable(txtApellido.getText());
      cli.setCorreoElectronico(txtCorreoElectronico.getText());
-     cli.setCuil(Utilidades.parseInteger(txtCUIT.getText()));
+     cli.setCuit(Utilidades.parseString(txtCUIT.getText()));
      cli.setNombreResponsable(txtNombre.getText());
      cli.setRazonSocial(txtRazonSocial.getText());
      cli.setTelefonoResponsable(Utilidades.parseLong(txtTelefono.getText()));
@@ -281,7 +346,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
       
         try {
             gestor.ejecutarCU(cli);
-            this.setVisible(false);
+            gestor.finalizarCU();
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
@@ -297,16 +362,8 @@ public class PantallaClienteABM extends javax.swing.JDialog {
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
-
             public void run() {
-                PantallaClienteABM dialog = new PantallaClienteABM(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                new GestorClienteAlta().iniciarCU();
             }
         });
     }
@@ -315,6 +372,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox cmbTipoCliente;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -322,12 +380,17 @@ public class PantallaClienteABM extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JPanel pnlBaja;
     private javax.swing.JPanel pnlCliente;
     private javax.swing.JPanel pnlResponsable;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCUIT;
     private javax.swing.JTextField txtCorreoElectronico;
     private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtFechaBaja;
+    private javax.swing.JTextArea txtMotivoBaja;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtRazonSocial;
     private javax.swing.JTextField txtTelefono;
