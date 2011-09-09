@@ -31,6 +31,7 @@ public class Producto  implements java.io.Serializable {
 
 
      private int idProducto;
+     private UnidadMedida TUnidadesMedida;
      private TipoProducto TTproducto;
      private String descripcion;
      private String nombre;
@@ -44,14 +45,16 @@ public class Producto  implements java.io.Serializable {
     }
 
 
-    public Producto(int idProducto, TipoProducto TTproducto, String nombre, BigDecimal precioUnitario) {
+    public Producto(int idProducto,UnidadMedida TUnidadesMedida, TipoProducto TTproducto, String nombre, BigDecimal precioUnitario) {
         this.idProducto = idProducto;
+        this.TUnidadesMedida = TUnidadesMedida;
         this.TTproducto = TTproducto;
         this.nombre = nombre;
         this.precioUnitario = precioUnitario;
     }
-    public Producto(int idProducto, TipoProducto TTproducto, String descripcion, String nombre, BigDecimal precioUnitario, Date fecBaja, String motivoBaja, Set TEtapasProduccionEspecificas,  Set TDetallesProductos) {
+    public Producto(int idProducto,UnidadMedida TUnidadesMedida, TipoProducto TTproducto, String descripcion, String nombre, BigDecimal precioUnitario, Date fecBaja, String motivoBaja, Set TEtapasProduccionEspecificas,  Set TDetallesProductos) {
        this.idProducto = idProducto;
+       this.TUnidadesMedida = TUnidadesMedida;
        this.TTproducto = TTproducto;
        this.descripcion = descripcion;
        this.nombre = nombre;
@@ -82,6 +85,15 @@ public class Producto  implements java.io.Serializable {
         this.TTproducto = TTproducto;
     }
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_UNIDAD_MEDIDA", nullable=false)
+    public UnidadMedida getTUnidadesMedida() {
+        return this.TUnidadesMedida;
+    }
+
+    public void setTUnidadesMedida(UnidadMedida TUnidadesMedida) {
+        this.TUnidadesMedida = TUnidadesMedida;
+    }
     @Column(name="DESCRIPCION", length=200)
     public String getDescripcion() {
         return this.descripcion;
