@@ -41,6 +41,7 @@
   <table-filter match-name="T_DOMICILIOS"/>
   <table-filter match-name="T_CLIENTES"/>
   <table-filter match-name="T_DETALLES_ORDEN_COMPRA"/>
+  <table-filter match-name="T_UNIDADES_MEDIDA"/>
   <table-filter match-name="T_RECLAMOS"/>
   <table-filter match-name="T_EPEDIDO"/>
   <table-filter match-name="T_PLANES_PRODUCCION"/>

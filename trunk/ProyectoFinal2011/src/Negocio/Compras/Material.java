@@ -5,6 +5,7 @@ import Negocio.Deposito.Faltante;
 import Negocio.Produccion.DetalleEtapaProduccion;
 import Negocio.Compras.DetalleOrdenCompra;
 import Negocio.Produccion.DetalleProducto;
+import Negocio.Produccion.UnidadMedida;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -16,6 +17,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,6 +36,9 @@ public class Material implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_MATERIAL", unique = true, nullable = false, precision = 3, scale = 0)
     private Short idMaterial;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_UNIDAD_MEDIDA", nullable=false)
+    private UnidadMedida TUnidadesMedida;
     @Column(name = "NOMBRE", nullable = false, length = 50)
     private String nombre;
     @Column(name = "DESCRIPCION", length = 200)
@@ -206,4 +212,12 @@ public class Material implements java.io.Serializable {
         for(Proveedor p:proveedores)
             TMaterialesXProveedors.add(new MaterialesXProveedor(p,this));
     }
+    public UnidadMedida getTUnidadesMedida() {
+        return this.TUnidadesMedida;
+    }
+
+    public void setTUnidadesMedida(UnidadMedida TUnidadesMedida) {
+        this.TUnidadesMedida = TUnidadesMedida;
+    }
+
 }
