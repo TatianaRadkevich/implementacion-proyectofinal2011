@@ -336,6 +336,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                 producto.setMotivoBaja(txtMotivoBaja.getText());
             }
 
+
            
             try {
                 gestor.ejecutarOperacion(producto);
@@ -445,6 +446,14 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                 break;
             }
         }
+          UnidadMedida unidadMedida=null;
+        for(int i=0; i<cmbUnidadMedida.getItemCount();i++){
+            unidadMedida=(UnidadMedida) cmbUnidadMedida.getItemAt(i);
+            if(unidadMedida.getNombre().compareTo(this.producto.getTUnidadesMedida().getNombre())==0){
+                cmbTipoProducto.setSelectedIndex(i);
+                break;
+            }
+        }
     }
 
      private void cargarTipoProductos(){
@@ -487,7 +496,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         producto=new Producto();
         activarBaja(false);
         activarProducto(true);
-        this.activarBotones(true, true, false);
+        this.activarBotones(true, true);
         this.txtNombre.requestFocus();
     }
 
@@ -496,7 +505,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
         this.activarProducto(true);
         this.activarBaja(false);
-        this.activarBotones(true, true, false);
+        this.activarBotones(true, true);
         
        
         if(producto.getFecBaja()!=null){
@@ -508,15 +517,17 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     }
 
     public void baja(Producto prod) {       
-        Format formato=new SimpleDateFormat("dd/MM/yyyy");
-        String fecha=formato.format(new Date());
-        this.txtFechaBaja.setText(fecha);
+        
+        
         this.producto=prod;
         this.activarProducto(false);
         this.activarBaja(true);
-        this.activarBotones(true, true, false);
+        this.activarBotones(true, true);
         this.txtMotivoBaja.requestFocus();
          this.cargarDatos(this.producto);
+         Format formato=new SimpleDateFormat("dd/MM/yyyy");
+        String fecha=formato.format(new Date());
+        this.txtFechaBaja.setText(fecha);
         }
 
     public void vaciar(){
@@ -534,6 +545,8 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         this.txtNombre.setEnabled(flag);
         this.txtAreaDescripcion.setEnabled(flag);
         this.txtPrecio.setEnabled(flag);
+        this.cmbTipoProducto.setEnabled(flag);
+        this.cmbUnidadMedida.setEnabled(flag);
         
     }
     
@@ -542,10 +555,18 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         this.txtMotivoBaja.setEnabled(flag);
     }
 
-    private void activarBotones(boolean aceptar,boolean cancelar, boolean alta){
+    private void activarBotones(boolean aceptar,boolean cancelar){
         this.btnAceptar.setEnabled(aceptar);
         this.btnCancelar.setEnabled(cancelar);
-      //  this.btnAlta.setEnabled(alta);
+    }
+
+    public void reactivar(Producto traerProducto) {
+         this.producto=traerProducto;
+        this.activarProducto(false);
+        this.activarBaja(false);
+        this.activarBotones(true, true);      
+         this.cargarDatos(this.producto);
+
     }
     
     
