@@ -17,6 +17,7 @@ import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.Operacion;
 import gui.GUILocal;
+import java.awt.Dialog;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,7 +38,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
     /** Creates new form AdministrarTipoProducto */
     public PantallaABMTipoProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        GUILocal.establecerGUILocal(this);
+       
         initComponents();
 
        this.activarTipoProducto(false);
@@ -48,6 +49,9 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
 
     }
+
+
+     
 
 
     /** This method is called from within the constructor to
@@ -85,13 +89,17 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tipo producto");
 
         pnlCargo.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo producto"));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Nombre:");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Descripción:");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Código:");
 
         txtDescripcion.setColumns(20);
@@ -101,8 +109,10 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
         pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder("Baja"));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Fecha:");
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Motivo:");
 
         txtMotivoBaja.setColumns(20);
@@ -114,7 +124,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         pnlBajaLayout.setHorizontalGroup(
             pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBajaLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(43, 43, 43)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
                     .addComponent(jLabel4))
@@ -168,7 +178,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
                             .addGroup(pnlCargoLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE))))
+                                .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))))
                     .addGroup(pnlCargoLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel2)
