@@ -15,6 +15,7 @@ import Negocio.Produccion.TipoProducto;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.GestorPedido;
 import Negocio.Ventas.GestorPedidoAlta;
+import Presentacion.IniciadorDeVentanas;
 import Presentacion.ValidarTexbox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,6 +42,8 @@ public class PantallaPedidoDetalleABM extends javax.swing.JDialog {
         ValidarTexbox.validarInt(txtCantidad);
         ValidarTexbox.validarLongitud(txtCantidad, 5);
         cargarCombos();
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+
     }
 
     public PantallaPedidoDetalleABM(GestorPedido gp) {
