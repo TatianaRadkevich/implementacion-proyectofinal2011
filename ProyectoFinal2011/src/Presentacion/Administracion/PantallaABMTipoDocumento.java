@@ -273,6 +273,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -412,6 +413,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
 
      public void nuevo() {
         // TODO add your handling code here:
+        this.vaciar();
         this.activarDisponible(false);
         this.btnBaja.setEnabled(false);
         this.activarTipoDocumento(true);
