@@ -83,4 +83,34 @@ public class ProductoBD{
         return (Producto) HibernateUtil.getObjeto(Producto.class, id);
     }
 
+//    public static List<Pedido> getProducto(
+//            String RazonSocial,String CUIL,String NroPedido,
+//            boolean vigentes,boolean cancelados){
+//
+//        if(vigentes==false&&cancelados==false)
+//            return new ArrayList<Pedido>(0);
+//
+//
+//
+//        String HQL=String.format(
+//                "FROM Pedido as p "
+//                + "WHERE LOWER(p.TClientes.razonSocial) like  LOWER('%s%%') "
+//                + "AND  p.TClientes.cuit  like '%s%%' "
+//                + "AND p.idPedido like '%s%%' "
+//                + ((desde==null)?"":"AND p.fecHoraGeneracion >= '%4$s' ")
+//                + ((hasta==null)?"":"AND p.fecHoraGeneracion <= '%5$s' ")
+//                ,RazonSocial,CUIL,NroPedido,auxDesde,auxHasta);
+//
+//        if(vigentes==true&&cancelados==true)
+//            return HibernateUtil.ejecutarConsulta(HQL);
+//
+//        if(vigentes==true&&cancelados==false)
+//            HQL+="AND p.fecBaja IS NULL ";
+//
+//        if(vigentes==false&&cancelados==true)
+//            HQL+="AND p.fecBaja IS NOT NULL ";
+//
+//        return HibernateUtil.ejecutarConsulta(HQL);
+//    }
+
 }
