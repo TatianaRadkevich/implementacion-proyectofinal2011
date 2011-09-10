@@ -14,5 +14,6 @@ public class Operacion {
     public static int  nuevo=1;
     public static int  modificar=2;
     public static int  baja=3;
+    public static int reactivar=4;
             
 }
