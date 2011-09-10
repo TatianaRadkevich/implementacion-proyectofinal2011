@@ -15,10 +15,13 @@ import java.util.List;
  */
 public abstract class GestorProducto {
 
-    public List<TipoProducto> traerTiposProductos() throws ExceptionGestor {
+    public static List<TipoProducto> traerTiposProductos() throws ExceptionGestor {
         return GestorTipoProducto.listarTiposProductoAlta();
     }
 
+    public List<UnidadMedida> traerUnidadesMedida() throws ExceptionGestor {
+        return GestorUnidadMedida.listarUnidadMedida();
+    }
     public abstract Producto ejecutarOperacion(Producto producto) throws ExceptionGestor;
 
     public static List<Producto> listarProductos(){
