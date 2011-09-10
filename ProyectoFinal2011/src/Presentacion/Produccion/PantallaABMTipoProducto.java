@@ -43,7 +43,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
        this.activarTipoProducto(false);
        this.activarBaja(false);
        this.activarDisponible(true);
-       this.activarBotones(true, false, true, false, true,false);
+       this.activarBotones(true, false, false, false, true,false,true);
        this.cargarTipoProductos();
        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
 
@@ -78,7 +78,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         pnlDisponible = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstDisponible = new javax.swing.JList();
-        btnBaja = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnReactivar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
@@ -214,10 +214,10 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(lstDisponible);
 
-        btnBaja.setText("Eliminar");
-        btnBaja.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBajaActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -253,9 +253,9 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
                 .addGroup(pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReactivar))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDisponibleLayout.setVerticalGroup(
             pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,10 +267,10 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBaja)
+                        .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnReactivar)))
-                .addContainerGap(4, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         btnSalir.setText("Salir");
@@ -284,28 +284,27 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnlCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(pnlCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addComponent(btnSalir))))
+                        .addComponent(pnlDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSalir)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                    .addComponent(pnlDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSalir)
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -339,7 +338,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         this.activarDisponible(false);
         this.activarBaja(false);
         this.activarTipoProducto(true);
-        this.activarBotones(false, false, false, true, true,false);
+        this.activarBotones(false, false, false, true, true,false,false);
 
         
 
@@ -349,7 +348,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         if(lstDisponible.getSelectedIndex()==-1){
             Mensajes.mensajeErrorGenerico("Debe seleccionar un tipo de producto que desea dar de baja");
@@ -364,10 +363,10 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         this.activarBaja(true);
         this.activarTipoProducto(false);
         this.activarDisponible(false);
-        this.activarBotones(false, false, false, true, true,false);
+        this.activarBotones(false, false, false, true, true,false,false);
         txtMotivoBaja.requestFocus();
         this.operacion=Operacion.baja;
-    }//GEN-LAST:event_btnBajaActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
@@ -410,6 +409,12 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
             cancelar();
             return;
         }
+        if(operacion==Operacion.reactivar){
+            tipo_actual.setFecBaja(null);
+            tipo_actual.setMotivoBaja(null);
+            gestor.modificar(tipo_actual);
+            Mensajes.mensajeInformacion("El tipo de producto "+tipo_actual.getNombre()+"\n ha sido dado reactivado exitosamente");
+        }
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -421,14 +426,14 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
             this.activarBaja(false);
             this.activarDisponible(true);
             this.activarTipoProducto(false);
-            this.activarBotones(true, false, false, false, true, true);
+            this.activarBotones(true, false, false, false, true, true,true);
 
         }
         else{
             this.activarBaja(false);
             this.activarDisponible(true);
             this.activarTipoProducto(false);
-            this.activarBotones(true, true, true, false, true, false);
+            this.activarBotones(true, true, true, false, true, false,true);
         }
 
 
@@ -436,15 +441,13 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
     private void btnReactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReactivarActionPerformed
         // TODO add your handling code here:
-        this.tipo_actual=(TipoProducto) lstDisponible.getSelectedValue();
-        tipo_actual.setFecBaja(null);
-        this.tipo_actual.setMotivoBaja(null);
+        this.tipo_actual=(TipoProducto) lstDisponible.getSelectedValue();       
         this.activarBaja(false);
         this.activarTipoProducto(false);
-        this.activarBotones(false, false, false, true, true, false);
+        this.activarBotones(false, false, false, true, true, false,false);
         this.txtFechaBaja.setText("");
         this.txtMotivoBaja.setText("");
-        this.operacion=Operacion.modificar;
+        this.operacion=Operacion.reactivar;
     }//GEN-LAST:event_btnReactivarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -472,8 +475,8 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnBaja;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnReactivar;
@@ -531,13 +534,14 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         this.lstDisponible.setEnabled(flag);
     }
 
-    private void activarBotones(boolean nuevo, boolean modificar, boolean baja, boolean aceptar, boolean cancelar, boolean reactivar){
+    private void activarBotones(boolean nuevo, boolean modificar, boolean baja, boolean aceptar, boolean cancelar, boolean reactivar,boolean salir){
         this.btnNuevo.setEnabled(nuevo);
         this.btnModificar.setEnabled(modificar);
-        this.btnBaja.setEnabled(baja);
+        this.btnEliminar.setEnabled(baja);
         this.btnAceptar.setEnabled(aceptar);
         this.btnCancelar.setEnabled(cancelar);
         this.btnReactivar.setEnabled(reactivar);
+        this.btnSalir.setEnabled(salir);
         
     }
 
@@ -548,6 +552,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         this.txtNombre.setText("");
         this.txtFechaBaja.setText("");
         this.txtMotivoBaja.setText("");
+        this.lstDisponible.setSelectedIndex(-1);
 
     }
     private boolean validar(){
@@ -580,17 +585,20 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
          this.activarTipoProducto(false);
        this.activarBaja(false);
        this.activarDisponible(true);
-       this.activarBotones(true, false, false,  false, true,false);
+       this.activarBotones(true, false, false,  false, false,false,true);
        this.vaciar();
     }
 
      public void nuevo() {
         // TODO add your handling code here:
+        this.vaciar();
         this.activarDisponible(false);
         this.activarBaja(false);
         this.activarTipoProducto(true);
-        this.activarBotones(false, false, false, true, true,false);
+        this.activarBotones(false, false, false, true, true,false,false);
         this.operacion = Operacion.nuevo;
+        this.txtNombre.requestFocus();
     }
+     
 
 }
