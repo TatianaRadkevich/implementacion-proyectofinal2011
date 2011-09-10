@@ -176,6 +176,12 @@ public class Producto  implements java.io.Serializable {
         return null;
     }
 
+    public boolean estaBaja(){
+        if(this.fecBaja==null)
+            return false;
+        return true;
+    }
+
 }
 
 
