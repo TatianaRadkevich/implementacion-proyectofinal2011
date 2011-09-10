@@ -11,15 +11,20 @@
 
 package Presentacion.Produccion;
 
+import BaseDeDatos.Produccion.ProductoBD;
+import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Produccion.GestorBajaProducto;
 import Negocio.Produccion.GestorModificarProducto;
 import Negocio.Produccion.GestorProducto;
 import Negocio.Produccion.GestorRegistrarProducto;
+import Negocio.Produccion.GestorTipoProducto;
 import Negocio.Produccion.Producto;
+import Negocio.Produccion.TipoProducto;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import gui.GUILocal;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -35,9 +40,12 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
 //        GUILocal.establecerGUISyntheticaClassy(this);
 //        GUILocal.establecerGUISyntheticaGreenDreamLookAndFeel(this);
         initComponents();
+        this.cargarTipoProductos();
         tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
     }
+
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -56,18 +64,19 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         tabla_producto = new javax.swing.JTable();
         btnConsultar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
         pnlBuscar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         chkMostrarTodos = new javax.swing.JCheckBox();
         chkMostrarDadosBaja = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
-        txtCodigo = new javax.swing.JTextField();
+        txtCodigoId = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        txtCodigo1 = new javax.swing.JTextField();
+        txtCodigoTipo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        cmbTipoProducto = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consultar Producto");
@@ -140,15 +149,19 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
 
         jButton1.setText("Reactivar");
 
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(553, Short.MAX_VALUE)
-                        .addComponent(btnConsultar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap(553, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -158,7 +171,12 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
                         .addGap(554, 554, 554)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))))
+                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(553, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -179,18 +197,20 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
                 .addComponent(jButton1)
                 .addGap(24, 24, 24)
                 .addComponent(btnConsultar)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnSalir)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(55, Short.MAX_VALUE)))
+                    .addContainerGap(61, Short.MAX_VALUE)))
         );
 
         pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
         pnlBuscar.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Tipo de producto:");
         pnlBuscar.add(jLabel1);
@@ -198,23 +218,23 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         pnlBuscar.add(txtNombre);
         txtNombre.setBounds(160, 50, 110, 20);
 
-        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11));
         chkMostrarTodos.setText("Mostrar vigentes");
         pnlBuscar.add(chkMostrarTodos);
         chkMostrarTodos.setBounds(370, 20, 130, 23);
 
-        chkMostrarDadosBaja.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkMostrarDadosBaja.setFont(new java.awt.Font("Tahoma", 1, 11));
         chkMostrarDadosBaja.setText("Mostrar dados de baja");
         pnlBuscar.add(chkMostrarDadosBaja);
         chkMostrarDadosBaja.setBounds(370, 50, 170, 23);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("-");
         pnlBuscar.add(jLabel4);
         jLabel4.setBounds(200, 20, 20, 17);
-        pnlBuscar.add(txtCodigo);
-        txtCodigo.setBounds(220, 20, 50, 20);
+        pnlBuscar.add(txtCodigoId);
+        txtCodigoId.setBounds(220, 20, 50, 20);
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -225,23 +245,23 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         pnlBuscar.add(btnBuscar);
         btnBuscar.setBounds(560, 110, 80, 23);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Código:");
         pnlBuscar.add(jLabel5);
         jLabel5.setBounds(50, 20, 80, 14);
-        pnlBuscar.add(txtCodigo1);
-        txtCodigo1.setBounds(160, 20, 40, 20);
+        pnlBuscar.add(txtCodigoTipo);
+        txtCodigoTipo.setBounds(160, 20, 40, 20);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Nombre:");
         pnlBuscar.add(jLabel2);
         jLabel2.setBounds(50, 50, 80, 14);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        pnlBuscar.add(jComboBox1);
-        jComboBox1.setBounds(160, 90, 150, 20);
+        cmbTipoProducto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        pnlBuscar.add(cmbTipoProducto);
+        cmbTipoProducto.setBounds(160, 90, 150, 20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -302,9 +322,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
 }//GEN-LAST:event_tabla_productoAncestorAdded
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-         tabla_producto.setModel(new ModelerProducto(GestorProducto.listarProductos()));
-         tabla_producto.updateUI();
+         inciarBusqueda();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
@@ -322,6 +340,11 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
     * @param args the command line arguments
@@ -346,10 +369,11 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JCheckBox chkMostrarDadosBaja;
     private javax.swing.JCheckBox chkMostrarTodos;
+    private javax.swing.JComboBox cmbTipoProducto;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -358,14 +382,32 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pnlBuscar;
     private javax.swing.JTable tabla_producto;
-    private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtCodigo1;
+    private javax.swing.JTextField txtCodigoId;
+    private javax.swing.JTextField txtCodigoTipo;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
 
     private void baja(){
 
+    }
+
+      private void cargarTipoProductos(){
+        try {
+            cmbTipoProducto.removeAllItems();
+            TipoProducto temp=new TipoProducto(-1, "TODOS", "TOD");
+            cmbTipoProducto.addItem(temp);
+            List<TipoProducto> tipo = GestorProducto.traerTiposProductos();
+            for(int i=0;i<tipo.size();i++){
+                cmbTipoProducto.addItem(tipo.get(i));
+            }
+        } catch (ExceptionGestor ex) {        }
+        cmbTipoProducto.repaint();
+    }
+
+      private void inciarBusqueda() {       
+        tabla_producto.setModel(new ModelerProducto(ProductoBD.getProducto(txtNombre.getText().trim(), (TipoProducto) cmbTipoProducto.getSelectedItem(), chkMostrarTodos.isSelected(), chkMostrarDadosBaja.isSelected())));
+        tabla_producto.updateUI();
     }
 
     

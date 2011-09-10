@@ -507,8 +507,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         this.cargarDatos(this.producto);
     }
 
-    public void baja(Producto prod) {
-        this.cargarDatos(prod);
+    public void baja(Producto prod) {       
         Format formato=new SimpleDateFormat("dd/MM/yyyy");
         String fecha=formato.format(new Date());
         this.txtFechaBaja.setText(fecha);
@@ -517,6 +516,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         this.activarBaja(true);
         this.activarBotones(true, true, false);
         this.txtMotivoBaja.requestFocus();
+         this.cargarDatos(this.producto);
         }
 
     public void vaciar(){
