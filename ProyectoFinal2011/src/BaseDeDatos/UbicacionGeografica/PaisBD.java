@@ -44,4 +44,8 @@ public class PaisBD {
         return pai;
     }
 
+    public static void eliminar(Pais pai){
+        HibernateUtil.EliminarObjeto(pai);
+    }
+
 }
