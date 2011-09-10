@@ -43,7 +43,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
        this.activarTipoProducto(false);
        this.activarBaja(false);
        this.activarDisponible(true);
-       this.activarBotones(true, false, false, false, true,false,true);
+       this.activarBotones(true, false, false, false, false,false,true);
        this.cargarTipoProductos();
        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
 
@@ -95,6 +95,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         jLabel3.setText("Código:");
 
         txtDescripcion.setColumns(20);
+        txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 11));
         txtDescripcion.setRows(5);
         jScrollPane1.setViewportView(txtDescripcion);
 
@@ -247,9 +248,9 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         pnlDisponibleLayout.setHorizontalGroup(
             pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDisponibleLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -261,7 +262,6 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
             pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDisponibleLayout.createSequentialGroup()
                 .addGroup(pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlDisponibleLayout.createSequentialGroup()
                         .addComponent(btnNuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -269,7 +269,8 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnReactivar)))
+                        .addComponent(btnReactivar))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
@@ -316,14 +317,8 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-
-        if(!btnAceptar.isEnabled()){
-            this.dispose();
-            return;
-        }
-        this.cargarTipoProductos();
-        this.vaciar();
-        this.lstDisponible.setSelectedIndex(-1);
+     
+        this.cargarTipoProductos();   
         
         this.tipo_actual=null;
        this.cancelar();
@@ -338,9 +333,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         this.activarDisponible(false);
         this.activarBaja(false);
         this.activarTipoProducto(true);
-        this.activarBotones(false, false, false, true, true,false,false);
-
-        
+        this.activarBotones(false, false, false, true, true,false,false);   
 
         tipo_actual=(TipoProducto) lstDisponible.getSelectedValue();
         this.cargarDatos(tipo_actual);       
@@ -351,10 +344,11 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         if(lstDisponible.getSelectedIndex()==-1){
-            Mensajes.mensajeErrorGenerico("Debe seleccionar un tipo de producto que desea dar de baja");
+            Mensajes.mensajeErrorGenerico("Debe seleccionar un tipo de producto que desea eliminado exitosamente");
             return;
         }      
-        
+
+        this.activarDisponible(false);
         tipo_actual=(TipoProducto) lstDisponible.getSelectedValue();
         this.cargarDatos(tipo_actual);
         Format formato=new SimpleDateFormat("dd/MM/yyyy");
@@ -380,10 +374,10 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
             tipo.setDescripcion(txtDescripcion.getText());
 
             gestor.guardar(tipo);
-            Mensajes.mensajeInformacion("El tipo de producto "+tipo.getNombre()+"\n ha sido guardado exitosamente");
-            this.vaciar();
-            cancelar();
+            Mensajes.mensajeInformacion("El tipo de producto "+tipo.getNombre()+"\n ha sido guardado exitosamente");   
             this.cargarTipoProductos();
+            cancelar();
+            this.lstDisponible.setSelectedIndex(-1);
             return;
         }
 
@@ -393,28 +387,31 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
             tipo_actual.setDescripcion(txtDescripcion.getText());
             gestor.modificar(tipo_actual);            
             Mensajes.mensajeInformacion("El tipo de producto "+tipo_actual.getNombre()+"\n ha sido modificado exitosamente");
-            this.vaciar();
+              tipo_actual=null;
             cancelar();
-            tipo_actual=null;
+            this.lstDisponible.setSelectedIndex(-1);
             return;
         }
          if(operacion==Operacion.baja){
              tipo_actual.setFecBaja(new Date());
             tipo_actual.setMotivoBaja(txtMotivoBaja.getText());
-            gestor.modificar(tipo_actual);
-            
+            gestor.modificar(tipo_actual);            
             Mensajes.mensajeInformacion("El tipo de producto "+tipo_actual.getNombre()+"\n ha sido dado de baja exitosamente");
-            this.vaciar();
+           
             tipo_actual=null;
-            cancelar();
+            this.cancelar();
+            this.lstDisponible.setSelectedIndex(-1);
             return;
         }
         if(operacion==Operacion.reactivar){
             tipo_actual.setFecBaja(null);
             tipo_actual.setMotivoBaja(null);
             gestor.modificar(tipo_actual);
+            cancelar();
+            this.lstDisponible.setSelectedIndex(-1);
             Mensajes.mensajeInformacion("El tipo de producto "+tipo_actual.getNombre()+"\n ha sido dado reactivado exitosamente");
         }
+        this.cancelar();
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -426,14 +423,14 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
             this.activarBaja(false);
             this.activarDisponible(true);
             this.activarTipoProducto(false);
-            this.activarBotones(true, false, false, false, true, true,true);
+            this.activarBotones(true, false, false, false, false, true,true);
 
         }
         else{
             this.activarBaja(false);
             this.activarDisponible(true);
             this.activarTipoProducto(false);
-            this.activarBotones(true, true, true, false, true, false,true);
+            this.activarBotones(true, true, true, false, false, false,true);
         }
 
 
@@ -441,6 +438,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
     private void btnReactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReactivarActionPerformed
         // TODO add your handling code here:
+        this.activarDisponible(false);
         this.tipo_actual=(TipoProducto) lstDisponible.getSelectedValue();       
         this.activarBaja(false);
         this.activarTipoProducto(false);
@@ -513,6 +511,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
                 modelo.addElement(tipo.get(i));
 
             lstDisponible.setModel(modelo);
+            lstDisponible.setSelectedIndex(-1);
 
 
             }
@@ -552,7 +551,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         this.txtNombre.setText("");
         this.txtFechaBaja.setText("");
         this.txtMotivoBaja.setText("");
-        this.lstDisponible.setSelectedIndex(-1);
+       this.lstDisponible.setSelectedIndex(-1);
 
     }
     private boolean validar(){
@@ -582,7 +581,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
     }
 
     private void cancelar(){
-         this.activarTipoProducto(false);
+       this.activarTipoProducto(false);
        this.activarBaja(false);
        this.activarDisponible(true);
        this.activarBotones(true, false, false,  false, false,false,true);
@@ -591,7 +590,8 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
      public void nuevo() {
         // TODO add your handling code here:
-        this.vaciar();
+        
+        this.activarDisponible(false);
         this.activarDisponible(false);
         this.activarBaja(false);
         this.activarTipoProducto(true);
