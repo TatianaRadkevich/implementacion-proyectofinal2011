@@ -256,12 +256,13 @@ public class PantallaABMPais extends javax.swing.JDialog {
 }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void lstDisponibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDisponibleMouseClicked
-        // TODO add your handling code here:
+        if(lstDisponible.getSelectedIndex()!=-1){
         Pais temp= (Pais) lstDisponible.getSelectedValue();
         this.cargarDatos(temp);
         this.activarDisponible(true);
         this.activarPais(false);
         this.activarBotones(true, true, true, false, false);
+        }
 }//GEN-LAST:event_lstDisponibleMouseClicked
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
@@ -294,10 +295,11 @@ public class PantallaABMPais extends javax.swing.JDialog {
 }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if(validar()){
+        
 
         
         if(operacion==Operacion.nuevo){
+            if(validar()){
             Pais pai=new Pais();
             pai.setNombre(txtNombre.getText().toUpperCase());
             pai.setDescripcion(txtDescripcion.getText());
@@ -308,9 +310,12 @@ public class PantallaABMPais extends javax.swing.JDialog {
             cancelar();
             this.cargarPaises();
             return;
+            }
+            else return;
         }
 
         if(operacion==Operacion.modificar){
+            if(validar()){
             pais_actual.setNombre(txtNombre.getText().toUpperCase());
             pais_actual.setDescripcion(txtDescripcion.getText());
             gestor.modificar(pais_actual);
@@ -319,6 +324,8 @@ public class PantallaABMPais extends javax.swing.JDialog {
             cancelar();
             pais_actual=null;
             return;
+            }
+            else return;
         }
         if(operacion==Operacion.baja){
             gestor.eliminar(pais_actual);
@@ -329,7 +336,7 @@ public class PantallaABMPais extends javax.swing.JDialog {
             this.cargarPaises();
             return;
         }
-    }
+    
 }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
@@ -437,6 +444,7 @@ public class PantallaABMPais extends javax.swing.JDialog {
         if (txtNombre.getText().compareTo("")==0)
         {
             Mensajes.mensajeErrorGenerico("Debe ingresar el nombre");
+            txtNombre.requestFocus();
             return false;
         }
         return true;
