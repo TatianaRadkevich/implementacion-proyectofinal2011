@@ -238,12 +238,13 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
 }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void lstDisponibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDisponibleMouseClicked
-        // TODO add your handling code here:
+        if(lstDisponible.getSelectedIndex()!=-1){
         UnidadMedida temp= (UnidadMedida) lstDisponible.getSelectedValue();
         this.cargarDatos(temp);
         this.activarDisponible(true);
         this.activarUnidadMedida(false);
         this.activarBotones(true, true, true, false, false);
+        }
 }//GEN-LAST:event_lstDisponibleMouseClicked
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
@@ -276,10 +277,11 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
 }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if(validar()){
+        
 
         
         if(operacion==Operacion.nuevo){
+            if(validar()){
             UnidadMedida unidad=new UnidadMedida();
             unidad.setNombre(txtNombre.getText().toUpperCase());
             unidad.setDescripcion(txtDescripcion.getText());
@@ -291,8 +293,11 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
             this.cargarUnidadMedida();
             return;
         }
+        else return;
+        }
 
         if(operacion==Operacion.modificar){
+            if(validar()){
             unidad_actual.setNombre(txtNombre.getText().toUpperCase());
             unidad_actual.setDescripcion(txtDescripcion.getText());
             gestor.modificar(unidad_actual);
@@ -301,6 +306,8 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
             cancelar();
             unidad_actual=null;
             return;
+        }
+        else return;
         }
         if(operacion==Operacion.baja){
             gestor.eliminar(unidad_actual);
@@ -311,7 +318,7 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
             this.cargarUnidadMedida();
             return;
         }
-     }
+     
 }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -432,6 +439,7 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
              if (txtNombre.getText().compareTo("")==0)
         {
             Mensajes.mensajeErrorGenerico("Debe ingresar el nombre");
+            txtNombre.requestFocus();
             return false;
         }
         return true;

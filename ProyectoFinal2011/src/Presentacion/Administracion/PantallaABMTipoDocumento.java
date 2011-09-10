@@ -234,10 +234,11 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-         if(validar()){
+        
 
         
       if(operacion==Operacion.nuevo){
+           if(validar()){
             TipoDocumento tipo=new TipoDocumento();
             tipo.setNombre(txtNombre.getText().toUpperCase());
             tipo.setDescripcion(txtDescripcion.getText());
@@ -249,8 +250,11 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
             this.cargarTipoDocumento();
             return;
         }
+       else return;
+      }
 
         if(operacion==Operacion.modificar){
+            if(validar()){
             tipo_actual.setNombre(txtNombre.getText().toUpperCase());
             tipo_actual.setDescripcion(txtDescripcion.getText());
             gestor.modificar(tipo_actual);
@@ -259,6 +263,8 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
             cancelar();
             tipo_actual=null;
             return;
+        }
+        else return;
         }
          if(operacion==Operacion.baja){
            gestor.eliminar(tipo_actual);
@@ -269,7 +275,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
             this.cargarTipoDocumento();
             return;
         }
-     }
+     
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -312,12 +318,13 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void lstDisponibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDisponibleMouseClicked
-        // TODO add your handling code here:
+        if(lstDisponible.getSelectedIndex()!=-1){
          TipoDocumento temp= (TipoDocumento) lstDisponible.getSelectedValue();
         this.cargarDatos(temp);
         this.activarDisponible(true);
         this.activarTipoDocumento(false);
         this.activarBotones(true, true, true, false, false);
+        }
     }//GEN-LAST:event_lstDisponibleMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -433,6 +440,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
                if (txtNombre.getText().compareTo("")==0)
         {
             Mensajes.mensajeErrorGenerico("Debe ingresar el nombre");
+            txtNombre.requestFocus();
             return false;
         }
         return true;
