@@ -134,7 +134,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(lstDisponible);
 
-        btnBaja.setText("Baja");
+        btnBaja.setText("Eliminar");
         btnBaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBajaActionPerformed(evt);
@@ -236,7 +236,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
          if(validar()){
 
-        }
+        
       if(operacion==Operacion.nuevo){
             TipoDocumento tipo=new TipoDocumento();
             tipo.setNombre(txtNombre.getText().toUpperCase());
@@ -262,13 +262,14 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
         }
          if(operacion==Operacion.baja){
            gestor.eliminar(tipo_actual);
-           Mensajes.mensajeInformacion("El tipo de documento "+tipo_actual.getNombre()+"\n ha sido dado de baja exitosamente");
+           Mensajes.mensajeInformacion("El tipo de documento "+tipo_actual.getNombre()+"\n ha sido eliminado exitosamente");
             this.vaciar();
             tipo_actual=null;
             cancelar();
             this.cargarTipoDocumento();
             return;
         }
+     }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -283,7 +284,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
            if(lstDisponible.getSelectedIndex()==-1){
-            Mensajes.mensajeErrorGenerico("Debe seleccionar un tipo de documento que desea modificar");
+            Mensajes.mensajeErrorGenerico("Debe seleccionar el tipo de documento que desea modificar");
             return;
         }
         this.activarDisponible(false);
@@ -298,7 +299,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
         if(lstDisponible.getSelectedIndex()==-1){
-            Mensajes.mensajeErrorGenerico("Debe seleccionar un tipo de documento que desea dar de baja");
+            Mensajes.mensajeErrorGenerico("Debe seleccionar el tipo de documento que desea dar de baja");
          return;
         }
 
@@ -429,6 +430,11 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
     }
 
     private boolean validar() {
+               if (txtNombre.getText().compareTo("")==0)
+        {
+            Mensajes.mensajeErrorGenerico("Debe ingresar el nombre");
+            return false;
+        }
         return true;
     }
 }
