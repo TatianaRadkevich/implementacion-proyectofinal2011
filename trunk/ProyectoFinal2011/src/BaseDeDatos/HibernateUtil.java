@@ -82,6 +82,13 @@ public class HibernateUtil {
         session.getTransaction().commit();        
     }
 
+
+    public static void EliminarObjeto(Object o) {
+        session.beginTransaction();
+        session.delete(o);
+        session.getTransaction().commit();
+    }
+
     public static List ejecutarConsulta(String HQL) {
         List salida;
         session.beginTransaction();
