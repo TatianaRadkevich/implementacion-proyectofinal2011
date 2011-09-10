@@ -31,4 +31,8 @@ public abstract class GestorProducto {
     public abstract String mensajeResultado(String nombreProducto);
 
     public abstract void reiniciar(PantallaABMProducto aThis) ;
+
+    public static Producto traerProducto(String codigo){
+        return ProductoBD.traerProducto(codigo);
+    }
 }
