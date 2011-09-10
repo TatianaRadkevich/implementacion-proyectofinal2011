@@ -90,7 +90,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         txtFechaBaja = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtMotivoBaja = new javax.swing.JTextArea();
-        btnAlta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("ABM Producto");
@@ -242,13 +241,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         txtMotivoBaja.setRows(5);
         jScrollPane3.setViewportView(txtMotivoBaja);
 
-        btnAlta.setText("Alta");
-        btnAlta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAltaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlBajaLayout = new javax.swing.GroupLayout(pnlBaja);
         pnlBaja.setLayout(pnlBajaLayout);
         pnlBajaLayout.setHorizontalGroup(
@@ -260,10 +252,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlBajaLayout.createSequentialGroup()
-                        .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(96, 96, 96))
         );
@@ -273,7 +262,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAlta)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,7 +290,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 142, Short.MAX_VALUE)
                 .addComponent(pnlBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -351,16 +339,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         this.cargarTipoProductos();
     }//GEN-LAST:event_btnAgregarTipoActionPerformed
 
-    private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-        // TODO add your handling code here:
-
-        this.producto.setMotivoBaja(null);
-        this.producto.setFecBaja(null);
-        this.txtFechaBaja.setText("");
-        this.txtMotivoBaja.setText("");
-        this.btnAlta.setEnabled(false);
-}//GEN-LAST:event_btnAltaActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -389,7 +367,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregarTipo;
-    private javax.swing.JButton btnAlta;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox cmbTipoProducto;
     private javax.swing.JButton jButton1;
@@ -448,9 +425,10 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
      private void cargarTipoProductos(){
         try {
-            for(int i=0;i<cmbTipoProducto.getItemCount();i++){
-                cmbTipoProducto.remove(i);
-            }
+//            for(int i=0;i<cmbTipoProducto.getItemCount();i++){
+//                cmbTipoProducto.remove(i);
+//            }
+            cmbTipoProducto.removeAllItems();
             
             List<TipoProducto> tipo = gestor.traerTiposProductos();
             for(int i=0;i<tipo.size();i++){
@@ -459,7 +437,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         } catch (ExceptionGestor ex) {
             Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
-        cmbTipoProducto.setSelectedIndex(2);
+//        cmbTipoProducto.setSelectedIndex(2);
         cmbTipoProducto.repaint();
     }
 
@@ -482,7 +460,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         
        
         if(producto.getFecBaja()!=null){
-            this.btnAlta.setEnabled(true);
+//            this.btnAlta.setEnabled(true);
          }
         
         this.txtNombre.requestFocus();
@@ -527,7 +505,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     private void activarBotones(boolean aceptar,boolean cancelar, boolean alta){
         this.btnAceptar.setEnabled(aceptar);
         this.btnCancelar.setEnabled(cancelar);
-        this.btnAlta.setEnabled(alta);
+      //  this.btnAlta.setEnabled(alta);
     }
     
     
