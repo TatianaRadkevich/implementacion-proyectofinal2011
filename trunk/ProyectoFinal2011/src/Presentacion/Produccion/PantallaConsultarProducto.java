@@ -16,6 +16,7 @@ import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Produccion.GestorBajaProducto;
 import Negocio.Produccion.GestorModificarProducto;
 import Negocio.Produccion.GestorProducto;
+import Negocio.Produccion.GestorReactivarProducto;
 import Negocio.Produccion.GestorRegistrarProducto;
 import Negocio.Produccion.GestorTipoProducto;
 import Negocio.Produccion.Producto;
@@ -43,6 +44,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         this.cargarTipoProductos();
         tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+        this.activarBotones(true, false, false, false, false);
     }
 
 
@@ -63,7 +65,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla_producto = new javax.swing.JTable();
         btnConsultar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnReactivar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         pnlBuscar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -105,7 +107,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             }
         });
 
-        tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11));
+        tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         tabla_producto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -119,6 +121,11 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         ));
         tabla_producto.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tabla_producto.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabla_producto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_productoMouseClicked(evt);
+            }
+        });
         tabla_producto.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 tabla_productoComponentShown(evt);
@@ -127,6 +134,11 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         tabla_producto.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
                 tabla_productoComponentAdded(evt);
+            }
+        });
+        tabla_producto.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tabla_productoPropertyChange(evt);
             }
         });
         tabla_producto.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -147,7 +159,12 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("Reactivar");
+        btnReactivar.setText("Reactivar");
+        btnReactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReactivarActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -166,7 +183,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
                         .addContainerGap(553, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btnReactivar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(554, 554, 554)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,7 +211,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBaja)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btnReactivar)
                 .addGap(24, 24, 24)
                 .addComponent(btnConsultar)
                 .addGap(18, 18, 18)
@@ -218,7 +235,8 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         pnlBuscar.add(txtNombre);
         txtNombre.setBounds(160, 50, 110, 20);
 
-        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11));
+        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkMostrarTodos.setSelected(true);
         chkMostrarTodos.setText("Mostrar vigentes");
         pnlBuscar.add(chkMostrarTodos);
         chkMostrarTodos.setBounds(370, 20, 130, 23);
@@ -291,9 +309,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
         GestorRegistrarProducto gestor=new GestorRegistrarProducto();
         gestor.nuevoProducto(this);
-        tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
-        tabla_producto.updateUI();
-
+       this.iniciarBusqueda();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -304,9 +320,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         }
         GestorModificarProducto gestor=new GestorModificarProducto();
         gestor.modificarProducto(this, (String) tabla_producto.getValueAt(tabla_producto.getSelectedRow(),0));
-        tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
-        tabla_producto.updateUI();
-
+       this.iniciarBusqueda();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void tabla_productoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabla_productoComponentShown
@@ -322,7 +336,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
 }//GEN-LAST:event_tabla_productoAncestorAdded
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-         inciarBusqueda();
+         iniciarBusqueda();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
@@ -333,8 +347,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         }
         GestorBajaProducto gestor=new GestorBajaProducto();
         gestor.bajaProducto(this, (String) tabla_producto.getValueAt(tabla_producto.getSelectedRow(),0));
-        tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
-        tabla_producto.updateUI();
+        this.iniciarBusqueda();
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
@@ -345,6 +358,48 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnReactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReactivarActionPerformed
+        // TODO add your handling code here:
+           if(tabla_producto.getSelectedRow()==-1){
+            Mensajes.mensajeErrorGenerico("Debe seleccion un producto");
+            return;
+        }
+        GestorReactivarProducto gestor=new GestorReactivarProducto();
+        gestor.reactivarProducto(this, (String) tabla_producto.getValueAt(tabla_producto.getSelectedRow(),0));
+        this.iniciarBusqueda();
+    }//GEN-LAST:event_btnReactivarActionPerformed
+
+    private void tabla_productoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tabla_productoPropertyChange
+        // TODO add your handling code here:
+       try{
+           String codigo=(String) tabla_producto.getValueAt(tabla_producto.getSelectedRow(),0);
+            Producto temp=GestorProducto.traerProducto(codigo);
+
+            if(!temp.estaBaja())
+                this.activarBotones(true, true, true, false, true);
+            else
+                this.activarBotones(true, false, false, true, true);
+       }catch(Exception e){}
+
+       
+
+    }//GEN-LAST:event_tabla_productoPropertyChange
+
+    private void tabla_productoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_productoMouseClicked
+        // TODO add your handling code here:
+        try{
+           String codigo=(String) tabla_producto.getValueAt(tabla_producto.getSelectedRow(),0);
+            Producto temp=GestorProducto.traerProducto(codigo);
+
+            if(!temp.estaBaja())
+                this.activarBotones(true, true, true, false, true);
+            else
+                this.activarBotones(true, false, false, true, true);
+       }catch(Exception e){}
+
+       
+    }//GEN-LAST:event_tabla_productoMouseClicked
 
     /**
     * @param args the command line arguments
@@ -369,11 +424,11 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnReactivar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JCheckBox chkMostrarDadosBaja;
     private javax.swing.JCheckBox chkMostrarTodos;
     private javax.swing.JComboBox cmbTipoProducto;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -405,10 +460,18 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         cmbTipoProducto.repaint();
     }
 
-      private void inciarBusqueda() {       
+      private void iniciarBusqueda() {
         tabla_producto.setModel(new ModelerProducto(ProductoBD.getProducto(txtNombre.getText().trim(), (TipoProducto) cmbTipoProducto.getSelectedItem(), chkMostrarTodos.isSelected(), chkMostrarDadosBaja.isSelected())));
         tabla_producto.updateUI();
+        this.activarBotones(true, false, false, false, false);
     }
 
-    
+
+      private void activarBotones(boolean nuevo, boolean modificar, boolean eliminar, boolean reactivar, boolean consultar){
+          btnNuevo.setEnabled(nuevo);
+          btnModificar.setEnabled(modificar);
+          btnBaja.setEnabled(eliminar);
+          btnReactivar.setEnabled(reactivar);
+          btnConsultar.setEnabled(consultar);
+      }
 }
