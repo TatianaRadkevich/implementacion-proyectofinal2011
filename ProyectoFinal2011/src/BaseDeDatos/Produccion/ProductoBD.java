@@ -8,6 +8,7 @@ package BaseDeDatos.Produccion;
 import BaseDeDatos.HibernateUtil;
 import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
+import java.util.ArrayList;
 
 import java.util.List;
 import org.hibernate.Session;
@@ -24,30 +25,14 @@ public class ProductoBD{
 
     }
     public static Producto guardar(Producto producto){
-//        Session usuario = null;
-//        try{
-//            usuario= HibernateUtil.getNewSession();
-//            usuario.beginTransaction();
-//
-//            usuario.save(producto);
-//            usuario.getTransaction().commit();
-//            usuario.close();
-//        }catch(Exception  ex) {  }
+
         HibernateUtil.guardarObjeto(producto);
 
         return producto;
     } 
 
     public static Producto modificar(Producto producto){
-//        Session usuario = null;
-//        try{
-//            usuario= HibernateUtil.getNewSession();
-//            usuario.beginTransaction();
-//
-//            usuario.update(producto);
-//            usuario.getTransaction().commit();
-//            usuario.close();
-//        }catch(Exception  ex) {  }
+
 
         HibernateUtil.modificarObjeto(producto);
         return producto;
@@ -66,15 +51,8 @@ public class ProductoBD{
     }
 
     public static Producto traerProducto(int id){
-        Session usuario = null;
-        Producto producto=null;
-
-        try{            
-            usuario= HibernateUtil.getNewSession();
-            producto =(Producto) usuario.get(Producto.class,id);
-            usuario.close();
-        }catch(Exception  ex) {}
-        return producto;
+        
+        return (Producto) HibernateUtil.getObjeto(Producto.class, id);
     }
 
     public static Producto traerProducto(String codigo){
@@ -83,34 +61,35 @@ public class ProductoBD{
         return (Producto) HibernateUtil.getObjeto(Producto.class, id);
     }
 
-//    public static List<Pedido> getProducto(
-//            String RazonSocial,String CUIL,String NroPedido,
-//            boolean vigentes,boolean cancelados){
-//
-//        if(vigentes==false&&cancelados==false)
-//            return new ArrayList<Pedido>(0);
-//
-//
-//
-//        String HQL=String.format(
-//                "FROM Pedido as p "
-//                + "WHERE LOWER(p.TClientes.razonSocial) like  LOWER('%s%%') "
-//                + "AND  p.TClientes.cuit  like '%s%%' "
-//                + "AND p.idPedido like '%s%%' "
-//                + ((desde==null)?"":"AND p.fecHoraGeneracion >= '%4$s' ")
-//                + ((hasta==null)?"":"AND p.fecHoraGeneracion <= '%5$s' ")
-//                ,RazonSocial,CUIL,NroPedido,auxDesde,auxHasta);
-//
-//        if(vigentes==true&&cancelados==true)
-//            return HibernateUtil.ejecutarConsulta(HQL);
-//
-//        if(vigentes==true&&cancelados==false)
-//            HQL+="AND p.fecBaja IS NULL ";
-//
-//        if(vigentes==false&&cancelados==true)
-//            HQL+="AND p.fecBaja IS NOT NULL ";
-//
-//        return HibernateUtil.ejecutarConsulta(HQL);
-//    }
+
+
+    public static List<Producto> getProducto(
+            String nombre,TipoProducto tipo, boolean vigentes,boolean cancelados){
+
+        if(vigentes==false&&cancelados==false)
+            return new ArrayList<Producto>(0);
+
+
+
+        String HQL=String.format(
+                "FROM Producto as p "
+                + "WHERE LOWER(p.nombre) like  LOWER('%s%%') "               
+               ,nombre);
+
+       if(tipo.getIdTproducto()!=-1){
+            HQL+="AND p.TTproducto.idTproducto="+tipo.getIdTproducto();
+       }
+
+        if(vigentes==true&&cancelados==true)
+            return HibernateUtil.ejecutarConsulta(HQL);
+
+        if(vigentes==true&&cancelados==false)
+            HQL+="AND p.fecBaja IS NULL ";
+
+        if(vigentes==false&&cancelados==true)
+            HQL+="AND p.fecBaja IS NOT NULL ";
+
+        return HibernateUtil.ejecutarConsulta(HQL);
+    }
 
 }

@@ -25,11 +25,7 @@ public class TipoProductoBD{
         List<TipoProducto> result=null;
         
         try{            
-//            usuario= HibernateUtil.getSessionFactory().getCurrentSession();
-//            usuario.beginTransaction();
-//
-//            result = usuario.createQuery("from TipoProducto").list();
-//            usuario.getTransaction().commit();
+
             result = HibernateUtil.ejecutarConsulta("from TipoProducto");
                
         }catch(Exception  ex) {
