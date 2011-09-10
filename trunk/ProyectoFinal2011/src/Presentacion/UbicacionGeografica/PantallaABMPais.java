@@ -4,16 +4,16 @@
  */
 
 /*
- * PantallaABMUnidadMedida.java
+ * PantallaABMPais.java
  *
- * Created on 10/09/2011, 16:30:39
+ * Created on 10/09/2011, 17:29:50
  */
 
-package Presentacion.Produccion;
+package Presentacion.UbicacionGeografica;
 
 import Presentacion.Operacion;
-import Negocio.Produccion.UnidadMedida;
-import Negocio.Produccion.GestorUnidadMedida;
+import Negocio.UbicacionGeografica.Pais;
+import Negocio.UbicacionGeografica.gestorPais;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import gui.GUILocal;
@@ -25,23 +25,22 @@ import javax.swing.DefaultListModel;
  *
  * @author Heber Parrucci
  */
-public class PantallaABMUnidadMedida extends javax.swing.JDialog {
+public class PantallaABMPais extends javax.swing.JDialog {
 
     private int operacion;
-    private UnidadMedida unidad_actual=null;
-    private GestorUnidadMedida gestor=new GestorUnidadMedida();
-
-    /** Creates new form PantallaABMUnidadMedida */
-    public PantallaABMUnidadMedida(java.awt.Frame parent, boolean modal) {
+    private Pais pais_actual=null;
+    private gestorPais gestor=new gestorPais();
+   
+    public PantallaABMPais(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         GUILocal.establecerGUILocal(this);
         initComponents();
 
-       this.activarUnidadMedida(false);
+       this.activarPais(false);
        this.btnBaja.setEnabled(false);
        this.activarDisponible(true);
        this.activarBotones(true, false, false, false, false);
-       this.cargarUnidadMedida();
+       this.cargarPaises();
        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
     }
 
@@ -54,6 +53,8 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnCancelar = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         txtNombre = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -67,12 +68,24 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
         btnBaja = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Unidad de Medida"));
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("País"));
 
         jLabel1.setText("Nombre:");
 
@@ -181,24 +194,12 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
             }
         });
 
-        btnSalir.setText("Salir");
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
-            }
-        });
-
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 540, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,6 +217,8 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 246, Short.MAX_VALUE)
+            .addGap(0, 246, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -229,8 +232,23 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.getAccessibleContext().setAccessibleName("Pais");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.activarPais(false);
+        this.btnBaja.setEnabled(false);
+        this.activarDisponible(true);
+        this.activarBotones(true, false, false, false, false);
+        this.vaciar();
+}//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+        System.exit(0);
+}//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         nuevo();
@@ -239,22 +257,22 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
 
     private void lstDisponibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDisponibleMouseClicked
         // TODO add your handling code here:
-        UnidadMedida temp= (UnidadMedida) lstDisponible.getSelectedValue();
+        Pais temp= (Pais) lstDisponible.getSelectedValue();
         this.cargarDatos(temp);
         this.activarDisponible(true);
-        this.activarUnidadMedida(false);
+        this.activarPais(false);
         this.activarBotones(true, true, true, false, false);
 }//GEN-LAST:event_lstDisponibleMouseClicked
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
         if(lstDisponible.getSelectedIndex()==-1){
-            Mensajes.mensajeErrorGenerico("Debe seleccionar la unidad de medida que desea dar de baja");
+            Mensajes.mensajeErrorGenerico("Debe seleccionar el país que desea dar de baja");
             return;
         }
 
-        unidad_actual =(UnidadMedida) lstDisponible.getSelectedValue();
-        this.cargarDatos(unidad_actual);
-        this.activarUnidadMedida(false);
+        pais_actual =(Pais) lstDisponible.getSelectedValue();
+        this.cargarDatos(pais_actual);
+        this.activarPais(false);
         this.activarDisponible(false);
         this.activarBotones(false, false, false, true, true);
         this.operacion=Operacion.baja;
@@ -262,15 +280,15 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         if(lstDisponible.getSelectedIndex()==-1){
-            Mensajes.mensajeErrorGenerico("Debe seleccionar la unidad de medida que desea modificar");
+            Mensajes.mensajeErrorGenerico("Debe seleccionar el país que desea modificar");
             return;
         }
         this.activarDisponible(false);
         this.btnBaja.setEnabled(false);
-        this.activarUnidadMedida(true);
+        this.activarPais(true);
         this.activarBotones(false, false, false, true, true);
-        unidad_actual=(UnidadMedida) lstDisponible.getSelectedValue();
-        this.cargarDatos(unidad_actual);
+        pais_actual=(Pais) lstDisponible.getSelectedValue();
+        this.cargarDatos(pais_actual);
         this.operacion=Operacion.modificar;
         this.txtNombre.requestFocus();
 }//GEN-LAST:event_btnModificarActionPerformed
@@ -280,52 +298,39 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
 
         
         if(operacion==Operacion.nuevo){
-            UnidadMedida unidad=new UnidadMedida();
-            unidad.setNombre(txtNombre.getText().toUpperCase());
-            unidad.setDescripcion(txtDescripcion.getText());
+            Pais pai=new Pais();
+            pai.setNombre(txtNombre.getText().toUpperCase());
+            pai.setDescripcion(txtDescripcion.getText());
 
-            gestor.guardar(unidad);
-            Mensajes.mensajeInformacion("La unidad de medida "+unidad.getNombre()+"\n ha sido guardada exitosamente");
+            gestor.guardar(pai);
+            Mensajes.mensajeInformacion("El país "+pai.getNombre()+"\n ha sido guardado exitosamente");
             this.vaciar();
             cancelar();
-            this.cargarUnidadMedida();
+            this.cargarPaises();
             return;
         }
 
         if(operacion==Operacion.modificar){
-            unidad_actual.setNombre(txtNombre.getText().toUpperCase());
-            unidad_actual.setDescripcion(txtDescripcion.getText());
-            gestor.modificar(unidad_actual);
-            Mensajes.mensajeInformacion("La unidad de medida "+unidad_actual.getNombre()+"\n ha sido modificada exitosamente");
+            pais_actual.setNombre(txtNombre.getText().toUpperCase());
+            pais_actual.setDescripcion(txtDescripcion.getText());
+            gestor.modificar(pais_actual);
+            Mensajes.mensajeInformacion("El país "+pais_actual.getNombre()+"\n ha sido modificado exitosamente");
             this.vaciar();
             cancelar();
-            unidad_actual=null;
+            pais_actual=null;
             return;
         }
         if(operacion==Operacion.baja){
-            gestor.eliminar(unidad_actual);
-            Mensajes.mensajeInformacion("La unidad de medida "+unidad_actual.getNombre()+"\n ha sido eliminada exitosamente");
+            gestor.eliminar(pais_actual);
+            Mensajes.mensajeInformacion("El país "+pais_actual.getNombre()+"\n ha sido eliminado exitosamente");
             this.vaciar();
-            unidad_actual=null;
+            pais_actual=null;
             cancelar();
-            this.cargarUnidadMedida();
+            this.cargarPaises();
             return;
         }
-     }
+    }
 }//GEN-LAST:event_btnAceptarActionPerformed
-
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        this.dispose();
-        System.exit(0);
-}//GEN-LAST:event_btnSalirActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.activarUnidadMedida(false);
-        this.btnBaja.setEnabled(false);
-        this.activarDisponible(true);
-        this.activarBotones(true, false, false, false, false);
-        this.vaciar();
-}//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
     * @param args the command line arguments
@@ -333,7 +338,7 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PantallaABMUnidadMedida dialog = new PantallaABMUnidadMedida(new javax.swing.JFrame(), true);
+                PantallaABMPais dialog = new PantallaABMPais(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -362,12 +367,12 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
-     private void cargarUnidadMedida(){
+    private void cargarPaises(){
         try {
             lstDisponible.removeAll();
             DefaultListModel modelo = new DefaultListModel();
 
-            List<UnidadMedida> tipo = GestorUnidadMedida.listarUnidadMedida();
+            List<Pais> tipo = gestorPais.listarPaises();
             for(int i=0;i<tipo.size();i++){
                 modelo.addElement(tipo.get(i));
 
@@ -376,10 +381,10 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
 
             }
         } catch (Exception ex) {
-            Logger.getLogger(PantallaABMUnidadMedida.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PantallaABMPais.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void activarUnidadMedida(boolean flag){
+    private void activarPais(boolean flag){
         this.txtNombre.setEnabled(flag);
         this.txtDescripcion.setEnabled(flag);
     }
@@ -404,7 +409,7 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
 
 
      private void cancelar(){
-       this.activarUnidadMedida(false);
+       this.activarPais(false);
        this.btnBaja.setEnabled(false);
        this.activarDisponible(true);
        this.activarBotones(true, false, false,  false, false);
@@ -416,24 +421,25 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
         this.vaciar();
         this.activarDisponible(false);
         this.btnBaja.setEnabled(false);
-        this.activarUnidadMedida(true);
+        this.activarPais(true);
         this.activarBotones(false, false, false, true, true);
         this.operacion = Operacion.nuevo;
     }
 
-    private void cargarDatos(UnidadMedida unidad_actual) {
+    private void cargarDatos(Pais pai) {
 
-        this.txtDescripcion.setText(unidad_actual.getDescripcion());
-        this.txtNombre.setText(unidad_actual.getNombre());
+        this.txtDescripcion.setText(pai.getDescripcion());
+        this.txtNombre.setText(pai.getNombre());
 
     }
 
     private boolean validar() {
-             if (txtNombre.getText().compareTo("")==0)
+        if (txtNombre.getText().compareTo("")==0)
         {
             Mensajes.mensajeErrorGenerico("Debe ingresar el nombre");
             return false;
         }
         return true;
     }
+
 }

@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -44,7 +45,7 @@ public class Pais  implements java.io.Serializable {
     }
    
      @Id 
-    
+    @GeneratedValue
     @Column(name="ID_PAIS", unique=true, nullable=false, precision=3, scale=0)
     public short getIdPais() {
         return this.idPais;
@@ -79,6 +80,10 @@ public class Pais  implements java.io.Serializable {
     
     public void setTProvinciases(Set<Provincia> TProvinciases) {
         this.TProvinciases = TProvinciases;
+    }
+
+    public String toString(){
+        return this.getNombre();
     }
 
 
