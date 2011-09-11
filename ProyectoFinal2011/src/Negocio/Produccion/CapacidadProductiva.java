@@ -2,7 +2,7 @@ package Negocio.Produccion;
 // Generated 11/09/2011 15:37:24 by Hibernate Tools 3.2.1.GA
 
 
-import AAA.*;
+
 import Negocio.Compras.Material;
 import javax.persistence.Column;
 import javax.persistence.Entity;
