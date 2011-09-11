@@ -335,8 +335,16 @@ public class PantallaABMCargo extends javax.swing.JDialog {
             this.lstDisponible.setSelectedIndex(-1);
             return;
         }
+          if(operacion==Operacion.reactivar){
+            cargo_actual.setFecBaja(null);
+            cargo_actual.setMotivoBaja(null);
+            gestor.modificar(cargo_actual);
+            cancelar();
+            this.lstDisponible.setSelectedIndex(-1);
+            Mensajes.mensajeInformacion("El cargo "+cargo_actual.getNombre()+"\n ha sido dado reactivado exitosamente");
+        }
         
-        this.cancelar();
+  
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
