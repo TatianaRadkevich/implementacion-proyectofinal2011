@@ -172,6 +172,7 @@ public class BuscadorCliente extends javax.swing.JPanel {
         });
 
         btgBusqueda.add(rdbCUIL);
+        rdbCUIL.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rdbCUIL.setText("CUIL"); // NOI18N
         rdbCUIL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,6 +181,7 @@ public class BuscadorCliente extends javax.swing.JPanel {
         });
 
         btgBusqueda.add(rdbRazonSocial);
+        rdbRazonSocial.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rdbRazonSocial.setSelected(true);
         rdbRazonSocial.setText("Razón Social"); // NOI18N
         rdbRazonSocial.addActionListener(new java.awt.event.ActionListener() {
@@ -188,8 +190,10 @@ public class BuscadorCliente extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("CUIL:"); // NOI18N
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Razón Social:"); // NOI18N
 
         txtCUIL.setEditable(false);
@@ -211,7 +215,7 @@ public class BuscadorCliente extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlBuscador, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                        .addComponent(pnlBuscador, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(rdbRazonSocial)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -224,11 +228,11 @@ public class BuscadorCliente extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCUIL, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                        .addComponent(txtCUIL, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)))
+                        .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

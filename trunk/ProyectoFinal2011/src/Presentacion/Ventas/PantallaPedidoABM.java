@@ -198,12 +198,16 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("Prioridad:");
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Tipo Pedido:");
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("Fecha Necesidad:");
 
+        labelFechaEstimada.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         labelFechaEstimada.setText("Fecha Estimada:");
 
         pnlDetalle.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle"));
@@ -242,7 +246,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(PaneDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnDetalleElminar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -293,8 +297,10 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
 
         txtFecha.setEditable(false);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Fecha/Hora Generación:");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Estado:");
 
         txtEstado.setEditable(false);
@@ -307,11 +313,11 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                .addComponent(txtEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlInfoLayout.setVerticalGroup(
@@ -343,8 +349,8 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
                             .addComponent(jLabel6))
                         .addGap(18, 18, 18)
                         .addGroup(pnlPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbPrioridad, 0, 208, Short.MAX_VALUE)
-                            .addComponent(cmbTipoPedido, 0, 208, Short.MAX_VALUE))
+                            .addComponent(cmbPrioridad, 0, 198, Short.MAX_VALUE)
+                            .addComponent(cmbTipoPedido, 0, 198, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(pnlPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlPedidoLayout.createSequentialGroup()
@@ -354,8 +360,8 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)))
                         .addGroup(pnlPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFechaEstimada, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                            .addComponent(dtcFechaNecesidad, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)))
+                            .addComponent(txtFechaEstimada, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                            .addComponent(dtcFechaNecesidad, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)))
                     .addComponent(pnlCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -385,8 +391,10 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
 
         pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder("Cancelación"));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Fecha:");
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("Motivo:");
 
         txtFechaBaja.setEditable(false);
