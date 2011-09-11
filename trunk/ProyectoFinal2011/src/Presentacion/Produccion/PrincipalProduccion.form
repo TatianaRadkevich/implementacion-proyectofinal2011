@@ -48,6 +48,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnTipoDocumento" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
                   <Component id="btnCargo" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
                   <Component id="btnEmpleado" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
                   <Component id="btnTipoProducto" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
@@ -68,7 +69,9 @@
               <Component id="btnEmpleado" min="-2" pref="44" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnCargo" min="-2" pref="44" max="-2" attributes="0"/>
-              <EmptySpace pref="221" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btnTipoDocumento" min="-2" pref="44" max="-2" attributes="0"/>
+              <EmptySpace pref="171" max="32767" attributes="0"/>
               <Component id="btnFinalizar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
           </Group>
@@ -114,6 +117,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCargoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnTipoDocumento">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tipo documento"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTipoDocumentoActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
