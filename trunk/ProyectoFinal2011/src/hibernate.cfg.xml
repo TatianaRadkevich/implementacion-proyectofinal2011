@@ -3,10 +3,9 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-    <property name="hibernate.connection.url">jdbc:sqlserver://localhost\casa:1433;databaseName=Ramaty</property>
-    <property name="hibernate.connection.username">proyecto</property>
-    <property name="hibernate.connection.password">33437838</property>
-
+    <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=Ramaty</property>
+    <property name="hibernate.connection.username">sa</property>
+    <property name="hibernate.connection.password">123</property>
     <mapping class="Negocio.Administracion.AsistenciaEmpleado"/>
     <mapping class="Negocio.Administracion.Cargo"/>
     <mapping class="Negocio.Administracion.Cheque"/>
@@ -33,16 +32,17 @@
     <mapping class="Negocio.Produccion.DetalleEtapaProduccion"/>
     <mapping class="Negocio.Produccion.DetallePlanProduccion"/>
     <mapping class="Negocio.Produccion.DetalleProducto"/>
-    <mapping class="Negocio.Produccion.EstadoEtapaProduccion"/>
+    <mapping class="Negocio.Produccion.EtapaProduccion"/>
     <mapping class="Negocio.Produccion.EstadoMaquina"/>
     <mapping class="Negocio.Produccion.EtapaProduccionEspecifica"/>
     <mapping class="Negocio.Produccion.MaquinaHerramientaParticular"/>
     <mapping class="Negocio.Produccion.PlanProduccion"/>
-    <mapping class="Negocio.Produccion.Producto"/>  
+    <mapping class="Negocio.Produccion.Producto"/>
+    <mapping class="Negocio.Produccion.CapacidadProductiva"/>
     <mapping class="Negocio.Produccion.TipoMaquinaHerramienta"/>
     <mapping class="Negocio.Produccion.TipoProducto"/>
     <mapping class="Negocio.Produccion.UnidadMedida"/>
-    
+
     <mapping class="Negocio.UbicacionGeografica.Barrio"/>
     <mapping class="Negocio.UbicacionGeografica.Domicilio"/>
     <mapping class="Negocio.UbicacionGeografica.Localidad"/>
@@ -51,10 +51,11 @@
     <mapping class="Negocio.Ventas.Cliente"/>
     <mapping class="Negocio.Ventas.DetallePedido"/>
     <mapping class="Negocio.Ventas.EstadoPedido"/>
+    <mapping class="Negocio.Ventas.EstadoDetallePedido"/>
     <mapping class="Negocio.Ventas.Pedido"/>
     <mapping class="Negocio.Ventas.TipoCliente"/>
     <mapping class="Negocio.Ventas.TipoPedido"/>
-    <mapping class="Negocio.Web.ClienteWeb"/>
+    <mapping class="Negocio.Web.ClienteWeb"/>  
 
   </session-factory>
 </hibernate-configuration>
