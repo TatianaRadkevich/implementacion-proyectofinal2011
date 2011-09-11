@@ -6,7 +6,7 @@
 package BaseDeDatos.Produccion;
 
 import BaseDeDatos.HibernateUtil;
-import Negocio.Produccion.EstadoEtapaProduccion;
+import Negocio.Produccion.EtapaProduccion;
 import java.util.List;
 
 /**
@@ -14,16 +14,16 @@ import java.util.List;
  * @author Ivan
  */
 public class EtapaProduccionBD {
- public static List<EstadoEtapaProduccion> listarEtapaProduccion() throws ExceptionInInitializerError{
+ public static List<EtapaProduccion> listarEtapaProduccion() throws ExceptionInInitializerError{
 
-        List<EstadoEtapaProduccion> result=null;
-        result = HibernateUtil.ejecutarConsulta("from EstadoEtapaProduccion");
+        List<EtapaProduccion> result=null;
+        result = HibernateUtil.ejecutarConsulta("from EtapaProduccion");
         return result;
     }
 
-    public static List<EstadoEtapaProduccion> listarEtapaProduccionAlta() {
-        List<EstadoEtapaProduccion> result=null;
-        result = HibernateUtil.ejecutarConsulta("from EstadoEtapaProduccion as p where p.fecBaja=null");
+    public static List<EtapaProduccion> listarEtapaProduccionAlta() {
+        List<EtapaProduccion> result=null;
+        result = HibernateUtil.ejecutarConsulta("from EtapaProduccion as p where p.fecBaja=null");
         return result;
 
     }
@@ -32,12 +32,12 @@ public class EtapaProduccionBD {
 
     }
 
-    public static EstadoEtapaProduccion guardar(EstadoEtapaProduccion tipoProducto){
+    public static EtapaProduccion guardar(EtapaProduccion tipoProducto){
         HibernateUtil.guardarObjeto(tipoProducto);
         return tipoProducto;
     }
 
-    public static EstadoEtapaProduccion modificar(EstadoEtapaProduccion tipoProducto){
+    public static EtapaProduccion modificar(EtapaProduccion tipoProducto){
         HibernateUtil.modificarObjeto(tipoProducto);
         return tipoProducto;
     }
