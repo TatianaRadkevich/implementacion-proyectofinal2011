@@ -81,7 +81,9 @@ public class Sexo  implements java.io.Serializable {
         this.TEmpleadoses = TEmpleadoses;
     }
 
-
+    public String toString(){
+        return this.getNombre();
+    }
 
 
 }
