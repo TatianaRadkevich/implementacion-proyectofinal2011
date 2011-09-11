@@ -22,6 +22,16 @@ public abstract class GestorEmpleado {
     public static List<Empleado> listarProductos(){
         return EmpleadoBD.listarEmpleado();
     }
+    public static List<Cargo> listarCargos(){
+        return GestorCargo.listarCargosAlta();
+    }
+    public List<TipoDocumento> listarTipoDocumento(){
+        return GestorTipoDocumento.listarTipoDocumentos();
+    }
+
+    public List<Sexo> listarSexo(){
+        return GestorSexo.listarSexos();
+    }
 
     public abstract String mensajeResultado(String nombreProducto);
 
