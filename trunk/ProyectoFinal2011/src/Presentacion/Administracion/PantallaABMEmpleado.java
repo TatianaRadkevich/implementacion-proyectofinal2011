@@ -21,7 +21,6 @@ import Negocio.UbicacionGeografica.Localidad;
 import Negocio.UbicacionGeografica.Pais;
 import Negocio.UbicacionGeografica.Provincia;
 import Presentacion.IniciadorDeVentanas;
-import Presentacion.Mensajes;
 import gui.GUILocal;
 import java.awt.Dialog;
 

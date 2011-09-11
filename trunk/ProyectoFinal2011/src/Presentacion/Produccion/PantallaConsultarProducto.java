@@ -18,12 +18,10 @@ import Negocio.Produccion.GestorModificarProducto;
 import Negocio.Produccion.GestorProducto;
 import Negocio.Produccion.GestorReactivarProducto;
 import Negocio.Produccion.GestorRegistrarProducto;
-import Negocio.Produccion.GestorTipoProducto;
 import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
-import gui.GUILocal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,7 +105,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             }
         });
 
-        tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11));
         tabla_producto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -198,8 +196,8 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(138, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(100, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,8 +218,8 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(61, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
@@ -235,7 +233,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         pnlBuscar.add(txtNombre);
         txtNombre.setBounds(160, 50, 110, 20);
 
-        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11));
         chkMostrarTodos.setSelected(true);
         chkMostrarTodos.setText("Mostrar vigentes");
         pnlBuscar.add(chkMostrarTodos);
