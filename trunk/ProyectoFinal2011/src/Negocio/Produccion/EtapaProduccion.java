@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
     ,schema="dbo"
     ,catalog="Ramaty"
 )
-public class EstadoEtapaProduccion  implements java.io.Serializable {
+public class EtapaProduccion  implements java.io.Serializable {
 
 
      private short idEtapaProduccion;
@@ -34,15 +34,15 @@ public class EstadoEtapaProduccion  implements java.io.Serializable {
      private String motivoBaja;
      private Set<EtapaProduccionEspecifica> TEtapasProduccionEspecificas = new HashSet<EtapaProduccionEspecifica>(0);
 
-    public EstadoEtapaProduccion() {
+    public EtapaProduccion() {
     }
 
 	
-    public EstadoEtapaProduccion(short idEtapaProduccion, String nombre) {
+    public EtapaProduccion(short idEtapaProduccion, String nombre) {
         this.idEtapaProduccion = idEtapaProduccion;
         this.nombre = nombre;
     }
-    public EstadoEtapaProduccion(short idEtapaProduccion, String nombre, String descripcion, Date fecBaja, String motivoBaja, Set<EtapaProduccionEspecifica> TEtapasProduccionEspecificas) {
+    public EtapaProduccion(short idEtapaProduccion, String nombre, String descripcion, Date fecBaja, String motivoBaja, Set<EtapaProduccionEspecifica> TEtapasProduccionEspecificas) {
        this.idEtapaProduccion = idEtapaProduccion;
        this.nombre = nombre;
        this.descripcion = descripcion;
