@@ -68,32 +68,33 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Consultar empleado");
 
         btnBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Nombre:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Tipo Documento:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Número Documento:");
 
         cmbTipoDocumento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton1.setText("Buscar");
 
-        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11));
         chkMostrarTodos.setText("Mostrar vigentes");
 
-        chkMostrarDadosBaja.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkMostrarDadosBaja.setFont(new java.awt.Font("Tahoma", 1, 11));
         chkMostrarDadosBaja.setText("Mostrar dados de baja");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Legajo:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setText("Apellido:");
 
         javax.swing.GroupLayout btnBuscarLayout = new javax.swing.GroupLayout(btnBuscar);
@@ -165,7 +166,7 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Empleados"));
 
-        tbEmpleados.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tbEmpleados.setFont(new java.awt.Font("Tahoma", 1, 11));
         tbEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
