@@ -26,18 +26,18 @@ public class GestorEtapaProduccion {
         tipoProducto.setVisible(true);
     }
 
-    public static List<EstadoEtapaProduccion> listarTiposProductoAlta(){
+    public static List<EtapaProduccion> listarTiposProductoAlta(){
         return EtapaProduccionBD.listarEtapaProduccionAlta();
     }
-    public static List<EstadoEtapaProduccion> listarTipoProducto(){
+    public static List<EtapaProduccion> listarTipoProducto(){
         return EtapaProduccionBD.listarEtapaProduccion();
     }
-    public EstadoEtapaProduccion guardar(EstadoEtapaProduccion etapaProduccion){
+    public EtapaProduccion guardar(EtapaProduccion etapaProduccion){
         return EtapaProduccionBD.guardar(etapaProduccion);
     }
 
 
-    public EstadoEtapaProduccion modificar(EstadoEtapaProduccion etapaProduccion){
+    public EtapaProduccion modificar(EtapaProduccion etapaProduccion){
         return EtapaProduccionBD.modificar(etapaProduccion);
     }
 }
