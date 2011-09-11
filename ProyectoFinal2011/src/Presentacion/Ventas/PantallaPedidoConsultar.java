@@ -38,7 +38,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
     /** Creates new form PantallaConsultarPedido */
     public PantallaPedidoConsultar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        GUILocal.establecerGUILocal(this);
+        
         initComponents();
         HibernateUtil.getSessionFactory();
         tablita = new TablaManager<Pedido>(tbPedidos) {
@@ -161,9 +161,11 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
 
         pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
 
+        chkMostrarVigentes.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkMostrarVigentes.setSelected(true);
         chkMostrarVigentes.setText("Mostrar Vigentes");
 
+        chkMostrarCancelados.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkMostrarCancelados.setText("Mostrar Cancelados");
 
         btnBuscar.setText("Buscar");
@@ -175,8 +177,10 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Fecha Generación"));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Desde:");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Hasta:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -209,10 +213,13 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Razón Social:");
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Nro. Pedido:");
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("CUIT:");
 
         javax.swing.GroupLayout pnlBuscarLayout = new javax.swing.GroupLayout(pnlBuscar);
