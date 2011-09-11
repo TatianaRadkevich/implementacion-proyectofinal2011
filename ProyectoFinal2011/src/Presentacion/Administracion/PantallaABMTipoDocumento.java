@@ -34,7 +34,6 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
     /** Creates new form AdministrarTipoDocumento */
    public PantallaABMTipoDocumento(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        GUILocal.establecerGUILocal(this);
         initComponents();
 
        this.activarTipoDocumento(false);
