@@ -35,7 +35,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
     /** Creates new form AdministrarCargos */
     public PantallaABMCargo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        GUILocal.establecerGUILocal(this);
+     
         initComponents();
 
        this.activarCargo(false);
