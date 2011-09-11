@@ -11,7 +11,7 @@
 
 package Presentacion.Produccion;
 
-import Negocio.Produccion.EstadoEtapaProduccion;
+import Negocio.Produccion.EtapaProduccion;
 import Negocio.Produccion.GestorEtapaProduccion;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
@@ -30,7 +30,7 @@ import javax.swing.DefaultListModel;
 public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
 
         private int operacion;
-        private EstadoEtapaProduccion etapa_actual=null;
+        private EtapaProduccion etapa_actual=null;
         private GestorEtapaProduccion gestor=new GestorEtapaProduccion();
     /** Creates new form PantallaABMEtapaProduccion */
     public PantallaABMEtapaProduccion(java.awt.Frame parent, boolean modal) {
@@ -306,7 +306,7 @@ public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
             return;
         }
 
-        etapa_actual=(EstadoEtapaProduccion) lstDisponible.getSelectedValue();
+        etapa_actual=(EtapaProduccion) lstDisponible.getSelectedValue();
         this.cargarDatos(etapa_actual);
         Format formato=new SimpleDateFormat("dd/MM/yyyy");
         String fecha=formato.format(new Date());
@@ -330,7 +330,7 @@ public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
         this.activarCargo(true);
         this.activarBotones(false, false, false, false, true, true);
 
-        etapa_actual=(EstadoEtapaProduccion) lstDisponible.getSelectedValue();
+        etapa_actual=(EtapaProduccion) lstDisponible.getSelectedValue();
         this.cargarDatos(etapa_actual);
         if(etapa_actual.getFecBaja()!=null){
             this.btnAlta.setEnabled(true);
@@ -348,7 +348,7 @@ public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
 
         }
         if(operacion==Operacion.nuevo){
-            EstadoEtapaProduccion tipo=new EstadoEtapaProduccion();
+            EtapaProduccion tipo=new EtapaProduccion();
             tipo.setNombre(txtNombre.getText().toUpperCase());
             tipo.setDescripcion(txtDescripcion.getText());
 
@@ -446,7 +446,7 @@ public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
             lstDisponible.removeAll();
             DefaultListModel modelo = new DefaultListModel();
 
-            List<EstadoEtapaProduccion> tipo = GestorEtapaProduccion.listarTipoProducto();
+            List<EtapaProduccion> tipo = GestorEtapaProduccion.listarTipoProducto();
             for(int i=0;i<tipo.size();i++){
                 modelo.addElement(tipo.get(i));
 
@@ -491,7 +491,7 @@ public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
     private boolean validar(){
         return true;
     }
-    private void cargarDatos(EstadoEtapaProduccion tipo){
+    private void cargarDatos(EtapaProduccion tipo){
 
         this.txtDescripcion.setText(tipo.getDescripcion());
         this.txtNombre.setText(tipo.getNombre());
