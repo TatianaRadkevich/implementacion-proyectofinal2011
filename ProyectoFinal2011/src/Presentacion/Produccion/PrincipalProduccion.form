@@ -47,12 +47,13 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnTipoDocumento" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
-                  <Component id="btnCargo" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
-                  <Component id="btnEmpleado" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
-                  <Component id="btnTipoProducto" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
-                  <Component id="btnProducto" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="jButton1" alignment="0" max="32767" attributes="1"/>
+                  <Component id="btnTipoDocumento" alignment="0" pref="158" max="32767" attributes="1"/>
+                  <Component id="btnCargo" alignment="0" pref="158" max="32767" attributes="1"/>
+                  <Component id="btnEmpleado" alignment="0" pref="158" max="32767" attributes="1"/>
+                  <Component id="btnTipoProducto" alignment="0" pref="158" max="32767" attributes="1"/>
+                  <Component id="btnProducto" alignment="0" pref="158" max="32767" attributes="1"/>
               </Group>
               <EmptySpace pref="513" max="32767" attributes="0"/>
           </Group>
@@ -71,7 +72,9 @@
               <Component id="btnCargo" min="-2" pref="44" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnTipoDocumento" min="-2" pref="44" max="-2" attributes="0"/>
-              <EmptySpace pref="171" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jButton1" min="-2" pref="36" max="-2" attributes="0"/>
+              <EmptySpace pref="117" max="32767" attributes="0"/>
               <Component id="btnFinalizar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
           </Group>
@@ -125,6 +128,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTipoDocumentoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Estructura de producto"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -50,7 +50,6 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         super((JDialog) null, true);
         this.gestor = gestor;
         initComponents();
-        GUILocal.establecerGUILocal(this);
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
         //Seteo de variables//
         tmEtapaEspecifica = new TablaManager<EtapaProduccionEspecifica>(tbEtapas) {
@@ -157,7 +156,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         cmbCargo.setModel(new DefaultComboBoxModel(gestor.listarCargos().toArray()));
         cmbTipoEtapa.setModel(new DefaultComboBoxModel(gestor.listarEtapasGenericas().toArray()));
         cmbTipoProducto.setModel(new DefaultComboBoxModel(gestor.listarTipoProducto().toArray()));
-        cmbProducto.addActionListener(new ActionListener() {
+        cmbTipoProducto.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 if (cmbTipoProducto.getSelectedIndex() != -1) {
@@ -728,9 +727,10 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEliminarDetalleEtapaActionPerformed
 
     public static void main(String args[]) {
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//
-//            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
+            public void run() {
+                new GestorEstructura().iniciarCU();
 //                PantallaEstructuraProductoABM dialog = new PantallaEstructuraProductoABM(new javax.swing.JFrame(), true);
 //                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 //
@@ -739,8 +739,8 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 //                    }
 //                });
 //                dialog.setVisible(true);
-//            }
-//        });
+            }
+        });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
