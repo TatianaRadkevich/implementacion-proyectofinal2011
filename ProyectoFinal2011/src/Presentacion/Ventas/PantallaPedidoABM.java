@@ -42,7 +42,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
     public PantallaPedidoABM(GestorPedido gestor) {
         super((JDialog) null, true);
         this.gestor = gestor;
-        initComponents();       
+        initComponents();
         //Seteo de variables//
         tablaDetalle = new TablaManager<DetallePedido>(tbDetalle) {
 
@@ -81,7 +81,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         cargarCombos();
         cargarValidaciones();
         pnlInfo.setVisible(false);
-        habilitarBaja(false,false,null,"");
+        habilitarBaja(false, false, null, "");
     }
 
     private void cargarValidaciones() {
@@ -107,8 +107,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         dtcFechaNecesidad.setEnabled(valor);
     }
 
-    public void habilitarBaja(boolean visible,boolean edittable, Date fecha,String motivo)
-    {
+    public void habilitarBaja(boolean visible, boolean edittable, Date fecha, String motivo) {
         pnlBaja.setVisible(visible);
         txtMotivoBaja.setEditable(edittable);
         txtMotivoBaja.setText(Utilidades.parseString(motivo));
@@ -126,8 +125,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         tablaDetalle.setDatos(pedido.getDetallePedido());
         cmbPrioridad.setSelectedIndex(pedido.getPrioridad());
         cmbTipoPedido.setSelectedItem(pedido.getTipoPedido());
-        if(pedido.getFecBaja()!=null)
-        {
+        if (pedido.getFecBaja() != null) {
             pnlBaja.setVisible(true);
             txtFechaBaja.setText(Utilidades.parseFecha(pedido.getFecBaja()));
             txtMotivoBaja.setText(Utilidades.parseString(pedido.getMotivoBaja()));
@@ -473,7 +471,8 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         pedido.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
         try {
             gestor.ejecutarCU(pedido);
-            this.setVisible(false);
+            gestor.finalizarCU();
+            
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
@@ -491,11 +490,10 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
             DetallePedido nuevoDetalle = panDet.getDetalle();
             for (DetallePedido dp : tablaDetalle.getDatos()) {
                 if (dp.getProducto().getNombre().equals(nuevoDetalle.getProducto().getNombre())) {
-                    String mensage=
-                            "¡Ya existe un detalle que contiene el producto "+dp.getProducto().getNombre()+"!\n"
+                    String mensage =
+                            "¡Ya existe un detalle que contiene el producto " + dp.getProducto().getNombre() + "!\n"
                             + "¿Desea agregar la cantidad ingresada al detalle existente?";
-                    if(Mensajes.mensajeConfirmacionGenerico(mensage))
-                    {
+                    if (Mensajes.mensajeConfirmacionGenerico(mensage)) {
                         dp.setCantidad(dp.getCantidad() + nuevoDetalle.getCantidad());
                         tablaDetalle.updateTabla();
                     }
