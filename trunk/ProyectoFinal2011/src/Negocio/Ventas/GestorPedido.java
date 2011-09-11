@@ -37,7 +37,7 @@ public abstract class GestorPedido {
     }
 
     public List<TipoProducto> getTipoProductos() {
-        return TipoProductoBD.listarTiposProductos();
+        return TipoProductoBD.listarTiposProductosAlta();
     }
 
      public List<TipoPedido> getTipoPedidos() {
@@ -48,7 +48,7 @@ public abstract class GestorPedido {
     {
          if(tp==null)
              return new ArrayList();
-         return BaseDeDatos.Produccion.ProductoBD.listarProductos(tp);
+         return ProductoBD.listarProductos(tp);
      }
 
     public List getPrioridades()
