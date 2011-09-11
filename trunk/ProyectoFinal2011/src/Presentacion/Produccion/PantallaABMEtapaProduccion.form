@@ -73,8 +73,8 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jScrollPane1" pref="275" max="32767" attributes="0"/>
-                              <Component id="txtNombre" alignment="1" pref="275" max="32767" attributes="1"/>
+                              <Component id="jScrollPane1" pref="286" max="32767" attributes="0"/>
+                              <Component id="txtNombre" alignment="1" pref="286" max="32767" attributes="1"/>
                           </Group>
                       </Group>
                       <Component id="pnlBaja" alignment="1" max="32767" attributes="1"/>
@@ -271,13 +271,8 @@
                               <Component id="btnModificar" alignment="1" min="-2" pref="78" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnReactivar" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnBaja" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="btnReactivar" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnBaja" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
