@@ -49,6 +49,9 @@ public class Pedido implements java.io.Serializable {
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_GENERACION")
     private Date fecHoraGeneracion;
+     @Temporal(value = TemporalType.TIMESTAMP)
+     @Column(name = "FEC_CLI_REC")
+    private Date fechaClienteRecep;
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_REAL_ENTREGA")
     private Date fecHoraRealEntrega;
@@ -216,5 +219,14 @@ public class Pedido implements java.io.Serializable {
         return super.equals(obj);
     }
 
+    public Date getFechaClienteRecep() {
+        return fechaClienteRecep;
+    }
+
+    public void setFechaClienteRecep(Date fechaClienteRecep) {
+        this.fechaClienteRecep = fechaClienteRecep;
+    }
+
+    
 
 }
