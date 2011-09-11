@@ -33,7 +33,9 @@ public class CargoBD {
     }
 
     public static List<Cargo> listarCargosAlta() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        List<Cargo> result=null;
+        result = HibernateUtil.ejecutarConsulta("from Cargo as p where p.fecBaja=null");
+        return result;
     }
 
     public CargoBD() {
