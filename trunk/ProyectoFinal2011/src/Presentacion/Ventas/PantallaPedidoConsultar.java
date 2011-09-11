@@ -46,12 +46,12 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
             @Override
             public Vector getCabecera() {
                 Vector cabcera = new Vector();
-                cabcera.add("Estado");
+                
                 cabcera.add("Nro. Pedido");//col 3
                 cabcera.add("Fecha Generación");//col 4
                 cabcera.add("Razón Social");//col 1
                 cabcera.add("CUIL");//col 2                
-                
+                cabcera.add("Estado");
                 return cabcera;
            
             }
@@ -59,11 +59,12 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(Pedido elemento) {
                 Vector fila = new Vector();
-                fila.add(elemento.getEstadoPedido());
+                
                 fila.add(elemento.getIdPedido());//col 3
                 fila.add(Utilidades.parseFecha(elemento.getFechaGeneracion()));//col 4
                 fila.add(elemento.getCliente().getRazonSocial());//col 1
                 fila.add(elemento.getCliente().getCuit());//col 2
+                fila.add(elemento.getEstadoPedido());
                 return fila;
             }
         };
