@@ -13,6 +13,7 @@ package Presentacion.Produccion;
 
 import Negocio.Administracion.Empleado;
 import Presentacion.Administracion.PantallaABMCargo;
+import Presentacion.Administracion.PantallaABMTipoDocumento;
 import Presentacion.Administracion.PantallaConsultarEmpleado;
 import gui.GUILocal;
 
@@ -44,6 +45,7 @@ public class PrincipalProduccion extends javax.swing.JFrame {
         btnTipoProducto = new javax.swing.JButton();
         btnEmpleado = new javax.swing.JButton();
         btnCargo = new javax.swing.JButton();
+        btnTipoDocumento = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -86,6 +88,13 @@ public class PrincipalProduccion extends javax.swing.JFrame {
             }
         });
 
+        btnTipoDocumento.setText("Tipo documento");
+        btnTipoDocumento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTipoDocumentoActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
@@ -105,6 +114,7 @@ public class PrincipalProduccion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -122,7 +132,9 @@ public class PrincipalProduccion extends javax.swing.JFrame {
                 .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 221, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
                 .addComponent(btnFinalizar)
                 .addGap(23, 23, 23))
         );
@@ -159,6 +171,12 @@ public class PrincipalProduccion extends javax.swing.JFrame {
         cargo.setVisible(true);
     }//GEN-LAST:event_btnCargoActionPerformed
 
+    private void btnTipoDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoDocumentoActionPerformed
+        // TODO add your handling code here:
+        PantallaABMTipoDocumento documento= new PantallaABMTipoDocumento(this, true);
+        documento.setVisible(true);
+    }//GEN-LAST:event_btnTipoDocumentoActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -175,6 +193,7 @@ public class PrincipalProduccion extends javax.swing.JFrame {
     private javax.swing.JButton btnEmpleado;
     private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnProducto;
+    private javax.swing.JButton btnTipoDocumento;
     private javax.swing.JButton btnTipoProducto;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
