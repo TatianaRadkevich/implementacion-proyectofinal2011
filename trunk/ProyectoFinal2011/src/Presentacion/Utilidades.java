@@ -80,6 +80,14 @@ public class Utilidades {
         }
     }
 
+   public static Byte parseByte(String value) {
+        try {
+            return new Byte(value);
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
     public static String parseString(Object value) {
         try {
             return value.toString();
