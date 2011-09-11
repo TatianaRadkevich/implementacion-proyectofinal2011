@@ -26,7 +26,7 @@ public class EstadoDetallePedido implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_EDETALLE_PEDIDO", unique = true, nullable = false, precision = 2, scale = 0)
     private int idEdetallePedido;
-    @Column(name = "NOMBRE", nullable = false, length = 50)
+    @Column(name = "NOMBRE", nullable = true, length = 50)
     private String nombre;
     @Column(name = "DESCRIPCION", length = 200)
     private String descripcion;
