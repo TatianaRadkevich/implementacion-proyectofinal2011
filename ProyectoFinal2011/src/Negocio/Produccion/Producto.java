@@ -140,7 +140,7 @@ public class Producto  implements java.io.Serializable {
         this.motivoBaja = motivoBaja;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TProductos")
- @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+// @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     public Set<EtapaProduccionEspecifica> getTEtapasProduccionEspecificas() {
         return this.EtapaProduccionEspecifica;
     }
