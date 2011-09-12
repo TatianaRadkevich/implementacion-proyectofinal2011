@@ -8,12 +8,25 @@
  *
  * Created on 11/09/2011, 18:10:55
  */
-
 package Presentacion.Produccion;
 
+import BaseDeDatos.Administracion.EmpleadoBD;
+import Negocio.Administracion.Empleado;
 import Negocio.Produccion.DetallePlanProduccion;
+import Negocio.Produccion.EtapaProduccionEspecifica;
 import Negocio.Produccion.Producto;
+import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.Pedido;
+import Presentacion.Mensajes;
+import Presentacion.TablaManager;
+import Presentacion.Utilidades;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 /**
  *
@@ -23,47 +36,181 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
     /** Creates new form PantallaABMPlanificacion */
     private Pedido pedido;
+    private TablaManager<DetallePedido> tmDetallePedido;
+    private TablaManager<EtapaProduccionEspecifica> tmEstructura;
+    private TablaManager<DetallePlanProduccion> tmDetallePlanProduccion;
 
     public PantallaABMPlanificacion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
-    public PantallaABMPlanificacion(Pedido p)
-    {
-        this(null,true);
-        pedido=p;
+    public PantallaABMPlanificacion(Pedido p) {
+        this(null, true);
+        pedido = p;
         cargarDatosPedido(p);
         cargarCombos();
 
-    }
 
-    private void cargarCombos()
-    {
 
     }
 
-    public void cargarDatosPedido(Pedido p)
-    {
+    private void inicializarTablas() {
+        tmDetallePedido = new TablaManager<DetallePedido>(tbDetallePedido) {
 
+            @Override
+            public Vector ObjetoFila(DetallePedido elemento) {
+                Vector fila = new Vector();
+                fila.add(elemento.getProducto().getTTproducto().getNombre());
+                fila.add(elemento.getProducto().getNombre());
+                fila.add(elemento.getCantidad());
+
+                return fila;
+            }
+
+            @Override
+            public Vector getCabecera() {
+                Vector cabecera = new Vector();
+                cabecera.add("Tipo Producto");
+                cabecera.add("Producto");
+                cabecera.add("Cantidad");
+                return cabecera;
+            }
+        };
+        tmDetallePedido.addListenerModificacionTabla(new TableModelListener() {
+
+            public void tableChanged(TableModelEvent e) {
+                cargarEstructura(tmDetallePedido.getSeletedObject().getProducto());
+            }
+        });
+
+        /***************************************************************************/
+        tmEstructura = new TablaManager<EtapaProduccionEspecifica>(tbEstructura) {
+
+            @Override
+            public Vector ObjetoFila(EtapaProduccionEspecifica elemento) {
+                Vector fila = new Vector();
+                fila.add(elemento.getNumeroOrden());
+                fila.add(elemento.getEtapaProduccion().getNombre());
+                fila.add(elemento.getDetalleEtapaProduccion().get(0).getTipoMaquinaHerramienta().getNombre());
+                fila.add(elemento.getCargo().getNombre());
+                fila.add(elemento.getHorasHombre());
+                return fila;
+            }
+
+            @Override
+            public Vector getCabecera() {
+                Vector cabecera = new Vector();
+                cabecera.add("Nro Oreden");
+                cabecera.add("Etapa");
+                cabecera.add("Tipo maquina");
+                cabecera.add("Cargo empleado");
+                cabecera.add("Horas hombre");
+                return cabecera;
+            }
+        };
+
+        /******************************************************************************/
+        tmDetallePlanProduccion = new TablaManager<DetallePlanProduccion>(tbDetallePlan) {
+
+            @Override
+            public Vector ObjetoFila(DetallePlanProduccion elemento) {
+                Vector fila = new Vector();
+                fila.add(elemento.getTEtapasProduccionEspecifica().getNumeroOrden());
+                fila.add(elemento.getTEtapasProduccionEspecifica().getEtapaProduccion().getNombre());
+                fila.add((elemento.getTMaquinasHerramientaParticular() == null) ? "" : elemento.getTMaquinasHerramientaParticular().getNombre());
+                fila.add((elemento.getTEmpleados() == null) ? "" : elemento.getTEmpleados().getNombre());
+                fila.add((elemento.getFecHoraPrevistaInicio() == null) ? "" : Utilidades.parseFecha(elemento.getFecHoraPrevistaInicio()));
+                return fila;
+            }
+
+            @Override
+            public Vector getCabecera() {
+                Vector cabecera = new Vector();
+                cabecera.add("Nro. Orden");
+                cabecera.add("Etapa");
+                cabecera.add("Maquina");
+                cabecera.add("Empleado");
+                cabecera.add("Fecha/Hora inicio");
+
+                return cabecera;
+            }
+        };
+        tmDetallePlanProduccion.addListenerModificaionSelecion(new ListSelectionListener() {
+
+            public void valueChanged(ListSelectionEvent e) {
+                cargarDatosEtapaPlanificacion(tmDetallePlanProduccion.getSeletedObject());
+            }
+        });
     }
 
-    private void cargarEstructura(Producto p)
-    {
+    private void cargarCombos() {
+        cmbResponsable.removeAllItems();
+        List<Empleado> emp = EmpleadoBD.listarEmpleado();
+        for (int i = 0; i < emp.size(); i++) {
+            cmbResponsable.addItem(emp.get(i));
+        }
 
+        cmbResponsable.repaint();
     }
 
-    private void habilitarDatosPlanificacion(boolean valor)
-    {
-        tbResultado.setEnabled(!valor);
+    public void cargarDatosPedido(Pedido p) {
+        lblRazonSocial.setText(p.getCliente().getRazonSocial());
+        lblFechaNecesidad.setText(Utilidades.parseFecha(p.getFechaSolicitada()));
+        lblFechaEntrega.setText(Utilidades.parseFecha(p.getFechaEstimadaEntrega()));
+        lblTipoPedido.setText(p.getTipoPedido().getNombre());
+        tmDetallePedido.setDatos(p.getDetallePedido());
+    }
 
+    private void cargarEstructura(Producto p) {
+        tmEstructura.setDatos(new ArrayList(p.getTEtapasProduccionEspecificas()));
+
+        ArrayList<DetallePlanProduccion> aux=new ArrayList<DetallePlanProduccion>(p.getTEtapasProduccionEspecificas().size());
+        for(int i=0;i<p.getTDetallesProductos().size();i++)
+            aux.add(new DetallePlanProduccion(tmEstructura.getDato(i)));
         
-        txtObservaciones.setEditable(valor);
+        tmDetallePlanProduccion.setDatos(aux);
+
     }
 
-    private void cagarDatosEtapaPlanificacion(DetallePlanProduccion detalle)
-    {
+    private void habilitarDatosPlanificacion(boolean valor) {
+        tbDetallePlan.setEnabled(!valor);
+        btnModificar.setEnabled(!valor); //cambió el nombre de componente
 
+        fhInicioDetallePlan.setEnabled(valor);
+        cmbMaquina.setEnabled(valor);
+        cmbOperario.setEnabled(valor);
+        txtObservaciones.setEditable(valor);
+        btnAceptar.setEnabled(valor); //cambió el nombre de componente
+        btnCancelar.setEnabled(valor); //cambió el nombre de componente
+    }
+
+    public boolean validarDatosDetalle() {
+        if (fhInicioDetallePlan.getDate() == null) {
+            Mensajes.mensajeErrorGenerico("Debe ingresar la fecha de inicio del detalle de plan");
+            fhInicioDetallePlan.requestFocus();
+            return false;
+        }
+
+        if (cmbMaquina.getSelectedIndex() == -1) {
+            Mensajes.mensajeErrorGenerico("Debe seleccionar una máquina");
+            cmbMaquina.requestFocus();
+            return false;
+        }
+
+        if (cmbOperario.getSelectedIndex() == -1) {
+            Mensajes.mensajeErrorGenerico("Debe seleccionar un operario");
+            cmbOperario.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private void cargarDatosEtapaPlanificacion(DetallePlanProduccion detalle) {
+        fhInicioDetallePlan.setDate(detalle.getFecHoraPrevistaInicio());
+        cmbMaquina.setSelectedItem(detalle.getTMaquinasHerramientaParticular());
+        cmbOperario.setSelectedItem(detalle.getTEmpleados());
+        txtObservaciones.setText(detalle.getObservaciones());
     }
 
     /** This method is called from within the constructor to
@@ -87,23 +234,23 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         lblFechaNecesidad = new javax.swing.JLabel();
         lblTipoPedido = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblFechaEntrega = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbPedidos = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
+        tbDetallePedido = new javax.swing.JTable();
+        pnlEstructura = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tbPedidos1 = new javax.swing.JTable();
-        jPanel5 = new javax.swing.JPanel();
+        tbEstructura = new javax.swing.JTable();
+        pnlDetallePlanificacion = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tbResultado = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        tbDetallePlan = new javax.swing.JTable();
+        btnModificar = new javax.swing.JButton();
         pnlDetallePlanificaion = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         fhInicioDetallePlan = new com.toedter.calendar.JSpinnerDateEditor();
-        jButton5 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         cmbMaquina = new javax.swing.JComboBox();
@@ -142,8 +289,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Fecha necesidad:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel3.setText("Fecha entrega material:");
+        lblFechaEntrega.setFont(new java.awt.Font("Tahoma", 1, 11));
+        lblFechaEntrega.setText("Fecha entrega material:");
 
         jLabel7.setText("[fecha entrga]");
 
@@ -154,7 +301,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
+                    .addComponent(lblFechaEntrega)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel4))
@@ -182,7 +329,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                     .addComponent(lblTipoPedido))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(lblFechaEntrega)
                     .addComponent(jLabel7))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -197,10 +344,10 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                     .addComponent(jLabel15)
                     .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cmbResponsable, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fhInicioPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fhInicioPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbResponsable, 0, 186, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -221,10 +368,10 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resultado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
 
-        tbPedidos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        tbPedidos.setModel(new javax.swing.table.DefaultTableModel(
+        tbDetallePedido.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tbDetallePedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -235,37 +382,37 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 "Producto", "Cantidad", "Tipo producto"
             }
         ));
-        tbPedidos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tbPedidos.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbDetallePedido.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbDetallePedido.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbPedidosMouseClicked(evt);
+                tbDetallePedidoMouseClicked(evt);
             }
         });
-        tbPedidos.addComponentListener(new java.awt.event.ComponentAdapter() {
+        tbDetallePedido.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
-                tbPedidosComponentShown(evt);
+                tbDetallePedidoComponentShown(evt);
             }
         });
-        tbPedidos.addContainerListener(new java.awt.event.ContainerAdapter() {
+        tbDetallePedido.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
-                tbPedidosComponentAdded(evt);
+                tbDetallePedidoComponentAdded(evt);
             }
         });
-        tbPedidos.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        tbDetallePedido.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                tbPedidosPropertyChange(evt);
+                tbDetallePedidoPropertyChange(evt);
             }
         });
-        tbPedidos.addAncestorListener(new javax.swing.event.AncestorListener() {
+        tbDetallePedido.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                tbPedidosAncestorAdded(evt);
+                tbDetallePedidoAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jScrollPane2.setViewportView(tbPedidos);
+        jScrollPane2.setViewportView(tbDetallePedido);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -283,10 +430,10 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resultado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        pnlEstructura.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estructura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
 
-        tbPedidos1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        tbPedidos1.setModel(new javax.swing.table.DefaultTableModel(
+        tbEstructura.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tbEstructura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -297,58 +444,58 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 "Nro. Orden", "Etapa", "Tipo maquina", "Cargo empleado", "Horas hombre"
             }
         ));
-        tbPedidos1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tbPedidos1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbEstructura.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbEstructura.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbPedidos1MouseClicked(evt);
+                tbEstructuraMouseClicked(evt);
             }
         });
-        tbPedidos1.addComponentListener(new java.awt.event.ComponentAdapter() {
+        tbEstructura.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
-                tbPedidos1ComponentShown(evt);
+                tbEstructuraComponentShown(evt);
             }
         });
-        tbPedidos1.addContainerListener(new java.awt.event.ContainerAdapter() {
+        tbEstructura.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
-                tbPedidos1ComponentAdded(evt);
+                tbEstructuraComponentAdded(evt);
             }
         });
-        tbPedidos1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        tbEstructura.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                tbPedidos1PropertyChange(evt);
+                tbEstructuraPropertyChange(evt);
             }
         });
-        tbPedidos1.addAncestorListener(new javax.swing.event.AncestorListener() {
+        tbEstructura.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                tbPedidos1AncestorAdded(evt);
+                tbEstructuraAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jScrollPane3.setViewportView(tbPedidos1);
+        jScrollPane3.setViewportView(tbEstructura);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlEstructuraLayout = new javax.swing.GroupLayout(pnlEstructura);
+        pnlEstructura.setLayout(pnlEstructuraLayout);
+        pnlEstructuraLayout.setHorizontalGroup(
+            pnlEstructuraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEstructuraLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        pnlEstructuraLayout.setVerticalGroup(
+            pnlEstructuraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEstructuraLayout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resultado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        pnlDetallePlanificacion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle del Plan", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
 
-        tbResultado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        tbResultado.setModel(new javax.swing.table.DefaultTableModel(
+        tbDetallePlan.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tbDetallePlan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -359,56 +506,61 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 "Nro. Orden", "Etapa", "Maquina", "Empleado", "Fecha hora inicio"
             }
         ));
-        tbResultado.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tbResultado.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbDetallePlan.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbDetallePlan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbResultadoMouseClicked(evt);
+                tbDetallePlanMouseClicked(evt);
             }
         });
-        tbResultado.addComponentListener(new java.awt.event.ComponentAdapter() {
+        tbDetallePlan.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
-                tbResultadoComponentShown(evt);
+                tbDetallePlanComponentShown(evt);
             }
         });
-        tbResultado.addContainerListener(new java.awt.event.ContainerAdapter() {
+        tbDetallePlan.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
-                tbResultadoComponentAdded(evt);
+                tbDetallePlanComponentAdded(evt);
             }
         });
-        tbResultado.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        tbDetallePlan.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                tbResultadoPropertyChange(evt);
+                tbDetallePlanPropertyChange(evt);
             }
         });
-        tbResultado.addAncestorListener(new javax.swing.event.AncestorListener() {
+        tbDetallePlan.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                tbResultadoAncestorAdded(evt);
+                tbDetallePlanAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jScrollPane4.setViewportView(tbResultado);
+        jScrollPane4.setViewportView(tbDetallePlan);
 
-        jButton2.setText("Modificar");
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlDetallePlanificacionLayout = new javax.swing.GroupLayout(pnlDetallePlanificacion);
+        pnlDetallePlanificacion.setLayout(pnlDetallePlanificacionLayout);
+        pnlDetallePlanificacionLayout.setHorizontalGroup(
+            pnlDetallePlanificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetallePlanificacionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btnModificar)
                 .addContainerGap())
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
+        pnlDetallePlanificacionLayout.setVerticalGroup(
+            pnlDetallePlanificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDetallePlanificacionLayout.createSequentialGroup()
+                .addGroup(pnlDetallePlanificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnModificar)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -418,12 +570,17 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel14.setText("Fecha/hora inicio:");
 
-        jButton5.setText("Cancelar");
-
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
             }
         });
 
@@ -458,9 +615,9 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetallePlanificaionLayout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnAceptar)
                         .addGap(10, 10, 10)
-                        .addComponent(jButton5))
+                        .addComponent(btnCancelar))
                     .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDetallePlanificaionLayout.createSequentialGroup()
                             .addGap(34, 34, 34)
@@ -501,8 +658,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton5))
+                    .addComponent(btnAceptar)
+                    .addComponent(btnCancelar))
                 .addContainerGap())
         );
 
@@ -526,8 +683,9 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pnlDetallePlanificaion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -537,10 +695,9 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                                 .addComponent(jButton4)
                                 .addGap(17, 17, 17)
                                 .addComponent(jButton3))
-                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                            .addComponent(pnlEstructura, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlDetallePlanificacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -549,12 +706,12 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel4, 0, 148, Short.MAX_VALUE)
+                    .addComponent(pnlEstructura, 0, 148, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlDetallePlanificaion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlDetallePlanificacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton4)
@@ -565,71 +722,69 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tbPedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPedidosMouseClicked
+    private void tbDetallePedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDetallePedidoMouseClicked
         // TODO add your handling code here:
-       
-    }//GEN-LAST:event_tbPedidosMouseClicked
+    }//GEN-LAST:event_tbDetallePedidoMouseClicked
 
-    private void tbPedidosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tbPedidosComponentShown
+    private void tbDetallePedidoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tbDetallePedidoComponentShown
+}//GEN-LAST:event_tbDetallePedidoComponentShown
 
-}//GEN-LAST:event_tbPedidosComponentShown
+    private void tbDetallePedidoComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tbDetallePedidoComponentAdded
+}//GEN-LAST:event_tbDetallePedidoComponentAdded
 
-    private void tbPedidosComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tbPedidosComponentAdded
-
-}//GEN-LAST:event_tbPedidosComponentAdded
-
-    private void tbPedidosPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbPedidosPropertyChange
+    private void tbDetallePedidoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbDetallePedidoPropertyChange
         // TODO add your handling code here:
-      
-    }//GEN-LAST:event_tbPedidosPropertyChange
+    }//GEN-LAST:event_tbDetallePedidoPropertyChange
 
-    private void tbPedidosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbPedidosAncestorAdded
+    private void tbDetallePedidoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbDetallePedidoAncestorAdded
+}//GEN-LAST:event_tbDetallePedidoAncestorAdded
 
-}//GEN-LAST:event_tbPedidosAncestorAdded
-
-    private void tbPedidos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPedidos1MouseClicked
+    private void tbEstructuraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbEstructuraMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbPedidos1MouseClicked
+    }//GEN-LAST:event_tbEstructuraMouseClicked
 
-    private void tbPedidos1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tbPedidos1ComponentShown
+    private void tbEstructuraComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tbEstructuraComponentShown
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbPedidos1ComponentShown
+    }//GEN-LAST:event_tbEstructuraComponentShown
 
-    private void tbPedidos1ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tbPedidos1ComponentAdded
+    private void tbEstructuraComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tbEstructuraComponentAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbPedidos1ComponentAdded
+    }//GEN-LAST:event_tbEstructuraComponentAdded
 
-    private void tbPedidos1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbPedidos1PropertyChange
+    private void tbEstructuraPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbEstructuraPropertyChange
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbPedidos1PropertyChange
+    }//GEN-LAST:event_tbEstructuraPropertyChange
 
-    private void tbPedidos1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbPedidos1AncestorAdded
+    private void tbEstructuraAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbEstructuraAncestorAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbPedidos1AncestorAdded
+    }//GEN-LAST:event_tbEstructuraAncestorAdded
 
-    private void tbResultadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbResultadoMouseClicked
+    private void tbDetallePlanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDetallePlanMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbResultadoMouseClicked
+    }//GEN-LAST:event_tbDetallePlanMouseClicked
 
-    private void tbResultadoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tbResultadoComponentShown
+    private void tbDetallePlanComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tbDetallePlanComponentShown
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbResultadoComponentShown
+    }//GEN-LAST:event_tbDetallePlanComponentShown
 
-    private void tbResultadoComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tbResultadoComponentAdded
+    private void tbDetallePlanComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tbDetallePlanComponentAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbResultadoComponentAdded
+    }//GEN-LAST:event_tbDetallePlanComponentAdded
 
-    private void tbResultadoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbResultadoPropertyChange
+    private void tbDetallePlanPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbDetallePlanPropertyChange
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbResultadoPropertyChange
+    }//GEN-LAST:event_tbDetallePlanPropertyChange
 
-    private void tbResultadoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbResultadoAncestorAdded
+    private void tbDetallePlanAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbDetallePlanAncestorAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbResultadoAncestorAdded
+    }//GEN-LAST:event_tbDetallePlanAncestorAdded
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-}//GEN-LAST:event_jButton1ActionPerformed
+        validarDatosDetalle();
+        habilitarDatosPlanificacion(false);
+
+}//GEN-LAST:event_btnAceptarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -640,14 +795,27 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         // TODO add your handling code here:
 }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        habilitarDatosPlanificacion(true);
+
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        habilitarDatosPlanificacion(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 PantallaABMPlanificacion dialog = new PantallaABMPlanificacion(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
@@ -656,18 +824,17 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox cmbMaquina;
     private javax.swing.JComboBox cmbOperario;
     private javax.swing.JComboBox cmbResponsable;
     private com.toedter.calendar.JSpinnerDateEditor fhInicioDetallePlan;
     private com.toedter.calendar.JSpinnerDateEditor fhInicioPlan;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -675,27 +842,26 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel lblFechaEntrega;
     private javax.swing.JLabel lblFechaNecesidad;
     private javax.swing.JLabel lblRazonSocial;
     private javax.swing.JLabel lblTipoPedido;
+    private javax.swing.JPanel pnlDetallePlanificacion;
     private javax.swing.JPanel pnlDetallePlanificaion;
-    private javax.swing.JTable tbPedidos;
-    private javax.swing.JTable tbPedidos1;
-    private javax.swing.JTable tbResultado;
+    private javax.swing.JPanel pnlEstructura;
+    private javax.swing.JTable tbDetallePedido;
+    private javax.swing.JTable tbDetallePlan;
+    private javax.swing.JTable tbEstructura;
     private javax.swing.JTextArea txtObservaciones;
     // End of variables declaration//GEN-END:variables
-
 }
