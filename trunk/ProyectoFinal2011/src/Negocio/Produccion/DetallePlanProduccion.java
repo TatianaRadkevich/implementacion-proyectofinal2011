@@ -14,6 +14,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -38,16 +39,24 @@ public class DetallePlanProduccion  implements java.io.Serializable {
      private Empleado TEmpleados;
      private PlanProduccion TPlanesProduccion;
      private MaquinaHerramientaParticular TMaquinasHerramientaParticular;
-     private int cantidad;
+     private Integer cantidadPlanificada;
+     private Integer cantidadProducida;
+     private String observaciones;
      private Date fecHoraPrevistaFin;
      private Date fecHoraPrevistaInicio;
      private Date fecHoraRealInicio;
      private Date fecHoraRealFin;
      private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
 
+
     public DetallePlanProduccion() {
     }
 
+    public DetallePlanProduccion(EtapaProduccionEspecifica TEtapasProduccionEspecifica) {
+        this.TEtapasProduccionEspecifica = TEtapasProduccionEspecifica;
+    }
+
+    
 	
     public DetallePlanProduccion(int idDetallePlan, EtapaProduccionEspecifica TEtapasProduccionEspecifica, Empleado TEmpleados, PlanProduccion TPlanesProduccion, MaquinaHerramientaParticular TMaquinasHerramientaParticular, int cantidad, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealInicio, Date fecHoraRealFin) {
         this.idDetallePlan = idDetallePlan;
@@ -55,7 +64,7 @@ public class DetallePlanProduccion  implements java.io.Serializable {
         this.TEmpleados = TEmpleados;
         this.TPlanesProduccion = TPlanesProduccion;
         this.TMaquinasHerramientaParticular = TMaquinasHerramientaParticular;
-        this.cantidad = cantidad;
+        this.cantidadPlanificada = cantidad;
         this.fecHoraPrevistaFin = fecHoraPrevistaFin;
         this.fecHoraPrevistaInicio = fecHoraPrevistaInicio;
         this.fecHoraRealInicio = fecHoraRealInicio;
@@ -67,7 +76,7 @@ public class DetallePlanProduccion  implements java.io.Serializable {
        this.TEmpleados = TEmpleados;
        this.TPlanesProduccion = TPlanesProduccion;
        this.TMaquinasHerramientaParticular = TMaquinasHerramientaParticular;
-       this.cantidad = cantidad;
+       this.cantidadPlanificada = cantidad;
        this.fecHoraPrevistaFin = fecHoraPrevistaFin;
        this.fecHoraPrevistaInicio = fecHoraPrevistaInicio;
        this.fecHoraRealInicio = fecHoraRealInicio;
@@ -76,7 +85,7 @@ public class DetallePlanProduccion  implements java.io.Serializable {
     }
    
      @Id 
-    
+    @GeneratedValue
     @Column(name="ID_DETALLE_PLAN", unique=true, nullable=false, precision=8, scale=0)
     public int getIdDetallePlan() {
         return this.idDetallePlan;
@@ -124,11 +133,11 @@ public class DetallePlanProduccion  implements java.io.Serializable {
     
     @Column(name="CANTIDAD", nullable=false, precision=5, scale=0)
     public int getCantidad() {
-        return this.cantidad;
+        return this.cantidadPlanificada;
     }
     
     public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+        this.cantidadPlanificada = cantidad;
     }
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="FEC_HORA_PREVISTA_FIN", nullable=false, length=23)
@@ -175,8 +184,23 @@ public class DetallePlanProduccion  implements java.io.Serializable {
         this.TFaltanteses = TFaltanteses;
     }
 
+    @Column(name="OBSERVACIONES", length=200)
+    public String getObservaciones() {
+        return this.observaciones;
+    }
 
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+   @Column(name="CANTIDAD_PRODUCIDA", precision=5, scale=0)
+    public Integer getCantidadProducida() {
+        return this.cantidadProducida;
+    }
 
+    public void setCantidadProducida(Integer cantidadProducida) {
+        this.cantidadProducida = cantidadProducida;
+    }
+    
 
 }
 

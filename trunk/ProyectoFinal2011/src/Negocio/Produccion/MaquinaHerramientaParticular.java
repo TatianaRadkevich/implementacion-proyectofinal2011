@@ -201,4 +201,11 @@ public class MaquinaHerramientaParticular implements java.io.Serializable {
         this.TCapacidadPoductivas = TCapacidadPoductivas;
     }
 
+    @Override
+    public String toString() {
+        return this.getNombre();
+    }
+
+
+
 }
