@@ -6,7 +6,9 @@
 package Negocio.Administracion;
 
 import BaseDeDatos.Administracion.EmpleadoBD;
+import BaseDeDatos.UbicacionGeografica.PaisBD;
 import Negocio.Exceptiones.ExceptionGestor;
+import Negocio.UbicacionGeografica.Pais;
 import java.util.List;
 
 /**
@@ -35,5 +37,8 @@ public abstract class GestorEmpleado {
 
     public abstract String mensajeResultado(String nombreProducto);
 
-    
+    public List<Pais> listarPais(){
+        return PaisBD.listarPaises();
+    }
+
 }
