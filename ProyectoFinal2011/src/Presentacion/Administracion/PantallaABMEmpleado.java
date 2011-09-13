@@ -23,7 +23,10 @@ import Negocio.UbicacionGeografica.Localidad;
 import Negocio.UbicacionGeografica.Pais;
 import Negocio.UbicacionGeografica.Provincia;
 import Presentacion.IniciadorDeVentanas;
+import Presentacion.Mensajes;
 import java.awt.Dialog;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -51,7 +54,10 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
        cargarCargos();
        this.cargarTipoDocumento();
        this.cargarSexo();
+       this.btnAceptar.setVisible(true);
+       this.btnCancelar.setVisible(true);
        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+       this.cargarComboPais();
     }
 
 
@@ -115,22 +121,22 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Personales"));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Nombre:");
 
-        Apellido.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Apellido.setFont(new java.awt.Font("Tahoma", 1, 11));
         Apellido.setText("Apellido:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Tipo Documento:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Número Documento:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Fecha de Nacimiento:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setText("Sexo:");
 
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -176,7 +182,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                     .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
                     .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,37 +216,58 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Domicilio"));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel6.setText("País:");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel7.setText("Provincia:");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel8.setText("Localidad:");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel9.setText("Barrio:");
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel10.setText("Calle:");
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel11.setText("Número:");
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel14.setText("Depto:");
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel12.setText("Piso:");
 
-        cmbBarrio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbBarrio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBarrioActionPerformed(evt);
+            }
+        });
 
-        cmbLocalidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbLocalidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbLocalidadActionPerformed(evt);
+            }
+        });
 
-        cmbProvincia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbProvincia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbProvinciaActionPerformed(evt);
+            }
+        });
 
-        cmbPais.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPais.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmbPaisMouseClicked(evt);
+            }
+        });
+        cmbPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPaisActionPerformed(evt);
+            }
+        });
 
         txtDepto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -362,13 +389,13 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Contacto"));
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel13.setText("Teléfono:");
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel15.setText("Celular:");
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel16.setText("E-Mail:");
 
         txtTelefono.addActionListener(new java.awt.event.ActionListener() {
@@ -389,10 +416,10 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                     .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                    .addComponent(txtCelular, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
-                .addGap(145, 145, 145))
+                    .addComponent(txtCelular, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(130, 130, 130))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -411,7 +438,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel15)
                         .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Cargos"));
@@ -429,7 +456,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(lstCargos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -445,9 +472,9 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, 0, 494, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(738, Short.MAX_VALUE)
+                .addContainerGap(750, Short.MAX_VALUE)
                 .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -512,29 +539,24 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
            domicilio.setTBarrios((Barrio) cmbBarrio.getSelectedItem());
            domicilio.setCalle(txtCalle.getText());
            domicilio.setNumero(Integer.parseInt(txtNumero.getText()));
+          try{
            domicilio.setDepto(txtDepto.getText());
            domicilio.setPiso(Short.parseShort(txtPiso.getText()));
+              }catch(Exception e){}
 
 
-
-
+//           List<Cargo> cargos=this.lstCargos.getSelectedItems();
            
 
-//            if(txtFechaBaja.getText().compareTo("")!=0){
-//                producto.setFecBaja(new Date());
-//                producto.setMotivoBaja(txtMotivoBaja.getText());
-//            }
-//
-//
-//            try {
-//                gestor.ejecutarOperacion(empleado);
-//                Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido()+", "+empleado.getNombre()));
-//                this.vaciar();
-//                gestor.reiniciar(this);
-//
-//            } catch (ExceptionGestor ex) {
-//                Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+
+            try {
+                gestor.ejecutarOperacion(empleado);
+                Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido()+", "+empleado.getNombre()));
+                this.vaciar();
+                this.dispose();
+            } catch (ExceptionGestor ex) {
+                
+            }
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -548,6 +570,36 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void cmbPaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbPaisMouseClicked
+        // TODO add your handling code here:
+        if(cmbPais.getSelectedItem()!=null)
+            this.cargarComboProvicias((Pais)cmbPais.getSelectedItem());
+        this.repaint();
+}//GEN-LAST:event_cmbPaisMouseClicked
+
+    private void cmbProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProvinciaActionPerformed
+        // TODO add your handling code here:
+        if(cmbProvincia.getSelectedItem()!=null)
+            this.cargarComboLocalidades((Provincia)cmbProvincia.getSelectedItem());
+        this.repaint();
+}//GEN-LAST:event_cmbProvinciaActionPerformed
+
+    private void cmbLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbLocalidadActionPerformed
+        // TODO add your handling code here:
+        if(cmbLocalidad.getSelectedItem()!=null)
+            this.cargarComboBarrio((Localidad)cmbLocalidad.getSelectedItem());
+        this.repaint();
+}//GEN-LAST:event_cmbLocalidadActionPerformed
+
+    private void cmbBarrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBarrioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbBarrioActionPerformed
+
+    private void cmbPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPaisActionPerformed
+        // TODO add your handling code here:
+        this.cargarComboProvicias((Pais)cmbPais.getSelectedItem());
+    }//GEN-LAST:event_cmbPaisActionPerformed
 
     /**
     * @param args the command line arguments
@@ -646,7 +698,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             }
          }
 
-         this.cargarProvicias(pais);
+         this.cargarComboProvicias(pais);
 
 
           Provincia provincia=null;
@@ -656,9 +708,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 cmbProvincia.setSelectedIndex(i);
                 break;
             }
-         }
-
-          this.cargarLocalidades(provincia);
+         }      
 
             Localidad localidad=null;
         for(int i=0; i<cmbLocalidad.getItemCount();i++){
@@ -669,7 +719,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             }
          }
 
-            this.cargarBarrio(localidad);
+
 
              Barrio barrio=null;
         for(int i=0; i<cmbBarrio.getItemCount();i++){
@@ -720,7 +770,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
      }
 
     public void nuevo(){
-       
+       empleado=new Empleado();
     }
 
     public void modificar(Empleado emp){
@@ -747,18 +797,73 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
       
     }
 
-    private void cargarPais(){
+    private void cargarComboPais(){
+        List<Pais> pais=this.gestor.listarPais();
+         cmbPais.removeAllItems();
 
+
+            for(int i=0;i<pais.size();i++){
+                cmbPais.addItem(pais.get(i));
+            }
+
+           Pais pai=null;
+        for(int i=0; i<cmbPais.getItemCount();i++){
+            pai=(Pais) cmbPais.getItemAt(i);
+            if(pai.getNombre().compareTo("ARGENTINA")==0){
+                cmbPais.setSelectedIndex(i);
+                break;
+            }
+        }
+           
+           this.cargarComboProvicias(pai);
+        cmbPais.repaint();
     }
-    private void cargarProvicias(Pais pais){
+    private void cargarComboProvicias(Pais pais){
+         Iterator<Provincia> provincias= pais.getTProvinciases().iterator();
+         cmbProvincia.removeAllItems();
 
+
+         while(provincias.hasNext()){
+             cmbProvincia.addItem(provincias.next());
+         }
+            
+        if(cmbProvincia.getSelectedItem()!=null)
+            this.cargarComboLocalidades((Provincia)cmbProvincia.getSelectedItem());
+        else{
+             cmbLocalidad.removeAllItems();
+             cmbLocalidad.repaint();
+             cmbBarrio.removeAllItems();
+             cmbBarrio.repaint();
+        }
+        cmbProvincia.repaint();
     }
-    private void cargarLocalidades(Provincia provincia){
+    private void cargarComboLocalidades(Provincia provincia){
+        Iterator<Localidad> localidad= provincia.getTLocalidadeses().iterator();
+         cmbLocalidad.removeAllItems();
 
+         while(localidad.hasNext()){
+             cmbLocalidad.addItem(localidad.next());
+         }
+
+         if(cmbLocalidad.getSelectedItem()!=null)
+            this.cargarComboBarrio((Localidad)cmbLocalidad.getSelectedItem());
+         else{
+             cmbBarrio.removeAllItems();
+             cmbBarrio.repaint();
+        }
+         this.cmbLocalidad.repaint();
     }
 
-    private void cargarBarrio(Localidad localidad){
-        
+    private void cargarComboBarrio(Localidad localidad){
+
+         Iterator<Barrio> barrio=localidad.getTBarrioses().iterator();
+         cmbBarrio.removeAllItems();
+
+         while(barrio.hasNext()){
+             cmbBarrio.addItem(barrio.next());
+         }
+         this.cmbBarrio.repaint();
+
     }
 
 
