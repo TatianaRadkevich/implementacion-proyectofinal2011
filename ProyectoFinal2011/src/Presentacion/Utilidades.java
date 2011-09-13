@@ -4,6 +4,8 @@
  */
 package Presentacion;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,6 +57,14 @@ public class Utilidades {
 
     public Calendar getFechaCalendar() {
         return GregorianCalendar.getInstance();
+    }
+
+    private void habilitarTodo(Container contenedor,boolean valor)
+    {
+        for(Component componente:contenedor.getComponents())
+            if(componente instanceof Container)
+                habilitarTodo((Container) componente,valor);
+        contenedor.setEnabled(valor);
     }
 
      public static BigDecimal parseBigDecimal(String value) {
