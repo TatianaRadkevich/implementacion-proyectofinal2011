@@ -11,6 +11,8 @@
 package Presentacion.Produccion;
 
 import BaseDeDatos.Administracion.EmpleadoBD;
+import BaseDeDatos.Produccion.MaquinaHerramientaBD;
+import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.Empleado;
 import Negocio.Produccion.DetallePlanProduccion;
 import Negocio.Produccion.EtapaProduccionEspecifica;
@@ -23,6 +25,7 @@ import Presentacion.Utilidades;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
@@ -48,11 +51,10 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     public PantallaABMPlanificacion(Pedido p) {
         this(null, true);
         pedido = p;
-        cargarDatosPedido(p);
         cargarCombos();
-
-
-
+        inicializarTablas();
+        habilitarDatosPlanificacion(false);
+        cargarDatosPedido(p);
     }
 
     private void inicializarTablas() {
@@ -77,10 +79,14 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 return cabecera;
             }
         };
-        tmDetallePedido.addListenerModificacionTabla(new TableModelListener() {
+        tmDetallePedido.addListenerModificaionSelecion(new ListSelectionListener() {
 
-            public void tableChanged(TableModelEvent e) {
-                cargarEstructura(tmDetallePedido.getSeletedObject().getProducto());
+            public void valueChanged(ListSelectionEvent e) {
+
+                if (tmDetallePedido.getSeletedObject() != null) {
+                    cargarEstructura(tmDetallePedido.getSeletedObject().getProducto());
+                }
+
             }
         });
 
@@ -165,10 +171,11 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private void cargarEstructura(Producto p) {
         tmEstructura.setDatos(new ArrayList(p.getTEtapasProduccionEspecificas()));
 
-        ArrayList<DetallePlanProduccion> aux=new ArrayList<DetallePlanProduccion>(p.getTEtapasProduccionEspecificas().size());
-        for(int i=0;i<p.getTDetallesProductos().size();i++)
+        ArrayList<DetallePlanProduccion> aux = new ArrayList<DetallePlanProduccion>(p.getTEtapasProduccionEspecificas().size());
+        for (int i = 0; i < p.getTEtapasProduccionEspecificas().size(); i++) {
             aux.add(new DetallePlanProduccion(tmEstructura.getDato(i)));
-        
+        }
+
         tmDetallePlanProduccion.setDatos(aux);
 
     }
@@ -207,8 +214,19 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     }
 
     private void cargarDatosEtapaPlanificacion(DetallePlanProduccion detalle) {
-        fhInicioDetallePlan.setDate(detalle.getFecHoraPrevistaInicio());
+
+        fhInicioDetallePlan.setDate((detalle.getFecHoraPrevistaInicio()==null)?Utilidades.getFechaActual():detalle.getFecHoraPrevistaInicio());
+        cmbMaquina.setModel(
+                new DefaultComboBoxModel(
+                MaquinaHerramientaBD.getMaquinasHerramientas(
+                detalle.getTEtapasProduccionEspecifica()
+                .getDetalleEtapaProduccion().get(0)
+                .getTipoMaquinaHerramienta(), true, false).toArray()));
         cmbMaquina.setSelectedItem(detalle.getTMaquinasHerramientaParticular());
+
+        cmbOperario.setModel(
+                new DefaultComboBoxModel(EmpleadoBD.getEmpleados(detalle.getTEtapasProduccionEspecifica().getCargo(), true, false).toArray()));
+        
         cmbOperario.setSelectedItem(detalle.getTEmpleados());
         txtObservaciones.setText(detalle.getObservaciones());
     }
@@ -813,14 +831,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                PantallaABMPlanificacion dialog = new PantallaABMPlanificacion(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                new PantallaABMPlanificacion(PedidoBD.getPedido(1)).setVisible(true);
             }
         });
     }

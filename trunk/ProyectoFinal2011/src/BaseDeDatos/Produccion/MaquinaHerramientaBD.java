@@ -51,6 +51,25 @@ public class MaquinaHerramientaBD {
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 
+        public static List<MaquinaHerramientaParticular> getMaquinasHerramientas(TipoMaquinaHerramienta tm,boolean vigentes,boolean eliminados) {
+        String HQL="FROM MaquinaHerramientaParticular as mh "
+                + "WHERE "+((tm==null)?"1=1":"mh.TTmaquinaHerramienta.idTmaquinaHerramienta = "+tm.getId());
+
+         if(vigentes==false&&eliminados==false)
+            return new ArrayList<MaquinaHerramientaParticular>(0);
+
+         if(vigentes==true&&eliminados==true)
+            return HibernateUtil.ejecutarConsulta(HQL);
+
+        if(vigentes==true&&eliminados==false)
+            HQL+=" AND mh.fecBaja IS NULL ";
+
+        if(vigentes==false&&eliminados==true)
+            HQL+=" AND mh.fecBaja IS NOT NULL ";
+
+        return HibernateUtil.ejecutarConsulta(HQL);
+    }
+
     public static void guardar(MaquinaHerramientaParticular mh) {
         HibernateUtil.guardarObjeto(mh);
     }
