@@ -438,7 +438,7 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
 
     private void btnAgregarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTipoActionPerformed
         // TODO add your handling code here:
-        new PantallaMaquinaHerramientaTipoABM().setVisible(true);
+        new GestorTipoMaquinaHerramienta().administar();
         recargarComboTipoMaquina();
     }//GEN-LAST:event_btnAgregarTipoActionPerformed
 
