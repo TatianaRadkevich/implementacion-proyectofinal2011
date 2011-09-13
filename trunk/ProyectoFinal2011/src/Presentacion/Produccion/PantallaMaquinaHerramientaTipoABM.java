@@ -33,10 +33,10 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
     private GestorTipoMaquinaHerramienta gestor;
 
     /** Creates new form PantallaMaquinaHerramientaTipoABM */
-    public PantallaMaquinaHerramientaTipoABM() {
+    public PantallaMaquinaHerramientaTipoABM(GestorTipoMaquinaHerramienta g) {
         super((java.awt.Frame) null, true);
         initComponents();
-        gestor = new GestorTipoMaquinaHerramienta(this);
+        gestor = g;
         //GUILocal.establecerGUILocal(this);
         habilitarCampos(false);
         habilitarConfirmacion(false);
@@ -485,14 +485,7 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                PantallaMaquinaHerramientaTipoABM dialog = new PantallaMaquinaHerramientaTipoABM();
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+            new GestorTipoMaquinaHerramienta().administar();
             }
         });
     }
