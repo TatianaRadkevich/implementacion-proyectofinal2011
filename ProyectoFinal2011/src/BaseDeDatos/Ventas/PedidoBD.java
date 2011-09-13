@@ -84,10 +84,10 @@ public class PedidoBD
             return HibernateUtil.ejecutarConsulta(HQL);
 
         if(vigentes==true&&cancelados==false)
-            HQL+="AND p.fecBaja IS NULL ";
+            HQL+=" AND p.fecBaja IS NULL ";
 
         if(vigentes==false&&cancelados==true)
-            HQL+="AND p.fecBaja IS NOT NULL ";
+            HQL+=" AND p.fecBaja IS NOT NULL ";
 
         return HibernateUtil.ejecutarConsulta(HQL);
     }

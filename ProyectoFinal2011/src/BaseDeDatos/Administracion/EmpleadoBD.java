@@ -6,7 +6,9 @@
 package BaseDeDatos.Administracion;
 
 import BaseDeDatos.HibernateUtil;
+import Negocio.Administracion.Cargo;
 import Negocio.Administracion.Empleado;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +39,28 @@ public class EmpleadoBD {
         return var;
     }
 
-    
+   public static List<Empleado> getEmpleados(
+            Cargo c,boolean vigentes,boolean cancelados){
+
+        if(vigentes==false&&cancelados==false)
+            return new ArrayList<Empleado>(0);
+
+
+
+        String HQL="SELECT e.TEmpleados FROM TEmpleadosXCargo as e "
+                + "WHERE "+((c==null)?"1=1":"e.Cargo.idCargo = "+c.getIdCargo());
+
+        if(vigentes==true&&cancelados==true)
+            return HibernateUtil.ejecutarConsulta(HQL);
+
+        if(vigentes==true&&cancelados==false)
+            HQL+=" AND e.TEmpleados.fecBaja IS NULL ";
+
+        if(vigentes==false&&cancelados==true)
+            HQL+=" AND e.TEmpleados.fecBaja IS NOT NULL ";
+
+        return HibernateUtil.ejecutarConsulta(HQL);
+    }
 
 
 
