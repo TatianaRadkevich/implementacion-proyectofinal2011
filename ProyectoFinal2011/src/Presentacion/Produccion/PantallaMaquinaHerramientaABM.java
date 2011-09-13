@@ -90,7 +90,7 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
                         det.setMaterial((Material) value);
                         break;
                     case (1):
-                        det.setCapacidad((Integer) value);
+                        det.setCapacidad(new Integer( value.toString()));
                         break;
                    
                 }
@@ -192,6 +192,8 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
         pnlCapacidad = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbCapacidadProductiva = new javax.swing.JTable();
+        btnAgregar = new javax.swing.JButton();
+        btnSacar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nueva Máquina o Herramienta ");
@@ -242,7 +244,7 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,7 +260,7 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtModelo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE))))
+                            .addComponent(txtModelo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -283,12 +285,12 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -329,9 +331,10 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
                     .addComponent(jLabel9))
                 .addGap(18, 18, 18)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3))
-                .addContainerGap())
+                    .addGroup(pnlBajaLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3)
+                        .addContainerGap())
+                    .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         pnlBajaLayout.setVerticalGroup(
             pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,7 +345,7 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -358,19 +361,42 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
         ));
         jScrollPane4.setViewportView(tbCapacidadProductiva);
 
+        btnAgregar.setText("+");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
+        btnSacar.setText("-");
+        btnSacar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSacarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlCapacidadLayout = new javax.swing.GroupLayout(pnlCapacidad);
         pnlCapacidad.setLayout(pnlCapacidadLayout);
         pnlCapacidadLayout.setHorizontalGroup(
             pnlCapacidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCapacidadLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlCapacidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnSacar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlCapacidadLayout.setVerticalGroup(
             pnlCapacidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCapacidadLayout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
+                .addGroup(pnlCapacidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                    .addGroup(pnlCapacidadLayout.createSequentialGroup()
+                        .addComponent(btnAgregar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSacar)))
                 .addContainerGap())
         );
 
@@ -442,27 +468,33 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
         recargarComboTipoMaquina();
     }//GEN-LAST:event_btnAgregarTipoActionPerformed
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        tmCapacidad.add(new CapacidadProductiva());
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnSacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacarActionPerformed
+        // TODO add your handling code here:
+        tmCapacidad.removeSelectedRow();
+    }//GEN-LAST:event_btnSacarActionPerformed
+
     /**
     * @param args the command line arguments
     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PantallaMaquinaHerramientaABM dialog = new PantallaMaquinaHerramientaABM(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+               new GestorMaquinaHerramientaAlta().iniciarCU();
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAgregarTipo;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnSacar;
     private javax.swing.JComboBox cmbTipoMaquinaHerramienta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

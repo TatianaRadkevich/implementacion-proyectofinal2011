@@ -175,7 +175,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         {
             PlanProduccion plan=p.getPlanesProduccion().iterator().next();
             cmbResponsable.setSelectedItem(plan.getTEmpleados());
-            fhInicioPlan.setDate(plan.getFecHoraPrevistaInicio());
+            fhInicioPlan.setDate((plan.getFecHoraPrevistaInicio()==null)?Utilidades.getFechaActual():plan.getFecHoraPrevistaInicio());
         }
         
     }
@@ -284,8 +284,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         lblFechaNecesidad = new javax.swing.JLabel();
         lblTipoPedido = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        labefdsfsf = new javax.swing.JLabel();
         lblFechaEntrega = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbDetallePedido = new javax.swing.JTable();
@@ -314,15 +314,15 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Planificación de producción");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Planificacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Planificacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel15.setText("Responsable de Plan:");
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel16.setText("Fecha/hora calculada inicio Plan:");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Razón social cliente:");
@@ -339,10 +339,10 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Fecha necesidad:");
 
-        lblFechaEntrega.setFont(new java.awt.Font("Tahoma", 1, 11));
-        lblFechaEntrega.setText("Fecha entrega material:");
+        labefdsfsf.setFont(new java.awt.Font("Tahoma", 1, 11));
+        labefdsfsf.setText("Fecha entrega material:");
 
-        jLabel7.setText("[fecha entrga]");
+        lblFechaEntrega.setText("[fecha entrga]");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -351,7 +351,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblFechaEntrega)
+                    .addComponent(labefdsfsf)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel4))
@@ -360,7 +360,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                     .addComponent(lblFechaNecesidad, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                     .addComponent(lblRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                     .addComponent(lblTipoPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE))
+                    .addComponent(lblFechaEntrega, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -379,8 +379,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                     .addComponent(lblTipoPedido))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFechaEntrega)
-                    .addComponent(jLabel7))
+                    .addComponent(labefdsfsf)
+                    .addComponent(lblFechaEntrega))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -395,8 +395,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                     .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fhInicioPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbResponsable, 0, 186, Short.MAX_VALUE))
+                    .addComponent(cmbResponsable, 0, 186, Short.MAX_VALUE)
+                    .addComponent(fhInicioPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -418,9 +418,9 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        tbDetallePedido.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tbDetallePedido.setFont(new java.awt.Font("Tahoma", 1, 11));
         tbDetallePedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -480,9 +480,9 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        pnlEstructura.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estructura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        pnlEstructura.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estructura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        tbEstructura.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tbEstructura.setFont(new java.awt.Font("Tahoma", 1, 11));
         tbEstructura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -539,12 +539,12 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             pnlEstructuraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEstructuraLayout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        pnlDetallePlanificacion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle del Plan", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        pnlDetallePlanificacion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle del Plan", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        tbDetallePlan.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tbDetallePlan.setFont(new java.awt.Font("Tahoma", 1, 11));
         tbDetallePlan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -615,7 +615,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        pnlDetallePlanificaion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle Planificación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        pnlDetallePlanificaion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle Planificación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel14.setText("Fecha/hora inicio:");
@@ -640,12 +640,12 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel10.setText("Empleado:");
 
-        txtObservaciones.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        txtObservaciones.setFont(new java.awt.Font("Tahoma", 0, 11));
         txtObservaciones.setLineWrap(true);
         txtObservaciones.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txtObservaciones);
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel11.setText("Observaciones:");
 
         javax.swing.GroupLayout pnlDetallePlanificaionLayout = new javax.swing.GroupLayout(pnlDetallePlanificaion);
@@ -756,7 +756,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlEstructura, 0, 148, Short.MAX_VALUE)
+                    .addComponent(pnlEstructura, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -857,6 +857,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         plan.setTEmpleados((Empleado) cmbResponsable.getSelectedItem());
         plan.setFecHoraPrevistaInicio(fhInicioPlan.getDate());
         HibernateUtil.guardarObjeto(plan);
+        Mensajes.mensajeInformacion("Se ha generado el plan correctamente");
+        this.dispose();
 
 }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -903,7 +905,6 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -912,6 +913,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel labefdsfsf;
     private javax.swing.JLabel lblFechaEntrega;
     private javax.swing.JLabel lblFechaNecesidad;
     private javax.swing.JLabel lblRazonSocial;

@@ -146,8 +146,8 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
     public void habilitarCarga(boolean valor) {
         habilitarSeleccionProducto(!valor);
         habilitarSelecionEtapa(!valor);
-        btnAceptar.setEnabled(valor);
-        btnCancelar.setEnabled(valor);
+        btnAceptar.setEnabled(!valor);
+        btnCancelar.setEnabled(!valor);
 
         pnlEtapaEspecifica.setEnabled(valor);
         cmbCargo.setEnabled(valor);
@@ -672,6 +672,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        if(Mensajes.mensajeConfirmacionGenerico("¿Realmente desea salir?"))
         gestor.finalizarCU();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -679,6 +680,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         try {
             // TODO add your handling code here:
             gestor.ejecutarCU((ArrayList<EtapaProduccionEspecifica>) tmEtapaEspecifica.getDatos());
+            Mensajes.mensajeInformacion("Se ha guardado con exito");
             gestor.finalizarCU();
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
