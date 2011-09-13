@@ -147,6 +147,8 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
         }
     }
 
+
+
     public void addDetalleEtapaProduccion(DetalleEtapaProduccion detalle) {
 
             detalle.setEtapaProduccionEspecifica(this);
@@ -154,11 +156,17 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
 
     }
 
-    public Set<DetallePlanProduccion> getDetallePlanProduccion() {
-        return this.TDetallesPlans;
+    public List<DetallePlanProduccion> getDetallePlanProduccion() {
+        return new ArrayList<DetallePlanProduccion>(this.TDetallesPlans);
     }
 
-    public void setDetallePlanProduccion(Set<DetallePlanProduccion> detalle) {
+    public void addDetallePlanProduccion(DetallePlanProduccion detalle)
+    {
+        if(TDetallesPlans.contains(detalle)==false)
+            TDetallesPlans.add(detalle);
+    }
+
+    public void setDetallePlanProduccion(List<DetallePlanProduccion> detalle) {
         this.TDetallesPlans.clear();
         for (DetallePlanProduccion dt : detalle) {
             TDetallesPlans.add(dt);

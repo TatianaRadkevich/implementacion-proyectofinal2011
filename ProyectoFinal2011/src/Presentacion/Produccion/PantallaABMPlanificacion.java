@@ -11,18 +11,23 @@
 package Presentacion.Produccion;
 
 import BaseDeDatos.Administracion.EmpleadoBD;
+import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Produccion.MaquinaHerramientaBD;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.Empleado;
 import Negocio.Produccion.DetallePlanProduccion;
 import Negocio.Produccion.EtapaProduccionEspecifica;
+import Negocio.Produccion.MaquinaHerramientaParticular;
+import Negocio.Produccion.PlanProduccion;
 import Negocio.Produccion.Producto;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.Pedido;
+import Presentacion.JCheckList;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -166,14 +171,28 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         lblFechaEntrega.setText(Utilidades.parseFecha(p.getFechaEstimadaEntrega()));
         lblTipoPedido.setText(p.getTipoPedido().getNombre());
         tmDetallePedido.setDatos(p.getDetallePedido());
+        if(p.getPlanesProduccion().iterator().hasNext())
+        {
+            PlanProduccion plan=p.getPlanesProduccion().iterator().next();
+            cmbResponsable.setSelectedItem(plan.getTEmpleados());
+            fhInicioPlan.setDate(plan.getFecHoraPrevistaInicio());
+        }
+        
     }
 
     private void cargarEstructura(Producto p) {
         tmEstructura.setDatos(new ArrayList(p.getTEtapasProduccionEspecificas()));
 
+
         ArrayList<DetallePlanProduccion> aux = new ArrayList<DetallePlanProduccion>(p.getTEtapasProduccionEspecificas().size());
         for (int i = 0; i < p.getTEtapasProduccionEspecificas().size(); i++) {
-            aux.add(new DetallePlanProduccion(tmEstructura.getDato(i)));
+            if(tmEstructura.getDato(i).getDetallePlanProduccion().isEmpty())
+                aux.add(new DetallePlanProduccion(tmEstructura.getDato(i)));
+            else
+            {
+                aux.add(tmEstructura.getDato(i).getDetallePlanProduccion().get(0));
+            }
+
         }
 
         tmDetallePlanProduccion.setDatos(aux);
@@ -213,7 +232,20 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         return true;
     }
 
+    private void limpiarDatosEtapaPlanificacion()
+    {
+        fhInicioDetallePlan.setDate(Utilidades.getFechaActual());
+        cmbMaquina.setSelectedIndex(-1);
+        cmbOperario.setSelectedIndex(-1);
+        txtObservaciones.setText("");
+    }
+
     private void cargarDatosEtapaPlanificacion(DetallePlanProduccion detalle) {
+        if(detalle==null)
+        {
+            limpiarDatosEtapaPlanificacion();
+            return;
+        }
 
         fhInicioDetallePlan.setDate((detalle.getFecHoraPrevistaInicio()==null)?Utilidades.getFechaActual():detalle.getFecHoraPrevistaInicio());
         cmbMaquina.setModel(
@@ -799,8 +831,16 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-        validarDatosDetalle();
+        //validarDatosDetalle();
+
+        DetallePlanProduccion det=tmDetallePlanProduccion.getSeletedObject();
+        det.setFecHoraPrevistaInicio(fhInicioDetallePlan.getDate());
+        det.setObservaciones(txtObservaciones.getText());
+        det.setTEmpleados((Empleado) cmbOperario.getSelectedItem());
+        det.setTMaquinasHerramientaParticular((MaquinaHerramientaParticular) cmbMaquina.getSelectedItem());
         habilitarDatosPlanificacion(false);
+        limpiarDatosEtapaPlanificacion();
+        tmDetallePlanProduccion.updateTabla();
 
 }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -811,6 +851,13 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        PlanProduccion plan=new PlanProduccion();
+        plan.setTDetallesPlans(tmDetallePlanProduccion.getDatos());
+        plan.setTPedidos(pedido);
+        plan.setTEmpleados((Empleado) cmbResponsable.getSelectedItem());
+        plan.setFecHoraPrevistaInicio(fhInicioPlan.getDate());
+        HibernateUtil.guardarObjeto(plan);
+
 }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -822,6 +869,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         habilitarDatosPlanificacion(false);
+        limpiarDatosEtapaPlanificacion();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
