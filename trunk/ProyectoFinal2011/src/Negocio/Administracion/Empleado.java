@@ -334,7 +334,12 @@ public class Empleado  implements java.io.Serializable {
                  return this.getCorreoElectronico();
                  }
         return null;
-        }    
+        }
+
+    @Override
+    public String toString() {
+        return this.getNombre()+", "+this.getApellido();
+    }
 
 }
 

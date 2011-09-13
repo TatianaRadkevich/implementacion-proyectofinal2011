@@ -104,6 +104,9 @@ public class Cargo  implements java.io.Serializable {
 
     @Override
     public boolean equals(Object obj) {
+        if(obj==null)
+            return false;
+
         Cargo temp=(Cargo)obj;
         if(this.getNombre().compareTo(temp.getNombre())==0)
             return true;
