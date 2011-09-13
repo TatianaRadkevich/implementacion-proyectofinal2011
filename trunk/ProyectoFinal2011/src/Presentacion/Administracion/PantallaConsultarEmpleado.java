@@ -11,6 +11,7 @@
 
 package Presentacion.Administracion;
 
+import BaseDeDatos.Administracion.EmpleadoBD;
 import Negocio.Administracion.Empleado;
 import Negocio.Administracion.GestorBajaEmpleado;
 import Negocio.Administracion.GestorModificarEmpleado;
@@ -84,6 +85,11 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
         cmbTipoDocumento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11));
         chkMostrarTodos.setText("Mostrar vigentes");
@@ -309,7 +315,8 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
             return;
         }
         GestorModificarEmpleado gestor=new GestorModificarEmpleado();
-        gestor.modificarEmpleado(this, Integer.parseInt((String)tbEmpleados.getValueAt(tbEmpleados.getSelectedRow(),0)));
+        String var=tbEmpleados.getValueAt(tbEmpleados.getSelectedRow(),0)+"";
+        gestor.modificarEmpleado(this, Integer.parseInt(var));
        this.iniciarBusqueda();
       
 }//GEN-LAST:event_btnModificarActionPerformed
@@ -334,6 +341,11 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
 }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        iniciarBusqueda();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
  /**
     * @param args the command line arguments
@@ -380,10 +392,13 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
 
 
      private void iniciarBusqueda() {
-//        tabla_producto.setModel(new ModelerProducto(ProductoBD.getProducto(txtNombre.getText().trim(), (TipoProducto) cmbTipoProducto.getSelectedItem(), chkMostrarTodos.isSelected(), chkMostrarDadosBaja.isSelected())));
-//        tabla_producto.updateUI();
+        tbEmpleados.setModel(new ModelerEmpleado(EmpleadoBD.listarEmpleado()));
+        tbEmpleados.updateUI();
 //        this.activarBotones(true, false, false, false, false);
+//        ProductoBD.getProducto(txtNombre.getText().trim(), (TipoProducto) cmbTipoProducto.getSelectedItem(), chkMostrarTodos.isSelected(), chkMostrarDadosBaja.isSelected()))
     }
+
+
 
 }
  
