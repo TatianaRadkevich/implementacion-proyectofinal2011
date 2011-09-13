@@ -4,6 +4,7 @@
  */
 package Presentacion;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -54,6 +55,14 @@ public class Utilidades {
 
     public Calendar getFechaCalendar() {
         return GregorianCalendar.getInstance();
+    }
+
+     public static BigDecimal parseBigDecimal(String value) {
+        try {
+            return new BigDecimal(value);
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     public static Integer parseInteger(String value) {
