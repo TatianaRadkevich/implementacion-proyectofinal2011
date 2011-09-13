@@ -532,7 +532,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
            empleado.setCorreoElectronico(txtEmail.getText());
 
 
-           Domicilio domicilio=empleado.getTDomicilios();
+           Domicilio domicilio=new Domicilio();
            domicilio.setTPaises((Pais) cmbPais.getSelectedItem());
            domicilio.setTProvincias((Provincia) cmbProvincia.getSelectedItem());
            domicilio.setTLocalidades((Localidad) cmbLocalidad.getSelectedItem());
@@ -544,6 +544,8 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
            domicilio.setPiso(Short.parseShort(txtPiso.getText()));
               }catch(Exception e){}
 
+           empleado.setTDomicilios(domicilio);
+      
 
 //           List<Cargo> cargos=this.lstCargos.getSelectedItems();
            
