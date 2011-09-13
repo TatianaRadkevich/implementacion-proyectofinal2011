@@ -33,22 +33,22 @@ public class MaquinaHerramientaParticular implements java.io.Serializable {
     @Column(name = "ID_MAQUINA_HERRAMIENTA_PARTICULAR", unique = true, nullable = false, precision = 3, scale = 0)
     private short idMaquinaHerramientaParticular;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_TMAQUINA_HERRAMIENTA", nullable = false)
+    @JoinColumn(name = "ID_TMAQUINA_HERRAMIENTA", nullable = true)
     private TipoMaquinaHerramienta TTmaquinaHerramienta;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_EMAQUINA", nullable = false)
+    @JoinColumn(name = "ID_EMAQUINA", nullable = true)
     private EstadoMaquina TEmaquina;
-    @Column(name = "CAPACIDAD_PRODUCTIVA", nullable = false, precision = 5, scale = 0)
+    @Column(name = "CAPACIDAD_PRODUCTIVA", nullable = true, precision = 5, scale = 0)
     private Integer capacidadProductiva;
-    @Column(name = "CARACTERISTICAS", nullable = false, length = 200)
+    @Column(name = "CARACTERISTICAS", nullable = true, length = 200)
     private String caracteristicas;
-    @Column(name = "MODELO", nullable = false, length = 50)
+    @Column(name = "MODELO", nullable = true, length = 50)
     private String modelo;
-    @Column(name = "NOMBRE", nullable = false, length = 50)
+    @Column(name = "NOMBRE", nullable = true, length = 50)
     private String nombre;
     @Column(name = "OBSERVACIONES", length = 200)
     private String observaciones;
-    @Column(name = "CODIGO", nullable = false, length = 2)
+    @Column(name = "CODIGO", nullable = true, length = 2)
     private String codigo;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="FEC_BAJA")
