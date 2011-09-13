@@ -35,7 +35,7 @@ public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
     /** Creates new form PantallaABMEtapaProduccion */
     public PantallaABMEtapaProduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        GUILocal.establecerGUILocal(this);
+     
         initComponents();
          this.activarCargo(false);
        this.activarBaja(false);
