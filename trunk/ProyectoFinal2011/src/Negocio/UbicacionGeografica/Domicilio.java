@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -63,7 +64,7 @@ public class Domicilio  implements java.io.Serializable {
     }
    
      @Id 
-    
+    @GeneratedValue
     @Column(name="ID_DOMICILIO", unique=true, nullable=false, precision=3, scale=0)
     public short getIdDomicilio() {
         return this.idDomicilio;
@@ -100,7 +101,7 @@ public class Domicilio  implements java.io.Serializable {
         this.TProvincias = TProvincias;
     }
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_PAIS", nullable=false)
+    @JoinColumn(name="ID_PAIS"/*, nullable=false*/)
     public Pais getTPaises() {
         return this.TPaises;
     }
@@ -109,7 +110,7 @@ public class Domicilio  implements java.io.Serializable {
         this.TPaises = TPaises;
     }
     
-    @Column(name="CALLE", nullable=false, length=20)
+    @Column(name="CALLE" /*, nullable=false*/, length=20)
     public String getCalle() {
         return this.calle;
     }
@@ -127,7 +128,7 @@ public class Domicilio  implements java.io.Serializable {
         this.depto = depto;
     }
     
-    @Column(name="NUMERO", nullable=false, precision=5, scale=0)
+    @Column(name="NUMERO"/*, nullable=false*/, precision=5, scale=0)
     public int getNumero() {
         return this.numero;
     }
