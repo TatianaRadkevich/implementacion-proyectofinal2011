@@ -5,6 +5,7 @@ package Negocio.Administracion;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -35,7 +36,7 @@ public class TEmpleadosXCargo  implements java.io.Serializable {
     }
    
      @Id 
-    
+    @GeneratedValue
     @Column(name="ID_EMPLEADO_X_CARGO", unique=true, nullable=false, precision=5, scale=0)
     public int getIdEmpleadoXCargo() {
         return this.idEmpleadoXCargo;
