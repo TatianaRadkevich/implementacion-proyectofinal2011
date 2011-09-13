@@ -11,10 +11,15 @@
 
 package Presentacion.Administracion;
 
+import BaseDeDatos.Administracion.TEmpleadosXCargoBD;
+import BaseDeDatos.UbicacionGeografica.DomicilioBD;
 import Negocio.Administracion.Cargo;
 import Negocio.Administracion.Empleado;
 import Negocio.Administracion.GestorEmpleado;
+import Negocio.Administracion.GestorModificarEmpleado;
+import Negocio.Administracion.GestorRegistrarEmpleado;
 import Negocio.Administracion.Sexo;
+import Negocio.Administracion.TEmpleadosXCargo;
 import Negocio.Administracion.TipoDocumento;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.UbicacionGeografica.Barrio;
@@ -532,7 +537,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
            empleado.setCorreoElectronico(txtEmail.getText());
 
 
-           Domicilio domicilio=new Domicilio();
+           Domicilio domicilio=empleado.getTDomicilios();
            domicilio.setTPaises((Pais) cmbPais.getSelectedItem());
            domicilio.setTProvincias((Provincia) cmbProvincia.getSelectedItem());
            domicilio.setTLocalidades((Localidad) cmbLocalidad.getSelectedItem());
@@ -544,15 +549,65 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
            domicilio.setPiso(Short.parseShort(txtPiso.getText()));
               }catch(Exception e){}
 
-           empleado.setTDomicilios(domicilio);
-      
+        if(gestor instanceof GestorRegistrarEmpleado)
+                    DomicilioBD.guardar(domicilio);
+        
 
-//           List<Cargo> cargos=this.lstCargos.getSelectedItems();
+//            if(gestor instanceof GestorModificarEmpleado){
+//                TEmpleadosXCargo temp;
+//                List<Cargo> cargos=this.lstCargos.getSelectedItems();
+//                List<TEmpleadosXCargo> cargosSacados=new ArrayList<TEmpleadosXCargo>();
+//                Iterator<TEmpleadosXCargo> empcargo= empleado.getTEmpleadosXCargos().iterator();
+//                int var=empleado.getTEmpleadosXCargos().hashCode();
+//                for(int i=0;i<cargos.size();i++)
+//                {
+//                    while(empcargo.hasNext()){
+//                        if(cargos)
+//
+//                    }
+//                    empcargo= empleado.getTEmpleadosXCargos().iterator();
+//                }
+//
+//
+//
+//
+//                for(int i=0; i<cargos.size();i++){
+//                    temp= new TEmpleadosXCargo();
+//                    temp.setTCargos(cargos.get(i));
+//                    temp.setTEmpleados(empleado);
+//
+//                    TEmpleadosXCargoBD.guardar(temp);
+//                }
+//
+//
+//            }
+
+
+
+
+           
            
 
 
             try {
                 gestor.ejecutarOperacion(empleado);
+               //---------------------------
+                 List<Cargo> cargos=this.lstCargos.getSelectedItems();
+            if(gestor instanceof GestorRegistrarEmpleado){
+                TEmpleadosXCargo temp;
+              
+
+                for(int i=0; i<cargos.size();i++){
+                    temp= new TEmpleadosXCargo();
+                    temp.setTCargos(cargos.get(i));
+                    temp.setTEmpleados(empleado);
+
+                    TEmpleadosXCargoBD.guardar(temp);
+                }
+
+
+            }
+                 //-----------------------------------
                 Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido()+", "+empleado.getNombre()));
                 this.vaciar();
                 this.dispose();
@@ -686,6 +741,16 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             }
          }
 
+         Sexo sexo=null;
+        for(int i=0; i<cmbSexo.getItemCount();i++){
+            sexo=(Sexo) cmbSexo.getItemAt(i);
+            if(sexo.getNombre().compareTo(this.empleado.getTSexos().getNombre())==0){
+                cmbSexo.setSelectedIndex(i);
+                break;
+            }
+         }
+
+         this.dtcFechaNacimiento.setDate(empleado.getFecNacimiento());
          this.txtNumeroDocumento.setText(empleado.getNumeroDocumento()+"");
          this.txtTelefono.setText(empleado.getTelefono()+"");
          this.txtCelular.setText(empleado.getCelular()+"");
@@ -737,6 +802,17 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
           this.txtNumero.setText(empleado.getTDomicilios().getNumero()+"");
           this.txtDepto.setText(empleado.getTDomicilios().getDepto());
 
+
+          //------------------selecciona los cargos
+
+          List<Cargo> cargo_temp=new ArrayList<Cargo>();
+          Iterator<TEmpleadosXCargo> ite=empleado.getTEmpleadosXCargos().iterator();
+         while(ite.hasNext()){
+             cargo_temp.add(ite.next().getTCargos());
+          }
+          lstCargos.setSelectedItems(cargo_temp);
+
+
     }
 
      private void cargarCargos(){
@@ -776,9 +852,24 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     }
 
     public void modificar(Empleado emp){
-       
+        empleado=emp;
+        
+        
+        this.cargarCargos();
+
+        
+       this.cargarDatos(empleado);
     }
 
+    private void cargarDomicilioEmpleado(){
+
+
+
+        this.txtCalle.setText(empleado.getTDomicilios().getCalle());
+        this.txtNumero.setText(empleado.getTDomicilios().getNumero()+"");
+        this.txtPiso.setText(empleado.getTDomicilios().getPiso()+"");
+        this.txtDepto.setText(empleado.getTDomicilios().getDepto());
+    }
     public void baja(Empleado emp) {
        
         }
