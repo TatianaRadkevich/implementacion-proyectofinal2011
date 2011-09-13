@@ -13,6 +13,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -101,7 +102,7 @@ public class Empleado  implements java.io.Serializable {
     }
 
      @Id
-
+    @GeneratedValue
     @Column(name="ID_EMPLEADO", unique=true, nullable=false, precision=5, scale=0)
     public int getIdEmpleado() {
         return this.idEmpleado;
@@ -111,7 +112,7 @@ public class Empleado  implements java.io.Serializable {
         this.idEmpleado = idEmpleado;
     }
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_DOMICILIO", nullable=false)
+    @JoinColumn(name="ID_DOMICILIO"/*, nullable=false*/)
     public Domicilio getTDomicilios() {
         return this.TDomicilios;
     }
@@ -129,7 +130,7 @@ public class Empleado  implements java.io.Serializable {
         this.TTdocumento = TTdocumento;
     }
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_USUARIO", nullable=false)
+    @JoinColumn(name="ID_USUARIO"/*, nullable=false*/)
     public Usuario getTUsuarios() {
         return this.TUsuarios;
     }
