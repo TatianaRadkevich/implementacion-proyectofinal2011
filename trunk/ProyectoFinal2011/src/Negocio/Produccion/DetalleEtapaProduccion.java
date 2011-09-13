@@ -25,19 +25,19 @@ public class DetalleEtapaProduccion implements java.io.Serializable {
     @Column(name = "ID_DETALLE_ETAPA", unique = true, nullable = false, precision = 5, scale = 0)
     private int idDetalleEtapa;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_ETAPA_PRODUCCION_ESPECIFICA", nullable = false)
+    @JoinColumn(name = "ID_ETAPA_PRODUCCION_ESPECIFICA")//, nullable = false)
     private EtapaProduccionEspecifica TEtapasProduccionEspecifica;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_TMAQUINA_HERRAMIENTA")
     private TipoMaquinaHerramienta TTmaquinaHerramienta;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_MATERIAL", nullable = false)
+    @JoinColumn(name = "ID_MATERIAL")//, nullable = false)
     private Material TMateriales;
-    @Column(name = "CANTIDAD_NECESARIA", nullable = false, precision = 6)
+    @Column(name = "CANTIDAD_NECESARIA", precision = 6)//, nullable = false
     private BigDecimal cantidadNecesaria;
-    @Column(name = "CANTIDAD_REPETICIONES", nullable = false, precision = 6)
+    @Column(name = "CANTIDAD_REPETICIONES", precision = 6)//, nullable = false
     private BigDecimal cantidadRepeticiones;
-    @Column(name = "HORAS_MAQUINA", nullable = false, precision = 6)
+    @Column(name = "HORAS_MAQUINA", precision = 6)// nullable = false,
     private BigDecimal horasMaquina;
 
     public DetalleEtapaProduccion() {

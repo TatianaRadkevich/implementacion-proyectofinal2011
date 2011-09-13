@@ -20,9 +20,14 @@ public class GestorTipoMaquinaHerramienta {
     protected PantallaMaquinaHerramientaTipoABM interfaz;
     protected TipoMaquinaHerramienta tipoMaquinaHerramienta;
 
-    public GestorTipoMaquinaHerramienta(PantallaMaquinaHerramientaTipoABM interfaz)
+    public GestorTipoMaquinaHerramienta()
     {
-        this.interfaz=interfaz;
+        this.interfaz=new PantallaMaquinaHerramientaTipoABM(this);
+    }
+
+    public void administar()
+    {
+        interfaz.setVisible(true);
     }
 
     public void iniciarNuevo() {
