@@ -85,6 +85,10 @@ public class Barrio  implements java.io.Serializable {
         this.descripcion = descripcion;
     }
 
+    public String toString(){
+        return this.getNombre();
+    }
+
 }
 
 

@@ -98,6 +98,9 @@ public class Localidad  implements java.io.Serializable {
         this.TBarrioses = TBarrioses;
     }
 
+    public String toString(){
+        return this.getNombre();
+    }
 
 
 

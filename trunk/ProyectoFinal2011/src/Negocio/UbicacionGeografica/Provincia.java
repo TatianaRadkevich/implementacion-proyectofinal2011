@@ -98,7 +98,9 @@ public class Provincia  implements java.io.Serializable {
 
 
 
-
+    public String toString(){
+        return this.getNombre();
+    }
 
 }
 
