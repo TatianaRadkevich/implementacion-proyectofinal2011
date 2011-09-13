@@ -26,15 +26,14 @@ public class GestorEstructura {
 
     protected PantallaEstructuraProductoABM interfaz;
     protected Producto producto;
+    private boolean modificable = true;
+private boolean grabar = true;
 
-    public GestorEstructura()
-    {
-        interfaz=new PantallaEstructuraProductoABM(this);
-        producto=null;
+    public GestorEstructura() {
+        interfaz = new PantallaEstructuraProductoABM(this);
+        producto = null;
         interfaz.setTitle("Registrar estructura");
     }
-
-
 
     public void iniciarCU() {
 
@@ -43,28 +42,36 @@ public class GestorEstructura {
         interfaz.habilitarCarga(false);
         interfaz.habilitarSelecionEtapa(false);
         interfaz.limpiarTodo();
-        interfaz.habilitarSeleccionProducto(true);        
+        interfaz.habilitarSeleccionProducto(true);
         interfaz.setVisible(true);
+        modificable = true;
+        grabar=true;
     }
 
-    public void iniciarCU(Producto prod) {
+    public void iniciarCU(Producto prod,boolean grabarBD) {
         if (producto != null) {
             if (producto.equals(prod)) {
                 return;
             }
         }
         producto = prod;
-        
+
         interfaz.limpiarEtapa();
         interfaz.cargarProducto(producto);
         interfaz.habilitarSeleccionProducto(false);
         interfaz.habilitarSelecionEtapa(true);
         interfaz.habilitarCarga(false);
         interfaz.setVisible(true);
+        modificable = false;
+        grabar=grabarBD;
     }
 
-  public void setProducto(Producto prod) {
-         if (producto != null) {
+    public void setProducto(Producto prod) {
+        if (modificable == false) {
+            return;
+        }
+
+        if (producto != null) {
             if (producto.equals(prod)) {
                 return;
             }
@@ -75,12 +82,16 @@ public class GestorEstructura {
         interfaz.cargarProducto(producto);
         interfaz.habilitarSeleccionProducto(true);
         interfaz.habilitarSelecionEtapa(true);
-        interfaz.habilitarCarga(false);       
+        interfaz.habilitarCarga(false);
+        
     }
 
     public void ejecutarCU(ArrayList<EtapaProduccionEspecifica> e) throws ExceptionGestor {
         producto.setTEtapasProduccionEspecificas(new HashSet<EtapaProduccionEspecifica>(e));
-        ProductoBD.guardar(producto);
+
+        if (grabar == true) {
+            ProductoBD.guardar(producto);
+        }
     }
 
     public void finalizarCU() {
@@ -118,6 +129,4 @@ public class GestorEstructura {
     public List<Material> listarMaterial() {
         return MaterialBD.getMateriales("", "", true, false);
     }
-
-
 }
