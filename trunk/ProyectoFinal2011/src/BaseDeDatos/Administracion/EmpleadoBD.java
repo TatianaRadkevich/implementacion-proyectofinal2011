@@ -45,10 +45,8 @@ public class EmpleadoBD {
         if(vigentes==false&&cancelados==false)
             return new ArrayList<Empleado>(0);
 
-
-
         String HQL="SELECT e.TEmpleados FROM TEmpleadosXCargo as e "
-                + "WHERE "+((c==null)?"1=1":"e.Cargo.idCargo = "+c.getIdCargo());
+                + "WHERE "+((c==null)?"1=1":"e.TCargos.idCargo = "+c.getIdCargo());
 
         if(vigentes==true&&cancelados==true)
             return HibernateUtil.ejecutarConsulta(HQL);
