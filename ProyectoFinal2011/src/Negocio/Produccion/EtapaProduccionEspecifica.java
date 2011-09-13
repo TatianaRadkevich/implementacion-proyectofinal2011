@@ -33,19 +33,19 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
     @Column(name = "ID_ETAPA_PRODUCCION_ESPECIFICA", unique = true, nullable = false, precision = 5, scale = 0)
     private int idEtapaProduccionEspecifica;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_CARGO", nullable = false)
+    @JoinColumn(name = "ID_CARGO")//, nullable = false)
     private Cargo TCargos;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_ETAPA_PRODUCCION", nullable = false)
+    @JoinColumn(name = "ID_ETAPA_PRODUCCION")//, nullable = false)
     private EtapaProduccion TEtapasProduccion;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_PRODUCTO", nullable = false)
+    @JoinColumn(name = "ID_PRODUCTO")//, nullable = false)
     private Producto TProductos;
-    @Column(name = "DESCRIPCION_ESPECIFICA", nullable = false, length = 200)
+    @Column(name = "DESCRIPCION_ESPECIFICA", length = 200)//, nullable = false
     private String descripcionEspecifica;
-    @Column(name = "HORAS_HOMBRE", nullable = false, precision = 6)
+    @Column(name = "HORAS_HOMBRE",  precision = 6)//nullable = false,
     private BigDecimal horasHombre;
-    @Column(name = "NUMERO_ORDEN", nullable = false, precision = 2, scale = 0)
+    @Column(name = "NUMERO_ORDEN",  precision = 2, scale = 0)//nullable = false,
     private Byte numeroOrden;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEtapasProduccionEspecifica")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
@@ -145,6 +145,13 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
             dt.setEtapaProduccionEspecifica(this);
             TDetallesEtapas.add(dt);
         }
+    }
+
+    public void addDetalleEtapaProduccion(DetalleEtapaProduccion detalle) {
+
+            detalle.setEtapaProduccionEspecifica(this);
+            TDetallesEtapas.add(detalle);
+
     }
 
     public Set<DetallePlanProduccion> getDetallePlanProduccion() {

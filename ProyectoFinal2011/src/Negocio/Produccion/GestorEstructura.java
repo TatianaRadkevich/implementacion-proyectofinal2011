@@ -31,6 +31,7 @@ public class GestorEstructura {
     {
         interfaz=new PantallaEstructuraProductoABM(this);
         producto=null;
+        interfaz.setTitle("Registrar estructura");
     }
 
 
@@ -38,10 +39,11 @@ public class GestorEstructura {
     public void iniciarCU() {
 
         producto = null;
+        interfaz.limpiarEtapa();
         interfaz.habilitarCarga(false);
+        interfaz.habilitarSelecionEtapa(false);
         interfaz.limpiarTodo();
-        interfaz.habilitarSeleccionProducto(true);
-        interfaz.setTitle("Registrar estructura");
+        interfaz.habilitarSeleccionProducto(true);        
         interfaz.setVisible(true);
     }
 
@@ -52,15 +54,29 @@ public class GestorEstructura {
             }
         }
         producto = prod;
-        interfaz.habilitarCarga(false);
+        
         interfaz.limpiarEtapa();
         interfaz.cargarProducto(producto);
         interfaz.habilitarSeleccionProducto(false);
-        interfaz.setTitle("Registrar estructura");
+        interfaz.habilitarSelecionEtapa(true);
+        interfaz.habilitarCarga(false);
         interfaz.setVisible(true);
     }
 
+  public void setProducto(Producto prod) {
+         if (producto != null) {
+            if (producto.equals(prod)) {
+                return;
+            }
+        }
+        this.producto = prod;
 
+        interfaz.limpiarEtapa();
+        interfaz.cargarProducto(producto);
+        interfaz.habilitarSeleccionProducto(true);
+        interfaz.habilitarSelecionEtapa(true);
+        interfaz.habilitarCarga(false);       
+    }
 
     public void ejecutarCU(ArrayList<EtapaProduccionEspecifica> e) throws ExceptionGestor {
         producto.setTEtapasProduccionEspecificas(new HashSet<EtapaProduccionEspecifica>(e));
@@ -102,4 +118,6 @@ public class GestorEstructura {
     public List<Material> listarMaterial() {
         return MaterialBD.getMateriales("", "", true, false);
     }
+
+
 }
