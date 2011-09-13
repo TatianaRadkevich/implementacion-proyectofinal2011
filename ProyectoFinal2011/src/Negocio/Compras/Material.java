@@ -37,7 +37,7 @@ public class Material implements java.io.Serializable {
     @Column(name = "ID_MATERIAL", unique = true, nullable = false, precision = 3, scale = 0)
     private Short idMaterial;
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_UNIDAD_MEDIDA", nullable=false)
+    @JoinColumn(name="ID_UNIDAD_MEDIDA")//, nullable=false)
     private UnidadMedida TUnidadesMedida;
     @Column(name = "NOMBRE", nullable = false, length = 50)
     private String nombre;
@@ -219,5 +219,12 @@ public class Material implements java.io.Serializable {
     public void setTUnidadesMedida(UnidadMedida TUnidadesMedida) {
         this.TUnidadesMedida = TUnidadesMedida;
     }
+
+    @Override
+    public String toString() {
+        return this.getNombre();
+    }
+
+
 
 }
