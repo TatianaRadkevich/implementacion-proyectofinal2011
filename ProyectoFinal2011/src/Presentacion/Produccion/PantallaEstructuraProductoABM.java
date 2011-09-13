@@ -96,7 +96,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
     private void cargarValidaciones() {
         ValidarTexbox.validarInt(txtOrden);
         ValidarTexbox.validarLongitud(txtOrden, 2);
-        ValidarTexbox.validarInt(txtHorasHombre);
+        ValidarTexbox.validarFloat(txtHorasHombre);
         ValidarTexbox.validarLongitud(txtHorasHombre, 6);
         ValidarTexbox.validarLongitud(txtDescripcion, 200);
         ValidarTexbox.validarInt(txtRepeticiones);
@@ -398,7 +398,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                                         .addGroup(pnlEtapaEspecificaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(btnCargarCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(btnCargarTipoEtapa, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
                                 .addGroup(pnlEtapaEspecificaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel18)
                                     .addComponent(jLabel20)
@@ -558,7 +558,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                     .addComponent(btnBajar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSubir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlEtapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
@@ -612,7 +612,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCancelar))
                     .addComponent(pnlEtapas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 853, Short.MAX_VALUE))
+                    .addComponent(pnlProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
