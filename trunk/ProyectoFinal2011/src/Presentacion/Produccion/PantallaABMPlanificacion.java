@@ -40,7 +40,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private TablaManager<EtapaProduccionEspecifica> tmEstructura;
     private TablaManager<DetallePlanProduccion> tmDetallePlanProduccion;
 
-    public PantallaABMPlanificacion(java.awt.Frame parent, boolean modal) {
+    private PantallaABMPlanificacion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
