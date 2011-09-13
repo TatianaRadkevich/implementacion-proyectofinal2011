@@ -7,6 +7,7 @@ package BaseDeDatos.Ventas;
 
 import BaseDeDatos.HibernateUtil;
 import Negocio.Ventas.Pedido;
+import Negocio.Ventas.TipoPedido;
 import Presentacion.Utilidades;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,6 +63,32 @@ public class PedidoBD
         if(vigentes==false&&cancelados==true)
             HQL+="AND p.fecBaja IS NOT NULL ";
              
+        return HibernateUtil.ejecutarConsulta(HQL);
+    }
+
+        public static List<Pedido> getPedidos(
+            String RazonSocial,TipoPedido tp,boolean vigentes,boolean cancelados){
+
+        if(vigentes==false&&cancelados==false)
+            return new ArrayList<Pedido>(0);
+
+
+
+        String HQL=String.format(
+                "FROM Pedido as p "
+                + "WHERE LOWER(p.TClientes.razonSocial) like  LOWER('%s%%') "
+                + ((tp==null)?"":"AND p.TTpedido.idTpedido = "+ tp.getIdTipoPedido())
+                ,RazonSocial);
+
+        if(vigentes==true&&cancelados==true)
+            return HibernateUtil.ejecutarConsulta(HQL);
+
+        if(vigentes==true&&cancelados==false)
+            HQL+="AND p.fecBaja IS NULL ";
+
+        if(vigentes==false&&cancelados==true)
+            HQL+="AND p.fecBaja IS NOT NULL ";
+
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 
