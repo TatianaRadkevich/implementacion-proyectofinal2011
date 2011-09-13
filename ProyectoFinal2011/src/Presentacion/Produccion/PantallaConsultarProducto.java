@@ -43,6 +43,10 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
         this.activarBotones(true, false, false, false, false);
+        this.txtCodigoId.setVisible(false);
+        this.txtCodigoTipo.setVisible(false);
+        this.lblCodigo.setVisible(false);
+        this.lblCodigoLinea.setVisible(false);
     }
 
 
@@ -70,10 +74,10 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
         chkMostrarTodos = new javax.swing.JCheckBox();
         chkMostrarDadosBaja = new javax.swing.JCheckBox();
-        jLabel4 = new javax.swing.JLabel();
+        lblCodigoLinea = new javax.swing.JLabel();
         txtCodigoId = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
+        lblCodigo = new javax.swing.JLabel();
         txtCodigoTipo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         cmbTipoProducto = new javax.swing.JComboBox();
@@ -244,11 +248,11 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         pnlBuscar.add(chkMostrarDadosBaja);
         chkMostrarDadosBaja.setBounds(370, 50, 170, 23);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("-");
-        pnlBuscar.add(jLabel4);
-        jLabel4.setBounds(200, 20, 20, 17);
+        lblCodigoLinea.setFont(new java.awt.Font("Tahoma", 1, 18));
+        lblCodigoLinea.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCodigoLinea.setText("-");
+        pnlBuscar.add(lblCodigoLinea);
+        lblCodigoLinea.setBounds(200, 20, 20, 17);
         pnlBuscar.add(txtCodigoId);
         txtCodigoId.setBounds(220, 20, 50, 20);
 
@@ -261,11 +265,11 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         pnlBuscar.add(btnBuscar);
         btnBuscar.setBounds(560, 110, 80, 23);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Código:");
-        pnlBuscar.add(jLabel5);
-        jLabel5.setBounds(50, 20, 80, 14);
+        lblCodigo.setFont(new java.awt.Font("Tahoma", 1, 11));
+        lblCodigo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblCodigo.setText("Código:");
+        pnlBuscar.add(lblCodigo);
+        lblCodigo.setBounds(50, 20, 80, 14);
         pnlBuscar.add(txtCodigoTipo);
         txtCodigoTipo.setBounds(160, 20, 40, 20);
 
@@ -429,10 +433,10 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     private javax.swing.JComboBox cmbTipoProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblCodigoLinea;
     private javax.swing.JPanel pnlBuscar;
     private javax.swing.JTable tabla_producto;
     private javax.swing.JTextField txtCodigoId;
