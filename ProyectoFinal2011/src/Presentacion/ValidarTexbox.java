@@ -66,6 +66,34 @@ public class ValidarTexbox {
         });
     }
 
+    public static void validarFloat(final JTextField txt) {
+        txt.addKeyListener(new java.awt.event.KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_V && e.getModifiers() == KeyEvent.CTRL_MASK) {
+                    e.consume();
+                }
+            }
+
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                int pos = txt.getCaretPosition();
+                String texto = txt.getText();
+                texto = texto.substring(0, pos) + evt.getKeyChar() + texto.substring(pos);
+
+                if (Character.toLowerCase(evt.getKeyChar()) == 'f') {
+                    evt.consume();
+                }
+                try {
+
+                    Float.parseFloat(texto);
+                } catch (Exception ex) {
+                    evt.consume();
+                }
+            }
+        });
+    }
+
     public static void validarMoneda(final JTextField txt) {
         txt.addKeyListener(new java.awt.event.KeyAdapter() {
 
