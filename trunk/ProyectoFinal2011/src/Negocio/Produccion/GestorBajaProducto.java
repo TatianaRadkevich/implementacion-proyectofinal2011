@@ -22,10 +22,9 @@ public class GestorBajaProducto extends GestorProducto{
     }
 
     public void bajaProducto(Dialog parent,String codigo) {
-        PantallaABMProducto pantalla_producto=new PantallaABMProducto(parent, true, this);
+        PantallaABMProducto pantalla_producto=new PantallaABMProducto(parent, true, this,"Eliminar Producto");
         pantalla_producto.baja(ProductoBD.traerProducto(codigo));
-        parent.setTitle("Eliminando Producto");
-        pantalla_producto.setVisible(true);
+       
     }
 
     @Override
