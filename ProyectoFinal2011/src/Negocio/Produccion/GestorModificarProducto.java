@@ -24,10 +24,9 @@ public class GestorModificarProducto extends GestorProducto{
     }
 
     public void modificarProducto(Dialog parent,String codigo) {
-        PantallaABMProducto pantalla_producto=new PantallaABMProducto(parent, true, this);        
+        PantallaABMProducto pantalla_producto=new PantallaABMProducto(parent, true, this,"Modificar Producto");
         pantalla_producto.modificar(ProductoBD.traerProducto(codigo));
-        parent.setTitle("Modificando Producto");
-        pantalla_producto.setVisible(true);
+     
     }
 
     @Override

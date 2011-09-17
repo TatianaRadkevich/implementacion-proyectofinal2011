@@ -17,12 +17,17 @@ public class GestorRegistrarProducto extends GestorProducto{
 
 
     public void nuevoProducto(Dialog parent){
-        PantallaABMProducto producto=new PantallaABMProducto(parent, true, this);        
-        producto.nuevo();
-        parent.setTitle("Registrando Producto");
+        PantallaABMProducto producto=new PantallaABMProducto(parent, true, this,"Registrar Producto");
+        producto.nuevo();        
         producto.setVisible(true);
-    }    
+        
+    }
 
+    public GestorRegistrarProducto() {
+    }
+
+
+    
     @Override
     public Producto ejecutarOperacion(Producto producto) throws ExceptionGestor {
         return ProductoBD.guardar(producto);
