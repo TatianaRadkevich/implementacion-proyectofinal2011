@@ -5,6 +5,7 @@
 
 package gui;
 
+import de.javasoft.plaf.synthetica.SyntheticaBlueIceLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaClassyLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaGreenDreamLookAndFeel;
 import java.awt.Frame;
@@ -57,6 +58,20 @@ public class GUILocal {
     {
 
       UIManager.setLookAndFeel(new SyntheticaGreenDreamLookAndFeel());
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+
+
+    }
+
+    public static void SyntheticaBlueIceLookAndFeel(Object frame){
+      try
+    {
+
+      UIManager.setLookAndFeel(new SyntheticaBlueIceLookAndFeel());
     }
     catch (Exception e)
     {
