@@ -20,6 +20,7 @@ import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import gui.GUILocal;
 import java.awt.Dialog;
+import java.awt.Frame;
 import java.math.BigDecimal;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -38,7 +39,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     private Producto producto=null;
     /** Creates new form PantallaABMProducto */
     public PantallaABMProducto(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super((Frame)null, modal);
         //GUILocal.establecerGUILocal(this);
       //  GUILocal.establecerGUISyntheticaClassy(this);
 
@@ -46,15 +47,15 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
     }
 
-    public PantallaABMProducto(Dialog owner, boolean modal, GestorProducto gestor) {
-        super(owner, modal);
+    public PantallaABMProducto(Dialog owner, boolean modal, GestorProducto gestor, String title) {
+        super((Dialog)null, modal);
 //        GUILocal.establecerGUILocal(this);
 
         initComponents();        
         this.gestor=gestor;
         cargarTipoProductos();
         cargarUnidadDeMedida();
-
+        setTitle(title);
        
        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
     }
@@ -97,9 +98,9 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         txtMotivoBaja = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("ABM Producto");
+        setTitle("null");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Producto"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -242,7 +243,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
             }
         });
 
-        pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder("Baja"));
+        pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);

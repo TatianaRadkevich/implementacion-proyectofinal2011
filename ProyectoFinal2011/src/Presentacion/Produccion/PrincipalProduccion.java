@@ -28,8 +28,9 @@ public class PrincipalProduccion extends javax.swing.JFrame {
 
     /** Creates new form PrincipalProduccion */
     public PrincipalProduccion() {
-      GUILocal.establecerGUISyntheticaGreenDreamLookAndFeel(this);
+//      GUILocal.establecerGUISyntheticaGreenDreamLookAndFeel(this);
 //        GUILocal.establecerGUISyntheticaClassy(this);
+        GUILocal.SyntheticaBlueIceLookAndFeel(this);
         initComponents();
        
     }
