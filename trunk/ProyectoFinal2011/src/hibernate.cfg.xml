@@ -3,16 +3,12 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-<<<<<<< .mine
+
     <property name="hibernate.connection.url">jdbc:sqlserver://localhost\casa:1433;databaseName=Ramaty</property>
     <property name="hibernate.connection.username">proyecto</property>
-    <property name="hibernate.connection.password">sistemas</property>
+    <property name="hibernate.connection.password">33437838</property>
 
-=======
-    <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=Ramaty</property>
-    <property name="hibernate.connection.username">sa</property>
-    <property name="hibernate.connection.password">123</property>
->>>>>>> .r339
+
     <mapping class="Negocio.Administracion.AsistenciaEmpleado"/>
     <mapping class="Negocio.Administracion.Cargo"/>
     <mapping class="Negocio.Administracion.Cheque"/>
@@ -24,7 +20,7 @@
     <mapping class="Negocio.Administracion.FormaPago"/>
     <mapping class="Negocio.Administracion.Sexo"/>
     <mapping class="Negocio.Administracion.TipoDocumento"/>
-    <mapping class="Negocio.Administracion.TEmpleadosXCargo"/>
+    <mapping class="Negocio.Administracion.EmpleadosXCargo"/>
 
     <mapping class="Negocio.Compras.DetalleOrdenCompra"/>
     <mapping class="Negocio.Compras.EstadoOrdenCompra"/>
