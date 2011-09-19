@@ -40,7 +40,7 @@ import javax.swing.event.TableModelListener;
  *
  * @author Ivan
  */
-public class PantallaABMPlanificacion_1 extends javax.swing.JDialog {
+public class PantallaABMPlanificacion1 extends javax.swing.JDialog {
 
     /** Creates new form PantallaABMPlanificacion */
     private Pedido pedido;
@@ -48,12 +48,12 @@ public class PantallaABMPlanificacion_1 extends javax.swing.JDialog {
     private TablaManager<EtapaProduccionEspecifica> tmEstructura;
     private TablaManager<DetallePlanProduccion> tmDetallePlanProduccion;
 
-    private PantallaABMPlanificacion_1(java.awt.Frame parent, boolean modal) {
+    private PantallaABMPlanificacion1(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
-    public PantallaABMPlanificacion_1(Pedido p) {
+    public PantallaABMPlanificacion1(Pedido p) {
         this(null, true);
         pedido = p;
         cargarCombos();
@@ -204,7 +204,7 @@ public class PantallaABMPlanificacion_1 extends javax.swing.JDialog {
         btnModificar.setEnabled(!valor); //cambió el nombre de componente
 
         fhInicioDetallePlan.setEnabled(valor);
-        cmbMaquina.setEnabled(valor);
+       // cmbMaquina.setEnabled(valor);
         cmbOperario.setEnabled(valor);
         txtObservaciones.setEditable(valor);
         btnAceptar.setEnabled(valor); //cambió el nombre de componente
@@ -218,11 +218,11 @@ public class PantallaABMPlanificacion_1 extends javax.swing.JDialog {
             return false;
         }
 
-        if (cmbMaquina.getSelectedIndex() == -1) {
-            Mensajes.mensajeErrorGenerico("Debe seleccionar una máquina");
-            cmbMaquina.requestFocus();
-            return false;
-        }
+//        if (cmbMaquina.getSelectedIndex() == -1) {
+//            Mensajes.mensajeErrorGenerico("Debe seleccionar una máquina");
+//            cmbMaquina.requestFocus();
+//            return false;
+//        }
 
         if (cmbOperario.getSelectedIndex() == -1) {
             Mensajes.mensajeErrorGenerico("Debe seleccionar un operario");
@@ -235,7 +235,7 @@ public class PantallaABMPlanificacion_1 extends javax.swing.JDialog {
     private void limpiarDatosEtapaPlanificacion()
     {
         fhInicioDetallePlan.setDate(Utilidades.getFechaActual());
-        cmbMaquina.setSelectedIndex(-1);
+        //cmbMaquina.setSelectedIndex(-1);
         cmbOperario.setSelectedIndex(-1);
         txtObservaciones.setText("");
     }
@@ -248,13 +248,13 @@ public class PantallaABMPlanificacion_1 extends javax.swing.JDialog {
         }
 
         fhInicioDetallePlan.setDate((detalle.getFecHoraPrevistaInicio()==null)?Utilidades.getFechaActual():detalle.getFecHoraPrevistaInicio());
-        cmbMaquina.setModel(
-                new DefaultComboBoxModel(
-                MaquinaHerramientaBD.getMaquinasHerramientas(
-                detalle.getTEtapasProduccionEspecifica()
-                .getDetalleEtapaProduccion().get(0)
-                .getTipoMaquinaHerramienta(), true, false).toArray()));
-        cmbMaquina.setSelectedItem(detalle.getTMaquinasHerramientaParticular());
+//        cmbMaquina.setModel(
+//                new DefaultComboBoxModel(
+//                MaquinaHerramientaBD.getMaquinasHerramientas(
+//                detalle.getTEtapasProduccionEspecifica()
+//                .getDetalleEtapaProduccion().get(0)
+//                .getTipoMaquinaHerramienta(), true, false).toArray()));
+//        cmbMaquina.setSelectedItem(detalle.getTMaquinasHerramientaParticular());
 
         cmbOperario.setModel(
                 new DefaultComboBoxModel(EmpleadoBD.getEmpleados(detalle.getTEtapasProduccionEspecifica().getCargo(), true, false).toArray()));
@@ -906,7 +906,7 @@ public class PantallaABMPlanificacion_1 extends javax.swing.JDialog {
         det.setFecHoraPrevistaInicio(fhInicioDetallePlan.getDate());
         det.setObservaciones(txtObservaciones.getText());
         det.setTEmpleados((Empleado) cmbOperario.getSelectedItem());
-        det.setTMaquinasHerramientaParticular((MaquinaHerramientaParticular) cmbMaquina.getSelectedItem());
+      //  det.setTMaquinasHerramientaParticular((MaquinaHerramientaParticular) cmbMaquina.getSelectedItem());
         habilitarDatosPlanificacion(false);
         limpiarDatosEtapaPlanificacion();
         tmDetallePlanProduccion.updateTabla();

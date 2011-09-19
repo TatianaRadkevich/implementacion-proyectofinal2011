@@ -4,42 +4,35 @@
  */
 
 /*
- * PantallaAMBCliente.java
+ * PantallaProveedorABM.java
  *
- * Created on 26/06/2011, 16:26:04
+ * Created on 19/09/2011, 16:39:22
  */
-package Presentacion.Ventas;
 
-import BaseDeDatos.Ventas.ClienteBD;
-import BaseDeDatos.TipoBD;
+package Presentacion.Compras;
+
+import Negocio.Compras.Proveedor;
 import Negocio.Exceptiones.ExceptionGestor;
-import Negocio.UbicacionGeografica.Domicilio;
-import Negocio.Ventas.Cliente;
-import Negocio.Ventas.GestorCliente;
-import Negocio.Ventas.GestorClienteAlta;
-import Negocio.Ventas.GestorClienteBaja;
-import Negocio.Ventas.TipoCliente;
+import Negocio.Compras.GestorProveedor;
 import Presentacion.Mensajes;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import java.util.Date;
-import javax.swing.DefaultComboBoxModel;
 
 /**
  *
- * @author Ivan
+ * @author Rodrigo
  */
-public class PantallaClienteABM extends javax.swing.JDialog {
+public class PantallaProveedorABM extends javax.swing.JDialog {
 
-    /** Creates new form PantallaAMBCliente */
-    private GestorCliente gestor;
-
-    private PantallaClienteABM(java.awt.Frame parent, boolean modal) {
+    private GestorProveedor gestor;
+    /** Creates new form PantallaProveedorABM */
+    private PantallaProveedorABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
-    public PantallaClienteABM(GestorCliente g) {
+    public PantallaProveedorABM(GestorProveedor g) {
         this(null, true);
         gestor = g;
 
@@ -47,12 +40,10 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         habilitarBaja(false,false,null,"");
         cargarValidaciones();
         pnlDomicilio.inicializar();
-        recargarComboTipoCleinte();        
+       
     }
 
-    private void recargarComboTipoCleinte() {
-        cmbTipoCliente.setModel(new DefaultComboBoxModel(gestor.getTipoClientes().toArray()));
-    }
+ 
 
     public void cargarValidaciones() {
         ValidarTexbox.validarInt(txtCUIT);
@@ -62,22 +53,23 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         ValidarTexbox.validarLongitud(txtApellido, 200);
         ValidarTexbox.validarLongitud(txtCorreoElectronico, 50);
         ValidarTexbox.validarLongitud(txtRazonSocial, 50);
+        ValidarTexbox.validarLongitud(txtPaginaWeb, 50);
     }
 
-    public void cargar(Cliente c) {
-        txtApellido.setText(c.getApellidoResponsable());
-        txtCUIT.setText(c.getCuit()+"");
-        txtCorreoElectronico.setText(c.getCorreoElectronico());
-        txtNombre.setText(c.getNombreResponsable());
-        txtRazonSocial.setText(c.getRazonSocial());
-        txtTelefono.setText(c.getTelefonoResponsable()+"");
-        cmbTipoCliente.setSelectedItem(c.getTipoCliente());
-        pnlDomicilio.setDomicilio(c.getDomicilio());
-        if(c.getFecBaja()!=null)
+    public void cargar(Proveedor p) {
+        txtApellido.setText(p.getApellidoResponsable());
+        txtCUIT.setText(Utilidades.parseString(p.getCuit()));
+        txtPaginaWeb.setText(p.getPaginaWeb());
+        txtCorreoElectronico.setText(p.getCorreoElectronico());
+        txtNombre.setText(p.getNombreResponsable());
+        txtRazonSocial.setText(p.getRazonSocial());
+        txtTelefono.setText(Utilidades.parseString(p.getTelefonoResponsable()));
+        pnlDomicilio.setDomicilio(p.getDomicilio());
+        if(p.getFecBaja()!=null)
         {
            // pnlBaja.setVisible(true);
-            txtFechaBaja.setText(Utilidades.parseFecha(c.getFecBaja()));
-            txtMotivoBaja.setText(Utilidades.parseString(c.getMotivoBaja()));
+            txtFechaBaja.setText(Utilidades.parseFecha(p.getFecBaja()));
+            txtMotivoBaja.setText(Utilidades.parseString(p.getMotivoBaja()));
         }
     }
 
@@ -86,12 +78,12 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         txtCUIT.setEditable(b);
         txtCorreoElectronico.setEditable(b);
         pnlDomicilio.habilitar(b);
-        txtNombre.setEditable(b);        
-        txtTelefono.setEditable(b);
-        cmbTipoCliente.setEnabled(b);
+        txtNombre.setEditable(b);
+        txtTelefono.setEditable(b);        
         txtRazonSocial.setEditable(b);
         pnlDomicilio.setEnabled(b);
-        
+        txtPaginaWeb.setEditable(b);
+
     }
 
     public void habilitarBaja(boolean visible,boolean edittable, Date fecha,String motivo)
@@ -113,14 +105,11 @@ public class PantallaClienteABM extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnCancelar = new javax.swing.JButton();
-        btnAceptar = new javax.swing.JButton();
+        pnlDomicilio = new Presentacion.PnlDomicilio();
         pnlCliente = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtCorreoElectronico = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        cmbTipoCliente = new javax.swing.JComboBox();
-        jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtRazonSocial = new javax.swing.JTextField();
         txtCUIT = new javax.swing.JTextField();
@@ -131,56 +120,39 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        txtPaginaWeb = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         pnlBaja = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txtFechaBaja = new javax.swing.JTextField();
         scrollBaja = new javax.swing.JScrollPane();
         txtMotivoBaja = new javax.swing.JTextArea();
-        pnlDomicilio = new Presentacion.PnlDomicilio();
+        btnAceptar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Nuevo CLiente");
-
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-
-        btnAceptar.setText("Aceptar");
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
-            }
-        });
 
         pnlCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("CUIT:");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Razon social:");
 
-        cmbTipoCliente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel3.setText("Tipo:");
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setText("Correo electronico:");
 
         pnlResponsable.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Responsable", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel6.setText("Nombre:");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel7.setText("Aplellido:");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel8.setText("Telefono:");
 
         javax.swing.GroupLayout pnlResponsableLayout = new javax.swing.GroupLayout(pnlResponsable);
@@ -195,9 +167,9 @@ public class PantallaClienteABM extends javax.swing.JDialog {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlResponsableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-                    .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE))
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                    .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlResponsableLayout.setVerticalGroup(
@@ -218,30 +190,37 @@ public class PantallaClienteABM extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel3.setText("Pagina web:");
+
         javax.swing.GroupLayout pnlClienteLayout = new javax.swing.GroupLayout(pnlCliente);
         pnlCliente.setLayout(pnlClienteLayout);
         pnlClienteLayout.setHorizontalGroup(
             pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlClienteLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlClienteLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCUIT, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
-                            .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
-                            .addComponent(cmbTipoCliente, 0, 308, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlClienteLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCorreoElectronico, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE))
-                    .addComponent(pnlResponsable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE))
+                    .addGroup(pnlClienteLayout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCUIT, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE))
+                    .addGroup(pnlClienteLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtPaginaWeb, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                            .addComponent(txtCorreoElectronico, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)))
+                    .addGroup(pnlClienteLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnlResponsable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlClienteLayout.setVerticalGroup(
@@ -250,18 +229,18 @@ public class PantallaClienteABM extends javax.swing.JDialog {
                 .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtCUIT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cmbTipoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCorreoElectronico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPaginaWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addComponent(pnlResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -269,10 +248,10 @@ public class PantallaClienteABM extends javax.swing.JDialog {
 
         pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Baja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel9.setText("Fecha:");
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel10.setText("Motivo:");
 
         txtFechaBaja.setEditable(false);
@@ -307,29 +286,41 @@ public class PantallaClienteABM extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(scrollBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))
+                    .addComponent(scrollBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnlBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(pnlDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(639, Short.MAX_VALUE)
-                        .addComponent(btnAceptar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelar)))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnlBaja, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(pnlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(pnlDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(btnAceptar)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnCancelar))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -340,58 +331,63 @@ public class PantallaClienteABM extends javax.swing.JDialog {
                     .addComponent(pnlDomicilio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-     Cliente cli = gestor.getCliente();
-     cli.setApellidoResponsable(txtApellido.getText());
-     cli.setCorreoElectronico(txtCorreoElectronico.getText());
-     cli.setCuit(Utilidades.parseString(txtCUIT.getText()));
-     cli.setNombreResponsable(txtNombre.getText());
-     cli.setRazonSocial(txtRazonSocial.getText());
-     cli.setTelefonoResponsable(Utilidades.parseLong(txtTelefono.getText()));
-     cli.setTipoCliente((TipoCliente) cmbTipoCliente.getSelectedItem());
-     cli.setDomicilio(pnlDomicilio.getDomicilio());
-     cli.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
-     cli.setMotivoBaja(null);
-      
+        Proveedor pro = gestor.getProveedor();
+        pro.setApellidoResponsable(txtApellido.getText());
+        pro.setCorreoElectronico(txtCorreoElectronico.getText());
+        pro.setCuit(Utilidades.parseString(txtCUIT.getText()));
+        pro.setNombreResponsable(txtNombre.getText());
+        pro.setRazonSocial(txtRazonSocial.getText());
+        pro.setPaginaWeb(txtPaginaWeb.getText());
+        pro.setTelefonoResponsable(txtTelefono.getText());      
+        pro.setDomicilio(pnlDomicilio.getDomicilio());
+        pro.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
+        pro.setMotivoBaja(null);
+
         try {
-            gestor.ejecutarCU(cli);
+            gestor.ejecutarCU(pro);
             gestor.finalizarCU();
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
-    }//GEN-LAST:event_btnAceptarActionPerformed
+}//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-       gestor.finalizarCU();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+        gestor.finalizarCU();
+}//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
-     * @param args the command line arguments
-     */
+    * @param args the command line arguments
+    */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new GestorClienteBaja(new Cliente()).iniciarCU();
-                new GestorClienteAlta().iniciarCU();
+                PantallaProveedorABM dialog = new PantallaProveedorABM(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox cmbTipoCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -412,7 +408,9 @@ public class PantallaClienteABM extends javax.swing.JDialog {
     private javax.swing.JTextField txtFechaBaja;
     private javax.swing.JTextArea txtMotivoBaja;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPaginaWeb;
     private javax.swing.JTextField txtRazonSocial;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+
 }

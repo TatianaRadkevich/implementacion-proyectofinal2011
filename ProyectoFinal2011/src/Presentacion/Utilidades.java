@@ -51,20 +51,21 @@ public class Utilidades {
         return c.getTime();
     }
 
+    public static void habilitarPanel(Container panel,boolean valor)
+    {
+        panel.setEnabled(valor);
+        for(Component componente:panel.getComponents())
+            if(componente instanceof Container)
+                habilitarPanel((Container) componente,valor);
+        
+    }
+
     public static Date getFechaActual() {
         return GregorianCalendar.getInstance().getTime();
     }
 
     public Calendar getFechaCalendar() {
         return GregorianCalendar.getInstance();
-    }
-
-    private void habilitarTodo(Container contenedor,boolean valor)
-    {
-        for(Component componente:contenedor.getComponents())
-            if(componente instanceof Container)
-                habilitarTodo((Container) componente,valor);
-        contenedor.setEnabled(valor);
     }
 
      public static BigDecimal parseBigDecimal(String value) {
