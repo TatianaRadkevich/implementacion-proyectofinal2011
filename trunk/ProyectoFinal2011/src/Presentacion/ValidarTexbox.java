@@ -41,6 +41,32 @@ public class ValidarTexbox {
         });
     }
 
+     public static void validarShort(final JTextField txt) {
+        txt.addKeyListener(new java.awt.event.KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_V && e.getModifiers() == KeyEvent.CTRL_MASK) {
+                    e.consume();
+                }
+            }
+
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+
+                int pos = txt.getCaretPosition();
+                String texto = txt.getText();
+                texto = texto.substring(0, pos) + evt.getKeyChar() + texto.substring(pos);
+
+                try {
+
+                    Short.parseShort(texto);
+                } catch (Exception ex) {
+                    evt.consume();
+                }
+            }
+        });
+    }
+
     public static void validarLong(final JTextField txt) {
         txt.addKeyListener(new java.awt.event.KeyAdapter() {
 
