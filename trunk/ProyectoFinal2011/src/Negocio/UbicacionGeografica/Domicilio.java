@@ -28,29 +28,43 @@ import javax.persistence.Table;
 )
 public class Domicilio  implements java.io.Serializable {
 
-
+@Id
+    @GeneratedValue
+    @Column(name="ID_DOMICILIO", unique=true, nullable=false, precision=3, scale=0)
      private short idDomicilio;
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_LOCALIDAD")
      private Localidad TLocalidades;
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_BARRIO")
      private Barrio TBarrios;
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_PROVINCIA")
      private Provincia TProvincias;
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_PAIS"/*, nullable=false*/)
      private Pais TPaises;
+    @Column(name = "CALLE", length = 20)
      private String calle;
+    @Column(name = "DEPTO", precision = 3, scale = 0)
      private String depto;
-     private int numero;
-     private short piso;
+    @Column(name = "NUMERO", precision = 5, scale = 0)
+     private Integer numero;
+    @Column(name = "PISO", precision = 2, scale = 0)
+     private Short piso;
     
 
     public Domicilio() {
     }
 
 	
-    public Domicilio(short idDomicilio, Pais TPaises, String calle, int numero) {
+    public Domicilio(short idDomicilio, Pais TPaises, String calle, Integer numero) {
         this.idDomicilio = idDomicilio;
         this.TPaises = TPaises;
         this.calle = calle;
         this.numero = numero;
     }
-    public Domicilio(short idDomicilio, Localidad TLocalidades, Barrio TBarrios, Provincia TProvincias, Pais TPaises, String calle, String depto, int numero, short piso) {
+    public Domicilio(short idDomicilio, Localidad TLocalidades, Barrio TBarrios, Provincia TProvincias, Pais TPaises, String calle, String depto, Integer numero, Short piso) {
        this.idDomicilio = idDomicilio;
        this.TLocalidades = TLocalidades;
        this.TBarrios = TBarrios;
@@ -63,9 +77,7 @@ public class Domicilio  implements java.io.Serializable {
       
     }
    
-     @Id 
-    @GeneratedValue
-    @Column(name="ID_DOMICILIO", unique=true, nullable=false, precision=3, scale=0)
+     
     public short getIdDomicilio() {
         return this.idDomicilio;
     }
@@ -73,8 +85,7 @@ public class Domicilio  implements java.io.Serializable {
     public void setIdDomicilio(short idDomicilio) {
         this.idDomicilio = idDomicilio;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_LOCALIDAD")
+
     public Localidad getTLocalidades() {
         return this.TLocalidades;
     }
@@ -82,8 +93,7 @@ public class Domicilio  implements java.io.Serializable {
     public void setTLocalidades(Localidad TLocalidades) {
         this.TLocalidades = TLocalidades;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_BARRIO")
+
     public Barrio getTBarrios() {
         return this.TBarrios;
     }
@@ -91,8 +101,7 @@ public class Domicilio  implements java.io.Serializable {
     public void setTBarrios(Barrio TBarrios) {
         this.TBarrios = TBarrios;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_PROVINCIA")
+
     public Provincia getTProvincias() {
         return this.TProvincias;
     }
@@ -100,8 +109,7 @@ public class Domicilio  implements java.io.Serializable {
     public void setTProvincias(Provincia TProvincias) {
         this.TProvincias = TProvincias;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_PAIS"/*, nullable=false*/)
+
     public Pais getTPaises() {
         return this.TPaises;
     }
@@ -110,7 +118,6 @@ public class Domicilio  implements java.io.Serializable {
         this.TPaises = TPaises;
     }
     
-    @Column(name="CALLE" /*, nullable=false*/, length=20)
     public String getCalle() {
         return this.calle;
     }
@@ -119,7 +126,6 @@ public class Domicilio  implements java.io.Serializable {
         this.calle = calle;
     }
     
-    @Column(name="DEPTO", precision=3, scale=0)
     public String getDepto() {
         return this.depto;
     }
@@ -128,21 +134,19 @@ public class Domicilio  implements java.io.Serializable {
         this.depto = depto;
     }
     
-    @Column(name="NUMERO"/*, nullable=false*/, precision=5, scale=0)
-    public int getNumero() {
+    public Integer getNumero() {
         return this.numero;
     }
     
-    public void setNumero(int numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
     
-    @Column(name="PISO", precision=2, scale=0)
-    public short getPiso() {
+    public Short getPiso() {
         return this.piso;
     }
     
-    public void setPiso(short piso) {
+    public void setPiso(Short piso) {
         this.piso = piso;
     }}
 
