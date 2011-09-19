@@ -3,28 +3,28 @@
  * and open the template in the editor.
  */
 
-package Negocio.Ventas;
+package Negocio.Compras;
 
-import BaseDeDatos.BaseDatos;
-import BaseDeDatos.Ventas.ClienteBD;
+import BaseDeDatos.Compras.ProveedorBD;
+import Negocio.Compras.Proveedor;
 import Negocio.Exceptiones.ExceptionGestor;
-import Presentacion.Ventas.PantallaClienteABM;
+import Presentacion.Compras.PantallaProveedorABM;
 
 /**
  *
  * @author Rodrigo
  */
-public class GestorClienteAlta extends GestorCliente {
+public class GestorProveedorAlta extends GestorProveedor{
 
-    @Override
+     @Override
     public void iniciarCU() {
-        interfaz=new PantallaClienteABM(this);
-        cliente=new Cliente();
-        interfaz.setTitle("Registrar Cliente");
+        interfaz=new PantallaProveedorABM(this);
+        proveedor=new Proveedor();
+        interfaz.setTitle("Registrar Proveedor");
         interfaz.setVisible(true);
     }
 
-    private void validar(Cliente p) throws ExceptionGestor
+    private void validar(Proveedor p) throws ExceptionGestor
     {
         String mensage="";
 //        if(p.getCliente()==null)
@@ -38,13 +38,10 @@ public class GestorClienteAlta extends GestorCliente {
     }
 
     @Override
-    public void ejecutarCU(Cliente p) throws ExceptionGestor {
+    public void ejecutarCU(Proveedor p) throws ExceptionGestor {
         validar(p);
-        ClienteBD.guardar(p);
+        ProveedorBD.guardar(p);
     }
-
-
-
 
 
 }

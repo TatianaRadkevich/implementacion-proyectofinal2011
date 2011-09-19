@@ -30,7 +30,7 @@ public GestorClienteBaja(Cliente p)
         interfaz.cargar(cliente);
         interfaz.habilitarBaja(true, true, Utilidades.getFechaActual(), "");
         interfaz.habilitarCarga(false);
-        interfaz.setTitle("Eliminar cliente");
+        interfaz.setTitle("Eliminar Cliente");
         interfaz.setVisible(true);
     }
 
