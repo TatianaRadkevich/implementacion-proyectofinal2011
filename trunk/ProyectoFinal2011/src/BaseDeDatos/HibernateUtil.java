@@ -68,6 +68,12 @@ public class HibernateUtil {
         session.getTransaction().commit();
     }
 
+    public static void guardarModificarObjeto(Object o) {
+        session.beginTransaction();
+        session.saveOrUpdate(o);
+        session.getTransaction().commit();
+    }
+
     public static Object getObjeto(Class type, Serializable srlzbl) {
         Object salida;
         session.beginTransaction();
