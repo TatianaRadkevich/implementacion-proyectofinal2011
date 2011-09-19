@@ -18,11 +18,13 @@ public class ClienteBD {
 
     public static void guardar(Cliente c)
     {
+        HibernateUtil.guardarModificarObjeto(c.getDomicilio());
         HibernateUtil.guardarObjeto(c);
     }
 
     public static void modificar(Cliente c)
     {
+         HibernateUtil.guardarModificarObjeto(c.getDomicilio());
         HibernateUtil.guardarObjeto(c);
     }
 
