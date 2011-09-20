@@ -55,7 +55,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         this(null, true);
         this.gestor = gestor;
 
-        //Seteo de variables//
+        //Seteo de variables//-
         cmbMaterial = new JComboBox();
         txtCodigo.setText((gestor.getCodigo() + 1) + "");
         txtFecha.setText(Utilidades.parseFecha(Utilidades.getFechaActual()));
