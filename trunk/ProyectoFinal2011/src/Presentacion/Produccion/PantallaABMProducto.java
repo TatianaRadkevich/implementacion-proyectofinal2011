@@ -776,11 +776,27 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
     public void cargarComboMaterial(){
 
+        cmbTipoProducto.removeAllItems();
         if(!rdbInsumo.isSelected() && !rdbMateriaPrima.isSelected())
             return;
         List<Material> materiales=MaterialBD.getMateriales(rdbMateriaPrima.isSelected());
 
 
+try {
+//            for(int i=0;i<cmbTipoProducto.getItemCount();i++){
+//                cmbTipoProducto.remove(i);
+//            }
+            
+
+            List<TipoProducto> tipo = gestor.traerTiposProductos();
+            for(int i=0;i<tipo.size();i++){
+                cmbTipoProducto.addItem(tipo.get(i));
+            }
+        } catch (ExceptionGestor ex) {
+            Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//        cmbTipoProducto.setSelectedIndex(2);
+        cmbTipoProducto.repaint();
     }
     
     
