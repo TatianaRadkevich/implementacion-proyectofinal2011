@@ -6,6 +6,7 @@ import Negocio.Compras.Material;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -38,7 +39,7 @@ public class DetalleProducto  implements java.io.Serializable {
     }
    
      @Id 
-    
+    @GeneratedValue
     @Column(name="ID_DETALLE_PRODUCTO", unique=true, nullable=false, precision=5, scale=0)
     public int getIdDetalleProducto() {
         return this.idDetalleProducto;
@@ -75,7 +76,30 @@ public class DetalleProducto  implements java.io.Serializable {
         this.longitud = longitud;
     }
 
+    public String tipoMaterial(){
+       if(this.TMateriales.isMateriaPrima())
+           return "Materia prima";
+       else
+           return "Insumo";
+    }
 
+    public String getInfoLongitud(){
+        return this.getLongitud() + " "+this.getTMateriales().getTUnidadesMedida().getNombre();
+
+    }
+
+    public Object getInfoColumna(int columnIndex) {
+        switch (columnIndex) {
+            case 0:
+                return this.getTMateriales().getNombre();
+            case 1:
+                return this.tipoMaterial();
+            case 2:
+                return this.getInfoLongitud();
+
+        }
+        return null;
+    }
 
 
 }
