@@ -83,7 +83,7 @@ public class DetalleProducto  implements java.io.Serializable {
            return "Insumo";
     }
 
-    public String getInfoLongitud(){
+    public String InfoLongitud(){
         return this.getLongitud() + " "+this.getTMateriales().getTUnidadesMedida().getNombre();
 
     }
@@ -95,7 +95,7 @@ public class DetalleProducto  implements java.io.Serializable {
             case 1:
                 return this.tipoMaterial();
             case 2:
-                return this.getInfoLongitud();
+                return this.InfoLongitud();
 
         }
         return null;
