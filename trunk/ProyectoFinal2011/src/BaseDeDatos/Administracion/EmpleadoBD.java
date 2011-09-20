@@ -8,6 +8,7 @@ package BaseDeDatos.Administracion;
 import BaseDeDatos.HibernateUtil;
 import Negocio.Administracion.Cargo;
 import Negocio.Administracion.Empleado;
+import Negocio.Administracion.TipoDocumento;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,5 +66,36 @@ public class EmpleadoBD {
     public static Empleado traerEmpleado(int id){
         return (Empleado) HibernateUtil.getObjeto(Empleado.class, id);
     }
+
+    public static List<Empleado> getEmpleados(
+            String nombre, String apellido,String legajo,TipoDocumento tipo, String numeroDoc, boolean vigentes,boolean cancelados){
+
+        if(vigentes==false&&cancelados==false)
+            return new ArrayList<Empleado>(0);
+
+
+
+        String HQL=String.format(
+                "FROM Empleado as p "
+                + "WHERE LOWER(p.nombre) like  LOWER('%s%%') "
+                + "AND LOWER(p.apellido) like  LOWER('%s%%') "
+                + "AND p.idEmpleado like '%s%%' "
+               ,nombre,apellido,legajo);
+
+       if(tipo.getIdTdocumento()!=-1){
+            HQL+="AND p.TTdocumento.idTdocumento="+tipo.getIdTdocumento();
+       }
+       if(vigentes==true&&cancelados==true)
+            return HibernateUtil.ejecutarConsulta(HQL);
+
+        if(vigentes==true&&cancelados==false)
+            HQL+="AND p.fecBaja IS NULL ";
+
+        if(vigentes==false&&cancelados==true)
+            HQL+="AND p.fecBaja IS NOT NULL ";
+
+        return HibernateUtil.ejecutarConsulta(HQL);
+    }
+
     
 }
