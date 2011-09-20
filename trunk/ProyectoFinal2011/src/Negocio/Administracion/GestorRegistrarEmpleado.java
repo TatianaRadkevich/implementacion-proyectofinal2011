@@ -18,7 +18,7 @@ public class GestorRegistrarEmpleado extends GestorEmpleado{
 
 
     public void nuevoEmpleado(Dialog parent){
-        PantallaABMEmpleado producto=new PantallaABMEmpleado(parent, true, this);
+        PantallaABMEmpleado producto=new PantallaABMEmpleado(parent, true, this,"Registrar Empleado");
         producto.nuevo();
         producto.setVisible(true);
     }

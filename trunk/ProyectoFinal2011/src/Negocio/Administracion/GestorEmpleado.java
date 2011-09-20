@@ -6,6 +6,7 @@
 package Negocio.Administracion;
 
 import BaseDeDatos.Administracion.EmpleadoBD;
+import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.UbicacionGeografica.PaisBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.UbicacionGeografica.Pais;
@@ -39,6 +40,10 @@ public abstract class GestorEmpleado {
 
     public List<Pais> listarPais(){
         return PaisBD.listarPaises();
+    }
+
+    public static  Empleado traerEmpleado(int legajo){
+       return (Empleado) HibernateUtil.getObjeto(Empleado.class, legajo);
     }
 
 }

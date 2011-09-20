@@ -366,4 +366,12 @@ public class Empleado implements java.io.Serializable {
     public String toString() {
         return this.getNombre() + ", " + this.getApellido();
     }
+
+     public boolean estaBaja() {
+        if (fecBaja == null) {
+            return false;
+        }
+        return true;
+
+    }
 }
