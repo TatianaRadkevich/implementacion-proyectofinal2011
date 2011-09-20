@@ -58,7 +58,7 @@ public class Provincia implements java.io.Serializable {
         this.TLocalidadeses = TLocalidadeses;
 
     }
-
+   
     public int getIdProvincia() {
         return this.idProvincia;
     }
