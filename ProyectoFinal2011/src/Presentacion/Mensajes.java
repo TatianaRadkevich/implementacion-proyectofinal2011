@@ -56,6 +56,14 @@ public class Mensajes
 
     }
 
+      /*
+       * Guardar: "El xxxx nombrexxx ha sido guardado exitosamente."
+       * Moficar: "El xxxx nombrexxx ha sido modificado exitosamente."
+       * Eliminar: "El xxxx nombrexxx ha sido eliminado exitosamente."
+       * Reactivar: "El xxxx nombrexxx ha sido dado reactivado exitosamente"
+       * Cancelar: "¿Esta seguro que desea cancelar la operacion?
+       */
+
       public static void mensajeInformacion(String mensaje){
         JOptionPane.showMessageDialog(null, mensaje,"Informacion",JOptionPane.INFORMATION_MESSAGE);
       }
