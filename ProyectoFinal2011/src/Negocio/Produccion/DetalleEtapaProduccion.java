@@ -43,6 +43,10 @@ public class DetalleEtapaProduccion implements java.io.Serializable {
     public DetalleEtapaProduccion() {
     }
 
+     public DetalleEtapaProduccion(TipoMaquinaHerramienta tipoMaq) {
+         this.TTmaquinaHerramienta=tipoMaq;
+    }
+
     public int getId() {
         return this.idDetalleEtapa;
     }
