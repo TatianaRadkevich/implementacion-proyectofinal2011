@@ -64,7 +64,7 @@ public class ProductoBD{
 
 
     public static List<Producto> getProducto(
-            String nombre,TipoProducto tipo, boolean vigentes,boolean cancelados){
+            String nombre,TipoProducto tipo, boolean vigentes,boolean cancelados, String codTipo, String id ){
 
         if(vigentes==false&&cancelados==false)
             return new ArrayList<Producto>(0);
@@ -73,8 +73,10 @@ public class ProductoBD{
 
         String HQL=String.format(
                 "FROM Producto as p "
-                + "WHERE LOWER(p.nombre) like  LOWER('%s%%') "               
-               ,nombre);
+                + "WHERE LOWER(p.nombre) like  LOWER('%s%%') "
+                + "AND p.idProducto like '%s%%' "
+                + "AND LOWER(p.TTproducto.codigo) like  LOWER('%s%%') "
+               ,nombre,id,codTipo);
 
        if(tipo.getIdTproducto()!=-1){
             HQL+="AND p.TTproducto.idTproducto="+tipo.getIdTproducto();
