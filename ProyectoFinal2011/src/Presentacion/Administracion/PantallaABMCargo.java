@@ -80,7 +80,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        pnlCargo.setBorder(javax.swing.BorderFactory.createTitledBorder("Cargo"));
+        pnlCargo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cargo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Nombre:");
@@ -93,7 +93,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
         txtDescripcion.setRows(5);
         jScrollPane1.setViewportView(txtDescripcion);
 
-        pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder("Baja"));
+        pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Baja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Fecha:");
@@ -110,7 +110,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
         pnlBajaLayout.setHorizontalGroup(
             pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBajaLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(51, 51, 51)
                 .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
                     .addComponent(jLabel4))
@@ -156,7 +156,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCargoLayout.createSequentialGroup()
                 .addContainerGap()
@@ -170,7 +170,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
                 .addGap(27, 27, 27)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+                .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlCargoLayout.setVerticalGroup(
@@ -192,7 +192,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
                     .addComponent(btnCancelar)))
         );
 
-        pnlDisponible.setBorder(javax.swing.BorderFactory.createTitledBorder("Disponible"));
+        pnlDisponible.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Disponible", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         lstDisponible.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -257,7 +257,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnReactivar))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         btnSalir.setText("Salir");
@@ -287,7 +287,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(pnlDisponible, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlCargo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlCargo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalir)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -307,7 +307,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
             tipo.setDescripcion(txtDescripcion.getText());
 
             gestor.guardar(tipo);
-            Mensajes.mensajeInformacion("El vargo "+tipo.getNombre()+"\n ha sido guardado exitosamente");
+            Mensajes.mensajeInformacion("El cargo "+tipo.getNombre()+"\n ha sido guardado exitosamente");
             this.cargarCargos();
             cancelar();
             this.lstDisponible.setSelectedIndex(-1);
@@ -318,7 +318,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
             cargo_actual.setNombre(txtNombre.getText().toUpperCase());
             cargo_actual.setDescripcion(txtDescripcion.getText());
             gestor.modificar(cargo_actual);
-            Mensajes.mensajeInformacion("El tipo de producto "+cargo_actual.getNombre()+"\n ha sido modificado exitosamente");
+            Mensajes.mensajeInformacion("El cargo "+cargo_actual.getNombre()+"\n ha sido modificado exitosamente");
             cargo_actual=null;
             cancelar();
             this.lstDisponible.setSelectedIndex(-1);
