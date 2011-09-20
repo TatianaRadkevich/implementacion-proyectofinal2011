@@ -35,18 +35,13 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     /** Creates new form PantallaConsultarProducto */
     public PantallaConsultarProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-//        GUILocal.establecerGUILocal(this);
-//        GUILocal.establecerGUISyntheticaClassy(this);
-//        GUILocal.establecerGUISyntheticaGreenDreamLookAndFeel(this);
+
         initComponents();
         this.cargarTipoProductos();
         tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
         this.activarBotones(true, false, false, false, false);
-        this.txtCodigoId.setVisible(false);
-        this.txtCodigoTipo.setVisible(false);
-        this.lblCodigo.setVisible(false);
-        this.lblCodigoLinea.setVisible(false);
+     
     }
 
 
@@ -109,7 +104,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             }
         });
 
-        tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11));
+        tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         tabla_producto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -128,28 +123,9 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
                 tabla_productoMouseClicked(evt);
             }
         });
-        tabla_producto.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                tabla_productoComponentShown(evt);
-            }
-        });
-        tabla_producto.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                tabla_productoComponentAdded(evt);
-            }
-        });
         tabla_producto.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tabla_productoPropertyChange(evt);
-            }
-        });
-        tabla_producto.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                tabla_productoAncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jScrollPane2.setViewportView(tabla_producto);
@@ -325,18 +301,6 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
        this.iniciarBusqueda();
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void tabla_productoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabla_productoComponentShown
-
-}//GEN-LAST:event_tabla_productoComponentShown
-
-    private void tabla_productoComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabla_productoComponentAdded
-
-}//GEN-LAST:event_tabla_productoComponentAdded
-
-    private void tabla_productoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tabla_productoAncestorAdded
-
-}//GEN-LAST:event_tabla_productoAncestorAdded
-
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
          iniciarBusqueda();
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -463,7 +427,12 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     }
 
       private void iniciarBusqueda() {
-        tabla_producto.setModel(new ModelerProducto(ProductoBD.getProducto(txtNombre.getText().trim(), (TipoProducto) cmbTipoProducto.getSelectedItem(), chkMostrarTodos.isSelected(), chkMostrarDadosBaja.isSelected())));
+        tabla_producto.setModel(new ModelerProducto(ProductoBD.getProducto(txtNombre.getText().trim()
+                                , (TipoProducto) cmbTipoProducto.getSelectedItem(),
+                                chkMostrarTodos.isSelected(),
+                                chkMostrarDadosBaja.isSelected()
+                                , txtCodigoTipo.getText(), txtCodigoId.getText()
+                                )));
         tabla_producto.updateUI();
         this.activarBotones(true, false, false, false, false);
     }
