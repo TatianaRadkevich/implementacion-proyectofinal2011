@@ -2,8 +2,10 @@ package Negocio.Produccion;
 // Generated 19/08/2011 17:02:19 by Hibernate Tools 3.2.1.GA
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -156,12 +158,17 @@ public class Producto implements java.io.Serializable {
         }
     }
 
-    public Set<DetalleProducto> getTDetallesProductos() {
-        return this.DetalleProducto;
+    public List<DetalleProducto> getTDetallesProductos() {
+         return new ArrayList<DetalleProducto>(DetalleProducto);
     }
 
-    public void setTDetallesProductos(Set<DetalleProducto> TDetallesProductos) {
-        this.DetalleProducto = TDetallesProductos;
+    public void setTDetallesProductos(List<DetalleProducto> detalle) {
+        this.DetalleProducto.clear();
+        for (DetalleProducto dt : detalle)
+        {
+            dt.setTProductos(this);
+            this.DetalleProducto.add(dt);
+        }
     }
 
     public String codigoMerge() {
