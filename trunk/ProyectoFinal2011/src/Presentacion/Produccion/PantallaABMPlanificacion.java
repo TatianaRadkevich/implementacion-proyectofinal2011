@@ -861,6 +861,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         plan.setTEmpleados((Empleado) cmbResponsable.getSelectedItem());
         plan.setFecHoraPrevistaInicio(fhInicioPlan.getDate());
         HibernateUtil.guardarObjeto(plan);
+
+        
         Mensajes.mensajeInformacion("Se ha generado el plan correctamente");
         this.dispose();
 

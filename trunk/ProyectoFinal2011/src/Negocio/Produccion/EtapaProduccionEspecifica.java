@@ -35,6 +35,8 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CARGO")//, nullable = false)
     private Cargo TCargos;
+    @Column(name = "DURACION",  precision = 5)
+    private Integer duracion;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_ETAPA_PRODUCCION")//, nullable = false)
     private EtapaProduccion TEtapasProduccion;
@@ -113,6 +115,14 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
 
     public String getDescripcion() {
         return this.descripcionEspecifica;
+    }
+
+    public Integer getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(Integer duracion) {
+        this.duracion = duracion;
     }
 
     public void setDescripcion(String descripcionEspecifica) {

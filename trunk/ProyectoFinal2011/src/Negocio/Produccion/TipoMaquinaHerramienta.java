@@ -122,7 +122,7 @@ public class TipoMaquinaHerramienta implements java.io.Serializable {
 
     @Override
     public String toString() {
-        String maqHer = (getFechaBaja()==null) ? "Vigente" : "Eliminado";
-        return this.nombre + " [" + maqHer + "]";
+       // String maqHer = (getFechaBaja()==null) ? "Vigente" : "Eliminado";
+        return this.nombre;// + " [" + maqHer + "]";
     }
 }
