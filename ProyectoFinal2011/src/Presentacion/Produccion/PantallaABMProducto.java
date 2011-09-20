@@ -81,7 +81,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                  Vector fila = new Vector();
                 fila.add(elemento.getTMateriales().getNombre());
                 fila.add(elemento.tipoMaterial());
-                fila.add(elemento.getInfoLongitud());
+                fila.add(elemento.InfoLongitud());
           
                 return fila;
             }
