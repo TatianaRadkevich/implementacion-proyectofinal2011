@@ -1,7 +1,5 @@
 package Presentacion.Produccion;
 
-import BaseDeDatos.Compras.MaterialBD;
-import BaseDeDatos.Produccion.TipoMaquinaHerramientaBD;
 import Negocio.Administracion.Cargo;
 import Negocio.Administracion.GestorCargo;
 import Negocio.Compras.GestorMaterialAlta;
@@ -12,7 +10,6 @@ import Negocio.Produccion.EtapaProduccion;
 import Negocio.Produccion.EtapaProduccionEspecifica;
 import Negocio.Produccion.GestorEstructura;
 import Negocio.Produccion.GestorEtapaProduccion;
-import Negocio.Produccion.GestorMaquinaHerramientaAlta;
 import Negocio.Produccion.GestorTipoMaquinaHerramienta;
 import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoMaquinaHerramienta;
@@ -22,24 +19,16 @@ import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
-import gui.GUILocal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
