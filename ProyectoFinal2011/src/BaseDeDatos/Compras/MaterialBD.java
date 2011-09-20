@@ -46,4 +46,12 @@ public class MaterialBD {
      public static void modificar(Material m) {
        HibernateUtil.modificarObjeto(m);
     }
+
+     public static List<Material> getMateriales(boolean esMateriaPrima){
+          String HQL="FROM Material as m "
+                + "WHERE m.esMateriaPrima = " + esMateriaPrima;
+
+          HQL+=" AND m.fecBaja IS NULL ";
+         return HibernateUtil.ejecutarConsulta(HQL);
+     }
 }
