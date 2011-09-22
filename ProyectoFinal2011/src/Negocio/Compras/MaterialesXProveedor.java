@@ -1,6 +1,7 @@
 package Negocio.Compras;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,6 +25,8 @@ public class MaterialesXProveedor implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PROVEEDOR")
     private Proveedor TProveedores;
+    @Column(name="PRECIO_UNITARIO", precision=6)
+    private Float precioUnitario;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_MATERIAL")
     private Material TMateriales;
@@ -69,4 +72,14 @@ public class MaterialesXProveedor implements java.io.Serializable {
     public void setMaterial(Material material) {
         this.TMateriales = material;
     }
+
+    public Float getPrecio() {
+        return precioUnitario;
+    }
+
+    public void setPrecio(Float precio) {
+        this.precioUnitario = precio;
+    }
+
+
 }

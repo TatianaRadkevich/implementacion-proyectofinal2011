@@ -318,19 +318,7 @@ public class PrincipalProduccion extends javax.swing.JFrame {
 
     private void btnOrdenCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenCompraActionPerformed
         // TODO add your handling code here:
-           java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                PantallaOrdenCompraABM dialog = new PantallaOrdenCompraABM(new GestorOrdenCompra());
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+           
 
     }//GEN-LAST:event_btnOrdenCompraActionPerformed
 
