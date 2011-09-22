@@ -2,8 +2,10 @@ package Negocio.Compras;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
 import Negocio.Compras.DetalleOrdenCompra;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -121,12 +123,17 @@ public class OrdenCompra implements java.io.Serializable {
         this.fecRecepcion = fecRecepcion;
     }
 
-    public Set<DetalleOrdenCompra> getDetalle() {
-        return this.TDetallesOrdenCompras;
+    public List<DetalleOrdenCompra> getDetalle() {
+        return new ArrayList<DetalleOrdenCompra>(this.TDetallesOrdenCompras);
     }
 
-    public void setDetalle(Set<DetalleOrdenCompra> TDetallesOrdenCompras) {
-        this.TDetallesOrdenCompras = TDetallesOrdenCompras;
+    public void setDetalle(List<DetalleOrdenCompra> detalle) {
+        this.TDetallesOrdenCompras.clear();
+        for(DetalleOrdenCompra doc: detalle)
+        {
+            doc.setOrdenCompra(this);
+            this.TDetallesOrdenCompras.add(doc);
+        }
     }
 
     public Set<Reclamo> getReclamos() {

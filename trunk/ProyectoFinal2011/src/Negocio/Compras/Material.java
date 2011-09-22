@@ -6,6 +6,7 @@ import Negocio.Produccion.DetalleEtapaProduccion;
 import Negocio.Compras.DetalleOrdenCompra;
 import Negocio.Produccion.DetalleProducto;
 import Negocio.Produccion.UnidadMedida;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -212,6 +213,9 @@ public class Material implements java.io.Serializable {
         for(Proveedor p:proveedores)
             TMaterialesXProveedors.add(new MaterialesXProveedor(p,this));
     }
+
+
+
     public UnidadMedida getTUnidadesMedida() {
         return this.TUnidadesMedida;
     }
@@ -223,6 +227,19 @@ public class Material implements java.io.Serializable {
     @Override
     public String toString() {
         return this.getNombre();
+    }
+
+     public List<MaterialesXProveedor> getMaterialXProveedor()
+    {
+        return new ArrayList<MaterialesXProveedor>(this.TMaterialesXProveedors);
+    }
+
+    public Float getPrecio(Proveedor pro)
+    {
+        for(MaterialesXProveedor mp:this.TMaterialesXProveedors)
+            if(mp.getProveedor().equals(pro))
+                return mp.getPrecio();
+        return null;
     }
 
 

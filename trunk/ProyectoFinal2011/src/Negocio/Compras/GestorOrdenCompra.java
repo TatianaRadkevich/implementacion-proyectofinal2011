@@ -7,6 +7,7 @@ package Negocio.Compras;
 import BaseDeDatos.Compras.ProveedorBD;
 import BaseDeDatos.HibernateUtil;
 import Negocio.Deposito.Faltante;
+import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Compras.PantallaOrdenCompraABM;
 import java.util.List;
 
@@ -14,14 +15,14 @@ import java.util.List;
  *
  * @author Rodrigo
  */
-public class GestorOrdenCompra {
+public abstract class GestorOrdenCompra {
 
     protected PantallaOrdenCompraABM interfaz;
     protected OrdenCompra ordenCompra;
-//
-//    public abstract void iniciarCU();
-//
-//    public abstract void ejecutarCU(OrdenCompra p) throws ExceptionGestor;
+
+    public abstract void iniciarCU();
+
+    public abstract void ejecutarCU(OrdenCompra p) throws ExceptionGestor;
 
     public void finalizarCU() {
         interfaz.setVisible(false);
@@ -36,17 +37,12 @@ public class GestorOrdenCompra {
         return ProveedorBD.listarProveedores();
     }
 
-    public Integer getCodigo() {
+    public int getCodigo() {
        
         try{
-        Integer salida= (Integer) HibernateUtil.ejecutarConsulta("SELECT   max(idOrdenCompra) FROM OrdenCompra").get(0);
-         if(salida==null)
-             return new Integer(0);
-              else
-                  return salida;
-
-
-        }catch(Exception e){return new Integer(0);}
+        return (Integer) HibernateUtil.ejecutarConsulta("SELECT   max(idOrdenCompra) FROM OrdenCompra").get(0);
+        }catch(Exception e)
+        {return 0;}
         
     }
 

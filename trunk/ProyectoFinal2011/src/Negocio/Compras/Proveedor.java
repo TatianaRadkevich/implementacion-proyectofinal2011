@@ -178,18 +178,32 @@ public class Proveedor implements java.io.Serializable {
         this.TOrdenesCompras = TOrdenesCompras;
     }
 
-    public List<Material> getMateriales()
-    {
-        ArrayList<Material> salida=new ArrayList<Material>(this.TMaterialesXProveedors.size());
-        for(MaterialesXProveedor mxp:this.TMaterialesXProveedors)
+    public List<Material> getMateriales() {
+        ArrayList<Material> salida = new ArrayList<Material>(this.TMaterialesXProveedors.size());
+        for (MaterialesXProveedor mxp : this.TMaterialesXProveedors) {
             salida.add(mxp.getMaterial());
+        }
         return salida;
     }
 
     public void setMateriales(List<Material> materiales) {
         this.TMaterialesXProveedors.clear();
-        for(Material m: materiales)
+        for (Material m : materiales) {
             this.TMaterialesXProveedors.add(new MaterialesXProveedor(this, m));
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        try {
+//            if(((Proveedor)obj).getRazonSocial().equalsIgnoreCase(this.getRazonSocial()));
+//                return true;
+            if (((Proveedor) obj).getCuit().equalsIgnoreCase(this.getCuit()));
+            return true;
+
+        } catch (Exception e) {
+        }
+        return false;
     }
 
     @Override
