@@ -4,19 +4,23 @@
  */
 
 /*
- * PantallaABMProvincia.java
+ * PantallaABMLocalidad.java
  *
- * Created on 19/09/2011, 17:47:40
+ * Created on 23/09/2011, 14:55:01
  */
 
 package Presentacion.UbicacionGeografica;
 
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Operacion;
-import Negocio.UbicacionGeografica.Provincia;
-import Negocio.UbicacionGeografica.GestorProvincia;
+import Negocio.UbicacionGeografica.Localidad;
+import Negocio.UbicacionGeografica.GestorLocalidad;
 import Negocio.UbicacionGeografica.Pais;
 import Negocio.UbicacionGeografica.gestorPais;
+import Negocio.UbicacionGeografica.Provincia;
+import Negocio.UbicacionGeografica.GestorProvincia;
+import Presentacion.UbicacionGeografica.PantallaABMPais;
+import Presentacion.UbicacionGeografica.PantallaABMProvincia;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import gui.GUILocal;
@@ -30,18 +34,18 @@ import javax.swing.DefaultListModel;
  *
  * @author Heber Parrucci
  */
-public class PantallaABMProvincia extends javax.swing.JFrame {
+public class PantallaABMLocalidad extends javax.swing.JFrame {
 
     private int operacion;
-    private Provincia pro_actual=null;
-    private GestorProvincia gestor=new GestorProvincia();
+    private Localidad loc_actual=null;
+    private GestorLocalidad gestor=new GestorLocalidad();
+    /** Creates new form PantallaABMLocalidad */
 
-    /** Creates new form PantallaABMProvincia */
-    public PantallaABMProvincia(java.awt.Frame parent, boolean modal) {
+    public PantallaABMLocalidad(java.awt.Frame parent, boolean modal) {
         super();
         initComponents();
 
-       this.activarProvincia(false);
+       this.activarLocalidad(false);
        this.btnBaja.setEnabled(false);
        this.activarDisponible(true);
        this.activarBotones(true, false, false, false, false);
@@ -67,7 +71,11 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
         cmbConsultaPais = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        cmbConsultaProvincia = new javax.swing.JComboBox();
+        jLabel8 = new javax.swing.JLabel();
         btnAgregarPais = new javax.swing.JButton();
+        btnAgregarProvincia = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         txtNombre = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -78,7 +86,8 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
         btnAceptar = new javax.swing.JButton();
         cmbPais = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
-        btnSalir = new javax.swing.JButton();
+        cmbProvincia = new javax.swing.JComboBox();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -123,11 +132,25 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("País:");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel6.setText("Provincias:");
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setText("Localidades:");
+
+        cmbConsultaProvincia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmbConsultaProvinciaMouseClicked(evt);
+            }
+        });
+        cmbConsultaProvincia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbConsultaProvinciaActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel8.setText("Provincia:");
 
         btnAgregarPais.setText("+");
         btnAgregarPais.addActionListener(new java.awt.event.ActionListener() {
@@ -136,36 +159,56 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
             }
         });
 
+        btnAgregarProvincia.setText("+");
+        btnAgregarProvincia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarProvinciaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbConsultaPais, 0, 122, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbConsultaProvincia, javax.swing.GroupLayout.Alignment.TRAILING, 0, 144, Short.MAX_VALUE)
+                            .addComponent(cmbConsultaPais, 0, 144, Short.MAX_VALUE))))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarPais))
-                .addContainerGap())
+                    .addComponent(btnAgregarPais)
+                    .addComponent(btnAgregarProvincia))
+                .addGap(10, 10, 10))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbConsultaPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(btnAgregarPais))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbConsultaProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAgregarProvincia))
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnNuevo)
@@ -173,17 +216,24 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
                         .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBaja))
-                    .addComponent(jLabel6)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Provincias"));
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Localidades"));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Nombre:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Descripción:");
 
         txtDescripcion.setColumns(20);
@@ -204,67 +254,92 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
+        cmbPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPaisActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("País:");
+
+        cmbProvincia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbProvinciaActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel7.setText("Provincia:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel4)
+                        .addGap(4, 4, 4)
+                        .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel7)
+                        .addGap(4, 4, 4)
+                        .addComponent(cmbProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel1)
+                        .addGap(3, 3, 3)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel2)
+                        .addGap(4, 4, 4)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(162, 162, 162)
                         .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel4)))
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                            .addComponent(cmbPais, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                        .addGap(10, 10, 10)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel4))
+                    .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel7))
+                    .addComponent(cmbProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel1))
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnAceptar)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAceptar)
+                    .addComponent(btnCancelar)))
         );
-
-        btnSalir.setText("Salir");
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 747, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -272,43 +347,46 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(557, Short.MAX_VALUE)
+                .addContainerGap(639, Short.MAX_VALUE)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 366, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalir))
         );
+
+        jPanel1.getAccessibleContext().setAccessibleName("Localidades");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void lstDisponibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDisponibleMouseClicked
         if(lstDisponible.getSelectedIndex()!=-1){
-            Provincia temp= (Provincia) lstDisponible.getSelectedValue();
+            Localidad temp= (Localidad) lstDisponible.getSelectedValue();
             this.cargarDatos(temp);
             this.activarDisponible(true);
-            this.activarProvincia(false);
+            this.activarLocalidad(false);
             this.activarBotones(true, true, true, false, false);
         }
 }//GEN-LAST:event_lstDisponibleMouseClicked
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
         if(lstDisponible.getSelectedIndex()==-1){
-            Mensajes.mensajeErrorGenerico("Debe seleccionar la provincia que desea dar de baja");
+            Mensajes.mensajeErrorGenerico("Debe seleccionar la localidad que desea dar de baja");
             return;
         }
 
-        pro_actual=(Provincia) lstDisponible.getSelectedValue();
-        this.cargarDatos(pro_actual);
-        this.activarProvincia(false);
+        loc_actual=(Localidad) lstDisponible.getSelectedValue();
+        this.cargarDatos(loc_actual);
+        this.activarLocalidad(false);
         this.activarDisponible(false);
         this.activarBotones(false, false, false, true, true);
         this.operacion=Operacion.baja;
@@ -316,15 +394,15 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         if(lstDisponible.getSelectedIndex()==-1){
-            Mensajes.mensajeErrorGenerico("Debe seleccionar la provincia que desea modificar");
+            Mensajes.mensajeErrorGenerico("Debe seleccionar la localidad que desea modificar");
             return;
         }
         this.activarDisponible(false);
         this.btnBaja.setEnabled(false);
-        this.activarProvincia(true);
+        this.activarLocalidad(true);
         this.activarBotones(false, false, false, true, true);
-        pro_actual=(Provincia) lstDisponible.getSelectedValue();
-        this.cargarDatos(pro_actual);
+        loc_actual=(Localidad) lstDisponible.getSelectedValue();
+        this.cargarDatos(loc_actual);
         this.operacion=Operacion.modificar;
         this.cmbPais.requestFocus();
 }//GEN-LAST:event_btnModificarActionPerformed
@@ -333,12 +411,34 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
         nuevo();
 }//GEN-LAST:event_btnNuevoActionPerformed
 
+    private void cmbConsultaPaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbConsultaPaisMouseClicked
+            cargarComboConsultaProvincias();
+            if(cmbConsultaProvincia.getSelectedIndex()!=-1)
+            cargarLocalidades();
+            else{
+            lstDisponible.removeAll();
+            DefaultListModel mod = new DefaultListModel();
+            lstDisponible.setModel(mod);}
+            vaciar();
+}//GEN-LAST:event_cmbConsultaPaisMouseClicked
+
+    private void cmbConsultaPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbConsultaPaisActionPerformed
+            cargarComboConsultaProvincias();
+            if(cmbConsultaProvincia.getSelectedIndex()!=-1)
+            cargarLocalidades();
+            else{
+                lstDisponible.removeAll();
+                DefaultListModel mod = new DefaultListModel();
+                lstDisponible.setModel(mod);}
+            vaciar();
+}//GEN-LAST:event_cmbConsultaPaisActionPerformed
+
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
 }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.activarProvincia(false);
+        this.activarLocalidad(false);
         this.btnBaja.setEnabled(false);
         this.activarDisponible(true);
         this.activarBotones(true, false, false, false, false);
@@ -351,61 +451,75 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
 
         if(operacion==Operacion.nuevo){
             if(validar()){
-                Provincia pro=new Provincia();
-                pro.setTPaises((Pais) cmbPais.getSelectedItem());
-                pro.setNombre(txtNombre.getText().toUpperCase());
-                pro.setDescripcion(txtDescripcion.getText());
+                Localidad loc=new Localidad();
+                loc.setTProvincias((Provincia) cmbProvincia.getSelectedItem());
+                loc.setNombre(txtNombre.getText().toUpperCase());
+                loc.setDescripcion(txtDescripcion.getText());
 
-                gestor.guardar(pro);
-                Mensajes.mensajeInformacion("La provincia "+pro.getNombre()+" "+"ha sido guardada exitosamente");
+                gestor.guardar(loc);
+                Mensajes.mensajeInformacion("La localidad "+loc.getNombre()+" "+"ha sido guardada exitosamente");
                 this.vaciar();
                 cancelar();
-                this.cargarProvincias();
+                this.cargarLocalidades();
                 return;
             } else return;
         }
 
         if(operacion==Operacion.modificar){
             if(validar()){
-                pro_actual.setTPaises((Pais) cmbPais.getSelectedItem());
-                pro_actual.setNombre(txtNombre.getText().toUpperCase());
-                pro_actual.setDescripcion(txtDescripcion.getText());
-                gestor.modificar(pro_actual);
-                Mensajes.mensajeInformacion("La provincia "+pro_actual.getNombre()+" "+"ha sido modificada exitosamente");
+                loc_actual.setTProvincias((Provincia) cmbProvincia.getSelectedItem());
+                loc_actual.setNombre(txtNombre.getText().toUpperCase());
+                loc_actual.setDescripcion(txtDescripcion.getText());
+                gestor.modificar(loc_actual);
+                Mensajes.mensajeInformacion("La localidad "+loc_actual.getNombre()+" "+"ha sido modificada exitosamente");
+                this.cargarLocalidades();
                 this.vaciar();
                 cancelar();
-                pro_actual=null;
+                loc_actual=null;
                 return;
             } else return;
         }
         if(operacion==Operacion.baja){
-            gestor.eliminar(pro_actual);
-            Mensajes.mensajeInformacion("La provincia "+pro_actual.getNombre()+" "+"ha sido eliminada exitosamente");
+            gestor.eliminar(loc_actual);
+            Mensajes.mensajeInformacion("La localidad "+loc_actual.getNombre()+" "+"ha sido eliminada exitosamente");
             this.vaciar();
-            pro_actual=null;
+            loc_actual=null;
             cancelar();
-            this.cargarProvincias();
+            this.cargarLocalidades();
             return;
         }
-    }//GEN-LAST:event_btnAceptarActionPerformed
+}//GEN-LAST:event_btnAceptarActionPerformed
 
-    private void cmbConsultaPaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbConsultaPaisMouseClicked
-    if (cmbConsultaPais.getSelectedIndex()!=-1){
-            cargarProvincias();
-            vaciar();
-        }
-    }//GEN-LAST:event_cmbConsultaPaisMouseClicked
+    private void cmbConsultaProvinciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbConsultaProvinciaMouseClicked
+       if (cmbConsultaProvincia.getSelectedIndex()!=-1){
+           cargarLocalidades();
+           vaciar();
+       }
+    }//GEN-LAST:event_cmbConsultaProvinciaMouseClicked
 
-    private void cmbConsultaPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbConsultaPaisActionPerformed
-        if (cmbConsultaPais.getSelectedIndex()!=-1){
-            cargarProvincias();
-            vaciar();
-        }
-    }//GEN-LAST:event_cmbConsultaPaisActionPerformed
+    private void cmbConsultaProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbConsultaProvinciaActionPerformed
+        if (cmbConsultaProvincia.getSelectedIndex()!=-1){
+           cargarLocalidades();
+           vaciar();
+       }
+    }//GEN-LAST:event_cmbConsultaProvinciaActionPerformed
+
+    private void cmbPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPaisActionPerformed
+       cargarComboProvincias();
+    }//GEN-LAST:event_cmbPaisActionPerformed
+
+    private void cmbProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProvinciaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbProvinciaActionPerformed
+
+    private void btnAgregarProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProvinciaActionPerformed
+     PantallaABMProvincia pro = new PantallaABMProvincia(this, true);
+ pro.setVisible(true);
+    }//GEN-LAST:event_btnAgregarProvinciaActionPerformed
 
     private void btnAgregarPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPaisActionPerformed
-     PantallaABMPais pai = new PantallaABMPais(this, true);
-     pai.setVisible(true);
+ PantallaABMPais pais = new PantallaABMPais(this, true);
+ pais.setVisible(true);
     }//GEN-LAST:event_btnAgregarPaisActionPerformed
 
     /**
@@ -414,7 +528,7 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PantallaABMProvincia dialog = new PantallaABMProvincia(new javax.swing.JFrame(), true);
+                PantallaABMLocalidad dialog = new PantallaABMLocalidad(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -428,18 +542,23 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregarPais;
+    private javax.swing.JButton btnAgregarProvincia;
     private javax.swing.JButton btnBaja;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox cmbConsultaPais;
+    private javax.swing.JComboBox cmbConsultaProvincia;
     private javax.swing.JComboBox cmbPais;
+    private javax.swing.JComboBox cmbProvincia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -449,25 +568,26 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
-   private void cargarProvincias(){
+       private void cargarLocalidades(){
         try {
             lstDisponible.removeAll();
             DefaultListModel modelo = new DefaultListModel();
 
-            List<Provincia> pro = GestorProvincia.listarProvincias((Pais) cmbConsultaPais.getSelectedItem());
-            for(int i=0;i<pro.size();i++){
-                modelo.addElement(pro.get(i));
+            List<Localidad> loc = GestorLocalidad.listarLocalidades((Provincia) cmbConsultaProvincia.getSelectedItem());
+            for(int i=0;i<loc.size();i++){
+                modelo.addElement(loc.get(i));
             }
             lstDisponible.setModel(modelo);
 
 
-            
+
         } catch (Exception ex) {
             Logger.getLogger(PantallaABMProvincia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void activarProvincia(boolean flag){
+    private void activarLocalidad(boolean flag){
         cmbPais.setEnabled(flag);
+        cmbProvincia.setEnabled(flag);
         this.txtNombre.setEnabled(flag);
         this.txtDescripcion.setEnabled(flag);
     }
@@ -475,6 +595,7 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
     private void activarDisponible(boolean  flag)
     {
         cmbConsultaPais.setEnabled(flag);
+        cmbConsultaProvincia.setEnabled(flag);
         this.lstDisponible.setEnabled(flag);
     }
 
@@ -488,13 +609,14 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
 
        private void vaciar(){
         this.cmbPais.setSelectedIndex(-1);
+        this.cmbProvincia.setSelectedIndex(-1);
         this.txtDescripcion.setText("");
         this.txtNombre.setText("");
  }
 
 
      private void cancelar(){
-       this.activarProvincia(false);
+       this.activarLocalidad(false);
        this.btnBaja.setEnabled(false);
        this.activarDisponible(true);
        this.activarBotones(true, false, false,  false, false);
@@ -506,15 +628,17 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
         this.vaciar();
         this.activarDisponible(false);
         this.btnBaja.setEnabled(false);
-        this.activarProvincia(true);
+        this.activarLocalidad(true);
         this.cmbPais.setSelectedIndex(cmbConsultaPais.getSelectedIndex());
+        this.cmbProvincia.setSelectedIndex(cmbConsultaProvincia.getSelectedIndex());
         this.activarBotones(false, false, false, true, true);
         this.txtNombre.requestFocus();
         this.operacion = Operacion.nuevo;
     }
 
-    private void cargarDatos(Provincia pro_actual) {
+    private void cargarDatos(Localidad pro_actual) {
         this.cmbPais.setSelectedIndex(cmbConsultaPais.getSelectedIndex());
+        this.cmbProvincia.setSelectedIndex(cmbConsultaProvincia.getSelectedIndex());
         this.txtDescripcion.setText(pro_actual.getDescripcion());
         this.txtNombre.setText(pro_actual.getNombre());
 
@@ -526,6 +650,13 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
         {
             Mensajes.mensajeErrorGenerico("Debe seleccionar el país");
             cmbPais.requestFocus();
+            return false;
+        }
+
+                       if (cmbProvincia.getSelectedIndex()==-1)
+        {
+            Mensajes.mensajeErrorGenerico("Debe seleccionar la provincia");
+            cmbProvincia.requestFocus();
             return false;
         }
                if (txtNombre.getText().compareTo("")==0)
@@ -542,6 +673,22 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
          cmbConsultaPais.setModel(new DefaultComboBoxModel(gestorPais.listarPaises().toArray()));
          cmbPais.setSelectedIndex(0);
          cmbConsultaPais.setSelectedIndex(0);
-         cargarProvincias();
+         cargarComboConsultaProvincias();
+         cargarComboProvincias();
+         cmbProvincia.setSelectedIndex(0);
+         cmbConsultaProvincia.setSelectedIndex(0);
+         cargarLocalidades();
     }
+
+    private void cargarComboProvincias() {
+        if (cmbPais.getSelectedIndex()!=-1)
+        cmbProvincia.setModel(new DefaultComboBoxModel(GestorProvincia.listarProvincias((Pais) cmbPais.getSelectedItem()).toArray()));
+    }
+
+    private void cargarComboConsultaProvincias() {
+        if (cmbConsultaPais.getSelectedIndex()!=-1)
+        cmbConsultaProvincia.setModel(new DefaultComboBoxModel(GestorProvincia.listarProvincias((Pais) cmbConsultaPais.getSelectedItem()).toArray()));
+    }
+
+
 }
