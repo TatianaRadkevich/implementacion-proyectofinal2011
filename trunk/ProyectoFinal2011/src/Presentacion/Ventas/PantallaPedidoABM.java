@@ -68,7 +68,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
                 return cabecera;
             }
         };
-        tablaDetalle.addListenerModificacionTabla(new TableModelListener() {
+        tablaDetalle.addModificationListener(new TableModelListener() {
 
             public void tableChanged(TableModelEvent e) {
                 float total = 0;

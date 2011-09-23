@@ -84,7 +84,7 @@ public class PantallaABMPlanificacion1 extends javax.swing.JDialog {
                 return cabecera;
             }
         };
-        tmDetallePedido.addListenerModificaionSelecion(new ListSelectionListener() {
+        tmDetallePedido.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
 
@@ -147,7 +147,7 @@ public class PantallaABMPlanificacion1 extends javax.swing.JDialog {
                 return cabecera;
             }
         };
-        tmDetallePlanProduccion.addListenerModificaionSelecion(new ListSelectionListener() {
+        tmDetallePlanProduccion.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
                 cargarDatosEtapaPlanificacion(tmDetallePlanProduccion.getSeletedObject());
