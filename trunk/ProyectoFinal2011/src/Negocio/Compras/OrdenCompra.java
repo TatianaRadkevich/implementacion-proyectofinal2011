@@ -30,7 +30,7 @@ public class OrdenCompra implements java.io.Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "ID_ORDEN_COMPRA", unique = true, nullable = true, precision = 8, scale = 0)
+    @Column(name = "ID_ORDEN_COMPRA", unique = true, nullable = false, precision = 8, scale = 0)
     private int idOrdenCompra;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PROVEEDOR", nullable = true)
@@ -38,8 +38,8 @@ public class OrdenCompra implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EORDEN_COMPRA", nullable = true)
     private EstadoOrdenCompra TEordenCompra;
-    @Column(name = "CODIGO", nullable = true, length = 2)
-    private String codigo;
+//    @Column(name = "CODIGO", nullable = true, length = 2)
+//    private String codigo;
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_GENERACION", nullable = true, length = 23)
     private Date fecGeneracion;
@@ -59,7 +59,7 @@ public class OrdenCompra implements java.io.Serializable {
         this.idOrdenCompra = idOrdenCompra;
         this.TProveedores = TProveedores;
         this.TEordenCompra = TEordenCompra;
-        this.codigo = codigo;
+        
         this.fecGeneracion = fecGeneracion;
         this.fecRecepcion = fecRecepcion;
     }
@@ -68,7 +68,7 @@ public class OrdenCompra implements java.io.Serializable {
         this.idOrdenCompra = idOrdenCompra;
         this.TProveedores = TProveedores;
         this.TEordenCompra = TEordenCompra;
-        this.codigo = codigo;
+    
         this.fecGeneracion = fecGeneracion;
         this.fecRecepcion = fecRecepcion;
         this.TDetallesOrdenCompras = TDetallesOrdenCompras;
@@ -99,13 +99,7 @@ public class OrdenCompra implements java.io.Serializable {
         this.TEordenCompra = TEordenCompra;
     }
 
-    public String getCodigo() {
-        return this.codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
+ 
 
     public Date getFecGeneracion() {
         return this.fecGeneracion;

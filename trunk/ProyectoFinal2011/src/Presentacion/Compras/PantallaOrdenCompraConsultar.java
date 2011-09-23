@@ -10,8 +10,9 @@
  */
 package Presentacion.Compras;
 
-
+import BaseDeDatos.Compras.EstadoOrdenCompraBD;
 import BaseDeDatos.Compras.OrdenCompraBD;
+import BaseDeDatos.Compras.ProveedorBD;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Compras.DetalleOrdenCompra;
@@ -28,7 +29,9 @@ import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import com.toedter.calendar.JTextFieldDateEditor;
 import gui.GUILocal;
+import java.util.List;
 import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -44,13 +47,28 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
     /** Creates new form PantallaConsultarPedido */
     public PantallaOrdenCompraConsultar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        
+
         initComponents();
         HibernateUtil.getSessionFactory();
+
         inicializarTablas();
+        cargarCombos();
         cargarValidaciones();
-        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
     }
+
+    private void cargarCombos() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel(ProveedorBD.listarProveedores().toArray());
+        model.insertElementAt("Todos", 0);
+        cmbProveedor.setModel(model);
+        cmbProveedor.setSelectedIndex(0);
+
+        model = new DefaultComboBoxModel(EstadoOrdenCompraBD.listarEstados().toArray());
+        model.insertElementAt("Todos", 0);
+        cmbEstado.setModel(model);
+        cmbEstado.setSelectedIndex(0);
+    }
+
     private void inicializarTablas() {
         tmOrdenes = new TablaManager<OrdenCompra>(tbOrdenes) {
 
@@ -63,7 +81,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
                 cabcera.add("CUIT");//col
                 cabcera.add("Estado");
                 cabcera.add("Monto total");
-                
+
 
                 return cabcera;
 
@@ -79,12 +97,15 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
                 fila.add(elemento.getProveedor().getCuit());
                 fila.add(elemento.getEstado());
 
-                 float montoTotal=0f;
-                for(DetalleOrdenCompra dp:elemento.getDetalle())
-                    montoTotal+=dp.getCantidadPedida()*dp.getPrecioUnitario();
-                fila.add("$ "+montoTotal);
-        
+                float montoTotal = 0f;
+                try {
+                    for (DetalleOrdenCompra dp : elemento.getDetalle()) {
+                        montoTotal += dp.getCantidadPedida() * dp.getPrecioUnitario();
+                    }
+                } catch (Exception ex) {
+                }
 
+                fila.add("$ " + montoTotal);
                 return fila;
             }
         };
@@ -92,10 +113,11 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
         tmOrdenes.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
-              if(tmOrdenes.getSeletedObject()!=null)
-                  tmDetalle.setDatos(tmOrdenes.getSeletedObject().getDetalle());
-              else
-                  tmDetalle.limpiar();
+                if (tmOrdenes.getSeletedObject() != null) {
+                    tmDetalle.setDatos(tmOrdenes.getSeletedObject().getDetalle());
+                } else {
+                    tmDetalle.limpiar();
+                }
             }
         });
         ////////////////////////////////////////////////////////
@@ -111,7 +133,9 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
                 salida.add(elemento.getCantidadRecibida());
                 salida.add(elemento.getEstado());
 
-                salida.add("$ "+elemento.getCantidadPedida() * elemento.getPrecioUnitario());
+                try{
+                salida.add("$ " + elemento.getCantidadPedida() * elemento.getPrecioUnitario());
+                }catch(Exception ex){salida.add("Error");}
                 return salida;
             }
 
@@ -119,7 +143,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
             public Vector getCabecera() {
                 Vector cabcera = new Vector();
                 cabcera.add("Material");//col 3
-                 cabcera.add("Descripción");//col 2
+                cabcera.add("Descripción");//col 2
                 cabcera.add("Precio unitario");//col 4
                 cabcera.add("Cantidad pedida");//col 1
                 cabcera.add("Cantidad recibida");//col 1
@@ -132,11 +156,10 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
 
     }
 
-
     private void cargarValidaciones() {
         //**********************Validacion de textBox********************//
-       
-        
+
+
         //**********************Validacion de Fecha********************//
         ((JTextFieldDateEditor) dtcFechaGeneracionHasta.getDateEditor()).setEditable(false);
         ((JTextFieldDateEditor) dtcFechaGeneracionDesde.getDateEditor()).setEditable(false);
@@ -166,18 +189,18 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
         /************************Validacion de botones **********************************/
         btnCancelar.setEnabled(false);
         btnModificar.setEnabled(false);
-//        tablita.addListenerModificaionSelecion(new ListSelectionListener() {
-//
-//            public void valueChanged(ListSelectionEvent e) {
-//                boolean var = false;
-//                if (tablita.getSeletedObject() != null)
-//                    if(tablita.getSeletedObject().getFecBaja()==null)
-//                        var = true;
-//
-//                btnCancelar.setEnabled(var);
-//                btnModificar.setEnabled(var);
-//            }
-//        });
+        tmOrdenes.addSelectionListener(new ListSelectionListener() {
+
+            public void valueChanged(ListSelectionEvent e) {
+                boolean var = false;
+                if (tmOrdenes.getSeletedObject() != null)
+//                    if(tmOrdenes.getSeletedObject().getEstado()==null)
+                        var = true;
+
+                btnCancelar.setEnabled(var);
+                btnModificar.setEnabled(var);
+            }
+        });
     }
 
     /** This method is called from within the constructor to
@@ -486,8 +509,8 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
         tmOrdenes.setDatos(
                 OrdenCompraBD.getOrdenes(
                 txtNroOrden.getText(),
-                (EstadoOrdenCompra)cmbEstado.getSelectedItem(),
-                (Proveedor)cmbProveedor.getSelectedItem(),
+                (EstadoOrdenCompra) ((cmbEstado.getSelectedIndex() == 0) ? null : cmbEstado.getSelectedItem()),
+                (Proveedor) ((cmbProveedor.getSelectedIndex() == 0) ? null : cmbProveedor.getSelectedItem()),
                 dtcFechaGeneracionDesde.getDate(),
                 dtcFechaGeneracionHasta.getDate(),
                 chkMostrarVigentes.isEnabled(),
