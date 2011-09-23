@@ -143,14 +143,12 @@ public class Producto implements java.io.Serializable {
         this.motivoBaja = motivoBaja;
     }
 
-    public Set<EtapaProduccionEspecifica> getTEtapasProduccionEspecificas() {
-        return this.EtapaProduccionEspecifica;
+    public List<EtapaProduccionEspecifica> getEtapasProduccionEspecificas() {
+        return new ArrayList(this.EtapaProduccionEspecifica);
     }
 
-    public void setTEtapasProduccionEspecificas(Set<EtapaProduccionEspecifica> etapas) {
-        if (EtapaProduccionEspecifica == etapas) {
-            return;
-        }
+    public void setEtapasProduccionEspecificas(List<EtapaProduccionEspecifica> etapas) {
+       
         EtapaProduccionEspecifica.clear();
         for (EtapaProduccionEspecifica et : etapas) {
             et.setProducto(this);

@@ -181,11 +181,11 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     }
 
     private void cargarEstructura(Producto p) {
-        tmEstructura.setDatos(new ArrayList(p.getTEtapasProduccionEspecificas()));
+        tmEstructura.setDatos(new ArrayList(p.getEtapasProduccionEspecificas()));
 
 
-        ArrayList<DetallePlanProduccion> aux = new ArrayList<DetallePlanProduccion>(p.getTEtapasProduccionEspecificas().size());
-        for (int i = 0; i < p.getTEtapasProduccionEspecificas().size(); i++) {
+        ArrayList<DetallePlanProduccion> aux = new ArrayList<DetallePlanProduccion>(p.getEtapasProduccionEspecificas().size());
+        for (int i = 0; i < p.getEtapasProduccionEspecificas().size(); i++) {
             if(tmEstructura.getDato(i).getDetallePlanProduccion().isEmpty())
                 aux.add(new DetallePlanProduccion(tmEstructura.getDato(i)));
             else

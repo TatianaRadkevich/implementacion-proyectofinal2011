@@ -71,18 +71,29 @@ public abstract class TablaManager<E> {
         estructura.addRow(ObjetoFila(objeto));
     }
 
-    public void add(int index, E objeto) {
+    public void insert(int index, E objeto) {
         contenido.add(index, objeto);
         estructura.insertRow(index, ObjetoFila(objeto));
     }
 
-    public void removeSelectedRow() {
-        removeRow(tabla.getSelectedRow());
+    public int getSelectedRow()
+    {
+        return tabla.getSelectedRow();
     }
 
-    public void removeRow(int index) {
-        contenido.remove(index);
+    public int getSize()
+    {
+        return contenido.size();
+    }
+
+    public E removeSelectedRow() {
+        return removeRow(tabla.getSelectedRow());
+    }
+
+    public E removeRow(int index) {
+        
         estructura.removeRow(index);
+        return contenido.remove(index);
     }
 
     public void replaceRow(int index, E objeto) {
@@ -123,5 +134,9 @@ public abstract class TablaManager<E> {
 
     public E getDato(int fila) {
         return contenido.get(fila);
+    }
+
+    public void setSelectedRow(int i) {
+        tabla.setRowSelectionInterval(i, i);
     }
 }
