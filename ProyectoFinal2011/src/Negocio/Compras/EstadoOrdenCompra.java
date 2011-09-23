@@ -19,7 +19,7 @@ public class EstadoOrdenCompra implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_EORDEN_COMPRA", unique = true, nullable = false, precision = 2, scale = 0)
     private short idEordenCompra;
-    @Column(name = "NOMBRE", nullable = false, length = 50)
+    @Column(name = "NOMBRE", nullable = true, length = 50)
     private String nombre;
     @Column(name = "DESCRIPCION", length = 200)
     private String descripcion;
@@ -64,6 +64,14 @@ public class EstadoOrdenCompra implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    @Override
+    public String toString() {
+        return this.getNombre();
+    }
+
+
+
 //    public Set<OrdenCompra> getTOrdenesCompras() {
 //        return this.TOrdenesCompras;
 //    }

@@ -40,13 +40,13 @@ public class OrdenCompraBD {
         String auxDesde=Utilidades.parseFecha(Utilidades.agregarTiempoFecha(desde, -1, 0, 0));
         String auxHasta=Utilidades.parseFecha(Utilidades.agregarTiempoFecha(hasta, 1, 0, 0));
         String HQL=String.format(
-                "FROM OrdenCompra as p "
+                "FROM OrdenCompra as oc "
                 + "WHERE oc.idOrdenCompra LIKE '%s%%' "
-                + "AND oc.TProveedores.idProveedor = '%s' "
-                + "AND oc.TEordenCompra.idEordenCompra  = '%s' "                
-                + ((desde==null)?"":"AND oc.fecHoraGeneracion >= '%4$s' ")
-                + ((hasta==null)?"":"AND oc.fecHoraGeneracion <= '%5$s' ")
-                ,nro,proveedor.getId()+"",estado.getId()+"",auxDesde,auxHasta);
+                + ((proveedor==null)?"":" AND oc.TProveedores.idProveedor = "+proveedor.getId())
+                 + ((estado==null)?"":" AND oc.TEordenCompra.idEordenCompra = "+estado.getId())
+                + ((desde==null)?"":" AND oc.fecGeneracion >= '%2$s' ")
+                + ((hasta==null)?"":" AND oc.fecGeneracion <= '%3$s' ")
+                ,nro,auxDesde,auxHasta);
 
         if(vigentes==true&&cancelados==true)
             return HibernateUtil.ejecutarConsulta(HQL);

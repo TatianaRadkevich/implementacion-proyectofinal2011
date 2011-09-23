@@ -40,6 +40,11 @@ public class EstadoOrdenCompraBD {
         return getEstoadoPedido(Est_Enviada);
     }
 
+    public static List<EstadoOrdenCompra> listarEstados()
+    {
+        return HibernateUtil.ejecutarConsulta("FROM EstadoOrdenCompra");
+    }
+
     private static EstadoOrdenCompra getEstoadoPedido(String nombre) {
         String HQL = String.format("FROM EstadoOrdenCompra as oc WHERE LOWER(oc.nombre) = LOWER('%s')", nombre);
         List<EstadoOrdenCompra> lst = HibernateUtil.ejecutarConsulta(HQL);

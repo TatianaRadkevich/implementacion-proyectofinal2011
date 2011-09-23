@@ -196,9 +196,9 @@ public class Proveedor implements java.io.Serializable {
     @Override
     public boolean equals(Object obj) {
         try {
-//            if(((Proveedor)obj).getRazonSocial().equalsIgnoreCase(this.getRazonSocial()));
+//            if(((Proveedor)obj).getRazonSocial().equalsIgnoreCase(this.getRazonSocial()))
 //                return true;
-            if (((Proveedor) obj).getCuit().equalsIgnoreCase(this.getCuit()));
+            if (((Proveedor) obj).getCuit().equalsIgnoreCase(this.getCuit()))
             return true;
 
         } catch (Exception e) {
@@ -208,6 +208,6 @@ public class Proveedor implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return getRazonSocial();
+        return this.getRazonSocial();
     }
 }

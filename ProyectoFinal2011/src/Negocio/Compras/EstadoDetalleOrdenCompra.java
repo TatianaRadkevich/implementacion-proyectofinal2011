@@ -70,6 +70,13 @@ public class EstadoDetalleOrdenCompra implements java.io.Serializable {
     }
 
     @Override
+    public String toString() {
+        return this.getNombre();
+    }
+
+
+
+    @Override
     public boolean equals(Object obj) {
         try {
             String nom = ((EstadoDetalleOrdenCompra) obj).getNombre();

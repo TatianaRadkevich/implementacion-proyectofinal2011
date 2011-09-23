@@ -29,7 +29,7 @@ public class DetalleOrdenCompra implements java.io.Serializable {
     @Column(name = "ID_DETALLE_ORDEN_COMPRA", unique = true, nullable = false, precision = 8, scale = 0)
     private int idDetalleOrdenCompra;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_ORDEN_COMPRA", nullable = false)
+    @JoinColumn(name = "ID_ORDEN_COMPRA", nullable = true)
     private OrdenCompra TOrdenesCompra;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_MATERIAL")
@@ -41,7 +41,7 @@ public class DetalleOrdenCompra implements java.io.Serializable {
     private EstadoDetalleOrdenCompra estado;
     @Column(name = "CANTIDAD_PEDIDA", nullable = true, precision = 3, scale = 0)
     private Short cantidadPedida;
-    @Column(name = "CANTIDAD_RECIBIDA", nullable = false, precision = 3, scale = 0)
+    @Column(name = "CANTIDAD_RECIBIDA", nullable = true, precision = 3, scale = 0)
     private Short cantidadRecibida;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TDetallesOrdenCompra")
     private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
