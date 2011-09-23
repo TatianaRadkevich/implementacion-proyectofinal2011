@@ -55,11 +55,11 @@ public abstract class TablaManager<E> {
 
     public abstract Vector getCabecera();
 
-    public void addListenerModificacionTabla(TableModelListener tml) {
+    public void addModificationListener(TableModelListener tml) {
         tabla.getModel().addTableModelListener(tml);
     }
 
-    public void addListenerModificaionSelecion(ListSelectionListener lst) {
+    public void addSelectionListener(ListSelectionListener lst) {
         tabla.getSelectionModel().addListSelectionListener(lst);
     }
 

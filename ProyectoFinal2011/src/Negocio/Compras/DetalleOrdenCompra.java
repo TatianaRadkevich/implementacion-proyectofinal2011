@@ -34,10 +34,12 @@ public class DetalleOrdenCompra implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_MATERIAL")
     private Material TMateriales;
+    @Column(name="PRECIO_UNITARIO", precision=6)
+    private Float precioUnitario;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_EDETALLE_ORDEN_COMPRA", nullable = false)
+    @JoinColumn(name = "ID_EDETALLE_ORDEN_COMPRA", nullable = true)
     private EstadoDetalleOrdenCompra estado;
-    @Column(name = "CANTIDAD_PEDIDA", nullable = false, precision = 3, scale = 0)
+    @Column(name = "CANTIDAD_PEDIDA", nullable = true, precision = 3, scale = 0)
     private Short cantidadPedida;
     @Column(name = "CANTIDAD_RECIBIDA", nullable = false, precision = 3, scale = 0)
     private Short cantidadRecibida;
@@ -114,6 +116,14 @@ public class DetalleOrdenCompra implements java.io.Serializable {
 
     public void setEstado(EstadoDetalleOrdenCompra estado) {
         this.estado = estado;
+    }
+
+    public Float getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(Float precioUnitario) {
+        this.precioUnitario = precioUnitario;
     }
 
     public Set<Faltante> getFaltantes() {

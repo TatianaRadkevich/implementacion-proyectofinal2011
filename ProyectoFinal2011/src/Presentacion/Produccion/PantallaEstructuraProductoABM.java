@@ -77,7 +77,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 return cabecera;
             }
         };
-        tmEtapaEspecifica.addListenerModificaionSelecion(new ListSelectionListener() {
+        tmEtapaEspecifica.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
                 cargarEtapa(tmEtapaEspecifica.getSeletedObject());

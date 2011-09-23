@@ -82,7 +82,7 @@ private TablaManager<Proveedor> tablita;
         /************************Validacion de botones **********************************/
         btnCancelar.setEnabled(false);
         btnModificar.setEnabled(false);
-        tablita.addListenerModificaionSelecion(new ListSelectionListener() {
+        tablita.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
                 boolean var = false;

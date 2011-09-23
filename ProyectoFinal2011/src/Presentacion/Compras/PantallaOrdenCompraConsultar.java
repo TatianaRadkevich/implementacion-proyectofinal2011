@@ -14,6 +14,7 @@ package Presentacion.Compras;
 import BaseDeDatos.Compras.OrdenCompraBD;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
+import Negocio.Compras.DetalleOrdenCompra;
 import Negocio.Compras.EstadoOrdenCompra;
 import Negocio.Compras.GestorOrdenCompraAlta;
 import Negocio.Compras.GestorOrdenCompraBaja;
@@ -37,7 +38,8 @@ import javax.swing.event.ListSelectionListener;
  */
 public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
 
-    private TablaManager<OrdenCompra> tablita;
+    private TablaManager<OrdenCompra> tmOrdenes;
+    private TablaManager<DetalleOrdenCompra> tmDetalle;
 
     /** Creates new form PantallaConsultarPedido */
     public PantallaOrdenCompraConsultar(java.awt.Frame parent, boolean modal) {
@@ -45,35 +47,91 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
         
         initComponents();
         HibernateUtil.getSessionFactory();
-        tablita = new TablaManager<OrdenCompra>(tbOrdenes) {
+        inicializarTablas();
+        cargarValidaciones();
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+    }
+    private void inicializarTablas() {
+        tmOrdenes = new TablaManager<OrdenCompra>(tbOrdenes) {
 
             @Override
             public Vector getCabecera() {
-                Vector cabcera = new Vector();               
-                cabcera.add("Nro. orden");//col
-                cabcera.add("Estado");
+                Vector cabcera = new Vector();
+                cabcera.add("Nro. orden de compra");//col
                 cabcera.add("Fecha generación");//col
                 cabcera.add("Proveedor");//col
-        
+                cabcera.add("CUIT");//col
+                cabcera.add("Estado");
+                cabcera.add("Monto total");
+                
+
                 return cabcera;
-           
+
             }
 
             @Override
             public Vector ObjetoFila(OrdenCompra elemento) {
                 Vector fila = new Vector();
-                
+
                 fila.add(elemento.getId());//col 3
-                fila.add(elemento.getEstado().getNombre());//col 1
-                fila.add(Utilidades.parseFecha(elemento.getFecGeneracion()));//col 4
-                fila.add(elemento.getProveedor().getNombreResponsable());//col 2
+                fila.add(elemento.getFecGeneracion());
+                fila.add(elemento.getProveedor().getRazonSocial());
+                fila.add(elemento.getProveedor().getCuit());
+                fila.add(elemento.getEstado());
+
+                 float montoTotal=0f;
+                for(DetalleOrdenCompra dp:elemento.getDetalle())
+                    montoTotal+=dp.getCantidadPedida()*dp.getPrecioUnitario();
+                fila.add("$ "+montoTotal);
+        
 
                 return fila;
             }
         };
-        cargarValidaciones();
-        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+
+        tmOrdenes.addSelectionListener(new ListSelectionListener() {
+
+            public void valueChanged(ListSelectionEvent e) {
+              if(tmOrdenes.getSeletedObject()!=null)
+                  tmDetalle.setDatos(tmOrdenes.getSeletedObject().getDetalle());
+              else
+                  tmDetalle.limpiar();
+            }
+        });
+        ////////////////////////////////////////////////////////
+        tmDetalle = new TablaManager<DetalleOrdenCompra>(tbDetalle) {
+
+            @Override
+            public Vector ObjetoFila(DetalleOrdenCompra elemento) {
+                Vector salida = new Vector(6);
+                salida.add(elemento.getMaterial().getNombre());
+                salida.add(elemento.getMaterial().getDescripcion());
+                salida.add(elemento.getPrecioUnitario());
+                salida.add(elemento.getCantidadPedida());
+                salida.add(elemento.getCantidadRecibida());
+                salida.add(elemento.getEstado());
+
+                salida.add("$ "+elemento.getCantidadPedida() * elemento.getPrecioUnitario());
+                return salida;
+            }
+
+            @Override
+            public Vector getCabecera() {
+                Vector cabcera = new Vector();
+                cabcera.add("Material");//col 3
+                 cabcera.add("Descripción");//col 2
+                cabcera.add("Precio unitario");//col 4
+                cabcera.add("Cantidad pedida");//col 1
+                cabcera.add("Cantidad recibida");//col 1
+                cabcera.add("Estado");
+                cabcera.add("Sub total");
+                return cabcera;
+            }
+        };
+
+
     }
+
 
     private void cargarValidaciones() {
         //**********************Validacion de textBox********************//
@@ -153,12 +211,15 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
         btnModificar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        pnlDetalle = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbDetalle = new javax.swing.JTable();
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consultar Orden de Compra");
 
-        pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
+        pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         chkMostrarVigentes.setFont(new java.awt.Font("Tahoma", 1, 11));
         chkMostrarVigentes.setSelected(true);
@@ -278,7 +339,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlOrden.setBorder(javax.swing.BorderFactory.createTitledBorder("Pedidos"));
+        pnlOrden.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ordenes de compra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         tbOrdenes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -335,13 +396,43 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        pnlDetalle.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle orden de compra seleccionada", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+
+        tbDetalle.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Producto", "Descripción", "Precio unit. ($)", "Cantidad", "Estado", "Sub total"
+            }
+        ));
+        jScrollPane2.setViewportView(tbDetalle);
+
+        javax.swing.GroupLayout pnlDetalleLayout = new javax.swing.GroupLayout(pnlDetalle);
+        pnlDetalle.setLayout(pnlDetalleLayout);
+        pnlDetalleLayout.setHorizontalGroup(
+            pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetalleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnlDetalleLayout.setVerticalGroup(
+            pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDetalleLayout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout pnlOrdenLayout = new javax.swing.GroupLayout(pnlOrden);
         pnlOrden.setLayout(pnlOrdenLayout);
         pnlOrdenLayout.setHorizontalGroup(
             pnlOrdenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrdenLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+                .addGroup(pnlOrdenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+                    .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -350,7 +441,9 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
             .addGroup(pnlOrdenLayout.createSequentialGroup()
                 .addGroup(pnlOrdenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -368,7 +461,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlOrden, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+                    .addComponent(pnlOrden, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -390,7 +483,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        tablita.setDatos(
+        tmOrdenes.setDatos(
                 OrdenCompraBD.getOrdenes(
                 txtNroOrden.getText(),
                 (EstadoOrdenCompra)cmbEstado.getSelectedItem(),
@@ -410,7 +503,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
-            new GestorOrdenCompraModificar(tablita.getSeletedObject()).iniciarCU();
+            new GestorOrdenCompraModificar(tmOrdenes.getSeletedObject()).iniciarCU();
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
@@ -419,7 +512,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         try {
-            new GestorOrdenCompraBaja(tablita.getSeletedObject()).iniciarCU();
+            new GestorOrdenCompraBaja(tmOrdenes.getSeletedObject()).iniciarCU();
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
@@ -469,9 +562,12 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlBuscar;
+    private javax.swing.JPanel pnlDetalle;
     private javax.swing.JPanel pnlOrden;
+    private javax.swing.JTable tbDetalle;
     private javax.swing.JTable tbOrdenes;
     private javax.swing.JTextField txtNroOrden;
     // End of variables declaration//GEN-END:variables

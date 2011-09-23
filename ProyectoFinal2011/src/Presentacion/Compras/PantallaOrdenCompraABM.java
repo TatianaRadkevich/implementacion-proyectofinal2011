@@ -103,7 +103,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             }
         };
 
-        tmOrdenCompra.addListenerModificaionSelecion(new ListSelectionListener() {
+        tmOrdenCompra.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
                 if (tmOrdenCompra.getSeletedObject() != null) {
@@ -114,7 +114,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             }
         });
 
-        tmOrdenCompra.addListenerModificacionTabla(new TableModelListener() {
+        tmOrdenCompra.addModificationListener(new TableModelListener() {
 
             public void tableChanged(TableModelEvent e) {
                 recalcularTotal();
