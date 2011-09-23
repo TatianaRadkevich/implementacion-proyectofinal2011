@@ -87,7 +87,7 @@ private boolean grabar = true;
     }
 
     public void ejecutarCU(ArrayList<EtapaProduccionEspecifica> e) throws ExceptionGestor {
-        producto.setTEtapasProduccionEspecificas(new HashSet<EtapaProduccionEspecifica>(e));
+        producto.setEtapasProduccionEspecificas(e);
 
         if (grabar == true) {
             ProductoBD.guardar(producto);
