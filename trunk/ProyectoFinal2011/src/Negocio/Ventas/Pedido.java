@@ -49,8 +49,8 @@ public class Pedido implements java.io.Serializable {
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_GENERACION")
     private Date fecHoraGeneracion;
-     @Temporal(value = TemporalType.TIMESTAMP)
-     @Column(name = "FEC_CLI_REC")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name = "FEC_CLI_REC")
     private Date fechaClienteRecep;
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_REAL_ENTREGA")
@@ -61,12 +61,12 @@ public class Pedido implements java.io.Serializable {
     @Column(name = "PRIORIDAD")
     private byte prioridad;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="FEC_BAJA")
+    @Column(name = "FEC_BAJA")
     private Date fecBaja;
-    @Column(name="MOTIVO_BAJA", length=100)
+    @Column(name = "MOTIVO_BAJA", length = 100)
     private String motivoBaja;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")   
-    private Set<PlanProduccion> TPlanesProduccions = new HashSet<PlanProduccion>(0);    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")
+    private Set<PlanProduccion> TPlanesProduccions = new HashSet<PlanProduccion>(0);
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<DetallePedido> TDetallesPedidos = new HashSet<DetallePedido>(0);
@@ -86,18 +86,18 @@ public class Pedido implements java.io.Serializable {
         this.prioridad = prioridad;
     }
 
-    public Pedido(int idPedido, TipoPedido TTpedido, Cliente TClientes, EstadoPedido TEpedido, Date fecHoraEstimadaEntrega, Date fecHoraGeneracion, Date fecHoraRealEntrega, Date fecSolicitada, byte prioridad, Set<PlanProduccion> TPlanesProduccions, Set<DetallePedido> TDetallesPedidos) {
+    public Pedido(int idPedido, TipoPedido TTpedido, Cliente TClientes, EstadoPedido TEpedido, Date fecHoraEstimadaEntrega, Date fecHoraGeneracion, Date fecHoraRealEntrega, Date fecSolicitada, byte prioridad, Set<DetallePedido> TDetallesPedidos) {
         this.idPedido = idPedido;
         this.TTpedido = TTpedido;
         this.TClientes = TClientes;
         this.TEpedido = TEpedido;
-        
+
         this.fecHoraEstimadaEntrega = fecHoraEstimadaEntrega;
         this.fecHoraGeneracion = fecHoraGeneracion;
         this.fecHoraRealEntrega = fecHoraRealEntrega;
         this.fecSolicitada = fecSolicitada;
         this.prioridad = prioridad;
-        this.TPlanesProduccions = TPlanesProduccions;
+        //this.TPlanesProduccions = TPlanesProduccions;
         this.TDetallesPedidos = TDetallesPedidos;
     }
 
@@ -133,8 +133,6 @@ public class Pedido implements java.io.Serializable {
     public void setEstadoPedido(EstadoPedido estado) {
         this.TEpedido = estado;
     }
-
-
 
     public Date getFechaEstimadaEntrega() {
         return this.fecHoraEstimadaEntrega;
@@ -176,26 +174,24 @@ public class Pedido implements java.io.Serializable {
         this.prioridad = prioridad;
     }
 
-    public Set<PlanProduccion> getPlanesProduccion() {
-        return this.TPlanesProduccions;
+    public List<PlanProduccion> getPlanesProduccion() {
+        return new ArrayList<PlanProduccion>(this.TPlanesProduccions);
     }
 
-    public void setPlanesProduccion(Set<PlanProduccion> planes) {
-        this.TPlanesProduccions = planes;
-    }
-
+//    public void setPlanesProduccion(Set<PlanProduccion> planes) {
+//        this.TPlanesProduccions = planes;
+//    }
     public List<DetallePedido> getDetallePedido() {
         return new ArrayList<DetallePedido>(TDetallesPedidos);
     }
 
     public void setDetallePedido(List<DetallePedido> detalle) {
         this.TDetallesPedidos.clear();
-        for (DetallePedido dt : detalle)
-        {
+        for (DetallePedido dt : detalle) {
             dt.setPedido(this);
             TDetallesPedidos.add(dt);
         }
-        
+
     }
 
     public Date getFecBaja() {
@@ -226,7 +222,4 @@ public class Pedido implements java.io.Serializable {
     public void setFechaClienteRecep(Date fechaClienteRecep) {
         this.fechaClienteRecep = fechaClienteRecep;
     }
-
-    
-
 }

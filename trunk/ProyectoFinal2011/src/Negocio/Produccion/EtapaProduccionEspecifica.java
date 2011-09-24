@@ -182,6 +182,19 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
             TDetallesPlans.add(dt);
         }
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        try {
+            if (((EtapaProduccionEspecifica) obj).getId()==this.getId())
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+
     //@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEtapasProduccionEspecifica")
 //    public Set<TipoMaquinaHerramienta> getTTmaquinaHerramientas() {
 //        return this.TTmaquinaHerramientas;
