@@ -76,13 +76,11 @@ public abstract class TablaManager<E> {
         estructura.insertRow(index, ObjetoFila(objeto));
     }
 
-    public int getSelectedRow()
-    {
+    public int getSelectedRow() {
         return tabla.getSelectedRow();
     }
 
-    public int getSize()
-    {
+    public int getSize() {
         return contenido.size();
     }
 
@@ -91,7 +89,7 @@ public abstract class TablaManager<E> {
     }
 
     public E removeRow(int index) {
-        
+
         estructura.removeRow(index);
         return contenido.remove(index);
     }
@@ -129,7 +127,7 @@ public abstract class TablaManager<E> {
     }
 
     public List<E> getDatos() {
-        return contenido;
+        return new ArrayList<E>(contenido);
     }
 
     public E getDato(int fila) {

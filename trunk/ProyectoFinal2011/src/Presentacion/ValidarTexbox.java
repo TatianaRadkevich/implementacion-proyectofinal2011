@@ -4,6 +4,7 @@
  */
 package Presentacion;
 
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -41,7 +42,29 @@ public class ValidarTexbox {
         });
     }
 
-     public static void validarShort(final JTextField txt) {
+    public static void desabilitarEdicion(final JTextField txt) {
+        txt.addKeyListener(
+                new KeyAdapter() {
+
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        e.consume();
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_LEFT
+                                || e.getKeyCode() == KeyEvent.VK_RIGHT
+                                || e.getKeyCode() == KeyEvent.VK_UP
+                                || e.getKeyCode() == KeyEvent.VK_DOWN) {
+                            return;
+                        }
+                        e.consume();
+                    }
+                });
+    }
+
+    public static void validarShort(final JTextField txt) {
         txt.addKeyListener(new java.awt.event.KeyAdapter() {
 
             @Override
