@@ -16,7 +16,7 @@ public class TipoMaquinaHerramientaBD {
 
     public static List<TipoMaquinaHerramienta> listarTipoMaquinaHerramienta()
     {
-        return HibernateUtil.ejecutarConsulta("FROM TipoMaquinaHerramienta");
+        return HibernateUtil.ejecutarConsulta("FROM TipoMaquinaHerramienta ORDER BY nombre");
     }
 
     public static void guardar(TipoMaquinaHerramienta tmh)
