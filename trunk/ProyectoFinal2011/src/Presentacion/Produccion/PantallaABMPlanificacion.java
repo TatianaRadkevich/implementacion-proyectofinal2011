@@ -21,6 +21,7 @@ import Negocio.Produccion.EtapaProduccionEspecifica;
 import Negocio.Produccion.MaquinaHerramientaParticular;
 import Negocio.Produccion.PlanProduccion;
 import Negocio.Produccion.Producto;
+import Negocio.Produccion.TipoMaquinaHerramienta;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.Pedido;
 import Presentacion.JCheckList;
@@ -78,6 +79,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         inicializarTablas();
         habilitarDatosPlanificacion(false);
         cargarDatosPedido(p);
+        if(p.getPlanesProduccion().isEmpty())
+            p.getPlanesProduccion().add(new PlanProduccion());
 
         // ValidarTexbox.desabilitarEdicion(((DefaultEditor) fhInicioPlan.getEditor()).getTextField());
 
@@ -216,8 +219,11 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private void cargarEstructura(DetallePedido dp) {
 
         List<EtapaProduccionEspecifica> etapas = dp.getProducto().getEtapasProduccionEspecificas();
+        List<DetallePlanProduccion> etapasPlanif ;
+        try{
         PlanProduccion plan = dp.getPedido().getPlanesProduccion().iterator().next();
-        List<DetallePlanProduccion> etapasPlanif = plan.getDetallePlan(dp.getProducto());
+        etapasPlanif= plan.getDetallePlan(dp.getProducto());
+        }catch(Exception ex){etapasPlanif=new ArrayList<DetallePlanProduccion> ();}
 
         for (EtapaProduccionEspecifica epe : dp.getProducto().getEtapasProduccionEspecificas()) {
             for (DetallePlanProduccion dpp : etapasPlanif) {
@@ -277,16 +283,22 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         }
 
         fhInicioDetallePlan.setDate((detalle.getFecHoraPrevistaInicio() == null) ? Utilidades.getFechaActual() : detalle.getFecHoraPrevistaInicio());
+        TipoMaquinaHerramienta tipoMaq=null;
+        for(DetalleEtapaProduccion det:detalle.getTEtapasProduccionEspecifica().getDetalleEtapaProduccion())
+            if(det.getTipoMaquinaHerramienta()!=null)
+                tipoMaq=det.getTipoMaquinaHerramienta();
+
         cmbMaquina.setModel(
                 new DefaultComboBoxModel(
                 MaquinaHerramientaBD.getMaquinasHerramientas(
-                detalle.getTEtapasProduccionEspecifica().getDetalleEtapaProduccion().get(0).getTipoMaquinaHerramienta(), true, false).toArray()));
+                tipoMaq, true, false).toArray()));
+
         cmbMaquina.setSelectedItem(detalle.getTMaquinasHerramientaParticular());
 
         cmbOperario.setModel(
                 new DefaultComboBoxModel(EmpleadoBD.getEmpleados(detalle.getTEtapasProduccionEspecifica().getCargo(), true, false).toArray()));
 
-        cmbOperario.setSelectedItem(detalle.getTEmpleados());
+        //cmbOperario.setSelectedItem(detalle.getTEmpleados());
         txtObservaciones.setText(detalle.getObservaciones());
     }
 
@@ -776,7 +788,9 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
         if (modificarDetPlan == false) {
             det.setTEtapasProduccionEspecifica(tmEstructura.removeSelectedRow());
+            
             insertDetallePlan(det);
+           // pedido.getPlanesProduccion().get(0).addDetallePlan(det);
         }
 
 
@@ -836,8 +850,12 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             return;
         }
 
-        limpiarDatosEtapaPlanificacion();
+        EtapaProduccionEspecifica epe=tmEstructura.getSeletedObject();
+
+       // limpiarDatosEtapaPlanificacion();
+        cargarDatosEtapaPlanificacion(new DetallePlanProduccion(epe));
         habilitarDatosPlanificacion(true);
+
         modificarDetPlan = false;
 
     }//GEN-LAST:event_btnPlanificarActionPerformed

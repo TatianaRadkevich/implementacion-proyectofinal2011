@@ -203,4 +203,10 @@ public class PlanProduccion implements java.io.Serializable {
         }
 
     }
+
+   public void addDetallePlan(DetallePlanProduccion detalle)
+    {
+        this.TDetallesPlans.add(detalle);
+
+   }
 }
