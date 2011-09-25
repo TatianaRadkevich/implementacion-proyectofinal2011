@@ -518,7 +518,7 @@ public class PantallaABMLocalidad extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarProvinciaActionPerformed
 
     private void btnAgregarPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPaisActionPerformed
- PantallaABMPais pais = new PantallaABMPais(this, true);
+ PantallaABMPais pais = new PantallaABMPais(true);
  pais.setVisible(true);
     }//GEN-LAST:event_btnAgregarPaisActionPerformed
 

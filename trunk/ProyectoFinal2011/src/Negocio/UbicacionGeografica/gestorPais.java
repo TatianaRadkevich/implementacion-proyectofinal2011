@@ -16,11 +16,11 @@ import java.util.List;
 public class gestorPais {
 
  public static void administrarPais(Dialog parent){
-        PantallaABMPais pais=new PantallaABMPais(null, true);
+        PantallaABMPais pais=new PantallaABMPais(true);
         pais.setVisible(true);
     }
     public static void administrarPaisAgregar(Dialog parent){
-        PantallaABMPais pais=new PantallaABMPais(null, true);
+        PantallaABMPais pais=new PantallaABMPais(true);
         pais.nuevo();
         pais.setVisible(true);
     }

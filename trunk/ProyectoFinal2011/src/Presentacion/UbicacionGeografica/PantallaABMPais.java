@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 /**
  *
  * @author Heber Parrucci
@@ -31,8 +32,8 @@ public class PantallaABMPais extends javax.swing.JDialog {
     private Pais pais_actual=null;
     private gestorPais gestor=new gestorPais();
    
-    public PantallaABMPais(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public PantallaABMPais(boolean modal) {
+        super((JFrame)null, modal);
         GUILocal.establecerGUILocal(this);
         initComponents();
 
@@ -343,7 +344,7 @@ public class PantallaABMPais extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PantallaABMPais dialog = new PantallaABMPais(new javax.swing.JFrame(), true);
+                PantallaABMPais dialog = new PantallaABMPais(true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
