@@ -832,8 +832,8 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         limpiarEtapa();
         if (tbEtapas.getSelectedRow() != -1) {
             txtOrden.setText(tbEtapas.getSelectedRow()+1 + "");
-        } else {
-            txtOrden.setText(tbEtapas.getRowCount() + "");
+        } else {            
+            txtOrden.setText(tbEtapas.getRowCount()+1 + "");
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
