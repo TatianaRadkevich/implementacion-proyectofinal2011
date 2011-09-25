@@ -34,8 +34,8 @@ public class GestorRegistrarProducto extends GestorProducto{
     }
 
     @Override
-    public String mensajeResultado(String nombreProducto) {
-        return "El producto "+nombreProducto+ "\nha sido dado de registrado exitosamente";
+    public String mensajeResultado(Producto productos) {
+        return "El producto "+productos.getNombre()+ " ha sido dado de registrado exitosamente \nsu codigo es: "+productos.codigoMerge();
     }
 
     @Override

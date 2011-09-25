@@ -63,6 +63,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         cargarTipoProductos();
         cargarUnidadDeMedida();
         setTitle(title);
+        cargarMaterial();
 
         tablaDetalle = new TablaManager<DetalleProducto>(tbDetalle) {
 
@@ -218,33 +219,40 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         ));
         tbDetalle.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tbDetalle.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tbDetalle.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbDetalleMouseClicked(evt);
-            }
-        });
-        tbDetalle.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                tbDetallePropertyChange(evt);
-            }
-        });
         jScrollPane2.setViewportView(tbDetalle);
 
         lblMaterial.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblMaterial.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblMaterial.setText("Material:");
 
-        lblLongitud.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblLongitud.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblLongitud.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblLongitud.setText("Longitud:");
 
+        cmbMaterial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMaterialActionPerformed(evt);
+            }
+        });
+
         buttonGroup1.add(rdbMateriaPrima);
         rdbMateriaPrima.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        rdbMateriaPrima.setSelected(true);
         rdbMateriaPrima.setText("Materia prima");
+        rdbMateriaPrima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbMateriaPrimaActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(rdbInsumo);
-        rdbInsumo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        rdbInsumo.setFont(new java.awt.Font("Tahoma", 1, 11));
         rdbInsumo.setText("Insumo");
+        rdbInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbInsumoActionPerformed(evt);
+            }
+        });
 
         lblUnidadMedidaLongitud.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblUnidadMedidaLongitud.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -270,18 +278,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblMaterial)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmbMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(lblLongitud)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLongitud, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(lblUnidadMedidaLongitud)
-                .addGap(156, 156, 156))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -289,19 +285,32 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                     .addComponent(btnAgregarDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(rdbInsumo)
-                .addGap(18, 18, 18)
-                .addComponent(rdbMateriaPrima)
-                .addContainerGap())
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(rdbMateriaPrima)
+                        .addGap(18, 18, 18)
+                        .addComponent(rdbInsumo)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblMaterial)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(lblLongitud)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtLongitud, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblUnidadMedidaLongitud)
+                        .addGap(156, 156, 156))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rdbInsumo)
-                    .addComponent(rdbMateriaPrima))
+                    .addComponent(rdbMateriaPrima)
+                    .addComponent(rdbInsumo))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMaterial)
@@ -493,6 +502,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
             producto.setPrecioUnitario(new BigDecimal(txtPrecio.getText()));
             producto.setTTproducto((TipoProducto) cmbTipoProducto.getSelectedItem());
             producto.setTUnidadesMedida((UnidadMedida)cmbUnidadMedida.getSelectedItem());
+            producto.setTDetallesProductos(tablaDetalle.getDatos());
 
             if(txtFechaBaja.getText().compareTo("")!=0){
                 producto.setFecBaja(new Date());
@@ -503,7 +513,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
            
             try {
                 gestor.ejecutarOperacion(producto);
-                Mensajes.mensajeInformacion(gestor.mensajeResultado(producto.getNombre()));
+                Mensajes.mensajeInformacion(gestor.mensajeResultado(producto));
                 this.vaciar();
                 gestor.reiniciar(this);
 
@@ -529,22 +539,27 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarUnidadMedidaActionPerformed
 
-    private void tbDetalleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDetalleMouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_tbDetalleMouseClicked
-
-    private void tbDetallePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbDetallePropertyChange
-        // TODO add your handling code here:
-        
-
-    }//GEN-LAST:event_tbDetallePropertyChange
-
     private void btnAgregarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarDetalleActionPerformed
         // TODO add your handling code here:
         DetalleProducto detalle=new DetalleProducto();
         detalle.setTMateriales((Material)cmbMaterial.getSelectedItem());
         detalle.setLongitud(Short.parseShort(txtLongitud.getText()));
+
+        for (DetalleProducto dp : tablaDetalle.getDatos()) {
+            if (dp.getTMateriales().getNombre().equals(detalle.getTMateriales().getNombre())) {
+                String mensage =
+                        "¡Ya existe un detalle que contiene el material " + dp.getTMateriales().getNombre() + "!\n"
+                        + "¿Desea modificar la longitud ingresada?";
+                if (Mensajes.mensajeConfirmacionGenerico(mensage)) {
+                    dp.setLongitud(detalle.getLongitud());
+                    tablaDetalle.updateTabla();
+                }
+                return;
+            }
+        }
+        this.tablaDetalle.add(detalle);
+        tablaDetalle.updateTabla();
+        this.limpiarDetalle();
 
 
     }//GEN-LAST:event_btnAgregarDetalleActionPerformed
@@ -555,6 +570,23 @@ public class PantallaABMProducto extends javax.swing.JDialog {
             tablaDetalle.removeSelectedRow();
         }
     }//GEN-LAST:event_btnQuitarDetalleActionPerformed
+
+    private void cmbMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMaterialActionPerformed
+        // TODO add your handling code here:
+        Material material=(Material) cmbMaterial.getSelectedItem();
+        if(material!=null)
+            lblUnidadMedidaLongitud.setText(material.getTUnidadesMedida().getNombre());
+    }//GEN-LAST:event_cmbMaterialActionPerformed
+
+    private void rdbMateriaPrimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbMateriaPrimaActionPerformed
+        // TODO add your handling code here:
+        this.cargarMaterial();
+    }//GEN-LAST:event_rdbMateriaPrimaActionPerformed
+
+    private void rdbInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbInsumoActionPerformed
+        // TODO add your handling code here:
+        this.cargarMaterial();
+    }//GEN-LAST:event_rdbInsumoActionPerformed
 
     public boolean validar(){
         return true;
@@ -659,6 +691,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         }
 
          tablaDetalle.setDatos((List<DetalleProducto>) producto.getTDetallesProductos());
+         tablaDetalle.updateTabla();
     }
 
      private void cargarTipoProductos(){
@@ -668,7 +701,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 //            }
             cmbTipoProducto.removeAllItems();
             
-            List<TipoProducto> tipo = gestor.traerTiposProductos();
+            List<TipoProducto> tipo = GestorProducto.traerTiposProductos();
             for(int i=0;i<tipo.size();i++){
                 cmbTipoProducto.addItem(tipo.get(i));
             }
@@ -782,23 +815,32 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         List<Material> materiales=MaterialBD.getMateriales(rdbMateriaPrima.isSelected());
 
 
-try {
-//            for(int i=0;i<cmbTipoProducto.getItemCount();i++){
-//                cmbTipoProducto.remove(i);
-//            }
-            
+try {        
 
-            List<TipoProducto> tipo = gestor.traerTiposProductos();
+            List<TipoProducto> tipo = GestorProducto.traerTiposProductos();
             for(int i=0;i<tipo.size();i++){
                 cmbTipoProducto.addItem(tipo.get(i));
             }
         } catch (ExceptionGestor ex) {
             Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        cmbTipoProducto.setSelectedIndex(2);
         cmbTipoProducto.repaint();
     }
     
-    
+    private void cargarMaterial(){
+        List<Material> materiales=GestorProducto.traerMateriales(rdbMateriaPrima.isSelected());
+        cmbMaterial.removeAllItems();
+        for(int i=0;i<materiales.size();i++){
+                cmbMaterial.addItem(materiales.get(i));
+            }
+        cmbMaterial.setSelectedIndex(-1);
+
+        cmbMaterial.repaint();
+    }
+
+    private void limpiarDetalle(){
+        cmbMaterial.setSelectedIndex(-1);
+        txtLongitud.setText("");
+    }
     
 }

@@ -4,7 +4,9 @@
  */
 
 package Negocio.Produccion;
+import BaseDeDatos.Compras.MaterialBD;
 import BaseDeDatos.Produccion.ProductoBD;
+import Negocio.Compras.Material;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Produccion.PantallaABMProducto;
 import java.util.List;
@@ -28,11 +30,14 @@ public abstract class GestorProducto {
         return ProductoBD.listarProductos();
     }
 
-    public abstract String mensajeResultado(String nombreProducto);
+    public abstract String mensajeResultado(Producto producto);
 
     public abstract void reiniciar(PantallaABMProducto aThis) ;
 
     public static Producto traerProducto(String codigo){
         return ProductoBD.traerProducto(codigo);
+    }
+    public static List<Material> traerMateriales(boolean esMateriaPrima){
+        return MaterialBD.getMateriales(esMateriaPrima);
     }
 }
