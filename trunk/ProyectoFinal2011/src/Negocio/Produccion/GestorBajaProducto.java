@@ -28,8 +28,8 @@ public class GestorBajaProducto extends GestorProducto{
     }
 
     @Override
-    public String mensajeResultado(String nombreProducto) {
-        return "El producto "+nombreProducto+ "\nha sido dado de baja exitosamente";
+    public String mensajeResultado(Producto producto) {
+        return "El producto "+producto.getNombre()+ "\nha sido dado de baja exitosamente";
     }
 
     @Override

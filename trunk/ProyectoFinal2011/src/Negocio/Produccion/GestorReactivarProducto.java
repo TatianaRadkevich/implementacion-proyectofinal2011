@@ -31,8 +31,8 @@ public class GestorReactivarProducto extends GestorProducto{
     }
 
     @Override
-    public String mensajeResultado(String nombreProducto) {
-        return "El producto "+nombreProducto+ "\nha sido reactivado exitosamente";
+    public String mensajeResultado(Producto producto) {
+        return "El producto "+producto.getNombre()+ "\nha sido reactivado exitosamente";
     }
 
     @Override

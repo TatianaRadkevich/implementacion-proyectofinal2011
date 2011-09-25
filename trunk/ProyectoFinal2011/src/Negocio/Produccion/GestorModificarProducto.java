@@ -26,12 +26,13 @@ public class GestorModificarProducto extends GestorProducto{
     public void modificarProducto(Dialog parent,String codigo) {
         PantallaABMProducto pantalla_producto=new PantallaABMProducto(parent, true, this,"Modificar Producto");
         pantalla_producto.modificar(ProductoBD.traerProducto(codigo));
+        pantalla_producto.setVisible(true);
      
     }
 
     @Override
-    public String mensajeResultado(String nombreProducto) {
-        return "El producto "+nombreProducto+ "\nha sido modificado exitosamente";
+    public String mensajeResultado(Producto producto) {
+        return "El producto "+producto.getNombre()+ "\nha sido modificado exitosamente";
     }
 
     @Override

@@ -573,6 +573,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         pedido.setPrioridad((byte) cmbPrioridad.getSelectedIndex());
         pedido.setTipoPedido((TipoPedido) cmbTipoPedido.getSelectedItem());
         pedido.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
+
         try {
             gestor.ejecutarCU(pedido);
             gestor.finalizarCU();
