@@ -30,7 +30,7 @@ import javax.swing.DefaultListModel;
  *
  * @author Heber Parrucci
  */
-public class PantallaABMProvincia extends javax.swing.JFrame {
+public class PantallaABMProvincia extends javax.swing.JDialog {
 
     private int operacion;
     private Provincia pro_actual=null;
@@ -38,7 +38,7 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
 
     /** Creates new form PantallaABMProvincia */
     public PantallaABMProvincia(java.awt.Frame parent, boolean modal) {
-        super();
+        super(parent,modal);
         initComponents();
 
        this.activarProvincia(false);
@@ -404,7 +404,7 @@ public class PantallaABMProvincia extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbConsultaPaisActionPerformed
 
     private void btnAgregarPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPaisActionPerformed
-     PantallaABMPais pai = new PantallaABMPais(this, true);
+     PantallaABMPais pai = new PantallaABMPais(true);
      pai.setVisible(true);
     }//GEN-LAST:event_btnAgregarPaisActionPerformed
 
