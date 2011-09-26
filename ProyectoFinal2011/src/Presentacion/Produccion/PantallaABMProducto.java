@@ -43,7 +43,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
     private GestorProducto gestor;
     private Producto producto=null;
-    private TablaManager<DetalleProducto> tablaDetalle;
     /** Creates new form PantallaABMProducto */
     public PantallaABMProducto(java.awt.Frame parent, boolean modal) {
         super((Frame)null, modal);
@@ -63,32 +62,8 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         cargarTipoProductos();
         cargarUnidadDeMedida();
         setTitle(title);
-        cargarMaterial();
 
-        tablaDetalle = new TablaManager<DetalleProducto>(tbDetalle) {
-
-            @Override
-            public Vector getCabecera() {
-                Vector cabecera = new Vector();
-                cabecera.add("Material");
-                cabecera.add("Tipo material");
-                cabecera.add("Longitud");
-              
-                return cabecera;
-            }
-
-            @Override
-            public Vector ObjetoFila(DetalleProducto elemento) {
-                 Vector fila = new Vector();
-                fila.add(elemento.getTMateriales().getNombre());
-                fila.add(elemento.tipoMaterial());
-                fila.add(elemento.InfoLongitud());
-          
-                return fila;
-            }
-
-
-        };
+       
        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
     }
    
@@ -121,18 +96,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         cmbUnidadMedida = new javax.swing.JComboBox();
         btnAgregarUnidadMedida = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable();
-        lblMaterial = new javax.swing.JLabel();
-        lblLongitud = new javax.swing.JLabel();
-        cmbMaterial = new javax.swing.JComboBox();
-        rdbMateriaPrima = new javax.swing.JRadioButton();
-        rdbInsumo = new javax.swing.JRadioButton();
-        txtLongitud = new javax.swing.JTextField();
-        lblUnidadMedidaLongitud = new javax.swing.JLabel();
-        btnAgregarDetalle = new javax.swing.JButton();
-        btnQuitarDetalle = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         pnlBaja = new javax.swing.JPanel();
@@ -203,168 +166,40 @@ public class PantallaABMProducto extends javax.swing.JDialog {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
-
-        tbDetalle.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        tbDetalle.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tbDetalle.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        tbDetalle.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane2.setViewportView(tbDetalle);
-
-        lblMaterial.setFont(new java.awt.Font("Tahoma", 1, 11));
-        lblMaterial.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblMaterial.setText("Material:");
-
-        lblLongitud.setFont(new java.awt.Font("Tahoma", 1, 11));
-        lblLongitud.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblLongitud.setText("Longitud:");
-
-        cmbMaterial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbMaterialActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(rdbMateriaPrima);
-        rdbMateriaPrima.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        rdbMateriaPrima.setSelected(true);
-        rdbMateriaPrima.setText("Materia prima");
-        rdbMateriaPrima.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbMateriaPrimaActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(rdbInsumo);
-        rdbInsumo.setFont(new java.awt.Font("Tahoma", 1, 11));
-        rdbInsumo.setText("Insumo");
-        rdbInsumo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbInsumoActionPerformed(evt);
-            }
-        });
-
-        lblUnidadMedidaLongitud.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblUnidadMedidaLongitud.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblUnidadMedidaLongitud.setText("xxxxx");
-
-        btnAgregarDetalle.setText("Agregar");
-        btnAgregarDetalle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarDetalleActionPerformed(evt);
-            }
-        });
-
-        btnQuitarDetalle.setText("Quitar");
-        btnQuitarDetalle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuitarDetalleActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnQuitarDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAgregarDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(rdbMateriaPrima)
-                        .addGap(18, 18, 18)
-                        .addComponent(rdbInsumo)
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblMaterial)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(lblLongitud)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtLongitud, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblUnidadMedidaLongitud)
-                        .addGap(156, 156, 156))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rdbMateriaPrima)
-                    .addComponent(rdbInsumo))
-                .addGap(9, 9, 9)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMaterial)
-                    .addComponent(cmbMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblLongitud)
-                    .addComponent(txtLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUnidadMedidaLongitud))
-                .addGap(34, 34, 34)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnAgregarDetalle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnQuitarDetalle))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1)
+                    .addComponent(lbl_codigo))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtNombre)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(cmbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnAgregarTipo)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1)
-                            .addComponent(lbl_codigo))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtNombre)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(cmbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(btnAgregarTipo)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cmbUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnAgregarUnidadMedida)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1))))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(cmbUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAgregarUnidadMedida)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -396,8 +231,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                     .addComponent(cmbUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarUnidadMedida)
                     .addComponent(jButton1))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
 
         btnAceptar.setText("Aceptar");
@@ -477,10 +311,10 @@ public class PantallaABMProducto extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCancelar)
                     .addComponent(btnAceptar))
@@ -502,7 +336,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
             producto.setPrecioUnitario(new BigDecimal(txtPrecio.getText()));
             producto.setTTproducto((TipoProducto) cmbTipoProducto.getSelectedItem());
             producto.setTUnidadesMedida((UnidadMedida)cmbUnidadMedida.getSelectedItem());
-            producto.setTDetallesProductos(tablaDetalle.getDatos());
 
             if(txtFechaBaja.getText().compareTo("")!=0){
                 producto.setFecBaja(new Date());
@@ -539,55 +372,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarUnidadMedidaActionPerformed
 
-    private void btnAgregarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarDetalleActionPerformed
-        // TODO add your handling code here:
-        DetalleProducto detalle=new DetalleProducto();
-        detalle.setTMateriales((Material)cmbMaterial.getSelectedItem());
-        detalle.setLongitud(Short.parseShort(txtLongitud.getText()));
-
-        for (DetalleProducto dp : tablaDetalle.getDatos()) {
-            if (dp.getTMateriales().getNombre().equals(detalle.getTMateriales().getNombre())) {
-                String mensage =
-                        "¡Ya existe un detalle que contiene el material " + dp.getTMateriales().getNombre() + "!\n"
-                        + "¿Desea modificar la longitud ingresada?";
-                if (Mensajes.mensajeConfirmacionGenerico(mensage)) {
-                    dp.setLongitud(detalle.getLongitud());
-                    tablaDetalle.updateTabla();
-                }
-                return;
-            }
-        }
-        this.tablaDetalle.add(detalle);
-        tablaDetalle.updateTabla();
-        this.limpiarDetalle();
-
-
-    }//GEN-LAST:event_btnAgregarDetalleActionPerformed
-
-    private void btnQuitarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarDetalleActionPerformed
-        // TODO add your handling code here:
-        if (tbDetalle.getSelectedRow() != -1) {
-            tablaDetalle.removeSelectedRow();
-        }
-    }//GEN-LAST:event_btnQuitarDetalleActionPerformed
-
-    private void cmbMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMaterialActionPerformed
-        // TODO add your handling code here:
-        Material material=(Material) cmbMaterial.getSelectedItem();
-        if(material!=null)
-            lblUnidadMedidaLongitud.setText(material.getTUnidadesMedida().getNombre());
-    }//GEN-LAST:event_cmbMaterialActionPerformed
-
-    private void rdbMateriaPrimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbMateriaPrimaActionPerformed
-        // TODO add your handling code here:
-        this.cargarMaterial();
-    }//GEN-LAST:event_rdbMateriaPrimaActionPerformed
-
-    private void rdbInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbInsumoActionPerformed
-        // TODO add your handling code here:
-        this.cargarMaterial();
-    }//GEN-LAST:event_rdbInsumoActionPerformed
-
     public boolean validar(){
         return true;
     }
@@ -610,13 +394,10 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnAgregarDetalle;
     private javax.swing.JButton btnAgregarTipo;
     private javax.swing.JButton btnAgregarUnidadMedida;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnQuitarDetalle;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox cmbMaterial;
     private javax.swing.JComboBox cmbTipoProducto;
     private javax.swing.JComboBox cmbUnidadMedida;
     private javax.swing.JButton jButton1;
@@ -629,22 +410,13 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel lblLongitud;
-    private javax.swing.JLabel lblMaterial;
-    private javax.swing.JLabel lblUnidadMedidaLongitud;
     private javax.swing.JLabel lbl_codigo;
     private javax.swing.JPanel pnlBaja;
-    private javax.swing.JRadioButton rdbInsumo;
-    private javax.swing.JRadioButton rdbMateriaPrima;
-    private javax.swing.JTable tbDetalle;
     private javax.swing.JTextArea txtAreaDescripcion;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtFechaBaja;
-    private javax.swing.JTextField txtLongitud;
     private javax.swing.JTextArea txtMotivoBaja;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
@@ -690,8 +462,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
             }
         }
 
-         tablaDetalle.setDatos((List<DetalleProducto>) producto.getTDetallesProductos());
-         tablaDetalle.updateTabla();
     }
 
      private void cargarTipoProductos(){
@@ -807,40 +577,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
     }
 
-    public void cargarComboMaterial(){
-
-        cmbTipoProducto.removeAllItems();
-        if(!rdbInsumo.isSelected() && !rdbMateriaPrima.isSelected())
-            return;
-        List<Material> materiales=MaterialBD.getMateriales(rdbMateriaPrima.isSelected());
-
-
-try {        
-
-            List<TipoProducto> tipo = GestorProducto.traerTiposProductos();
-            for(int i=0;i<tipo.size();i++){
-                cmbTipoProducto.addItem(tipo.get(i));
-            }
-        } catch (ExceptionGestor ex) {
-            Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        cmbTipoProducto.repaint();
-    }
-    
-    private void cargarMaterial(){
-        List<Material> materiales=GestorProducto.traerMateriales(rdbMateriaPrima.isSelected());
-        cmbMaterial.removeAllItems();
-        for(int i=0;i<materiales.size();i++){
-                cmbMaterial.addItem(materiales.get(i));
-            }
-        cmbMaterial.setSelectedIndex(-1);
-
-        cmbMaterial.repaint();
-    }
-
-    private void limpiarDetalle(){
-        cmbMaterial.setSelectedIndex(-1);
-        txtLongitud.setText("");
-    }
+  
+   
     
 }
