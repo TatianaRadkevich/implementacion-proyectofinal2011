@@ -6,6 +6,7 @@ package Negocio.Produccion;
 
 import BaseDeDatos.Produccion.*;
 import Negocio.Exceptiones.ExceptionGestor;
+import Presentacion.Mensajes;
 import Presentacion.Produccion.PantallaMaquinaHerramientaTipoABM;
 import Presentacion.Utilidades;
 import java.util.List;
@@ -114,6 +115,7 @@ public void ejecutarCU(TipoMaquinaHerramienta tmh) throws ExceptionGestor {
                   validar(tmh);
         //mh.setEstadoMaquina(null);
         TipoMaquinaHerramientaBD.guardar(tmh);
+        Mensajes.mensajeInformacion("El Tipo de Maquina \""+tmh.getNombre()+"\" ha sido guardado exitosamente.");
         finalizarCU();
         }
 
@@ -147,6 +149,7 @@ public void ejecutarCU(TipoMaquinaHerramienta tmh) throws ExceptionGestor {
         public void ejecutarCU(TipoMaquinaHerramienta tmh) throws ExceptionGestor {
                  validar(tmh);
         TipoMaquinaHerramientaBD.modificar(tmh);
+        Mensajes.mensajeInformacion("El Tipo de Maquina \""+tmh.getNombre()+"\" ha sido modificado exitosamente.");
         finalizarCU();
         }
     };
@@ -179,6 +182,7 @@ public void ejecutarCU(TipoMaquinaHerramienta tmh) throws ExceptionGestor {
                  validar(tmh);
         tmh.setFechaBaja(Utilidades.getFechaActual());
         TipoMaquinaHerramientaBD.modificar(tmh);
+        Mensajes.mensajeInformacion("El Tipo de Maquina \""+tmh.getNombre()+"\" ha sido eliminado exitosamente.");
         finalizarCU();
         }
     };

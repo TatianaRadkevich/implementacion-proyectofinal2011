@@ -35,7 +35,7 @@ public class GestorPedidoBaja extends GestorPedido
         interfaz.cargar(pedido);
         interfaz.habilitarBaja(true, true, Utilidades.getFechaActual(), "");
         interfaz.habilitarCarga(false);
-        interfaz.setTitle("Eliminar pedido");
+        interfaz.setTitle("Eliminar Pedido");
         interfaz.setVisible(true);
     }
 

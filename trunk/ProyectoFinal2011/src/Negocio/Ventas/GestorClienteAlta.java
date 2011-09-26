@@ -8,6 +8,7 @@ package Negocio.Ventas;
 import BaseDeDatos.BaseDatos;
 import BaseDeDatos.Ventas.ClienteBD;
 import Negocio.Exceptiones.ExceptionGestor;
+import Presentacion.Mensajes;
 import Presentacion.Ventas.PantallaClienteABM;
 
 /**
@@ -41,6 +42,7 @@ public class GestorClienteAlta extends GestorCliente {
     public void ejecutarCU(Cliente p) throws ExceptionGestor {
         validar(p);
         ClienteBD.guardar(p);
+        Mensajes.mensajeInformacion("El Cliente \""+p.getRazonSocial()+"\" ha sido guardado exitosamente.");
     }
 
 

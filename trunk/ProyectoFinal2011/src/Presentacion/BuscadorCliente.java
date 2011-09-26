@@ -59,7 +59,7 @@ public class BuscadorCliente extends javax.swing.JPanel {
 
     @Override
     public void setEnabled(boolean enabled) {
-        btnBuscar.setEnabled(enabled);
+       
         txtBuscar.setEditable(enabled);
         rdbCUIL.setEnabled(enabled);
         rdbRazonSocial.setEnabled(enabled);
@@ -125,7 +125,6 @@ public class BuscadorCliente extends javax.swing.JPanel {
         pnlBuscador = new javax.swing.JPanel();
         txtBuscar = new javax.swing.JTextField();
         cmbBuscar = new javax.swing.JComboBox();
-        btnBuscar = new javax.swing.JButton();
         rdbCUIL = new javax.swing.JRadioButton();
         rdbRazonSocial = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
@@ -164,15 +163,8 @@ public class BuscadorCliente extends javax.swing.JPanel {
         });
         pnlBuscador.add(cmbBuscar, "card3");
 
-        btnBuscar.setText("Buscar"); // NOI18N
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
         btgBusqueda.add(rdbCUIL);
-        rdbCUIL.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        rdbCUIL.setFont(new java.awt.Font("Tahoma", 1, 11));
         rdbCUIL.setText("CUIL"); // NOI18N
         rdbCUIL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,7 +173,7 @@ public class BuscadorCliente extends javax.swing.JPanel {
         });
 
         btgBusqueda.add(rdbRazonSocial);
-        rdbRazonSocial.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        rdbRazonSocial.setFont(new java.awt.Font("Tahoma", 1, 11));
         rdbRazonSocial.setSelected(true);
         rdbRazonSocial.setText("Razón Social"); // NOI18N
         rdbRazonSocial.addActionListener(new java.awt.event.ActionListener() {
@@ -190,10 +182,10 @@ public class BuscadorCliente extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("CUIL:"); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Razón Social:"); // NOI18N
 
         txtCUIL.setEditable(false);
@@ -220,9 +212,7 @@ public class BuscadorCliente extends javax.swing.JPanel {
                         .addComponent(rdbRazonSocial)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(rdbCUIL)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(77, 77, 77)
                         .addComponent(jButton1))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -243,7 +233,6 @@ public class BuscadorCliente extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(rdbRazonSocial)
                         .addComponent(rdbCUIL)
-                        .addComponent(btnBuscar)
                         .addComponent(jButton1))
                     .addComponent(pnlBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -257,15 +246,6 @@ public class BuscadorCliente extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-        iniciarBusqueda();
-        mostrarMenu();
-        txtBuscar.requestFocus();
-
-
-    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         // TODO add your handling code here:
@@ -345,7 +325,6 @@ public class BuscadorCliente extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btgBusqueda;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JComboBox cmbBuscar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

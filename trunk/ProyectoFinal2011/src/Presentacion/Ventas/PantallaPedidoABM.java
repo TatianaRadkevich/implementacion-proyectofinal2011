@@ -166,7 +166,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         txtEstado.setText(pedido.getEstadoPedido().getNombre());
         pnlCliente.setCliente(pedido.getCliente());
         txtFechaEstimada.setText(Utilidades.parseFecha(pedido.getFechaEstimadaEntrega()));
-        dtcFechaNecesidad.setDate(pedido.getFechaSolicitada());
+        dtcFechaNecesidad.setDate(pedido.getFechaNecesidad());
         tmDetalle.setDatos(pedido.getDetallePedido());
         cmbPrioridad.setSelectedIndex(pedido.getPrioridad());
         cmbTipoPedido.setSelectedItem(pedido.getTipoPedido());
@@ -243,7 +243,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
             }
         });
 
-        pnlPedido.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Pedido"));
+        pnlPedido.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         cmbPrioridad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -263,7 +263,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         labelFechaEstimada.setFont(new java.awt.Font("Tahoma", 1, 11));
         labelFechaEstimada.setText("Fecha Estimada:");
 
-        pnlDetalle.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle"));
+        pnlDetalle.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         btnDetalleAgregar.setText("+");
         btnDetalleAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -284,14 +284,18 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Total ($):");
 
         pnlDetalleCarga.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel10.setText("Tipo Producto:");
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel11.setText("Producto:");
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel12.setText("Cantidad:");
 
         btnAceptar.setText("Aceptar");
@@ -316,11 +320,11 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbTipoProducto, 0, 81, Short.MAX_VALUE)
+                .addComponent(cmbTipoProducto, 0, 69, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbProducto, 0, 80, Short.MAX_VALUE)
+                .addComponent(cmbProducto, 0, 68, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -357,7 +361,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetalleLayout.createSequentialGroup()
                         .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlDetalleLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 405, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 398, Short.MAX_VALUE)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -430,7 +434,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
                 .addComponent(jLabel1))
         );
 
-        pnlCliente.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
+        pnlCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         javax.swing.GroupLayout pnlPedidoLayout = new javax.swing.GroupLayout(pnlPedido);
         pnlPedido.setLayout(pnlPedidoLayout);
@@ -485,7 +489,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder("Cancelación"));
+        pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cancelación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Fecha:");
@@ -567,7 +571,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         Pedido pedido = gestor.getPedido();
         pedido.setCliente(pnlCliente.getCliente());
         pedido.setDetallePedido(tmDetalle.getDatos());
-        pedido.setFechaSolicitada(dtcFechaNecesidad.getDate());
+        pedido.setFechaNecesidad(dtcFechaNecesidad.getDate());
         pedido.setFechaEstimadaEntrega(dtcFechaNecesidad.getDate());
         pedido.setFechaGeneracion(Utilidades.getFechaActual());
         pedido.setPrioridad((byte) cmbPrioridad.getSelectedIndex());
