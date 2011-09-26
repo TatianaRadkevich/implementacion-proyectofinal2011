@@ -783,11 +783,11 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        PlanProduccion plan = new PlanProduccion();
-        plan.setDetallePlan(tmDetallePlanProduccion.getDatos());
-        plan.setPedido(pedido);
-        plan.setEmpleado((Empleado) cmbResponsable.getSelectedItem());
-        plan.setFecHoraPrevistaInicio(fhInicioPlan.getDate());
+//        PlanProduccion plan = new PlanProduccion();
+//        plan.setDetallePlan(tmDetallePlanProduccion.getDatos());
+//        plan.setPedido(pedido);
+//        plan.setEmpleado((Empleado) cmbResponsable.getSelectedItem());
+//        plan.setFecHoraPrevistaInicio(fhInicioPlan.getDate());
         HibernateUtil.guardarObjeto(plan);
 
 
