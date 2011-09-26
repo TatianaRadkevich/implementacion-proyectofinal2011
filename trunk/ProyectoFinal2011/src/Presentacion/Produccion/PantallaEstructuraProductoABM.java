@@ -19,8 +19,12 @@ import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -31,8 +35,12 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -61,7 +69,18 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 fila.add(elemento.getNumeroOrden());
                 fila.add(elemento.getEtapaProduccion());
                 fila.add(elemento.getCargo());
-                fila.add(elemento.getHorasHombre());
+
+                if (elemento.getDuracion() != null && elemento.getDuracion() % 60 == 0) {
+                    fila.add(elemento.getDuracion() / 60 + " min.");
+
+                } else {
+                    if(elemento.getDuracion() != null)
+                        fila.add(elemento.getDuracion() + " seg.");
+                    else
+                        fila.add("");
+                }
+
+
                 fila.add(elemento.getDescripcion());
                 return fila;
             }
@@ -72,7 +91,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 cabecera.add("Nro Orden");
                 cabecera.add("Tipo Etapa");
                 cabecera.add("Cargo");
-                cabecera.add("Horas Hombre");
+                cabecera.add("Duracion");
                 cabecera.add("Descripcion");
                 return cabecera;
             }
@@ -89,8 +108,8 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(DetalleEtapaProduccion elemento) {
                 Vector fila = new Vector();
-                fila.add((elemento.getMaterial() == null) ? "" : elemento.getMaterial().getNombre());
-                fila.add(elemento.getCantidadNecesaria());
+                fila.add(elemento.getMaterial());
+                fila.add((elemento.getCantidadNecesaria() == null) ? "" : elemento.getCantidadNecesaria().intValueExact());
                 return fila;
             }
 
@@ -119,8 +138,29 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         };
         tbMaterial.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(cmbMaterial));
+        tbMaterial.getColumnModel().getColumn(0).setCellRenderer(new TableCellRenderer() {
 
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JComboBox cmb=new JComboBox();
+                cmb.addItem(value);
+                cmb.setEnabled(table.isEnabled());
+                return cmb;
+            }
+        });
+        JTextField txt = new JTextField();
+        ValidarTexbox.validarInt(txt);
+        ValidarTexbox.validarLongitud(txt, 3);
+        tbMaterial.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(txt));
+        tbMaterial.getColumnModel().getColumn(1).setCellRenderer(new TableCellRenderer() {
 
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JTextField txt=new JTextField();
+                txt.setText(value.toString());
+                txt.setEnabled(table.isEnabled());
+                return txt;
+            }
+        });
+        tbMaterial.setRowHeight((int) cmbMaterial.getPreferredSize().getHeight());
         cargarCombos();
         cargarValidaciones();
 
@@ -214,19 +254,21 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
         cmbTipoProducto.setSelectedItem(prod.getTTproducto());
         cmbProducto.setSelectedItem(prod);
-        
-        EtapaProduccionEspecifica [] etapa=new EtapaProduccionEspecifica[prod.getEtapasProduccionEspecificas().size()];
-        for(EtapaProduccionEspecifica epe: prod.getEtapasProduccionEspecificas())
-            etapa[epe.getNumeroOrden()-1]=epe;
 
-        for(EtapaProduccionEspecifica epe:etapa)
-        tmEtapaEspecifica.add(epe);
+        EtapaProduccionEspecifica[] etapa = new EtapaProduccionEspecifica[prod.getEtapasProduccionEspecificas().size()];
+        for (EtapaProduccionEspecifica epe : prod.getEtapasProduccionEspecificas()) {
+            etapa[epe.getNumeroOrden() - 1] = epe;
+        }
+
+        for (EtapaProduccionEspecifica epe : etapa) {
+            tmEtapaEspecifica.add(epe);
+        }
         //ordeno las etapas por el numero
-        
 
 
-        
-          
+
+
+
     }
 
     public void cargarEtapa(EtapaProduccionEspecifica ep) {
@@ -235,9 +277,30 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             return;
         }
 
+
+
         txtDescripcion.setText(Utilidades.parseString(ep.getDescripcion()));
-        txtHorasHombre.setText(Utilidades.parseString(ep.getHorasHombre()));
+
+
+        if (ep.getHorasHombre() != null && ep.getHorasHombre().intValueExact() % 60 == 0) {
+            txtHorasHombre.setText((int) (ep.getHorasHombre().intValueExact() / 60) + "");
+            cmbTiempoHorasHom.setSelectedIndex(1);
+        } else {
+            txtHorasHombre.setText(Utilidades.parseString(ep.getHorasHombre().intValueExact()));
+            cmbTiempoHorasHom.setSelectedIndex(0);
+        }
+
+        if (ep.getDuracion() != null && ep.getDuracion() % 60 == 0) {
+            txtDuracion.setText(ep.getDuracion() / 60 + "");
+            cmbTiempoDurEtapa.setSelectedIndex(1);
+        } else {
+            txtDuracion.setText(Utilidades.parseString(ep.getDuracion()));
+            cmbTiempoDurEtapa.setSelectedIndex(0);
+        }
+
         txtOrden.setText(Utilidades.parseString(ep.getNumeroOrden()));
+
+
         cmbCargo.setSelectedItem(ep.getCargo());
         cmbTipoEtapa.setSelectedItem(ep.getEtapaProduccion());
 
@@ -270,6 +333,9 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         txtDescripcion.setText("");
         txtHorasHombre.setText("");
         txtOrden.setText("");
+        cmbTiempoDurEtapa.setSelectedIndex(-1);
+        cmbTiempoHorasHom.setSelectedIndex(-1);
+        txtDuracion.setText("");
         cmbCargo.setSelectedIndex(-1);
         cmbTipoEtapa.setSelectedIndex(-1);
         cmbMaterial.setSelectedIndex(-1);
@@ -307,7 +373,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         txtHorasHombre = new javax.swing.JTextField();
         txtDuracion = new javax.swing.JTextField();
         cmbTipoEtapa = new javax.swing.JComboBox();
-        jComboBox1 = new javax.swing.JComboBox();
+        cmbTiempoDurEtapa = new javax.swing.JComboBox();
         jLabel14 = new javax.swing.JLabel();
         btnCargarTipoMaquina = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
@@ -317,6 +383,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         btnCargarTipoEtapa = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        cmbTiempoHorasHom = new javax.swing.JComboBox();
         jPanel4 = new javax.swing.JPanel();
         btnEliminarMaterial = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -360,7 +427,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel15)
-                .addContainerGap(194, Short.MAX_VALUE))
+                .addContainerGap(205, Short.MAX_VALUE))
             .addComponent(jScrollPane4)
         );
         jPanel2Layout.setVerticalGroup(
@@ -380,6 +447,8 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel21.setText("Duracion Etapa:");
+
+        cmbTiempoDurEtapa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "seg.", "min." }));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel14.setText("Cargo:");
@@ -412,6 +481,8 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Tipo maquina:");
 
+        cmbTiempoHorasHom.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "seg.", "min." }));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -426,12 +497,15 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtHorasHombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtHorasHombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbTiempoHorasHom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbTiempoDurEtapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                             .addComponent(cmbTipoEtapa, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -461,7 +535,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbTiempoDurEtapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
@@ -470,7 +544,8 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(txtHorasHombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHorasHombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbTiempoHorasHom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -554,7 +629,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             pnlEtapaEspecificaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEtapaEspecificaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -684,7 +759,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                     .addComponent(btnBajar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSubir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlEtapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
@@ -737,7 +812,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCancelar))
                     .addComponent(pnlEtapas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 895, Short.MAX_VALUE)
+                    .addComponent(pnlProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE)
                     .addComponent(pnlEtapaEspecifica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -831,9 +906,9 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         nuevo = true;
         limpiarEtapa();
         if (tbEtapas.getSelectedRow() != -1) {
-            txtOrden.setText(tbEtapas.getSelectedRow()+1 + "");
-        } else {            
-            txtOrden.setText(tbEtapas.getRowCount()+1 + "");
+            txtOrden.setText(tbEtapas.getSelectedRow() + 1 + "");
+        } else {
+            txtOrden.setText(tbEtapas.getRowCount() + 1 + "");
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -859,6 +934,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
     private void btnAceptarEtapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarEtapaActionPerformed
         // TODO add your handling code here:
         EtapaProduccionEspecifica etapa;
+        Integer duracion;
 
         if (nuevo) {
             etapa = new EtapaProduccionEspecifica();
@@ -872,8 +948,23 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         etapa.setCargo((Cargo) cmbCargo.getSelectedItem());
         etapa.setDescripcion(txtDescripcion.getText());
         etapa.setEtapaProduccion((EtapaProduccion) cmbTipoEtapa.getSelectedItem());
-        etapa.setHorasHombre(new BigDecimal(txtHorasHombre.getText()));
         etapa.setNumeroOrden(Utilidades.parseByte(txtOrden.getText()));
+
+        duracion = Utilidades.parseInteger(txtDuracion.getText());
+        if (duracion != null) {
+            if (cmbTiempoDurEtapa.getSelectedIndex() == 1) {
+                duracion = duracion * 60;
+            }
+        }
+        etapa.setDuracion(duracion);
+
+        duracion = Utilidades.parseInteger(txtHorasHombre.getText());
+        if (duracion != null) {
+            if (cmbTiempoHorasHom.getSelectedIndex() == 1) {
+                duracion = duracion * 60;
+            }
+        }
+        etapa.setHorasHombre(new BigDecimal(duracion));
 
 
         etapa.setDetalleEtapaProduccion(tmMateriales.getDatos());
@@ -885,7 +976,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         etapa.setProducto(gestor.getProducto());
 
         if (nuevo) {
-            tmEtapaEspecifica.insert(etapa.getNumeroOrden()-1,etapa);
+            tmEtapaEspecifica.insert(etapa.getNumeroOrden() - 1, etapa);
             recalcularNroOrden();
         }
 
@@ -984,10 +1075,11 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
     private javax.swing.JButton btnSubir;
     private javax.swing.JComboBox cmbCargo;
     private javax.swing.JComboBox cmbProducto;
+    private javax.swing.JComboBox cmbTiempoDurEtapa;
+    private javax.swing.JComboBox cmbTiempoHorasHom;
     private javax.swing.JComboBox cmbTipoEtapa;
     private javax.swing.JComboBox cmbTipoMaquina;
     private javax.swing.JComboBox cmbTipoProducto;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
