@@ -64,6 +64,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
             }
         };
         cmbTipoPedido.setModel(new DefaultComboBoxModel(TipoPedidoBD.getTipoPedidos().toArray()));
+        cmbTipoPedido.insertItemAt("TODOS", 0);
         ValidarTexbox.validarLongitud(txtRazonSocial, 50);
     }
 
@@ -280,7 +281,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
         tmPedido.setDatos(
                 PedidoBD.getPedidos(
                 txtRazonSocial.getText(), 
-                (TipoPedido) cmbTipoPedido.getSelectedItem(),
+                (cmbTipoPedido.getSelectedIndex()==0)?null:(TipoPedido) cmbTipoPedido.getSelectedItem(),
                 true,
                 false));
     }//GEN-LAST:event_btnBuscarActionPerformed
