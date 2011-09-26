@@ -32,7 +32,7 @@
                       <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="pnlEtapas" alignment="1" max="32767" attributes="1"/>
-                  <Component id="pnlProducto" alignment="1" pref="916" max="32767" attributes="1"/>
+                  <Component id="pnlProducto" alignment="1" pref="933" max="32767" attributes="1"/>
                   <Component id="pnlEtapaEspecifica" alignment="0" max="32767" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -78,7 +78,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel3" min="-2" pref="301" max="-2" attributes="0"/>
+                  <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jPanel2" max="32767" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -107,7 +107,7 @@
                           </Group>
                       </Group>
                       <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jPanel3" alignment="0" pref="226" max="32767" attributes="0"/>
+                      <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -193,25 +193,21 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="cmbTiempoDurEtapa" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="cmbTipoEtapa" min="-2" pref="146" max="-2" attributes="1"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btnCargarTipoEtapa" min="-2" pref="41" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="cmbTipoEtapa" pref="163" max="32767" attributes="1"/>
+                                  <Component id="cmbTipoMaquina" alignment="0" pref="163" max="32767" attributes="0"/>
+                                  <Component id="cmbCargo" alignment="1" pref="163" max="32767" attributes="1"/>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="cmbTipoMaquina" alignment="0" pref="146" max="32767" attributes="0"/>
-                                      <Component id="cmbCargo" alignment="1" max="32767" attributes="1"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="btnCargarTipoMaquina" min="-2" pref="41" max="-2" attributes="0"/>
-                                      <Component id="btnCargarCargo" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
-                                  </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="btnCargarTipoMaquina" min="-2" pref="41" max="-2" attributes="0"/>
+                                  <Component id="btnCargarCargo" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
+                                  <Component id="btnCargarTipoEtapa" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -252,6 +248,7 @@
                           <Component id="cmbTipoMaquina" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnCargarTipoMaquina" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace pref="67" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -602,7 +599,7 @@
                       <Component id="btnSubir" alignment="0" max="32767" attributes="1"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="705" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="722" max="32767" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="btnNuevo" alignment="0" pref="75" max="32767" attributes="1"/>
