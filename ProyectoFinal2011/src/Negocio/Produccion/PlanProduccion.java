@@ -69,6 +69,10 @@ public class PlanProduccion implements java.io.Serializable {
     public PlanProduccion() {
     }
 
+    public PlanProduccion(Pedido TPedidos) {
+        this.TPedidos=TPedidos;
+    }
+
     public PlanProduccion(int idPlanProduccion, Empleado TEmpleados, Pedido TPedidos, Date fecGeneracion, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealFin, Date fecHoraRealInicio) {
         this.idPlanProduccion = idPlanProduccion;
         this.TEmpleados = TEmpleados;
@@ -207,6 +211,12 @@ public class PlanProduccion implements java.io.Serializable {
    public void addDetallePlan(DetallePlanProduccion detalle)
     {
         this.TDetallesPlans.add(detalle);
+
+   }
+
+     public void removeDetallePlan(DetallePlanProduccion detalle)
+    {
+        this.TDetallesPlans.remove(detalle);
 
    }
 }
