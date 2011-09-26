@@ -7,6 +7,7 @@ package Negocio.Ventas;
 
 import BaseDeDatos.Ventas.ClienteBD;
 import Negocio.Exceptiones.ExceptionGestor;
+import Presentacion.Mensajes;
 import Presentacion.Ventas.PantallaClienteABM;
 
 /**
@@ -52,6 +53,7 @@ public class GestorClienteModificar extends GestorCliente {
 
         validar(p);
         ClienteBD.modificar(p);
+         Mensajes.mensajeInformacion("El Cliente \""+p.getRazonSocial()+"\" ha sido modificado exitosamente.");
     }
 
 

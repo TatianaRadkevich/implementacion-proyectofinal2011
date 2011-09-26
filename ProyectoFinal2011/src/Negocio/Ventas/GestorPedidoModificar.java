@@ -34,7 +34,7 @@ public class GestorPedidoModificar extends GestorPedido
 
         interfaz=new PantallaPedidoABM(this);
         interfaz.cargar(pedido);
-        interfaz.setTitle("Modificar pedido");
+        interfaz.setTitle("Modificar Pedido");
         interfaz.setVisible(true);
     }
 

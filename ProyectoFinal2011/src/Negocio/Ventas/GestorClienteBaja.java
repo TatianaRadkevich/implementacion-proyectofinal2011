@@ -7,6 +7,7 @@ package Negocio.Ventas;
 
 import BaseDeDatos.Ventas.ClienteBD;
 import Negocio.Exceptiones.ExceptionGestor;
+import Presentacion.Mensajes;
 import Presentacion.Utilidades;
 import Presentacion.Ventas.PantallaClienteABM;
 
@@ -48,6 +49,7 @@ public GestorClienteBaja(Cliente p)
         validar(p);
         p.setFecBaja(Utilidades.getFechaActual());
         ClienteBD.modificar(p);
+        Mensajes.mensajeInformacion("El Cliente \""+p.getRazonSocial()+"\" ha sido eliminado exitosamente.");
     }
 
 

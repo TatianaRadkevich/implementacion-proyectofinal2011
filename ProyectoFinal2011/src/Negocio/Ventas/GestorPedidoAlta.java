@@ -22,7 +22,7 @@ public class GestorPedidoAlta extends GestorPedido
     public void iniciarCU() {
         interfaz=new PantallaPedidoABM(this);
         pedido=new Pedido();
-        interfaz.setTitle("Registrar nuevo pedido");
+        interfaz.setTitle("Registrar Pedido");
         interfaz.setVisible(true);
     }
 

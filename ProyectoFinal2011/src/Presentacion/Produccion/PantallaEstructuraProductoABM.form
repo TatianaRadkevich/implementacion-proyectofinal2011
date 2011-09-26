@@ -3,7 +3,7 @@
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="title" type="java.lang.String" value="Estructura Producto"/>
+    <Property name="title" type="java.lang.String" value="Estructura de Producto"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -63,7 +63,9 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Etapa especifica"/>
+            <TitledBorder title="Etapa espec&#xed;fica">
+              <Font PropertyName="font" name="Tahoma" size="11" style="1"/>
+            </TitledBorder>
           </Border>
         </Property>
       </Properties>
@@ -120,7 +122,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="205" max="32767" attributes="0"/>
+                      <EmptySpace pref="233" max="32767" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane4" alignment="0" max="32767" attributes="1"/>
               </Group>
@@ -159,7 +161,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="11" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Descripcion:"/>
+                <Property name="text" type="java.lang.String" value="Descripci&#xf3;n:"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -275,7 +277,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="11" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Duracion Etapa:"/>
+                <Property name="text" type="java.lang.String" value="Duraci&#xf3;n Etapa:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtHorasHombre">
@@ -328,7 +330,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="11" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Nro orden:"/>
+                <Property name="text" type="java.lang.String" value="Nro de orden:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbCargo">
@@ -356,7 +358,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="11" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Tipo Etapa:"/>
+                <Property name="text" type="java.lang.String" value="Tipo etapa:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
@@ -364,7 +366,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="11" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Tipo maquina:"/>
+                <Property name="text" type="java.lang.String" value="Tipo m&#xe1;quina:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbTiempoHorasHom">
@@ -389,9 +391,9 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jScrollPane2" pref="166" max="32767" attributes="1"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="btnNuevoMaterial" max="32767" attributes="1"/>
-                                  <Component id="btnEliminarMaterial" alignment="1" min="-2" max="-2" attributes="1"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="btnEliminarMaterial" max="32767" attributes="1"/>
+                                  <Component id="btnNuevoMaterial" alignment="0" max="32767" attributes="1"/>
                               </Group>
                           </Group>
                           <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -410,7 +412,7 @@
                               <Component id="btnNuevoMaterial" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnEliminarMaterial" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="113" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane2" pref="165" max="32767" attributes="0"/>
                       </Group>
@@ -421,7 +423,7 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btnEliminarMaterial">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Eliminar"/>
+                <Property name="text" type="java.lang.String" value="-"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarMaterialActionPerformed"/>
@@ -465,7 +467,7 @@
             </Container>
             <Component class="javax.swing.JButton" name="btnNuevoMaterial">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Nuevo"/>
+                <Property name="text" type="java.lang.String" value="+"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNuevoMaterialActionPerformed"/>
@@ -583,7 +585,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Etapas de produccion del producto">
+            <TitledBorder title="Etapas de producci&#xf3;n del producto">
               <Font PropertyName="font" name="Tahoma" size="11" style="1"/>
             </TitledBorder>
           </Border>

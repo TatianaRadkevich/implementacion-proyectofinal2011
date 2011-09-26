@@ -190,7 +190,7 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administrar Maquina/Herramienta");
 
-        pnlDisponible.setBorder(javax.swing.BorderFactory.createTitledBorder("Disponible"));
+        pnlDisponible.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Disponible", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jScrollPane2.setViewportView(lstDisponible);
 
@@ -255,7 +255,7 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
             pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDisponibleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -263,26 +263,30 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
         pnlDisponibleLayout.setVerticalGroup(
             pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDisponibleLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+                .addGroup(pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
-            .addGroup(pnlDisponibleLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(236, Short.MAX_VALUE))
         );
 
-        pnlCargo.setBorder(javax.swing.BorderFactory.createTitledBorder("Máquina/Herramienta"));
+        pnlCargo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Máquina/Herramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Nombre:");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Descripción:");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Tipo:");
 
         btgTipo.add(rdbHerramienta);
+        rdbHerramienta.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rdbHerramienta.setSelected(true);
         rdbHerramienta.setText("Herramienta");
 
         btgTipo.add(rdbMaquina);
+        rdbMaquina.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rdbMaquina.setText("Máquina");
 
         txtDescripcion.setLineWrap(true);
@@ -303,10 +307,12 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
             }
         });
 
-        pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder("Eliminación"));
+        pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Eliminación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Fecha:");
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("Motivo:");
 
         txtFechaBaja.setEditable(false);
@@ -450,8 +456,7 @@ public class PantallaMaquinaHerramientaTipoABM extends javax.swing.JDialog {
 
 
         try {
-            gestor.ejecutarCU(tipo);
-            Mensajes.mensajeGuardoCorrectamente();
+            gestor.ejecutarCU(tipo);            
             cargarLista();
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());

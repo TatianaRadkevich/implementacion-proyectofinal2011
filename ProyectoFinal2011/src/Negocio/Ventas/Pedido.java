@@ -57,7 +57,7 @@ public class Pedido implements java.io.Serializable {
     private Date fecHoraRealEntrega;
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_SOLICITADA")
-    private Date fecSolicitada;
+    private Date fecNecesidad;
     @Column(name = "PRIORIDAD")
     private byte prioridad;
     @Temporal(TemporalType.TIMESTAMP)
@@ -82,7 +82,7 @@ public class Pedido implements java.io.Serializable {
         this.fecHoraEstimadaEntrega = fecHoraEstimadaEntrega;
         this.fecHoraGeneracion = fecHoraGeneracion;
         this.fecHoraRealEntrega = fecHoraRealEntrega;
-        this.fecSolicitada = fecSolicitada;
+        this.fecNecesidad = fecSolicitada;
         this.prioridad = prioridad;
     }
 
@@ -95,7 +95,7 @@ public class Pedido implements java.io.Serializable {
         this.fecHoraEstimadaEntrega = fecHoraEstimadaEntrega;
         this.fecHoraGeneracion = fecHoraGeneracion;
         this.fecHoraRealEntrega = fecHoraRealEntrega;
-        this.fecSolicitada = fecSolicitada;
+        this.fecNecesidad = fecSolicitada;
         this.prioridad = prioridad;
         //this.TPlanesProduccions = TPlanesProduccions;
         this.TDetallesPedidos = TDetallesPedidos;
@@ -158,12 +158,12 @@ public class Pedido implements java.io.Serializable {
         this.fecHoraRealEntrega = fecha;
     }
 
-    public Date getFechaSolicitada() {
-        return this.fecSolicitada;
+    public Date getFechaNecesidad() {
+        return this.fecNecesidad;
     }
 
-    public void setFechaSolicitada(Date fecha) {
-        this.fecSolicitada = fecha;
+    public void setFechaNecesidad(Date fecha) {
+        this.fecNecesidad = fecha;
     }
 
     public byte getPrioridad() {

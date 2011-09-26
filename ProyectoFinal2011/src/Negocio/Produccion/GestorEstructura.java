@@ -27,12 +27,12 @@ public class GestorEstructura {
     protected PantallaEstructuraProductoABM interfaz;
     protected Producto producto;
     private boolean modificable = true;
-private boolean grabar = true;
+    private boolean grabar = true;
 
     public GestorEstructura() {
         interfaz = new PantallaEstructuraProductoABM(this);
         producto = null;
-        interfaz.setTitle("Registrar estructura");
+        interfaz.setTitle("Registrar Estructura de Producto");
     }
 
     public void iniciarCU() {
@@ -45,10 +45,10 @@ private boolean grabar = true;
         interfaz.habilitarSeleccionProducto(true);
         interfaz.setVisible(true);
         modificable = true;
-        grabar=true;
+        grabar = true;
     }
 
-    public void iniciarCU(Producto prod,boolean grabarBD) {
+    public void iniciarCU(Producto prod, boolean grabarBD) {
         if (producto != null) {
             if (producto.equals(prod)) {
                 return;
@@ -63,7 +63,7 @@ private boolean grabar = true;
         interfaz.habilitarCarga(false);
         interfaz.setVisible(true);
         modificable = false;
-        grabar=grabarBD;
+        grabar = grabarBD;
     }
 
     public void setProducto(Producto prod) {
@@ -83,7 +83,7 @@ private boolean grabar = true;
         interfaz.habilitarSeleccionProducto(true);
         interfaz.habilitarSelecionEtapa(true);
         interfaz.habilitarCarga(false);
-        
+
     }
 
     public void ejecutarCU(ArrayList<EtapaProduccionEspecifica> e) throws ExceptionGestor {
@@ -122,8 +122,15 @@ private boolean grabar = true;
         return EtapaProduccionBD.listarEtapaProduccionAlta();
     }
 
-    public List<TipoMaquinaHerramienta> listarMaquinaHerramienta() {
-        return TipoMaquinaHerramientaBD.listarTipoMaquinaHerramienta();
+    public List<TipoMaquinaHerramienta> listarMaquinas() {
+        List<TipoMaquinaHerramienta> salida = TipoMaquinaHerramientaBD.listarTipoMaquinaHerramienta();
+        for (int i = 0; i < salida.size(); i++) {
+            if (salida.get(i).isEsHerramienta()) {
+                salida.remove(i);
+                i--;
+            }
+        }
+        return salida;
     }
 
     public List<Material> listarMaterial() {
