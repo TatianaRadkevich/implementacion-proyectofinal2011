@@ -98,6 +98,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         habilitarCargaDetalle(false);
         cargarCombos();
         cargarValidaciones();
+        txtFechaEstimada.setText(Utilidades.parseFecha(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 20, 0, 0)));
         pnlInfo.setVisible(false);
         habilitarBaja(false, false, null, "");
     }
@@ -617,6 +618,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         if (tbDetalle.getSelectedRow() != -1) {
             tmDetalle.removeSelectedRow();
             limpiarDetalle();
+             txtFechaEstimada.setText(Utilidades.parseFecha(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 20+3*tmDetalle.getSize(), 0, 0)));
         }
 
     }//GEN-LAST:event_btnDetalleElminarActionPerformed
@@ -640,14 +642,18 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
                 if (Mensajes.mensajeConfirmacionGenerico(mensage)) {
                     dp.setCantidad(dp.getCantidad() + nuevoDetalle.getCantidad());
                     tmDetalle.updateTabla();
+                     limpiarDetalle();
+                    habilitarCargaDetalle(false);
                 }
                 return;
             }
         }
 
+        
         tmDetalle.add(nuevoDetalle);
         limpiarDetalle();
         habilitarCargaDetalle(false);
+         txtFechaEstimada.setText(Utilidades.parseFecha(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 20+3*tmDetalle.getSize(), 0, 0)));
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

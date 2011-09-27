@@ -8,11 +8,23 @@
  *
  * Created on 17/08/2011, 17:53:23
  */
-
 package Presentacion;
 
+import Negocio.Produccion.GestorEstructura;
+import Presentacion.Administracion.*;
+import Presentacion.Compras.PantallaMaterialConsultar;
+import Presentacion.Compras.PantallaProveedorConsultar;
 import Presentacion.Produccion.PantallaABMTipoProducto;
+import Presentacion.Produccion.PantallaConsultarPedido;
 import Presentacion.Produccion.PantallaConsultarProducto;
+import Presentacion.Produccion.PantallaMaquinaHerramientaConsultar;
+import Presentacion.Ventas.PantallaClienteConsultar;
+
+
+import Presentacion.Ventas.PantallaPedidoConsultar;
+import gui.GUILocal;
+import java.awt.Graphics;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -21,9 +33,24 @@ import Presentacion.Produccion.PantallaConsultarProducto;
 public class Principal extends javax.swing.JFrame {
 
     /** Creates new form Principal */
+    ImageIcon imagen;
     public Principal() {
-        initComponents();
+        
+ GUILocal.SyntheticaBlueIceLookAndFeel(this);
+initComponents();
+
     }
+
+
+    private void visible(boolean valor)
+    {
+         pnlProduccion.setVisible(valor);
+       pnlVentas.setVisible(valor);
+        pnlCompras.setVisible(valor);
+        pnlAdministracion.setVisible(valor);
+    }
+
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -34,82 +61,498 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        pnlFondo = new Presentacion.Fondo();
+        pnMenu = new javax.swing.JPanel();
+        btnAdministracion = new javax.swing.JButton();
+        btnCompras = new javax.swing.JButton();
+        btnProduccion = new javax.swing.JButton();
+        btnVenta = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+        pnlContenido = new Presentacion.Fondo("trans.png");
+        pnlAdministracion = new Presentacion.Fondo("trans.png");
+        txtAdm = new javax.swing.JTextField();
+        btnEmpleado = new javax.swing.JButton();
+        btnCargo = new javax.swing.JButton();
+        btnTipoDocumento = new javax.swing.JButton();
+        pnlCompras = new Presentacion.Fondo("trans.png");
+        txtComp = new javax.swing.JTextField();
+        btnProveedor = new javax.swing.JButton();
+        btnOrdenCompra = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        pnlProduccion = new Presentacion.Fondo("trans.png");
+        txtProd = new javax.swing.JTextField();
+        btnProducto = new javax.swing.JButton();
+        btnTipoProducto = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        pnlVentas = new Presentacion.Fondo("trans.png");
+        txtVentas = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        pnMenu.setLayout(new java.awt.GridLayout(1, 0));
 
-        jMenu2.setText("Produccción");
-
-        jMenuItem1.setText("Consultar producto");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        btnAdministracion.setText("Administracion");
+        btnAdministracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                btnAdministracionActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        pnMenu.add(btnAdministracion);
 
-        jMenuItem2.setText("Tipo producto");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        btnCompras.setText("Compras");
+        btnCompras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                btnComprasActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        pnMenu.add(btnCompras);
 
-        jMenuBar1.add(jMenu2);
+        btnProduccion.setText("Producción");
+        btnProduccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProduccionActionPerformed(evt);
+            }
+        });
+        pnMenu.add(btnProduccion);
 
-        setJMenuBar(jMenuBar1);
+        btnVenta.setText("Venta");
+        btnVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentaActionPerformed(evt);
+            }
+        });
+        pnMenu.add(btnVenta);
+
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        pnMenu.add(btnSalir);
+
+        pnlContenido.setLayout(new java.awt.CardLayout());
+
+        txtAdm.setEditable(false);
+        txtAdm.setText("Administracion");
+
+        btnEmpleado.setText("Empleado");
+        btnEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmpleadoActionPerformed(evt);
+            }
+        });
+
+        btnCargo.setText("Cargo");
+        btnCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargoActionPerformed(evt);
+            }
+        });
+
+        btnTipoDocumento.setText("Tipo documento");
+        btnTipoDocumento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTipoDocumentoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlAdministracionLayout = new javax.swing.GroupLayout(pnlAdministracion);
+        pnlAdministracion.setLayout(pnlAdministracionLayout);
+        pnlAdministracionLayout.setHorizontalGroup(
+            pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txtAdm, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
+            .addGroup(pnlAdministracionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnTipoDocumento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(583, Short.MAX_VALUE))
+        );
+        pnlAdministracionLayout.setVerticalGroup(
+            pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAdministracionLayout.createSequentialGroup()
+                .addComponent(txtAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(264, 264, 264))
+        );
+
+        pnlContenido.add(pnlAdministracion, "card2");
+
+        txtComp.setEditable(false);
+        txtComp.setText("Compras");
+
+        btnProveedor.setText("Proveedor");
+        btnProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProveedorActionPerformed(evt);
+            }
+        });
+
+        btnOrdenCompra.setText("Oeden Compra");
+        btnOrdenCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenCompraActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Material");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlComprasLayout = new javax.swing.GroupLayout(pnlCompras);
+        pnlCompras.setLayout(pnlComprasLayout);
+        pnlComprasLayout.setHorizontalGroup(
+            pnlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txtComp, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
+            .addGroup(pnlComprasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(539, 539, 539))
+            .addGroup(pnlComprasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(539, 539, 539))
+            .addGroup(pnlComprasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnOrdenCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(539, 539, 539))
+        );
+        pnlComprasLayout.setVerticalGroup(
+            pnlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlComprasLayout.createSequentialGroup()
+                .addComponent(txtComp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnOrdenCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(264, 264, 264))
+        );
+
+        pnlContenido.add(pnlCompras, "card3");
+
+        txtProd.setEditable(false);
+        txtProd.setText("Producción");
+
+        btnProducto.setText("Producto");
+        btnProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductoActionPerformed(evt);
+            }
+        });
+
+        btnTipoProducto.setText("Tipo producto");
+        btnTipoProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTipoProductoActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Maquina");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Estructura de producto");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Planificacion");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlProduccionLayout = new javax.swing.GroupLayout(pnlProduccion);
+        pnlProduccion.setLayout(pnlProduccionLayout);
+        pnlProduccionLayout.setHorizontalGroup(
+            pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txtProd, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
+            .addGroup(pnlProduccionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(583, Short.MAX_VALUE))
+            .addGroup(pnlProduccionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(583, Short.MAX_VALUE))
+        );
+        pnlProduccionLayout.setVerticalGroup(
+            pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlProduccionLayout.createSequentialGroup()
+                .addComponent(txtProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(140, 140, 140))
+        );
+
+        pnlContenido.add(pnlProduccion, "card4");
+
+        txtVentas.setEditable(false);
+        txtVentas.setText("Ventas");
+
+        jButton4.setText("Pedido");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Cliente");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlVentasLayout = new javax.swing.GroupLayout(pnlVentas);
+        pnlVentas.setLayout(pnlVentasLayout);
+        pnlVentasLayout.setHorizontalGroup(
+            pnlVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txtVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
+            .addGroup(pnlVentasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(539, 539, 539))
+            .addGroup(pnlVentasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(539, 539, 539))
+        );
+        pnlVentasLayout.setVerticalGroup(
+            pnlVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlVentasLayout.createSequentialGroup()
+                .addComponent(txtVentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(326, Short.MAX_VALUE))
+        );
+
+        pnlContenido.add(pnlVentas, "card5");
+
+        javax.swing.GroupLayout pnlFondoLayout = new javax.swing.GroupLayout(pnlFondo);
+        pnlFondo.setLayout(pnlFondoLayout);
+        pnlFondoLayout.setHorizontalGroup(
+            pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE)
+            .addGroup(pnlFondoLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(pnlContenido, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
+                .addGap(10, 10, 10))
+        );
+        pnlFondoLayout.setVerticalGroup(
+            pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFondoLayout.createSequentialGroup()
+                .addComponent(pnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(pnlContenido, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 641, Short.MAX_VALUE)
+            .addComponent(pnlFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 501, Short.MAX_VALUE)
+            .addComponent(pnlFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void btnProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProduccionActionPerformed
         // TODO add your handling code here:
-        PantallaConsultarProducto pantalla=new PantallaConsultarProducto(this, true);
-        pantalla.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+        visible(false);
+    pnlProduccion.setVisible(true);
+    }//GEN-LAST:event_btnProduccionActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
         // TODO add your handling code here:
-        PantallaABMTipoProducto pantalla=new PantallaABMTipoProducto(this, true);
+           visible(false);
+    pnlVentas.setVisible(true);
+    }//GEN-LAST:event_btnVentaActionPerformed
+
+    private void btnComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprasActionPerformed
+        // TODO add your handling code here:
+            visible(false);
+    pnlCompras.setVisible(true);
+    }//GEN-LAST:event_btnComprasActionPerformed
+
+    private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
+        // TODO add your handling code here:
+        visible(false);        
+    pnlAdministracion.setVisible(true);;
+    }//GEN-LAST:event_btnAdministracionActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        if(Mensajes.mensajeConfirmacionGenerico("¿Realmente desea salir?"))
+            System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadoActionPerformed
+        // TODO add your handling code here:
+        PantallaConsultarEmpleado empleado=new PantallaConsultarEmpleado(this, true);
+        empleado.setVisible(true);
+}//GEN-LAST:event_btnEmpleadoActionPerformed
+
+    private void btnCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargoActionPerformed
+        // TODO add your handling code here:
+        PantallaABMCargo cargo=new PantallaABMCargo(this, true);
+        cargo.setVisible(true);
+}//GEN-LAST:event_btnCargoActionPerformed
+
+    private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
+        // TODO add your handling code here:
+        PantallaConsultarProducto producto=new PantallaConsultarProducto(this, true);
+        producto.setVisible(true);
+}//GEN-LAST:event_btnProductoActionPerformed
+
+    private void btnTipoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoProductoActionPerformed
+        // TODO add your handling code here:
+        PantallaABMTipoProducto tipo=new PantallaABMTipoProducto(this, true);
+        tipo.setVisible(true);
+}//GEN-LAST:event_btnTipoProductoActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        PantallaMaquinaHerramientaConsultar pantalla=new PantallaMaquinaHerramientaConsultar(this, true);
         pantalla.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+}//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new GestorEstructura().iniciarCU();
+}//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        PantallaConsultarPedido pantalla=new PantallaConsultarPedido(this, true);
+        pantalla.setVisible(true);
+}//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
+        // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                PantallaProveedorConsultar dialog = new PantallaProveedorConsultar(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_btnProveedorActionPerformed
+
+    private void btnOrdenCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenCompraActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnOrdenCompraActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        PantallaMaterialConsultar pantalla=new PantallaMaterialConsultar(this, true);
+        pantalla.setVisible(true);
+}//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnTipoDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoDocumentoActionPerformed
+        // TODO add your handling code here:
+        PantallaABMTipoDocumento documento= new PantallaABMTipoDocumento(this, true);
+        documento.setVisible(true);
+}//GEN-LAST:event_btnTipoDocumentoActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        new PantallaPedidoConsultar(this,true).setVisible(true);
+}//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+
+        new PantallaClienteConsultar(this, true).setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new Principal().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JButton btnAdministracion;
+    private javax.swing.JButton btnCargo;
+    private javax.swing.JButton btnCompras;
+    private javax.swing.JButton btnEmpleado;
+    private javax.swing.JButton btnOrdenCompra;
+    private javax.swing.JButton btnProduccion;
+    private javax.swing.JButton btnProducto;
+    private javax.swing.JButton btnProveedor;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnTipoDocumento;
+    private javax.swing.JButton btnTipoProducto;
+    private javax.swing.JButton btnVenta;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JPanel pnMenu;
+    private Presentacion.Fondo pnlAdministracion;
+    private Presentacion.Fondo pnlCompras;
+    private Presentacion.Fondo pnlContenido;
+    private Presentacion.Fondo pnlFondo;
+    private Presentacion.Fondo pnlProduccion;
+    private Presentacion.Fondo pnlVentas;
+    private javax.swing.JTextField txtAdm;
+    private javax.swing.JTextField txtComp;
+    private javax.swing.JTextField txtProd;
+    private javax.swing.JTextField txtVentas;
     // End of variables declaration//GEN-END:variables
-
 }
