@@ -51,7 +51,7 @@ public abstract class GestorPedido {
          return ProductoBD.listarProductos(tp);
      }
 
-    public List getPrioridades()
+    public static List getPrioridades()
     {
         ArrayList salida=new ArrayList();
         salida.add("Muy Alta");

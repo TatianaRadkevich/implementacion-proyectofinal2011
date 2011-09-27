@@ -67,7 +67,7 @@ public class PedidoBD
     }
 
         public static List<Pedido> getPedidos(
-            String RazonSocial,TipoPedido tp,boolean vigentes,boolean cancelados){
+            String RazonSocial,TipoPedido tp,int prioridad,boolean vigentes,boolean cancelados){
 
         if(vigentes==false&&cancelados==false)
             return new ArrayList<Pedido>(0);
@@ -77,6 +77,7 @@ public class PedidoBD
         String HQL=String.format(
                 "FROM Pedido as p "
                 + "WHERE LOWER(p.TClientes.razonSocial) like  LOWER('%s%%') "
+                + ((0<=prioridad && prioridad<=3)?"AND p.prioridad = "+ prioridad:"")
                 + ((tp==null)?"":"AND p.TTpedido.idTpedido = "+ tp.getIdTipoPedido())
                 ,RazonSocial);
 

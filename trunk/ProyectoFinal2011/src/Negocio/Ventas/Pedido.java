@@ -174,13 +174,19 @@ public class Pedido implements java.io.Serializable {
         this.prioridad = prioridad;
     }
 
-    public List<PlanProduccion> getPlanesProduccion() {
-        return new ArrayList<PlanProduccion>(this.TPlanesProduccions);
+    public PlanProduccion getPlanProduccion() {
+        if (this.TPlanesProduccions.isEmpty()) {
+            return null;
+        } else {
+            return this.TPlanesProduccions.iterator().next();
+        }
     }
 
-//    public void setPlanesProduccion(Set<PlanProduccion> planes) {
-//        this.TPlanesProduccions = planes;
-//    }
+    public void setPlanProduccion(PlanProduccion planes) {
+        this.TPlanesProduccions.clear();
+        this.TPlanesProduccions.add(planes);
+    }
+
     public List<DetallePedido> getDetallePedido() {
         return new ArrayList<DetallePedido>(TDetallesPedidos);
     }
