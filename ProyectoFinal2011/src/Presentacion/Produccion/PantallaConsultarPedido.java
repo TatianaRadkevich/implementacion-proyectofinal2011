@@ -12,6 +12,7 @@ package Presentacion.Produccion;
 
 import BaseDeDatos.Ventas.PedidoBD;
 import BaseDeDatos.Ventas.TipoPedidoBD;
+import Negocio.Ventas.GestorPedido;
 import Negocio.Ventas.Pedido;
 import Negocio.Ventas.TipoPedido;
 import Presentacion.Mensajes;
@@ -41,6 +42,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
                 cabcera.add("Nro pedido");
                 cabcera.add("Cliente");
+                cabcera.add("Prioridad");
                 cabcera.add("Tipo pedido");
                 cabcera.add("Fecha generación");
                 cabcera.add("Fecha necesidad");
@@ -56,6 +58,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
                 fila.add(elemento.getIdPedido());
                 fila.add(elemento.getCliente().getRazonSocial());
+                fila.add(GestorPedido.getPrioridades().get(elemento.getPrioridad()));
                 fila.add(elemento.getTipoPedido().getNombre());
                 fila.add(Utilidades.parseFechaHora(elemento.getFechaGeneracion()));
                 fila.add(Utilidades.parseFechaHora(elemento.getFechaNecesidad()));
@@ -65,6 +68,12 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
         };
         cmbTipoPedido.setModel(new DefaultComboBoxModel(TipoPedidoBD.getTipoPedidos().toArray()));
         cmbTipoPedido.insertItemAt("TODOS", 0);
+        cmbTipoPedido.setSelectedIndex(0);
+
+        cmbPrioridad.setModel(new DefaultComboBoxModel(GestorPedido.getPrioridades().toArray()));
+        cmbPrioridad.addItem("TODOS");
+        cmbPrioridad.setSelectedIndex(cmbPrioridad.getItemCount()-1);
+
         ValidarTexbox.validarLongitud(txtRazonSocial, 50);
     }
 
@@ -87,6 +96,8 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        cmbPrioridad = new javax.swing.JComboBox();
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -159,6 +170,9 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel3.setText("Prioridad:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -173,8 +187,13 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                     .addComponent(cmbTipoPedido, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(btnBuscar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbPrioridad, 0, 119, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +201,9 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(cmbPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -205,13 +226,13 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnPlanificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnPlanificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -282,6 +303,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                 PedidoBD.getPedidos(
                 txtRazonSocial.getText(), 
                 (cmbTipoPedido.getSelectedIndex()==0)?null:(TipoPedido) cmbTipoPedido.getSelectedItem(),
+                cmbPrioridad.getSelectedIndex(),
                 true,
                 false));
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -313,9 +335,11 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnPlanificar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox cmbPrioridad;
     private javax.swing.JComboBox cmbTipoPedido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;

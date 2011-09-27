@@ -70,7 +70,8 @@ public class PlanProduccion implements java.io.Serializable {
     }
 
     public PlanProduccion(Pedido TPedidos) {
-        this.TPedidos=TPedidos;
+        this.TPedidos = TPedidos;
+        TPedidos.setPlanProduccion(this);
     }
 
     public PlanProduccion(int idPlanProduccion, Empleado TEmpleados, Pedido TPedidos, Date fecGeneracion, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealFin, Date fecHoraRealInicio) {
@@ -120,8 +121,7 @@ public class PlanProduccion implements java.io.Serializable {
 
     public void setPedido(Pedido TPedidos) {
         this.TPedidos = TPedidos;
-        TPedidos.getPlanesProduccion().clear();
-        TPedidos.getPlanesProduccion().add(this);
+        TPedidos.setPlanProduccion(this);
     }
 
     public Date getFecGeneracion() {
@@ -208,15 +208,15 @@ public class PlanProduccion implements java.io.Serializable {
 
     }
 
-   public void addDetallePlan(DetallePlanProduccion detalle)
-    {
+    public void addDetallePlan(DetallePlanProduccion detalle) {
+        detalle.setTPlanesProduccion(this);
         this.TDetallesPlans.add(detalle);
 
-   }
+    }
 
-     public void removeDetallePlan(DetallePlanProduccion detalle)
-    {
+    public void removeDetallePlan(DetallePlanProduccion detalle) {
+        detalle.setTPlanesProduccion(null);
         this.TDetallesPlans.remove(detalle);
 
-   }
+    }
 }

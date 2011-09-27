@@ -35,7 +35,7 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CARGO")//, nullable = false)
     private Cargo TCargos;
-    @Column(name = "DURACION",  precision = 5)
+    @Column(name = "DURACION", precision = 5)
     private Integer duracion;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_ETAPA_PRODUCCION")//, nullable = false)
@@ -45,9 +45,9 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
     private Producto TProductos;
     @Column(name = "DESCRIPCION_ESPECIFICA", length = 200)//, nullable = false
     private String descripcionEspecifica;
-    @Column(name = "HORAS_HOMBRE",  precision = 6)//nullable = false,
+    @Column(name = "HORAS_HOMBRE", precision = 6)//nullable = false,
     private BigDecimal horasHombre;
-    @Column(name = "NUMERO_ORDEN",  precision = 2, scale = 0)//nullable = false,
+    @Column(name = "NUMERO_ORDEN", precision = 2, scale = 0)//nullable = false,
     private Byte numeroOrden;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEtapasProduccionEspecifica")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
@@ -157,12 +157,10 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
         }
     }
 
-
-
     public void addDetalleEtapaProduccion(DetalleEtapaProduccion detalle) {
 
-            detalle.setEtapaProduccionEspecifica(this);
-            TDetallesEtapas.add(detalle);
+        detalle.setEtapaProduccionEspecifica(this);
+        TDetallesEtapas.add(detalle);
 
     }
 
@@ -170,10 +168,15 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
         return new ArrayList<DetallePlanProduccion>(this.TDetallesPlans);
     }
 
-    public void addDetallePlanProduccion(DetallePlanProduccion detalle)
-    {
-        if(TDetallesPlans.contains(detalle)==false)
+    public void addDetallePlanProduccion(DetallePlanProduccion detalle) {
+        if (TDetallesPlans.contains(detalle) == false) {
             TDetallesPlans.add(detalle);
+        }
+    }
+
+    public void removeDetallePlanProduccion(DetallePlanProduccion detalle) {
+        detalle.setTEtapasProduccionEspecifica(null);
+        TDetallesPlans.remove(detalle);
     }
 
     public void setDetallePlanProduccion(List<DetallePlanProduccion> detalle) {
@@ -183,18 +186,16 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
         }
     }
 
-
     @Override
     public boolean equals(Object obj) {
         try {
-            if (((EtapaProduccionEspecifica) obj).getId()==this.getId())
-            return true;
+            if (((EtapaProduccionEspecifica) obj).getId() == this.getId()) {
+                return true;
+            }
         } catch (Exception e) {
         }
         return false;
     }
-
-
     //@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEtapasProduccionEspecifica")
 //    public Set<TipoMaquinaHerramienta> getTTmaquinaHerramientas() {
 //        return this.TTmaquinaHerramientas;
