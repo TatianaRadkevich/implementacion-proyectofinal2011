@@ -23,31 +23,31 @@ public class Fondo extends javax.swing.JPanel {
     private ImageIcon imagen;
 
     /** Creates new form Fondo */
-    public Fondo() {
-        imagen = new ImageIcon(getClass().getResource("/Presentacion/Imagenes/fff.png"));
+    public Fondo() {        
         initComponents();
+        this.setOpaque(false);
     }
 
-    public Fondo(String nombre) {
+    public Fondo(String nombre) {        
+        this();
         imagen = new ImageIcon(getClass().getResource("/Presentacion/Imagenes/" + nombre));
-        initComponents();
     }
 
     public void setImagen(String nombre) {
         imagen = new ImageIcon(getClass().getResource("/Presentacion/Imagenes/" + nombre));
+        this.updateUI();
     }
 
-    @Override
-    public void paint(Graphics g) {
-        
-        if (imagen != null) {
-            g.drawImage(imagen.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
-            setOpaque(false);
-        }
 
-        super.paintComponents(g);
+     @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
+        if (imagen != null)
+            g.drawImage(imagen.getImage(),0,0, getWidth(), getHeight(), this);
     }
+
+  
 
     /** This method is called from within the constructor to
      * initialize the form.
