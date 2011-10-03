@@ -26,7 +26,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="pnlBaja" alignment="1" pref="420" max="32767" attributes="2"/>
+                  <Component id="pnlBaja" alignment="1" max="32767" attributes="2"/>
                   <Component id="jPanel3" alignment="1" max="32767" attributes="3"/>
                   <Component id="jPanel1" alignment="0" max="32767" attributes="3"/>
               </Group>
@@ -37,7 +37,7 @@
                           <Component id="jPanel2" min="0" pref="494" max="32767" attributes="3"/>
                           <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="3"/>
                       </Group>
-                      <EmptySpace pref="17" max="32767" attributes="0"/>
+                      <EmptySpace pref="20" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="btnAceptar" min="-2" pref="79" max="-2" attributes="0"/>
@@ -107,7 +107,7 @@
                       <Component id="cmbSexo" min="-2" pref="122" max="-2" attributes="0"/>
                       <Component id="dtcFechaNacimiento" alignment="0" max="32767" attributes="1"/>
                   </Group>
-                  <EmptySpace pref="106" max="32767" attributes="0"/>
+                  <EmptySpace pref="113" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

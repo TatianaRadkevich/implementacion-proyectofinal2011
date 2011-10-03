@@ -617,19 +617,19 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 gestor.ejecutarOperacion(empleado);
                //---------------------------
                  List<Cargo> cargos=this.lstCargos.getSelectedItems();
-            if(gestor instanceof GestorRegistrarEmpleado){
-                EmpleadosXCargo temp;
-              
-
-                for(int i=0; i<cargos.size();i++){
-                    temp= new EmpleadosXCargo();
-                    temp.setTCargos(cargos.get(i));
-                    temp.setTEmpleados(empleado);
-
-                    TEmpleadosXCargoBD.guardar(temp);
-                }
-
-            }
+//            if(gestor instanceof GestorRegistrarEmpleado){
+//                EmpleadosXCargo temp;
+//
+//
+//                for(int i=0; i<cargos.size();i++){
+//                    temp= new EmpleadosXCargo();
+//                    temp.setTCargos(cargos.get(i));
+//                    temp.setTEmpleados(empleado);
+//
+//                    TEmpleadosXCargoBD.guardar(temp);
+//                }
+//
+//            }
                  //-----------------------------------
                 Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido()+", "+empleado.getNombre()));
                 this.vaciar();
@@ -948,17 +948,17 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
       
     }
 
-    private void activarProducto(boolean flag){
-        
-    }
-
-    private void activarBaja(boolean flag){
-        
-    }
-
-    private void activarBotones(boolean aceptar,boolean cancelar){
-      
-    }
+//    private void activarProducto(boolean flag){
+//
+//    }
+//
+//    private void activarBaja(boolean flag){
+//
+//    }
+//
+//    private void activarBotones(boolean aceptar,boolean cancelar){
+//
+//    }
 
     private void cargarComboPais(){
         List<Pais> pais=this.gestor.listarPais();
