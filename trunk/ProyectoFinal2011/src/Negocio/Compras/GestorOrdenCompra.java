@@ -49,4 +49,8 @@ public abstract class GestorOrdenCompra {
     public List<Faltante> getFaltantes() {
        return HibernateUtil.ejecutarConsulta("FROM Faltante");
     }
+
+    public List<Material> listarMateriales() {
+        return HibernateUtil.ejecutarConsulta("FROM Material ORDER BY nombre");
+    }
 }

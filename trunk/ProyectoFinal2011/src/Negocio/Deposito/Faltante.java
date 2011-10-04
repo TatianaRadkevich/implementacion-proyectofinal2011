@@ -5,6 +5,7 @@ import Negocio.Produccion.DetallePlanProduccion;
 import Negocio.Compras.DetalleOrdenCompra;
 import Negocio.Compras.Material;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,20 +50,20 @@ public class Faltante implements java.io.Serializable {
     public Faltante() {
     }
 
-    public Faltante(short idFaltante, Material TMateriales, BigDecimal cantidad, Date fecGeneracion, Date fecNecesidad) {
+    public Faltante(short idFaltante, Material TMateriales, Integer cantidad, Date fecGeneracion, Date fecNecesidad) {
         this.idFaltante = idFaltante;
         this.TMateriales = TMateriales;
-        this.cantidad = cantidad;
+        this.cantidad =  BigDecimal.valueOf(cantidad);
         this.fecGeneracion = fecGeneracion;
         this.fecNecesidad = fecNecesidad;
     }
 
-    public Faltante(short idFaltante, DetallePlanProduccion TDetallesPlan, DetalleOrdenCompra TDetallesOrdenCompra, Material TMateriales, BigDecimal cantidad, Date fecGeneracion, Date fecNecesidad) {
+    public Faltante(short idFaltante, DetallePlanProduccion TDetallesPlan, DetalleOrdenCompra TDetallesOrdenCompra, Material TMateriales, Integer cantidad, Date fecGeneracion, Date fecNecesidad) {
         this.idFaltante = idFaltante;
         this.TDetallesPlan = TDetallesPlan;
         this.TDetallesOrdenCompra = TDetallesOrdenCompra;
         this.TMateriales = TMateriales;
-        this.cantidad = cantidad;
+        this.cantidad =  BigDecimal.valueOf(cantidad);
         this.fecGeneracion = fecGeneracion;
         this.fecNecesidad = fecNecesidad;
     }
@@ -99,12 +100,12 @@ public class Faltante implements java.io.Serializable {
         this.TMateriales = TMateriales;
     }
 
-    public BigDecimal getCantidad() {
-        return this.cantidad;
+    public Integer getCantidad() {
+        return this.cantidad.intValueExact();
     }
 
-    public void setCantidad(BigDecimal cantidad) {
-        this.cantidad = cantidad;
+    public void setCantidad(Integer cantidad) {
+        this.cantidad =  BigDecimal.valueOf(cantidad);
     }
 
     public Date getFecGeneracion() {

@@ -34,7 +34,7 @@ public class DetalleEtapaProduccion implements java.io.Serializable {
     @JoinColumn(name = "ID_MATERIAL")//, nullable = false)
     private Material TMateriales;
     @Column(name = "CANTIDAD_NECESARIA", precision = 6)//, nullable = false
-    private BigDecimal cantidadNecesaria;
+    private Integer cantidadNecesaria;
     @Column(name = "CANTIDAD_REPETICIONES", precision = 6)//, nullable = false
     private BigDecimal cantidadRepeticiones;
     @Column(name = "HORAS_MAQUINA", precision = 6)// nullable = false,
@@ -79,11 +79,11 @@ public class DetalleEtapaProduccion implements java.io.Serializable {
         this.TMateriales = material;
     }
 
-    public BigDecimal getCantidadNecesaria() {
+    public Integer getCantidadNecesaria() {
         return this.cantidadNecesaria;
     }
 
-    public void setCantidadNecesaria(BigDecimal cantidadNecesaria) {
+    public void setCantidadNecesaria(Integer cantidadNecesaria) {
         this.cantidadNecesaria = cantidadNecesaria;
     }
 

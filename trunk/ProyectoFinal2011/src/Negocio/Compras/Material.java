@@ -6,6 +6,7 @@ import Negocio.Produccion.DetalleEtapaProduccion;
 import Negocio.Compras.DetalleOrdenCompra;
 import Negocio.Produccion.DetalleProducto;
 import Negocio.Produccion.UnidadMedida;
+import Presentacion.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,8 +38,8 @@ public class Material implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_MATERIAL", unique = true, nullable = false, precision = 3, scale = 0)
     private Short idMaterial;
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_UNIDAD_MEDIDA")//, nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_UNIDAD_MEDIDA")//, nullable=false)
     private UnidadMedida TUnidadesMedida;
     @Column(name = "NOMBRE", nullable = false, length = 50)
     private String nombre;
@@ -66,13 +67,12 @@ public class Material implements java.io.Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<MaterialesXProveedor> TMaterialesXProveedors = new HashSet<MaterialesXProveedor>(0);
-
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
 //    private Set<DetalleProducto> TDetallesProductos = new HashSet<DetalleProducto>(0);
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
 //    private Set<DetalleEtapaProduccion> TDetallesEtapas = new HashSet<DetalleEtapaProduccion>(0);
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
-//    private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
+    private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
 //    private Set<DetalleOrdenCompra> TDetallesOrdenCompras = new HashSet<DetalleOrdenCompra>(0);
 
@@ -185,14 +185,13 @@ public class Material implements java.io.Serializable {
         this.stockMinimo = stockMinimo;
     }
 
-    public Short getStockReservado() {
-        return this.stockReservado;
-    }
-
-    public void setStockReservado(Short stockReservado) {
-        this.stockReservado = stockReservado;
-    }
-
+//    public Short getStockReservado() {
+//        return this.stockReservado;
+//    }
+//
+//    public void setStockReservado(Short stockReservado) {
+//        this.stockReservado = stockReservado;
+//    }
     public String getCodigo() {
         return this.codigo;
     }
@@ -202,19 +201,19 @@ public class Material implements java.io.Serializable {
     }
 
     public List<Proveedor> getProveedores() {
-        ArrayList<Proveedor> salida=new ArrayList<Proveedor>(TMaterialesXProveedors.size());
-        for(MaterialesXProveedor mxp:this.TMaterialesXProveedors)
+        ArrayList<Proveedor> salida = new ArrayList<Proveedor>(TMaterialesXProveedors.size());
+        for (MaterialesXProveedor mxp : this.TMaterialesXProveedors) {
             salida.add(mxp.getProveedor());
+        }
         return salida;
     }
 
     public void setProveedores(List<Proveedor> proveedores) {
         TMaterialesXProveedors.clear();
-        for(Proveedor p:proveedores)
-            TMaterialesXProveedors.add(new MaterialesXProveedor(p,this));
+        for (Proveedor p : proveedores) {
+            TMaterialesXProveedors.add(new MaterialesXProveedor(p, this));
+        }
     }
-
-
 
     public UnidadMedida getTUnidadesMedida() {
         return this.TUnidadesMedida;
@@ -229,19 +228,76 @@ public class Material implements java.io.Serializable {
         return this.getNombre();
     }
 
-     public List<MaterialesXProveedor> getMaterialXProveedor()
-    {
+    public List<MaterialesXProveedor> getMaterialXProveedor() {
         return new ArrayList<MaterialesXProveedor>(this.TMaterialesXProveedors);
     }
 
-    public Float getPrecio(Proveedor pro)
-    {
-        for(MaterialesXProveedor mp:this.TMaterialesXProveedors)
-            if(mp.getProveedor().equals(pro))
+    public Float getPrecio(Proveedor pro) {
+        for (MaterialesXProveedor mp : this.TMaterialesXProveedors) {
+            if (mp.getProveedor().equals(pro)) {
                 return mp.getPrecio();
+            }
+        }
         return null;
     }
 
+    public Integer getCantidadFaltante() {
 
+        Integer cantReq = getCantidadRequerida();        
+        Integer faltantes=0;
+        
+        if(cantReq>=getStockActual())
+        {
+            faltantes=cantReq-getStockActual();
+            faltantes+=getStockMinimo();
+        }
+        else
+        {
+            if((getStockActual()-cantReq)<getStockMinimo())
+                faltantes+=getStockMinimo()-(getStockActual()-cantReq);            
+        }
+        
+        return faltantes;
+        
+      
+    }
+    
+       public Integer getCantidadRequerida() {
 
+        Integer faltantes = 0;
+
+        for (Faltante f : this.getFaltantes()) {
+            if (f.getFecNecesidad().compareTo(Utilidades.getFechaActual()) >= 0) {
+                faltantes += f.getCantidad();
+            }
+        }        
+
+        return faltantes;
+    }
+
+    public Integer getStockReservado() {
+        Integer cantReq = getCantidadRequerida();
+        
+        if(cantReq>=getStockActual())
+            return getStockActual().intValue();
+        else
+            return cantReq;
+
+    }
+
+    public Integer getStockDisponible() {
+        return this.getStockActual() - getStockReservado();
+    }
+
+    public List<Faltante> getFaltantes() {
+        return new ArrayList<Faltante>(TFaltanteses);
+    }
+
+//    public void setFaltantes(List<Faltante> faltantes) {
+//        TFaltanteses.clear();
+//        for (Faltante f : faltantes) {
+//            f.setMaterial(this);
+//            this.TFaltanteses.add(f);
+//        }
+//    }
 }
