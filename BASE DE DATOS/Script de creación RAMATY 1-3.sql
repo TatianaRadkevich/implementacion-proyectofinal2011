@@ -187,7 +187,8 @@ CREATE TABLE T_DETALLES_ORDEN_COMPRA (
        CANTIDAD_RECIBIDA    numeric(3) NOT NULL,
        ID_ORDEN_COMPRA      numeric(8) NOT NULL,
        ID_MATERIAL          numeric(3) NULL,
-       ID_EDETALLE_ORDEN_COMPRA numeric(2) NOT NULL
+       ID_EDETALLE_ORDEN_COMPRA numeric(2) NOT NULL,
+       PRECIO_UNITARIO      numeric(6,2) NOT NULL
 )
 go
 
@@ -252,9 +253,9 @@ go
 CREATE TABLE T_DIAS_HORA_LABORABLE (
        ID_DIA_HORA_LABORABLE numeric(4) IDENTITY,
        DIA                  varchar(20) NOT NULL,
-       HORA_INICIO          varchar(20) NOT NULL,
-       HORA_FIN             varchar(20) NULL,
-       ID_EMPLEADO          numeric(5) NOT NULL
+       HORA_FIN             datetime NULL,
+       ID_EMPLEADO          numeric(5) NOT NULL,
+       HORA_INICIO          datetime NOT NULL
 )
 go
 
