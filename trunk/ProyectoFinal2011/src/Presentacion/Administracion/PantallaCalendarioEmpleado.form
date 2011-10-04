@@ -157,11 +157,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txtCantidad1" min="-2" pref="46" max="-2" attributes="1"/>
+                      <Component id="txtHoraIngreso" min="-2" pref="46" max="-2" attributes="1"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtCantidad" min="-2" pref="46" max="-2" attributes="1"/>
+                      <Component id="txtHoraEgreso" min="-2" pref="46" max="-2" attributes="1"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnAceptarDias" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -178,10 +178,10 @@
                           <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbDias" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtCantidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtHoraEgreso" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnCancelarDias" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnAceptarDias" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtCantidad1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtHoraIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -230,7 +230,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarDiasActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtCantidad">
+            <Component class="javax.swing.JTextField" name="txtHoraEgreso">
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbDias">
               <Properties>
@@ -239,7 +239,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtCantidad1">
+            <Component class="javax.swing.JTextField" name="txtHoraIngreso">
             </Component>
           </SubComponents>
         </Container>

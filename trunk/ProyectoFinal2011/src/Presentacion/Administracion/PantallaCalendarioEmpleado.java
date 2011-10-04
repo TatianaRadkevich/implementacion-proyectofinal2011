@@ -11,16 +11,53 @@
 
 package Presentacion.Administracion;
 
+import Negocio.Administracion.DiaHoraLaborable;
+import Negocio.Administracion.Empleado;
+import Presentacion.TablaManager;
+import Presentacion.Utilidades;
+import java.sql.Time;
+import java.util.Date;
+import java.util.Vector;
+
 /**
  *
  * @author Ivan
  */
 public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
 
+    private Empleado empleado;
+    private TablaManager<DiaHoraLaborable> tmDetalle;
+
     /** Creates new form PantallaCalendarioEmpleado */
     public PantallaCalendarioEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+         //Seteo de variables//
+        tmDetalle = new TablaManager<DiaHoraLaborable>(tbDetalle) {
+
+            @Override
+            public Vector ObjetoFila(DiaHoraLaborable elemento) {
+                Vector fila = new Vector();
+                fila.add(cmbDias.getSelectedItem());
+                fila.add(elemento.getHoraInicio());
+                fila.add(elemento.getHoraFin());
+
+
+
+                return fila;
+            }
+
+            @Override
+            public Vector getCabecera() {
+                Vector cabecera = new Vector();
+                cabecera.add("Dia");
+                cabecera.add("Hora ingreso");
+                cabecera.add("Hora egreso");
+               
+                return cabecera;
+            }
+        };
     }
 
     /** This method is called from within the constructor to
@@ -43,9 +80,9 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
         jLabel12 = new javax.swing.JLabel();
         btnAceptarDias = new javax.swing.JButton();
         btnCancelarDias = new javax.swing.JButton();
-        txtCantidad = new javax.swing.JTextField();
+        txtHoraEgreso = new javax.swing.JTextField();
         cmbDias = new javax.swing.JComboBox();
-        txtCantidad1 = new javax.swing.JTextField();
+        txtHoraIngreso = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -112,11 +149,11 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
-                .addComponent(txtCantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtHoraIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtHoraEgreso, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAceptarDias)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -131,10 +168,10 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
                     .addComponent(jLabel10)
                     .addComponent(cmbDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHoraEgreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelarDias)
                     .addComponent(btnAceptarDias)
-                    .addComponent(txtCantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHoraIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -258,7 +295,8 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
     private void btnDetalleAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleAgregarActionPerformed
         // TODO add your handling code here:
 
-     
+        limpiarDetalle();
+        habilitarCargaDetalle(true);
 
     }//GEN-LAST:event_btnDetalleAgregarActionPerformed
 
@@ -269,6 +307,9 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
 
     private void btnAceptarDiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarDiasActionPerformed
         // TODO add your handling code here:
+          DiaHoraLaborable nuevoDetalle = new DiaHoraLaborable();
+
+       
 
 }//GEN-LAST:event_btnAceptarDiasActionPerformed
 
@@ -325,8 +366,19 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
     private javax.swing.JPanel pnlDetalleCarga;
     private javax.swing.JTable tbDetalle;
     private javax.swing.JTextField txtApellidoNombre;
-    private javax.swing.JTextField txtCantidad;
-    private javax.swing.JTextField txtCantidad1;
+    private javax.swing.JTextField txtHoraEgreso;
+    private javax.swing.JTextField txtHoraIngreso;
     // End of variables declaration//GEN-END:variables
 
+
+      public void limpiarDetalle() {
+        cmbDias.setSelectedIndex(-1);
+        txtHoraEgreso.setText("");
+        txtHoraIngreso.setText("");
+    }
+
+      public void habilitarCargaDetalle(boolean valor) {
+        Utilidades.habilitarPanel(pnlDetalle,!valor);
+        Utilidades.habilitarPanel(pnlDetalleCarga, valor);
+    }
 }
