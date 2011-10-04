@@ -28,5 +28,12 @@ public class Dia {
     public Dia() {
     }
 
+    @Override
+    public String toString() {
+        return this.getDia();
+    }
+
+
+
     
 }

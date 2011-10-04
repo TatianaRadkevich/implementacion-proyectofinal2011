@@ -11,12 +11,15 @@
 
 package Presentacion.Administracion;
 
+import Negocio.Administracion.Dia;
 import Negocio.Administracion.DiaHoraLaborable;
 import Negocio.Administracion.Empleado;
+import Negocio.Administracion.GestorDiaHoraLaborable;
+import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
-import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -27,6 +30,7 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
 
     private Empleado empleado;
     private TablaManager<DiaHoraLaborable> tmDetalle;
+    private GestorDiaHoraLaborable gestor=new GestorDiaHoraLaborable();
 
     /** Creates new form PantallaCalendarioEmpleado */
     public PantallaCalendarioEmpleado(java.awt.Frame parent, boolean modal) {
@@ -57,7 +61,11 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
                
                 return cabecera;
             }
+
+
         };
+
+        this.cargarComboDia();
     }
 
     /** This method is called from within the constructor to
@@ -282,7 +290,7 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
@@ -309,6 +317,15 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
         // TODO add your handling code here:
           DiaHoraLaborable nuevoDetalle = new DiaHoraLaborable();
 
+        nuevoDetalle.setDia(((Dia)cmbDias.getSelectedItem()).getDia());
+        nuevoDetalle.setHoraInicio(null);
+        nuevoDetalle.setHoraFin(null);
+
+
+        tmDetalle.add(nuevoDetalle);
+        tmDetalle.updateTabla();
+
+
        
 
 }//GEN-LAST:event_btnAceptarDiasActionPerformed
@@ -326,7 +343,9 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-     
+      if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea salir?")) {
+            this.dispose();
+        }
 }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
@@ -381,4 +400,14 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
         Utilidades.habilitarPanel(pnlDetalle,!valor);
         Utilidades.habilitarPanel(pnlDetalleCarga, valor);
     }
+
+      public void cargarComboDia(){
+             cmbDias.removeAllItems();
+
+            List<Dia> tipo = this.gestor.getDias();
+            for(int i=0;i<tipo.size();i++){
+                cmbDias.addItem(tipo.get(i));
+            }
+        cmbDias.repaint();
+      }
 }
