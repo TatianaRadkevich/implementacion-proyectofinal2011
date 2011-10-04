@@ -9,6 +9,6 @@ package Negocio.Administracion;
  *
  * @author Ivan
  */
-public class GestorRegistrarDiaHoraLaborable {
+public class GestorDiaHoraLaborable {
 
 }
