@@ -109,7 +109,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             public Vector ObjetoFila(DetalleEtapaProduccion elemento) {
                 Vector fila = new Vector();
                 fila.add(elemento.getMaterial());
-                fila.add((elemento.getCantidadNecesaria() == null) ? "" : elemento.getCantidadNecesaria().intValueExact());
+                fila.add((elemento.getCantidadNecesaria() == null) ? "" : elemento.getCantidadNecesaria());
                 return fila;
             }
 
@@ -133,7 +133,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                     tmMateriales.getDato(row).setMaterial((Material) value);
                 }
                 if (column == 1) {
-                    tmMateriales.getDato(row).setCantidadNecesaria(new BigDecimal(value.toString()));
+                    tmMateriales.getDato(row).setCantidadNecesaria(new Integer(value.toString()));
                 }
             }
         };

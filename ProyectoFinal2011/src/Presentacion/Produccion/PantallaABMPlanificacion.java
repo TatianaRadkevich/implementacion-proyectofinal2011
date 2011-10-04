@@ -768,7 +768,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         det.setObservaciones(txtObservaciones.getText());
         det.setTEmpleados((Empleado) cmbOperario.getSelectedItem());
         det.setTMaquinasHerramientaParticular((MaquinaHerramientaParticular) cmbMaquina.getSelectedItem());
-
+        det.setCantidad(tmDetallePedido.getSeletedObject().getCantidad());
         if (modificarDetPlan == false) {
             det.setTEtapasProduccionEspecifica(tmEstructura.removeSelectedRow());
             insertDetallePlan(det);
@@ -794,8 +794,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 //        plan.setPedido(pedido);
 //        plan.setEmpleado((Empleado) cmbResponsable.getSelectedItem());
 //        plan.setFecHoraPrevistaInicio(fhInicioPlan.getDate());
+        plan.generarFaltantes();
         HibernateUtil.guardarObjeto(plan);
-
 
         Mensajes.mensajeInformacion("Se ha generado el plan correctamente");
         this.dispose();

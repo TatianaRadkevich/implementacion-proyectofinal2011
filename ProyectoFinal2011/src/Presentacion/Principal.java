@@ -13,6 +13,7 @@ package Presentacion;
 import Negocio.Produccion.GestorEstructura;
 import Presentacion.Administracion.*;
 import Presentacion.Compras.PantallaMaterialConsultar;
+import Presentacion.Compras.PantallaOrdenCompraConsultar;
 import Presentacion.Compras.PantallaProveedorConsultar;
 import Presentacion.Produccion.PantallaABMTipoProducto;
 import Presentacion.Produccion.PantallaConsultarPedido;
@@ -494,6 +495,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnOrdenCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenCompraActionPerformed
         // TODO add your handling code here:
+        new PantallaOrdenCompraConsultar(new javax.swing.JFrame(), true).setVisible(true);
+
     }//GEN-LAST:event_btnOrdenCompraActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

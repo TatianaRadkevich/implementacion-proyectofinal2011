@@ -216,7 +216,16 @@ public class PlanProduccion implements java.io.Serializable {
 
     public void removeDetallePlan(DetallePlanProduccion detalle) {
         detalle.setTPlanesProduccion(null);
+        detalle.getTFaltanteses().clear();
         this.TDetallesPlans.remove(detalle);
 
     }
+
+    public void generarFaltantes()
+    {
+        for(DetallePlanProduccion dpp: this.TDetallesPlans)
+            dpp.generarFaltantes();
+
+    }
+
 }

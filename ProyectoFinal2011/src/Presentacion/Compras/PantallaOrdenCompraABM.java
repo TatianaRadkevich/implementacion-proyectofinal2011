@@ -17,6 +17,7 @@ import Negocio.Compras.GestorOrdenCompraAlta;
 import Negocio.Compras.Material;
 import Negocio.Compras.OrdenCompra;
 import Negocio.Compras.Proveedor;
+import Negocio.Deposito.Faltante;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
@@ -40,6 +41,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
     /** Creates new form PantallaOrdenCompraABM */
     private GestorOrdenCompra gestor;
     private TablaManager<DetalleOrdenCompra> tmOrdenCompra;
+    private TablaManager<Material> tmStock;
 
     private PantallaOrdenCompraABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -48,12 +50,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
     public PantallaOrdenCompraABM(GestorOrdenCompra gestor) {
         this(null, true);
-        this.gestor = gestor;
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
+        this.gestor = gestor;      
 
         //Seteo de variables//-      
         txtCodigo.setText((gestor.getCodigo() + 1) + "");
@@ -62,10 +59,41 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         IniciarTablas();
         cargarCombos();
         cargarValidaciones();
+        tmStock.setDatos(gestor.listarMateriales());
     }
 
     private void IniciarTablas() {
 
+        tmStock=new TablaManager<Material>(tbStock) {
+
+            @Override
+            public Vector ObjetoFila(Material elemento) {
+
+                    Vector salida=new Vector();
+                    salida.add(elemento.getNombre());
+                    salida.add(elemento.getStockActual());
+                    salida.add(elemento.getStockReservado());
+                    salida.add(elemento.getStockDisponible());
+                    salida.add(elemento.getStockMinimo());
+                    salida.add(elemento.getCantidadFaltante());
+                    return salida;
+            }
+
+            @Override
+            public Vector getCabecera() {
+                Vector salida=new Vector();
+                salida.add("Material");
+                salida.add("Stock Actual");
+                salida.add("Stock Reservado");
+                salida.add("Stock Disponible");
+                salida.add("Stock Minimo");
+                salida.add("Stock Faltante");
+
+                return salida;
+            }
+        };
+
+        ////////////////// Detalle orden compra ///////////////////////////
 
         tmOrdenCompra = new TablaManager<DetalleOrdenCompra>(tbDetalle) {
 
@@ -209,6 +237,10 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         btnDetalleCancelar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         cmbProveedor = new javax.swing.JComboBox();
+        pnlFaltantes = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbStock = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
 
@@ -317,11 +349,11 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                     .addGroup(pnlDetalleLayout.createSequentialGroup()
                         .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlDetalleLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 515, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 682, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnNuevoDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -340,7 +372,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminarDetalle))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetalleLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -350,13 +382,55 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
         jLabel3.setText("Proveedores:");
 
+        pnlFaltantes.setBorder(javax.swing.BorderFactory.createTitledBorder("Faltantes"));
+
+        tbStock.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Material", "Stock Actual", "Stock Reservado", "Stock Disponible", "Stock Minimo", "Stock Faltante"
+            }
+        ));
+        jScrollPane1.setViewportView(tbStock);
+
+        jButton1.setText("agregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlFaltantesLayout = new javax.swing.GroupLayout(pnlFaltantes);
+        pnlFaltantes.setLayout(pnlFaltantesLayout);
+        pnlFaltantesLayout.setHorizontalGroup(
+            pnlFaltantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFaltantesLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 825, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+        pnlFaltantesLayout.setVerticalGroup(
+            pnlFaltantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+            .addGroup(pnlFaltantesLayout.createSequentialGroup()
+                .addComponent(jButton1)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout pnlCompraLayout = new javax.swing.GroupLayout(pnlCompra);
         pnlCompra.setLayout(pnlCompraLayout);
         pnlCompraLayout.setHorizontalGroup(
             pnlCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCompraLayout.createSequentialGroup()
                 .addGroup(pnlCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlCompraLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnlFaltantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlCompraLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlCompraLayout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(jLabel1)
@@ -366,7 +440,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 305, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -382,8 +456,10 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
-                .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(pnlFaltantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -484,6 +560,15 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         habilitarCargaDetalle(false);
     }//GEN-LAST:event_btnDetalleAceptarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(tmStock.getSeletedObject()!= null)
+        {
+        Material mat=tmStock.getSeletedObject();
+        tmOrdenCompra.add(new DetalleOrdenCompra(mat, mat.getCantidadFaltante().shortValue()));
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -504,17 +589,21 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
     private javax.swing.JButton btnNuevoDetalle;
     private javax.swing.JComboBox cmbMaterial;
     private javax.swing.JComboBox cmbProveedor;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pnlCompra;
     private javax.swing.JPanel pnlDetalle;
     private javax.swing.JPanel pnlDetalleABM;
+    private javax.swing.JPanel pnlFaltantes;
     private javax.swing.JTable tbDetalle;
+    private javax.swing.JTable tbStock;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtFecha;
