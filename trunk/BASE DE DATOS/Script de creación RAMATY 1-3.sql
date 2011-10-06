@@ -17,6 +17,35 @@ ALTER TABLE T_ALMACENAMIENTOS_PRODUCTO_TERMINADO
 go
 
 
+CREATE TABLE T_ASIGNACIONES_DIAS (
+       ID_ASIGNACION_DIA    numeric(2) IDENTITY,
+       HORA_DESDE           datetime NOT NULL,
+       HORA_HASTA           datetime NULL,
+       ID_HORARIO           numeric(2) NOT NULL,
+       ID_DIA               numeric(2) NOT NULL
+)
+go
+
+
+ALTER TABLE T_ASIGNACIONES_DIAS
+       ADD PRIMARY KEY (ID_ASIGNACION_DIA ASC)
+go
+
+
+CREATE TABLE T_ASIGNACIONES_HORARIO (
+       ID_ASIGNACION_HORARIO numeric(4) IDENTITY,
+       FEC_HASTA            datetime NULL,
+       FEC_DESDE            datetime NOT NULL,
+       ID_HORARIO           numeric(2) NOT NULL
+)
+go
+
+
+ALTER TABLE T_ASIGNACIONES_HORARIO
+       ADD PRIMARY KEY (ID_ASIGNACION_HORARIO ASC)
+go
+
+
 CREATE TABLE T_ASISTENCIAS_EMPLEADO (
        ID_ASISTENCIA_EMPLEADO numeric(4) IDENTITY,
        FEC_ASISTENCIA       datetime NOT NULL,
@@ -250,18 +279,15 @@ ALTER TABLE T_DETALLES_PRODUCTO
 go
 
 
-CREATE TABLE T_DIAS_HORA_LABORABLE (
-       ID_DIA_HORA_LABORABLE numeric(4) IDENTITY,
-       DIA                  varchar(20) NOT NULL,
-       HORA_FIN             datetime NULL,
-       ID_EMPLEADO          numeric(5) NOT NULL,
-       HORA_INICIO          datetime NOT NULL
+CREATE TABLE T_DIAS (
+       ID_DIA               numeric(2) IDENTITY,
+       NOMBRE               varchar(20) NOT NULL
 )
 go
 
 
-ALTER TABLE T_DIAS_HORA_LABORABLE
-       ADD PRIMARY KEY (ID_DIA_HORA_LABORABLE ASC)
+ALTER TABLE T_DIAS
+       ADD PRIMARY KEY (ID_DIA ASC)
 go
 
 
@@ -380,7 +406,8 @@ CREATE TABLE T_EMPLEADOS (
        ID_USUARIO           numeric(5) NOT NULL,
        FEC_BAJA             datetime NULL,
        MOTIVO_BAJA          varchar(100) NULL,
-       ID_ESTADO_EMPLEADO   numeric(2) NOT NULL
+       ID_ESTADO_EMPLEADO   numeric(2) NOT NULL,
+       ID_ASIGNACION_HORARIO numeric(4) NOT NULL
 )
 go
 
@@ -557,6 +584,19 @@ go
 
 ALTER TABLE T_FORMAS_PAGO
        ADD PRIMARY KEY (ID_FORMA_PAGO ASC)
+go
+
+
+CREATE TABLE T_HORARIOS (
+       ID_HORARIO           numeric(2) IDENTITY,
+       NOMBRE               nvarchar(50) NOT NULL,
+       DESCRIPCION          varchar(200) NULL
+)
+go
+
+
+ALTER TABLE T_HORARIOS
+       ADD PRIMARY KEY (ID_HORARIO ASC)
 go
 
 
@@ -945,6 +985,30 @@ ALTER TABLE T_ALMACENAMIENTOS_PRODUCTO_TERMINADO
 go
 
 
+ALTER TABLE T_ASIGNACIONES_DIAS
+       ADD FOREIGN KEY (ID_DIA)
+                             REFERENCES T_DIAS  (ID_DIA)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_ASIGNACIONES_DIAS
+       ADD FOREIGN KEY (ID_HORARIO)
+                             REFERENCES T_HORARIOS  (ID_HORARIO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_ASIGNACIONES_HORARIO
+       ADD FOREIGN KEY (ID_HORARIO)
+                             REFERENCES T_HORARIOS  (ID_HORARIO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
 ALTER TABLE T_ASISTENCIAS_EMPLEADO
        ADD FOREIGN KEY (ID_EMPLEADO)
                              REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
@@ -1204,14 +1268,6 @@ ALTER TABLE T_DETALLES_PRODUCTO
 go
 
 
-ALTER TABLE T_DIAS_HORA_LABORABLE
-       ADD FOREIGN KEY (ID_EMPLEADO)
-                             REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
 ALTER TABLE T_DOMICILIOS
        ADD FOREIGN KEY (ID_LOCALIDAD)
                              REFERENCES T_LOCALIDADES  (ID_LOCALIDAD)
@@ -1247,6 +1303,15 @@ go
 ALTER TABLE T_EGRESOS
        ADD FOREIGN KEY (ID_RESPONSABLE_DEPOSITO)
                              REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_EMPLEADOS
+       ADD FOREIGN KEY (ID_ASIGNACION_HORARIO)
+                             REFERENCES T_ASIGNACIONES_HORARIO  (
+              ID_ASIGNACION_HORARIO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go

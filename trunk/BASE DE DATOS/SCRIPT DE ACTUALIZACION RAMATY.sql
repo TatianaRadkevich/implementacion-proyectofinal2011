@@ -560,3 +560,105 @@ ALTER TABLE T_DIAS_HORA_LABORABLE ALTER COLUMN HORA_FIN DATETIME NULL;
 GO
 ALTER TABLE T_DIAS_HORA_LABORABLE ALTER COLUMN HORA_INICIO DATETIME NOT NULL;
 GO
+
+/* Cambios realizados por observaciones hachas por Mairen*/
+
+DROP TABLE T_DIAS_HORA_LABORABLE;
+GO
+
+
+CREATE TABLE T_HORARIOS (
+       ID_HORARIO           numeric(2) IDENTITY,
+       NOMBRE               nvarchar(50) NOT NULL,
+       DESCRIPCION          varchar(200) NULL
+)
+GO
+
+
+ALTER TABLE T_HORARIOS
+       ADD PRIMARY KEY (ID_HORARIO ASC)
+GO
+
+CREATE TABLE T_ASIGNACIONES_HORARIO (
+       ID_ASIGNACION_HORARIO numeric(4) IDENTITY,
+       FEC_HASTA            datetime NULL,
+       FEC_DESDE            datetime NOT NULL,
+       ID_HORARIO           numeric(2) NOT NULL
+)
+GO
+
+ALTER TABLE T_ASIGNACIONES_HORARIO
+       ADD PRIMARY KEY (ID_ASIGNACION_HORARIO ASC)
+       
+GO
+ALTER TABLE T_ASIGNACIONES_HORARIO
+       ADD FOREIGN KEY (ID_HORARIO)
+                             REFERENCES T_HORARIOS  (ID_HORARIO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+GO                             
+ALTER TABLE T_EMPLEADOS ADD ID_ASIGNACION_HORARIO NUMERIC(4) NOT NULL;
+GO     
+ALTER TABLE T_EMPLEADOS
+       ADD FOREIGN KEY (ID_ASIGNACION_HORARIO)
+                             REFERENCES T_ASIGNACIONES_HORARIO  (
+              ID_ASIGNACION_HORARIO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+GO
+
+CREATE TABLE T_DIAS (
+       ID_DIA               numeric(2) IDENTITY,
+       NOMBRE               varchar(20) NOT NULL
+)
+GO
+
+
+ALTER TABLE T_DIAS
+       ADD PRIMARY KEY (ID_DIA ASC)
+
+
+
+ALTER TABLE T_ASIGNACIONES_DIAS
+       ADD FOREIGN KEY (ID_HORARIO)
+                             REFERENCES T_HORARIOS  (ID_HORARIO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+GO       
+
+
+CREATE TABLE T_ASIGNACIONES_DIAS (
+       ID_ASIGNACION_DIA    numeric(2) IDENTITY,
+       HORA_DESDE           datetime NOT NULL,
+       HORA_HASTA           datetime NULL,
+       ID_HORARIO           numeric(2) NOT NULL,
+       ID_DIA               numeric(2) NOT NULL
+)
+
+GO
+
+ALTER TABLE T_ASIGNACIONES_DIAS
+       ADD PRIMARY KEY (ID_ASIGNACION_DIA ASC)
+GO
+
+ALTER TABLE T_ASIGNACIONES_DIAS
+       ADD FOREIGN KEY (ID_DIA)
+                             REFERENCES T_DIAS  (ID_DIA)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+GO
+
+
+ALTER TABLE T_ASIGNACIONES_DIAS
+       ADD FOREIGN KEY (ID_DIA)
+                             REFERENCES T_DIAS  (ID_DIA)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+GO
+
+ALTER TABLE T_ASIGNACIONES_DIAS
+       ADD FOREIGN KEY (ID_HORARIO)
+                             REFERENCES T_HORARIOS  (ID_HORARIO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION                           
+GO                             
