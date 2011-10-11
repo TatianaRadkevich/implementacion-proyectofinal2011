@@ -661,4 +661,11 @@ ALTER TABLE T_ASIGNACIONES_DIAS
                              REFERENCES T_HORARIOS  (ID_HORARIO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION                           
-GO                             
+GO 
+
+/*Cambios solicitados por Heber - 11/10/2011*/                            
+
+ALTER TABLE T_PROBLEMAS_MHP ADD FEC_HORA_ESTIMADA_SOLUCION DATETIME NULL;
+GO
+ALTER TABLE T_PROBLEMAS_MHP ADD FEC_HORA_REAL_SOLUCION DATETIME NULL;
+GO
