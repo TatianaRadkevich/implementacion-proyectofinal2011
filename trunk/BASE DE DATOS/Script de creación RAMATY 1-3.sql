@@ -45,6 +45,20 @@ ALTER TABLE T_ASIGNACIONES_HORARIO
 go
 
 
+CREATE TABLE T_ASIGNACIONES_PERMISO (
+       ID_ASIGNACION_PERMISO numeric(2) IDENTITY,
+       FEC_HORA_ASIGNACION  datetime NOT NULL,
+       ID_CLIENTE_WEB       numeric(5) NOT NULL,
+       ID_PERMISO           numeric(2) NOT NULL
+)
+go
+
+
+ALTER TABLE T_ASIGNACIONES_PERMISO
+       ADD PRIMARY KEY (ID_ASIGNACION_PERMISO ASC)
+go
+
+
 CREATE TABLE T_ASISTENCIAS_EMPLEADO (
        ID_ASISTENCIA_EMPLEADO numeric(4) IDENTITY,
        FEC_ASISTENCIA       datetime NOT NULL,
@@ -134,7 +148,9 @@ go
 CREATE TABLE T_CLIENTES_WEB (
        ID_CLIENTE_WEB       numeric(5) IDENTITY,
        USUARIO              varchar(20) NOT NULL,
-       CONTRASENIA          varchar(20) NOT NULL
+       CONTRASENIA          varchar(20) NOT NULL,
+       FEC_BAJA             datetime NOT NULL,
+       MOTIVO_BAJA          varchar(100) NULL
 )
 go
 
@@ -152,7 +168,8 @@ CREATE TABLE T_COBROS (
        OBSERVACIONES        varchar(200) NULL,
        ID_FORMA_PAGO        numeric(2) NOT NULL,
        ID_CHEQUE            numeric(5) NULL,
-       ID_FACTURA           numeric(8) NOT NULL
+       ID_FACTURA           numeric(8) NOT NULL,
+       ID_TCOBRO            numeric(2) NOT NULL
 )
 go
 
@@ -254,7 +271,9 @@ CREATE TABLE T_DETALLES_PLAN (
        ID_PLAN_PRODUCCION   numeric(8) NOT NULL,
        CANTIDAD_PRODUCIDA   numeric(5) NULL,
        ID_EDETALLE_PLAN     numeric(2) NOT NULL,
-       OBSERVACIONES        varchar(200) NULL
+       OBSERVACIONES        varchar(200) NULL,
+       MOTIVO_CANCELACION   200 NULL,
+       FEC_HORA_CANCELACION datetime NULL
 )
 go
 
@@ -358,6 +377,18 @@ go
 
 ALTER TABLE T_EDETALLE_PLAN
        ADD PRIMARY KEY (ID_EDETALLE_PLAN ASC)
+go
+
+
+CREATE TABLE T_EFACTURA (
+       ID_EFACTURA          numeric(2) IDENTITY,
+       NOMBRE               varchar(50) NOT NULL
+)
+go
+
+
+ALTER TABLE T_EFACTURA
+       ADD PRIMARY KEY (ID_EFACTURA ASC)
 go
 
 
@@ -546,7 +577,8 @@ CREATE TABLE T_FACTURAS (
        FEC_FACTURA          datetime NOT NULL,
        NUMERO               numeric(8) NOT NULL,
        RECARGO              numeric(6,4) NULL,
-       ID_EMPLEADO          numeric(5) NOT NULL
+       ID_EMPLEADO          numeric(5) NOT NULL,
+       ID_EFACTURA          numeric(2) NOT NULL
 )
 go
 
@@ -742,13 +774,27 @@ CREATE TABLE T_PEDIDOS (
        ID_CLIENTE           numeric(5) NOT NULL,
        FEC_BAJA             datetime NULL,
        MOTIVO_BAJA          varchar(100) NULL,
-       ID_EMPLEADO          numeric(5) NOT NULL
+       ID_EMPLEADO          numeric(5) NOT NULL,
+       ID_FACTURA           numeric(8) NULL
 )
 go
 
 
 ALTER TABLE T_PEDIDOS
        ADD PRIMARY KEY (ID_PEDIDO ASC)
+go
+
+
+CREATE TABLE T_PERMISOS (
+       ID_PERMISO           numeric(2) IDENTITY,
+       NOMBRE               varchar(50) NOT NULL,
+       DESCRIPCION          varchar(200) NULL
+)
+go
+
+
+ALTER TABLE T_PERMISOS
+       ADD PRIMARY KEY (ID_PERMISO ASC)
 go
 
 
@@ -763,7 +809,9 @@ CREATE TABLE T_PLANES_PRODUCCION (
        OBSERVACIONES        varchar(200) NULL,
        ID_PEDIDO            numeric(8) NOT NULL,
        FEC_ULTIMA_MODIFICACION datetime NULL,
-       ID_EPLAN_PRODUCCION  numeric(2) NOT NULL
+       ID_EPLAN_PRODUCCION  numeric(2) NOT NULL,
+       MOTIVO_CANCELACION   varchar(200) NULL,
+       FEC_HORA_CANCELACION datetime NULL
 )
 go
 
@@ -858,6 +906,20 @@ ALTER TABLE T_RECLAMOS
 go
 
 
+CREATE TABLE T_REVOCACIONES_PERMISO (
+       ID_REVOCACION_PERMISO numeric(2) IDENTITY,
+       FEC_HORA_REVOCACION  datetime NOT NULL,
+       ID_CLIENTE_WEB       numeric(5) NOT NULL,
+       ID_PERMISO           numeric(2) NOT NULL
+)
+go
+
+
+ALTER TABLE T_REVOCACIONES_PERMISO
+       ADD PRIMARY KEY (ID_REVOCACION_PERMISO ASC)
+go
+
+
 CREATE TABLE T_SEXOS (
        ID_SEXO              numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
@@ -881,6 +943,18 @@ go
 
 ALTER TABLE T_TCLIENTE
        ADD PRIMARY KEY (ID_TCLIENTE ASC)
+go
+
+
+CREATE TABLE T_TCOBRO (
+       ID_TCOBRO            numeric(2) IDENTITY,
+       NOMBRE               varchar(20) NOT NULL
+)
+go
+
+
+ALTER TABLE T_TCOBRO
+       ADD PRIMARY KEY (ID_TCOBRO ASC)
 go
 
 
@@ -1010,6 +1084,23 @@ ALTER TABLE T_ASIGNACIONES_HORARIO
 go
 
 
+ALTER TABLE T_ASIGNACIONES_PERMISO
+       ADD FOREIGN KEY (ID_PERMISO)
+                             REFERENCES T_PERMISOS  (ID_PERMISO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_ASIGNACIONES_PERMISO
+       ADD FOREIGN KEY (ID_CLIENTE_WEB)
+                             REFERENCES T_CLIENTES_WEB  (
+              ID_CLIENTE_WEB)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
 ALTER TABLE T_ASISTENCIAS_EMPLEADO
        ADD FOREIGN KEY (ID_EMPLEADO)
                              REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
@@ -1062,6 +1153,14 @@ go
 ALTER TABLE T_CLIENTES
        ADD FOREIGN KEY (ID_TCLIENTE)
                              REFERENCES T_TCLIENTE  (ID_TCLIENTE)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_COBROS
+       ADD FOREIGN KEY (ID_TCOBRO)
+                             REFERENCES T_TCOBRO  (ID_TCOBRO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
@@ -1401,6 +1500,14 @@ go
 
 
 ALTER TABLE T_FACTURAS
+       ADD FOREIGN KEY (ID_EFACTURA)
+                             REFERENCES T_EFACTURA  (ID_EFACTURA)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_FACTURAS
        ADD FOREIGN KEY (ID_EMPLEADO)
                              REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
                              ON DELETE NO ACTION
@@ -1546,6 +1653,14 @@ go
 
 
 ALTER TABLE T_PEDIDOS
+       ADD FOREIGN KEY (ID_FACTURA)
+                             REFERENCES T_FACTURAS  (ID_FACTURA)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_PEDIDOS
        ADD FOREIGN KEY (ID_EMPLEADO)
                              REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
                              ON DELETE NO ACTION
@@ -1656,6 +1771,23 @@ go
 ALTER TABLE T_RECLAMOS
        ADD FOREIGN KEY (ID_ERECLAMO)
                              REFERENCES T_ERECLAMO  (ID_ERECLAMO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_REVOCACIONES_PERMISO
+       ADD FOREIGN KEY (ID_PERMISO)
+                             REFERENCES T_PERMISOS  (ID_PERMISO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_REVOCACIONES_PERMISO
+       ADD FOREIGN KEY (ID_CLIENTE_WEB)
+                             REFERENCES T_CLIENTES_WEB  (
+              ID_CLIENTE_WEB)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
