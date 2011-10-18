@@ -187,6 +187,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 Vector fila = new Vector();
                 fila.add(elemento.getMaterial());
                 fila.add((elemento.getCantidadNecesaria() == null) ? "" : elemento.getCantidadNecesaria());
+                fila.add((elemento.getMaterial() == null) ? "" : elemento.getMaterial().getUnidadMedida());
                 return fila;
             }
 
@@ -195,11 +196,14 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 Vector cabecera = new Vector();
                 cabecera.add("Material");
                 cabecera.add("Cantidad");
+                cabecera.add("Unidad");
                 return cabecera;
             }
 
             @Override
             public boolean isCellEditable(int columna) {
+                if(columna==2)
+                    return false;
                 return true;
             }
 
@@ -273,8 +277,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 cmbProducto.setSelectedIndex(-1);
 
             }
-        });
-        cmbTipoProducto.setSelectedIndex(0);
+        });        
         cmbHerramienta.setModel(new DefaultComboBoxModel(gestor.listarTipoHerramientas().toArray()));
     }
 

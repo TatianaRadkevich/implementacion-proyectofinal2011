@@ -156,6 +156,10 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
             TDetallesEtapas.add(dt);
         }
     }
+    
+    public void limpiarDetalleEtapaProduccion() {       
+        this.TDetallesEtapas.clear();
+    }
 
     public void addDetalleEtapaProduccion(DetalleEtapaProduccion detalle) {
 
