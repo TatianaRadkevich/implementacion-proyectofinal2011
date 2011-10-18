@@ -61,7 +61,7 @@ public class Material implements java.io.Serializable {
     @Column(name = "STOCK_MINIMO", nullable = false, precision = 3, scale = 0)
     private Short stockMinimo;
     @Column(name = "STOCK_RESERVADO", nullable = false, precision = 3, scale = 0)
-    private Short stockReservado;
+    private Short stockReservado=new Short("0");
     @Column(name = "CODIGO", nullable = false, length = 2)
     private String codigo;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
@@ -215,12 +215,12 @@ public class Material implements java.io.Serializable {
         }
     }
 
-    public UnidadMedida getTUnidadesMedida() {
+    public UnidadMedida getUnidadMedida() {
         return this.TUnidadesMedida;
     }
 
-    public void setTUnidadesMedida(UnidadMedida TUnidadesMedida) {
-        this.TUnidadesMedida = TUnidadesMedida;
+    public void setUnidadMedida(UnidadMedida unidad) {
+        this.TUnidadesMedida = unidad;
     }
 
     @Override

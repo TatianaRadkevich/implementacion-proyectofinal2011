@@ -37,7 +37,7 @@ public class Proveedor implements java.io.Serializable {
     private Domicilio TDomicilios;
     @Column(name = "RAZON_SOCIAL", nullable = true, length = 50)
     private String razonSocial;
-    @Column(name = "NOMBRE", nullable = true, length = 100)
+    @Column(name = "NOMBRE_RESPONSABLE", nullable = true, length = 100)
     private String nombreResponsable;
     @Column(name = "PAGINA_WEB", length = 50)
     private String paginaWeb;
@@ -45,7 +45,7 @@ public class Proveedor implements java.io.Serializable {
     private String telefono;
     @Column(name = "CORREO_ELECTRONICO", length = 50)
     private String correoElectronico;
-    @Column(name = "APELLIDO")//, nullable = false, length = 100)
+    @Column(name = "APELLIDO_RESPONSABLE")//, nullable = false, length = 100)
     private String apellidoResponsable;
     @Column(name = "CUIT", length = 20)
     private String cuit;

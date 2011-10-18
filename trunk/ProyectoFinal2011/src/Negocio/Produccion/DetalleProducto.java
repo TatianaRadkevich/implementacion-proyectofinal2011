@@ -84,7 +84,7 @@ public class DetalleProducto  implements java.io.Serializable {
     }
 
     public String InfoLongitud(){
-        return this.getLongitud() + " "+this.getTMateriales().getTUnidadesMedida().getNombre();
+        return this.getLongitud() + " "+this.getTMateriales().getUnidadMedida().getNombre();
 
     }
 

@@ -122,10 +122,21 @@ public class GestorEstructura {
         return EtapaProduccionBD.listarEtapaProduccionAlta();
     }
 
-    public List<TipoMaquinaHerramienta> listarMaquinas() {
+    public List<TipoMaquinaHerramienta> listarTipoMaquinas() {
         List<TipoMaquinaHerramienta> salida = TipoMaquinaHerramientaBD.listarTipoMaquinaHerramienta();
         for (int i = 0; i < salida.size(); i++) {
             if (salida.get(i).isEsHerramienta()) {
+                salida.remove(i);
+                i--;
+            }
+        }
+        return salida;
+    }
+    
+      public List<TipoMaquinaHerramienta> listarTipoHerramientas() {
+        List<TipoMaquinaHerramienta> salida = TipoMaquinaHerramientaBD.listarTipoMaquinaHerramienta();
+        for (int i = 0; i < salida.size(); i++) {
+            if (salida.get(i).isEsHerramienta()==false) {
                 salida.remove(i);
                 i--;
             }

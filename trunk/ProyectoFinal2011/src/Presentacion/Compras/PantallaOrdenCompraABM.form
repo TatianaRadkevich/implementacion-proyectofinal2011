@@ -70,7 +70,7 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="pnlFaltantes" max="32767" attributes="0"/>
+                          <Component id="pnlStock" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
@@ -85,7 +85,7 @@
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="cmbProveedor" min="-2" pref="165" max="-2" attributes="0"/>
-                          <EmptySpace pref="288" max="32767" attributes="0"/>
+                          <EmptySpace pref="258" max="32767" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtFecha" min="-2" pref="128" max="-2" attributes="0"/>
@@ -107,7 +107,7 @@
                       <Component id="cmbProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="pnlFaltantes" max="32767" attributes="0"/>
+                  <Component id="pnlStock" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="pnlDetalle" min="-2" max="-2" attributes="1"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -123,6 +123,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="11" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Fecha generacion:"/>
           </Properties>
         </Component>
@@ -133,6 +136,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="11" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Nro Orden:"/>
           </Properties>
         </Component>
@@ -156,12 +162,12 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <EmptySpace pref="693" max="32767" attributes="0"/>
+                                      <EmptySpace pref="676" max="32767" attributes="0"/>
                                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="txtTotal" min="-2" pref="101" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jScrollPane2" pref="826" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane2" pref="813" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -257,6 +263,9 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="11" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Total:"/>
               </Properties>
             </Component>
@@ -286,7 +295,9 @@
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtCantidad" min="-2" pref="45" max="-2" attributes="0"/>
-                          <EmptySpace pref="50" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblUnidad" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="57" max="32767" attributes="0"/>
                           <Component id="btnDetalleAceptar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnDetalleCancelar" min="-2" max="-2" attributes="0"/>
@@ -305,6 +316,7 @@
                               <Component id="txtCantidad" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnDetalleAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnDetalleCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblUnidad" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -321,6 +333,9 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel5">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="11" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Materiales:"/>
                   </Properties>
                 </Component>
@@ -328,6 +343,9 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel6">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="11" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Cantidad:"/>
                   </Properties>
                 </Component>
@@ -347,12 +365,23 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDetalleCancelarActionPerformed"/>
                   </Events>
                 </Component>
+                <Component class="javax.swing.JLabel" name="lblUnidad">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="11" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value=" "/>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="11" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Proveedores:"/>
           </Properties>
         </Component>
@@ -363,11 +392,13 @@
             </Property>
           </Properties>
         </Component>
-        <Container class="javax.swing.JPanel" name="pnlFaltantes">
+        <Container class="javax.swing.JPanel" name="pnlStock">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Faltantes"/>
+                <TitledBorder title="Stock">
+                  <Font PropertyName="font" name="Tahoma" size="11" style="1"/>
+                </TitledBorder>
               </Border>
             </Property>
           </Properties>
@@ -375,19 +406,20 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jScrollPane1" min="-2" pref="825" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jScrollPane1" pref="823" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="23" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" alignment="1" pref="110" max="32767" attributes="1"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" pref="178" max="32767" attributes="1"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

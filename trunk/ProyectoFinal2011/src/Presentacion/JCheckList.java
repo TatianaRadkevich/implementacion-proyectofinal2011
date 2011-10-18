@@ -120,11 +120,15 @@ public class JCheckList<E> extends javax.swing.JPanel {
 
                 if(lista.isEnabled()==false)
                     return;
+                
+               
 
                 JList list = (JList) event.getSource();
 
                 // Get index of item clicked
                 int index = list.locationToIndex(event.getPoint());
+                if(index<0)
+                    return;
                 CheckListItem item = (CheckListItem) list.getModel().getElementAt(index);
 
                 // Toggle selected state
@@ -132,6 +136,7 @@ public class JCheckList<E> extends javax.swing.JPanel {
 
                 // Repaint cell
                 list.repaint(list.getCellBounds(index, index));
+               
             }
         });
 
