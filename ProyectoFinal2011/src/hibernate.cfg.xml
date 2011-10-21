@@ -3,10 +3,9 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-
     <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=Ramaty</property>
-    <property name="hibernate.connection.username">sa</property>
-    <property name="hibernate.connection.password">123</property>
+    <property name="hibernate.connection.username">proyecto</property>
+    <property name="hibernate.connection.password">33437838</property>
 
     <mapping class="Negocio.Administracion.AsistenciaEmpleado"/>
     <mapping class="Negocio.Administracion.Cargo"/>
@@ -20,6 +19,11 @@
     <mapping class="Negocio.Administracion.Sexo"/>
     <mapping class="Negocio.Administracion.TipoDocumento"/>
     <mapping class="Negocio.Administracion.EmpleadosXCargo"/>
+    <mapping class="Negocio.Administracion.AsignacionesHorario"/>
+    <mapping class="Negocio.Administracion.AsignacionesDias"/>
+    <mapping class="Negocio.Administracion.Horarios"/>
+    <mapping class="Negocio.Administracion.Dias"/>
+    <mapping class="Negocio.Administracion.EstadosEmpleado"/>
 
     <mapping class="Negocio.Compras.DetalleOrdenCompra"/>
     <mapping class="Negocio.Compras.EstadoDetalleOrdenCompra"/>
