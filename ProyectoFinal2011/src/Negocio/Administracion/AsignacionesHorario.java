@@ -47,7 +47,7 @@ public class AsignacionesHorario  implements java.io.Serializable {
      private Date fecDesde;
      /*---------------------------------------------------------------------------------------------*/
       @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TAsignacionesHorario")
-     private Set TEmpleadoses = new HashSet(0);
+     private Set<Empleado> TEmpleadoses = new HashSet(0);
      /*---------------------------------------------------------------------------------------------*/
 
     public AsignacionesHorario() {
@@ -59,7 +59,7 @@ public class AsignacionesHorario  implements java.io.Serializable {
         this.THorarios = THorarios;
         this.fecDesde = fecDesde;
     }
-    public AsignacionesHorario(short idAsignacionHorario, Horarios THorarios, Date fecHasta, Date fecDesde, Set TEmpleadoses) {
+    public AsignacionesHorario(short idAsignacionHorario, Horarios THorarios, Date fecHasta, Date fecDesde, Set<Empleado> TEmpleadoses) {
        this.idAsignacionHorario = idAsignacionHorario;
        this.THorarios = THorarios;
        this.fecHasta = fecHasta;
@@ -104,7 +104,7 @@ public class AsignacionesHorario  implements java.io.Serializable {
         return this.TEmpleadoses;
     }
     
-    public void setTEmpleadoses(Set TEmpleadoses) {
+    public void setTEmpleadoses(Set<Empleado> TEmpleadoses) {
         this.TEmpleadoses = TEmpleadoses;
     }
 

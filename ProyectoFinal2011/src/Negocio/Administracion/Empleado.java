@@ -113,13 +113,22 @@ public class Empleado implements java.io.Serializable {
     private Set<EmpleadosXCargo> TEmpleadosXCargos = new HashSet(0);
 /*---------------------------------------------------------------------------------------------*/
 
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_ESTADO_EMPLEADO", nullable=false)
+
+     private EstadosEmpleado TEstadosEmpleado;
+     /*---------------------------------------------------------------------------------------------*/
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_ASIGNACION_HORARIO", nullable=false)
+     private AsignacionesHorario TAsignacionesHorario;
+     /*---------------------------------------------------------------------------------------------*/
 
     
     public Empleado() {
         this.TDomicilios = new Domicilio();
     }
 
-    public Empleado(int idEmpleado, Domicilio TDomicilios, TipoDocumento TTdocumento, Usuario TUsuarios, Sexo TSexos, String nombre, String apellido, Date fecNacimiento, int numeroDocumento) {
+    public Empleado(int idEmpleado, Domicilio TDomicilios, TipoDocumento TTdocumento, Usuario TUsuarios, Sexo TSexos, String nombre, String apellido, Date fecNacimiento, int numeroDocumento,EstadosEmpleado TEstadosEmpleado, AsignacionesHorario TAsignacionesHorario) {
         this.idEmpleado = idEmpleado;
         this.TDomicilios = TDomicilios;
         this.TTdocumento = TTdocumento;
@@ -129,9 +138,11 @@ public class Empleado implements java.io.Serializable {
         this.apellido = apellido;
         this.fecNacimiento = fecNacimiento;
         this.numeroDocumento = numeroDocumento;
+        this.TEstadosEmpleado = TEstadosEmpleado;
+        this.TAsignacionesHorario = TAsignacionesHorario;
     }
 
-    public Empleado(int idEmpleado, Domicilio TDomicilios, TipoDocumento TTdocumento, Usuario TUsuarios, Sexo TSexos, String nombre, String apellido, Long celular, String correoElectronico, Date fecNacimiento, int numeroDocumento, Long telefono, String observaciones, Integer idAsistenciaEmpleado, Short idDiasHorasLaborables, Date fecBaja, String motivoBaja, Set TCobroses, Set TFacturases, Set TDetallesPlans, Set TPlanesProduccions, Set TDiasHoraLaborables, Set<AsistenciaEmpleado> TAsistenciasEmpleados, Set TEmpleadosXCargos) {
+    public Empleado(int idEmpleado, Domicilio TDomicilios, TipoDocumento TTdocumento, Usuario TUsuarios, Sexo TSexos, String nombre, String apellido, Long celular, String correoElectronico, Date fecNacimiento, int numeroDocumento, Long telefono, String observaciones, Integer idAsistenciaEmpleado, Short idDiasHorasLaborables, Date fecBaja, String motivoBaja, Set TCobroses, Set TFacturases, Set TDetallesPlans, Set TPlanesProduccions, Set TDiasHoraLaborables, Set<AsistenciaEmpleado> TAsistenciasEmpleados, Set TEmpleadosXCargos,EstadosEmpleado TEstadosEmpleado, AsignacionesHorario TAsignacionesHorario) {
         this.idEmpleado = idEmpleado;
         this.TDomicilios = TDomicilios;
         this.TTdocumento = TTdocumento;
@@ -156,6 +167,8 @@ public class Empleado implements java.io.Serializable {
         this.TDiasHoraLaborables = TDiasHoraLaborables;
         this.TAsistenciasEmpleados = TAsistenciasEmpleados;
         this.TEmpleadosXCargos = TEmpleadosXCargos;
+        this.TEstadosEmpleado = TEstadosEmpleado;
+        this.TAsignacionesHorario = TAsignacionesHorario;
     }
 
     public int getIdEmpleado() {
@@ -399,5 +412,21 @@ public class Empleado implements java.io.Serializable {
         }
         return true;
 
+    }
+     
+    public EstadosEmpleado getTEstadosEmpleado() {
+        return this.TEstadosEmpleado;
+    }
+
+    public void setTEstadosEmpleado(EstadosEmpleado TEstadosEmpleado) {
+        this.TEstadosEmpleado = TEstadosEmpleado;
+    }
+
+    public AsignacionesHorario getTAsignacionesHorario() {
+        return this.TAsignacionesHorario;
+    }
+
+    public void setTAsignacionesHorario(AsignacionesHorario TAsignacionesHorario) {
+        this.TAsignacionesHorario = TAsignacionesHorario;
     }
 }
