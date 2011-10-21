@@ -25,13 +25,19 @@ import javax.persistence.Table;
 public class Horarios  implements java.io.Serializable {
 
 
+     @Id
+    @GeneratedValue
+    @Column(name="ID_HORARIO", unique=true, nullable=false, precision=2, scale=0)
      private byte idHorario;
      /*---------------------------------------------------------------------------------------------*/
+      @Column(name="NOMBRE", nullable=false)
      private Serializable nombre;
      /*---------------------------------------------------------------------------------------------*/
+      @Column(name="DESCRIPCION", length=200)
      private String descripcion;
      /*---------------------------------------------------------------------------------------------*/
-     private Set TAsignacionesDiases = new HashSet(0);
+      @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="THorarios")
+     private Set<AsignacionesDias> TAsignacionesDiases = new HashSet(0);
      /*---------------------------------------------------------------------------------------------*/
 //     private Set TAsignacionesHorarios = new HashSet(0);
      /*---------------------------------------------------------------------------------------------*/
@@ -44,7 +50,7 @@ public class Horarios  implements java.io.Serializable {
         this.idHorario = idHorario;
         this.nombre = nombre;
     }
-    public Horarios(byte idHorario, Serializable nombre, String descripcion, Set TAsignacionesDiases, Set TAsignacionesHorarios) {
+    public Horarios(byte idHorario, Serializable nombre, String descripcion, Set TAsignacionesDiases, Set<AsignacionesDias> TAsignacionesHorarios) {
        this.idHorario = idHorario;
        this.nombre = nombre;
        this.descripcion = descripcion;
@@ -52,9 +58,7 @@ public class Horarios  implements java.io.Serializable {
 //       this.TAsignacionesHorarios = TAsignacionesHorarios;
     }
    
-     @Id 
-    @GeneratedValue
-    @Column(name="ID_HORARIO", unique=true, nullable=false, precision=2, scale=0)
+    
     public byte getIdHorario() {
         return this.idHorario;
     }
@@ -63,7 +67,7 @@ public class Horarios  implements java.io.Serializable {
         this.idHorario = idHorario;
     }
     
-    @Column(name="NOMBRE", nullable=false)
+   
     public Serializable getNombre() {
         return this.nombre;
     }
@@ -72,7 +76,7 @@ public class Horarios  implements java.io.Serializable {
         this.nombre = nombre;
     }
     
-    @Column(name="DESCRIPCION", length=200)
+    
     public String getDescripcion() {
         return this.descripcion;
     }
@@ -80,12 +84,12 @@ public class Horarios  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="THorarios")
-    public Set getTAsignacionesDiases() {
+
+    public Set<AsignacionesDias> getTAsignacionesDiases() {
         return this.TAsignacionesDiases;
     }
     
-    public void setTAsignacionesDiases(Set TAsignacionesDiases) {
+    public void setTAsignacionesDiases(Set<AsignacionesDias> TAsignacionesDiases) {
         this.TAsignacionesDiases = TAsignacionesDiases;
     }
 //@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="THorarios")
