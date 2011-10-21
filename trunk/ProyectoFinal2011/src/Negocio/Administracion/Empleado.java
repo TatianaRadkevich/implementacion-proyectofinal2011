@@ -35,60 +35,86 @@ public class Empleado implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_EMPLEADO", unique = true, nullable = false, precision = 5, scale = 0)
     private int idEmpleado;
+    /*---------------------------------------------------------------------------------------------*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_DOMICILIO"/*, nullable=false*/)
     private Domicilio TDomicilios;
+    /*---------------------------------------------------------------------------------------------*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_TDOCUMENTO", nullable = false)
     private TipoDocumento TTdocumento;
+    /*---------------------------------------------------------------------------------------------*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_USUARIO"/*, nullable=false*/)
     private Usuario TUsuarios;
+    /*---------------------------------------------------------------------------------------------*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_SEXO", nullable = false)
     private Sexo TSexos;
+    /*---------------------------------------------------------------------------------------------*/
     @Column(name = "NOMBRE", nullable = false, length = 100)
     private String nombre;
+    /*---------------------------------------------------------------------------------------------*/
     @Column(name = "APELLIDO", nullable = false, length = 100)
     private String apellido;
+    /*---------------------------------------------------------------------------------------------*/
     @Column(name = "CELULAR", precision = 13, scale = 0)
     private Long celular;
+    /*---------------------------------------------------------------------------------------------*/
     @Column(name = "CORREO_ELECTRONICO", length = 50)
     private String correoElectronico;
+    /*---------------------------------------------------------------------------------------------*/
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_NACIMIENTO", nullable = false, length = 23)
     private Date fecNacimiento;
+    /*---------------------------------------------------------------------------------------------*/
     @Column(name = "NUMERO_DOCUMENTO", nullable = false, precision = 8, scale = 0)
     private int numeroDocumento;
+    /*---------------------------------------------------------------------------------------------*/
     @Column(name = "TELEFONO", precision = 11, scale = 0)
     private Long telefono;
+    /*---------------------------------------------------------------------------------------------*/
     @Column(name = "OBSERVACIONES", length = 200)
     private String observaciones;
+    /*---------------------------------------------------------------------------------------------*/
     @Column(name = "ID_ASISTENCIA_EMPLEADO", precision = 5, scale = 0)
     private Integer idAsistenciaEmpleado;
+    /*---------------------------------------------------------------------------------------------*/
     @Column(name = "ID_DIAS_HORAS_LABORABLES", precision = 3, scale = 0)
     private Short idDiasHorasLaborables;
+    /*---------------------------------------------------------------------------------------------*/
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_BAJA", length = 23)
     private Date fecBaja;
+    /*---------------------------------------------------------------------------------------------*/
     @Column(name = "MOTIVO_BAJA", length = 100)
     private String motivoBaja;
+    /*---------------------------------------------------------------------------------------------*/
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEmpleados")
     private Set<Cobro> TCobroses = new HashSet(0);
+    /*---------------------------------------------------------------------------------------------*/
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEmpleados")
     private Set<Factura> TFacturases = new HashSet(0);
+    /*---------------------------------------------------------------------------------------------*/
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEmpleados")
     private Set<DetallePlanProduccion> TDetallesPlans = new HashSet(0);
+    /*---------------------------------------------------------------------------------------------*/
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEmpleados")
     private Set<PlanProduccion> TPlanesProduccions = new HashSet(0);
+    /*---------------------------------------------------------------------------------------------*/
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEmpleados")
     private Set<DiaHoraLaborable> TDiasHoraLaborables = new HashSet(0);
+    /*---------------------------------------------------------------------------------------------*/
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEmpleados")
     private Set<AsistenciaEmpleado> TAsistenciasEmpleados = new HashSet(0);
+    /*---------------------------------------------------------------------------------------------*/
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEmpleados")
      @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<EmpleadosXCargo> TEmpleadosXCargos = new HashSet(0);
+/*---------------------------------------------------------------------------------------------*/
 
+
+    
     public Empleado() {
         this.TDomicilios = new Domicilio();
     }
