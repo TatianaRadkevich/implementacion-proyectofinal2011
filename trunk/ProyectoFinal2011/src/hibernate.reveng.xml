@@ -47,4 +47,9 @@
   <table-filter match-name="T_PLANES_PRODUCCION"/>
   <table-filter match-name="T_PROVEEDORES"/>
   <table-filter match-name="T_MATERIALES"/>
+  <table-filter match-name="T_HORARIOS"/>
+  <table-filter match-name="T_ASIGNACIONES_DIAS"/>
+  <table-filter match-name="T_ASIGNACIONES_HORARIO"/>
+  <table-filter match-name="T_DIAS"/>
+  <table-filter match-name="T_ESTADOS_EMPLEADO"/>
 </hibernate-reverse-engineering>
