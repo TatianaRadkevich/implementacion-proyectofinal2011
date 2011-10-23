@@ -199,6 +199,45 @@ public class PlanProduccion implements java.io.Serializable {
         return salida;
     }
 
+
+     public List<DetallePlanProduccion> getDetallePlan(Empleado emp) {
+        List<DetallePlanProduccion> salida = new ArrayList<DetallePlanProduccion>();
+        if (emp == null) {
+            return salida;
+        }
+
+        for (DetallePlanProduccion dpp : this.TDetallesPlans) {
+            if (dpp.getTEmpleados().getIdEmpleado() == emp.getIdEmpleado()) {
+                salida.add(dpp);
+            }
+        }
+
+        return salida;
+    }
+
+    public List<Empleado> getEmpleadosInvolucrados(){
+
+         List<Empleado> salida = new ArrayList<Empleado>();
+        
+        for (DetallePlanProduccion dpp : this.TDetallesPlans) {
+            if (!existe(dpp.getTEmpleados(), salida)) {
+                salida.add(dpp.getTEmpleados());
+            }
+        }
+
+        return salida;
+    }
+
+
+    private boolean existe(Empleado tEmpleados, List<Empleado> salida) {
+        for(int i=0; i<salida.size();i++){
+            if(tEmpleados.getIdEmpleado()==salida.get(i).getIdEmpleado())
+                return true;
+        }
+        return false;
+    }
+
+
     public void setDetallePlan(List<DetallePlanProduccion> detalle) {
         this.TDetallesPlans.clear();
         for (DetallePlanProduccion dt : detalle) {
@@ -207,6 +246,7 @@ public class PlanProduccion implements java.io.Serializable {
         }
 
     }
+
 
     public void addDetallePlan(DetallePlanProduccion detalle) {
         detalle.setTPlanesProduccion(this);
@@ -227,5 +267,6 @@ public class PlanProduccion implements java.io.Serializable {
             dpp.generarFaltantes();
 
     }
+
 
 }
