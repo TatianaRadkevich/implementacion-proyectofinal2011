@@ -13,6 +13,9 @@ package Presentacion.Produccion;
 import Presentacion.Ventas.*;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
+import Negocio.Administracion.Empleado;
+import Negocio.Produccion.DetallePlanProduccion;
+import Negocio.Produccion.PlanProduccion;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.GestorPedidoBaja;
 import Negocio.Ventas.GestorPedidoModificar;
@@ -25,6 +28,9 @@ import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import com.toedter.calendar.JTextFieldDateEditor;
 import gui.GUILocal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -36,7 +42,7 @@ import javax.swing.event.ListSelectionListener;
 public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
 
     private TablaManager<Pedido> tmPedido;
-    private TablaManager<DetallePedido> tmDetalle;
+    private TablaManager<DetallePlanProduccion> tmEtapas;
 
     /** Creates new form PantallaConsultarPedido */
     public PantallaABMOrdenTrabajo(java.awt.Frame parent, boolean modal) {
@@ -85,17 +91,45 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
                 return fila;
             }
         };
-        tmPedido.addSelectionListener(new ListSelectionListener() {
-
-            public void valueChanged(ListSelectionEvent e) {
-              if(tmPedido.getSeletedObject()!=null)
-                  tmDetalle.setDatos(tmPedido.getSeletedObject().getDetallePedido());
-              else
-                  tmDetalle.limpiar();
-            }
-        });
+//        tmPedido.addSelectionListener(new ListSelectionListener() {
+//
+//            public void valueChanged(ListSelectionEvent e) {
+//              if(tmPedido.getSeletedObject()!=null)
+//                  tmDetalle.setDatos(tmPedido.getSeletedObject().getDetallePedido());
+//              else
+//                  tmDetalle.limpiar();
+//            }
+//        });
         ////////////////////////////////////////////////////////
-      
+
+        tmEtapas = new TablaManager<DetallePlanProduccion>(tbEtapasPlanificadas) {
+
+            @Override
+            public Vector getCabecera() {
+                Vector cabcera = new Vector();
+
+                cabcera.add("Nro. orden");
+                cabcera.add("Etapa");
+                cabcera.add("Empleado");
+                cabcera.add("Máquina");
+                cabcera.add("Fecha/Hora inicio");
+                return cabcera;
+
+            }
+
+            @Override
+            public Vector ObjetoFila(DetallePlanProduccion elemento) {
+                Vector fila = new Vector();
+
+                fila.add(elemento.getTEtapasProduccionEspecifica().getNumeroOrden());
+                fila.add(elemento.getTEtapasProduccionEspecifica().getEtapaProduccion().getNombre());
+                fila.add(elemento.getTEmpleados().getApellido() +", "+ elemento.getTEmpleados().getNombre());
+                fila.add(elemento.getTMaquinasHerramientaParticular().getNombre());
+                fila.add(Utilidades.parseFechaHora(elemento.getFecHoraPrevistaInicio()));
+               
+                return fila;
+            }
+        };
 
     }
 
@@ -181,6 +215,12 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         pnlDetalle = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbEtapasPlanificadas = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        lblNroPedido = new javax.swing.JLabel();
+        lblFechaPlanificacion = new javax.swing.JLabel();
+        lblFechaInicio = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -272,7 +312,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
                 .addGroup(pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chkMostrarVigentes)
                     .addComponent(btnBuscar))
-                .addContainerGap(194, Short.MAX_VALUE))
+                .addContainerGap(208, Short.MAX_VALUE))
         );
         pnlBuscarLayout.setVerticalGroup(
             pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,6 +350,11 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
 
             }
         ));
+        tbPedidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbPedidosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbPedidos);
 
         javax.swing.GroupLayout pnlPedidosLayout = new javax.swing.GroupLayout(pnlPedidos);
@@ -318,7 +363,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
             pnlPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPedidosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlPedidosLayout.setVerticalGroup(
@@ -345,20 +390,60 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         tbEtapasPlanificadas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane4.setViewportView(tbEtapasPlanificadas);
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel6.setText("Fecha planificación:");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel7.setText("Número pedido:");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel8.setText("Fecha inicio:");
+
+        lblNroPedido.setText("xxxxxxxx");
+
+        lblFechaPlanificacion.setText("xxxxxxxx");
+
+        lblFechaInicio.setText("xxxxxxxx");
+
         javax.swing.GroupLayout pnlDetalleLayout = new javax.swing.GroupLayout(pnlDetalle);
         pnlDetalle.setLayout(pnlDetalleLayout);
         pnlDetalleLayout.setHorizontalGroup(
             pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetalleLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pnlDetalleLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblFechaPlanificacion))
+                    .addGroup(pnlDetalleLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblNroPedido)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblFechaInicio)
+                .addGap(176, 176, 176))
+            .addGroup(pnlDetalleLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         pnlDetalleLayout.setVerticalGroup(
             pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetalleLayout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(lblNroPedido))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8)
+                    .addComponent(lblFechaPlanificacion)
+                    .addComponent(lblFechaInicio))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
         );
 
         jButton1.setText("Generar Orden Trabajo");
@@ -382,13 +467,13 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlPedidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -398,13 +483,13 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
                 .addComponent(pnlBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCancelar)
+                    .addComponent(jButton1))
+                .addContainerGap())
         );
 
         pack();
@@ -413,7 +498,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         tmPedido.setDatos(
-                PedidoBD.getPedidos(
+                PedidoBD.getPedidosPlanificados(
                 txtRazonSocial.getText(),
                 txtCUIL.getText(),
                 txtNroPedido.getText(),
@@ -434,7 +519,44 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        PlanProduccion plan= ((Pedido)tmPedido.getSeletedObject()).getPlanProduccion();
+       
+        List<Empleado> empleados=plan.getEmpleadosInvolucrados();
+
+        for(int i=0; i<empleados.size();i++){
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tbPedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPedidosMouseClicked
+        // TODO add your handling code here:
+        Pedido ped=(Pedido)tmPedido.getSeletedObject();
+        lblNroPedido.setText(ped.getIdPedido()+"");
+        lblFechaInicio.setText(Utilidades.parseFecha(ped.getPlanProduccion().getFecHoraPrevistaInicio()));
+        lblFechaPlanificacion.setText(Utilidades.parseFecha(ped.getPlanProduccion().getFecGeneracion()));
+        tmEtapas.setDatos(ped.getPlanProduccion().getDetallePlan());
+        tmEtapas.updateTabla();
+
+    }//GEN-LAST:event_tbPedidosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -466,9 +588,15 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel lblFechaInicio;
+    private javax.swing.JLabel lblFechaPlanificacion;
+    private javax.swing.JLabel lblNroPedido;
     private javax.swing.JPanel pnlBuscar;
     private javax.swing.JPanel pnlDetalle;
     private javax.swing.JPanel pnlPedidos;
