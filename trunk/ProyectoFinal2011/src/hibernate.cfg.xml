@@ -51,6 +51,8 @@
     <mapping class="Negocio.Produccion.TipoMaquinaHerramienta"/>
     <mapping class="Negocio.Produccion.TipoProducto"/>
     <mapping class="Negocio.Produccion.UnidadMedida"/>
+    <mapping class="Negocio.Produccion.EstadoOrdenTrabajo"/>
+    <mapping class="Negocio.Produccion.OrdenTrabajo"/>
 
     <mapping class="Negocio.UbicacionGeografica.Barrio"/>
     <mapping class="Negocio.UbicacionGeografica.Domicilio"/>
