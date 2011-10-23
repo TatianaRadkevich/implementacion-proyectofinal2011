@@ -540,8 +540,7 @@ public class PantallaABMProvincia extends javax.swing.JDialog {
     private void cargarCombos() {
          cmbPais.setModel(new DefaultComboBoxModel(gestorPais.listarPaises().toArray()));
          cmbConsultaPais.setModel(new DefaultComboBoxModel(gestorPais.listarPaises().toArray()));
-         cmbPais.setSelectedIndex(0);
-         cmbConsultaPais.setSelectedIndex(0);
+         if (cmbPais.getSelectedIndex()!=-1)
          cargarProvincias();
     }
 }

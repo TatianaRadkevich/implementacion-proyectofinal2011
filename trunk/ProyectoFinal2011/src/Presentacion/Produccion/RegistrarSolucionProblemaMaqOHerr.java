@@ -11,16 +11,39 @@
 
 package Presentacion.Produccion;
 
+import BaseDeDatos.HibernateUtil;
+import Presentacion.Utilidades;
+import Negocio.Produccion.ProblemasMhp;
+import BaseDeDatos.Produccion.ProblemasMhpBD;
+import Negocio.Produccion.GestorProblemasMhp;
+import Negocio.Produccion.MaquinaHerramientaParticular;
+import Negocio.Produccion.TipoMaquinaHerramienta;
+import Presentacion.IniciadorDeVentanas;
+import Presentacion.Mensajes;
+import Presentacion.TablaManager;
+import com.toedter.calendar.JTextFieldDateEditor;
+import gui.GUILocal;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 /**
  *
  * @author Heber Parrucci
  */
 public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
 
+     private TablaManager<ProblemasMhp> tmProblemas;
+     private GestorProblemasMhp gestor=new GestorProblemasMhp();
+     private ProblemasMhp problema_actual= new ProblemasMhp();
     /** Creates new form RegistrarSolucionProblemaMaqOHerr */
     public RegistrarSolucionProblemaMaqOHerr(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        HibernateUtil.getSessionFactory();
+        inicializarTablas();
+        cargarTiposMaqYHerr();
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
     }
 
     /** This method is called from within the constructor to
@@ -32,20 +55,20 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        lblMoHPart = new javax.swing.JLabel();
         cmbMaqHerrParticular = new javax.swing.JComboBox();
         cmbTipoMaqHerr = new javax.swing.JComboBox();
-        jLabel6 = new javax.swing.JLabel();
-        rdbMaquina1 = new javax.swing.JRadioButton();
+        lblTipoMoH = new javax.swing.JLabel();
         rdbHerramienta1 = new javax.swing.JRadioButton();
+        rdbMaquina1 = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnRegistrarSolucion = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtObservaciones = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblProbActuales = new javax.swing.JTable();
@@ -56,88 +79,111 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Máquina/Herramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel7.setText("Máquina/Herramienta particular:");
+        lblMoHPart.setFont(new java.awt.Font("Tahoma", 1, 11));
+        lblMoHPart.setText("Herramienta particular:");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel6.setText("Tipo de Máquina/Herramienta:");
+        cmbMaqHerrParticular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMaqHerrParticularActionPerformed(evt);
+            }
+        });
 
-        rdbMaquina1.setFont(new java.awt.Font("Tahoma", 1, 11));
-        rdbMaquina1.setText("Máquina");
+        cmbTipoMaqHerr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTipoMaqHerrActionPerformed(evt);
+            }
+        });
 
-        rdbHerramienta1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        lblTipoMoH.setFont(new java.awt.Font("Tahoma", 1, 11));
+        lblTipoMoH.setText("Tipo de Herramienta:");
+
+        buttonGroup1.add(rdbHerramienta1);
+        rdbHerramienta1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rdbHerramienta1.setSelected(true);
         rdbHerramienta1.setText("Herramienta");
+        rdbHerramienta1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbHerramienta1ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(rdbMaquina1);
+        rdbMaquina1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        rdbMaquina1.setText("Máquina");
+        rdbMaquina1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbMaquina1ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setText("Tipo:");
-
-        jButton1.setText("Buscar Problemas");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblTipoMoH)
+                            .addComponent(lblMoHPart))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cmbMaqHerrParticular, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbTipoMaqHerr, javax.swing.GroupLayout.Alignment.LEADING, 0, 195, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
                         .addComponent(rdbHerramienta1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rdbMaquina1))
-                    .addComponent(cmbMaqHerrParticular, 0, 170, Short.MAX_VALUE)
-                    .addComponent(cmbTipoMaqHerr, 0, 170, Short.MAX_VALUE))
-                .addGap(28, 28, 28)
-                .addComponent(jButton1)
-                .addGap(190, 190, 190))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rdbMaquina1)))
+                .addContainerGap(541, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
+                    .addComponent(rdbHerramienta1)
                     .addComponent(rdbMaquina1)
-                    .addComponent(rdbHerramienta1))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(cmbTipoMaqHerr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(cmbMaqHerrParticular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblTipoMoH)
+                    .addComponent(cmbTipoMaqHerr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMoHPart)
+                    .addComponent(cmbMaqHerrParticular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Problemas:");
 
         btnRegistrarSolucion.setText("Registrar Como Solucionado");
+        btnRegistrarSolucion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarSolucionActionPerformed(evt);
+            }
+        });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txtObservaciones.setColumns(20);
+        txtObservaciones.setRows(5);
+        jScrollPane2.setViewportView(txtObservaciones);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Observaciones:");
 
-        tblProbActuales.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Nombre Máquina", "Descripción Problema", "Fecha Problema", "Fecha Estimada Solución"
+        tblProbActuales.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProbActualesMouseClicked(evt);
             }
-        ));
+        });
         jScrollPane3.setViewportView(tblProbActuales);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -154,9 +200,9 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(3, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,14 +212,11 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                        .addComponent(btnRegistrarSolucion)
-                        .addGap(21, 21, 21))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addContainerGap())))
+                    .addComponent(jLabel2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addComponent(btnRegistrarSolucion)
+                .addGap(20, 20, 20))
         );
 
         jButton2.setText("Aceptar");
@@ -185,36 +228,88 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(36, 36, 36)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGap(43, 43, 43))
+                    .addComponent(jButton3)
+                    .addComponent(jButton2))
+                .addGap(39, 39, 39))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmbTipoMaqHerrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoMaqHerrActionPerformed
+  if (cmbTipoMaqHerr.getSelectedIndex()!=-1)
+            cargarMaqYHerrParticulares();
+    }//GEN-LAST:event_cmbTipoMaqHerrActionPerformed
+
+    private void btnRegistrarSolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarSolucionActionPerformed
+        if(tmProblemas.getSelectedRow()!=-1){
+        problema_actual = tmProblemas.getSeletedObject();
+        problema_actual.setFecHoraRealSolucion(Utilidades.getFechaActual());
+
+        if(txtObservaciones.getText().compareTo("")!=0)
+        problema_actual.setObservacionesSolucion(txtObservaciones.getText());
+
+        ProblemasMhpBD.modificar(problema_actual);
+        
+        Mensajes.mensajeInformacion("La solución ha sido registrada exitosamente");
+        txtObservaciones.setText("");
+        if (cmbMaqHerrParticular.getSelectedIndex()!=-1)
+        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
+        else
+        {
+        tmProblemas.limpiar();
+        }
+        }
+        else
+        {
+            Mensajes.mensajeErrorGenerico("Debe seleccionar un problema");
+        }
+
+    }//GEN-LAST:event_btnRegistrarSolucionActionPerformed
+
+    private void tblProbActualesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProbActualesMouseClicked
+       if (tmProblemas.getSelectedRow()!=-1){
+           txtObservaciones.setEnabled(true);
+           txtObservaciones.setText("");
+        }
+    }//GEN-LAST:event_tblProbActualesMouseClicked
+
+    private void cmbMaqHerrParticularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMaqHerrParticularActionPerformed
+        if(cmbMaqHerrParticular.getSelectedIndex()!=-1)
+        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
+    }//GEN-LAST:event_cmbMaqHerrParticularActionPerformed
+
+    private void rdbHerramienta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbHerramienta1ActionPerformed
+        cargarTiposMaqYHerr();
+        lblTipoMoH.setText("Tipo de Herramienta:");
+        lblMoHPart.setText("Herramienta Particular:");
+}//GEN-LAST:event_rdbHerramienta1ActionPerformed
+
+    private void rdbMaquina1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbMaquina1ActionPerformed
+        cargarTiposMaqYHerr();
+        lblTipoMoH.setText("Tipo de Máquina:");
+        lblMoHPart.setText("Máquina Particular:");
+}//GEN-LAST:event_rdbMaquina1ActionPerformed
 
     /**
     * @param args the command line arguments
@@ -235,24 +330,77 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrarSolucion;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cmbMaqHerrParticular;
     private javax.swing.JComboBox cmbTipoMaqHerr;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel lblMoHPart;
+    private javax.swing.JLabel lblTipoMoH;
     private javax.swing.JRadioButton rdbHerramienta1;
     private javax.swing.JRadioButton rdbMaquina1;
     private javax.swing.JTable tblProbActuales;
+    private javax.swing.JTextArea txtObservaciones;
     // End of variables declaration//GEN-END:variables
 
+private void inicializarTablas() {
+
+        tmProblemas = new TablaManager<ProblemasMhp>(tblProbActuales) {
+
+            @Override
+            public Vector getCabecera() {
+                Vector cabecera = new Vector();
+
+                cabecera.add("Código Máquina");
+                cabecera.add("Nombre Máquina");
+                cabecera.add("Descripción Problema");
+                cabecera.add("Fecha Problema");
+                cabecera.add("Fecha Estimada Solución");
+                return cabecera;
+
+            }
+
+          
+            @Override
+            public Vector ObjetoFila(ProblemasMhp elemento) {
+                
+                Vector fila = new Vector();
+
+                fila.add(elemento.getTMaquinasHerramientaParticular().getId());
+                fila.add(elemento.getTMaquinasHerramientaParticular().getNombre());
+                fila.add(elemento.getDescripcion());
+                fila.add(Utilidades.parseFecha(elemento.getFecHoraProblema()));
+                fila.add(Utilidades.parseFecha(elemento.getFecHoraEstimadaSolucion()));
+
+                return fila;
+            }
+        };
+    }
+
+    private void cargarMaqYHerrParticulares() {
+        if (cmbTipoMaqHerr.getSelectedIndex()!=-1)
+        cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getMaquinas((TipoMaquinaHerramienta) cmbTipoMaqHerr.getSelectedItem()).toArray()));
+        if(cmbMaqHerrParticular.getSelectedIndex()!=-1)
+        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
+        else
+        {
+        tmProblemas.limpiar();
+        }
+    }
+
+    private void cargarTiposMaqYHerr() {
+        if (rdbMaquina1.isSelected())
+         cmbTipoMaqHerr.setModel(new DefaultComboBoxModel(gestor.listarTipoMaq().toArray()));
+         if(rdbHerramienta1.isSelected())
+         cmbTipoMaqHerr.setModel(new DefaultComboBoxModel(gestor.listarTipoHerr().toArray()));
+         if(cmbTipoMaqHerr.getSelectedIndex()!=-1)
+         cargarMaqYHerrParticulares();
+    }
 }
