@@ -103,9 +103,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblMoHPart" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblTipoMoH" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -117,7 +117,7 @@
                       <Component id="cmbMaqHerrParticular" pref="170" max="32767" attributes="1"/>
                       <Component id="cmbTipoMaqHerr" alignment="0" pref="170" max="32767" attributes="1"/>
                   </Group>
-                  <EmptySpace min="-2" pref="224" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="278" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -132,12 +132,12 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblTipoMoH" min="-2" max="-2" attributes="0"/>
                       <Component id="cmbTipoMaqHerr" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblMoHPart" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cmbMaqHerrParticular" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="26" max="32767" attributes="0"/>
@@ -146,12 +146,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel7">
+        <Component class="javax.swing.JLabel" name="lblMoHPart">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="11" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="M&#xe1;quina/Herramienta particular:"/>
+            <Property name="text" type="java.lang.String" value="Herramienta particular:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbMaqHerrParticular">
@@ -160,6 +160,9 @@
               <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbMaqHerrParticularActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbTipoMaqHerr">
           <Properties>
@@ -167,13 +170,16 @@
               <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbTipoMaqHerrActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel6">
+        <Component class="javax.swing.JLabel" name="lblTipoMoH">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="11" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Tipo de M&#xe1;quina/Herramienta:"/>
+            <Property name="text" type="java.lang.String" value="Tipo de Herramienta:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rdbMaquina1">
@@ -186,6 +192,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="M&#xe1;quina"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdbMaquina1ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rdbHerramienta1">
           <Properties>
@@ -198,6 +207,9 @@
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Herramienta"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdbHerramienta1ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -333,14 +345,14 @@
                       <Component id="txtNombre" alignment="0" pref="115" max="32767" attributes="0"/>
                       <Component id="txtNroSerie" alignment="0" pref="115" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="83" max="32767" attributes="0"/>
+                  <EmptySpace pref="120" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtModelo1" pref="115" max="32767" attributes="0"/>
+                      <Component id="txtCapacidadProductiva" pref="115" max="32767" attributes="0"/>
                       <Component id="txtModelo" alignment="0" pref="115" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
@@ -359,7 +371,7 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtModelo1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtCapacidadProductiva" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -420,7 +432,7 @@
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtModelo1">
+        <Component class="javax.swing.JTextField" name="txtCapacidadProductiva">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
@@ -430,7 +442,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="11" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Capacidad Productiva:"/>
+            <Property name="text" type="java.lang.String" value="Caracter&#xed;sticas:"/>
           </Properties>
         </Component>
       </SubComponents>

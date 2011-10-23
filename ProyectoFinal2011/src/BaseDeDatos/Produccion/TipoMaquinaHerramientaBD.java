@@ -19,6 +19,16 @@ public class TipoMaquinaHerramientaBD {
         return HibernateUtil.ejecutarConsulta("FROM TipoMaquinaHerramienta ORDER BY nombre");
     }
 
+    public static List<TipoMaquinaHerramienta> listarTipoMaquina()
+    {
+        return HibernateUtil.ejecutarConsulta("FROM TipoMaquinaHerramienta where ES_HERRAMIENTA=0 ORDER BY nombre");
+    }
+
+      public static List<TipoMaquinaHerramienta> listarTipoHerramienta()
+    {
+        return HibernateUtil.ejecutarConsulta("FROM TipoMaquinaHerramienta where ES_HERRAMIENTA=1 ORDER BY nombre");
+    }
+    
     public static void guardar(TipoMaquinaHerramienta tmh)
     {
         HibernateUtil.guardarObjeto(tmh);

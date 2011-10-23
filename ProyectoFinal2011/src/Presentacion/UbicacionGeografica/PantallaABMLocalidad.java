@@ -671,13 +671,12 @@ public class PantallaABMLocalidad extends javax.swing.JFrame {
     private void cargarCombos() {
          cmbPais.setModel(new DefaultComboBoxModel(gestorPais.listarPaises().toArray()));
          cmbConsultaPais.setModel(new DefaultComboBoxModel(gestorPais.listarPaises().toArray()));
-         cmbPais.setSelectedIndex(0);
-         cmbConsultaPais.setSelectedIndex(0);
+        if(cmbPais.getSelectedIndex()!=-1){
          cargarComboConsultaProvincias();
          cargarComboProvincias();
-         cmbProvincia.setSelectedIndex(0);
-         cmbConsultaProvincia.setSelectedIndex(0);
+         if(cmbProvincia.getSelectedIndex()!=-1)
          cargarLocalidades();
+        }
     }
 
     private void cargarComboProvincias() {
