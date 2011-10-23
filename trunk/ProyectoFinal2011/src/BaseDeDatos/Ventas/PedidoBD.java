@@ -66,6 +66,44 @@ public class PedidoBD
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 
+    
+    public static List<Pedido> getPedidosPlanificados(
+            String RazonSocial,String CUIL,String NroPedido,
+            Date desde,Date hasta,boolean vigentes,boolean cancelados){
+
+        if(vigentes==false&&cancelados==false)
+            return new ArrayList<Pedido>(0);
+
+
+        String auxDesde=Utilidades.parseFecha(Utilidades.agregarTiempoFecha(desde, -1, 0, 0));
+        String auxHasta=Utilidades.parseFecha(Utilidades.agregarTiempoFecha(hasta, 1, 0, 0));
+        String HQL=String.format(
+                "FROM Pedido as p "
+                + "WHERE LOWER(p.TClientes.razonSocial) like  LOWER('%s%%') "
+                + "AND  p.TClientes.cuit  like '%s%%' "
+                + "AND p.idPedido like '%s%%' "
+                + ((desde==null)?"":"AND p.fecHoraGeneracion >= '%4$s' ")
+                + ((hasta==null)?"":"AND p.fecHoraGeneracion <= '%5$s' ")
+                ,RazonSocial,CUIL,NroPedido,auxDesde,auxHasta);
+
+        if(vigentes==true&&cancelados==true)
+            return HibernateUtil.ejecutarConsulta(HQL);
+        
+        if(vigentes==true&&cancelados==false)
+            HQL+="AND p.fecBaja IS NULL ";
+        
+        if(vigentes==false&&cancelados==true)
+            HQL+="AND p.fecBaja IS NOT NULL ";
+             
+        
+         HQL+=String.format("AND LOWER(p.TEpedido.nombre) like  LOWER('%s%%') ",
+                 "Planificado");
+       
+        
+    
+        return HibernateUtil.ejecutarConsulta(HQL);
+    }
+    
         public static List<Pedido> getPedidos(
             String RazonSocial,TipoPedido tp,int prioridad,boolean vigentes,boolean cancelados){
 
