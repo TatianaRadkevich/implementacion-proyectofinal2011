@@ -800,3 +800,22 @@ ALTER TABLE T_ASIGNACIONES_PERMISO
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 GO  
+
+/*CAMBIO SOLICITADO POR IVAN - CAMBIA LA RELACION ENTRE LAS CLASES DETALLEPLAN Y ORDENTRABAJO - 24/10/2011*/
+
+/*A continuación se borra la constraint correspondiente a la relación con t_detalles_plan,
+deben fijarse en su motor fisico el nombre de la constraint. Se crea una con nombre diferente en cada motor.
+Deben ir a la tabla T_ORDES_TRABAJO en la seccion Claves y de ahi obtienen el nombre en cuestión.*/
+
+ALTER TABLE T_ORDENES_TRABAJO DROP CONSTRAINT FK__T_ORDENES__ID_DE__41B8C09B
+GO
+ALTER TABLE T_ORDENES_TRABAJO DROP COLUMN ID_DETALLE_PLAN
+GO
+ALTER TABLE T_DETALLES_PLAN ADD ID_ORDEN_TRABAJO NUMERIC(10)NOT NULL
+GO
+ALTER TABLE T_DETALLES_PLAN
+       ADD FOREIGN KEY (ID_ORDEN_TRABAJO)
+                             REFERENCES T_ORDENES_TRABAJO (ID_ORDEN_TRABAJO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+GO

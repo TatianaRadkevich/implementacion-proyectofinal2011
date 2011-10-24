@@ -1,5 +1,6 @@
 
                   /* SCRIPT DE CREACIÓN RAMATY - Versión 1-3*/
+                  
 CREATE TABLE T_ALMACENAMIENTOS_PRODUCTO_TERMINADO (
        ID_ALMACENAMIENTO_PRODUCTO_TERMINADO numeric(8) IDENTITY,
        FEC_HORA_ALMACENAMIENTO datetime NOT NULL,
@@ -272,7 +273,8 @@ CREATE TABLE T_DETALLES_PLAN (
        ID_EDETALLE_PLAN     numeric(2) NOT NULL,
        OBSERVACIONES        varchar(200) NULL,
        MOTIVO_CANCELACION   varchar(200) NULL,
-       FEC_HORA_CANCELACION datetime NULL
+       FEC_HORA_CANCELACION datetime NULL,
+       ID_ORDEN_TRABAJO     numeric(10) NOT NULL
 )
 go
 
@@ -736,7 +738,6 @@ CREATE TABLE T_ORDENES_TRABAJO (
        ID_ORDEN_TRABAJO     numeric(10) IDENTITY,
        FEC_EMISION          datetime NOT NULL,
        OBSERVACIONES        varchar(20) NULL,
-       ID_DETALLE_PLAN      numeric(8) NOT NULL,
        ID_EMPLEADO          numeric(5) NOT NULL,
        ID_EORDEN_TRABAJO    numeric(2) NOT NULL
 )
@@ -1318,6 +1319,15 @@ go
 
 
 ALTER TABLE T_DETALLES_PLAN
+       ADD FOREIGN KEY (ID_ORDEN_TRABAJO)
+                             REFERENCES T_ORDENES_TRABAJO  (
+              ID_ORDEN_TRABAJO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_DETALLES_PLAN
        ADD FOREIGN KEY (ID_EDETALLE_PLAN)
                              REFERENCES T_EDETALLE_PLAN  (
               ID_EDETALLE_PLAN)
@@ -1638,15 +1648,6 @@ go
 ALTER TABLE T_ORDENES_TRABAJO
        ADD FOREIGN KEY (ID_EMPLEADO)
                              REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_ORDENES_TRABAJO
-       ADD FOREIGN KEY (ID_DETALLE_PLAN)
-                             REFERENCES T_DETALLES_PLAN  (
-              ID_DETALLE_PLAN)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
