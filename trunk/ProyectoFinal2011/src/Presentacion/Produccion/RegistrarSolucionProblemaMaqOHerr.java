@@ -94,11 +94,11 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
             }
         });
 
-        lblTipoMoH.setFont(new java.awt.Font("Tahoma", 1, 11));
+        lblTipoMoH.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblTipoMoH.setText("Tipo de Herramienta:");
 
         buttonGroup1.add(rdbHerramienta1);
-        rdbHerramienta1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        rdbHerramienta1.setFont(new java.awt.Font("Tahoma", 1, 11));
         rdbHerramienta1.setSelected(true);
         rdbHerramienta1.setText("Herramienta");
         rdbHerramienta1.addActionListener(new java.awt.event.ActionListener() {
@@ -124,28 +124,28 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(57, 57, 57)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblTipoMoH)
                             .addComponent(lblMoHPart))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cmbMaqHerrParticular, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbTipoMaqHerr, javax.swing.GroupLayout.Alignment.LEADING, 0, 195, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbMaqHerrParticular, 0, 195, Short.MAX_VALUE)
+                            .addComponent(cmbTipoMaqHerr, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
+                        .addGap(101, 101, 101)
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
                         .addComponent(rdbHerramienta1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(rdbMaquina1)))
-                .addContainerGap(541, Short.MAX_VALUE))
+                .addGap(500, 500, 500))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rdbHerramienta1)
@@ -156,10 +156,10 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
                     .addComponent(lblTipoMoH)
                     .addComponent(cmbTipoMaqHerr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMoHPart)
                     .addComponent(cmbMaqHerrParticular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -236,7 +236,7 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -403,4 +403,8 @@ private void inicializarTablas() {
          if(cmbTipoMaqHerr.getSelectedIndex()!=-1)
          cargarMaqYHerrParticulares();
     }
+
+    
+
+
 }

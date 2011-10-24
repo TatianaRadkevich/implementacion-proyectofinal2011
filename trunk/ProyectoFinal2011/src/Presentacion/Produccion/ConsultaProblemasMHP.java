@@ -11,16 +11,37 @@
 
 package Presentacion.Produccion;
 
+import BaseDeDatos.HibernateUtil;
+import Presentacion.Utilidades;
+import Negocio.Produccion.ProblemasMhp;
+import BaseDeDatos.Produccion.ProblemasMhpBD;
+import Negocio.Produccion.GestorProblemasMhp;
+import Negocio.Produccion.MaquinaHerramientaParticular;
+import Negocio.Produccion.TipoMaquinaHerramienta;
+import Presentacion.IniciadorDeVentanas;
+import Presentacion.Mensajes;
+import Presentacion.TablaManager;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 /**
  *
  * @author Heber Parrucci
  */
 public class ConsultaProblemasMHP extends javax.swing.JDialog {
 
+     private TablaManager<ProblemasMhp> tmProblemas;
+     private TablaManager<ProblemasMhp> tmProblemasResueltos;
+     private GestorProblemasMhp gestor=new GestorProblemasMhp();
     /** Creates new form ConsultaProblemasMHP */
     public ConsultaProblemasMHP(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        HibernateUtil.getSessionFactory();
+        inicializarTablas();
+        inicializarTablasProblemasResueltos();
+        cargarTiposMaqYHerr();
+        cargarTodosProblemasHerramientas();
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
     }
 
     /** This method is called from within the constructor to
@@ -32,23 +53,23 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        lblMoHPart = new javax.swing.JLabel();
         cmbMaqHerrParticular = new javax.swing.JComboBox();
         cmbTipoMaqHerr = new javax.swing.JComboBox();
-        jLabel6 = new javax.swing.JLabel();
+        lblTipoMoH = new javax.swing.JLabel();
         rdbMaquina1 = new javax.swing.JRadioButton();
         rdbHerramienta1 = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
-        btnConsultar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblHistorico = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblProbActuales = new javax.swing.JTable();
+        tblHistorico = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProbActuales = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
 
@@ -56,33 +77,59 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Máquina/Herramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel7.setText("Máquina/Herramienta particular:");
+        lblMoHPart.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblMoHPart.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblMoHPart.setText("Herramienta particular:");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel6.setText("Tipo de Máquina/Herramienta:");
+        cmbMaqHerrParticular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMaqHerrParticularActionPerformed(evt);
+            }
+        });
 
-        rdbMaquina1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        cmbTipoMaqHerr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTipoMaqHerrActionPerformed(evt);
+            }
+        });
+
+        lblTipoMoH.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblTipoMoH.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblTipoMoH.setText("Tipo de Herramienta:");
+
+        buttonGroup1.add(rdbMaquina1);
+        rdbMaquina1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rdbMaquina1.setText("Máquina");
+        rdbMaquina1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbMaquina1ActionPerformed(evt);
+            }
+        });
 
-        rdbHerramienta1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        buttonGroup1.add(rdbHerramienta1);
+        rdbHerramienta1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rdbHerramienta1.setSelected(true);
         rdbHerramienta1.setText("Herramienta");
+        rdbHerramienta1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbHerramienta1ActionPerformed(evt);
+            }
+        });
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Tipo:");
-
-        btnConsultar.setText("Consultar ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7)
+                    .addComponent(lblMoHPart)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6))
+                    .addComponent(lblTipoMoH))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -91,9 +138,7 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
                         .addComponent(rdbMaquina1))
                     .addComponent(cmbMaqHerrParticular, 0, 170, Short.MAX_VALUE)
                     .addComponent(cmbTipoMaqHerr, 0, 170, Short.MAX_VALUE))
-                .addGap(106, 106, 106)
-                .addComponent(btnConsultar)
-                .addGap(106, 106, 106))
+                .addGap(428, 428, 428))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,59 +150,57 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
                     .addComponent(rdbHerramienta1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
+                    .addComponent(lblTipoMoH)
                     .addComponent(cmbTipoMaqHerr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(cmbMaqHerrParticular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConsultar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblMoHPart)
+                    .addComponent(cmbMaqHerrParticular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Histórico de Problemas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
+        jButton2.setText("Imprimir");
+
         tblHistorico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nombre Máquina", "Descripción Problema", "Fecha Problema", "Fecha Estimada Solución", "Fecha Real Solución"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblHistorico);
-        tblHistorico.getColumnModel().getColumn(4).setHeaderValue("Fecha Real Solución");
-
-        jButton2.setText("Imprimir");
+        jScrollPane2.setViewportView(tblHistorico);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
-                        .addGap(20, 20, 20))
+                        .addGap(122, 122, 122)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(58, 58, 58))))
+                        .addContainerGap(734, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Problemas Actuales", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+
+        jButton1.setText("Imprimir");
 
         tblProbActuales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -167,34 +210,33 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "Nombre Máquina", "Descripción Problema", "Fecha Problema", "Fecha Estimada Solución"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(tblProbActuales);
-
-        jButton1.setText("Imprimir");
+        jScrollPane1.setViewportView(tblProbActuales);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addGap(115, 115, 115)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(60, 60, 60))))
+                        .addContainerGap(734, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(jButton1))
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         btnCancelar.setText("Cancelar");
@@ -206,22 +248,18 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(441, Short.MAX_VALUE)
-                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,15 +270,41 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(119, 119, 119)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void rdbHerramienta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbHerramienta1ActionPerformed
+        cargarTiposMaqYHerr();
+        cargarTodosProblemasHerramientas();
+        lblTipoMoH.setText("Tipo de Herramienta:");
+        lblMoHPart.setText("Herramienta Particular:");
+    }//GEN-LAST:event_rdbHerramienta1ActionPerformed
+
+    private void rdbMaquina1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbMaquina1ActionPerformed
+        cargarTiposMaqYHerr();
+        cargarTodosProblemasMaquinas();
+        lblTipoMoH.setText("Tipo de Máquina:");
+        lblMoHPart.setText("Máquina Particular:");
+    }//GEN-LAST:event_rdbMaquina1ActionPerformed
+
+    private void cmbTipoMaqHerrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoMaqHerrActionPerformed
+        if (cmbTipoMaqHerr.getSelectedIndex()!=-1)
+            cargarMaqYHerrParticulares();
+    }//GEN-LAST:event_cmbTipoMaqHerrActionPerformed
+
+    private void cmbMaqHerrParticularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMaqHerrParticularActionPerformed
+        if(cmbMaqHerrParticular.getSelectedIndex()!=-1){
+        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
+        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
+        }
+    }//GEN-LAST:event_cmbMaqHerrParticularActionPerformed
 
     /**
     * @param args the command line arguments
@@ -262,23 +326,124 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnConsultar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cmbMaqHerrParticular;
     private javax.swing.JComboBox cmbTipoMaqHerr;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblMoHPart;
+    private javax.swing.JLabel lblTipoMoH;
     private javax.swing.JRadioButton rdbHerramienta1;
     private javax.swing.JRadioButton rdbMaquina1;
     private javax.swing.JTable tblHistorico;
     private javax.swing.JTable tblProbActuales;
     // End of variables declaration//GEN-END:variables
 
+      private void inicializarTablasProblemasResueltos() {
+            tmProblemasResueltos = new TablaManager<ProblemasMhp>(tblHistorico) {
+
+            @Override
+            public Vector getCabecera() {
+                Vector cabecera = new Vector();
+
+                cabecera.add("Código Máquina");
+                cabecera.add("Nombre Máquina");
+                cabecera.add("Descripción Problema");
+                cabecera.add("Fecha Problema");
+                cabecera.add("Fecha Estimada Solución");
+                cabecera.add("Fecha Real Solución");
+                return cabecera;
+
+            }
+
+
+            @Override
+            public Vector ObjetoFila(ProblemasMhp elemento) {
+
+                Vector fila = new Vector();
+
+                fila.add(elemento.getTMaquinasHerramientaParticular().getId());
+                fila.add(elemento.getTMaquinasHerramientaParticular().getNombre());
+                fila.add(elemento.getDescripcion());
+                fila.add(Utilidades.parseFecha(elemento.getFecHoraProblema()));
+                fila.add(Utilidades.parseFecha(elemento.getFecHoraEstimadaSolucion()));
+                fila.add(Utilidades.parseFecha(elemento.getFecHoraRealSolucion()));
+
+                return fila;
+            }
+        };
+    }
+
+    private void inicializarTablas() {
+                tmProblemas = new TablaManager<ProblemasMhp>(tblProbActuales) {
+
+            @Override
+            public Vector getCabecera() {
+                Vector cabecera = new Vector();
+
+                cabecera.add("Código Máquina");
+                cabecera.add("Nombre Máquina");
+                cabecera.add("Descripción Problema");
+                cabecera.add("Fecha Problema");
+                cabecera.add("Fecha Estimada Solución");
+                return cabecera;
+
+            }
+
+
+            @Override
+            public Vector ObjetoFila(ProblemasMhp elemento) {
+
+                Vector fila = new Vector();
+
+                fila.add(elemento.getTMaquinasHerramientaParticular().getId());
+                fila.add(elemento.getTMaquinasHerramientaParticular().getNombre());
+                fila.add(elemento.getDescripcion());
+                fila.add(Utilidades.parseFecha(elemento.getFecHoraProblema()));
+                fila.add(Utilidades.parseFecha(elemento.getFecHoraEstimadaSolucion()));
+
+                return fila;
+            }
+        };
+    }
+
+    private void cargarTiposMaqYHerr() {
+         if (rdbMaquina1.isSelected())
+         cmbTipoMaqHerr.setModel(new DefaultComboBoxModel(gestor.listarTipoMaq().toArray()));
+         if(rdbHerramienta1.isSelected())
+         cmbTipoMaqHerr.setModel(new DefaultComboBoxModel(gestor.listarTipoHerr().toArray()));
+         cmbTipoMaqHerr.setSelectedIndex(-1);
+         cmbMaqHerrParticular.setSelectedIndex(-1);
+         
+    }
+
+    private void cargarMaqYHerrParticulares() {
+        if (cmbTipoMaqHerr.getSelectedIndex()!=-1)
+        cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getMaquinas((TipoMaquinaHerramienta) cmbTipoMaqHerr.getSelectedItem()).toArray()));
+        if(cmbMaqHerrParticular.getSelectedIndex()!=-1){
+        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
+        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
+        }
+        else
+        {
+        tmProblemas.limpiar();
+        tmProblemasResueltos.limpiar();
+        }
+    }
+
+    private void cargarTodosProblemasHerramientas() {
+        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(true));
+        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(true));
+    }
+
+    private void cargarTodosProblemasMaquinas() {
+        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(false));
+        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(false));
+    }
 }
