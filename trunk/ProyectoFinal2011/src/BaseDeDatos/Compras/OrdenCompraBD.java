@@ -29,6 +29,11 @@ public class OrdenCompraBD {
         HibernateUtil.modificarObjeto(oc);
     }
     
+    public static OrdenCompra getOrdenCompra(int id){        
+            return (OrdenCompra) HibernateUtil.getObjeto(OrdenCompra.class, id);
+    }
+
+    
     public static List<OrdenCompra> getOrdenes(
             String nro,EstadoOrdenCompra estado,Proveedor proveedor,
             Date desde,Date hasta,boolean vigentes,boolean cancelados){

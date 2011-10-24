@@ -38,8 +38,9 @@ public class OrdenCompra implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EORDEN_COMPRA", nullable = true)
     private EstadoOrdenCompra TEordenCompra;
-//    @Column(name = "CODIGO", nullable = true, length = 2)
-//    private String codigo;
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name = "FEC_ENVIO", nullable = true, length = 23)
+    private Date fecEnvio;
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_GENERACION", nullable = true, length = 23)
     private Date fecGeneracion;
@@ -59,7 +60,7 @@ public class OrdenCompra implements java.io.Serializable {
         this.idOrdenCompra = idOrdenCompra;
         this.TProveedores = TProveedores;
         this.TEordenCompra = TEordenCompra;
-        
+
         this.fecGeneracion = fecGeneracion;
         this.fecRecepcion = fecRecepcion;
     }
@@ -68,7 +69,7 @@ public class OrdenCompra implements java.io.Serializable {
         this.idOrdenCompra = idOrdenCompra;
         this.TProveedores = TProveedores;
         this.TEordenCompra = TEordenCompra;
-    
+
         this.fecGeneracion = fecGeneracion;
         this.fecRecepcion = fecRecepcion;
         this.TDetallesOrdenCompras = TDetallesOrdenCompras;
@@ -99,8 +100,6 @@ public class OrdenCompra implements java.io.Serializable {
         this.TEordenCompra = TEordenCompra;
     }
 
- 
-
     public Date getFecGeneracion() {
         return this.fecGeneracion;
     }
@@ -121,10 +120,17 @@ public class OrdenCompra implements java.io.Serializable {
         return new ArrayList<DetalleOrdenCompra>(this.TDetallesOrdenCompras);
     }
 
+    public Date getFecEnvio() {
+        return fecEnvio;
+    }
+
+    public void setFecEnvio(Date fecEnvio) {
+        this.fecEnvio = fecEnvio;
+    }
+
     public void setDetalle(List<DetalleOrdenCompra> detalle) {
         this.TDetallesOrdenCompras.clear();
-        for(DetalleOrdenCompra doc: detalle)
-        {
+        for (DetalleOrdenCompra doc : detalle) {
             doc.setOrdenCompra(this);
             this.TDetallesOrdenCompras.add(doc);
         }
