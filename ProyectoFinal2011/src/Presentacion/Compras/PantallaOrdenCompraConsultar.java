@@ -19,6 +19,7 @@ import Negocio.Compras.DetalleOrdenCompra;
 import Negocio.Compras.EstadoOrdenCompra;
 import Negocio.Compras.GestorOrdenCompraAlta;
 import Negocio.Compras.GestorOrdenCompraBaja;
+import Negocio.Compras.GestorOrdenCompraEnviar;
 import Negocio.Compras.GestorOrdenCompraModificar;
 import Negocio.Compras.OrdenCompra;
 import Negocio.Compras.Proveedor;
@@ -133,9 +134,11 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
                 salida.add(elemento.getCantidadRecibida());
                 salida.add(elemento.getEstado());
 
-                try{
-                salida.add("$ " + elemento.getCantidadPedida() * elemento.getPrecioUnitario());
-                }catch(Exception ex){salida.add("Error");}
+                try {
+                    salida.add("$ " + elemento.getCantidadPedida() * elemento.getPrecioUnitario());
+                } catch (Exception ex) {
+                    salida.add("Error");
+                }
                 return salida;
             }
 
@@ -193,9 +196,10 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
 
             public void valueChanged(ListSelectionEvent e) {
                 boolean var = false;
-                if (tmOrdenes.getSeletedObject() != null)
-//                    if(tmOrdenes.getSeletedObject().getEstado()==null)
-                        var = true;
+                if (tmOrdenes.getSeletedObject() != null) //                    if(tmOrdenes.getSeletedObject().getEstado()==null)
+                {
+                    var = true;
+                }
 
                 btnCancelar.setEnabled(var);
                 btnModificar.setEnabled(var);
@@ -234,6 +238,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
         btnModificar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         pnlDetalle = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbDetalle = new javax.swing.JTable();
@@ -395,16 +400,25 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setText("<html>Registrar<br>envío</html>");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBotonesLayout = new javax.swing.GroupLayout(pnlBotones);
         pnlBotones.setLayout(pnlBotonesLayout);
         pnlBotonesLayout.setHorizontalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBotonesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlBotonesLayout.setVerticalGroup(
@@ -416,6 +430,8 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
                 .addComponent(btnModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCancelar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -464,7 +480,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
             .addGroup(pnlOrdenLayout.createSequentialGroup()
                 .addGroup(pnlOrdenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -496,7 +512,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
                 .addComponent(pnlBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(pnlOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(btnSalir)
                 .addContainerGap())
         );
@@ -545,8 +561,18 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         this.dispose();
-       
+
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            new GestorOrdenCompraEnviar(tmOrdenes.getSeletedObject()).iniciarCU();
+        } catch (Exception ex) {
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -578,6 +604,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
     private javax.swing.JComboBox cmbProveedor;
     private com.toedter.calendar.JDateChooser dtcFechaGeneracionDesde;
     private com.toedter.calendar.JDateChooser dtcFechaGeneracionHasta;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

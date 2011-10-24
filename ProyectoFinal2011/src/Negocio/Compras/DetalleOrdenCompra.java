@@ -4,6 +4,7 @@ package Negocio.Compras;
 import Negocio.Deposito.Faltante;
 import Negocio.Compras.Material;
 import Negocio.Compras.OrdenCompra;
+import BaseDeDatos.Compras.EstadoDetalleOrdenCompraBD;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -42,7 +43,7 @@ public class DetalleOrdenCompra implements java.io.Serializable {
     @Column(name = "CANTIDAD_PEDIDA", nullable = true, precision = 3, scale = 0)
     private Short cantidadPedida;
     @Column(name = "CANTIDAD_RECIBIDA", nullable = true, precision = 3, scale = 0)
-    private Short cantidadRecibida;
+    private Short cantidadRecibida=Short.parseShort("0");
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TDetallesOrdenCompra")
     private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
 
@@ -107,7 +108,19 @@ public class DetalleOrdenCompra implements java.io.Serializable {
     }
 
     public void setCantidadRecibida(Short cantidadRecibida) {
+        if(cantidadRecibida>cantidadPedida)
+            throw new RuntimeException("La cantidad recibida no puede ser mayor que la cantidad pedida");
+        
+        if(cantidadRecibida<0)
+            throw new RuntimeException("La cantidad recibida no puede ser menor que cero(0) ");
+        
         this.cantidadRecibida = cantidadRecibida;
+        
+        if(cantidadRecibida==cantidadPedida)
+            this.setEstado(EstadoDetalleOrdenCompraBD.getEstadoConcretadaTotal());
+        
+        if(cantidadRecibida<cantidadPedida)
+            this.setEstado(EstadoDetalleOrdenCompraBD.getEstadoConcretadaParcial());        
     }
 
     public EstadoDetalleOrdenCompra getEstado() {
@@ -124,6 +137,11 @@ public class DetalleOrdenCompra implements java.io.Serializable {
 
     public void setPrecioUnitario(Float precioUnitario) {
         this.precioUnitario = precioUnitario;
+    }
+    
+    public float getSubTotal()
+    {
+        return precioUnitario*cantidadPedida;
     }
 
     public Set<Faltante> getFaltantes() {
