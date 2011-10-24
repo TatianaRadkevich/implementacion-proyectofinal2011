@@ -79,7 +79,8 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Máquina/Herramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        lblMoHPart.setFont(new java.awt.Font("Tahoma", 1, 11));
+        lblMoHPart.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblMoHPart.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblMoHPart.setText("Herramienta particular:");
 
         cmbMaqHerrParticular.addActionListener(new java.awt.event.ActionListener() {
@@ -95,6 +96,7 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         });
 
         lblTipoMoH.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblTipoMoH.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTipoMoH.setText("Tipo de Herramienta:");
 
         buttonGroup1.add(rdbHerramienta1);
@@ -220,8 +222,18 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         );
 
         jButton2.setText("Aceptar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Cancelar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -307,9 +319,17 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
 
     private void rdbMaquina1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbMaquina1ActionPerformed
         cargarTiposMaqYHerr();
-        lblTipoMoH.setText("Tipo de Máquina:");
-        lblMoHPart.setText("Máquina Particular:");
+        lblTipoMoH.setText("    Tipo de Máquina:");
+        lblMoHPart.setText("    Máquina Particular:");
 }//GEN-LAST:event_rdbMaquina1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+      dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
     * @param args the command line arguments
