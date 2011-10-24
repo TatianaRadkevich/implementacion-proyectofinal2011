@@ -39,9 +39,9 @@ public class ProblemasMhpBD {
         List<ProblemasMhp> var=HibernateUtil.ejecutarConsulta("from ProblemasMhp");
         return var;
     }
-   public static List<ProblemasMhp> listarProblemasResueltos()throws ExceptionInInitializerError{
+   public static List<ProblemasMhp> listarProblemasResueltos(boolean herramienta)throws ExceptionInInitializerError{
 
-        List<ProblemasMhp> var=HibernateUtil.ejecutarConsulta("from ProblemasMhp where fecHoraRealSolucion is not null");
+        List<ProblemasMhp> var=HibernateUtil.ejecutarConsulta("from ProblemasMhp where fecHoraRealSolucion is not null AND TMaquinasHerramientaParticular.TTmaquinaHerramienta.esHerramienta="+herramienta);
         return var;
     }
 
@@ -57,8 +57,8 @@ public class ProblemasMhpBD {
         return var;
     }
 
-    public static List<ProblemasMhp> listarProblemasNoResueltos(){
-        String hql="from Producto as pd where fecHoraRealSolucion is null";
+    public static List<ProblemasMhp> listarProblemasNoResueltos(boolean herramienta){
+        String hql=("from ProblemasMhp where fecHoraRealSolucion is null AND TMaquinasHerramientaParticular.TTmaquinaHerramienta.esHerramienta="+herramienta);
         return HibernateUtil.ejecutarConsulta(hql);
     }
 

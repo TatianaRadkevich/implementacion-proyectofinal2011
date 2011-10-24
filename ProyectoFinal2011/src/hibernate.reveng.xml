@@ -54,4 +54,6 @@
   <table-filter match-name="T_ESTADOS_EMPLEADO"/>
   <table-filter match-name="T_ORDENES_TRABAJO"/>
   <table-filter match-name="T_EORDEN_TRABAJO"/>
+  <table-filter match-name="T_EORDEN_TRABAJO"/>
+  <table-filter match-name="T_PLANES_PRODUCCION"/>
 </hibernate-reverse-engineering>
