@@ -27,13 +27,19 @@ import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
 import javax.swing.JSpinner.DefaultEditor;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -45,7 +51,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private Pedido pedido;
     private TablaManager<DetallePedido> tmDetallePedido;
     private TablaManager<EtapaProduccionEspecifica> tmEstructura;
-    private TablaManager<DetallePlanProduccion> tmDetallePlanProduccion;
+    private TablaManager<MaquinaHerramientaParticular> tmMaquina;
+    private TablaManager<Empleado> tmEmpleado;
     private PlanProduccion plan;
     private boolean modificarDetPlan = false;
 
@@ -104,7 +111,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             public void valueChanged(ListSelectionEvent e) {
 
                 if (tmDetallePedido.getSeletedObject() != null) {
-                    cargarEstructura(tmDetallePedido.getSeletedObject());
+                    tmEstructura.setDatos(tmDetallePedido.getSeletedObject().getProducto().getEtapasProduccionEspecificas());
                 }
 
             }
@@ -116,6 +123,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(EtapaProduccionEspecifica elemento) {
                 Vector fila = new Vector();
+                fila.add((elemento.getDetallePlanProduccion()==null)?"Sin Planificar":"Planificado");
                 fila.add(elemento.getNumeroOrden());
                 fila.add(elemento.getEtapaProduccion().getNombre());
                 fila.add(elemento.getDuracion());
@@ -136,6 +144,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             @Override
             public Vector getCabecera() {
                 Vector cabecera = new Vector();
+                cabecera.add("Estado");
                 cabecera.add("Nro Oreden");
                 cabecera.add("Etapa");
                 cabecera.add("Duración");
@@ -144,49 +153,78 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 return cabecera;
             }
         };
+        tmEstructura.addSelectionListener(new ListSelectionListener() {
 
+            public void valueChanged(ListSelectionEvent e) {
+
+                if (tmEstructura.getSeletedObject() != null) {
+                    cargarDatosPlanificacionEtapa(tmEstructura.getSeletedObject());
+                }
+
+            }
+        });
         /******************************************************************************/
-        tmDetallePlanProduccion = new TablaManager<DetallePlanProduccion>(tbEtapasPlanificadas) {
+
+        tmMaquina=new TablaManager<MaquinaHerramientaParticular>(tbMaquinas) {
 
             @Override
-            public Vector ObjetoFila(DetallePlanProduccion elemento) {
-                Vector fila = new Vector();
-                fila.add(elemento.getTEtapasProduccionEspecifica().getNumeroOrden());
-                fila.add(elemento.getTEtapasProduccionEspecifica().getEtapaProduccion().getNombre());
-                fila.add((elemento.getTMaquinasHerramientaParticular() == null) ? "" : elemento.getTMaquinasHerramientaParticular().getNombre());
-                fila.add((elemento.getTEmpleados() == null) ? "" : elemento.getTEmpleados().getNombre());
-                fila.add((elemento.getFecHoraPrevistaInicio() == null) ? "" : Utilidades.parseFecha(elemento.getFecHoraPrevistaInicio()));
-                return fila;
+            public Vector ObjetoFila(MaquinaHerramientaParticular elemento) {
+                Vector salida=new Vector();
+                salida.add(elemento.getCodigo());
+                salida.add(elemento.getTipoMaquinaHerramienta().getNombre());
+                salida.add(elemento.getNombre());
+                salida.add(null);
+                return salida;
             }
 
             @Override
             public Vector getCabecera() {
-                Vector cabecera = new Vector();
-                cabecera.add("Nro. Orden");
-                cabecera.add("Etapa");
-                cabecera.add("Maquina");
-                cabecera.add("Empleado");
-                cabecera.add("Fecha/Hora inicio");
-
-                return cabecera;
+                Vector salida=new Vector();
+                salida.add("Codigo");
+                salida.add("Tipo");
+                salida.add("Maquina");
+                salida.add("");
+                return salida;
             }
         };
-        tmDetallePlanProduccion.addSelectionListener(new ListSelectionListener() {
+        tbMaquinas.getColumnModel().getColumn(3).setCellRenderer(new TableCellRenderer() {
 
-            public void valueChanged(ListSelectionEvent e) {
-                if (tmDetallePlanProduccion.getSeletedObject() != null) {
-                    cargarDatosEtapaPlanificacion(tmDetallePlanProduccion.getSeletedObject());
-                    btnEliminar.setEnabled(true);
-                    btnModificar.setEnabled(true);
-                }
-                else
-                {
-                    limpiarDatosEtapaPlanificacion();
-                      btnEliminar.setEnabled(false);
-                    btnModificar.setEnabled(false);
-                }
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JCheckBox chk=new JCheckBox();
+                chk.setSelected(isSelected);
+                return chk;
             }
         });
+        /********************************************************************************/
+        tmEmpleado=new TablaManager<Empleado>(tbEmpleado) {
+
+            @Override
+            public Vector ObjetoFila(Empleado elemento) {
+                Vector salida=new Vector();
+                salida.add(elemento.getIdEmpleado());
+                salida.add(elemento.getApellido()+", "+elemento.getNombre());
+                salida.add(null);
+                return salida;
+            }
+
+            @Override
+            public Vector getCabecera() {
+                Vector salida=new Vector();
+                salida.add("Legajo");
+                salida.add("Apellido/Nombre");
+                salida.add("");
+                return salida;
+            }
+        };
+        tbEmpleado.getColumnModel().getColumn(2).setCellRenderer(new TableCellRenderer() {
+
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JCheckBox chk=new JCheckBox();
+                chk.setSelected(isSelected);
+                return chk;
+            }
+        });
+      
     }
 
     private void cargarCombos() {
@@ -211,30 +249,14 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     public void cargarDatosPlan(PlanProduccion plan) {
         cmbResponsable.setSelectedItem(plan.getEmpleado());
         fhInicioPlan.setDate((plan.getFecHoraPrevistaInicio() == null) ? Utilidades.getFechaActual() : plan.getFecHoraPrevistaInicio());
-    }
-
-    private void cargarEstructura(DetallePedido dp) {
-
-        List<EtapaProduccionEspecifica> etapas = dp.getProducto().getEtapasProduccionEspecificas();
-        List<DetallePlanProduccion> etapasPlanificadas = plan.getDetallePlan(dp.getProducto());
-
-        for (EtapaProduccionEspecifica epe : dp.getProducto().getEtapasProduccionEspecificas()) {
-            for (DetallePlanProduccion dpp : etapasPlanificadas) {
-                if (dpp.getTEtapasProduccionEspecifica().getId() == epe.getId()) {
-                    etapas.remove(epe);
-                }
-            }
-        }
-        tmEstructura.setDatos(etapas);
-        tmDetallePlanProduccion.setDatos(etapasPlanificadas);
-    }
+    }    
 
     private void habilitarDatosPlanificacion(boolean valor) {
-        tbEtapasPlanificadas.setEnabled(!valor);      
+
+        Utilidades.habilitarPanel(pnlDetallePlanificaion, valor);
 
         fhInicioDetallePlan.setEnabled(valor);
-        cmbMaquina.setEnabled(valor);
-        cmbOperario.setEnabled(valor);
+       
         txtObservaciones.setEditable(valor);
         btnAceptar.setEnabled(valor); //cambió el nombre de componente
         btnCancelar.setEnabled(valor); //cambió el nombre de componente
@@ -247,15 +269,15 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             return false;
         }
 
-        if (cmbMaquina.getSelectedIndex() == -1) {
+        if (tmMaquina.getSelectedRow() == -1) {
             Mensajes.mensajeErrorGenerico("Debe seleccionar una máquina");
-            cmbMaquina.requestFocus();
+            tbMaquinas.requestFocus();
             return false;
         }
 
-        if (cmbOperario.getSelectedIndex() == -1) {
+        if (tmEmpleado.getSelectedRow() == -1) {
             Mensajes.mensajeErrorGenerico("Debe seleccionar un operario");
-            cmbOperario.requestFocus();
+            tbEmpleado.requestFocus();
             return false;
         }
         return true;
@@ -263,18 +285,22 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
     private void limpiarDatosEtapaPlanificacion() {
         fhInicioDetallePlan.setDate(Utilidades.getFechaActual());
-        cmbMaquina.setSelectedIndex(-1);
-        cmbOperario.setSelectedIndex(-1);
+        tbMaquinas.clearSelection();
+        tbEmpleado.clearSelection();
         txtObservaciones.setText("");
     }
 
-    private void cargarDatosEtapaPlanificacion(DetallePlanProduccion detalle) {
-        if (detalle == null) {
+    private void cargarDatosPlanificacionEtapa(EtapaProduccionEspecifica epe) {
+        if (epe == null||epe.getDetallePlanProduccion().isEmpty()) {
             limpiarDatosEtapaPlanificacion();
             return;
         }
 
+        DetallePlanProduccion detalle=epe.getDetallePlanProduccion().get(0);
+
         fhInicioDetallePlan.setDate((detalle.getFecHoraPrevistaInicio() == null) ? Utilidades.getFechaActual() : detalle.getFecHoraPrevistaInicio());
+        txtTiempoFin.setText(Utilidades.parseFechaHora(detalle.getFecHoraPrevistaInicio()));
+
         TipoMaquinaHerramienta tipoMaq = null;
         for (DetalleEtapaProduccion det : detalle.getTEtapasProduccionEspecifica().getDetalleEtapaProduccion()) {
             if (det.getTipoMaquinaHerramienta() != null) {
@@ -282,30 +308,13 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             }
         }
 
-        cmbMaquina.setModel(
-                new DefaultComboBoxModel(
-                MaquinaHerramientaBD.getMaquinasHerramientas(
-                tipoMaq, true, false).toArray()));
+        tmMaquina.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(tipoMaq, true, false));
+        tmMaquina.setSelectedRow(detalle.getTMaquinasHerramientaParticular());
 
-        cmbMaquina.setSelectedItem(detalle.getTMaquinasHerramientaParticular());
+        tmEmpleado.setDatos(EmpleadoBD.getEmpleados(detalle.getTEtapasProduccionEspecifica().getCargo(), true, false));
+        tmEmpleado.setSelectedRow(detalle.getTEmpleados());
 
-        cmbOperario.setModel(
-                new DefaultComboBoxModel(EmpleadoBD.getEmpleados(detalle.getTEtapasProduccionEspecifica().getCargo(), true, false).toArray()));
-
-        //cmbOperario.setSelectedItem(detalle.getTEmpleados());
         txtObservaciones.setText(detalle.getObservaciones());
-    }
-
-    private void insertDetallePlan(DetallePlanProduccion det) {
-        int i = 0;
-        for (DetallePlanProduccion dep : tmDetallePlanProduccion.getDatos()) {
-            if (dep.getTEtapasProduccionEspecifica().getNumeroOrden() >= det.getTEtapasProduccionEspecifica().getNumeroOrden()) {
-                tmDetallePlanProduccion.insert(i, det);
-                return;
-            }
-            i++;
-        }
-        tmDetallePlanProduccion.add(det);
     }
 
     private void insertEtapa(EtapaProduccionEspecifica epe) {
@@ -330,10 +339,6 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        cmbResponsable = new javax.swing.JComboBox();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        fhInicioPlan = new com.toedter.calendar.JSpinnerDateEditor();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -343,11 +348,11 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         labefdsfsf = new javax.swing.JLabel();
         lblFechaEntrega = new javax.swing.JLabel();
-        pnlDetallePlanificacion = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tbEtapasPlanificadas = new javax.swing.JTable();
-        btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        cmbResponsable = new javax.swing.JComboBox();
+        jLabel15 = new javax.swing.JLabel();
+        fhInicioPlan = new com.toedter.calendar.JSpinnerDateEditor();
+        jLabel16 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         pnlDetallePlanificaion = new javax.swing.JPanel();
@@ -355,18 +360,25 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         fhInicioDetallePlan = new com.toedter.calendar.JSpinnerDateEditor();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        cmbMaquina = new javax.swing.JComboBox();
-        cmbOperario = new javax.swing.JComboBox();
+        pnlEmpleado = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tbEmpleado = new javax.swing.JTable();
+        pnlMaquinas = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tbMaquinas = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtObservaciones = new javax.swing.JTextArea();
-        jLabel11 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        txtTiempoFin = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         pnlEstructura = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbEstructura = new javax.swing.JTable();
         btnPlanificar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbDetallePedido = new javax.swing.JTable();
@@ -375,12 +387,6 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         setTitle("Planificación de producción");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Planificacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel15.setText("Responsable de Plan:");
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel16.setText("Fecha/hora calculada inicio Plan:");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
@@ -411,16 +417,20 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labefdsfsf)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                    .addComponent(lblTipoPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                    .addComponent(lblFechaEntrega, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                    .addComponent(lblFechaNecesidad, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
+                    .addComponent(lblTipoPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                    .addComponent(lblRazonSocial))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labefdsfsf)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblFechaNecesidad)
+                    .addComponent(lblFechaEntrega))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -429,18 +439,49 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lblRazonSocial))
-                .addGap(8, 8, 8)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(lblFechaNecesidad))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(lblTipoPedido))
+                    .addComponent(lblTipoPedido)
+                    .addComponent(jLabel4)))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labefdsfsf)
                     .addComponent(lblFechaEntrega)))
+            .addComponent(lblFechaNecesidad)
+        );
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel15.setText("Responsable de Plan:");
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel16.setText("Fecha/hora calculada inicio Plan:");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fhInicioPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(cmbResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(fhInicioPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -448,86 +489,15 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel15))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fhInicioPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(cmbResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(fhInicioPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-
-        pnlDetallePlanificacion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Etapas planificadas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
-
-        tbEtapasPlanificadas.setFont(new java.awt.Font("Tahoma", 1, 11));
-        tbEtapasPlanificadas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Nro. Orden", "Etapa", "Maquina", "Empleado", "Fecha hora inicio"
-            }
-        ));
-        tbEtapasPlanificadas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane4.setViewportView(tbEtapasPlanificadas);
-
-        btnModificar.setText("Modificar");
-        btnModificar.setEnabled(false);
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
-
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setEnabled(false);
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlDetallePlanificacionLayout = new javax.swing.GroupLayout(pnlDetallePlanificacion);
-        pnlDetallePlanificacion.setLayout(pnlDetallePlanificacionLayout);
-        pnlDetallePlanificacionLayout.setHorizontalGroup(
-            pnlDetallePlanificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetallePlanificacionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(pnlDetallePlanificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        pnlDetallePlanificacionLayout.setVerticalGroup(
-            pnlDetallePlanificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDetallePlanificacionLayout.createSequentialGroup()
-                .addGroup(pnlDetallePlanificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlDetallePlanificacionLayout.createSequentialGroup()
-                        .addComponent(btnModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminar))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
-                .addContainerGap())
         );
 
         jButton3.setText("Cancelar planificación");
@@ -547,7 +517,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         pnlDetallePlanificaion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Planificación de etapa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel14.setText("Fecha/hora inicio:");
+        jLabel14.setText("Fecha/Hora inicio:");
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -563,19 +533,111 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel9.setText("Máquina asignada:");
+        pnlEmpleado.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Empleado Disponibles", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel10.setText("Empleado asignado:");
+        tbEmpleado.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Legajo", "Nombre/Apellido", ""
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(tbEmpleado);
+
+        javax.swing.GroupLayout pnlEmpleadoLayout = new javax.swing.GroupLayout(pnlEmpleado);
+        pnlEmpleado.setLayout(pnlEmpleadoLayout);
+        pnlEmpleadoLayout.setHorizontalGroup(
+            pnlEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+        );
+        pnlEmpleadoLayout.setVerticalGroup(
+            pnlEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+        );
+
+        pnlMaquinas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Máquinas Disponibles", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+
+        tbMaquinas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo", "Tipo", "Maquina", ""
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane5.setViewportView(tbMaquinas);
+
+        javax.swing.GroupLayout pnlMaquinasLayout = new javax.swing.GroupLayout(pnlMaquinas);
+        pnlMaquinas.setLayout(pnlMaquinasLayout);
+        pnlMaquinasLayout.setHorizontalGroup(
+            pnlMaquinasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+        );
+        pnlMaquinasLayout.setVerticalGroup(
+            pnlMaquinasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+        );
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel11.setText("Observaciones:");
 
         txtObservaciones.setFont(new java.awt.Font("Tahoma", 0, 11));
         txtObservaciones.setLineWrap(true);
         txtObservaciones.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txtObservaciones);
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel11.setText("Observaciones:");
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jLabel11)
+                .addContainerGap(117, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE))
+        );
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel17.setText("Fecha/Hora fin:");
+
+        txtTiempoFin.setEditable(false);
 
         javax.swing.GroupLayout pnlDetallePlanificaionLayout = new javax.swing.GroupLayout(pnlDetallePlanificaion);
         pnlDetallePlanificaion.setLayout(pnlDetallePlanificaionLayout);
@@ -584,49 +646,48 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             .addGroup(pnlDetallePlanificaionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetallePlanificaionLayout.createSequentialGroup()
-                        .addComponent(btnAceptar)
-                        .addGap(10, 10, 10)
-                        .addComponent(btnCancelar))
                     .addGroup(pnlDetallePlanificaionLayout.createSequentialGroup()
                         .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel9)
+                            .addComponent(jLabel17)
                             .addComponent(jLabel14))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(pnlDetallePlanificaionLayout.createSequentialGroup()
-                                .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(cmbOperario, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cmbMaquina, javax.swing.GroupLayout.Alignment.LEADING, 0, 187, Short.MAX_VALUE)
-                                    .addComponent(fhInicioDetallePlan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)))))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtTiempoFin)
+                            .addComponent(fhInicioDetallePlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(pnlMaquinas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlDetallePlanificaionLayout.createSequentialGroup()
+                        .addComponent(btnAceptar)
+                        .addGap(10, 10, 10)
+                        .addComponent(btnCancelar)
+                        .addContainerGap())
+                    .addComponent(pnlEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         pnlDetallePlanificaionLayout.setVerticalGroup(
             pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDetallePlanificaionLayout.createSequentialGroup()
-                .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fhInicioDetallePlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
-                .addGap(14, 14, 14)
-                .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(cmbMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbOperario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetallePlanificaionLayout.createSequentialGroup()
+                .addComponent(pnlEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetallePlanificaionLayout.createSequentialGroup()
+                .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnlMaquinas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDetallePlanificaionLayout.createSequentialGroup()
+                        .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(fhInicioDetallePlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel17)
+                            .addComponent(txtTiempoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pnlEstructura.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Etapas a planificar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
@@ -637,7 +698,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Nro. Orden", "Etapa", "Duración", "Tipo maquina", "Cargo empleado"
+                "Planificado", "Nro. Orden", "Etapa", "Duración", "Tipo maquina", "Cargo empleado"
             }
         ));
         tbEstructura.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -655,22 +716,42 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             }
         });
 
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlEstructuraLayout = new javax.swing.GroupLayout(pnlEstructura);
         pnlEstructura.setLayout(pnlEstructuraLayout);
         pnlEstructuraLayout.setHorizontalGroup(
             pnlEstructuraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlEstructuraLayout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEstructuraLayout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnPlanificar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlEstructuraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPlanificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         pnlEstructuraLayout.setVerticalGroup(
             pnlEstructuraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
             .addGroup(pnlEstructuraLayout.createSequentialGroup()
                 .addComponent(btnPlanificar)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnModificar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminar)
+                .addGap(56, 56, 56))
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producción", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
@@ -691,11 +772,11 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -703,7 +784,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlEstructura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -717,16 +798,13 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnlDetallePlanificaion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlDetallePlanificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(pnlDetallePlanificaion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3)))
@@ -737,13 +815,11 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlDetallePlanificacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDetallePlanificaion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addComponent(pnlDetallePlanificaion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
@@ -761,21 +837,25 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         // TODO add your handling code here:
         //validarDatosDetalle();
 
-        DetallePlanProduccion det = (modificarDetPlan)
-                ? tmDetallePlanProduccion.getSeletedObject() : new DetallePlanProduccion();
+        DetallePlanProduccion det;
+
+        if (modificarDetPlan)
+            det = tmEstructura.getSeletedObject().getDetallePlanProduccion().get(0);
+        else
+            det = new DetallePlanProduccion();
+
 
         det.setFecHoraPrevistaInicio(fhInicioDetallePlan.getDate());
         det.setObservaciones(txtObservaciones.getText());
-        det.setTEmpleados((Empleado) cmbOperario.getSelectedItem());
-        det.setTMaquinasHerramientaParticular((MaquinaHerramientaParticular) cmbMaquina.getSelectedItem());
+        det.setTEmpleados(tmEmpleado.getSeletedObject());
+        det.setTMaquinasHerramientaParticular(tmMaquina.getSeletedObject());
         det.setCantidad(tmDetallePedido.getSeletedObject().getCantidad());
+
         if (modificarDetPlan == false) {
-            det.setTEtapasProduccionEspecifica(tmEstructura.removeSelectedRow());
-            insertDetallePlan(det);
+            det.setTEtapasProduccionEspecifica(tmEstructura.getSeletedObject());
             plan.addDetallePlan(det);
-
+            tmEstructura.updateTabla();
         }
-
 
         habilitarDatosPlanificacion(false);
         limpiarDatosEtapaPlanificacion();
@@ -802,34 +882,12 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
 }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-        habilitarDatosPlanificacion(true);
-        modificarDetPlan = true;
-
-    }//GEN-LAST:event_btnModificarActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
 
         limpiarDatosEtapaPlanificacion();
         habilitarDatosPlanificacion(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-        if (tmDetallePlanProduccion.getSeletedObject() == null) {
-            return;
-        }
-        if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea eliminar esta planificación?")) {
-            DetallePlanProduccion dpp = tmDetallePlanProduccion.removeSelectedRow();
-            plan.removeDetallePlan(dpp);
-            EtapaProduccionEspecifica epe = dpp.getTEtapasProduccionEspecifica();
-            epe.removeDetallePlanProduccion(dpp);
-            insertEtapa(epe);
-        }
-
-    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnPlanificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanificarActionPerformed
         // TODO add your handling code here:
@@ -838,12 +896,33 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         }
 
         // limpiarDatosEtapaPlanificacion();
-        cargarDatosEtapaPlanificacion(new DetallePlanProduccion(tmEstructura.getSeletedObject()));
+        cargarDatosPlanificacionEtapa(tmEstructura.getSeletedObject());
         habilitarDatosPlanificacion(true);
-
         modificarDetPlan = false;
 
     }//GEN-LAST:event_btnPlanificarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        if (tmEstructura.getSeletedObject() == null) {
+            return;
+        }
+
+        // limpiarDatosEtapaPlanificacion();
+        cargarDatosPlanificacionEtapa(tmEstructura.getSeletedObject());
+        habilitarDatosPlanificacion(true);
+        modificarDetPlan = true;
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        if (tmEstructura.getSeletedObject() == null) {
+            return;
+        }
+        tmEstructura.getSeletedObject().limpiarDetalleEtapaProduccion();
+        tmEstructura.updateTabla();
+
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -863,41 +942,44 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnPlanificar;
-    private javax.swing.JComboBox cmbMaquina;
-    private javax.swing.JComboBox cmbOperario;
     private javax.swing.JComboBox cmbResponsable;
     private com.toedter.calendar.JSpinnerDateEditor fhInicioDetallePlan;
     private com.toedter.calendar.JSpinnerDateEditor fhInicioPlan;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel labefdsfsf;
     private javax.swing.JLabel lblFechaEntrega;
     private javax.swing.JLabel lblFechaNecesidad;
     private javax.swing.JLabel lblRazonSocial;
     private javax.swing.JLabel lblTipoPedido;
-    private javax.swing.JPanel pnlDetallePlanificacion;
     private javax.swing.JPanel pnlDetallePlanificaion;
+    private javax.swing.JPanel pnlEmpleado;
     private javax.swing.JPanel pnlEstructura;
+    private javax.swing.JPanel pnlMaquinas;
     private javax.swing.JTable tbDetallePedido;
+    private javax.swing.JTable tbEmpleado;
     private javax.swing.JTable tbEstructura;
-    private javax.swing.JTable tbEtapasPlanificadas;
+    private javax.swing.JTable tbMaquinas;
     private javax.swing.JTextArea txtObservaciones;
+    private javax.swing.JTextField txtTiempoFin;
     // End of variables declaration//GEN-END:variables
 }

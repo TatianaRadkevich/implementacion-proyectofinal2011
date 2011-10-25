@@ -123,4 +123,15 @@ public class Faltante implements java.io.Serializable {
     public void setFecNecesidad(Date fecNecesidad) {
         this.fecNecesidad = fecNecesidad;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        try{
+            if(((Faltante)obj).getId()==this.getId())
+                return true;
+        }catch(Exception ex){}
+        return false;
+    }
+
+
 }

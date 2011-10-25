@@ -11,6 +11,7 @@ import Negocio.Compras.DetalleOrdenCompra;
 import Negocio.Compras.OrdenCompra;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Deposito.PantalleRecepcionDeMateriales;
+import Presentacion.Mensajes;
 import org.hibernate.Hibernate;
 
 /**
@@ -32,8 +33,26 @@ public abstract class GestorRecepcionMaterial {
     }
 
     public  void iniciarCU(int nroOrden)
-    {            
+    {
+        String mensaje="";
         ordenCompra=OrdenCompraBD.getOrdenCompra(nroOrden);
+        
+        if(ordenCompra==null)
+        {
+            mensaje="No existe ningunna orden de compra con el nro. "+nroOrden+
+                    "\nPor favor pruebe con otro numero";
+            Mensajes.mensajeErrorGenerico(mensaje);
+            return;
+        }
+        if(ordenCompra.getEstado().equals(EstadoOrdenCompraBD.getEstadoPendiente())==false)
+        {
+            mensaje="La orden de comprada con el nro. "+ordenCompra.getId()+" es invalida.\n"+
+                "Solo las ordenes pendientes pueden se enviadas";
+            Mensajes.mensajeErrorGenerico(mensaje);
+            return;
+        }
+        /************************************************/
+
         interfaz.cargarOrden(ordenCompra);   
         interfaz.habilitarCarga(true);
     }
