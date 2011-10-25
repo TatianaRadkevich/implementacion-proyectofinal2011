@@ -1,6 +1,7 @@
 
                   /* SCRIPT DE CREACIÓN RAMATY - Versión 1-3*/
-                  
+
+
 CREATE TABLE T_ALMACENAMIENTOS_PRODUCTO_TERMINADO (
        ID_ALMACENAMIENTO_PRODUCTO_TERMINADO numeric(8) IDENTITY,
        FEC_HORA_ALMACENAMIENTO datetime NOT NULL,
@@ -434,11 +435,11 @@ CREATE TABLE T_EMPLEADOS (
        OBSERVACIONES        varchar(200) NULL,
        ID_ASISTENCIA_EMPLEADO numeric(5) NULL,
        ID_DIAS_HORAS_LABORABLES numeric(3) NULL,
-       ID_USUARIO           numeric(5) NOT NULL,
+       ID_USUARIO           numeric(5) NULL,
        FEC_BAJA             datetime NULL,
        MOTIVO_BAJA          varchar(100) NULL,
        ID_ESTADO_EMPLEADO   numeric(2) NOT NULL,
-       ID_ASIGNACION_HORARIO numeric(4) NOT NULL
+       ID_ASIGNACION_HORARIO numeric(4) NULL
 )
 go
 
@@ -724,7 +725,8 @@ CREATE TABLE T_ORDENES_COMPRA (
        ID_PROVEEDOR         numeric(3) NOT NULL,
        ID_EORDEN_COMPRA     numeric(2) NOT NULL,
        FEC_CANCELACION      datetime NULL,
-       MOTIVO_CANCELACION   varchar(200) NULL
+       MOTIVO_CANCELACION   varchar(200) NULL,
+       FEC_ENVIO            datetime NULL
 )
 go
 
@@ -775,7 +777,8 @@ CREATE TABLE T_PEDIDOS (
        FEC_BAJA             datetime NULL,
        MOTIVO_BAJA          varchar(100) NULL,
        ID_EMPLEADO          numeric(5) NOT NULL,
-       ID_FACTURA           numeric(8) NULL
+       ID_FACTURA           numeric(8) NULL,
+       FEC_CLI_REC          datetime NULL
 )
 go
 
@@ -1795,3 +1798,4 @@ go
 
 
 
+             
