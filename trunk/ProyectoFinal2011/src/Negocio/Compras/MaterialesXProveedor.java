@@ -26,7 +26,7 @@ public class MaterialesXProveedor implements java.io.Serializable {
     @JoinColumn(name = "ID_PROVEEDOR")
     private Proveedor TProveedores;
     @Column(name="PRECIO_UNITARIO", precision=6)
-    private Float precioUnitario;
+    private Float precioUnitario=5f;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_MATERIAL")
     private Material TMateriales;
