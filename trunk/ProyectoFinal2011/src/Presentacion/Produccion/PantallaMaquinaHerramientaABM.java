@@ -344,9 +344,9 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
         MaquinaHerramientaParticular maqHer = gestor.getMaquinaHerramientaParticular();
 //        maqHer.setCapacidadProductiva(tmCapacidad.getDatos());
         maqHer.setCaracteristicas(txtCaracteristicas.getText());
-        if(maqHer.getCapacidadProductiva().isEmpty())
-            maqHer.getCapacidadProductiva().add(new CapacidadProductiva());
-        maqHer.getCapacidadProductiva().get(0).setCapacidad(Utilidades.parseInteger(txtCapacidad.getText()));
+//        if(maqHer.getCapacidadProductiva().isEmpty())
+//            maqHer.getCapacidadProductiva().add(new CapacidadProductiva());
+//        maqHer.getCapacidadProductiva().get(0).setCapacidad(Utilidades.parseInteger(txtCapacidad.getText()));
         maqHer.setCodigo(txtCodigo.getText());
         maqHer.setModelo(txtModelo.getText());
         maqHer.setNombre(txtNombre.getText());
