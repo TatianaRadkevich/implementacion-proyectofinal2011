@@ -123,7 +123,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(EtapaProduccionEspecifica elemento) {
                 Vector fila = new Vector();
-                fila.add((elemento.getDetallePlanProduccion()==null)?"Sin Planificar":"Planificado");
+                fila.add((elemento.getDetallePlanProduccion().isEmpty())?"Sin Planificar":"Planificado");
                 fila.add(elemento.getNumeroOrden());
                 fila.add(elemento.getEtapaProduccion().getNombre());
                 fila.add(elemento.getDuracion());
@@ -145,7 +145,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             public Vector getCabecera() {
                 Vector cabecera = new Vector();
                 cabecera.add("Estado");
-                cabecera.add("Nro Oreden");
+                cabecera.add("Orden");
                 cabecera.add("Etapa");
                 cabecera.add("Duración");
                 cabecera.add("Tipo maquina");
@@ -291,8 +291,18 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     }
 
     private void cargarDatosPlanificacionEtapa(EtapaProduccionEspecifica epe) {
+        TipoMaquinaHerramienta tipoMaq = null;
+        for (DetalleEtapaProduccion det : epe.getDetalleEtapaProduccion()) {
+            if (det.getTipoMaquinaHerramienta() != null) {
+                tipoMaq = det.getTipoMaquinaHerramienta();
+            }
+        }
+        tmEmpleado.setDatos(EmpleadoBD.getEmpleados(epe.getCargo(), true, false));
+         tmMaquina.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(tipoMaq, true, false));
+
         if (epe == null||epe.getDetallePlanProduccion().isEmpty()) {
             limpiarDatosEtapaPlanificacion();
+
             return;
         }
 
@@ -301,17 +311,12 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         fhInicioDetallePlan.setDate((detalle.getFecHoraPrevistaInicio() == null) ? Utilidades.getFechaActual() : detalle.getFecHoraPrevistaInicio());
         txtTiempoFin.setText(Utilidades.parseFechaHora(detalle.getFecHoraPrevistaInicio()));
 
-        TipoMaquinaHerramienta tipoMaq = null;
-        for (DetalleEtapaProduccion det : detalle.getTEtapasProduccionEspecifica().getDetalleEtapaProduccion()) {
-            if (det.getTipoMaquinaHerramienta() != null) {
-                tipoMaq = det.getTipoMaquinaHerramienta();
-            }
-        }
+   
 
-        tmMaquina.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(tipoMaq, true, false));
+//        tmMaquina.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(tipoMaq, true, false));
         tmMaquina.setSelectedRow(detalle.getTMaquinasHerramientaParticular());
 
-        tmEmpleado.setDatos(EmpleadoBD.getEmpleados(detalle.getTEtapasProduccionEspecifica().getCargo(), true, false));
+//        tmEmpleado.setDatos(EmpleadoBD.getEmpleados(detalle.getTEtapasProduccionEspecifica().getCargo(), true, false));
         tmEmpleado.setSelectedRow(detalle.getTEmpleados());
 
         txtObservaciones.setText(detalle.getObservaciones());
@@ -859,6 +864,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
         habilitarDatosPlanificacion(false);
         limpiarDatosEtapaPlanificacion();
+        tmEstructura.updateTabla();
 
 }//GEN-LAST:event_btnAceptarActionPerformed
 
