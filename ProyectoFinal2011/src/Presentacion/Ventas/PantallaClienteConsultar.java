@@ -36,7 +36,7 @@ private TablaManager<Cliente> tablita;
     /** Creates new form PantallaClienteConsultar */
     public PantallaClienteConsultar(java.awt.Frame parent, boolean modal) {
     super(parent, modal);
-        GUILocal.establecerGUILocal(this);
+//        GUILocal.establecerGUILocal(this);
         initComponents();
         HibernateUtil.getSessionFactory();
         tablita = new TablaManager<Cliente>(tbClientes) {
