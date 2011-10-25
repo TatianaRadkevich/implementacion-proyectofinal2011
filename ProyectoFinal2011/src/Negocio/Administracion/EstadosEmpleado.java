@@ -27,7 +27,7 @@ public class EstadosEmpleado  implements java.io.Serializable {
     @Id
     @GeneratedValue
     @Column(name="ID_ESTADO_EMPLEADO", unique=true, nullable=false, precision=2, scale=0)
-     private byte idEstadoEmpleado;
+     private int idEstadoEmpleado;
      /*---------------------------------------------------------------------------------------------*/
      @Column(name="NOMBRE", nullable=false, length=50)
      private String nombre;
@@ -41,11 +41,11 @@ public class EstadosEmpleado  implements java.io.Serializable {
     }
 
 	
-    public EstadosEmpleado(byte idEstadoEmpleado, String nombre) {
+    public EstadosEmpleado(int idEstadoEmpleado, String nombre) {
         this.idEstadoEmpleado = idEstadoEmpleado;
         this.nombre = nombre;
     }
-    public EstadosEmpleado(byte idEstadoEmpleado, String nombre, String descripcion) {
+    public EstadosEmpleado(int idEstadoEmpleado, String nombre, String descripcion) {
        this.idEstadoEmpleado = idEstadoEmpleado;
        this.nombre = nombre;
        this.descripcion = descripcion;
@@ -53,11 +53,11 @@ public class EstadosEmpleado  implements java.io.Serializable {
     }
    
      
-    public byte getIdEstadoEmpleado() {
+    public int getIdEstadoEmpleado() {
         return this.idEstadoEmpleado;
     }
     
-    public void setIdEstadoEmpleado(byte idEstadoEmpleado) {
+    public void setIdEstadoEmpleado(int idEstadoEmpleado) {
         this.idEstadoEmpleado = idEstadoEmpleado;
     }
     

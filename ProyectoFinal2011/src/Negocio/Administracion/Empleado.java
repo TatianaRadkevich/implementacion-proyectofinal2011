@@ -119,7 +119,7 @@ public class Empleado implements java.io.Serializable {
      private EstadosEmpleado TEstadosEmpleado;
      /*---------------------------------------------------------------------------------------------*/
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_ASIGNACION_HORARIO", nullable=false)
+    @JoinColumn(name="ID_ASIGNACION_HORARIO", nullable=true)
      private AsignacionesHorario TAsignacionesHorario;
      /*---------------------------------------------------------------------------------------------*/
 
