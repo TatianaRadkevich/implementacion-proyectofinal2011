@@ -36,7 +36,7 @@ private TablaManager<Proveedor> tablita;
     /** Creates new form PantallaProveedorConsultar */
     public PantallaProveedorConsultar(java.awt.Frame parent, boolean modal) {
     super(parent, modal);
-        GUILocal.establecerGUILocal(this);
+//        GUILocal.establecerGUILocal(this);
         initComponents();
         HibernateUtil.getSessionFactory();
         tablita = new TablaManager<Proveedor>(tbProveedores) {

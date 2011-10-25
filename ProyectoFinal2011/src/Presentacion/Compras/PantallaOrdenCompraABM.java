@@ -201,17 +201,23 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
     private void cargarCombos() {
         cmbProveedor.setModel(new DefaultComboBoxModel(gestor.getProveedores().toArray()));
         cmbProveedor.addActionListener(new ActionListener() {
-
+            boolean nada=false;
             public void actionPerformed(ActionEvent e) {
-                if (cmbProveedor.getSelectedIndex() != -1) {
+                if(nada)
+                {
                     String mensaje = "¡Si selecciona otro proveedor se reiniciara la orden de compra!\n ¿Desea continuar?";
                     if (Mensajes.mensajeConfirmacionGenerico(mensaje) == false) {
                         return;
                     }
+                }
+                if (cmbProveedor.getSelectedIndex() != -1) {
+                    
                     Proveedor p = (Proveedor) cmbProveedor.getSelectedItem();
                     cmbMaterial.setModel(new DefaultComboBoxModel(p.getMateriales().toArray()));
+                    nada=false;
 
                 } else {
+                    nada=true;
                     cmbMaterial.removeAllItems();
                 }
                 cmbMaterial.setSelectedIndex(-1);
@@ -221,7 +227,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         cmbMaterial.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                if (cmbMaterial.getSelectedIndex() != -1) {
+                if (cmbMaterial.getSelectedIndex() == -1) {
                     return;
                 }
                 Material m = (Material) cmbMaterial.getSelectedItem();
@@ -426,7 +432,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(btnDetalleAceptar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDetalleCancelar)
@@ -458,11 +464,11 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                 .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(pnlDetalleABM, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlDetalleLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 612, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 623, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnNuevoDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -490,6 +496,12 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Proveedores:");
+
+        cmbProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbProveedorActionPerformed(evt);
+            }
+        });
 
         pnlStock.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Stock", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
@@ -547,7 +559,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAgregarTodosFaltantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnlStockLayout = new javax.swing.GroupLayout(pnlStock);
@@ -555,7 +567,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         pnlStockLayout.setHorizontalGroup(
             pnlStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlStockLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -748,6 +760,10 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         // TODO add your handling code here:
         calcularUnidades();
     }//GEN-LAST:event_txtCantidadKeyReleased
+
+    private void cmbProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProveedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbProveedorActionPerformed
 
     /**
      * @param args the command line arguments

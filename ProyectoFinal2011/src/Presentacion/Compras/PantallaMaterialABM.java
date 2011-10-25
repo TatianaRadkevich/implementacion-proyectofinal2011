@@ -34,14 +34,14 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         cargarValidaciones();
-        pnlBaja.setVisible(false);
-        cmbUnidadMedida.setModel(new DefaultComboBoxModel(gestor.getUnidadMedida().toArray()));
+        pnlBaja.setVisible(false);        
     }
 
     public PantallaMaterialABM(GestorMaterial gm) {
         this(null, true);
         gestor = gm;
         lstProveedores.setData(gestor.getProveedores());
+        cmbUnidadMedida.setModel(new DefaultComboBoxModel(gestor.getUnidadMedida().toArray()));
     }
 
     public void cargar(Material m)
