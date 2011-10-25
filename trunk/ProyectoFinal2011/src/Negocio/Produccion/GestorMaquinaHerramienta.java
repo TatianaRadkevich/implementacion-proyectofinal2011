@@ -40,6 +40,12 @@ public abstract class GestorMaquinaHerramienta {
         return MaquinaHerramientaBD.listarTipoMaquinaHerramienta();
     }
 
+    public int getUltimoID() {
+
+        return MaquinaHerramientaBD.getUltimoID();
+
+    }
+
     public List<EstadoMaquina> getEstadoMaquina() {
         return MaquinaHerramientaBD.listarEstadoMaquina();
     }
