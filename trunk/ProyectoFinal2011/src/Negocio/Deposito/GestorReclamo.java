@@ -3,9 +3,9 @@
  * and open the template in the editor.
  */
 
-package Negocio.Compras;
+package Negocio.Deposito;
 
-import BaseDeDatos.Compras.ReclamoBD;
+import BaseDeDatos.Deposito.ReclamoBD;
 import java.util.List;
 /**
  *

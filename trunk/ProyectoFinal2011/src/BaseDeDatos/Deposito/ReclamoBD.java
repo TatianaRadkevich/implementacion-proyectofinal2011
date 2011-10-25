@@ -3,10 +3,10 @@
  * and open the template in the editor.
  */
 
-package BaseDeDatos.Compras;
+package BaseDeDatos.Deposito;
 
 import BaseDeDatos.HibernateUtil;
-import Negocio.Compras.Reclamo;
+import Negocio.Deposito.Reclamo;
 import java.util.ArrayList;
 import java.util.List;
 
