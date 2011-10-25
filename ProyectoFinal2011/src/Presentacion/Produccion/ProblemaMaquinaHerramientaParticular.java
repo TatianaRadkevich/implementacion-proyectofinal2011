@@ -38,7 +38,7 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
     private GestorProblemasMhp gestor=new GestorProblemasMhp();
             /** Creates new form ProblemaMaquinaHerramientaParticular */
     public ProblemaMaquinaHerramientaParticular(java.awt.Frame parent, boolean modal) {
-           super((JFrame)null, modal);
+        super((JFrame)null, modal);
         GUILocal.establecerGUILocal(this);
         initComponents();
         ((JTextFieldDateEditor) dtcFechaEstimadaSolucion.getDateEditor()).setEditable(false);
@@ -228,6 +228,11 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
         });
 
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de Máquina o Herramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
@@ -386,6 +391,10 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
         lblTipoMoH.setText("Tipo de Herramienta:");
         lblMoHPart.setText("Herramienta Particular:");
     }//GEN-LAST:event_rdbHerramienta1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
     * @param args the command line arguments
