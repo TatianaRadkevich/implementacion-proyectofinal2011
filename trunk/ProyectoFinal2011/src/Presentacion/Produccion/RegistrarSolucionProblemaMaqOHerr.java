@@ -72,14 +72,13 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblProbActuales = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Máquina/Herramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        lblMoHPart.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblMoHPart.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblMoHPart.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblMoHPart.setText("Herramienta particular:");
 
@@ -95,7 +94,7 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
             }
         });
 
-        lblTipoMoH.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblTipoMoH.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblTipoMoH.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTipoMoH.setText("Tipo de Herramienta:");
 
@@ -110,7 +109,7 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         });
 
         buttonGroup1.add(rdbMaquina1);
-        rdbMaquina1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        rdbMaquina1.setFont(new java.awt.Font("Tahoma", 1, 11));
         rdbMaquina1.setText("Máquina");
         rdbMaquina1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -221,14 +220,7 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
                 .addGap(20, 20, 20))
         );
 
-        jButton2.setText("Aceptar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setText("Cancelar");
+        jButton3.setText("Salir");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -242,14 +234,14 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,11 +250,9 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
-                .addGap(39, 39, 39))
+                .addGap(26, 26, 26)
+                .addComponent(jButton3)
+                .addGap(40, 40, 40))
         );
 
         pack();
@@ -323,10 +313,6 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         lblMoHPart.setText("    Máquina Particular:");
 }//GEN-LAST:event_rdbMaquina1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
       dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -353,7 +339,6 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cmbMaqHerrParticular;
     private javax.swing.JComboBox cmbTipoMaqHerr;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
