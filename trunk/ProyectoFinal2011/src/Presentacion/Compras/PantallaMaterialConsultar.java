@@ -308,11 +308,11 @@ public class PantallaMaterialConsultar extends javax.swing.JDialog {
 }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try {
+//        try {
             new GestorMaterialModificar(tablita.getSeletedObject()).iniciarCU();
-        } catch (Exception ex) {
-            Mensajes.mensajeErrorGenerico(ex.getMessage());
-        }
+//        } catch (Exception ex) {
+//            Mensajes.mensajeErrorGenerico(ex.getMessage());
+//        }
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
