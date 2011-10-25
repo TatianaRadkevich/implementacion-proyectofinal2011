@@ -137,4 +137,8 @@ public abstract class TablaManager<E> {
     public void setSelectedRow(int i) {
         tabla.setRowSelectionInterval(i, i);
     }
+
+     public void setSelectedRow(E o) {
+         setSelectedRow(contenido.indexOf(o));
+    }
 }

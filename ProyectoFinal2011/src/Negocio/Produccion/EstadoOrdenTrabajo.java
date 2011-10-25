@@ -26,7 +26,7 @@ public class EstadoOrdenTrabajo  implements java.io.Serializable {
      private byte idEordenTrabajo;
      private String nombre;
      private String descripcion;
-     private Set TOrdenesTrabajos = new HashSet(0);
+//     private Set TOrdenesTrabajos = new HashSet(0);
 
     public EstadoOrdenTrabajo() {
     }
@@ -40,7 +40,7 @@ public class EstadoOrdenTrabajo  implements java.io.Serializable {
        this.idEordenTrabajo = idEordenTrabajo;
        this.nombre = nombre;
        this.descripcion = descripcion;
-       this.TOrdenesTrabajos = TOrdenesTrabajos;
+//       this.TOrdenesTrabajos = TOrdenesTrabajos;
     }
    
      @Id 
@@ -71,14 +71,14 @@ public class EstadoOrdenTrabajo  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEordenTrabajo")
-    public Set getTOrdenesTrabajos() {
-        return this.TOrdenesTrabajos;
-    }
+//@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TEordenTrabajo")
+//    public Set getTOrdenesTrabajos() {
+////        return this.TOrdenesTrabajos;
+//    }
     
-    public void setTOrdenesTrabajos(Set TOrdenesTrabajos) {
-        this.TOrdenesTrabajos = TOrdenesTrabajos;
-    }
+//    public void setTOrdenesTrabajos(Set TOrdenesTrabajos) {
+////        this.TOrdenesTrabajos = TOrdenesTrabajos;
+//    }
 
 
 
