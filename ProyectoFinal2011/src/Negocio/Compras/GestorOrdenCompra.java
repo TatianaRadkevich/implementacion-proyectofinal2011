@@ -6,6 +6,7 @@ package Negocio.Compras;
 
 import BaseDeDatos.Compras.ProveedorBD;
 import BaseDeDatos.HibernateUtil;
+import BaseDeDatos.Compras.OrdenCompraBD;
 import Negocio.Deposito.Faltante;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Compras.PantallaOrdenCompraABM;

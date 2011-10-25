@@ -24,6 +24,14 @@ public class MaquinaHerramientaBD {
         return HibernateUtil.ejecutarConsulta("FROM EstadoMaquina");
     }
 
+    public static int getUltimoID()
+    {
+        try{
+        return (Integer) HibernateUtil.ejecutarConsulta("SELECT   max(idMaquinaHerramientaParticular) FROM MaquinaHerramientaParticular").get(0);
+        }catch(Exception e)
+        {return 0;}
+    }
+
     public static List<TipoMaquinaHerramienta> listarTipoMaquinaHerramienta() {
         return HibernateUtil.ejecutarConsulta("FROM TipoMaquinaHerramienta");
     }

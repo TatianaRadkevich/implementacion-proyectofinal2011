@@ -33,6 +33,10 @@ public class OrdenCompraBD {
             return (OrdenCompra) HibernateUtil.getObjeto(OrdenCompra.class, id);
     }
 
+    public static int getUltimoNro(){
+      return OrdenCompraBD.getUltimoNro();
+    }
+
     
     public static List<OrdenCompra> getOrdenes(
             String nro,EstadoOrdenCompra estado,Proveedor proveedor,
