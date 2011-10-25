@@ -6,7 +6,9 @@
 package Negocio.Compras;
 
 import BaseDeDatos.Compras.ProveedorBD;
+import BaseDeDatos.Produccion.UnidadMedidaBD;
 import Negocio.Exceptiones.ExceptionGestor;
+import Negocio.Produccion.UnidadMedida;
 import Presentacion.Compras.PantallaMaterialABM;
 import java.util.List;
 
@@ -36,4 +38,7 @@ protected PantallaMaterialABM interfaz;
         return ProveedorBD.listarProveedores();
     }
 
+     public List<UnidadMedida>  getUnidadMedida() {
+        return UnidadMedidaBD.listarUnidadMedida();
+    }
 }

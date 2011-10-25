@@ -43,7 +43,4 @@ public abstract class GestorMaquinaHerramienta {
     public List<EstadoMaquina> getEstadoMaquina() {
         return MaquinaHerramientaBD.listarEstadoMaquina();
     }
-
-     
-
 }
