@@ -11,6 +11,7 @@
 
 package Presentacion.Administracion;
 
+import BaseDeDatos.Administracion.EstadoEmpleadoBD;
 import BaseDeDatos.Administracion.TEmpleadosXCargoBD;
 import BaseDeDatos.UbicacionGeografica.DomicilioBD;
 import Negocio.Administracion.Cargo;
@@ -20,6 +21,7 @@ import Negocio.Administracion.GestorModificarEmpleado;
 import Negocio.Administracion.GestorRegistrarEmpleado;
 import Negocio.Administracion.Sexo;
 import Negocio.Administracion.EmpleadosXCargo;
+import Negocio.Administracion.EstadosEmpleado;
 import Negocio.Administracion.TipoDocumento;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.UbicacionGeografica.Barrio;
@@ -589,6 +591,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
            empleado.setCelular(Long.parseLong(txtCelular.getText()));
            empleado.setCorreoElectronico(txtEmail.getText());
            empleado.setCargos(lstCargos.getSelectedItems());
+           empleado.setTEstadosEmpleado(EstadoEmpleadoBD.traerEstadoDisponible());
 
            Domicilio domicilio=empleado.getTDomicilios();
            domicilio.setTPaises((Pais) cmbPais.getSelectedItem());
@@ -602,6 +605,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                empleado.setFecBaja(new Date());
                empleado.setMotivoBaja(this.txtMotivoBaja.getText());
            }
+
 
 
 
