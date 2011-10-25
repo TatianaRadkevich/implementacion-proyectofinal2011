@@ -72,13 +72,12 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
         tblProbActuales = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        btnAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Máquina/Herramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        lblMoHPart.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblMoHPart.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblMoHPart.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblMoHPart.setText("Herramienta particular:");
 
@@ -94,12 +93,12 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
             }
         });
 
-        lblTipoMoH.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblTipoMoH.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblTipoMoH.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTipoMoH.setText("Tipo de Herramienta:");
 
         buttonGroup1.add(rdbMaquina1);
-        rdbMaquina1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        rdbMaquina1.setFont(new java.awt.Font("Tahoma", 1, 11));
         rdbMaquina1.setText("Máquina");
         rdbMaquina1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,7 +107,7 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
         });
 
         buttonGroup1.add(rdbHerramienta1);
-        rdbHerramienta1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        rdbHerramienta1.setFont(new java.awt.Font("Tahoma", 1, 11));
         rdbHerramienta1.setSelected(true);
         rdbHerramienta1.setText("Herramienta");
         rdbHerramienta1.addActionListener(new java.awt.event.ActionListener() {
@@ -117,7 +116,7 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Tipo:");
 
@@ -181,18 +180,19 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(208, 208, 208)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 955, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(978, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(103, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1060, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2))
@@ -227,33 +227,33 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(201, 201, 201)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)))
+                .addGap(747, 747, 747)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(101, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(91, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1072, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton1))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnCancelar.setText("Cancelar");
-
-        btnAceptar.setText("Aceptar");
+        btnCancelar.setText("Salir");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -261,16 +261,13 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
@@ -280,12 +277,10 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(19, 19, 19)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar)
-                    .addComponent(btnCancelar))
+                .addGap(18, 18, 18)
+                .addComponent(btnCancelar)
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -338,6 +333,10 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+      dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -356,7 +355,6 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cmbMaqHerrParticular;
@@ -388,6 +386,7 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
                 cabecera.add("Código Máquina");
                 cabecera.add("Nombre Máquina");
                 cabecera.add("Descripción Problema");
+                cabecera.add("Observaciones Solución");
                 cabecera.add("Fecha Problema");
                 cabecera.add("Fecha Estimada Solución");
                 cabecera.add("Fecha Real Solución");
@@ -404,6 +403,7 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
                 fila.add(elemento.getTMaquinasHerramientaParticular().getId());
                 fila.add(elemento.getTMaquinasHerramientaParticular().getNombre());
                 fila.add(elemento.getDescripcion());
+                fila.add(elemento.getObservacionesSolucion());
                 fila.add(Utilidades.parseFecha(elemento.getFecHoraProblema()));
                 fila.add(Utilidades.parseFecha(elemento.getFecHoraEstimadaSolucion()));
                 fila.add(Utilidades.parseFecha(elemento.getFecHoraRealSolucion()));
