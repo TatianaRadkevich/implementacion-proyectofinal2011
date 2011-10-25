@@ -703,6 +703,15 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         doc.setPrecioUnitario(doc.getMaterial().getPrecio((Proveedor) cmbProveedor.getSelectedItem()));
         doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoPendiente());
         tmOrdenCompra.add(doc);
+
+        int auxCant=doc.getCantidadPedida();
+        for(Faltante f:doc.getMaterial().getFaltantes())
+            if(f.getCantidad()<=auxCant)
+            {
+                f.setDetalleOrdenCompra(doc);
+                auxCant=auxCant-f.getCantidad();
+            }
+
         limpiarCargaDetalle();
         habilitarCargaDetalle(false);
     }//GEN-LAST:event_btnDetalleAceptarActionPerformed
