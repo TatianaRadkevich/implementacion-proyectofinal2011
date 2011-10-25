@@ -28,14 +28,16 @@
     <mapping class="Negocio.Compras.DetalleOrdenCompra"/>
     <mapping class="Negocio.Compras.EstadoDetalleOrdenCompra"/>
     <mapping class="Negocio.Compras.EstadoOrdenCompra"/>
-    <mapping class="Negocio.Compras.EstadoReclamo"/>
+    <mapping class="Negocio.Deposito.EstadoReclamo"/>
     <mapping class="Negocio.Compras.Material"/>
     <mapping class="Negocio.Compras.MaterialesXProveedor"/>
     <mapping class="Negocio.Compras.OrdenCompra"/>
     <mapping class="Negocio.Compras.Proveedor"/>
-    <mapping class="Negocio.Compras.Reclamo"/>
+    
 
     <mapping class="Negocio.Deposito.Faltante"/>
+    <mapping class="Negocio.Deposito.Reclamo"/>
+    <mapping class="Negocio.Deposito.Reclamo"/>
     <mapping class="Negocio.GestionUsuario.Usuario"/>
 
     <mapping class="Negocio.Produccion.DetalleEtapaProduccion"/>

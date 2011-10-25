@@ -9,13 +9,13 @@
  * Created on 25-oct-2011, 0:17:58
  */
 
-package Presentacion.Compras;
+package Presentacion.Deposito;
 
-import BaseDeDatos.Compras.EstadoReclamoBD;
-import BaseDeDatos.Compras.ReclamoBD;
-import Negocio.Compras.EstadoReclamo;
-import Negocio.Compras.GestorReclamo;
-import Negocio.Compras.Reclamo;
+import BaseDeDatos.Deposito.EstadoReclamoBD;
+import BaseDeDatos.Deposito.ReclamoBD;
+import Negocio.Deposito.EstadoReclamo;
+import Negocio.Deposito.GestorReclamo;
+import Negocio.Deposito.Reclamo;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.Utilidades;
@@ -130,18 +130,11 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
                     .addComponent(lblTipoMoH1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtNroOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtCodReclamo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+                    .addComponent(txtNroOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodReclamo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,7 +206,7 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
             reclamo.setMotivo(txtMotivo.getText());
             reclamo.setDescripcion(txtDescripcion.getText());
             reclamo.setTEreclamo(EstadoReclamoBD.getEst_Generado() );
-            ReclamoBD.guardar(reclamo);
+            gestor.guardar(reclamo);
             Mensajes.mensajeInformacion("El reclamo ha sido registrado exitosamente");
 
         }
