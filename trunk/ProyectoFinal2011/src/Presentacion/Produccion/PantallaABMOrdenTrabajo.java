@@ -14,7 +14,10 @@ import Presentacion.Ventas.*;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.Empleado;
+import Negocio.Compras.OrdenCompra;
 import Negocio.Produccion.DetallePlanProduccion;
+import Negocio.Produccion.GestorOrdenTrabajo;
+import Negocio.Produccion.OrdenTrabajo;
 import Negocio.Produccion.PlanProduccion;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.GestorPedidoBaja;
@@ -43,9 +46,10 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
 
     private TablaManager<Pedido> tmPedido;
     private TablaManager<DetallePlanProduccion> tmEtapas;
+    private GestorOrdenTrabajo gestor;
 
     /** Creates new form PantallaConsultarPedido */
-    public PantallaABMOrdenTrabajo(java.awt.Frame parent, boolean modal) {
+    public PantallaABMOrdenTrabajo(java.awt.Frame parent, boolean modal, GestorOrdenTrabajo orden) {
         super(parent, modal);
 
         initComponents();
@@ -53,7 +57,8 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         inicializarTablas();
         cargarValidaciones();
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
-
+        gestor=orden;
+        txtFecha.setText(Utilidades.parseFechaHora(new Date()));
 
     }
 
@@ -223,6 +228,12 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         lblFechaInicio = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtObservacion = new javax.swing.JTextArea();
+        jLabel10 = new javax.swing.JLabel();
+        txtFecha = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestor de Pedidos");
@@ -443,7 +454,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
                     .addComponent(lblFechaPlanificacion)
                     .addComponent(lblFechaInicio))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jButton1.setText("Generar Orden Trabajo");
@@ -460,20 +471,64 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
             }
         });
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Orden de trabajo"));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel9.setText("Observación:");
+
+        txtObservacion.setColumns(20);
+        txtObservacion.setRows(5);
+        jScrollPane2.setViewportView(txtObservacion);
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel10.setText("Fecha generación:");
+
+        txtFecha.setEditable(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(228, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlPedidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlDetalle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -484,8 +539,10 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(13, 13, 13)
+                .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(jButton1))
@@ -519,13 +576,26 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        PlanProduccion plan= ((Pedido)tmPedido.getSeletedObject()).getPlanProduccion();
-       
+        PlanProduccion plan= ((Pedido)tmPedido.getSeletedObject()).getPlanProduccion();       
         List<Empleado> empleados=plan.getEmpleadosInvolucrados();
-
+        
+        OrdenTrabajo tempOrden;
+        Date fecha=new Date();
         for(int i=0; i<empleados.size();i++){
+            tempOrden=new OrdenTrabajo();
+            tempOrden.setTEmpleados(empleados.get(i));
+            tempOrden.setFecEmision(fecha);
+            tempOrden.setTEordenTrabajo(gestor.estadoGenerado());
+            tempOrden.setObservaciones(txtObservacion.getText());
+            gestor.guardarOrdenTrabajo(tempOrden);
+            List<DetallePlanProduccion> detalle=plan.getDetallePlan(empleados.get(i));
 
-
+            for(int j=0; j<detalle.size();i++)
+            {
+                detalle.get(i).setTOrdenesTrabajo(tempOrden);
+                detalle.get(i).setTEdetallePlan(gestor.estadoDetalleEnEjecucion());
+            }
+            gestor.actualizarDetalle(detalle);
 
 
         }
@@ -565,7 +635,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                PantallaABMOrdenTrabajo dialog = new PantallaABMOrdenTrabajo(new javax.swing.JFrame(), true);
+                PantallaABMOrdenTrabajo dialog = new PantallaABMOrdenTrabajo(new javax.swing.JFrame(), true, new GestorOrdenTrabajo());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -584,6 +654,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
     private com.toedter.calendar.JDateChooser dtcFechaGeneracionHasta;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -591,8 +662,11 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblFechaInicio;
     private javax.swing.JLabel lblFechaPlanificacion;
@@ -603,7 +677,9 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
     private javax.swing.JTable tbEtapasPlanificadas;
     private javax.swing.JTable tbPedidos;
     private javax.swing.JTextField txtCUIL;
+    private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtNroPedido;
+    private javax.swing.JTextArea txtObservacion;
     private javax.swing.JTextField txtRazonSocial;
     // End of variables declaration//GEN-END:variables
 }
