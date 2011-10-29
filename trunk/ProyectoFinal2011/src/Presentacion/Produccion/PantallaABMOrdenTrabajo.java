@@ -10,19 +10,15 @@
  */
 package Presentacion.Produccion;
 
-import Presentacion.Ventas.*;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.Empleado;
-import Negocio.Compras.OrdenCompra;
 import Negocio.Produccion.DetallePlanProduccion;
 import Negocio.Produccion.GestorOrdenTrabajo;
 import Negocio.Produccion.OrdenTrabajo;
 import Negocio.Produccion.PlanProduccion;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.GestorPedidoBaja;
-import Negocio.Ventas.GestorPedidoModificar;
-import Negocio.Ventas.GestorPedidoAlta;
 import Negocio.Ventas.Pedido;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
@@ -30,8 +26,6 @@ import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import com.toedter.calendar.JTextFieldDateEditor;
-import gui.GUILocal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
