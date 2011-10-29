@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JDialog;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -62,6 +63,18 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
 
     }
 
+    public PantallaABMOrdenTrabajo(JDialog parent, boolean modal, GestorOrdenTrabajo orden) {
+        super(parent, modal);
+
+        initComponents();
+        HibernateUtil.getSessionFactory();
+        inicializarTablas();
+        cargarValidaciones();
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
+        gestor=orden;
+        txtFecha.setText(Utilidades.parseFechaHora(new Date()));
+
+    }
     private void inicializarTablas() {
         tmPedido = new TablaManager<Pedido>(tbPedidos) {
 
@@ -579,7 +592,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         PlanProduccion plan= ((Pedido)tmPedido.getSeletedObject()).getPlanProduccion();       
         List<Empleado> empleados=plan.getEmpleadosInvolucrados();
         
-        OrdenTrabajo tempOrden;
+        OrdenTrabajo tempOrden=null;
         Date fecha=new Date();
         for(int i=0; i<empleados.size();i++){
             tempOrden=new OrdenTrabajo();
@@ -597,21 +610,10 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
             }
             gestor.actualizarDetalle(detalle);
 
-
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
+        Mensajes.mensajeInformacion("La orden de trabajo ha sido regitrado exitosamente "
+                + "\n su numero de orden es: " + tempOrden.getIdOrdenTrabajo());
 
 
 
