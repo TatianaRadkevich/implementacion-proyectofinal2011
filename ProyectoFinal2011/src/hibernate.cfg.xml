@@ -56,6 +56,7 @@
     <mapping class="Negocio.Produccion.EstadoOrdenTrabajo"/>
     <mapping class="Negocio.Produccion.OrdenTrabajo"/>
     <mapping class="Negocio.Produccion.ProblemasMhp"/>
+    <mapping class="Negocio.Produccion.EstadoDetallePlan"/>
 
     <mapping class="Negocio.UbicacionGeografica.Barrio"/>
     <mapping class="Negocio.UbicacionGeografica.Domicilio"/>
