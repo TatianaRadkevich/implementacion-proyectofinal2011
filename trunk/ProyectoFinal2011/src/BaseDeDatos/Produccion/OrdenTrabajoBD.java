@@ -39,7 +39,7 @@ public class OrdenTrabajoBD {
         return var;
     }
 
-    public static OrdenTrabajo traerProducto(Long id){
+    public static OrdenTrabajo traerOrdenTrabajo(Long id){
 
         return (OrdenTrabajo) HibernateUtil.getObjeto(OrdenTrabajo.class, id);
     }
