@@ -68,6 +68,15 @@ public class DetallePlanProduccion implements java.io.Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TDetallesPlan")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
+    /*------------------------------------------------------------------------*/
+     @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_ORDEN_TRABAJO", nullable=false)
+    private OrdenTrabajo TOrdenesTrabajo;
+/*------------------------------------------------------------------------*/
+      @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_EDETALLE_PLAN", nullable=false)
+     private EstadoDetallePlan TEdetallePlan;
+
 
     public DetallePlanProduccion() {
     }
@@ -77,7 +86,7 @@ public class DetallePlanProduccion implements java.io.Serializable {
         TEtapasProduccionEspecifica.addDetallePlanProduccion(this);
     }
 
-    public DetallePlanProduccion(int idDetallePlan, EtapaProduccionEspecifica TEtapasProduccionEspecifica, Empleado TEmpleados, PlanProduccion TPlanesProduccion, MaquinaHerramientaParticular TMaquinasHerramientaParticular, int cantidad, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealInicio, Date fecHoraRealFin) {
+    public DetallePlanProduccion(int idDetallePlan, EtapaProduccionEspecifica TEtapasProduccionEspecifica, Empleado TEmpleados, PlanProduccion TPlanesProduccion, MaquinaHerramientaParticular TMaquinasHerramientaParticular, int cantidad, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealInicio, Date fecHoraRealFin, OrdenTrabajo TOrdenesTrabajo,EstadoDetallePlan TEdetallePlan) {
         this.idDetallePlan = idDetallePlan;
         this.TEtapasProduccionEspecifica = TEtapasProduccionEspecifica;
         this.TEmpleados = TEmpleados;
@@ -88,9 +97,11 @@ public class DetallePlanProduccion implements java.io.Serializable {
         this.fecHoraPrevistaInicio = fecHoraPrevistaInicio;
         this.fecHoraRealInicio = fecHoraRealInicio;
         this.fecHoraRealFin = fecHoraRealFin;
+        this.TOrdenesTrabajo = TOrdenesTrabajo;
+        this.TEdetallePlan = TEdetallePlan;
     }
 
-    public DetallePlanProduccion(int idDetallePlan, EtapaProduccionEspecifica TEtapasProduccionEspecifica, Empleado TEmpleados, PlanProduccion TPlanesProduccion, MaquinaHerramientaParticular TMaquinasHerramientaParticular, int cantidad, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealInicio, Date fecHoraRealFin, Set<Faltante> TFaltanteses) {
+    public DetallePlanProduccion(int idDetallePlan, EtapaProduccionEspecifica TEtapasProduccionEspecifica, Empleado TEmpleados, PlanProduccion TPlanesProduccion, MaquinaHerramientaParticular TMaquinasHerramientaParticular, int cantidad, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealInicio, Date fecHoraRealFin, Set<Faltante> TFaltanteses, OrdenTrabajo TOrdenesTrabajo,EstadoDetallePlan TEdetallePlan) {
         this.idDetallePlan = idDetallePlan;
         this.TEtapasProduccionEspecifica = TEtapasProduccionEspecifica;
         this.TEmpleados = TEmpleados;
@@ -102,6 +113,8 @@ public class DetallePlanProduccion implements java.io.Serializable {
         this.fecHoraRealInicio = fecHoraRealInicio;
         this.fecHoraRealFin = fecHoraRealFin;
         this.TFaltanteses = TFaltanteses;
+        this.TOrdenesTrabajo = TOrdenesTrabajo;
+        this.TEdetallePlan = TEdetallePlan;
     }
 
     public int getIdDetallePlan() {
@@ -222,5 +235,22 @@ public class DetallePlanProduccion implements java.io.Serializable {
                 f.setFecNecesidad(this.getFecHoraPrevistaInicio());
                 TFaltanteses.add(f);
             }
+    }
+
+
+    public OrdenTrabajo getTOrdenesTrabajo() {
+        return this.TOrdenesTrabajo;
+    }
+
+    public void setTOrdenesTrabajo(OrdenTrabajo TOrdenesTrabajo) {
+        this.TOrdenesTrabajo = TOrdenesTrabajo;
+    }
+
+    public EstadoDetallePlan getTEdetallePlan() {
+        return this.TEdetallePlan;
+    }
+
+    public void setTEdetallePlan(EstadoDetallePlan TEdetallePlan) {
+        this.TEdetallePlan = TEdetallePlan;
     }
 }
