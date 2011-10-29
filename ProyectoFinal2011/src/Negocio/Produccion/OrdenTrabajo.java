@@ -30,18 +30,18 @@ public class OrdenTrabajo  implements java.io.Serializable {
      private EstadoOrdenTrabajo TEordenTrabajo;
      private Date fecEmision;
      private String observaciones;
-     private int idDetallePlan;
+     
 
     public OrdenTrabajo() {
     }
 
 	
-    public OrdenTrabajo(long idOrdenTrabajo, Empleado TEmpleados, EstadoOrdenTrabajo TEordenTrabajo, Date fecEmision, int idDetallePlan) {
+    public OrdenTrabajo(long idOrdenTrabajo, Empleado TEmpleados, EstadoOrdenTrabajo TEordenTrabajo, Date fecEmision) {
         this.idOrdenTrabajo = idOrdenTrabajo;
         this.TEmpleados = TEmpleados;
         this.TEordenTrabajo = TEordenTrabajo;
         this.fecEmision = fecEmision;
-        this.idDetallePlan = idDetallePlan;
+        
     }
     public OrdenTrabajo(long idOrdenTrabajo, Empleado TEmpleados, EstadoOrdenTrabajo TEordenTrabajo, Date fecEmision, String observaciones, int idDetallePlan) {
        this.idOrdenTrabajo = idOrdenTrabajo;
@@ -49,7 +49,7 @@ public class OrdenTrabajo  implements java.io.Serializable {
        this.TEordenTrabajo = TEordenTrabajo;
        this.fecEmision = fecEmision;
        this.observaciones = observaciones;
-       this.idDetallePlan = idDetallePlan;
+       
     }
    
      @Id 
@@ -99,15 +99,7 @@ public class OrdenTrabajo  implements java.io.Serializable {
         this.observaciones = observaciones;
     }
     
-    @Column(name="ID_DETALLE_PLAN", nullable=false, precision=8, scale=0)
-    public int getIdDetallePlan() {
-        return this.idDetallePlan;
-    }
-    
-    public void setIdDetallePlan(int idDetallePlan) {
-        this.idDetallePlan = idDetallePlan;
-    }
-
+  
 
 
 
