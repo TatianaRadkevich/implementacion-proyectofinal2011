@@ -45,4 +45,8 @@ public class EstadoDetallePlanBD {
         List<EstadoDetallePlan> var=HibernateUtil.ejecutarConsulta("from EstadoDetallePlan where nombre like 'En ejecucion'");
         return var.get(0);
     }
+    public static EstadoDetallePlan traerEstadoFinalizado(){
+        List<EstadoDetallePlan> var=HibernateUtil.ejecutarConsulta("from EstadoDetallePlan where nombre like 'Finalizado'");
+        return var.get(0);
+    }
 }
