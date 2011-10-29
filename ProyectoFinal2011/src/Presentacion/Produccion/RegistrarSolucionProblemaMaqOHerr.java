@@ -12,6 +12,7 @@
 package Presentacion.Produccion;
 
 import BaseDeDatos.HibernateUtil;
+import BaseDeDatos.Produccion.EstadoMaquinaBD;
 import Presentacion.Utilidades;
 import Negocio.Produccion.ProblemasMhp;
 import BaseDeDatos.Produccion.ProblemasMhpBD;
@@ -36,13 +37,17 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
      private TablaManager<ProblemasMhp> tmProblemas;
      private GestorProblemasMhp gestor=new GestorProblemasMhp();
      private ProblemasMhp problema_actual= new ProblemasMhp();
+
     /** Creates new form RegistrarSolucionProblemaMaqOHerr */
-    public RegistrarSolucionProblemaMaqOHerr(java.awt.Frame parent, boolean modal) {
+    public RegistrarSolucionProblemaMaqOHerr(java.awt.Frame parent, boolean modal,int tipoMaq, int MaqHerrPart, boolean ban) {
         super(parent, modal);
         initComponents();
         HibernateUtil.getSessionFactory();
         inicializarTablas();
+        if (!ban) rdbMaquina1.setSelected(true);
         cargarTiposMaqYHerr();
+        if(tipoMaq!= -1)cmbTipoMaqHerr.setSelectedIndex(tipoMaq);
+        
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
     }
 
@@ -272,11 +277,15 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         problema_actual.setObservacionesSolucion(txtObservaciones.getText());
 
         ProblemasMhpBD.modificar(problema_actual);
-        
         Mensajes.mensajeInformacion("La solución ha sido registrada exitosamente");
         txtObservaciones.setText("");
-        if (cmbMaqHerrParticular.getSelectedIndex()!=-1)
+        if (cmbMaqHerrParticular.getSelectedIndex()!=-1){
         tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
+        if (tmProblemas.getSize()==0){
+        ((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).setEstadoMaquina(EstadoMaquinaBD.getEstadoDisponible());
+        Mensajes.mensajeInformacion("La máquina está disponible");
+        }
+            }
         else
         {
         tmProblemas.limpiar();
@@ -323,7 +332,7 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                RegistrarSolucionProblemaMaqOHerr dialog = new RegistrarSolucionProblemaMaqOHerr(new javax.swing.JFrame(), true);
+                RegistrarSolucionProblemaMaqOHerr dialog = new RegistrarSolucionProblemaMaqOHerr(new javax.swing.JFrame(), true,-1,-1,true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -367,7 +376,6 @@ private void inicializarTablas() {
                 cabecera.add("Nombre Máquina");
                 cabecera.add("Descripción Problema");
                 cabecera.add("Fecha Problema");
-                cabecera.add("Fecha Estimada Solución");
                 return cabecera;
 
             }
@@ -382,7 +390,6 @@ private void inicializarTablas() {
                 fila.add(elemento.getTMaquinasHerramientaParticular().getNombre());
                 fila.add(elemento.getDescripcion());
                 fila.add(Utilidades.parseFecha(elemento.getFecHoraProblema()));
-                fila.add(Utilidades.parseFecha(elemento.getFecHoraEstimadaSolucion()));
 
                 return fila;
             }
@@ -390,15 +397,19 @@ private void inicializarTablas() {
     }
 
     private void cargarMaqYHerrParticulares() {
-        if (cmbTipoMaqHerr.getSelectedIndex()!=-1)
+        if (cmbTipoMaqHerr.getSelectedIndex()!=-1){
         cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getMaquinas((TipoMaquinaHerramienta) cmbTipoMaqHerr.getSelectedItem()).toArray()));
-        if(cmbMaqHerrParticular.getSelectedIndex()!=-1)
+        if(cmbMaqHerrParticular.getSelectedIndex()!=-1){
         tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
+            }
         else
         {
         tmProblemas.limpiar();
         }
+
     }
+    }
+    
 
     private void cargarTiposMaqYHerr() {
         if (rdbMaquina1.isSelected())

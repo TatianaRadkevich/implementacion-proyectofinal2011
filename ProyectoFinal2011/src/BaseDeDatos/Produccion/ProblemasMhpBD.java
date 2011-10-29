@@ -7,7 +7,9 @@ package BaseDeDatos.Produccion;
 
 import BaseDeDatos.HibernateUtil;
 import Negocio.Produccion.ProblemasMhp;
+import Presentacion.Utilidades;
 import java.util.ArrayList;
+import java.util.Date;
 
 import java.util.List;
 /**
@@ -15,6 +17,15 @@ import java.util.List;
  * @author Heber Parrucci
  */
 public class ProblemasMhpBD {
+
+    public static List<ProblemasMhp> listarProblemasNoResueltosConFecha(boolean herramienta,Date fechaDesde, Date fechaHasta) {
+        String auxDesde=Utilidades.parseFecha(fechaDesde);
+        String auxHasta=Utilidades.parseFecha(Utilidades.agregarTiempoFecha(fechaHasta, 1, 0, 0));
+        String HQL = ("from ProblemasMhp where fecHoraRealSolucion is not null AND TMaquinasHerramientaParticular.TTmaquinaHerramienta.esHerramienta="+herramienta+" "+"and fecHoraProblema >= '"+auxDesde+"' and fecHoraProblema <= '"+auxHasta+"' order by fecHoraRealSolucion asc");
+
+
+        return HibernateUtil.ejecutarConsulta(HQL);
+    }
 
   public ProblemasMhpBD() {
 
@@ -41,24 +52,24 @@ public class ProblemasMhpBD {
     }
    public static List<ProblemasMhp> listarProblemasResueltos(boolean herramienta)throws ExceptionInInitializerError{
 
-        List<ProblemasMhp> var=HibernateUtil.ejecutarConsulta("from ProblemasMhp where fecHoraRealSolucion is not null AND TMaquinasHerramientaParticular.TTmaquinaHerramienta.esHerramienta="+herramienta);
+        List<ProblemasMhp> var=HibernateUtil.ejecutarConsulta("from ProblemasMhp where fecHoraRealSolucion is not null AND TMaquinasHerramientaParticular.TTmaquinaHerramienta.esHerramienta="+herramienta+" "+"order by fecHoraRealSolucion asc");
         return var;
     }
 
     public static List<ProblemasMhp> listarProblemasResueltos(int id)throws ExceptionInInitializerError{
 
-        List<ProblemasMhp> var=HibernateUtil.ejecutarConsulta("from ProblemasMhp where fecHoraRealSolucion is not null and ID_MAQUINA_HERRAMIENTA_PARTICULAR="+id);
+        List<ProblemasMhp> var=HibernateUtil.ejecutarConsulta("from ProblemasMhp where fecHoraRealSolucion is not null and ID_MAQUINA_HERRAMIENTA_PARTICULAR="+id+" "+"order by fecHoraRealSolucion asc");
         return var;
     }
 
    public static List<ProblemasMhp> listarProblemasNoResueltos(int id)throws ExceptionInInitializerError{
 
-        List<ProblemasMhp> var=HibernateUtil.ejecutarConsulta("from ProblemasMhp where fecHoraRealSolucion is null and ID_MAQUINA_HERRAMIENTA_PARTICULAR="+id);
+        List<ProblemasMhp> var=HibernateUtil.ejecutarConsulta("from ProblemasMhp where fecHoraRealSolucion is null and ID_MAQUINA_HERRAMIENTA_PARTICULAR="+id+" "+"order by fecHoraProblema asc");
         return var;
     }
 
     public static List<ProblemasMhp> listarProblemasNoResueltos(boolean herramienta){
-        String hql=("from ProblemasMhp where fecHoraRealSolucion is null AND TMaquinasHerramientaParticular.TTmaquinaHerramienta.esHerramienta="+herramienta);
+        String hql=("from ProblemasMhp where fecHoraRealSolucion is null AND TMaquinasHerramientaParticular.TTmaquinaHerramienta.esHerramienta="+herramienta+" "+"order by fecHoraProblema asc");
         return HibernateUtil.ejecutarConsulta(hql);
     }
 

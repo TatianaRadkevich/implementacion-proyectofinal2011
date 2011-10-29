@@ -36,7 +36,7 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
         txtCodReclamo.setText(cod+"");
         txtNroOrden.setText("1");
         txtFechaActual.setText((Utilidades.parseFecha(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 0, 0, 0))));
-        txtMotivo.requestFocus();
+        txtDescripcion.requestFocus();
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
     }
 
@@ -56,11 +56,8 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtMotivo = new javax.swing.JTextArea();
         txtCodReclamo = new javax.swing.JTextField();
         lblTipoMoH2 = new javax.swing.JLabel();
-        lblTipoMoH = new javax.swing.JLabel();
         lblTipoMoH1 = new javax.swing.JLabel();
         lblTipoMoH4 = new javax.swing.JLabel();
         txtNroOrden = new javax.swing.JTextField();
@@ -93,19 +90,11 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
         txtDescripcion.setRows(5);
         jScrollPane2.setViewportView(txtDescripcion);
 
-        txtMotivo.setColumns(20);
-        txtMotivo.setRows(5);
-        jScrollPane1.setViewportView(txtMotivo);
-
         txtCodReclamo.setEditable(false);
 
         lblTipoMoH2.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblTipoMoH2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTipoMoH2.setText("Código Reclamo:");
-
-        lblTipoMoH.setFont(new java.awt.Font("Tahoma", 1, 11));
-        lblTipoMoH.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTipoMoH.setText("Motivo:");
 
         lblTipoMoH1.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblTipoMoH1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -126,14 +115,12 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblTipoMoH4)
                     .addComponent(lblTipoMoH2)
-                    .addComponent(lblTipoMoH)
                     .addComponent(lblTipoMoH1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
                     .addComponent(txtNroOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCodReclamo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -147,14 +134,10 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTipoMoH4)
                     .addComponent(txtNroOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTipoMoH)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTipoMoH1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(63, 63, 63))
         );
 
@@ -203,12 +186,11 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
         if(validar()){
             reclamo = new Reclamo();
             reclamo.setFecReclamo(Utilidades.getFechaActual());
-            reclamo.setMotivo(txtMotivo.getText());
             reclamo.setDescripcion(txtDescripcion.getText());
             reclamo.setTEreclamo(EstadoReclamoBD.getEst_Generado() );
             gestor.guardar(reclamo);
             Mensajes.mensajeInformacion("El reclamo ha sido registrado exitosamente");
-
+            txtDescripcion.setText("");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -237,9 +219,7 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblTipoMoH;
     private javax.swing.JLabel lblTipoMoH1;
     private javax.swing.JLabel lblTipoMoH2;
     private javax.swing.JLabel lblTipoMoH3;
@@ -247,14 +227,13 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
     private javax.swing.JTextField txtCodReclamo;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtFechaActual;
-    private javax.swing.JTextArea txtMotivo;
     private javax.swing.JTextField txtNroOrden;
     // End of variables declaration//GEN-END:variables
 
     private boolean validar() {
-        if(txtMotivo.getText().compareTo("")==0){
-            Mensajes.mensajeErrorGenerico("Debe ingresar el motivo del reclamo");
-            txtMotivo.requestFocus();
+        if(txtDescripcion.getText().compareTo("")==0){
+            Mensajes.mensajeErrorGenerico("Debe ingresar la descripción del reclamo");
+            txtDescripcion.requestFocus();
             return false;
         }
         return true;

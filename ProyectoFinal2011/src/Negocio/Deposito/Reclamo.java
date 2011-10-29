@@ -100,7 +100,7 @@ public class Reclamo  implements java.io.Serializable {
         this.fecReclamo = fecReclamo;
     }
     
-    @Column(name="MOTIVO", nullable=false, length=200)
+    @Column(name="MOTIVO", nullable=true, length=200)
     public String getMotivo() {
         return this.motivo;
     }
