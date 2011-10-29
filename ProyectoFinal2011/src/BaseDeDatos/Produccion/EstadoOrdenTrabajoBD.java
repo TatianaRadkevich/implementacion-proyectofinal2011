@@ -39,4 +39,14 @@ public class EstadoOrdenTrabajoBD {
         return var;
     }
 
+
+    public static EstadoOrdenTrabajo traerEstadoGenerado(){
+        List<EstadoOrdenTrabajo> var=HibernateUtil.ejecutarConsulta("from EstadoOrdenTrabajo where nombre like 'Generado'");
+        return var.get(0);
+    }
+    public static EstadoOrdenTrabajo traerEstadoFinalizao(){
+        List<EstadoOrdenTrabajo> var=HibernateUtil.ejecutarConsulta("from EstadoOrdenTrabajo where nombre like 'Finalizado'");
+        return var.get(0);
+    }
+
 }
