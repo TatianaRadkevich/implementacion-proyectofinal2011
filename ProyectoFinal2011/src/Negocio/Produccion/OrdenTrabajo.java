@@ -3,13 +3,20 @@ package Negocio.Produccion;
 
 
 import Negocio.Administracion.Empleado;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,6 +37,7 @@ public class OrdenTrabajo  implements java.io.Serializable {
      private EstadoOrdenTrabajo TEordenTrabajo;
      private Date fecEmision;
      private String observaciones;
+     private Set<DetallePlanProduccion> TDetallesPlans = new HashSet(0);
      
 
     public OrdenTrabajo() {
@@ -43,17 +51,18 @@ public class OrdenTrabajo  implements java.io.Serializable {
         this.fecEmision = fecEmision;
         
     }
-    public OrdenTrabajo(long idOrdenTrabajo, Empleado TEmpleados, EstadoOrdenTrabajo TEordenTrabajo, Date fecEmision, String observaciones, int idDetallePlan) {
+    public OrdenTrabajo(long idOrdenTrabajo, Empleado TEmpleados, EstadoOrdenTrabajo TEordenTrabajo, Date fecEmision, String observaciones, Set TDetallesPlans) {
        this.idOrdenTrabajo = idOrdenTrabajo;
        this.TEmpleados = TEmpleados;
        this.TEordenTrabajo = TEordenTrabajo;
        this.fecEmision = fecEmision;
        this.observaciones = observaciones;
+        this.TDetallesPlans = TDetallesPlans;
        
     }
    
      @Id 
-    
+    @GeneratedValue
     @Column(name="ID_ORDEN_TRABAJO", unique=true, nullable=false, precision=10, scale=0)
     public long getIdOrdenTrabajo() {
         return this.idOrdenTrabajo;
@@ -98,7 +107,20 @@ public class OrdenTrabajo  implements java.io.Serializable {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-    
+
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TOrdenesTrabajo")
+    public List<DetallePlanProduccion> getTDetallesPlans() {
+        return new ArrayList<DetallePlanProduccion>(TDetallesPlans); 
+    }
+
+    public void setTDetallesPlans(Set<DetallePlanProduccion> TDetallesPlans) {
+        this.TDetallesPlans = TDetallesPlans;
+    }
+
+    public PlanProduccion getPlanProduccion(){
+        DetallePlanProduccion detalle=this.getTDetallesPlans().iterator().next();
+        return detalle.getTPlanesProduccion();
+    }
   
 
 

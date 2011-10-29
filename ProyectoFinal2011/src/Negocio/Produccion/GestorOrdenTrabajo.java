@@ -11,6 +11,7 @@ import BaseDeDatos.Produccion.EstadoOrdenTrabajoBD;
 import BaseDeDatos.Produccion.OrdenTrabajoBD;
 import Presentacion.Produccion.PantallaABMOrdenTrabajo;
 import java.util.List;
+import javax.swing.JDialog;
 
 /**
  *
@@ -20,8 +21,10 @@ public class GestorOrdenTrabajo {
 
 
 
-    public void iniciarCU(){
-        PantallaABMOrdenTrabajo pantalla=new PantallaABMOrdenTrabajo(null, true,this);
+    public void iniciarCU(JDialog dialog){
+        PantallaABMOrdenTrabajo pantalla=new PantallaABMOrdenTrabajo(dialog, true,this);
+        pantalla.setVisible(true);
+
     }
 
     public void ejecutarOperacion(OrdenTrabajo orden){
