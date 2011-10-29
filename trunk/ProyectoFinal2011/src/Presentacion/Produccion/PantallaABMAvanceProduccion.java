@@ -26,7 +26,7 @@ import javax.swing.JDialog;
  *
  * @author Ivan
  */
-public class PantallaABMAvanceProduccion extends javax.swing.JDialog {
+public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
 
     /** Creates new form PantallaABMAvanceProduccion */
     private OrdenTrabajo ordenActual;
@@ -34,7 +34,6 @@ public class PantallaABMAvanceProduccion extends javax.swing.JDialog {
     private GestorAvanceProduccion gestor;
 
     public PantallaABMAvanceProduccion(JDialog dialog, boolean focus,GestorAvanceProduccion gestor) {
-        super(dialog, focus);
         initComponents();
         this.gestor=gestor;
 
