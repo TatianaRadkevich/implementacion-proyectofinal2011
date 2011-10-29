@@ -573,11 +573,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        try {
-            new GestorPedidoBaja(tmPedido.getSeletedObject()).iniciarCU();
-        } catch (Exception ex) {
-            Mensajes.mensajeErrorGenerico(ex.getMessage());
-        }
+       this.dispose();
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
