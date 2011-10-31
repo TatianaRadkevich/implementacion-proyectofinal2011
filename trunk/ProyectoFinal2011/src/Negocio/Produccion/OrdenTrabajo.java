@@ -117,7 +117,7 @@ public class OrdenTrabajo  implements java.io.Serializable {
         this.TDetallesPlans = TDetallesPlans;
     }
 
-    public PlanProduccion getPlanProduccion(){
+    public PlanProduccion obtenerPlanProduccion(){
         DetallePlanProduccion detalle=this.getTDetallesPlans().iterator().next();
         return detalle.getTPlanesProduccion();
     }
