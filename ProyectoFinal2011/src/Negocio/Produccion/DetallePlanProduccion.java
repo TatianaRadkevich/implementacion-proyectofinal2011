@@ -76,6 +76,9 @@ public class DetallePlanProduccion implements java.io.Serializable {
       @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="ID_EDETALLE_PLAN", nullable=false)
      private EstadoDetallePlan TEdetallePlan;
+      /*------------------------------------------------------------------------*/
+      @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TDetallesPlan")
+       private Set<MaqHerrPartXDetPlan> TMaqHerrPartXDetPlans = new HashSet<MaqHerrPartXDetPlan>(0);
 
 
     public DetallePlanProduccion() {
@@ -253,4 +256,13 @@ public class DetallePlanProduccion implements java.io.Serializable {
     public void setTEdetallePlan(EstadoDetallePlan TEdetallePlan) {
         this.TEdetallePlan = TEdetallePlan;
     }
+    
+    public Set<MaqHerrPartXDetPlan> getTMaqHerrPartXDetPlans() {
+        return this.TMaqHerrPartXDetPlans;
+    }
+
+    public void setTMaqHerrPartXDetPlans(Set<MaqHerrPartXDetPlan> TMaqHerrPartXDetPlans) {
+        this.TMaqHerrPartXDetPlans = TMaqHerrPartXDetPlans;
+    }
+
 }
