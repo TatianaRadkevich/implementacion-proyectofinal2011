@@ -41,13 +41,13 @@ public class Material implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_UNIDAD_MEDIDA")//, nullable=false)
     private UnidadMedida TUnidadesMedida;
-    @Column(name = "NOMBRE", nullable = false, length = 50)
+    @Column(name = "NOMBRE", nullable = true, length = 50)
     private String nombre;
     @Column(name = "DESCRIPCION", length = 200)
     private String descripcion;
     @Column(name = "DIAMETRO", precision = 6, scale = 0)
     private Integer diametro;
-    @Column(name = "ES_MATERIA_PRIMA", nullable = false)
+    @Column(name = "ES_MATERIA_PRIMA", nullable = true)
     private boolean esMateriaPrima;
     @Column(name = "LOGITUD", precision = 3, scale = 0)
     private Short logitud;
@@ -56,13 +56,13 @@ public class Material implements java.io.Serializable {
     private Date fecBaja;
     @Column(name = "MOTIVO_BAJA", length = 200)
     private String motivoBaja;
-    @Column(name = "STOCK_ACTUAL", nullable = false, precision = 3, scale = 0)
+    @Column(name = "STOCK_ACTUAL", nullable = true, precision = 3, scale = 0)
     private Short stockActual;
-    @Column(name = "STOCK_MINIMO", nullable = false, precision = 3, scale = 0)
+    @Column(name = "STOCK_MINIMO", nullable = true, precision = 3, scale = 0)
     private Short stockMinimo;
-    @Column(name = "STOCK_RESERVADO", nullable = false, precision = 3, scale = 0)
+    @Column(name = "STOCK_RESERVADO", nullable = true, precision = 3, scale = 0)
     private Short stockReservado=new Short("0");
-    @Column(name = "CODIGO", nullable = false, length = 2)
+    @Column(name = "CODIGO", nullable = true, length = 6)
     private String codigo;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)

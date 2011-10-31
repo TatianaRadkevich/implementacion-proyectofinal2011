@@ -11,6 +11,7 @@
 package Presentacion.Compras;
 
 import Negocio.Compras.GestorMaterial;
+import Negocio.Compras.GestorMaterialAlta;
 import Negocio.Compras.Material;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Produccion.GestorUnidadMedida;
@@ -42,6 +43,19 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         gestor = gm;
         lstProveedores.setData(gestor.getProveedores());
         cmbUnidadMedida.setModel(new DefaultComboBoxModel(gestor.getUnidadMedida().toArray()));
+        generarCodigo();
+    }
+
+    private void generarCodigo()
+    {
+        String codigo="";
+        codigo+=(rdbInsumo.isSelected())?"I":"";
+        codigo+=(rdbMateriaPrima.isSelected())?"MP":"";
+        try{
+        codigo+=txtNombre.getText().subSequence(0, 1).toString().toUpperCase();
+        }catch(Exception e){}
+        codigo+=gestor.getUltimoID()+1;
+        txtCodigo.setText(codigo);
     }
 
     public void cargar(Material m)
@@ -142,46 +156,66 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
 
         pnlMaterial.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Material", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Descripcion:");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel7.setText("Stock actual:");
 
         txtCodigo.setEditable(false);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Proveedor:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Nombre:");
 
         btgTipoMaterial.add(rdbInsumo);
-        rdbInsumo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        rdbInsumo.setFont(new java.awt.Font("Tahoma", 1, 11));
         rdbInsumo.setText("Insumo");
+        rdbInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbInsumoActionPerformed(evt);
+            }
+        });
 
         btgTipoMaterial.add(rdbMateriaPrima);
-        rdbMateriaPrima.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        rdbMateriaPrima.setFont(new java.awt.Font("Tahoma", 1, 11));
         rdbMateriaPrima.setSelected(true);
         rdbMateriaPrima.setText("Materia Prima");
+        rdbMateriaPrima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbMateriaPrimaActionPerformed(evt);
+            }
+        });
+
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
+            }
+        });
 
         txtDescripcion.setLineWrap(true);
         txtDescripcion.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txtDescripcion);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        txtStockMinimo.setText("0");
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Codigo:");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        txtStockActual.setText("0");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel8.setText("Stock minimo:");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel6.setText("Tipo material:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setText("Longitud:");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel9.setText("Diametro:");
 
         cmbUnidadMedida.setName(""); // NOI18N
@@ -193,7 +227,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
             }
         });
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel10.setText("Unidad medida:");
 
         javax.swing.GroupLayout pnlMaterialLayout = new javax.swing.GroupLayout(pnlMaterial);
@@ -312,10 +346,10 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
 
         pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cancelación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel12.setText("Fecha:");
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel13.setText("Motivo:");
 
         txtFechaBaja.setEditable(false);
@@ -387,8 +421,8 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
         Material material = gestor.getMaterial();
-        //material.setCodigo(txtCodigo.getText());
-        material.setCodigo("XX");
+        generarCodigo();
+        material.setCodigo(txtCodigo.getText());
         material.setNombre(txtNombre.getText());
         material.setDescripcion(txtDescripcion.getText());
         material.setDiametro(Utilidades.parseInteger(txtDiametro.getText()));
@@ -419,6 +453,21 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         cmbUnidadMedida.setSelectedIndex(-1);
     }//GEN-LAST:event_btnAgregarUnidadActionPerformed
 
+    private void rdbMateriaPrimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbMateriaPrimaActionPerformed
+        // TODO add your handling code here:
+        generarCodigo();
+    }//GEN-LAST:event_rdbMateriaPrimaActionPerformed
+
+    private void rdbInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbInsumoActionPerformed
+        // TODO add your handling code here:
+        generarCodigo();
+    }//GEN-LAST:event_rdbInsumoActionPerformed
+
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+        // TODO add your handling code here:
+        generarCodigo();
+    }//GEN-LAST:event_txtNombreKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -426,14 +475,9 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                PantallaMaterialABM dialog = new PantallaMaterialABM(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                new GestorMaterialAlta().iniciarCU();
+
             }
         });
     }

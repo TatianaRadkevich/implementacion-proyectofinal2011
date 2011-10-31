@@ -39,6 +39,14 @@ public class MaterialBD {
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 
+    public static int getUltimoID()
+    {
+        try{
+        return (Integer) HibernateUtil.ejecutarConsulta("SELECT max(idMaterial) FROM Material").get(0);
+        }catch(Exception e)
+        {return -1;}
+    }
+
     public static void guardar(Material m) {
        HibernateUtil.guardarObjeto(m);
     }
@@ -54,4 +62,14 @@ public class MaterialBD {
           HQL+=" AND m.fecBaja IS NULL ";
          return HibernateUtil.ejecutarConsulta(HQL);
      }
+
+    public static boolean existeNombre(String nombre) {
+         String HQL="FROM Material as m "
+                + "WHERE m.nombre like '" + nombre +"'";
+
+         if(HibernateUtil.ejecutarConsulta(HQL).isEmpty())
+             return false;
+         else
+             return true;
+    }
 }

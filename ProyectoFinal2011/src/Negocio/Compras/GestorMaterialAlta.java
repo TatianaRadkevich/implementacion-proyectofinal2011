@@ -35,12 +35,14 @@ public class GestorMaterialAlta extends GestorMaterial{
     @Override
     public void validar(Material m) throws ExceptionGestor {
         String mensage="";
-//
-//
-//        if(m.getCliente()==null)
-//            mensage+="\n no se asigno un cliente al pedido";
-//        if(m.getDetallePedido().isEmpty())
-//            mensage+="\n El detalle debe contener al menos un elemento";
+
+
+        if(MaterialBD.existeNombre(m.getNombre()))
+            mensage+="\n El nombre \""+m.getNombre()+"\" ya existe, porfavor escriba otro nombre";
+        if(m.getStockActual()==null)
+            mensage+="\n El campo \"stock actual\" no puede dejarse vacio";
+        if(m.getStockMinimo()==null)
+            mensage+="\n El campo \"stock minimo\" no puede dejarse vacio";
 
         if(mensage.isEmpty()==false)
             throw new ExceptionGestor("Problemas:"+mensage);
