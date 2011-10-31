@@ -329,7 +329,7 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         ordenActual=OrdenTrabajoBD.traerOrdenTrabajo(Long.parseLong(txtNumeroOrden.getText()));
-        PlanProduccion plan=ordenActual.getPlanProduccion();
+        PlanProduccion plan=ordenActual.obtenerPlanProduccion();
         lblNumeroPedido.setText(plan.getPedido().getIdPedido()+"");
         lblFechaPlanificacion.setText(Utilidades.parseFecha(plan.getFecGeneracion()));
         lblCliente.setText(plan.getPedido().getCliente().getRazonSocial());
