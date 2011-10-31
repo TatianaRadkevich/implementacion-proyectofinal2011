@@ -5,7 +5,9 @@
 
 package Negocio.Compras;
 
+import BaseDeDatos.Compras.MaterialBD;
 import BaseDeDatos.Compras.ProveedorBD;
+import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Produccion.UnidadMedidaBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Produccion.UnidadMedida;
@@ -40,5 +42,9 @@ protected PantallaMaterialABM interfaz;
 
      public List<UnidadMedida>  getUnidadMedida() {
         return UnidadMedidaBD.listarUnidadMedida();
+    }
+
+    public int getUltimoID() {
+        return MaterialBD.getUltimoID();
     }
 }
