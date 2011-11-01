@@ -21,6 +21,8 @@ import Presentacion.Compras.PantallaProveedorConsultar;
 import Presentacion.Produccion.PantallaABMTipoProducto;
 import Presentacion.Produccion.PantallaConsultarPedido;
 import Presentacion.Produccion.PantallaConsultarProducto;
+import Presentacion.Produccion.ProblemaMaquinaHerramientaParticular;
+import Presentacion.Produccion.ConsultaProblemasMHP;
 import Presentacion.Produccion.PantallaMaquinaHerramientaConsultar;
 import Presentacion.Ventas.PantallaClienteConsultar;
 
@@ -94,6 +96,8 @@ public class Principal extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         btnAvance = new javax.swing.JButton();
+        btnProblemas = new javax.swing.JButton();
+        btnConsultaProblemas = new javax.swing.JButton();
         pnlVentas = new Presentacion.Fondo();
         txtVentas = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
@@ -324,44 +328,65 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnProblemas.setText("Problemas Máquina");
+        btnProblemas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProblemasActionPerformed(evt);
+            }
+        });
+
+        btnConsultaProblemas.setText("Consultar Problemas");
+        btnConsultaProblemas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultaProblemasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlProduccionLayout = new javax.swing.GroupLayout(pnlProduccion);
         pnlProduccion.setLayout(pnlProduccionLayout);
         pnlProduccionLayout.setHorizontalGroup(
             pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtProd, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
+            .addComponent(txtProd, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
             .addGroup(pnlProduccionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnProducto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTipoProducto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(556, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlProduccionLayout.createSequentialGroup()
+                        .addComponent(btnTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnProblemas, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                    .addGroup(pnlProduccionLayout.createSequentialGroup()
+                        .addComponent(btnProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnConsultaProblemas, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)))
+                .addGap(388, 388, 388))
             .addGroup(pnlProduccionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(556, Short.MAX_VALUE))
+                .addContainerGap(577, Short.MAX_VALUE))
             .addGroup(pnlProduccionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(556, Short.MAX_VALUE))
+                .addContainerGap(577, Short.MAX_VALUE))
             .addGroup(pnlProduccionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnAvance, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                .addContainerGap(556, Short.MAX_VALUE))
-            .addGroup(pnlProduccionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnAvance, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                .addGap(556, 556, 556))
+                .addContainerGap(577, Short.MAX_VALUE))
         );
         pnlProduccionLayout.setVerticalGroup(
             pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlProduccionLayout.createSequentialGroup()
                 .addComponent(txtProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProblemas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConsultaProblemas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -578,6 +603,15 @@ public class Principal extends javax.swing.JFrame {
         new GestorAvanceProduccion().iniciarCU(null);
     }//GEN-LAST:event_btnAvanceActionPerformed
 
+    private void btnProblemasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProblemasActionPerformed
+        new ProblemaMaquinaHerramientaParticular(this, true).setVisible(true);
+
+    }//GEN-LAST:event_btnProblemasActionPerformed
+
+    private void btnConsultaProblemasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaProblemasActionPerformed
+        new ConsultaProblemasMHP(this, true).setVisible(true);
+    }//GEN-LAST:event_btnConsultaProblemasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -594,8 +628,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnAvance;
     private javax.swing.JButton btnCargo;
     private javax.swing.JButton btnCompras;
+    private javax.swing.JButton btnConsultaProblemas;
     private javax.swing.JButton btnEmpleado;
     private javax.swing.JButton btnOrdenCompra;
+    private javax.swing.JButton btnProblemas;
     private javax.swing.JButton btnProduccion;
     private javax.swing.JButton btnProducto;
     private javax.swing.JButton btnProveedor;
