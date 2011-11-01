@@ -32,6 +32,7 @@ import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultCellEditor;
@@ -910,6 +911,28 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 //        plan.setEmpleado((Empleado) cmbResponsable.getSelectedItem());
 //        plan.setFecHoraPrevistaInicio(fhInicioPlan.getDate());
         plan.generarFaltantes();
+        if(plan.getFecGeneracion()==null)
+        plan.setFecGeneracion(Utilidades.getFechaActual());
+        plan.setFecUltimaModificacion(Utilidades.getFechaActual());
+        if(cmbResponsable.getSelectedIndex()==-1)
+        {
+            Mensajes.mensajeErrorGenerico("Seleccione un responsable");
+            return;
+        }
+        plan.setEmpleado((Empleado) cmbResponsable.getSelectedItem());
+
+        Date fechaFin=null,fechaIni=null;
+        for(DetallePlanProduccion dpp:plan.getDetallePlan())
+        {
+            if(fechaFin==null||fechaFin.compareTo(dpp.getFecHoraPrevistaFin())<=0)
+                fechaFin=dpp.getFecHoraPrevistaFin();
+
+              if(fechaIni==null||fechaIni.compareTo(dpp.getFecHoraPrevistaInicio())>=0)
+                fechaIni=dpp.getFecHoraPrevistaInicio();
+        }
+        plan.setFecHoraPrevistaFin(fechaFin);
+        plan.setFecHoraPrevistaInicio(fechaIni);
+
         plan.getPedido().setEstadoPedido(EstadoPedidoBD.getEstadoPlanificado());
         plan.setEstado(EstadoPlanBD.getEstadoGenerado());
         HibernateUtil.guardarObjeto(plan);
