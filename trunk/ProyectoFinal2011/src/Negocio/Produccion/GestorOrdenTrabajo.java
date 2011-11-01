@@ -5,10 +5,14 @@
 
 package Negocio.Produccion;
 
+import BaseDeDatos.Ventas.PedidoBD;
 import BaseDeDatos.Produccion.DetallePlanProduccionBD;
 import BaseDeDatos.Produccion.EstadoDetallePlanBD;
 import BaseDeDatos.Produccion.EstadoOrdenTrabajoBD;
 import BaseDeDatos.Produccion.OrdenTrabajoBD;
+import BaseDeDatos.Ventas.EstadoPedidoBD;
+import Negocio.Ventas.EstadoPedido;
+import Negocio.Ventas.Pedido;
 import Presentacion.Produccion.PantallaABMOrdenTrabajo;
 import java.util.List;
 import javax.swing.JDialog;
@@ -43,10 +47,16 @@ public class GestorOrdenTrabajo {
         OrdenTrabajoBD.guardar(tempOrden);
     }
     public void actualizarDetalle(List<DetallePlanProduccion> detalles){
-        for(int i=0;0<detalles.size();i++)
+        for(int i=0;i<detalles.size();i++)
         {
             DetallePlanProduccionBD.modificar(detalles.get(i));
         }
+    }
+
+    public void mofidificarEstadoPedido(Pedido pedido) {
+       
+        pedido.setEstadoPedido(EstadoPedidoBD.getEstadoProduccion());
+        PedidoBD.modificar(pedido);
     }
 
 
