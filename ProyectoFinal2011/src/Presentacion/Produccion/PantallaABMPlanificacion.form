@@ -375,6 +375,9 @@
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JSpinnerDateEditor" name="fhInicioDetallePlan">
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="fhInicioDetallePlanMousePressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCancelar">
           <Properties>

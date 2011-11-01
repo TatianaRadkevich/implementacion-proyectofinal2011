@@ -56,7 +56,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private TablaManager<EtapaProduccionEspecifica> tmEstructura;
     private TablaManager<MaquinaHerramientaParticular> tmMaquina;
     private TablaManager<Empleado> tmEmpleado;
-    private PlanProduccion plan; 
+    private PlanProduccion plan;
 
     private PantallaABMPlanificacion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -125,7 +125,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(EtapaProduccionEspecifica elemento) {
                 Vector fila = new Vector();
-                fila.add((elemento.getDetallePlanProduccion().isEmpty())?"Sin Planificar":"Planificado");
+
+                fila.add((plan.getDetallePlan(elemento)==null)?"Sin Planificar":"Planificado");
                 fila.add(elemento.getNumeroOrden());
                 fila.add(elemento.getEtapaProduccion().getNombre());
                 fila.add(elemento.getDuracion());
@@ -302,18 +303,16 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         tmEmpleado.setDatos(EmpleadoBD.getEmpleados(epe.getCargo(), true, false));
          tmMaquina.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(tipoMaq, true, false));
 
-        if (epe == null||epe.getDetallePlanProduccion().isEmpty()) {
+        if (epe == null||plan.getDetallePlan(epe)==null) {
             limpiarDatosEtapaPlanificacion();
-
+            txtTiempoFin.setText(Utilidades.parseFechaHora(Utilidades.agregarTiempoFecha(fhInicioDetallePlan.getDate(), epe.getDuracion(), 0, 0, 0, 0)));
             return;
         }
 
-        DetallePlanProduccion detalle=epe.getDetallePlanProduccion().get(0);
+        DetallePlanProduccion detalle=plan.getDetallePlan(epe);
 
         fhInicioDetallePlan.setDate((detalle.getFecHoraPrevistaInicio() == null) ? Utilidades.getFechaActual() : detalle.getFecHoraPrevistaInicio());
         txtTiempoFin.setText(Utilidades.parseFechaHora(detalle.getFecHoraPrevistaInicio()));
-
-   
 
 //        tmMaquina.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(tipoMaq, true, false));
         tmMaquina.setSelectedRow(detalle.getTMaquinasHerramientaParticular());
@@ -527,6 +526,12 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel14.setText("Fecha/Hora inicio:");
+
+        fhInicioDetallePlan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                fhInicioDetallePlanMousePressed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -871,12 +876,15 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
         
 
-        if (tmEstructura.getSeletedObject().getDetallePlanProduccion().isEmpty())                   
+        if (plan.getDetallePlan(tmEstructura.getSeletedObject())==null)
             plan.addDetallePlan(new DetallePlanProduccion(tmEstructura.getSeletedObject()));
         
         DetallePlanProduccion det=plan.getDetallePlan(tmEstructura.getSeletedObject());
 
         det.setFecHoraPrevistaInicio(fhInicioDetallePlan.getDate());
+        det.setFecHoraPrevistaFin(
+                Utilidades.agregarTiempoFecha(
+                fhInicioDetallePlan.getDate(), tmEstructura.getSeletedObject().getDuracion(), 0, 0, 0, 0));
         det.setObservaciones(txtObservaciones.getText());
         det.setTEmpleados(tmEmpleado.getSeletedObject());
         det.setTMaquinasHerramientaParticular(tmMaquina.getSeletedObject());
@@ -940,6 +948,11 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         tmEstructura.updateTabla();
 
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void fhInicioDetallePlanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fhInicioDetallePlanMousePressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_fhInicioDetallePlanMousePressed
 
     /**
      * @param args the command line arguments
