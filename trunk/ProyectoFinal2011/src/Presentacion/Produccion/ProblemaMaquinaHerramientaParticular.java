@@ -11,6 +11,7 @@
 
 package Presentacion.Produccion;
 
+import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Produccion.EstadoMaquinaBD;
 import Presentacion.Operacion;
 import Presentacion.Utilidades;
@@ -39,9 +40,10 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
     private GestorProblemasMhp gestor=new GestorProblemasMhp();
             /** Creates new form ProblemaMaquinaHerramientaParticular */
     public ProblemaMaquinaHerramientaParticular(java.awt.Frame parent, boolean modal) {
-        super((JFrame)null, modal);
-        GUILocal.establecerGUILocal(this);
+        super(parent, modal);
+      //  GUILocal.establecerGUILocal(this);
         initComponents();
+        HibernateUtil.getSessionFactory();
         txtFechaActual.setText((Utilidades.parseFecha(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 0, 0, 0))));
        this.cargarTiposMaqYHerr();
        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
