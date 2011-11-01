@@ -48,6 +48,7 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
                 cabcera.add("Empleado");
                 cabcera.add("Máquina");
                 cabcera.add("Fecha/Hora inicio");
+                cabcera.add("Estado");
                 return cabcera;
 
             }
@@ -61,6 +62,7 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
                 fila.add(elemento.getTEmpleados().getApellido() +", "+ elemento.getTEmpleados().getNombre());
                 fila.add(elemento.getTMaquinasHerramientaParticular().getNombre());
                 fila.add(Utilidades.parseFechaHora(elemento.getFecHoraPrevistaInicio()));
+                fila.add(elemento.getTEdetallePlan().getNombre());
 
                 return fila;
             }
@@ -92,10 +94,10 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbDetalleOrdenTrabajo = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtCantidadProducida = new javax.swing.JTextField();
+        txtCantidadPlanificada = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         btnRegistrarAvance = new javax.swing.JButton();
 
@@ -211,50 +213,50 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
                 "Etapa", "Hora comienzo", "Hora fin", "Cantidad", "Estado"
             }
         ));
-        tbDetalleOrdenTrabajo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tbDetalleOrdenTrabajoKeyPressed(evt);
+        tbDetalleOrdenTrabajo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbDetalleOrdenTrabajoMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tbDetalleOrdenTrabajo);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Etapa seleccionada"));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel3.setText("Nombre:");
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel6.setText("Descripcion:");
+        jLabel6.setText("Cantidad planificada:");
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel13.setText("Cantidad Producida:");
+
+        txtCantidadPlanificada.setEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel13)
+                .addGap(25, 25, 25)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(444, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCantidadProducida, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCantidadPlanificada, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(434, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGap(19, 19, 19)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25))
+                    .addComponent(jLabel6)
+                    .addComponent(txtCantidadPlanificada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCantidadProducida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -303,7 +305,7 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGap(10, 10, 10))
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnRegistrarAvance)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -320,7 +322,7 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(btnRegistrarAvance))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -341,16 +343,12 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void tbDetalleOrdenTrabajoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbDetalleOrdenTrabajoKeyPressed
-        // TODO add your handling code here:
-
-        
-    }//GEN-LAST:event_tbDetalleOrdenTrabajoKeyPressed
-
     private void btnRegistrarAvanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAvanceActionPerformed
         // TODO add your handling code here:
         DetallePlanProduccion detalle=tmEtapas.getSeletedObject();
-        gestor.registrarAvance(detalle);
+        gestor.registrarAvance(detalle,Integer.parseInt(txtCantidadProducida.getText()));
+
+       
         Mensajes.mensajeInformacion("Se registro el avance exitosamente.");
         this.dispose();
     }//GEN-LAST:event_btnRegistrarAvanceActionPerformed
@@ -359,6 +357,11 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tbDetalleOrdenTrabajoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDetalleOrdenTrabajoMouseClicked
+        // TODO add your handling code here:
+        this.txtCantidadPlanificada.setText(tmEtapas.getSeletedObject().getCantidad()+"");
+    }//GEN-LAST:event_tbDetalleOrdenTrabajoMouseClicked
 
     /**
     * @param args the command line arguments
@@ -378,7 +381,6 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -387,12 +389,13 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblCliente;
     private javax.swing.JLabel lblEmpleado;
     private javax.swing.JLabel lblFechaPlanificacion;
     private javax.swing.JLabel lblNumeroPedido;
     private javax.swing.JTable tbDetalleOrdenTrabajo;
+    private javax.swing.JTextField txtCantidadPlanificada;
+    private javax.swing.JTextField txtCantidadProducida;
     private javax.swing.JTextField txtNumeroOrden;
     // End of variables declaration//GEN-END:variables
 
