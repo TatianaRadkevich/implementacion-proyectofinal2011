@@ -27,8 +27,9 @@ public class GestorAvanceProduccion {
 
     }
 
-    public void registrarAvance(DetallePlanProduccion detalle) {
+    public void registrarAvance(DetallePlanProduccion detalle, int cantidad_producida) {
         detalle.setTEdetallePlan(EstadoDetallePlanBD.traerEstadoFinalizado());
+        detalle.setCantidadProducida(cantidad_producida);
         DetallePlanProduccionBD.modificar(detalle);
     }
 
