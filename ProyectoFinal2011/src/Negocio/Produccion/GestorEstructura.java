@@ -55,15 +55,17 @@ public class GestorEstructura {
             }
         }
         producto = prod;
-
+        grabar = grabarBD;
         interfaz.limpiarEtapa();
+        modificable = false;
         interfaz.cargarProducto(producto);
+        interfaz.setVisibleBuscadorProducto(false);
         interfaz.habilitarSeleccionProducto(false);
         interfaz.habilitarSelecionEtapa(true);
         interfaz.habilitarCarga(false);
         interfaz.setVisible(true);
-        modificable = false;
-        grabar = grabarBD;
+       
+        
     }
 
     public void setProducto(Producto prod) {

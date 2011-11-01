@@ -10,6 +10,7 @@
  */
 package Presentacion;
 
+import Negocio.Deposito.GestorRecepcionMaterial;
 import Negocio.Produccion.GestorEstructura;
 import Presentacion.Administracion.*;
 import Presentacion.Compras.PantallaMaterialConsultar;
@@ -81,6 +82,7 @@ public class Principal extends javax.swing.JFrame {
         btnProveedor = new javax.swing.JButton();
         btnOrdenCompra = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        btnRecepcion = new javax.swing.JButton();
         pnlProduccion = new Presentacion.Fondo();
         txtProd = new javax.swing.JTextField();
         btnProducto = new javax.swing.JButton();
@@ -219,6 +221,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnRecepcion.setText("Recepcion de Materiales");
+        btnRecepcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecepcionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlComprasLayout = new javax.swing.GroupLayout(pnlCompras);
         pnlCompras.setLayout(pnlComprasLayout);
         pnlComprasLayout.setHorizontalGroup(
@@ -236,6 +245,10 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnOrdenCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(556, Short.MAX_VALUE))
+            .addGroup(pnlComprasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnRecepcion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(556, Short.MAX_VALUE))
         );
         pnlComprasLayout.setVerticalGroup(
             pnlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,7 +260,9 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btnProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnOrdenCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRecepcion, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(179, 179, 179))
         );
 
         pnlContenerdor.add(pnlCompras, "card3");
@@ -522,6 +537,11 @@ public class Principal extends javax.swing.JFrame {
         new PantallaClienteConsultar(this, true).setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void btnRecepcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecepcionActionPerformed
+        // TODO add your handling code here:
+        new GestorRecepcionMaterial();
+    }//GEN-LAST:event_btnRecepcionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -542,6 +562,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnProduccion;
     private javax.swing.JButton btnProducto;
     private javax.swing.JButton btnProveedor;
+    private javax.swing.JButton btnRecepcion;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnTipoDocumento;
     private javax.swing.JButton btnTipoProducto;

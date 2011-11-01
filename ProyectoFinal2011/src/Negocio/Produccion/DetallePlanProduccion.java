@@ -70,11 +70,11 @@ public class DetallePlanProduccion implements java.io.Serializable {
     private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
     /*------------------------------------------------------------------------*/
      @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_ORDEN_TRABAJO", nullable=false)
+    @JoinColumn(name="ID_ORDEN_TRABAJO", nullable=true)
     private OrdenTrabajo TOrdenesTrabajo;
 /*------------------------------------------------------------------------*/
       @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_EDETALLE_PLAN", nullable=false)
+    @JoinColumn(name="ID_EDETALLE_PLAN", nullable=true)
      private EstadoDetallePlan TEdetallePlan;
       /*------------------------------------------------------------------------*/
       @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TDetallesPlan")

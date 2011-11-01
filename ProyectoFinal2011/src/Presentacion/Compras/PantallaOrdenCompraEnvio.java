@@ -295,7 +295,7 @@ public class PantallaOrdenCompraEnvio extends javax.swing.JDialog {
             return;
         
         //oc.setId(Utilidades.parseInteger( txtCodigo.getText()));
-        oc.setFecGeneracion(dtcFechaEnvio.getDate());
+        oc.setFecEnvio(dtcFechaEnvio.getDate());
         
         try {
             gestor.ejecutarCU(oc);

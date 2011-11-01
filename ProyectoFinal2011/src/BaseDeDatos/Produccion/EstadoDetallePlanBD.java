@@ -49,4 +49,34 @@ public class EstadoDetallePlanBD {
         List<EstadoDetallePlan> var=HibernateUtil.ejecutarConsulta("from EstadoDetallePlan where nombre like 'Finalizado'");
         return var.get(0);
     }
+
+
+    private static final String EP_Terminado="Terminado";
+    private static final String EP_Pendiente="Pendiente";
+    private static final String EP_Cancelado="Cancelado";
+
+    public static EstadoDetallePlan getEstadoTerminado()
+    {
+        return getEstadoDetallePlan(EP_Terminado);
+    }
+
+       public static EstadoDetallePlan getEstadoPendiente()
+    {
+        return getEstadoDetallePlan(EP_Pendiente);
+    }
+
+          public static EstadoDetallePlan getEstadoCancelado()
+    {
+        return getEstadoDetallePlan(EP_Cancelado);
+    }
+
+    private static EstadoDetallePlan getEstadoDetallePlan(String nombre)
+    {
+        String HQL=String.format("FROM EstadoDetallePlan as ep WHERE LOWER(ep.nombre) = LOWER('%s')", nombre);
+        List<EstadoDetallePlan> lst=HibernateUtil.ejecutarConsulta(HQL);
+        if(lst.isEmpty())
+            throw new RuntimeException("No existe un \"estado detalle plan\" con el nombre de : "+nombre);
+        return lst.get(0);
+    }
+
 }

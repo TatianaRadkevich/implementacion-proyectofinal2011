@@ -135,6 +135,8 @@ public abstract class TablaManager<E> {
     }
 
     public void setSelectedRow(int i) {
+        if(i<0||i>=contenido.size())
+            return;
         tabla.setRowSelectionInterval(i, i);
     }
 

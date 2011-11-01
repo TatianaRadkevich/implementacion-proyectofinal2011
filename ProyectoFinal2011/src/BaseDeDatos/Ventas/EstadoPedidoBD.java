@@ -48,5 +48,4 @@ public class EstadoPedidoBD {
             throw new RuntimeException("No existe un \"estado de pedido\" con el nombre de : "+nombre);
         return lst.get(0);
     }
-
 }

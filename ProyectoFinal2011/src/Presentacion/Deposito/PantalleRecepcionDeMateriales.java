@@ -33,10 +33,10 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
 
     public PantalleRecepcionDeMateriales(GestorRecepcionMaterial g, java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        gestor = g;
+        gestor =g;
         initComponents();
         iniciarTablas();
-        Utilidades.habilitarPanel(pnlOrden, false);
+       // Utilidades.habilitarPanel(pnlOrden, false);
         habilitarCarga(false);
         txtFechaActual.setText(Utilidades.parseFecha(Utilidades.getFechaActual()));
     }
@@ -95,6 +95,7 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
     }
 
     public void habilitarCarga(boolean valor) {
+
         Utilidades.habilitarPanel(pnlRecepcion, valor);
     }
 
@@ -499,14 +500,7 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                PantalleRecepcionDeMateriales dialog = new PantalleRecepcionDeMateriales(null, new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+         new GestorRecepcionMaterial();
             }
         });
     }

@@ -70,6 +70,16 @@ public class EstadoOrdenCompra implements java.io.Serializable {
         return this.getNombre();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        try{
+            if(((EstadoOrdenCompra)obj).getNombre().equals(this.getNombre()))
+                return true;
+        }catch(Exception e){}
+
+        return false;
+    }
+
 
 
 //    public Set<OrdenCompra> getTOrdenesCompras() {
