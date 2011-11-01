@@ -115,8 +115,14 @@ public class DetalleOrdenCompra implements java.io.Serializable {
         
         if(cantidadRecibida<0)
             throw new RuntimeException("La cantidad recibida no puede ser menor que cero(0) ");
-        
-        this.cantidadRecibida = cantidadRecibida;       
+         try{
+        int stock=this.getMaterial().getStockActual();
+        stock+=-this.cantidadRecibida;
+        stock+=cantidadRecibida;
+        this.getMaterial().setStockActual(new Short(stock+""));
+        }catch(Exception e){}
+
+        this.cantidadRecibida = cantidadRecibida;      
         
         if(cantidadRecibida<cantidadPedida)
             this.setEstado(EstadoDetalleOrdenCompraBD.getEstadoConcretadaParcial());

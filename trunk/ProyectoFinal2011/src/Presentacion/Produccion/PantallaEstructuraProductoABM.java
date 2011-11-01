@@ -281,7 +281,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         }
         //ordeno las etapas por el numero
 
-
+        actualizarContenido();
 
 
 
