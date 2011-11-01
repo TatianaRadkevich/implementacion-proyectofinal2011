@@ -8,14 +8,16 @@
  *
  * Created on 07/06/2011, 09:00:49
  */
-
 package Presentacion.Produccion;
+
 import BaseDeDatos.Compras.MaterialBD;
 import Negocio.Compras.Material;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Produccion.DetalleProducto;
+import Negocio.Produccion.GestorEstructura;
 import Negocio.Produccion.GestorProducto;
 import Negocio.Produccion.GestorTipoProducto;
+import Negocio.Produccion.GestorUnidadMedida;
 import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
 import Negocio.Produccion.UnidadMedida;
@@ -34,6 +36,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -42,31 +45,31 @@ import java.util.logging.Logger;
 public class PantallaABMProducto extends javax.swing.JDialog {
 
     private GestorProducto gestor;
-    private Producto producto=null;
+    private Producto producto = null;
+
     /** Creates new form PantallaABMProducto */
     public PantallaABMProducto(java.awt.Frame parent, boolean modal) {
-        super((Frame)null, modal);
+        super((Frame) null, modal);
         //GUILocal.establecerGUILocal(this);
-      //  GUILocal.establecerGUISyntheticaClassy(this);
+        //  GUILocal.establecerGUISyntheticaClassy(this);
 
         initComponents();
-        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
     }
 
     public PantallaABMProducto(Dialog owner, boolean modal, GestorProducto gestor, String title) {
-        super((Dialog)null, modal);
+        super((Dialog) null, modal);
 //        GUILocal.establecerGUILocal(this);
 
-        initComponents();        
-        this.gestor=gestor;
+        initComponents();
+        this.gestor = gestor;
         cargarTipoProductos();
         cargarUnidadDeMedida();
         setTitle(title);
 
-       
-       IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
     }
-   
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -135,6 +138,11 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         jScrollPane1.setViewportView(txtAreaDescripcion);
 
         jButton1.setText("Registrar estructura");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -197,9 +205,9 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                         .addComponent(cmbUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAgregarUnidadMedida)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                         .addComponent(jButton1)))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,7 +312,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                         .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE))
+                    .addComponent(pnlBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -330,20 +338,20 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-        if(validar()){            
+        if (validar()) {
             producto.setNombre(txtNombre.getText().toUpperCase());
             producto.setDescripcion(txtAreaDescripcion.getText());
             producto.setPrecioUnitario(new BigDecimal(txtPrecio.getText()));
             producto.setTTproducto((TipoProducto) cmbTipoProducto.getSelectedItem());
-            producto.setTUnidadesMedida((UnidadMedida)cmbUnidadMedida.getSelectedItem());
+            producto.setTUnidadesMedida((UnidadMedida) cmbUnidadMedida.getSelectedItem());
 
-            if(txtFechaBaja.getText().compareTo("")!=0){
+            if (txtFechaBaja.getText().compareTo("") != 0) {
                 producto.setFecBaja(new Date());
                 producto.setMotivoBaja(txtMotivoBaja.getText());
             }
 
 
-           
+
             try {
                 gestor.ejecutarOperacion(producto);
                 Mensajes.mensajeInformacion(gestor.mensajeResultado(producto));
@@ -359,7 +367,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
     private void btnAgregarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTipoActionPerformed
         // TODO add your handling code here:       
-        GestorTipoProducto.administarTipoProductoAgregar(this);        
+        GestorTipoProducto.administarTipoProductoAgregar(this);
         this.cargarTipoProductos();
     }//GEN-LAST:event_btnAgregarTipoActionPerformed
 
@@ -370,19 +378,31 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
     private void btnAgregarUnidadMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarUnidadMedidaActionPerformed
         // TODO add your handling code here:
+        new GestorUnidadMedida().administrarUnidadMedidaAgregar(this);
+        this.cargarUnidadDeMedida();
+
     }//GEN-LAST:event_btnAgregarUnidadMedidaActionPerformed
 
-    public boolean validar(){
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new GestorEstructura().iniciarCU(producto, false);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public boolean validar() {
         return true;
     }
+
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 PantallaABMProducto dialog = new PantallaABMProducto(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
@@ -391,7 +411,6 @@ public class PantallaABMProducto extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregarTipo;
@@ -422,41 +441,43 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 
-
-    private void cargarDatos(Producto prod){
+    private void cargarDatos(Producto prod) {
 
         this.txtCodigo.setText(prod.codigoMerge());
         this.txtNombre.setText(prod.getNombre());
-        this.txtPrecio.setText(prod.getPrecioUnitario()+"");
+        this.txtPrecio.setText(prod.getPrecioUnitario() + "");
         this.txtAreaDescripcion.setText(prod.getDescripcion());
 
-         if(prod.getFecBaja()==null)
+        if (prod.getFecBaja() == null) {
             this.txtFechaBaja.setText("");
-        else
-        {
-            Format formato=new SimpleDateFormat("dd/MM/yyyy");
-            String fecha=formato.format(prod.getFecBaja());
+            
+        } else {
+            Format formato = new SimpleDateFormat("dd/MM/yyyy");
+            String fecha = formato.format(prod.getFecBaja());
             this.txtFechaBaja.setText(fecha);
         }
 
-        if(prod.getMotivoBaja()==null)
+        if (prod.getMotivoBaja() == null) {
             this.txtMotivoBaja.setText("");
-        else
+            
+        } else {
             this.txtMotivoBaja.setText(prod.getMotivoBaja());
 
 
-         TipoProducto tipo=null;
-        for(int i=0; i<cmbTipoProducto.getItemCount();i++){
-            tipo=(TipoProducto) cmbTipoProducto.getItemAt(i);
-            if(tipo.getNombre().compareTo(this.producto.getTTproducto().getNombre())==0){
+
+        }
+        TipoProducto tipo = null;
+        for (int i = 0; i < cmbTipoProducto.getItemCount(); i++) {
+            tipo = (TipoProducto) cmbTipoProducto.getItemAt(i);
+            if (tipo.getNombre().compareTo(this.producto.getTTproducto().getNombre()) == 0) {
                 cmbTipoProducto.setSelectedIndex(i);
                 break;
             }
         }
-          UnidadMedida unidadMedida=null;
-        for(int i=0; i<cmbUnidadMedida.getItemCount();i++){
-            unidadMedida=(UnidadMedida) cmbUnidadMedida.getItemAt(i);
-            if(unidadMedida.getNombre().compareTo(this.producto.getTUnidadesMedida().getNombre())==0){
+        UnidadMedida unidadMedida = null;
+        for (int i = 0; i < cmbUnidadMedida.getItemCount(); i++) {
+            unidadMedida = (UnidadMedida) cmbUnidadMedida.getItemAt(i);
+            if (unidadMedida.getNombre().compareTo(this.producto.getTUnidadesMedida().getNombre()) == 0) {
                 cmbTipoProducto.setSelectedIndex(i);
                 break;
             }
@@ -464,15 +485,15 @@ public class PantallaABMProducto extends javax.swing.JDialog {
 
     }
 
-     private void cargarTipoProductos(){
+    private void cargarTipoProductos() {
         try {
 //            for(int i=0;i<cmbTipoProducto.getItemCount();i++){
 //                cmbTipoProducto.remove(i);
 //            }
             cmbTipoProducto.removeAllItems();
-            
+
             List<TipoProducto> tipo = GestorProducto.traerTiposProductos();
-            for(int i=0;i<tipo.size();i++){
+            for (int i = 0; i < tipo.size(); i++) {
                 cmbTipoProducto.addItem(tipo.get(i));
             }
         } catch (ExceptionGestor ex) {
@@ -482,13 +503,13 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         cmbTipoProducto.repaint();
     }
 
-      private void cargarUnidadDeMedida(){
+    private void cargarUnidadDeMedida() {
         try {
 
             cmbUnidadMedida.removeAllItems();
 
             List<UnidadMedida> tipo = gestor.traerUnidadesMedida();
-            for(int i=0;i<tipo.size();i++){
+            for (int i = 0; i < tipo.size(); i++) {
                 cmbUnidadMedida.addItem(tipo.get(i));
             }
         } catch (ExceptionGestor ex) {
@@ -498,47 +519,47 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         cmbUnidadMedida.repaint();
     }
 
-    public void nuevo(){
+    public void nuevo() {
         this.txtCodigo.setVisible(false);
         this.lbl_codigo.setVisible(false);
-        producto=new Producto();
+        producto = new Producto();
         activarBaja(false);
         activarProducto(true);
         this.activarBotones(true, true);
         this.txtNombre.requestFocus();
     }
 
-    public void modificar(Producto producto){
-        this.producto=producto;  
+    public void modificar(Producto producto) {
+        this.producto = producto;
 
         this.activarProducto(true);
         this.activarBaja(false);
         this.activarBotones(true, true);
-        
-       
-        if(producto.getFecBaja()!=null){
+
+
+        if (producto.getFecBaja() != null) {
 //            this.btnAlta.setEnabled(true);
-         }
-        
+        }
+
         this.txtNombre.requestFocus();
         this.cargarDatos(this.producto);
     }
 
-    public void baja(Producto prod) {       
-        
-        
-        this.producto=prod;
+    public void baja(Producto prod) {
+
+
+        this.producto = prod;
         this.activarProducto(false);
         this.activarBaja(true);
         this.activarBotones(true, true);
         this.txtMotivoBaja.requestFocus();
-         this.cargarDatos(this.producto);
-         Format formato=new SimpleDateFormat("dd/MM/yyyy");
-        String fecha=formato.format(new Date());
+        this.cargarDatos(this.producto);
+        Format formato = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = formato.format(new Date());
         this.txtFechaBaja.setText(fecha);
-        }
+    }
 
-    public void vaciar(){
+    public void vaciar() {
         this.txtCodigo.setText("");
         this.txtNombre.setText("");
         this.txtAreaDescripcion.setText("");
@@ -547,37 +568,33 @@ public class PantallaABMProducto extends javax.swing.JDialog {
         this.txtMotivoBaja.setText("");
         this.cmbTipoProducto.setSelectedIndex(1);
     }
-    
-    private void activarProducto(boolean flag){
+
+    private void activarProducto(boolean flag) {
         this.txtCodigo.setEnabled(flag);
         this.txtNombre.setEnabled(flag);
         this.txtAreaDescripcion.setEnabled(flag);
         this.txtPrecio.setEnabled(flag);
         this.cmbTipoProducto.setEnabled(flag);
         this.cmbUnidadMedida.setEnabled(flag);
-        
+
     }
-    
-    private void activarBaja(boolean flag){
+
+    private void activarBaja(boolean flag) {
         this.txtFechaBaja.setEnabled(false);
         this.txtMotivoBaja.setEnabled(flag);
     }
 
-    private void activarBotones(boolean aceptar,boolean cancelar){
+    private void activarBotones(boolean aceptar, boolean cancelar) {
         this.btnAceptar.setEnabled(aceptar);
         this.btnCancelar.setEnabled(cancelar);
     }
 
     public void reactivar(Producto traerProducto) {
-         this.producto=traerProducto;
+        this.producto = traerProducto;
         this.activarProducto(false);
         this.activarBaja(false);
-        this.activarBotones(true, true);      
-         this.cargarDatos(this.producto);
+        this.activarBotones(true, true);
+        this.cargarDatos(this.producto);
 
     }
-
-  
-   
-    
 }

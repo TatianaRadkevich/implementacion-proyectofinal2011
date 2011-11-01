@@ -2,10 +2,11 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
+    
     <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
     <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=Ramaty</property>
-    <property name="hibernate.connection.username">proyecto</property>
-    <property name="hibernate.connection.password">33437838</property>
+    <property name="hibernate.connection.username">sa</property>
+    <property name="hibernate.connection.password">123</property>
 
     <mapping class="Negocio.Administracion.AsistenciaEmpleado"/>
     <mapping class="Negocio.Administracion.Cargo"/>
@@ -55,7 +56,9 @@
     <mapping class="Negocio.Produccion.UnidadMedida"/>
     <mapping class="Negocio.Produccion.EstadoOrdenTrabajo"/>
     <mapping class="Negocio.Produccion.OrdenTrabajo"/>
-    <mapping class="Negocio.Produccion.ProblemasMhp"/>
+    <mapping class="Negocio.Produccion.ProblemasMhp"/>    
+    <mapping class="Negocio.Produccion.EstadoPlanProduccion"/>
+    <mapping class="Negocio.Produccion.MaqHerrPartXDetPlan"/>
     <mapping class="Negocio.Produccion.EstadoDetallePlan"/>
 
     <mapping class="Negocio.UbicacionGeografica.Barrio"/>

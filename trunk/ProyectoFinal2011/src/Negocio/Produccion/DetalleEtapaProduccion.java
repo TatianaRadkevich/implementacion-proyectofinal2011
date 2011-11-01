@@ -36,7 +36,7 @@ public class DetalleEtapaProduccion implements java.io.Serializable {
     @Column(name = "CANTIDAD_NECESARIA", precision = 6)//, nullable = false
     private Integer cantidadNecesaria;
     @Column(name = "CANTIDAD_REPETICIONES", precision = 6)//, nullable = false
-    private BigDecimal cantidadRepeticiones;
+    private BigDecimal cantidadRepeticiones=new BigDecimal(0);
     @Column(name = "HORAS_MAQUINA", precision = 6)// nullable = false,
     private BigDecimal horasMaquina;
 

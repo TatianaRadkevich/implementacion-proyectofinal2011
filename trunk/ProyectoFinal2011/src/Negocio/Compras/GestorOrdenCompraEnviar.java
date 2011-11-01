@@ -37,6 +37,14 @@ public class GestorOrdenCompraEnviar extends GestorOrdenCompra {
 
     }
 
+    @Override
+    public void finalizarCU() {
+        interfaz.setVisible(false);
+        interfaz.dispose();
+    }
+
+
+
     private void validar(OrdenCompra oc) throws ExceptionGestor {
         String mensage = "";
 

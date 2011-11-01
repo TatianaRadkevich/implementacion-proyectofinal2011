@@ -6,7 +6,6 @@ import Negocio.Compras.Material;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Produccion.*;
 import Presentacion.*;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
@@ -17,8 +16,6 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.table.TableCellRenderer;
-import org.hibernate.mapping.Collection;
 
 /**
  *
@@ -50,19 +47,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 fila.add(elemento.getNumeroOrden());
                 fila.add(elemento.getEtapaProduccion());
                 fila.add(elemento.getCargo());
-
-                if (elemento.getDuracion() != null && elemento.getDuracion() % 60 == 0) {
-                    fila.add(elemento.getDuracion() / 60 + " min.");
-
-                } else {
-                    if (elemento.getDuracion() != null) {
-                        fila.add(elemento.getDuracion() + " seg.");
-                    } else {
-                        fila.add("");
-                    }
-                }
-
-
+                fila.add(elemento.getDuracion());
                 fila.add(elemento.getDescripcion());
                 return fila;
             }
@@ -131,7 +116,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             @Override
             public Vector getCabecera() {
                 Vector cabecera = new Vector();
-                cabecera.add("Material");
+                cabecera.add("Herramienta");
                 cabecera.add("Cantidad");
                 return cabecera;
             }
@@ -153,29 +138,11 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         };
         cmbHerramienta = new JComboBox();
-        tbHerramientas.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(cmbHerramienta));
-        tbHerramientas.getColumnModel().getColumn(0).setCellRenderer(new TableCellRenderer() {
-
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JComboBox cmb = new JComboBox();
-                cmb.addItem(value);
-                cmb.setEnabled(table.isEnabled());
-                return cmb;
-            }
-        });
+        tbHerramientas.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(cmbHerramienta));        
         JTextField txt = new JTextField();
         ValidarTexbox.validarInt(txt);
         ValidarTexbox.validarLongitud(txt, 3);
-        tbHerramientas.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(txt));
-        tbHerramientas.getColumnModel().getColumn(1).setCellRenderer(new TableCellRenderer() {
-
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JTextField txt = new JTextField();
-                txt.setText(value.toString());
-                txt.setEnabled(table.isEnabled());
-                return txt;
-            }
-        });
+        tbHerramientas.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(txt));        
         tbHerramientas.setRowHeight((int) cmbHerramienta.getPreferredSize().getHeight());
     }
 
@@ -219,29 +186,19 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         };
         cmbMaterial = new JComboBox();
-        tbMaterial.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(cmbMaterial));
-        tbMaterial.getColumnModel().getColumn(0).setCellRenderer(new TableCellRenderer() {
+        cmbMaterial.addActionListener(new ActionListener() {
 
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JComboBox cmb = new JComboBox();
-                cmb.addItem(value);
-                cmb.setEnabled(table.isEnabled());
-                return cmb;
+            public void actionPerformed(ActionEvent e) {
+                int index=tmMateriales.getSelectedRow();
+                tmMateriales.updateTabla();
+                tmMateriales.setSelectedRow(index);
             }
         });
+        tbMaterial.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(cmbMaterial));
         JTextField txt = new JTextField();
         ValidarTexbox.validarInt(txt);
         ValidarTexbox.validarLongitud(txt, 3);
         tbMaterial.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(txt));
-        tbMaterial.getColumnModel().getColumn(1).setCellRenderer(new TableCellRenderer() {
-
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JTextField txt = new JTextField();
-                txt.setText(value.toString());
-                txt.setEnabled(table.isEnabled());
-                return txt;
-            }
-        });
         tbMaterial.setRowHeight((int) cmbMaterial.getPreferredSize().getHeight());
 
 
@@ -336,26 +293,9 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             return;
         }
 
-
-
         txtDescripcion.setText(Utilidades.parseString(ep.getDescripcion()));
-
-
-//        if (ep.getHorasHombre() != null && ep.getHorasHombre().intValueExact() % 60 == 0) {
-//            txtHorasHombre.setText((int) (ep.getHorasHombre().intValueExact() / 60) + "");
-//            cmbTiempoHorasHom.setSelectedIndex(1);
-//        } else {
-//            txtHorasHombre.setText(Utilidades.parseString(ep.getHorasHombre().intValueExact()));
-//            cmbTiempoHorasHom.setSelectedIndex(0);
-//        }
-//
-//        if (ep.getDuracion() != null && ep.getDuracion() % 60 == 0) {
-//            txtDuracion.setText(ep.getDuracion() / 60 + "");
-//            cmbTiempoDurEtapa.setSelectedIndex(1);
-//        } else {
-//            txtDuracion.setText(Utilidades.parseString(ep.getDuracion()));
-//            cmbTiempoDurEtapa.setSelectedIndex(0);
-//        }
+        txtHorasHombre.setText(ep.getHorasHombre().intValueExact()+"");
+        txtDuracion.setText(ep.getDuracion() +"");
 
         txtOrden.setText(Utilidades.parseString(ep.getNumeroOrden()));
 
@@ -379,10 +319,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         }
         tmHerramientas.setDatos(herramientas);
         tmMateriales.setDatos(materiales);
-
-        // cmbTipoMaquina.setSelectedItem(ep.getDetalleEtapaProduccion().get(0).getTipoMaquinaHerramienta());
-        //cmbMaterial.setSelectedItem(ep.getDetalleEtapaProduccion().get(0).getMaterial());
-        //txtRepeticiones.setText(ep.getDetalleEtapaProduccion().get(0).getCantidadRepeticiones() + "");
+      
 
     }
 
@@ -434,6 +371,56 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         });
         tmComposicion.updateTabla();
+
+    }
+
+     public void setVisibleBuscadorProducto(boolean b) {
+        pnlProducto.setVisible(b);
+        this.pack();
+    }
+
+    private boolean validarEtapa()
+    {
+        String mensaje="";
+       if(cmbTipoEtapa.getSelectedIndex()==-1)
+            mensaje+="\nDebe seleccionar un tipo de etapa";
+        if(cmbCargo.getSelectedIndex()==-1)
+            mensaje+="\nDebe seleccionar un cargo correcto";
+        if(cmbTipoMaquina.getSelectedIndex()==-1)
+            mensaje+="\nDebe seleccionar un tipo de maquina correcto";
+        if(txtDuracion.getText().trim().isEmpty())
+            mensaje+="\nDebe ingresar una duración determinada";
+        if(txtHorasHombre.getText().trim().isEmpty())
+            mensaje+="\nDebe ingresar las horas hombre requeridas";
+        if(txtHorasHombre.getText().trim().isEmpty()==false)
+            if(txtDuracion.getText().trim().isEmpty()==false)
+                if(txtDuracion.getText().compareTo(txtHorasHombre.getText())<0)
+                    mensaje+="\nLas horas hombre no puede superar la duracion de la etapa";
+
+        for(int i=0;i<tmHerramientas.getSize();i++)
+        {
+            DetalleEtapaProduccion dep=tmHerramientas.getDato(i);
+            if(dep.getCantidadNecesaria()==null||dep.getCantidadNecesaria()<=0)
+                mensaje+="\nHerramientas fila "+i+1+": La cantidad ingresada es invalida";
+
+            if(dep.getTipoMaquinaHerramienta()==null)
+                 mensaje+="\nHerramientas fila "+i+1+": No se eligió una herramienta correcta";
+            else
+            for(int x=0;x<tmHerramientas.getSize();x++)
+            {
+                if(x<i && dep.getTipoMaquinaHerramienta().equals(tmHerramientas.getDato(x)))
+                {
+                    mensaje+="\nHerramientas fila "+i+1+": Se ha elegido más de una vez la misma herramienta";
+                    break;
+                }
+            }
+        }
+
+        if(mensaje.isEmpty())
+            return true;
+
+        Mensajes.mensajeErrorGenerico(mensaje);
+        return false;
 
     }
 
@@ -659,7 +646,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Material", "Cantidad"
+                "Material", "Cantidad", "Unidad"
             }
         ));
         jScrollPane2.setViewportView(tbMaterial);
@@ -1129,8 +1116,11 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
     private void btnAceptarEtapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarEtapaActionPerformed
         // TODO add your handling code here:
-        EtapaProduccionEspecifica etapa;
-        Integer duracion;
+
+        if(validarEtapa()==false)
+            return;
+
+        EtapaProduccionEspecifica etapa;       
 
         if (nuevo) {
             etapa = new EtapaProduccionEspecifica();
@@ -1146,20 +1136,8 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         etapa.setEtapaProduccion((EtapaProduccion) cmbTipoEtapa.getSelectedItem());
         etapa.setNumeroOrden(Utilidades.parseByte(txtOrden.getText()));
 
-//        duracion = Utilidades.parseInteger(txtDuracion.getText());
-//        if (duracion != null) {
-//            if (cmbTiempoDurEtapa.getSelectedIndex() == 1) {
-//                duracion = duracion * 60;
-//            }
-//        }
         etapa.setDuracion(new Integer(txtDuracion.getText()));
 
-//        duracion = Utilidades.parseInteger(txtHorasHombre.getText());
-//        if (duracion != null) {
-//            if (cmbTiempoHorasHom.getSelectedIndex() == 1) {
-//                duracion = duracion * 60;
-//            }
-//        }
         etapa.setHorasHombre(new BigDecimal(txtHorasHombre.getText()));
 
 
@@ -1258,6 +1236,8 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
     private void btnNuevaHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaHerramientaActionPerformed
         // TODO add your handling code here:
+        tmHerramientas.add(new DetalleEtapaProduccion());
+
     }//GEN-LAST:event_btnNuevaHerramientaActionPerformed
 
     public static void main(String args[]) {
@@ -1334,4 +1314,6 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
     private javax.swing.JTextField txtHorasHombre;
     private javax.swing.JTextField txtOrden;
     // End of variables declaration//GEN-END:variables
+
+
 }

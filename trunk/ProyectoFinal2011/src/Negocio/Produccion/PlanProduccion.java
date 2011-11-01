@@ -36,6 +36,9 @@ public class PlanProduccion implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_PLAN_PRODUCCION", unique = true, nullable = false, precision = 8, scale = 0)
     private int idPlanProduccion;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_EPLAN_PRODUCCION")
+    private EstadoPlanProduccion TEplanProduccion;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_ENCARGADO")//, nullable=false)
     private Empleado TEmpleados;
@@ -199,6 +202,14 @@ public class PlanProduccion implements java.io.Serializable {
         return salida;
     }
 
+    public DetallePlanProduccion getDetallePlan(EtapaProduccionEspecifica epe)
+    {
+        for(DetallePlanProduccion dpp:this.TDetallesPlans)
+            if(dpp.getTEtapasProduccionEspecifica().equals(epe))
+                return dpp;
+        return null;
+    }
+
 
      public List<DetallePlanProduccion> getDetallePlan(Empleado emp) {
         List<DetallePlanProduccion> salida = new ArrayList<DetallePlanProduccion>();
@@ -265,8 +276,17 @@ public class PlanProduccion implements java.io.Serializable {
     {
         for(DetallePlanProduccion dpp: this.TDetallesPlans)
             dpp.generarFaltantes();
-
     }
+
+    public EstadoPlanProduccion getEstado() {
+        return TEplanProduccion;
+    }
+
+    public void setEstado(EstadoPlanProduccion estado) {
+        this.TEplanProduccion = estado;
+    }
+
+
 
 
 }

@@ -19,7 +19,7 @@ import org.hibernate.Hibernate;
  * @author Rodrigo
  */
 
-public abstract class GestorRecepcionMaterial {
+public class GestorRecepcionMaterial {
 
     protected PantalleRecepcionDeMateriales interfaz;
     protected OrdenCompra ordenCompra;
@@ -44,13 +44,14 @@ public abstract class GestorRecepcionMaterial {
             Mensajes.mensajeErrorGenerico(mensaje);
             return;
         }
-        if(ordenCompra.getEstado().equals(EstadoOrdenCompraBD.getEstadoPendiente())==false)
-        {
-            mensaje="La orden de comprada con el nro. "+ordenCompra.getId()+" es invalida.\n"+
-                "Solo las ordenes pendientes pueden se enviadas";
-            Mensajes.mensajeErrorGenerico(mensaje);
-            return;
-        }
+//        if(ordenCompra.getEstado().equals(EstadoOrdenCompraBD.getEstadoEnviada())!=true
+//                ||ordenCompra.getEstado().equals(EstadoOrdenCompraBD.getEstadoConcretadaParcial())!=true)
+//        {
+//            mensaje="La orden de comprada con el nro. "+ordenCompra.getId()+" es invalida.\n"+
+//                "Solo las ordenes enviadas o con recepcion parcial pueden ser recibidas";
+//            Mensajes.mensajeErrorGenerico(mensaje);
+//            return;
+//        }
         /************************************************/
 
         interfaz.cargarOrden(ordenCompra);   

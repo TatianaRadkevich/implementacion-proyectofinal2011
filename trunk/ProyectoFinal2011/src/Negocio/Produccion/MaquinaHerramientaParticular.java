@@ -39,7 +39,7 @@ public class MaquinaHerramientaParticular implements java.io.Serializable {
     @JoinColumn(name = "ID_EMAQUINA", nullable = true)
     private EstadoMaquina TEmaquina;
     @Column(name = "CAPACIDAD_PRODUCTIVA", nullable = true, precision = 5, scale = 0)
-    private Integer capacidadProductiva;
+    private Integer capacidadProductiva=new Integer(0);
     @Column(name = "CARACTERISTICAS", nullable = true, length = 200)
     private String caracteristicas;
     @Column(name = "MODELO", nullable = true, length = 50)
@@ -49,7 +49,7 @@ public class MaquinaHerramientaParticular implements java.io.Serializable {
     @Column(name = "OBSERVACIONES", length = 200)
     private String observaciones;
     @Column(name = "CODIGO", nullable = true, length = 2)
-    private String codigo;
+    private String codigo="";
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="FEC_BAJA")
     private Date fecBaja;
