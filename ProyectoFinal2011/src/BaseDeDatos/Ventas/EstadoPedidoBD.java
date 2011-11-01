@@ -19,7 +19,12 @@ public class EstadoPedidoBD {
     private static final String EP_AutorizadoPendiente="Autorizado-Pendiente";
     private static final String EP_Planificado="Planificado";
     private static final String EP_Cancelado="Cancelado";
+    private static final String EP_Produccion="Produccion";
 
+    public static EstadoPedido getEstadoProduccion()
+    {
+        return getEstoadoPedido(EP_Produccion);
+    }
     public static EstadoPedido getEstadoAutorizadoPendiente()
     {
         return getEstoadoPedido(EP_AutorizadoPendiente);
