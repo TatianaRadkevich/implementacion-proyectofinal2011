@@ -26,6 +26,7 @@ import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import com.toedter.calendar.JTextFieldDateEditor;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -582,6 +583,8 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         PlanProduccion plan= ((Pedido)tmPedido.getSeletedObject()).getPlanProduccion();       
         List<Empleado> empleados=plan.getEmpleadosInvolucrados();
         
+        List<OrdenTrabajo> orden=new ArrayList<OrdenTrabajo>();
+        
         OrdenTrabajo tempOrden=null;
         Date fecha=new Date();
         for(int i=0; i<empleados.size();i++){
@@ -591,19 +594,37 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
             tempOrden.setTEordenTrabajo(gestor.estadoGenerado());
             tempOrden.setObservaciones(txtObservacion.getText());
             gestor.guardarOrdenTrabajo(tempOrden);
+            orden.add(tempOrden);
             List<DetallePlanProduccion> detalle=plan.getDetallePlan(empleados.get(i));
 
-            for(int j=0; j<detalle.size();i++)
+
+
+            for(int j=0; j<detalle.size();j++)
             {
-                detalle.get(i).setTOrdenesTrabajo(tempOrden);
-                detalle.get(i).setTEdetallePlan(gestor.estadoDetalleEnEjecucion());
+                detalle.get(j).setTOrdenesTrabajo(tempOrden);
+//                detalle.get(j).setTEdetallePlan(gestor.estadoDetalleEnEjecucion());
             }
             gestor.actualizarDetalle(detalle);
 
+            gestor.mofidificarEstadoPedido(detalle.get(0).getTPlanesProduccion().getPedido());
+
         }
 
-        Mensajes.mensajeInformacion("La orden de trabajo ha sido regitrado exitosamente "
-                + "\n su numero de orden es: " + tempOrden.getIdOrdenTrabajo());
+        if(orden.size()==1){
+            Mensajes.mensajeInformacion("La orden de trabajo ha sido generado exitosamente "
+                + "\n su numero de orden es: \n"
+                + tempOrden.getIdOrdenTrabajo()+" Empleado: "+ tempOrden.getTEmpleados().getApellido() + ", "+ tempOrden.getTEmpleados().getNombre());
+        }
+         else{
+            String mensaje="Las ordenes de trabajo han sido generadas exitosamente "
+                + "\n los números de ordenes son: ";
+            for(int i=0;i<orden.size();i++){
+                mensaje+= "\n    " + orden.get(i).getIdOrdenTrabajo() + " Empleado: "+ orden.get(i).getTEmpleados().getApellido() + ", "+ orden.get(i).getTEmpleados().getNombre();
+            }
+            Mensajes.mensajeInformacion( mensaje);
+            
+         }
+        this.dispose();
 
 
 
