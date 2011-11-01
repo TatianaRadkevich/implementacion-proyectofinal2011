@@ -215,7 +215,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnOrdenCompra.setText("Oeden Compra");
+        btnOrdenCompra.setText("Orden Compra");
         btnOrdenCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOrdenCompraActionPerformed(evt);
@@ -346,34 +346,34 @@ public class Principal extends javax.swing.JFrame {
         pnlProduccion.setLayout(pnlProduccionLayout);
         pnlProduccionLayout.setHorizontalGroup(
             pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtProd, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
+            .addComponent(txtProd, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
             .addGroup(pnlProduccionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlProduccionLayout.createSequentialGroup()
                         .addComponent(btnTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnProblemas, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                        .addComponent(btnProblemas, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                     .addGroup(pnlProduccionLayout.createSequentialGroup()
                         .addComponent(btnProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnConsultaProblemas, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)))
+                        .addComponent(btnConsultaProblemas, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
                 .addGap(388, 388, 388))
             .addGroup(pnlProduccionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(577, Short.MAX_VALUE))
+                .addContainerGap(556, Short.MAX_VALUE))
             .addGroup(pnlProduccionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(577, Short.MAX_VALUE))
+                .addContainerGap(556, Short.MAX_VALUE))
             .addGroup(pnlProduccionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnAvance, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                .addContainerGap(577, Short.MAX_VALUE))
+                .addContainerGap(556, Short.MAX_VALUE))
         );
         pnlProduccionLayout.setVerticalGroup(
             pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
