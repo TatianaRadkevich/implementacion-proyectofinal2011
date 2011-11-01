@@ -45,7 +45,7 @@ public class Faltante implements java.io.Serializable {
     private Date fecGeneracion;
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_NECESIDAD", nullable = true, length = 23)
-    private Date fecNecesidad;
+    private Date fecNecesidad;    
 
     public Faltante() {
     }
@@ -132,6 +132,4 @@ public class Faltante implements java.io.Serializable {
         }catch(Exception ex){}
         return false;
     }
-
-
 }

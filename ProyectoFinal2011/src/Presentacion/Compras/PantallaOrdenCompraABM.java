@@ -61,6 +61,8 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         IniciarTablas();
         cargarCombos();
         cargarValidaciones();
+        btnAgregarFaltante.setVisible(false);
+        btnAgregarTodosFaltantes.setVisible(false);
         tmStock.setDatos(gestor.listarMateriales());
     }
 
@@ -74,7 +76,8 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                 salida.add(Utilidades.parseFecha(elemento.getFecGeneracion()));
                 salida.add(Utilidades.parseFecha(elemento.getFecNecesidad()));
                 salida.add(elemento.getCantidad());
-                salida.add((elemento.getDetalleOrdenCompra() == null) ? "NO" : "SI");
+//                salida.add((elemento.getDetalleOrdenCompra() == null) ? "NO" : "SI");
+                
                 return salida;
             }
 
@@ -84,7 +87,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                 salida.add("Fecha generacion");
                 salida.add("Fecha necesidad");
                 salida.add("Cantidad");
-                salida.add("Satisfecho");
+//                salida.add("Satisfecho");
                 return salida;
             }
         };
@@ -125,7 +128,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             public void valueChanged(ListSelectionEvent e) {
                 tmFaltante.limpiar();
                 for (Faltante f : tmStock.getSeletedObject().getFaltantes()) {
-                    if (f.getDetalleOrdenCompra() == null) {
+                    if (f.getFecNecesidad().compareTo(Utilidades.getFechaActual())<=0) {
                         tmFaltante.add(f);
                     }
                 }
