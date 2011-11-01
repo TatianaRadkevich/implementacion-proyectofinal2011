@@ -32,11 +32,27 @@ import javax.persistence.TemporalType;
 public class OrdenTrabajo  implements java.io.Serializable {
 
 
+     @Id
+    @GeneratedValue
+    @Column(name="ID_ORDEN_TRABAJO", unique=true, nullable=false, precision=10, scale=0)
      private long idOrdenTrabajo;
+
+     @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_EMPLEADO", nullable=false)
      private Empleado TEmpleados;
+
+     @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_EORDEN_TRABAJO", nullable=false)
      private EstadoOrdenTrabajo TEordenTrabajo;
+
+       @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="FEC_EMISION", nullable=false, length=23)
      private Date fecEmision;
+
+         @Column(name="OBSERVACIONES", length=20)
      private String observaciones;
+
+         @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TOrdenesTrabajo")
      private Set<DetallePlanProduccion> TDetallesPlans = new HashSet(0);
      
 
@@ -61,9 +77,7 @@ public class OrdenTrabajo  implements java.io.Serializable {
        
     }
    
-     @Id 
-    @GeneratedValue
-    @Column(name="ID_ORDEN_TRABAJO", unique=true, nullable=false, precision=10, scale=0)
+    
     public long getIdOrdenTrabajo() {
         return this.idOrdenTrabajo;
     }
@@ -71,8 +85,7 @@ public class OrdenTrabajo  implements java.io.Serializable {
     public void setIdOrdenTrabajo(long idOrdenTrabajo) {
         this.idOrdenTrabajo = idOrdenTrabajo;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_EMPLEADO", nullable=false)
+
     public Empleado getTEmpleados() {
         return this.TEmpleados;
     }
@@ -80,8 +93,7 @@ public class OrdenTrabajo  implements java.io.Serializable {
     public void setTEmpleados(Empleado TEmpleados) {
         this.TEmpleados = TEmpleados;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_EORDEN_TRABAJO", nullable=false)
+
     public EstadoOrdenTrabajo getTEordenTrabajo() {
         return this.TEordenTrabajo;
     }
@@ -89,8 +101,7 @@ public class OrdenTrabajo  implements java.io.Serializable {
     public void setTEordenTrabajo(EstadoOrdenTrabajo TEordenTrabajo) {
         this.TEordenTrabajo = TEordenTrabajo;
     }
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="FEC_EMISION", nullable=false, length=23)
+  
     public Date getFecEmision() {
         return this.fecEmision;
     }
@@ -99,7 +110,7 @@ public class OrdenTrabajo  implements java.io.Serializable {
         this.fecEmision = fecEmision;
     }
     
-    @Column(name="OBSERVACIONES", length=20)
+  
     public String getObservaciones() {
         return this.observaciones;
     }
@@ -108,7 +119,7 @@ public class OrdenTrabajo  implements java.io.Serializable {
         this.observaciones = observaciones;
     }
 
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TOrdenesTrabajo")
+
     public List<DetallePlanProduccion> getTDetallesPlans() {
         return new ArrayList<DetallePlanProduccion>(TDetallesPlans); 
     }
