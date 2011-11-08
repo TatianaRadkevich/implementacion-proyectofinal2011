@@ -128,7 +128,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
             @Override
             public void fireTableCellUpdated(int row, int column) {
-                Object value = tbMaterial.getValueAt(row, column);
+                Object value = tbHerramientas.getValueAt(row, column);
                 if (column == 0) {
                     tmHerramientas.getDato(row).setTipoMaquinaHerramienta((TipoMaquinaHerramienta) value);
                 }
@@ -308,14 +308,16 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         List<DetalleEtapaProduccion> herramientas = new ArrayList<DetalleEtapaProduccion>();
 
         for (DetalleEtapaProduccion det : ep.getDetalleEtapaProduccion()) {
-            if (det.getTipoMaquinaHerramienta() != null) {
+            if (det.getTipoMaquinaHerramienta() != null&& det.getTipoMaquinaHerramienta().isEsHerramienta()==false) {
                 cmbTipoMaquina.setSelectedItem(det.getTipoMaquinaHerramienta());
-            } else if (det.getMaterial() != null) {
-                materiales.add(det);
             }
-            else{
+            if (det.getTipoMaquinaHerramienta() != null&& det.getTipoMaquinaHerramienta().isEsHerramienta()) {
                 herramientas.add(det);
             }
+            if (det.getMaterial() != null) {
+                materiales.add(det);
+            }
+         
         }
         tmHerramientas.setDatos(herramientas);
         tmMateriales.setDatos(materiales);
