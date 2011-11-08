@@ -72,6 +72,7 @@ public class GestorRecepcionMaterial {
             oc.setEstado(EstadoOrdenCompraBD.getEstadoConcretadaParcial());
  
         OrdenCompraBD.modificar(oc);
+        Mensajes.mensajeInformacion("La recepcion de materiales de la Orden de Compra \"Nro. "+oc.getId()+"\" ha sido guardado exitosamente.");
     }
 
     public void finalizarCU() {

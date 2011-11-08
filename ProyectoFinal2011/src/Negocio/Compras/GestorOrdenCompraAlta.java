@@ -10,6 +10,7 @@ import BaseDeDatos.Compras.EstadoOrdenCompraBD;
 import BaseDeDatos.Compras.OrdenCompraBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Compras.PantallaOrdenCompraABM;
+import Presentacion.Mensajes;
 import Presentacion.Utilidades;
 
 /**
@@ -49,6 +50,7 @@ public class GestorOrdenCompraAlta extends GestorOrdenCompra{
 
         validar(oc);
         OrdenCompraBD.guardar(oc);
+        Mensajes.mensajeInformacion("La Orden de Compra \"Nro. "+oc.getId()+"\" ha sido guardado exitosamente.");
     }
 
 
