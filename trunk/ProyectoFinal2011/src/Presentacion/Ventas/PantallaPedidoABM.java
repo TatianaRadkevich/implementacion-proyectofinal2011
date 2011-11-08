@@ -626,6 +626,17 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
 
+        if (cmbProducto.getSelectedIndex() == -1) {
+            Mensajes.mensajeErrorGenerico("Debe seleccionar un producto");
+            return;
+        }
+
+        try {
+            new Short(txtCantidad.getText());
+        } catch (Exception e) {
+            Mensajes.mensajeErrorGenerico("La cantidad ingresada es incorrecta");
+            return;
+        }
 
         DetallePedido nuevoDetalle = new DetallePedido();
         Producto prod = (Producto) cmbProducto.getSelectedItem();
