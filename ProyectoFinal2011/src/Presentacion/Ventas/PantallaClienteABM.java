@@ -178,7 +178,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         jLabel6.setText("Nombre:");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel7.setText("Aplellido:");
+        jLabel7.setText("Apellido:");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel8.setText("Teléfono:");
@@ -198,7 +198,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
                         .addGap(11, 11, 11)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE))
+                        .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlResponsableLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel8)
