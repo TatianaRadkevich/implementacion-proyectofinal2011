@@ -28,6 +28,7 @@ import Presentacion.ValidarTexbox;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JDialog;
@@ -121,6 +122,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
             public Vector getCabecera() {
                 Vector cabcera = new Vector();
 
+                cabcera.add("Producto");
                 cabcera.add("Nro. orden");
                 cabcera.add("Etapa");
                 cabcera.add("Empleado");
@@ -134,6 +136,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
             public Vector ObjetoFila(DetallePlanProduccion elemento) {
                 Vector fila = new Vector();
 
+                fila.add(elemento.getTEtapasProduccionEspecifica().getProducto().getNombre());
                 fila.add(elemento.getTEtapasProduccionEspecifica().getNumeroOrden());
                 fila.add(elemento.getTEtapasProduccionEspecifica().getEtapaProduccion().getNombre());
                 fila.add(elemento.getTEmpleados().getApellido() +", "+ elemento.getTEmpleados().getNombre());
@@ -244,7 +247,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         txtFecha = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gestor de Pedidos");
+        setTitle("Orden de Trabajo");
 
         pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
@@ -462,7 +465,8 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
                     .addComponent(lblFechaPlanificacion)
                     .addComponent(lblFechaInicio))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jButton1.setText("Generar Orden Trabajo");
@@ -594,19 +598,25 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
             tempOrden.setTEordenTrabajo(gestor.estadoGenerado());
             tempOrden.setObservaciones(txtObservacion.getText());
             gestor.guardarOrdenTrabajo(tempOrden);
-            orden.add(tempOrden);
+            
+            
             List<DetallePlanProduccion> detalle=plan.getDetallePlan(empleados.get(i));
+             tempOrden.setTDetallesPlans(new HashSet<DetallePlanProduccion>(detalle));
+            orden.add(tempOrden);
 
 
+//            for(int j=0; j<detalle.size();j++)
+//            {
+//                detalle.get(j).setTOrdenesTrabajo(tempOrden);
+////                detalle.get(j).setTEdetallePlan(gestor.estadoDetalleEnEjecucion());
+//                
+//            }
 
-            for(int j=0; j<detalle.size();j++)
-            {
-                detalle.get(j).setTOrdenesTrabajo(tempOrden);
-//                detalle.get(j).setTEdetallePlan(gestor.estadoDetalleEnEjecucion());
-            }
+           
             gestor.actualizarDetalle(detalle);
 
-            gestor.mofidificarEstadoPedido(detalle.get(0).getTPlanesProduccion().getPedido());
+            gestor.modificarEstadoPedido(detalle.get(0).getTPlanesProduccion().getPedido());
+            gestor.modificarEstadoPlan(detalle.get(0).getTPlanesProduccion());
 
         }
 
