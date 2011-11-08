@@ -6,6 +6,7 @@ import Negocio.Administracion.Empleado;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -121,7 +122,17 @@ public class OrdenTrabajo  implements java.io.Serializable {
 
 
     public List<DetallePlanProduccion> getTDetallesPlans() {
-        return new ArrayList<DetallePlanProduccion>(TDetallesPlans); 
+
+         List<DetallePlanProduccion> salida = new ArrayList<DetallePlanProduccion>(this.TDetallesPlans.size());
+
+        for (DetallePlanProduccion dpp : this.TDetallesPlans) {
+           
+                salida.add(dpp);
+            
+        }
+
+        return salida;
+       
     }
 
     public void setTDetallesPlans(Set<DetallePlanProduccion> TDetallesPlans) {
@@ -129,7 +140,8 @@ public class OrdenTrabajo  implements java.io.Serializable {
     }
 
     public PlanProduccion obtenerPlanProduccion(){
-        DetallePlanProduccion detalle=this.getTDetallesPlans().iterator().next();
+
+        DetallePlanProduccion detalle=this.getTDetallesPlans().get(0);
         return detalle.getTPlanesProduccion();
     }
   
