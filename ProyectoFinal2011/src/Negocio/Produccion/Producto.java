@@ -144,7 +144,11 @@ public class Producto implements java.io.Serializable {
     }
 
     public List<EtapaProduccionEspecifica> getEtapasProduccionEspecificas() {
-        return new ArrayList(this.EtapaProduccionEspecifica);
+        List<EtapaProduccionEspecifica> salida=new ArrayList(this.EtapaProduccionEspecifica);
+        for(EtapaProduccionEspecifica epe:this.EtapaProduccionEspecifica)
+            salida.set(epe.getNumeroOrden()-1, epe);
+
+        return salida;
     }
 
     public void setEtapasProduccionEspecificas(List<EtapaProduccionEspecifica> etapas) {

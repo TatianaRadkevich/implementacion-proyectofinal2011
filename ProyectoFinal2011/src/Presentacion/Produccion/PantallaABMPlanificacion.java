@@ -132,7 +132,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 fila.add((plan.getDetallePlan(elemento) == null) ? "Sin Planificar" : "Planificado");
                 fila.add(elemento.getNumeroOrden());
                 fila.add(elemento.getEtapaProduccion().getNombre());
-                fila.add(elemento.getDuracion());
+                fila.add(elemento.getDuracion()*tmDetallePedido.getSeletedObject().getCantidad());
 
                 String tipoMaquina = "";
                 for (DetalleEtapaProduccion dep : elemento.getDetalleEtapaProduccion()) {
@@ -153,7 +153,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 cabecera.add("Estado");
                 cabecera.add("Orden");
                 cabecera.add("Etapa");
-                cabecera.add("Duración");
+                cabecera.add("Duración total (min.)");
                 cabecera.add("Tipo maquina");
                 cabecera.add("Cargo empleado");
                 return cabecera;
