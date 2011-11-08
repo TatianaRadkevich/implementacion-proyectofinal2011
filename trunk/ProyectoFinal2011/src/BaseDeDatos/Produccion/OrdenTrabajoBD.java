@@ -41,6 +41,6 @@ public class OrdenTrabajoBD {
 
     public static OrdenTrabajo traerOrdenTrabajo(Long id){
 
-        return (OrdenTrabajo) HibernateUtil.getObjeto(OrdenTrabajo.class, id);
+        return (OrdenTrabajo) HibernateUtil.ejecutarConsulta("from OrdenTrabajo where idOrdenTrabajo = "+id).get(0);
     }
 }
