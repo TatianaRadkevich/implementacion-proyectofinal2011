@@ -1,7 +1,9 @@
 package Negocio.Produccion;
 // Generated 31-oct-2011 20:10:21 by Hibernate Tools 3.2.1.GA
 
+import BaseDeDatos.HibernateUtil;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +21,7 @@ import javax.persistence.Table;
 @Table(name = "T_EPLAN_PRODUCCION", schema = "dbo", catalog = "Ramaty")
 public class EstadoPlanProduccion implements java.io.Serializable {
 
+
     @Id
     @GeneratedValue
     @Column(name = "ID_EPLAN_PRODUCCION", unique = true, nullable = false, precision = 2, scale = 0)
@@ -30,6 +33,9 @@ public class EstadoPlanProduccion implements java.io.Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEplanProduccion")
     private Set<PlanProduccion> TPlanesProduccions = new HashSet<PlanProduccion>(0);
 
+    private static final String EP_Iniciado="Iniciado";
+
+    
     public EstadoPlanProduccion() {
     }
 
@@ -75,5 +81,19 @@ public class EstadoPlanProduccion implements java.io.Serializable {
 
     public void setTPlanesProduccions(Set<PlanProduccion> TPlanesProduccions) {
         this.TPlanesProduccions = TPlanesProduccions;
+    }
+
+    public static EstadoPlanProduccion getEstadoIniciado() {
+        return getEstadoPlan(EP_Iniciado);
+    }
+
+    private static EstadoPlanProduccion getEstadoPlan(String nombre)
+    {
+        String HQL=String.format("FROM EstadoPlanProduccion as ep WHERE LOWER(ep.nombre) = LOWER('%s')", nombre);
+        List<EstadoPlanProduccion> lst=HibernateUtil.ejecutarConsulta(HQL);
+        if(lst.isEmpty())
+            throw new RuntimeException("No existe un \"estado detalle plan\" con el nombre de : "+nombre);
+
+        return lst.get(0);
     }
 }
