@@ -1056,9 +1056,13 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         // TODO add your handling code here:
 
         if (cmbProducto.getSelectedIndex() != -1) {
+            tmEtapaEspecifica.setDatos(null);
+            tmComposicion.setDatos(null);
+            limpiarEtapa();
             gestor.setProducto((Producto) cmbProducto.getSelectedItem());
         } else {
-            tmEtapaEspecifica.setDatos(new ArrayList<EtapaProduccionEspecifica>());
+            tmEtapaEspecifica.setDatos(null);
+            tmComposicion.setDatos(null);           
             limpiarEtapa();
         }
 
@@ -1191,6 +1195,11 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
     private void btnNuevoMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoMaterialActionPerformed
         // TODO add your handling code here:
+        if(cmbMaterial.getItemCount()<=0)
+        {
+            Mensajes.mensajeErrorGenerico("No hay ningun mateterial cargado en el sistema");
+            return;
+        }
         tmMateriales.add(new DetalleEtapaProduccion());
     }//GEN-LAST:event_btnNuevoMaterialActionPerformed
 
@@ -1236,6 +1245,11 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
     private void btnNuevaHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaHerramientaActionPerformed
         // TODO add your handling code here:
+        if(cmbHerramienta.getItemCount()<=0)
+        {
+            Mensajes.mensajeErrorGenerico("No hay ninguna herramienta cargada en el sistema");
+            return;
+        }
         tmHerramientas.add(new DetalleEtapaProduccion());
 
     }//GEN-LAST:event_btnNuevaHerramientaActionPerformed

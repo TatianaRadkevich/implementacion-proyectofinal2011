@@ -21,22 +21,22 @@ public class EstadoDetalleOrdenCompraBD {
     private static final String Est_Concretada_Total = "Concretada Total";
 
     public static EstadoDetalleOrdenCompra getEstadoPendiente() {
-        return getEstoadoPedido(Est_Pendiente);
+        return getEstadoDetalleOrden(Est_Pendiente);
     }
 
     public static EstadoDetalleOrdenCompra getEstadoCancelada() {
-        return getEstoadoPedido(Est_Cancelada);
+        return getEstadoDetalleOrden(Est_Cancelada);
     }
 
     public static EstadoDetalleOrdenCompra getEstadoConcretadaParcial() {
-        return getEstoadoPedido(Est_Concretada_Parcial);
+        return getEstadoDetalleOrden(Est_Concretada_Parcial);
     }
 
     public static EstadoDetalleOrdenCompra getEstadoConcretadaTotal() {
-        return getEstoadoPedido(Est_Concretada_Total);
+        return getEstadoDetalleOrden(Est_Concretada_Total);
     }
 
-    private static EstadoDetalleOrdenCompra getEstoadoPedido(String nombre) {
+    private static EstadoDetalleOrdenCompra getEstadoDetalleOrden(String nombre) {
         String HQL = String.format("FROM EstadoDetalleOrdenCompra AS det WHERE LOWER(det.nombre) = LOWER('%s')", nombre);
         List<EstadoDetalleOrdenCompra> lst = HibernateUtil.ejecutarConsulta(HQL);
         if (lst.isEmpty()) {
