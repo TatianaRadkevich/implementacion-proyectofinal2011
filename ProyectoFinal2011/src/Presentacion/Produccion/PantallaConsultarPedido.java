@@ -10,6 +10,7 @@
  */
 package Presentacion.Produccion;
 
+import BaseDeDatos.Ventas.EstadoPedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
 import BaseDeDatos.Ventas.TipoPedidoBD;
 import Negocio.Ventas.GestorPedido;
@@ -19,6 +20,7 @@ import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 
@@ -74,7 +76,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
         cmbPrioridad.setModel(new DefaultComboBoxModel(GestorPedido.getPrioridades().toArray()));
         cmbPrioridad.addItem("TODOS");
-        cmbPrioridad.setSelectedIndex(cmbPrioridad.getItemCount()-1);
+        cmbPrioridad.setSelectedIndex(cmbPrioridad.getItemCount() - 1);
 
         ValidarTexbox.validarLongitud(txtRazonSocial, 50);
     }
@@ -291,8 +293,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
     private void btnPlanificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanificarActionPerformed
         // TODO add your handling code here:
-        if(tmPedido.getSeletedObject()==null)
-        {
+        if (tmPedido.getSeletedObject() == null) {
             Mensajes.mensajeInformacion("Por favor selecciones un pedido para planificarlo");
             return;
         }
@@ -302,13 +303,21 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        tmPedido.setDatos(
-                PedidoBD.getPedidos(
-                txtRazonSocial.getText(), 
-                (cmbTipoPedido.getSelectedIndex()==0)?null:(TipoPedido) cmbTipoPedido.getSelectedItem(),
+
+        List<Pedido> resultado = PedidoBD.getPedidos(
+                txtRazonSocial.getText(),
+                (cmbTipoPedido.getSelectedIndex() == 0) ? null : (TipoPedido) cmbTipoPedido.getSelectedItem(),
                 cmbPrioridad.getSelectedIndex(),
                 true,
-                false));
+                false);
+        for (int i = 0; i < resultado.size(); i++) {
+            Pedido p = resultado.get(i);
+            if (p.getEstadoPedido().equals(EstadoPedidoBD.getEstadoAutorizadoPendiente()) == false) {
+                resultado.remove(i);
+                i--;
+            }
+        }
+        tmPedido.setDatos(resultado);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed

@@ -28,6 +28,7 @@ public class GestorOrdenCompraAlta extends GestorOrdenCompra{
     @Override
     public void iniciarCU() {
         interfaz.setTitle("Generar Orden de Compra");
+        interfaz.setNro(getCodigo()+1);
         interfaz.setVisible(true);
     }
 
