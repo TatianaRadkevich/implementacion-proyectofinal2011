@@ -43,10 +43,11 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                 cabcera.add("Nro pedido");
                 cabcera.add("Cliente");
                 cabcera.add("Prioridad");
+                cabcera.add("Estado");
                 cabcera.add("Tipo pedido");
                 cabcera.add("Fecha generación");
                 cabcera.add("Fecha necesidad");
-                cabcera.add("Fecha recepción materiales");
+                cabcera.add("Fecha recepción materiales del cliente");
 
                 return cabcera;
 
@@ -59,6 +60,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
                 fila.add(elemento.getIdPedido());
                 fila.add(elemento.getCliente().getRazonSocial());
                 fila.add(GestorPedido.getPrioridades().get(elemento.getPrioridad()));
+                fila.add(elemento.getEstadoPedido().getNombre());
                 fila.add(elemento.getTipoPedido().getNombre());
                 fila.add(Utilidades.parseFechaHora(elemento.getFechaGeneracion()));
                 fila.add(Utilidades.parseFechaHora(elemento.getFechaNecesidad()));
