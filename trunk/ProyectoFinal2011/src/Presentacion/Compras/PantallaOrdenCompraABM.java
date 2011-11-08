@@ -63,6 +63,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         cargarValidaciones();
         btnAgregarFaltante.setVisible(false);
         btnAgregarTodosFaltantes.setVisible(false);
+        pnlFlatante.setVisible(false);
         tmStock.setDatos(gestor.listarMateriales());
     }
 
@@ -186,6 +187,11 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             }
         });
 
+    }
+
+    public void setNro(int id)
+    {
+        txtCodigo.setText(""+id);
     }
 
     private void recalcularTotal() {
@@ -329,7 +335,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         pnlStock = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbStock = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
+        pnlFlatante = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbFaltantes = new javax.swing.JTable();
         btnAgregarFaltante = new javax.swing.JButton();
@@ -526,7 +532,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tbStock);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Faltantes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        pnlFlatante.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Faltantes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         tbFaltantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -552,20 +558,20 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlFlatanteLayout = new javax.swing.GroupLayout(pnlFlatante);
+        pnlFlatante.setLayout(pnlFlatanteLayout);
+        pnlFlatanteLayout.setHorizontalGroup(
+            pnlFlatanteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFlatanteLayout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlFlatanteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregarTodosFaltantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarFaltante)))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pnlFlatanteLayout.setVerticalGroup(
+            pnlFlatanteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFlatanteLayout.createSequentialGroup()
                 .addComponent(btnAgregarFaltante)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAgregarTodosFaltantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -580,11 +586,11 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlStockLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlFlatante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlStockLayout.setVerticalGroup(
             pnlStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlFlatante, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
         );
 
@@ -829,7 +835,6 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -837,6 +842,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
     private javax.swing.JPanel pnlCompra;
     private javax.swing.JPanel pnlDetalle;
     private javax.swing.JPanel pnlDetalleABM;
+    private javax.swing.JPanel pnlFlatante;
     private javax.swing.JPanel pnlStock;
     private javax.swing.JTable tbDetalle;
     private javax.swing.JTable tbFaltantes;

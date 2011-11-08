@@ -418,6 +418,26 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         }
 
+
+        for(int i=0;i<tmMateriales.getSize();i++)
+        {
+            DetalleEtapaProduccion dep=tmMateriales.getDato(i);
+            if(dep.getCantidadNecesaria()==null||dep.getCantidadNecesaria()<=0)
+                mensaje+="\nMaterial fila "+i+1+": La cantidad ingresada es invalida";
+
+            if(dep.getMaterial()==null)
+                 mensaje+="\nMaterial fila "+i+1+": No se eligió un Material correcto";
+            else
+            for(int x=0;x<tmMateriales.getSize();x++)
+            {
+                if(x<i && dep.getMaterial().equals(tmMateriales.getDato(x)))
+                {
+                    mensaje+="\nMaterial fila "+i+1+": Se ha elegido más de una vez el mismo material";
+                    break;
+                }
+            }
+        }
+
         if(mensaje.isEmpty())
             return true;
 

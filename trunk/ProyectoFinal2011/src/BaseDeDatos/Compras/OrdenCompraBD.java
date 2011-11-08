@@ -34,7 +34,10 @@ public class OrdenCompraBD {
     }
 
     public static int getUltimoNro(){
-      return OrdenCompraBD.getUltimoNro();
+              try{
+        return (Integer) HibernateUtil.ejecutarConsulta("SELECT   max(idOrdenCompra) FROM OrdenCompra").get(0);
+        }catch(Exception e)
+        {return 0;}
     }
 
     
