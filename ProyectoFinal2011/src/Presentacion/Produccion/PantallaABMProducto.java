@@ -361,6 +361,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
             } catch (ExceptionGestor ex) {
                 Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
             }
+            this.dispose();
         }
 
     }//GEN-LAST:event_btnAceptarActionPerformed
