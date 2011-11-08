@@ -74,15 +74,16 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         cargarDatosPedido(p);
 
 
-        if (p.getPlanProduccion()!=null) {
+        if (p.getPlanProduccion() != null) {
             plan = p.getPlanProduccion();
             cargarDatosPlan(plan);
         } else {
             plan = new PlanProduccion(p);
         }
 
-        ValidarTexbox.desabilitarEdicion(((DefaultEditor) fhInicioDetallePlan.getEditor()).getTextField());
+        // ValidarTexbox.desabilitarEdicion(((DefaultEditor) fhInicioDetallePlan.getEditor()).getTextField());
         ValidarTexbox.desabilitarEdicion(((DefaultEditor) fhInicioPlan.getEditor()).getTextField());
+        fhInicioPlan.setDate(Utilidades.getFechaActual());
 
 
 
@@ -128,7 +129,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             public Vector ObjetoFila(EtapaProduccionEspecifica elemento) {
                 Vector fila = new Vector();
 
-                fila.add((plan.getDetallePlan(elemento)==null)?"Sin Planificar":"Planificado");
+                fila.add((plan.getDetallePlan(elemento) == null) ? "Sin Planificar" : "Planificado");
                 fila.add(elemento.getNumeroOrden());
                 fila.add(elemento.getEtapaProduccion().getNombre());
                 fila.add(elemento.getDuracion());
@@ -169,12 +170,11 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             }
         });
         /******************************************************************************/
-
-        tmMaquina=new TablaManager<MaquinaHerramientaParticular>(tbMaquinas) {
+        tmMaquina = new TablaManager<MaquinaHerramientaParticular>(tbMaquinas) {
 
             @Override
             public Vector ObjetoFila(MaquinaHerramientaParticular elemento) {
-                Vector salida=new Vector();
+                Vector salida = new Vector();
                 salida.add(elemento.getCodigo());
                 salida.add(elemento.getTipoMaquinaHerramienta().getNombre());
                 salida.add(elemento.getNombre());
@@ -184,7 +184,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
             @Override
             public Vector getCabecera() {
-                Vector salida=new Vector();
+                Vector salida = new Vector();
                 salida.add("Codigo");
                 salida.add("Tipo");
                 salida.add("Maquina");
@@ -195,26 +195,26 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         tbMaquinas.getColumnModel().getColumn(3).setCellRenderer(new TableCellRenderer() {
 
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JCheckBox chk=new JCheckBox();
+                JCheckBox chk = new JCheckBox();
                 chk.setSelected(isSelected);
                 return chk;
             }
         });
         /********************************************************************************/
-        tmEmpleado=new TablaManager<Empleado>(tbEmpleado) {
+        tmEmpleado = new TablaManager<Empleado>(tbEmpleado) {
 
             @Override
             public Vector ObjetoFila(Empleado elemento) {
-                Vector salida=new Vector();
+                Vector salida = new Vector();
                 salida.add(elemento.getIdEmpleado());
-                salida.add(elemento.getApellido()+", "+elemento.getNombre());
+                salida.add(elemento.getApellido() + ", " + elemento.getNombre());
                 salida.add(null);
                 return salida;
             }
 
             @Override
             public Vector getCabecera() {
-                Vector salida=new Vector();
+                Vector salida = new Vector();
                 salida.add("Legajo");
                 salida.add("Apellido/Nombre");
                 salida.add("");
@@ -224,32 +224,32 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         tbEmpleado.getColumnModel().getColumn(2).setCellRenderer(new TableCellRenderer() {
 
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JCheckBox chk=new JCheckBox();
+                JCheckBox chk = new JCheckBox();
                 chk.setSelected(isSelected);
                 return chk;
             }
         });
         /********************************************************************************/
-        tmHerramientas=new TablaManager<DetalleEtapaProduccion>(tbHerramienta) {
+        tmHerramientas = new TablaManager<DetalleEtapaProduccion>(tbHerramienta) {
 
             @Override
             public Vector ObjetoFila(DetalleEtapaProduccion elemento) {
-                Vector salida=new Vector();
-                salida.add((elemento.getTipoMaquinaHerramienta()==null)?
-                    "":elemento.getTipoMaquinaHerramienta().getNombre());
+                Vector salida = new Vector();
+                salida.add((elemento.getTipoMaquinaHerramienta() == null)
+                        ? "" : elemento.getTipoMaquinaHerramienta().getNombre());
                 salida.add(elemento.getCantidadNecesaria());
                 return salida;
             }
 
             @Override
             public Vector getCabecera() {
-                Vector salida=new Vector();
+                Vector salida = new Vector();
                 salida.add("Herramientas");
                 salida.add("Cantidad");
                 return salida;
             }
         };
-      
+
     }
 
     private void cargarCombos() {
@@ -274,26 +274,21 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     public void cargarDatosPlan(PlanProduccion plan) {
         cmbResponsable.setSelectedItem(plan.getEmpleado());
         fhInicioPlan.setDate((plan.getFecHoraPrevistaInicio() == null) ? Utilidades.getFechaActual() : plan.getFecHoraPrevistaInicio());
-    }    
+    }
 
     private void habilitarDatosPlanificacion(boolean valor) {
 
         Utilidades.habilitarPanel(pnlDetallePlanificaion, valor);
         Utilidades.habilitarPanel(pnlContenedorAux, !valor);
 
-        fhInicioDetallePlan.setEnabled(valor);
-       
+        //fhInicioDetallePlan.setEnabled(valor);
+
         txtObservaciones.setEditable(valor);
         btnAceptar.setEnabled(valor); //cambió el nombre de componente
         btnCancelar.setEnabled(valor); //cambió el nombre de componente
     }
 
     public boolean validarDatosDetalle() {
-        if (fhInicioDetallePlan.getDate() == null) {
-            Mensajes.mensajeErrorGenerico("Debe ingresar la fecha de inicio del detalle de plan");
-            fhInicioDetallePlan.requestFocus();
-            return false;
-        }
 
         if (tmMaquina.getSelectedRow() == -1) {
             Mensajes.mensajeErrorGenerico("Debe seleccionar una máquina");
@@ -310,9 +305,11 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     }
 
     private void limpiarDatosEtapaPlanificacion() {
-        fhInicioDetallePlan.setDate(Utilidades.getFechaActual());
+//        fhInicioDetallePlan.setDate(Utilidades.getFechaActual());
 //        tbMaquinas.clearSelection();
 //        tbEmpleado.clearSelection();
+        txtTiempoInicio.setText("");
+        txtTiempoFin.setText("");
         tmEmpleado.limpiar();
         tmMaquina.limpiar();
         tmHerramientas.limpiar();
@@ -322,29 +319,38 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private void cargarDatosPlanificacionEtapa(EtapaProduccionEspecifica epe) {
         limpiarDatosEtapaPlanificacion();
         TipoMaquinaHerramienta tipoMaq = null;
-        List<DetalleEtapaProduccion> herramientas=new ArrayList<DetalleEtapaProduccion>();
+        List<DetalleEtapaProduccion> herramientas = new ArrayList<DetalleEtapaProduccion>();
         for (DetalleEtapaProduccion det : epe.getDetalleEtapaProduccion()) {
             if (det.getTipoMaquinaHerramienta() != null) {
                 tipoMaq = det.getTipoMaquinaHerramienta();
             }
-            if(det.getTipoMaquinaHerramienta()!=null&&det.getTipoMaquinaHerramienta().isEsHerramienta())
-            {
+            if (det.getTipoMaquinaHerramienta() != null && det.getTipoMaquinaHerramienta().isEsHerramienta()) {
                 herramientas.add(det);
             }
         }
 
         tmHerramientas.setDatos(herramientas);
         tmEmpleado.setDatos(EmpleadoBD.getEmpleados(epe.getCargo(), true, false));
-         tmMaquina.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(tipoMaq, true, false));
+        tmMaquina.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(tipoMaq, true, false));
 
-        if (epe == null||plan.getDetallePlan(epe)==null) {            
-            txtTiempoFin.setText(Utilidades.parseFechaHora(Utilidades.agregarTiempoFecha(fhInicioDetallePlan.getDate(), epe.getDuracion(), 0, 0, 0, 0)));
+        Date inicio = fhInicioPlan.getDate();
+        if (epe.getNumeroOrden() == 1) {
+            inicio = fhInicioPlan.getDate();
+        } else {
+            inicio = plan.getDetallePlan(tmEstructura.getDato(epe.getNumeroOrden() - 1)).getFecHoraPrevistaFin();
+        }
+        txtTiempoInicio.setText(Utilidades.parseFechaHora(inicio));
+        txtTiempoFin.setText(Utilidades.parseFechaHora(Utilidades.agregarTiempoFecha(inicio, epe.getDuracion(), 0, 0, 0, 0)));
+
+
+        if (plan.getDetallePlan(epe) == null) {
             return;
         }
 
-        DetallePlanProduccion detalle=plan.getDetallePlan(epe);
+        DetallePlanProduccion detalle = plan.getDetallePlan(epe);
 
-        fhInicioDetallePlan.setDate((detalle.getFecHoraPrevistaInicio() == null) ? Utilidades.getFechaActual() : detalle.getFecHoraPrevistaInicio());
+//        fhInicioDetallePlan.setDate((detalle.getFecHoraPrevistaInicio() == null) ? Utilidades.getFechaActual() : detalle.getFecHoraPrevistaInicio());
+        txtTiempoInicio.setText(Utilidades.parseFechaHora(detalle.getFecHoraPrevistaInicio()));
         txtTiempoFin.setText(Utilidades.parseFechaHora(detalle.getFecHoraPrevistaInicio()));
 
 //        tmMaquina.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(tipoMaq, true, false));
@@ -396,7 +402,6 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         jButton4 = new javax.swing.JButton();
         pnlDetallePlanificaion = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        fhInicioDetallePlan = new com.toedter.calendar.JSpinnerDateEditor();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         pnlEmpleado = new javax.swing.JPanel();
@@ -414,6 +419,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         jPanel7 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tbHerramienta = new javax.swing.JTable();
+        txtTiempoInicio = new javax.swing.JTextField();
         pnlContenedorAux = new javax.swing.JPanel();
         pnlEstructura = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -431,10 +437,10 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Razón social del cliente:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Tipo de pedido:");
 
         lblRazonSocial.setText("[razon social]");
@@ -493,7 +499,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             .addComponent(lblFechaNecesidad)
         );
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel15.setText("Responsable del Plan:");
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -559,12 +565,6 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel14.setText("Fecha/Hora inicio:");
-
-        fhInicioDetallePlan.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                fhInicioDetallePlanMousePressed(evt);
-            }
-        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -718,6 +718,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
         );
 
+        txtTiempoInicio.setEditable(false);
+
         javax.swing.GroupLayout pnlDetallePlanificaionLayout = new javax.swing.GroupLayout(pnlDetallePlanificaion);
         pnlDetallePlanificaion.setLayout(pnlDetallePlanificaionLayout);
         pnlDetallePlanificaionLayout.setHorizontalGroup(
@@ -730,9 +732,9 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                             .addComponent(jLabel17)
                             .addComponent(jLabel14))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtTiempoFin)
-                            .addComponent(fhInicioDetallePlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtTiempoFin, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTiempoInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pnlMaquinas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -758,7 +760,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetallePlanificaionLayout.createSequentialGroup()
                 .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(fhInicioDetallePlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTiempoInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDetallePlanificaionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
@@ -907,17 +909,19 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         // TODO add your handling code here:
         //validarDatosDetalle();
 
-        
 
-        if (plan.getDetallePlan(tmEstructura.getSeletedObject())==null)
+
+        if (plan.getDetallePlan(tmEstructura.getSeletedObject()) == null) {
             plan.addDetallePlan(new DetallePlanProduccion(tmEstructura.getSeletedObject()));
-        
-        DetallePlanProduccion det=plan.getDetallePlan(tmEstructura.getSeletedObject());
+        }
 
-        det.setFecHoraPrevistaInicio(fhInicioDetallePlan.getDate());
-        det.setFecHoraPrevistaFin(
-                Utilidades.agregarTiempoFecha(
-                fhInicioDetallePlan.getDate(), tmEstructura.getSeletedObject().getDuracion(), 0, 0, 0, 0));
+        DetallePlanProduccion det = plan.getDetallePlan(tmEstructura.getSeletedObject());
+
+//        det.setFecHoraPrevistaInicio(fhInicioDetallePlan.getDate());
+        det.setFecHoraPrevistaInicio(new Date(txtTiempoInicio.getText()));
+        det.setFecHoraPrevistaFin(new Date(txtTiempoFin.getText()));
+//                Utilidades.agregarTiempoFecha(
+//                fhInicioDetallePlan.getDate(), tmEstructura.getSeletedObject().getDuracion(), 0, 0, 0, 0));
         det.setObservaciones(txtObservaciones.getText());
         det.setTEmpleados(tmEmpleado.getSeletedObject());
         det.setTMaquinasHerramientaParticular(tmMaquina.getSeletedObject());
@@ -943,24 +947,25 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 //        plan.setEmpleado((Empleado) cmbResponsable.getSelectedItem());
 //        plan.setFecHoraPrevistaInicio(fhInicioPlan.getDate());
         plan.generarFaltantes();
-        if(plan.getFecGeneracion()==null)
-        plan.setFecGeneracion(Utilidades.getFechaActual());
+        if (plan.getFecGeneracion() == null) {
+            plan.setFecGeneracion(Utilidades.getFechaActual());
+        }
         plan.setFecUltimaModificacion(Utilidades.getFechaActual());
-        if(cmbResponsable.getSelectedIndex()==-1)
-        {
+        if (cmbResponsable.getSelectedIndex() == -1) {
             Mensajes.mensajeErrorGenerico("Seleccione un responsable");
             return;
         }
         plan.setEmpleado((Empleado) cmbResponsable.getSelectedItem());
 
-        Date fechaFin=null,fechaIni=null;
-        for(DetallePlanProduccion dpp:plan.getDetallePlan())
-        {
-            if(fechaFin==null||fechaFin.compareTo(dpp.getFecHoraPrevistaFin())<=0)
-                fechaFin=dpp.getFecHoraPrevistaFin();
+        Date fechaFin = null, fechaIni = null;
+        for (DetallePlanProduccion dpp : plan.getDetallePlan()) {
+            if (fechaFin == null || fechaFin.compareTo(dpp.getFecHoraPrevistaFin()) <= 0) {
+                fechaFin = dpp.getFecHoraPrevistaFin();
+            }
 
-              if(fechaIni==null||fechaIni.compareTo(dpp.getFecHoraPrevistaInicio())>=0)
-                fechaIni=dpp.getFecHoraPrevistaInicio();
+            if (fechaIni == null || fechaIni.compareTo(dpp.getFecHoraPrevistaInicio()) >= 0) {
+                fechaIni = dpp.getFecHoraPrevistaInicio();
+            }
         }
         plan.setFecHoraPrevistaFin(fechaFin);
         plan.setFecHoraPrevistaInicio(fechaIni);
@@ -987,11 +992,16 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             return;
         }
 
+        if (tmEstructura.getSelectedRow() >= 1 && plan.getDetallePlan(tmEstructura.getDato(tmEstructura.getSelectedRow() - 1)) == null) {
+            Mensajes.mensajeInformacion("Antes debe planificar la etapa anterior");
+            return;
+        }
+
         // limpiarDatosEtapaPlanificacion();
         cargarDatosPlanificacionEtapa(tmEstructura.getSeletedObject());
         habilitarDatosPlanificacion(true);
 
-       
+
 
     }//GEN-LAST:event_btnPlanificarActionPerformed
 
@@ -1004,11 +1014,6 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         tmEstructura.updateTabla();
 
     }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void fhInicioDetallePlanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fhInicioDetallePlanMousePressed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_fhInicioDetallePlanMousePressed
 
     /**
      * @param args the command line arguments
@@ -1028,7 +1033,6 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnPlanificar;
     private javax.swing.JComboBox cmbResponsable;
-    private com.toedter.calendar.JSpinnerDateEditor fhInicioDetallePlan;
     private com.toedter.calendar.JSpinnerDateEditor fhInicioPlan;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1069,5 +1073,6 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private javax.swing.JTable tbMaquinas;
     private javax.swing.JTextArea txtObservaciones;
     private javax.swing.JTextField txtTiempoFin;
+    private javax.swing.JTextField txtTiempoInicio;
     // End of variables declaration//GEN-END:variables
 }
