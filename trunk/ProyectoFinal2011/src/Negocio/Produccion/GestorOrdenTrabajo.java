@@ -5,17 +5,18 @@
 
 package Negocio.Produccion;
 
+import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
 import BaseDeDatos.Produccion.DetallePlanProduccionBD;
 import BaseDeDatos.Produccion.EstadoDetallePlanBD;
 import BaseDeDatos.Produccion.EstadoOrdenTrabajoBD;
 import BaseDeDatos.Produccion.OrdenTrabajoBD;
 import BaseDeDatos.Ventas.EstadoPedidoBD;
-import Negocio.Ventas.EstadoPedido;
 import Negocio.Ventas.Pedido;
 import Presentacion.Produccion.PantallaABMOrdenTrabajo;
 import java.util.List;
 import javax.swing.JDialog;
+import org.hibernate.Hibernate;
 
 /**
  *
@@ -53,10 +54,15 @@ public class GestorOrdenTrabajo {
         }
     }
 
-    public void mofidificarEstadoPedido(Pedido pedido) {
+    public void modificarEstadoPedido(Pedido pedido) {
        
         pedido.setEstadoPedido(EstadoPedidoBD.getEstadoProduccion());
         PedidoBD.modificar(pedido);
+    }
+
+    public void modificarEstadoPlan(PlanProduccion tPlanesProduccion) {
+        tPlanesProduccion.setEstado(EstadoPlanProduccion.getEstadoIniciado());
+        HibernateUtil.modificarObjeto(tPlanesProduccion);
     }
 
 
