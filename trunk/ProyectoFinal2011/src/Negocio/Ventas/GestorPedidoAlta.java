@@ -8,6 +8,7 @@ package Negocio.Ventas;
 
 import BaseDeDatos.Ventas.*;
 import Negocio.Exceptiones.ExceptionGestor;
+import Presentacion.Mensajes;
 import Presentacion.Utilidades;
 import Presentacion.Ventas.PantallaPedidoABM;
 
@@ -48,6 +49,7 @@ public class GestorPedidoAlta extends GestorPedido
         p.setFechaGeneracion(Utilidades.getFechaActual());
         validar(p);
         PedidoBD.guardar(p);
+        Mensajes.mensajeInformacion("El pedido \"Nro. "+p.getIdPedido()+"\" ha sido guardado exitosamente.");
     }
 
 
