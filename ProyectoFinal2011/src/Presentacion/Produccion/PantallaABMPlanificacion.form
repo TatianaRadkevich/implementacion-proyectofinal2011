@@ -312,9 +312,9 @@
                               <Component id="jLabel14" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtTiempoFin" max="32767" attributes="1"/>
-                              <Component id="fhInicioDetallePlan" alignment="0" max="32767" attributes="1"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="txtTiempoFin" min="-2" pref="98" max="-2" attributes="1"/>
+                              <Component id="txtTiempoInicio" min="-2" pref="98" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
@@ -349,7 +349,7 @@
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="fhInicioDetallePlan" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtTiempoInicio" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -373,11 +373,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Fecha/Hora inicio:"/>
           </Properties>
-        </Component>
-        <Component class="com.toedter.calendar.JSpinnerDateEditor" name="fhInicioDetallePlan">
-          <Events>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="fhInicioDetallePlanMousePressed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCancelar">
           <Properties>
@@ -663,6 +658,11 @@
             </Container>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JTextField" name="txtTiempoInicio">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="pnlContenedorAux">
