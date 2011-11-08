@@ -122,7 +122,7 @@ public class PantallaOrdenCompraEnvio extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("Fecha:");
+        jLabel2.setText("Fecha de hoy:");
 
         txtFecha.setEditable(false);
         txtFecha.setText("xx/xx/xxxx");
@@ -146,7 +146,7 @@ public class PantallaOrdenCompraEnvio extends javax.swing.JDialog {
         txtFechaGeneración.setEditable(false);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel3.setText("Fecha generacion:");
+        jLabel3.setText("Fecha generación:");
 
         txtCodigo.setEditable(false);
 
@@ -182,7 +182,7 @@ public class PantallaOrdenCompraEnvio extends javax.swing.JDialog {
         txtProveedor.setEditable(false);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel5.setText("Total:");
+        jLabel5.setText("Total: $");
 
         txtTotal.setEditable(false);
 
@@ -199,11 +199,11 @@ public class PantallaOrdenCompraEnvio extends javax.swing.JDialog {
                 .addGroup(pnlCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCompraLayout.createSequentialGroup()
                         .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
                         .addComponent(jLabel3))
                     .addGroup(pnlCompraLayout.createSequentialGroup()
                         .addComponent(txtProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 225, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
                         .addComponent(jLabel5)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,7 +242,7 @@ public class PantallaOrdenCompraEnvio extends javax.swing.JDialog {
                         .addComponent(jLabel1)
                         .addGap(10, 10, 10)
                         .addComponent(dtcFechaEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 313, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 299, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))

@@ -240,7 +240,7 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
         txtTotal.setEditable(false);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel6.setText("Total:");
+        jLabel6.setText("Total: $");
 
         pnlRecepcion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recepción", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
