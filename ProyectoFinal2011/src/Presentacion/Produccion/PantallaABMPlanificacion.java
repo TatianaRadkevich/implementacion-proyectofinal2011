@@ -337,10 +337,17 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         if (epe.getNumeroOrden() == 1) {
             inicio = fhInicioPlan.getDate();
         } else {
-            inicio = plan.getDetallePlan(tmEstructura.getDato(epe.getNumeroOrden() - 1)).getFecHoraPrevistaFin();
+            try{
+            inicio=plan.getDetallePlan(tmEstructura.getDato(tmEstructura.getSelectedRow() - 1)).getFecHoraPrevistaFin();
+            //inicio = plan.getDetallePlan(tmEstructura.getDato(epe.getNumeroOrden() - 1)).getFecHoraPrevistaFin();
+            }catch(Exception e){inicio=Utilidades.getFechaActual();}
         }
         txtTiempoInicio.setText(Utilidades.parseFechaHora(inicio));
-        txtTiempoFin.setText(Utilidades.parseFechaHora(Utilidades.agregarTiempoFecha(inicio, epe.getDuracion(), 0, 0, 0, 0)));
+        int cantidadProductos=0;
+        for(DetallePedido dp:tmDetallePedido.getDatos())
+            if(dp.getProducto().getIdProducto()==epe.getProducto().getIdProducto())
+                cantidadProductos=dp.getCantidad();
+        txtTiempoFin.setText(Utilidades.parseFechaHora(Utilidades.agregarTiempoFecha(inicio, cantidadProductos*epe.getDuracion(), 0, 0, 0, 0)));
 
 
         if (plan.getDetallePlan(epe) == null) {
@@ -351,7 +358,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
 //        fhInicioDetallePlan.setDate((detalle.getFecHoraPrevistaInicio() == null) ? Utilidades.getFechaActual() : detalle.getFecHoraPrevistaInicio());
         txtTiempoInicio.setText(Utilidades.parseFechaHora(detalle.getFecHoraPrevistaInicio()));
-        txtTiempoFin.setText(Utilidades.parseFechaHora(detalle.getFecHoraPrevistaInicio()));
+        txtTiempoFin.setText(Utilidades.parseFechaHora(detalle.getFecHoraPrevistaFin()));
 
 //        tmMaquina.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(tipoMaq, true, false));
         tmMaquina.setSelectedRow(detalle.getTMaquinasHerramientaParticular());
