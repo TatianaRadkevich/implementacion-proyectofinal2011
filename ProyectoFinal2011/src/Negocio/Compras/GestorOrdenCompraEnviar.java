@@ -32,7 +32,7 @@ public class GestorOrdenCompraEnviar extends GestorOrdenCompra {
         interfaz.cargar(ordenCompra);
         //interfaz.habilitarBaja(true, true, Utilidades.getFechaActual(), "");
        
-        interfaz.setTitle("Enviar Orden de Compra");
+        interfaz.setTitle("Registrar Envío De Orden de Compra");
         interfaz.setVisible(true);
 
     }
