@@ -57,6 +57,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private TablaManager<EtapaProduccionEspecifica> tmEstructura;
     private TablaManager<MaquinaHerramientaParticular> tmMaquina;
     private TablaManager<Empleado> tmEmpleado;
+    private TablaManager<DetalleEtapaProduccion> tmHerramientas;
     private PlanProduccion plan;
 
     private PantallaABMPlanificacion(java.awt.Frame parent, boolean modal) {
@@ -228,6 +229,26 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 return chk;
             }
         });
+        /********************************************************************************/
+        tmHerramientas=new TablaManager<DetalleEtapaProduccion>(tbHerramienta) {
+
+            @Override
+            public Vector ObjetoFila(DetalleEtapaProduccion elemento) {
+                Vector salida=new Vector();
+                salida.add((elemento.getTipoMaquinaHerramienta()==null)?
+                    "":elemento.getTipoMaquinaHerramienta().getNombre());
+                salida.add(elemento.getCantidadNecesaria());
+                return salida;
+            }
+
+            @Override
+            public Vector getCabecera() {
+                Vector salida=new Vector();
+                salida.add("Herramientas");
+                salida.add("Cantidad");
+                return salida;
+            }
+        };
       
     }
 
@@ -258,6 +279,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private void habilitarDatosPlanificacion(boolean valor) {
 
         Utilidades.habilitarPanel(pnlDetallePlanificaion, valor);
+        Utilidades.habilitarPanel(pnlContenedorAux, !valor);
 
         fhInicioDetallePlan.setEnabled(valor);
        
@@ -289,23 +311,33 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
     private void limpiarDatosEtapaPlanificacion() {
         fhInicioDetallePlan.setDate(Utilidades.getFechaActual());
-        tbMaquinas.clearSelection();
-        tbEmpleado.clearSelection();
+//        tbMaquinas.clearSelection();
+//        tbEmpleado.clearSelection();
+        tmEmpleado.limpiar();
+        tmMaquina.limpiar();
+        tmHerramientas.limpiar();
         txtObservaciones.setText("");
     }
 
     private void cargarDatosPlanificacionEtapa(EtapaProduccionEspecifica epe) {
+        limpiarDatosEtapaPlanificacion();
         TipoMaquinaHerramienta tipoMaq = null;
+        List<DetalleEtapaProduccion> herramientas=new ArrayList<DetalleEtapaProduccion>();
         for (DetalleEtapaProduccion det : epe.getDetalleEtapaProduccion()) {
             if (det.getTipoMaquinaHerramienta() != null) {
                 tipoMaq = det.getTipoMaquinaHerramienta();
             }
+            if(det.getTipoMaquinaHerramienta()!=null&&det.getTipoMaquinaHerramienta().isEsHerramienta())
+            {
+                herramientas.add(det);
+            }
         }
+
+        tmHerramientas.setDatos(herramientas);
         tmEmpleado.setDatos(EmpleadoBD.getEmpleados(epe.getCargo(), true, false));
          tmMaquina.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(tipoMaq, true, false));
 
-        if (epe == null||plan.getDetallePlan(epe)==null) {
-            limpiarDatosEtapaPlanificacion();
+        if (epe == null||plan.getDetallePlan(epe)==null) {            
             txtTiempoFin.setText(Utilidades.parseFechaHora(Utilidades.agregarTiempoFecha(fhInicioDetallePlan.getDate(), epe.getDuracion(), 0, 0, 0, 0)));
             return;
         }
@@ -381,8 +413,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         txtTiempoFin = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        tbEmpleado1 = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
+        tbHerramienta = new javax.swing.JTable();
+        pnlContenedorAux = new javax.swing.JPanel();
         pnlEstructura = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbEstructura = new javax.swing.JTable();
@@ -395,15 +427,15 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Planificación de producción");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Planificacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Planificación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel1.setText("Razón social cliente:");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setText("Razón social del cliente:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel4.setText("Tipo pedido:");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setText("Tipo de pedido:");
 
         lblRazonSocial.setText("[razon social]");
 
@@ -461,8 +493,8 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             .addComponent(lblFechaNecesidad)
         );
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel15.setText("Responsable de Plan:");
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel15.setText("Responsable del Plan:");
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel16.setText("Fecha/hora calculada inicio Plan:");
@@ -657,7 +689,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Herramientas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        tbEmpleado1.setModel(new javax.swing.table.DefaultTableModel(
+        tbHerramienta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -673,7 +705,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane6.setViewportView(tbEmpleado1);
+        jScrollPane6.setViewportView(tbHerramienta);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -817,17 +849,17 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlContenedorAuxLayout = new javax.swing.GroupLayout(pnlContenedorAux);
+        pnlContenedorAux.setLayout(pnlContenedorAuxLayout);
+        pnlContenedorAuxLayout.setHorizontalGroup(
+            pnlContenedorAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContenedorAuxLayout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlEstructura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlContenedorAuxLayout.setVerticalGroup(
+            pnlContenedorAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnlEstructura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -840,7 +872,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(pnlDetallePlanificaion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlContenedorAux, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton4)
@@ -854,7 +886,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlContenedorAux, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlDetallePlanificaion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -958,6 +990,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         // limpiarDatosEtapaPlanificacion();
         cargarDatosPlanificacionEtapa(tmEstructura.getSeletedObject());
         habilitarDatosPlanificacion(true);
+
        
 
     }//GEN-LAST:event_btnPlanificarActionPerformed
@@ -1010,7 +1043,6 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -1025,14 +1057,15 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private javax.swing.JLabel lblFechaNecesidad;
     private javax.swing.JLabel lblRazonSocial;
     private javax.swing.JLabel lblTipoPedido;
+    private javax.swing.JPanel pnlContenedorAux;
     private javax.swing.JPanel pnlDetallePlanificaion;
     private javax.swing.JPanel pnlEmpleado;
     private javax.swing.JPanel pnlEstructura;
     private javax.swing.JPanel pnlMaquinas;
     private javax.swing.JTable tbDetallePedido;
     private javax.swing.JTable tbEmpleado;
-    private javax.swing.JTable tbEmpleado1;
     private javax.swing.JTable tbEstructura;
+    private javax.swing.JTable tbHerramienta;
     private javax.swing.JTable tbMaquinas;
     private javax.swing.JTextArea txtObservaciones;
     private javax.swing.JTextField txtTiempoFin;

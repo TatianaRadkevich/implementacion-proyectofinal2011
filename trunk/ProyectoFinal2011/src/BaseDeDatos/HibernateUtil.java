@@ -7,6 +7,7 @@ package BaseDeDatos;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;
@@ -29,6 +30,7 @@ public class HibernateUtil {
             // Create the SessionFactory from standard
             sessionFactory = addClases(new AnnotationConfiguration()).configure().buildSessionFactory();
             session = sessionFactory.openSession();
+            session.setFlushMode(FlushMode.MANUAL);
 
         } catch (Throwable ex) {
             // Log the exception.
@@ -66,12 +68,14 @@ public class HibernateUtil {
         session.beginTransaction();
         session.save(o);
         session.getTransaction().commit();
+        session.flush();
     }
 
     public static void guardarModificarObjeto(Object o) {
         session.beginTransaction();
         session.saveOrUpdate(o);
         session.getTransaction().commit();
+        session.flush();
     }
 
     public static Object getObjeto(Class type, Serializable srlzbl) {
@@ -85,7 +89,8 @@ public class HibernateUtil {
     public static void modificarObjeto(Object o) {
         session.beginTransaction();
         session.update(o);
-        session.getTransaction().commit();        
+        session.getTransaction().commit();
+         session.flush();
     }
 
 
@@ -93,6 +98,7 @@ public class HibernateUtil {
         session.beginTransaction();
         session.delete(o);
         session.getTransaction().commit();
+         session.flush();
     }
 
     public static List ejecutarConsulta(String HQL) {

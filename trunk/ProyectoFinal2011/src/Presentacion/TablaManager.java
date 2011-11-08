@@ -115,7 +115,10 @@ public abstract class TablaManager<E> {
     }
 
     public void setDatos(List<E> data) {
-        contenido = data;
+        if(data==null)
+            contenido=new ArrayList<E>();
+        else
+            contenido = data;
         updateTabla();
     }
 
