@@ -45,7 +45,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" pref="281" max="-2" attributes="2"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="2"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="pnlBaja" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
@@ -104,7 +104,7 @@
                           <Component id="cmbUnidadMedida" min="-2" pref="138" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnAgregarUnidadMedida" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="93" max="32767" attributes="0"/>
+                          <EmptySpace pref="104" max="32767" attributes="0"/>
                           <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
