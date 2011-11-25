@@ -63,6 +63,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         super(parent, modal);
 
         initComponents();
+        chkMostrarVigentes.setVisible(false);
         HibernateUtil.getSessionFactory();
         inicializarTablas();
         cargarValidaciones();
@@ -184,7 +185,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         });
 
         /************************Validacion de botones **********************************/
-        btnCancelar.setEnabled(false);
+        btnCancelar.setEnabled(true);
     
         tmPedido.addSelectionListener(new ListSelectionListener() {
 
