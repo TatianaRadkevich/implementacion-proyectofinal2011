@@ -104,6 +104,7 @@ public class Principal extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Pantalla Principal");
 
         pnlMenu.setLayout(new java.awt.GridLayout(1, 0));
 
