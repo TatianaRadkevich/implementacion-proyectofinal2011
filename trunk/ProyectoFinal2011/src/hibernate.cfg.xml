@@ -2,12 +2,10 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    
     <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
     <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=Ramaty</property>
-    <property name="hibernate.connection.username">sa</property>
-    <property name="hibernate.connection.password">123</property>
-
+    <property name="hibernate.connection.username">proyecto</property>
+    <property name="hibernate.connection.password">sistema</property>
     <mapping class="Negocio.Administracion.AsistenciaEmpleado"/>
     <mapping class="Negocio.Administracion.Cargo"/>
     <mapping class="Negocio.Administracion.Cheque"/>
@@ -25,7 +23,6 @@
     <mapping class="Negocio.Administracion.Horarios"/>
     <mapping class="Negocio.Administracion.Dias"/>
     <mapping class="Negocio.Administracion.EstadosEmpleado"/>
-
     <mapping class="Negocio.Compras.DetalleOrdenCompra"/>
     <mapping class="Negocio.Compras.EstadoDetalleOrdenCompra"/>
     <mapping class="Negocio.Compras.EstadoOrdenCompra"/>
@@ -34,13 +31,10 @@
     <mapping class="Negocio.Compras.MaterialesXProveedor"/>
     <mapping class="Negocio.Compras.OrdenCompra"/>
     <mapping class="Negocio.Compras.Proveedor"/>
-    
-
     <mapping class="Negocio.Deposito.Faltante"/>
     <mapping class="Negocio.Deposito.EstadoReclamo"/>
     <mapping class="Negocio.Deposito.Reclamo"/>
     <mapping class="Negocio.GestionUsuario.Usuario"/>
-
     <mapping class="Negocio.Produccion.DetalleEtapaProduccion"/>
     <mapping class="Negocio.Produccion.DetallePlanProduccion"/>
     <mapping class="Negocio.Produccion.DetalleProducto"/>
@@ -56,17 +50,15 @@
     <mapping class="Negocio.Produccion.UnidadMedida"/>
     <mapping class="Negocio.Produccion.EstadoOrdenTrabajo"/>
     <mapping class="Negocio.Produccion.OrdenTrabajo"/>
-    <mapping class="Negocio.Produccion.ProblemasMhp"/>    
+    <mapping class="Negocio.Produccion.ProblemasMhp"/>
     <mapping class="Negocio.Produccion.EstadoPlanProduccion"/>
     <mapping class="Negocio.Produccion.MaqHerrPartXDetPlan"/>
     <mapping class="Negocio.Produccion.EstadoDetallePlan"/>
-
     <mapping class="Negocio.UbicacionGeografica.Barrio"/>
     <mapping class="Negocio.UbicacionGeografica.Domicilio"/>
     <mapping class="Negocio.UbicacionGeografica.Localidad"/>
     <mapping class="Negocio.UbicacionGeografica.Pais"/>
     <mapping class="Negocio.UbicacionGeografica.Provincia"/>
-
     <mapping class="Negocio.Ventas.Cliente"/>
     <mapping class="Negocio.Ventas.DetallePedido"/>
     <mapping class="Negocio.Ventas.EstadoPedido"/>
@@ -75,6 +67,5 @@
     <mapping class="Negocio.Ventas.TipoCliente"/>
     <mapping class="Negocio.Ventas.TipoPedido"/>
     <mapping class="Negocio.Web.ClienteWeb"/>
-   
   </session-factory>
 </hibernate-configuration>
