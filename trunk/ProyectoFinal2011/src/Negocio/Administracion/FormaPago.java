@@ -23,6 +23,10 @@ import javax.persistence.Table;
 )
 public class FormaPago  implements java.io.Serializable {
 
+    static void nuevo() {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
 
      private byte idFormaPago;
      private String nombre;
