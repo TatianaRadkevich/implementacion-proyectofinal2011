@@ -13,6 +13,7 @@ package Presentacion.Administracion;
 
 import Negocio.Administracion.FormaPago;
 import Negocio.Administracion.GestorFormaPago;
+import Presentacion.Mensajes;
 import Presentacion.Operacion;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -26,6 +27,7 @@ public class FormaDePagoPantalla extends javax.swing.JDialog {
     private int operacion;
     private FormaPago tipo_actual=null;
     private GestorFormaPago gestor=new GestorFormaPago();
+    private boolean True;
 
 
 
@@ -125,6 +127,11 @@ public class FormaDePagoPantalla extends javax.swing.JDialog {
         btnAceptar.setText("Aceptar");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -193,8 +200,18 @@ public class FormaDePagoPantalla extends javax.swing.JDialog {
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnReactivar.setText("Reactivar");
 
@@ -233,6 +250,11 @@ public class FormaDePagoPantalla extends javax.swing.JDialog {
         );
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -275,6 +297,7 @@ public class FormaDePagoPantalla extends javax.swing.JDialog {
  this.btnModificar.setEnabled(false);
  this.btnEliminar.setEnabled(false);
  this.btnReactivar.setEnabled(false);
+ this.btnSalir.setEnabled(false);
  this.btnAceptar.setEnabled(true);
  this.btnCancelar.setEnabled(true);
 
@@ -283,6 +306,53 @@ this.operacion= Operacion.nuevo;
 
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+             this.inicializar();
+             
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        this.lstDisponible.setEnabled(true);
+        this.activarBotones(false, false, false, false, false, true, true);
+        
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
+ private void cargarDatos(FormaPago tipo_actual) {
+
+        this.txtDescripcion.setText(tipo_actual.getDescripcion());
+        this.txtNombre.setText(tipo_actual.getNombre());
+
+    }
+
+     private void lstDisponibleMouseClicked(java.awt.event.MouseEvent evt) {
+        if(lstDisponible.getSelectedIndex()!=-1){
+        tipo_actual=(FormaPago) lstDisponible.getSelectedValue();
+        this.cargarDatos(tipo_actual);
+        this.txtNombre.setEnabled(true);
+        this.txtDescripcion.setEnabled(true);
+        this.operacion=Operacion.modificar;
+        this.txtNombre.requestFocus();
+        }
+    }
+     private void activarBotones(boolean nuevo, boolean modificar, boolean eliminar, boolean reactivar, boolean salir, boolean aceptar, boolean cancelar){
+        this.btnNuevo.setEnabled(nuevo);
+        this.btnModificar.setEnabled(modificar);
+        this.btnEliminar.setEnabled(eliminar);
+        this.btnReactivar.setEnabled(reactivar);
+        this.btnSalir.setEnabled(salir);
+        this.btnAceptar.setEnabled(aceptar);
+        this.btnCancelar.setEnabled(cancelar);
+        }
     /**
     * @param args the command line arguments
     */
@@ -335,15 +405,14 @@ this.operacion= Operacion.nuevo;
       this.txtFecha.setEnabled(false);
       this.txtMotivo.setEnabled(false);
       this.txtNombre.setEnabled(false);
+      this.lstDisponible.setEnabled(false);
       this.txtDescripcion.setText("");
       this.txtFecha.setText("");
       this.txtMotivo.setText("");
       this.txtNombre.setText("");
-      this.btnAceptar.setEnabled(false);
-      this.btnCancelar.setEnabled(false);
-      this.btnEliminar.setEnabled(false);
-      this.btnModificar.setEnabled(false);
-      this.btnReactivar.setEnabled(false);
+      this.activarBotones(true, true, true, true, true, false,false);
+   
+      
  }
 
     private void cargarFormaPago()
