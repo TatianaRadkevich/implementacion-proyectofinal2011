@@ -1,7 +1,6 @@
 
                   /* SCRIPT DE CREACIÓN RAMATY - Versión 1-3*/
 
-
 CREATE TABLE T_ALMACENAMIENTOS_PRODUCTO_TERMINADO (
        ID_ALMACENAMIENTO_PRODUCTO_TERMINADO numeric(8) IDENTITY,
        FEC_HORA_ALMACENAMIENTO datetime NOT NULL,
@@ -610,7 +609,9 @@ go
 CREATE TABLE T_FORMAS_PAGO (
        ID_FORMA_PAGO        numeric(2) IDENTITY,
        NOMBRE               varchar(50) NOT NULL,
-       DESCRIPCION          varchar(200) NULL
+       DESCRIPCION          varchar(200) NULL,
+       FEC_BAJA             datetime NULL,
+       MOTIVO_BAJA          varchar(200) NULL
 )
 go
 
