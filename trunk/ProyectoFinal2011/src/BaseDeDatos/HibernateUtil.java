@@ -87,6 +87,7 @@ public class HibernateUtil {
     }
 
     public static void modificarObjeto(Object o) {
+
         session.beginTransaction();
         session.update(o);
         session.getTransaction().commit();

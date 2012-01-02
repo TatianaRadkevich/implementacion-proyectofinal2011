@@ -15,6 +15,9 @@ import Negocio.Administracion.FormaPago;
 import Negocio.Administracion.GestorFormaPago;
 import Presentacion.Mensajes;
 import Presentacion.Operacion;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
 
@@ -125,6 +128,11 @@ public class FormaDePagoPantalla extends javax.swing.JDialog {
         );
 
         btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -189,6 +197,11 @@ public class FormaDePagoPantalla extends javax.swing.JDialog {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
+        });
+        lstDisponible.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstDisponibleMouseClicked(evt);
+            }
         });
         jScrollPane3.setViewportView(lstDisponible);
 
@@ -319,14 +332,79 @@ this.operacion= Operacion.nuevo;
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        this.lstDisponible.setEnabled(true);
         this.activarBotones(false, false, false, false, false, true, true);
-        
+        this.txtNombre.setEnabled(true);
+        this.txtDescripcion.setEnabled(true);
+        tipo_actual=(FormaPago) lstDisponible.getSelectedValue();
+        this.operacion= Operacion.modificar;
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        this.activarBotones(false, false, false, false, false, true, true);
+        this.txtFecha.setEnabled(true);
+        this.txtMotivo.setEnabled(true);
+        Format formato=new SimpleDateFormat("dd/MM/yyyy");
+        String fecha=formato.format(new Date());
+        this.txtFecha.setText(fecha);
+        this.operacion= Operacion.baja;
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void lstDisponibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDisponibleMouseClicked
+         if(lstDisponible.getSelectedIndex()!=-1){
+        tipo_actual=(FormaPago) lstDisponible.getSelectedValue();
+        this.cargarDatos(tipo_actual);
+        this.txtNombre.setEnabled(false);
+        this.txtDescripcion.setEnabled(false);
+        this.operacion=Operacion.modificar;
+        this.txtNombre.requestFocus();
+        this.activarBotones(false, true, true, true, true, false, false);
+        }
+    }//GEN-LAST:event_lstDisponibleMouseClicked
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+         if(operacion==Operacion.nuevo){
+            FormaPago tipo=new FormaPago();
+            tipo.setNombre(txtNombre.getText().toUpperCase());
+            tipo.setDescripcion(txtDescripcion.getText());
+
+            gestor.guardar(tipo);
+            Mensajes.mensajeInformacion("La forma de pago "+tipo.getNombre()+"\n ha sido guardado exitosamente");
+            this.cargarFormaPago();
+            //cancelar();
+           this.lstDisponible.setSelectedIndex(-1);
+            return;
+        }
+
+        if(operacion==Operacion.modificar){
+            tipo_actual.setNombre(txtNombre.getText().toUpperCase());
+            tipo_actual.setDescripcion(txtDescripcion.getText());
+            gestor.modificar(tipo_actual);
+            Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido modificado exitosamente");
+            tipo_actual=null;
+            //cancelar();
+            this.lstDisponible.setSelectedIndex(-1);
+            return;
+        }
+        if(operacion==Operacion.baja){
+            tipo_actual.setFecha(new Date());
+            tipo_actual.setMotivo(txtMotivo.getText());
+            gestor.eliminar(tipo_actual);
+            Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido eliminado exitosamente");
+
+            tipo_actual=null;
+           // this.cancelar();
+            this.lstDisponible.setSelectedIndex(-1);
+            return;
+        }
+          if(operacion==Operacion.reactivar){
+            tipo_actual.setFecha(null);
+            tipo_actual.setMotivo(null);
+            gestor.modificar(tipo_actual);
+            //cancelar();
+            this.lstDisponible.setSelectedIndex(-1);
+            Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido dado reactivado exitosamente");
+        }
+    }//GEN-LAST:event_btnAceptarActionPerformed
  private void cargarDatos(FormaPago tipo_actual) {
 
         this.txtDescripcion.setText(tipo_actual.getDescripcion());
@@ -334,17 +412,7 @@ this.operacion= Operacion.nuevo;
 
     }
 
-     private void lstDisponibleMouseClicked(java.awt.event.MouseEvent evt) {
-        if(lstDisponible.getSelectedIndex()!=-1){
-        tipo_actual=(FormaPago) lstDisponible.getSelectedValue();
-        this.cargarDatos(tipo_actual);
-        this.txtNombre.setEnabled(true);
-        this.txtDescripcion.setEnabled(true);
-        this.operacion=Operacion.modificar;
-        this.txtNombre.requestFocus();
-        }
-    }
-     private void activarBotones(boolean nuevo, boolean modificar, boolean eliminar, boolean reactivar, boolean salir, boolean aceptar, boolean cancelar){
+  private void activarBotones(boolean nuevo, boolean modificar, boolean eliminar, boolean reactivar, boolean salir, boolean aceptar, boolean cancelar){
         this.btnNuevo.setEnabled(nuevo);
         this.btnModificar.setEnabled(modificar);
         this.btnEliminar.setEnabled(eliminar);
@@ -405,12 +473,11 @@ this.operacion= Operacion.nuevo;
       this.txtFecha.setEnabled(false);
       this.txtMotivo.setEnabled(false);
       this.txtNombre.setEnabled(false);
-      this.lstDisponible.setEnabled(false);
       this.txtDescripcion.setText("");
       this.txtFecha.setText("");
       this.txtMotivo.setText("");
       this.txtNombre.setText("");
-      this.activarBotones(true, true, true, true, true, false,false);
+      this.activarBotones(true, false, false, false, true, false,false);
    
       
  }
