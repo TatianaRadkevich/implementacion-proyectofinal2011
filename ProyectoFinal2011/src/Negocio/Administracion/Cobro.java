@@ -107,7 +107,7 @@ public class Cobro  implements java.io.Serializable {
         this.TCheques = TCheques;
     }
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="FEC_COBRO", nullable=false, length=23)
+    @Column(name="FEC_HORA_COBRO", nullable=false, length=23)
     public Date getFecCobro() {
         return this.fecCobro;
     }
