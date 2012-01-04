@@ -39,6 +39,16 @@ public class MaterialBD {
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 
+    public static Material getMaterial(String codigo){
+        List lista=HibernateUtil.ejecutarConsulta("from Material m where m.codigo like '"+codigo+"'");
+        if (lista.isEmpty())
+                return null;
+        else
+            return (Material) lista.get(0);
+
+
+    }
+
     public static int getUltimoID()
     {
         try{

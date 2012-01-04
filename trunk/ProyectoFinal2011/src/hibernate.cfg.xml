@@ -34,6 +34,7 @@
     <mapping class="Negocio.Deposito.Faltante"/>
     <mapping class="Negocio.Deposito.EstadoReclamo"/>
     <mapping class="Negocio.Deposito.Reclamo"/>
+     <mapping class="Negocio.Deposito.ReajusteStock"/>
     <mapping class="Negocio.GestionUsuario.Usuario"/>
     <mapping class="Negocio.Produccion.DetalleEtapaProduccion"/>
     <mapping class="Negocio.Produccion.DetallePlanProduccion"/>
