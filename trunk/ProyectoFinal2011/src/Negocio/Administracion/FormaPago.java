@@ -41,7 +41,7 @@ public class FormaPago  implements java.io.Serializable {
      @Column(name="DESCRIPCION", length=200)
      private String descripcion;
       @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="FEC_BAJA", length=23)
+    @Column(name="FEC_BAJA",nullable=true, length=23)
      private Date fecha;
      @Column(name="MOTIVO_BAJA", nullable=true, length=200)
      private String motivo;
