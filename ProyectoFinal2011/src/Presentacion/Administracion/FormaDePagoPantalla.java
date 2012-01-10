@@ -227,6 +227,11 @@ public class FormaDePagoPantalla extends javax.swing.JDialog {
         });
 
         btnReactivar.setText("Reactivar");
+        btnReactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReactivarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -341,13 +346,14 @@ this.operacion= Operacion.nuevo;
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         this.activarBotones(false, false, false, false, false, true, true);
-        this.txtFecha.setEnabled(true);
+        this.txtFecha.setEnabled(false);
         this.txtMotivo.setEnabled(true);
         Format formato=new SimpleDateFormat("dd/MM/yyyy");
         String fecha=formato.format(new Date());
         this.txtFecha.setText(fecha);
         this.operacion= Operacion.baja;
     }//GEN-LAST:event_btnEliminarActionPerformed
+
 
     private void lstDisponibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDisponibleMouseClicked
          if(lstDisponible.getSelectedIndex()!=-1){
@@ -358,6 +364,9 @@ this.operacion= Operacion.nuevo;
         this.operacion=Operacion.modificar;
         this.txtNombre.requestFocus();
         this.activarBotones(false, true, true, true, true, false, false);
+        if (tipo_actual.getFecha()!=null) {
+         this.btnEliminar.setEnabled(false);
+        }
         }
     }//GEN-LAST:event_lstDisponibleMouseClicked
 
@@ -370,7 +379,7 @@ this.operacion= Operacion.nuevo;
             gestor.guardar(tipo);
             Mensajes.mensajeInformacion("La forma de pago "+tipo.getNombre()+"\n ha sido guardado exitosamente");
             this.cargarFormaPago();
-            //cancelar();
+            this.inicializar();
            this.lstDisponible.setSelectedIndex(-1);
             return;
         }
@@ -381,18 +390,17 @@ this.operacion= Operacion.nuevo;
             gestor.modificar(tipo_actual);
             Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido modificado exitosamente");
             tipo_actual=null;
-            //cancelar();
+            this.inicializar();
             this.lstDisponible.setSelectedIndex(-1);
             return;
         }
         if(operacion==Operacion.baja){
             tipo_actual.setFecha(new Date());
             tipo_actual.setMotivo(txtMotivo.getText());
-            gestor.eliminar(tipo_actual);
+            gestor.modificar(tipo_actual);
             Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido eliminado exitosamente");
-
-            tipo_actual=null;
-           // this.cancelar();
+                        tipo_actual=null;
+            this.inicializar();
             this.lstDisponible.setSelectedIndex(-1);
             return;
         }
@@ -400,11 +408,20 @@ this.operacion= Operacion.nuevo;
             tipo_actual.setFecha(null);
             tipo_actual.setMotivo(null);
             gestor.modificar(tipo_actual);
-            //cancelar();
+            this.inicializar();
             this.lstDisponible.setSelectedIndex(-1);
             Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido dado reactivado exitosamente");
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnReactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReactivarActionPerformed
+
+         this.activarBotones(false, false, false, false, false, true, true);
+         tipo_actual=(FormaPago) lstDisponible.getSelectedValue();
+         this.operacion= Operacion.reactivar;
+        
+        
+    }//GEN-LAST:event_btnReactivarActionPerformed
  private void cargarDatos(FormaPago tipo_actual) {
 
         this.txtDescripcion.setText(tipo_actual.getDescripcion());
