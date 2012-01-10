@@ -4,6 +4,7 @@ package Negocio.Administracion;
 import Negocio.GestionUsuario.Usuario;
 import Negocio.Produccion.DetallePlanProduccion;
 import Negocio.Produccion.PlanProduccion;
+import Negocio.TipoDatoException;
 import Negocio.UbicacionGeografica.Domicilio;
 import java.util.ArrayList;
 import java.util.Date;
@@ -203,7 +204,7 @@ public class Empleado implements java.io.Serializable {
         this.TUsuarios = TUsuarios;
     }
 
-    public Sexo getTSexos() {
+    public Sexo getTSexos()  {
         return this.TSexos;
     }
 
@@ -215,23 +216,34 @@ public class Empleado implements java.io.Serializable {
         return this.nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre(String nombre) throws TipoDatoException{
+        if(nombre.matches("[a-zA-Z ]*") || nombre.trim().isEmpty())
+            this.nombre = nombre;
+        else
+            throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
+        
     }
 
     public String getApellido() {
+
         return this.apellido;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setApellido(String apellido)  throws TipoDatoException {
+       if(apellido.matches("[a-zA-Z ]*") || apellido.trim().isEmpty())
+            this.apellido = apellido;
+        else
+            throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
+        
     }
 
     public Long getCelular() {
         return this.celular;
     }
 
-    public void setCelular(Long celular) {
+    public void setCelular(Long celular) throws TipoDatoException {
+        if(celular==0)
+            throw new TipoDatoException("Formato incorrecto. Debe ser numérico");
         this.celular = celular;
     }
 
@@ -252,10 +264,13 @@ public class Empleado implements java.io.Serializable {
     }
 
     public int getNumeroDocumento() {
+
         return this.numeroDocumento;
     }
 
-    public void setNumeroDocumento(int numeroDocumento) {
+    public void setNumeroDocumento(int numeroDocumento)  throws TipoDatoException {
+       if(celular==0)
+            throw new TipoDatoException("Formato incorrecto. Debe ser numérico");
         this.numeroDocumento = numeroDocumento;
     }
 
