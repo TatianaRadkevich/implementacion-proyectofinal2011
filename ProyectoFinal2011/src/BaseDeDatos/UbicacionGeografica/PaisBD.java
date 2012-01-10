@@ -23,7 +23,7 @@ public class PaisBD {
 
         try{
 
-            result = HibernateUtil.ejecutarConsulta("from Pais");
+            result = HibernateUtil.ejecutarConsulta("from Pais order by nombre");
 
         }catch(Exception  ex) {}
         return result;
