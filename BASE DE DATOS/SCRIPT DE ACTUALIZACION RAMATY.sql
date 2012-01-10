@@ -839,3 +839,34 @@ GO
 ALTER TABLE T_FORMAS_PAGO ADD FEC_BAJA DATETIME;
 GO
 ALTER TABLE T_FORMAS_PAGO ADD MOTIVO_BAJA VARCHAR(200);
+
+/*Cambio solicitado por Sebastián - 10/01/2012 */
+
+
+CREATE TABLE T_REAJUSTES_STOCK (
+       ID_REAJUSTE_STOCK    numeric(5) IDENTITY,
+       CANTIDAD             numeric(6,2) NOT NULL,
+       DIFERENCIA           numeric(6,2) NOT NULL,
+       FEC_REAJUSTE         datetime NULL,
+       OBSERVACIONES        varchar(500) NULL,
+       ID_MATERIAL          numeric(3) NOT NULL,
+       ID_EMPLEADO          numeric(5) NOT NULL
+)
+go
+ALTER TABLE T_REAJUSTES_STOCK
+       ADD PRIMARY KEY (ID_REAJUSTE_STOCK ASC)
+go
+ALTER TABLE T_REAJUSTES_STOCK
+       ADD FOREIGN KEY (ID_EMPLEADO)
+                             REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_REAJUSTES_STOCK
+       ADD FOREIGN KEY (ID_MATERIAL)
+                             REFERENCES T_MATERIALES  (ID_MATERIAL)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go

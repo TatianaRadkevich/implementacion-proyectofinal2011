@@ -895,6 +895,23 @@ ALTER TABLE T_PROVINCIAS
 go
 
 
+CREATE TABLE T_REAJUSTES_STOCK (
+       ID_REAJUSTE_STOCK    numeric(5) IDENTITY,
+       CANTIDAD             numeric(6,2) NOT NULL,
+       DIFERENCIA           numeric(6,2) NOT NULL,
+       FEC_REAJUSTE         datetime NULL,
+       OBSERVACIONES        varchar(500) NULL,
+       ID_MATERIAL          numeric(3) NOT NULL,
+       ID_EMPLEADO          numeric(5) NOT NULL
+)
+go
+
+
+ALTER TABLE T_REAJUSTES_STOCK
+       ADD PRIMARY KEY (ID_REAJUSTE_STOCK ASC)
+go
+
+
 CREATE TABLE T_RECLAMOS (
        ID_RECLAMO           numeric(3) IDENTITY,
        DESCRIPCION          varchar(200) NOT NULL,
@@ -1759,6 +1776,22 @@ go
 ALTER TABLE T_PROVINCIAS
        ADD FOREIGN KEY (ID_PAIS)
                              REFERENCES T_PAISES  (ID_PAIS)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_REAJUSTES_STOCK
+       ADD FOREIGN KEY (ID_EMPLEADO)
+                             REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_REAJUSTES_STOCK
+       ADD FOREIGN KEY (ID_MATERIAL)
+                             REFERENCES T_MATERIALES  (ID_MATERIAL)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
