@@ -3,6 +3,7 @@ package Negocio.Administracion;
 
 
 import Negocio.Administracion.Cobro;
+import Negocio.TipoDatoException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;

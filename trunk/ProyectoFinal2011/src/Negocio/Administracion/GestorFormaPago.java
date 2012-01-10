@@ -44,6 +44,6 @@ public class GestorFormaPago {
     public void eliminar(FormaPago forPag1){
         FormaDePagoBD.eliminar(forPag1);
     }
-
+    
 
 }
