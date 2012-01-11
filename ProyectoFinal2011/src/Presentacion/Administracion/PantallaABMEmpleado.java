@@ -28,6 +28,7 @@ import Negocio.UbicacionGeografica.Pais;
 import Negocio.UbicacionGeografica.Provincia;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
+import Presentacion.Utilidades;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.text.Format;
@@ -51,7 +52,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.cargarCargos();
-        txtNombre.setToolTipText("Rodrigo me dijo que esto anda, no se su creer");
+        
         
     }
 
@@ -186,6 +187,11 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         });
 
         cmbTipoDocumento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTipoDocumento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cmbTipoDocumentoFocusLost(evt);
+            }
+        });
 
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -709,6 +715,17 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
 
     private void txtNumeroDocumentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroDocumentoFocusLost
         // TODO add your handling code here:
+        try{
+            int temp=Integer.parseInt(txtNumeroDocumento.getText());
+            empleado.setNumeroDocumento(temp);
+            Utilidades.componenteCorrecto(txtNumeroDocumento);
+        }catch(TipoDatoException ex){
+             txtNumeroDocumento.setToolTipText(ex.getMessage());
+             Utilidades.componenteError(txtNumeroDocumento);
+        }catch(Exception e){
+             Utilidades.componenteError(txtNumeroDocumento);
+             txtNumeroDocumento.setToolTipText("Formato incorrecto. Debe ser numérico");
+        }
 
     }//GEN-LAST:event_txtNumeroDocumentoFocusLost
 
@@ -716,10 +733,11 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         try {
             // TODO add your handling code here:
             empleado.setApellido(txtApellido.getText().toUpperCase());
-            txtApellido.setBackground(Color.white);
+            Utilidades.componenteCorrecto(txtApellido);
         } catch (TipoDatoException ex) {
             txtApellido.setToolTipText(ex.getMessage());
-            txtApellido.setBackground(new Color(226, 90, 14) );
+            Utilidades.componenteError(txtApellido);
+            
         }
         
 
@@ -730,13 +748,24 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
          try {
             // TODO add your handling code here:
             empleado.setNombre(txtNombre.getText().toUpperCase());
-            txtNombre.setBackground(Color.white);
+            Utilidades.componenteCorrecto(txtNombre);
         } catch (TipoDatoException ex) {
             txtNombre.setToolTipText(ex.getMessage());
-            txtNombre.setBackground(new Color(226, 90, 14));
+            Utilidades.componenteError(txtNombre);
         }
 
     }//GEN-LAST:event_txtNombreFocusLost
+
+    private void cmbTipoDocumentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbTipoDocumentoFocusLost
+        // TODO add your handling code here:
+        try{
+            empleado.setTTdocumento((TipoDocumento)cmbTipoDocumento.getSelectedItem());
+        }catch(TipoDatoException ex){
+            cmbTipoDocumento.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(cmbTipoDocumento);
+        }
+
+    }//GEN-LAST:event_cmbTipoDocumentoFocusLost
 
     /**
     * @param args the command line arguments
