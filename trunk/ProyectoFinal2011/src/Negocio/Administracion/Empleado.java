@@ -192,8 +192,11 @@ public class Empleado implements java.io.Serializable {
         return this.TTdocumento;
     }
 
-    public void setTTdocumento(TipoDocumento TTdocumento) {
-        this.TTdocumento = TTdocumento;
+    public void setTTdocumento(TipoDocumento TTdocumento) throws TipoDatoException{
+        if(TTdocumento!=null)
+            this.TTdocumento = TTdocumento;
+        else
+            throw new TipoDatoException("Debe seleccionar un tipo documento");
     }
 
     public Usuario getTUsuarios() {
@@ -269,7 +272,7 @@ public class Empleado implements java.io.Serializable {
     }
 
     public void setNumeroDocumento(int numeroDocumento)  throws TipoDatoException {
-       if(celular==0)
+       if(numeroDocumento==0)
             throw new TipoDatoException("Formato incorrecto. Debe ser numérico");
         this.numeroDocumento = numeroDocumento;
     }
