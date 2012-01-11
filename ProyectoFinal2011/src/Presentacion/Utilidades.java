@@ -4,6 +4,7 @@
  */
 package Presentacion;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.math.BigDecimal;
@@ -130,5 +131,13 @@ public class Utilidades {
         } catch (Exception ex) {
             return "";
         }
+    }
+
+    public static void componenteError(Component componente){
+        componente.setBackground(new Color(226, 90, 14));
+    }
+
+    public static void componenteCorrecto(Component componente){
+        componente.setBackground(Color.white);
     }
 }
