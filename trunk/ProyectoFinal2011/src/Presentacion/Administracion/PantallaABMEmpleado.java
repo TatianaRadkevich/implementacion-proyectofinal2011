@@ -194,10 +194,20 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         });
 
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbSexo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cmbSexoFocusLost(evt);
+            }
+        });
 
         dtcFechaNacimiento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 dtcFechaNacimientoMouseClicked(evt);
+            }
+        });
+        dtcFechaNacimiento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                dtcFechaNacimientoFocusLost(evt);
             }
         });
 
@@ -281,11 +291,21 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         jLabel12.setText("Piso:");
 
         cmbBarrio.setEnabled(false);
+        cmbBarrio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cmbBarrioFocusLost(evt);
+            }
+        });
 
         cmbLocalidad.setEnabled(false);
         cmbLocalidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbLocalidadActionPerformed(evt);
+            }
+        });
+        cmbLocalidad.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cmbLocalidadFocusLost(evt);
             }
         });
 
@@ -295,16 +315,49 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 cmbProvinciaActionPerformed(evt);
             }
         });
+        cmbProvincia.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cmbProvinciaFocusLost(evt);
+            }
+        });
 
         cmbPais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbPaisActionPerformed(evt);
             }
         });
+        cmbPais.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cmbPaisFocusLost(evt);
+            }
+        });
 
         txtDepto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDeptoActionPerformed(evt);
+            }
+        });
+        txtDepto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDeptoFocusLost(evt);
+            }
+        });
+
+        txtPiso.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPisoFocusLost(evt);
+            }
+        });
+
+        txtNumero.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNumeroFocusLost(evt);
+            }
+        });
+
+        txtCalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCalleActionPerformed(evt);
             }
         });
 
@@ -436,6 +489,23 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 txtTelefonoActionPerformed(evt);
             }
         });
+        txtTelefono.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTelefonoFocusLost(evt);
+            }
+        });
+
+        txtCelular.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCelularFocusLost(evt);
+            }
+        });
+
+        txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtEmailFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -475,6 +545,12 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Cargos"));
+
+        lstCargos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lstCargosFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -603,68 +679,70 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
 
-//          if(validar()){
-//           empleado.setNombre(txtNombre.getText().toUpperCase());
-//           empleado.setApellido(txtApellido.getText().toUpperCase());
-//           empleado.setTTdocumento((TipoDocumento) cmbTipoDocumento.getSelectedItem());
-//           empleado.setNumeroDocumento(Integer.parseInt(txtNumeroDocumento.getText()));
-//           empleado.setFecNacimiento(dtcFechaNacimiento.getDate());
-//           empleado.setTSexos((Sexo) cmbSexo.getSelectedItem());
-//           empleado.setTelefono(Long.parseLong(txtTelefono.getText()));
-//           empleado.setCelular(Long.parseLong(txtCelular.getText()));
-//           empleado.setCorreoElectronico(txtEmail.getText());
-//           empleado.setCargos(lstCargos.getSelectedItems());
-//           empleado.setTEstadosEmpleado(EstadoEmpleadoBD.traerEstadoDisponible());
-//
-//           Domicilio domicilio=empleado.getTDomicilios();
-//           domicilio.setTPaises((Pais) cmbPais.getSelectedItem());
-//           domicilio.setTProvincias((Provincia) cmbProvincia.getSelectedItem());
-//           domicilio.setTLocalidades((Localidad) cmbLocalidad.getSelectedItem());
-//           domicilio.setTBarrios((Barrio) cmbBarrio.getSelectedItem());
-//           domicilio.setCalle(txtCalle.getText());
-//           domicilio.setNumero(Integer.parseInt(txtNumero.getText()));
-//           if(txtFechaBaja.getText().compareTo("")!=0)
-//           {
-//               empleado.setFecBaja(new Date());
-//               empleado.setMotivoBaja(this.txtMotivoBaja.getText());
-//           }
-//
-//
-//
-//
-//          try{
-//           domicilio.setDepto(txtDepto.getText());
-//           domicilio.setPiso(Short.parseShort(txtPiso.getText()));
-//              }catch(Exception e){}
-//
-//        if(gestor instanceof GestorRegistrarEmpleado)
-//                    DomicilioBD.guardar(domicilio);
-//
-//            try {
-//                gestor.ejecutarOperacion(empleado);
-//               //---------------------------
-//                 List<Cargo> cargos=this.lstCargos.getSelectedItems();
-////            if(gestor instanceof GestorRegistrarEmpleado){
-////                EmpleadosXCargo temp;
-////
-////
-////                for(int i=0; i<cargos.size();i++){
-////                    temp= new EmpleadosXCargo();
-////                    temp.setTCargos(cargos.get(i));
-////                    temp.setTEmpleados(empleado);
-////
-////                    TEmpleadosXCargoBD.guardar(temp);
-////                }
-////
-////            }
-//                 //-----------------------------------
-//                Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido()+", "+empleado.getNombre()));
-//                this.vaciar();
-//                this.dispose();
-//            } catch (ExceptionGestor ex) {
-//
-//            }
-//        }
+        try{
+          if(validar()){
+           empleado.setNombre(txtNombre.getText().toUpperCase());
+           empleado.setApellido(txtApellido.getText().toUpperCase());
+           empleado.setTTdocumento((TipoDocumento) cmbTipoDocumento.getSelectedItem());
+           empleado.setNumeroDocumento(Integer.parseInt(txtNumeroDocumento.getText()));
+           empleado.setFecNacimiento(dtcFechaNacimiento.getDate());
+           empleado.setTSexos((Sexo) cmbSexo.getSelectedItem());
+           empleado.setTelefono(Long.parseLong(txtTelefono.getText()));
+           empleado.setCelular(Long.parseLong(txtCelular.getText()));
+           empleado.setCorreoElectronico(txtEmail.getText());
+           empleado.setCargos(lstCargos.getSelectedItems());
+           empleado.setTEstadosEmpleado(EstadoEmpleadoBD.traerEstadoDisponible());
+
+           Domicilio domicilio=empleado.getTDomicilios();
+           domicilio.setTPaises((Pais) cmbPais.getSelectedItem());
+           domicilio.setTProvincias((Provincia) cmbProvincia.getSelectedItem());
+           domicilio.setTLocalidades((Localidad) cmbLocalidad.getSelectedItem());
+           domicilio.setTBarrios((Barrio) cmbBarrio.getSelectedItem());
+           domicilio.setCalle(txtCalle.getText());
+           domicilio.setNumero(Integer.parseInt(txtNumero.getText()));
+           if(txtFechaBaja.getText().compareTo("")!=0)
+           {
+               empleado.setFecBaja(new Date());
+               empleado.setMotivoBaja(this.txtMotivoBaja.getText());
+           }
+
+
+
+
+          try{
+           domicilio.setDepto(txtDepto.getText());
+           domicilio.setPiso(Short.parseShort(txtPiso.getText()));
+              }catch(Exception e){}
+
+        if(gestor instanceof GestorRegistrarEmpleado)
+                    DomicilioBD.guardar(domicilio);
+
+            try {
+                    gestor.ejecutarOperacion(empleado);
+                   //---------------------------
+                     List<Cargo> cargos=this.lstCargos.getSelectedItems();
+    //            if(gestor instanceof GestorRegistrarEmpleado){
+    //                EmpleadosXCargo temp;
+    //
+    //
+    //                for(int i=0; i<cargos.size();i++){
+    //                    temp= new EmpleadosXCargo();
+    //                    temp.setTCargos(cargos.get(i));
+    //                    temp.setTEmpleados(empleado);
+    //
+    //                    TEmpleadosXCargoBD.guardar(temp);
+    //                }
+    //
+    //            }
+                     //-----------------------------------
+                    Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido()+", "+empleado.getNombre()));
+                    this.vaciar();
+                    this.dispose();
+                } catch (ExceptionGestor ex) {    }
+            }
+        } catch(TipoDatoException e){
+            Mensajes.mensajeErrorGenerico("Algunos campos no han sido ingresado correctamente.");
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void dtcFechaNacimientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dtcFechaNacimientoMouseClicked
@@ -760,12 +838,191 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         // TODO add your handling code here:
         try{
             empleado.setTTdocumento((TipoDocumento)cmbTipoDocumento.getSelectedItem());
+            Utilidades.componenteCorrecto(cmbTipoDocumento);
         }catch(TipoDatoException ex){
             cmbTipoDocumento.setToolTipText(ex.getMessage());
             Utilidades.componenteError(cmbTipoDocumento);
         }
 
     }//GEN-LAST:event_cmbTipoDocumentoFocusLost
+
+    private void dtcFechaNacimientoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dtcFechaNacimientoFocusLost
+        // TODO add your handling code here:
+         try{
+            empleado.setFecNacimiento(dtcFechaNacimiento.getDate());
+            Utilidades.componenteCorrecto(dtcFechaNacimiento);
+        }catch(TipoDatoException ex){
+            dtcFechaNacimiento.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(dtcFechaNacimiento);
+        }
+    }//GEN-LAST:event_dtcFechaNacimientoFocusLost
+
+    private void cmbSexoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbSexoFocusLost
+        // TODO add your handling code here:
+         try{
+            empleado.setTSexos((Sexo)cmbSexo.getSelectedItem());
+             Utilidades.componenteCorrecto(cmbSexo);
+        }catch(TipoDatoException ex){
+            cmbSexo.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(cmbSexo);
+        }
+    }//GEN-LAST:event_cmbSexoFocusLost
+
+    private void txtTelefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusLost
+        // TODO add your handling code here:
+       try{
+            long temp=Long.parseLong(txtTelefono.getText());
+            empleado.setTelefono(temp);
+            Utilidades.componenteCorrecto(txtTelefono);
+        }catch(TipoDatoException ex){
+             txtTelefono.setToolTipText(ex.getMessage());
+             Utilidades.componenteError(txtTelefono);
+        }catch(Exception e){
+             Utilidades.componenteError(txtTelefono);
+             txtTelefono.setToolTipText("Formato incorrecto. Debe ser numérico");
+        }
+
+    }//GEN-LAST:event_txtTelefonoFocusLost
+
+    private void txtCelularFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCelularFocusLost
+        // TODO add your handling code here:
+        try{
+            long temp=Long.parseLong(txtCelular.getText());
+            empleado.setCelular(temp);
+            Utilidades.componenteCorrecto(txtCelular);
+        }catch(TipoDatoException ex){
+             txtCelular.setToolTipText(ex.getMessage());
+             Utilidades.componenteError(txtCelular);
+        }catch(Exception e){
+             Utilidades.componenteError(txtCelular);
+             txtCelular.setToolTipText("Formato incorrecto. Debe ser numérico");
+        }
+    }//GEN-LAST:event_txtCelularFocusLost
+
+    private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
+        // TODO add your handling code here:
+
+        try {
+            // TODO add your handling code here:
+            empleado. setCorreoElectronico(txtEmail.getText());
+            Utilidades.componenteCorrecto(txtEmail);
+        } catch (TipoDatoException ex) {
+            txtEmail.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(txtEmail);
+        }
+
+    }//GEN-LAST:event_txtEmailFocusLost
+
+    private void cmbPaisFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbPaisFocusLost
+        // TODO add your handling code here:
+
+         try{
+            empleado.getTDomicilios().setTPaises((Pais)cmbPais.getSelectedItem());
+            Utilidades.componenteCorrecto(cmbTipoDocumento);
+        }catch(TipoDatoException ex){
+            cmbTipoDocumento.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(cmbTipoDocumento);
+        }
+    }//GEN-LAST:event_cmbPaisFocusLost
+
+    private void cmbProvinciaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbProvinciaFocusLost
+        // TODO add your handling code here:
+        try{
+            empleado.getTDomicilios().setTProvincias((Provincia)cmbProvincia.getSelectedItem());
+            Utilidades.componenteCorrecto(cmbProvincia);
+        }catch(TipoDatoException ex){
+            cmbProvincia.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(cmbProvincia);
+        }
+    }//GEN-LAST:event_cmbProvinciaFocusLost
+
+    private void cmbLocalidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbLocalidadFocusLost
+        // TODO add your handling code here:
+        try{
+            empleado.getTDomicilios().setTLocalidades((Localidad)cmbLocalidad.getSelectedItem());
+            Utilidades.componenteCorrecto(cmbLocalidad);
+        }catch(TipoDatoException ex){
+            cmbLocalidad.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(cmbLocalidad);
+        }
+    }//GEN-LAST:event_cmbLocalidadFocusLost
+
+    private void cmbBarrioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbBarrioFocusLost
+        // TODO add your handling code here:
+        try{
+            empleado.getTDomicilios().setTBarrios((Barrio)cmbBarrio.getSelectedItem());
+            Utilidades.componenteCorrecto(cmbBarrio);
+        }catch(TipoDatoException ex){
+            cmbBarrio.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(cmbBarrio);
+        }
+    }//GEN-LAST:event_cmbBarrioFocusLost
+
+    private void txtCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCalleActionPerformed
+        // TODO add your handling code here:
+          try {
+            empleado.getTDomicilios().setCalle(txtCalle.getText());
+            Utilidades.componenteCorrecto(txtCalle);
+        } catch (TipoDatoException ex) {
+            txtCalle.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(txtCalle);
+        }
+    }//GEN-LAST:event_txtCalleActionPerformed
+
+    private void txtNumeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroFocusLost
+        // TODO add your handling code here:
+         try{
+            int temp=Integer.parseInt(txtNumero.getText());
+            empleado.getTDomicilios().setNumero(temp);
+            Utilidades.componenteCorrecto(txtNumero);
+        }catch(TipoDatoException ex){
+             txtNumero.setToolTipText(ex.getMessage());
+             Utilidades.componenteError(txtNumero);
+        }catch(Exception e){
+             Utilidades.componenteError(txtNumero);
+             txtNumero.setToolTipText("Formato incorrecto. Debe ser numérico");
+        }
+
+    }//GEN-LAST:event_txtNumeroFocusLost
+
+    private void txtPisoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPisoFocusLost
+        // TODO add your handling code here:
+        try{
+            short temp=Short.parseShort(txtPiso.getText());
+            empleado.getTDomicilios().setPiso(temp);
+            Utilidades.componenteCorrecto(txtPiso);
+        }catch(TipoDatoException ex){
+             txtPiso.setToolTipText(ex.getMessage());
+             Utilidades.componenteError(txtPiso);
+        }catch(Exception e){
+             Utilidades.componenteError(txtPiso);
+             txtPiso.setToolTipText("Formato incorrecto. Debe ser numérico");
+        }
+
+    }//GEN-LAST:event_txtPisoFocusLost
+
+    private void txtDeptoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeptoFocusLost
+        // TODO add your handling code here:
+        try{
+           empleado.getTDomicilios().setDepto(txtDepto.getText());
+            Utilidades.componenteCorrecto(txtDepto);
+        }catch(TipoDatoException ex){
+             txtDepto.setToolTipText(ex.getMessage());
+             Utilidades.componenteError(txtDepto);
+        }
+    }//GEN-LAST:event_txtDeptoFocusLost
+
+    private void lstCargosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lstCargosFocusLost
+        // TODO add your handling code here:
+         try{
+             empleado.setCargos(lstCargos.getSelectedItems());
+             Utilidades.componenteCorrecto(lstCargos);
+        }catch(TipoDatoException ex){
+             lstCargos.setToolTipText(ex.getMessage());
+             Utilidades.componenteError(lstCargos);
+        }
+
+    }//GEN-LAST:event_lstCargosFocusLost
 
     /**
     * @param args the command line arguments
