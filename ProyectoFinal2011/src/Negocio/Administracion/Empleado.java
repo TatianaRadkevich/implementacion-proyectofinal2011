@@ -211,16 +211,20 @@ public class Empleado implements java.io.Serializable {
         return this.TSexos;
     }
 
-    public void setTSexos(Sexo TSexos) {
-        this.TSexos = TSexos;
-    }
+    public void setTSexos(Sexo TSexos) throws TipoDatoException{
+        if(TTdocumento!=null)
+            this.TSexos = TSexos;
+        else
+            throw new TipoDatoException("Debe seleccionar el sexo");
+        
+    } 
 
     public String getNombre() {
         return this.nombre;
     }
 
     public void setNombre(String nombre) throws TipoDatoException{
-        if(nombre.matches("[a-zA-Z ]*") || nombre.trim().isEmpty())
+        if(nombre.matches("[a-zA-Z ]*") && nombre.trim().isEmpty())
             this.nombre = nombre;
         else
             throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
@@ -233,7 +237,7 @@ public class Empleado implements java.io.Serializable {
     }
 
     public void setApellido(String apellido)  throws TipoDatoException {
-       if(apellido.matches("[a-zA-Z ]*") || apellido.trim().isEmpty())
+       if(apellido.matches("[a-zA-Z ]*") && !apellido.trim().isEmpty())
             this.apellido = apellido;
         else
             throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
@@ -245,8 +249,8 @@ public class Empleado implements java.io.Serializable {
     }
 
     public void setCelular(Long celular) throws TipoDatoException {
-        if(celular==0)
-            throw new TipoDatoException("Formato incorrecto. Debe ser numérico");
+//        if(celular==0)
+//            throw new TipoDatoException("Formato incorrecto. Debe ser numérico");
         this.celular = celular;
     }
 
@@ -254,16 +258,35 @@ public class Empleado implements java.io.Serializable {
         return this.correoElectronico;
     }
 
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+    public void setCorreoElectronico(String correoElectronico) throws TipoDatoException {
+       if(correoElectronico.matches("[^A-Za-z0-9\\.\\@_\\-~#]+") || apellido.trim().isEmpty())
+            this.correoElectronico = correoElectronico;
+        else
+            throw new TipoDatoException("Formato incorrecto.");
+
+        
     }
 
     public Date getFecNacimiento() {
         return this.fecNacimiento;
     }
 
-    public void setFecNacimiento(Date fecNacimiento) {
-        this.fecNacimiento = fecNacimiento;
+    public void setFecNacimiento(Date fecNacimiento) throws TipoDatoException {
+        Date today= new Date();
+
+        if(fecNacimiento!=null ){
+            if (today.getDate() >= fecNacimiento.getDate() && today.getMonth() >=fecNacimiento.getMonth()
+                && today.getYear() >= fecNacimiento.getYear() && (fecNacimiento.getYear()-today.getYear())>=18) {
+
+                this.fecNacimiento = fecNacimiento;
+                }
+            else
+                throw new TipoDatoException("El empleado debe ser mayor de 18 años");
+        }
+        else
+            throw new TipoDatoException("Formato incorrecto. Seleccionar una fecha");
+
+        
     }
 
     public int getNumeroDocumento() {
@@ -281,8 +304,11 @@ public class Empleado implements java.io.Serializable {
         return this.telefono;
     }
 
-    public void setTelefono(Long telefono) {
+    public void setTelefono(Long telefono) throws TipoDatoException {
+         if(telefono==0)
+            throw new TipoDatoException("Formato incorrecto. Debe ser numérico");
         this.telefono = telefono;
+        
     }
 
     public String getObservaciones() {
@@ -389,7 +415,10 @@ public class Empleado implements java.io.Serializable {
         return salida;
     }
 
-    public void setCargos(List<Cargo> proveedores) {
+    public void setCargos(List<Cargo> proveedores) throws TipoDatoException{
+        if(proveedores.size()==0){
+            throw new TipoDatoException("Debe seleccionar un cargo como mínimo.");
+        }
         TEmpleadosXCargos.clear();
         for (Cargo c : proveedores) {
             TEmpleadosXCargos.add(new EmpleadosXCargo(this, c));
