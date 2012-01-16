@@ -4,6 +4,7 @@ package Negocio.UbicacionGeografica;
 
 import Negocio.Administracion.Empleado;
 import Negocio.Compras.Proveedor;
+import Negocio.TipoDatoException;
 import Negocio.Ventas.Cliente;
 import java.util.HashSet;
 import java.util.Set;
@@ -90,64 +91,91 @@ public class Domicilio  implements java.io.Serializable {
         return this.TLocalidades;
     }
     
-    public void setTLocalidades(Localidad TLocalidades) {
-        this.TLocalidades = TLocalidades;
+    public void setTLocalidades(Localidad TLocalidades)  throws TipoDatoException{
+        if(TLocalidades!=null)
+           this.TLocalidades = TLocalidades;
+        else
+            throw new TipoDatoException("Debe seleccionar un tipo documento");
+
+
     }
 
     public Barrio getTBarrios() {
         return this.TBarrios;
     }
     
-    public void setTBarrios(Barrio TBarrios) {
-        this.TBarrios = TBarrios;
+    public void setTBarrios(Barrio TBarrios) throws TipoDatoException{
+         if(TBarrios!=null)
+            this.TBarrios = TBarrios;
+        else
+            throw new TipoDatoException("Debe seleccionar un tipo documento");
+
     }
 
     public Provincia getTProvincias() {
         return this.TProvincias;
     }
     
-    public void setTProvincias(Provincia TProvincias) {
-        this.TProvincias = TProvincias;
+    public void setTProvincias(Provincia TProvincias) throws TipoDatoException{
+        if(TProvincias!=null)
+            this.TProvincias = TProvincias;
+        else
+            throw new TipoDatoException("Debe seleccionar un tipo documento");
+
     }
 
     public Pais getTPaises() {
         return this.TPaises;
     }
     
-    public void setTPaises(Pais TPaises) {
-        this.TPaises = TPaises;
+    public void setTPaises(Pais TPaises) throws TipoDatoException{
+         if(TPaises!=null)
+            this.TPaises = TPaises;
+        else
+            throw new TipoDatoException("Debe seleccionar un tipo documento");
+        
     }
     
     public String getCalle() {
         return this.calle;
     }
     
-    public void setCalle(String calle) {
-        this.calle = calle;
+    public void setCalle(String calle) throws TipoDatoException{
+        if(!calle.trim().isEmpty())
+            this.calle = calle;
+        else
+            throw new TipoDatoException("Debe ingresar una calle.");
     }
     
     public String getDepto() {
         return this.depto;
     }
     
-    public void setDepto(String depto) {
-        this.depto = depto;
+    public void setDepto(String depto) throws TipoDatoException{
+        if(depto.length()<=3)
+            this.depto = depto;
+        else
+            throw new TipoDatoException("Formato incorrecto. Como maximo deber tener 3 caracteres");
     }
     
     public Integer getNumero() {
         return this.numero;
     }
     
-    public void setNumero(Integer numero) {
-        this.numero = numero;
+    public void setNumero(Integer numero) throws TipoDatoException {
+             this.numero = numero;
     }
     
     public Short getPiso() {
         return this.piso;
     }
     
-    public void setPiso(Short piso) {
-        this.piso = piso;
-    }}
+    public void setPiso(Short piso) throws TipoDatoException{
+        if(piso<=200)
+             this.piso = piso;
+        else
+            throw new TipoDatoException("Formato incorrecto. Numero de piso no valido");
+    }
+}
 
 
