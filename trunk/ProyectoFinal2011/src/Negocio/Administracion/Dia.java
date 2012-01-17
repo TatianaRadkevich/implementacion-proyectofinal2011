@@ -21,7 +21,7 @@ import javax.persistence.Table;
     ,schema="dbo"
     ,catalog="Ramaty"
 )
-public class Dias  implements java.io.Serializable {
+public class Dia  implements java.io.Serializable {
 
 
      @Id
@@ -34,15 +34,18 @@ public class Dias  implements java.io.Serializable {
      /*---------------------------------------------------------------------------------------------*/
      
 
-    public Dias() {
+    public Dia() {
     }
 
+    public Dia(String nombre) {
+        this.nombre = nombre;
+    }
 	
-    public Dias(byte idDia, String nombre) {
+    public Dia(byte idDia, String nombre) {
         this.idDia = idDia;
         this.nombre = nombre;
     }
-    public Dias(byte idDia, String nombre, Set TAsignacionesDiases) {
+    public Dia(byte idDia, String nombre, Set TAsignacionesDiases) {
        this.idDia = idDia;
        this.nombre = nombre;
      
@@ -64,6 +67,11 @@ public class Dias  implements java.io.Serializable {
     
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    @Override
+    public String toString() {
+        return nombre;
     }
 
 
