@@ -11,6 +11,7 @@
 package Presentacion;
 
 import BaseDeDatos.UbicacionGeografica.PaisBD;
+import Negocio.TipoDatoException;
 import Negocio.UbicacionGeografica.*;
 import Negocio.UbicacionGeografica.Pais;
 import java.awt.event.ActionEvent;
@@ -109,6 +110,7 @@ public class PnlDomicilio extends javax.swing.JPanel {
     }
 
     public Domicilio getDomicilio() {
+        try{
         domicilio.setCalle(txtCalle.getText());
         domicilio.setDepto(txtDepto.getText());
         domicilio.setNumero(Utilidades.parseInteger(txtNumero.getText()));
@@ -118,6 +120,9 @@ public class PnlDomicilio extends javax.swing.JPanel {
         domicilio.setTPaises((Pais) cmbPais.getSelectedItem());
         domicilio.setTProvincias((Provincia) cmbProvincia.getSelectedItem());
 
+        } catch (TipoDatoException ex) {
+            return null;
+        }
         return domicilio;
     }
 
