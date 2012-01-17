@@ -36,7 +36,7 @@ public class AsignacionesDias  implements java.io.Serializable {
      /*---------------------------------------------------------------------------------------------*/
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="ID_DIA", nullable=false)
-     private Dias TDias;
+     private Dia TDias;
      /*---------------------------------------------------------------------------------------------*/
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="HORA_DESDE", nullable=false, length=23)
@@ -51,13 +51,13 @@ public class AsignacionesDias  implements java.io.Serializable {
     }
 
 	
-    public AsignacionesDias(byte idAsignacionDia, Horarios THorarios, Dias TDias, Date horaDesde) {
+    public AsignacionesDias(byte idAsignacionDia, Horarios THorarios, Dia TDias, Date horaDesde) {
         this.idAsignacionDia = idAsignacionDia;
         this.THorarios = THorarios;
         this.TDias = TDias;
         this.horaDesde = horaDesde;
     }
-    public AsignacionesDias(byte idAsignacionDia, Horarios THorarios, Dias TDias, Date horaDesde, Date horaHasta) {
+    public AsignacionesDias(byte idAsignacionDia, Horarios THorarios, Dia TDias, Date horaDesde, Date horaHasta) {
        this.idAsignacionDia = idAsignacionDia;
        this.THorarios = THorarios;
        this.TDias = TDias;
@@ -82,11 +82,11 @@ public class AsignacionesDias  implements java.io.Serializable {
         this.THorarios = THorarios;
     }
 
-    public Dias getTDias() {
+    public Dia getTDias() {
         return this.TDias;
     }
     
-    public void setTDias(Dias TDias) {
+    public void setTDias(Dia TDias) {
         this.TDias = TDias;
     }
     
