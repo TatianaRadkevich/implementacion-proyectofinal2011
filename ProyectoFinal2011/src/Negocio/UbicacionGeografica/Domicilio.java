@@ -153,7 +153,14 @@ public class Domicilio  implements java.io.Serializable {
     
     public void setDepto(String depto) throws TipoDatoException{
         if(depto.length()<=3)
-            this.depto = depto;
+        { 
+            if(this.piso!=null){
+                if(depto.length()<=0)
+                    throw new TipoDatoException("Debe agregar un departamento");
+                this.depto = depto;
+            }
+            
+        }            
         else
             throw new TipoDatoException("Formato incorrecto. Como maximo deber tener 3 caracteres");
     }
@@ -171,7 +178,8 @@ public class Domicilio  implements java.io.Serializable {
     }
     
     public void setPiso(Short piso) throws TipoDatoException{
-        if(piso<=200)
+       
+        if(piso==null || piso<=200 )
              this.piso = piso;
         else
             throw new TipoDatoException("Formato incorrecto. Numero de piso no valido");

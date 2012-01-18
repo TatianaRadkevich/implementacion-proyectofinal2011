@@ -224,7 +224,7 @@ public class Empleado implements java.io.Serializable {
     }
 
     public void setNombre(String nombre) throws TipoDatoException{
-        if(nombre.matches("[a-zA-Z ]*") && nombre.trim().isEmpty())
+        if(nombre.matches("[a-zA-Z ]*") && !nombre.trim().isEmpty())
             this.nombre = nombre;
         else
             throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
@@ -259,7 +259,7 @@ public class Empleado implements java.io.Serializable {
     }
 
     public void setCorreoElectronico(String correoElectronico) throws TipoDatoException {
-       if(correoElectronico.matches("[^A-Za-z0-9\\.\\@_\\-~#]+") || apellido.trim().isEmpty())
+       if( !correoElectronico.trim().isEmpty() && correoElectronico.matches("[^A-Za-z0-9\\.\\@_\\-~#]+") )
             this.correoElectronico = correoElectronico;
         else
             throw new TipoDatoException("Formato incorrecto.");
@@ -276,7 +276,8 @@ public class Empleado implements java.io.Serializable {
 
         if(fecNacimiento!=null ){
             if (today.getDate() >= fecNacimiento.getDate() && today.getMonth() >=fecNacimiento.getMonth()
-                && today.getYear() >= fecNacimiento.getYear() && (fecNacimiento.getYear()-today.getYear())>=18) {
+                && today.getYear() >= fecNacimiento.getYear() && (fecNacimiento.getYear()-today.getYear())>=18)
+            {
 
                 this.fecNacimiento = fecNacimiento;
                 }
@@ -416,7 +417,7 @@ public class Empleado implements java.io.Serializable {
     }
 
     public void setCargos(List<Cargo> proveedores) throws TipoDatoException{
-        if(proveedores.size()==0){
+        if(proveedores.size()<=0 || proveedores==null){
             throw new TipoDatoException("Debe seleccionar un cargo como mínimo.");
         }
         TEmpleadosXCargos.clear();
