@@ -21,7 +21,7 @@
     <mapping class="Negocio.Administracion.AsignacionesHorario"/>
     <mapping class="Negocio.Administracion.AsignacionesDias"/>
     <mapping class="Negocio.Administracion.Horarios"/>
-    <mapping class="Negocio.Administracion.Dias"/>
+    <mapping class="Negocio.Administracion.Dia"/>
     <mapping class="Negocio.Administracion.EstadosEmpleado"/>
     <mapping class="Negocio.Compras.DetalleOrdenCompra"/>
     <mapping class="Negocio.Compras.EstadoDetalleOrdenCompra"/>
