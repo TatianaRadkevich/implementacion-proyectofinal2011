@@ -360,6 +360,11 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 txtCalleActionPerformed(evt);
             }
         });
+        txtCalle.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCalleFocusLost(evt);
+            }
+        });
 
         btnAgregarProvincia.setText("Agregar");
 
@@ -918,10 +923,10 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
 
          try{
             empleado.getTDomicilios().setTPaises((Pais)cmbPais.getSelectedItem());
-            Utilidades.componenteCorrecto(cmbTipoDocumento);
+            Utilidades.componenteCorrecto(cmbPais);
         }catch(TipoDatoException ex){
-            cmbTipoDocumento.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(cmbTipoDocumento);
+            cmbPais.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(cmbPais);
         }
     }//GEN-LAST:event_cmbPaisFocusLost
 
@@ -988,8 +993,12 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     private void txtPisoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPisoFocusLost
         // TODO add your handling code here:
         try{
-            short temp=Short.parseShort(txtPiso.getText());
-            empleado.getTDomicilios().setPiso(temp);
+            if(txtPiso.getText().trim().length()!=0){
+                short temp=Short.parseShort(txtPiso.getText());
+                empleado.getTDomicilios().setPiso(temp);                
+            }
+            else
+                empleado.getTDomicilios().setPiso(null);
             Utilidades.componenteCorrecto(txtPiso);
         }catch(TipoDatoException ex){
              txtPiso.setToolTipText(ex.getMessage());
@@ -1023,6 +1032,17 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_lstCargosFocusLost
+
+    private void txtCalleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCalleFocusLost
+        // TODO add your handling code here:
+        try{
+            empleado.getTDomicilios().setCalle(txtCalle.getText());
+            Utilidades.componenteCorrecto(txtCalle);
+        }catch(TipoDatoException ex){
+             txtCalle.setToolTipText(ex.getMessage());
+             Utilidades.componenteError(txtCalle);
+        }
+    }//GEN-LAST:event_txtCalleFocusLost
 
     /**
     * @param args the command line arguments
@@ -1208,7 +1228,8 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             for(int i=0;i<tipo.size();i++){
                 cmbTipoDocumento.addItem(tipo.get(i));
             }
-        cmbTipoDocumento.repaint();
+            cmbTipoDocumento.setSelectedIndex(-1);
+            cmbTipoDocumento.repaint();
      }
 
      private void cargarSexo(){
@@ -1218,6 +1239,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             for(int i=0;i<tipo.size();i++){
                 cmbSexo.addItem(tipo.get(i));
             }
+            cmbSexo.setSelectedIndex(-1);
         cmbSexo.repaint();
      }
 
