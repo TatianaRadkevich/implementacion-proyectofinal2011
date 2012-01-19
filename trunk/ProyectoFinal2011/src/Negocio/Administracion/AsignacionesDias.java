@@ -2,6 +2,7 @@ package Negocio.Administracion;
 // Generated 21/10/2011 13:42:06 by Hibernate Tools 3.2.1.GA
 
 
+import Presentacion.Utilidades;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +29,7 @@ public class AsignacionesDias  implements java.io.Serializable {
     @Id
     @GeneratedValue
     @Column(name="ID_ASIGNACION_DIA", unique=true, nullable=false, precision=2, scale=0)
-     private byte idAsignacionDia;
+     private short idAsignacionDia;
      /*---------------------------------------------------------------------------------------------*/
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="ID_HORARIO", nullable=false)
@@ -51,13 +52,13 @@ public class AsignacionesDias  implements java.io.Serializable {
     }
 
 	
-    public AsignacionesDias(byte idAsignacionDia, Horarios THorarios, Dia TDias, Date horaDesde) {
+    public AsignacionesDias(short idAsignacionDia, Horarios THorarios, Dia TDias, Date horaDesde) {
         this.idAsignacionDia = idAsignacionDia;
         this.THorarios = THorarios;
         this.TDias = TDias;
         this.horaDesde = horaDesde;
     }
-    public AsignacionesDias(byte idAsignacionDia, Horarios THorarios, Dia TDias, Date horaDesde, Date horaHasta) {
+    public AsignacionesDias(short idAsignacionDia, Horarios THorarios, Dia TDias, Date horaDesde, Date horaHasta) {
        this.idAsignacionDia = idAsignacionDia;
        this.THorarios = THorarios;
        this.TDias = TDias;
@@ -66,11 +67,11 @@ public class AsignacionesDias  implements java.io.Serializable {
     }
    
      
-    public byte getIdAsignacionDia() {
+    public short getIdAsignacionDia() {
         return this.idAsignacionDia;
     }
     
-    public void setIdAsignacionDia(byte idAsignacionDia) {
+    public void setIdAsignacionDia(short idAsignacionDia) {
         this.idAsignacionDia = idAsignacionDia;
     }
 
@@ -105,6 +106,18 @@ public class AsignacionesDias  implements java.io.Serializable {
     public void setHoraHasta(Date horaHasta) {
         this.horaHasta = horaHasta;
     }
+
+    @Override
+    public String toString() {
+        String salida="";
+        salida+="Dia: "+TDias.getNombre()+" ";
+        salida+=String.format("Desde: %s:%s Hs.",horaDesde.getHours(),horaDesde.getMinutes())+" ";
+        salida+=String.format("Hasta: %s:%s Hs.",horaHasta.getHours(),horaHasta.getMinutes())+" ";
+        return salida;
+
+    }
+
+
 
 
 

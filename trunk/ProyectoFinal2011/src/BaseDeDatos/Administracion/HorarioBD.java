@@ -36,4 +36,10 @@ public class HorarioBD {
 
     }
 
+    public static List<Horarios> getHorarios(String codigo, String nombre) {
+        String hql="from Horarios h WHERE h.idHorario LIKE '%s%%' AND h.nombre LIKE '%s%%'";
+        //el String.format() reemplaza los '%s' por los argumentos, el codigo queda mas limpio!!.
+        return HibernateUtil.ejecutarConsulta(String.format(hql, codigo,nombre));
+    }
+
 }
