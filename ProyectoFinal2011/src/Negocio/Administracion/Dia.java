@@ -27,7 +27,7 @@ public class Dia  implements java.io.Serializable {
      @Id
     @GeneratedValue
     @Column(name="ID_DIA", unique=true, nullable=false, precision=2, scale=0)
-     private byte idDia;
+     private short idDia;
      /*---------------------------------------------------------------------------------------------*/
      @Column(name="NOMBRE", nullable=false, length=20)
      private String nombre;
@@ -41,22 +41,22 @@ public class Dia  implements java.io.Serializable {
         this.nombre = nombre;
     }
 	
-    public Dia(byte idDia, String nombre) {
+    public Dia(short idDia, String nombre) {
         this.idDia = idDia;
         this.nombre = nombre;
     }
-    public Dia(byte idDia, String nombre, Set TAsignacionesDiases) {
+    public Dia(short idDia, String nombre, Set TAsignacionesDiases) {
        this.idDia = idDia;
        this.nombre = nombre;
      
     }
    
     
-    public byte getIdDia() {
+    public short getIdDia() {
         return this.idDia;
     }
     
-    public void setIdDia(byte idDia) {
+    public void setIdDia(short idDia) {
         this.idDia = idDia;
     }
     
