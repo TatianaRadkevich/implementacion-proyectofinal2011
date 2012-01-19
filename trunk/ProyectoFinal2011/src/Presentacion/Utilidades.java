@@ -27,6 +27,15 @@ public class Utilidades {
         return String.format("%s/%s/%s", c.get(Calendar.DATE), c.get(Calendar.MONTH) + 1, c.get(Calendar.YEAR));
     }
 
+        public static String parseHora(Date fecha) {
+        if (fecha == null) {
+            return "";
+        }
+        Calendar c = GregorianCalendar.getInstance();
+        c.setTime(fecha);
+        return String.format("%s:%s Hs.",c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+    }
+
     public static String parseFechaHora(Date fecha) {
         if (fecha == null) {
             return "";
