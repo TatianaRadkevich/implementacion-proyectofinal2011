@@ -184,6 +184,14 @@ public class Domicilio  implements java.io.Serializable {
         else
             throw new TipoDatoException("Formato incorrecto. Numero de piso no valido");
     }
+
+    public boolean isOk()  throws TipoDatoException{
+        if(calle==null)
+            throw new TipoDatoException("Error");
+        if(numero==null)
+            throw new TipoDatoException("Error");
+        return true;
+    }
 }
 
 
