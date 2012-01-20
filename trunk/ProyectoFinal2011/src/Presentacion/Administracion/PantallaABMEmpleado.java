@@ -682,7 +682,16 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     }//GEN-LAST:event_txtTelefonoActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            empleado.isOk();
+        } catch (TipoDatoException ex) {
+            Logger.getLogger(PantallaABMEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+        
+
 
         try{
           if(validar()){
