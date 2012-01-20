@@ -70,7 +70,7 @@ public class Empleado implements java.io.Serializable {
     private Date fecNacimiento;
     /*---------------------------------------------------------------------------------------------*/
     @Column(name = "NUMERO_DOCUMENTO", nullable = false, precision = 8, scale = 0)
-    private int numeroDocumento;
+    private Integer numeroDocumento;
     /*---------------------------------------------------------------------------------------------*/
     @Column(name = "TELEFONO", precision = 11, scale = 0)
     private Long telefono;
@@ -476,5 +476,21 @@ public class Empleado implements java.io.Serializable {
 
     public void setTAsignacionesHorario(AsignacionesHorario TAsignacionesHorario) {
         this.TAsignacionesHorario = TAsignacionesHorario;
+    }
+
+    public boolean isOk() throws TipoDatoException{
+        if(nombre==null)
+            throw new TipoDatoException("Error");
+        if(apellido==null)
+            throw new TipoDatoException("Error");
+        if(this.TTdocumento==null)
+            throw new TipoDatoException("Error");
+        if(this.numeroDocumento==null)
+            throw new TipoDatoException("Error");
+        if(TDomicilios.isOk())
+            throw new TipoDatoException("Error");
+
+
+        return true;
     }
 }
