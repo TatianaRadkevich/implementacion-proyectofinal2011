@@ -6,6 +6,7 @@
 package BaseDeDatos.Administracion;
 
 import BaseDeDatos.HibernateUtil;
+import Negocio.Administracion.Dia;
 import Negocio.Administracion.Horarios;
 import java.util.List;
 
@@ -22,9 +23,9 @@ public class HorarioBD {
 
     }
 
-    public static List<Horarios> listarDias(){
+    public static List<Dia> listarDias(){
 
-    return HibernateUtil.ejecutarConsulta("from Dias");
+    return HibernateUtil.ejecutarConsulta("from Dia");
 
     }
 
