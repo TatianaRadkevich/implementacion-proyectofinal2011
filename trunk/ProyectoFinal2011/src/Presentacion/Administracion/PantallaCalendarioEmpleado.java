@@ -16,7 +16,7 @@ import Negocio.Administracion.AsignacionesHorario;
 import Negocio.Administracion.Dia;
 import Negocio.Administracion.DiaHoraLaborable;
 import Negocio.Administracion.Empleado;
-import Negocio.Administracion.GestorDiaHoraLaborable;
+//import Negocio.Administracion.GestorDiaHoraLaborable;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
@@ -33,7 +33,7 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
     private Empleado empleado;
     private TablaManager<Empleado> tmEmpleados;
     private TablaManager<Empleado> tmEmpleadosTurno;
-    private GestorDiaHoraLaborable gestor=new GestorDiaHoraLaborable();
+//    private GestorDiaHoraLaborable gestor=new GestorDiaHoraLaborable();
 
     /** Creates new form PantallaCalendarioEmpleado */
     public PantallaCalendarioEmpleado(java.awt.Frame parent, boolean modal) {
@@ -359,12 +359,12 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
     }
 
       public void cargarComboDia(){
-             cmbTurnos.removeAllItems();
-
-            List<Dia> tipo = this.gestor.getDias();
-            for(int i=0;i<tipo.size();i++){
-                cmbTurnos.addItem(tipo.get(i));
-            }
-        cmbTurnos.repaint();
+//             cmbTurnos.removeAllItems();
+//
+//            List<Dia> tipo = this.gestor.getDias();
+//            for(int i=0;i<tipo.size();i++){
+//                cmbTurnos.addItem(tipo.get(i));
+//            }
+//        cmbTurnos.repaint();
       }
 }
