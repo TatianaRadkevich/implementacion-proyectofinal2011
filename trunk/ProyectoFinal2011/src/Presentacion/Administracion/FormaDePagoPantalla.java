@@ -13,12 +13,16 @@ package Presentacion.Administracion;
 
 import Negocio.Administracion.FormaPago;
 import Negocio.Administracion.GestorFormaPago;
+import Negocio.TipoDatoException;
 import Presentacion.Mensajes;
 import Presentacion.Operacion;
+import Presentacion.Utilidades;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 /**
@@ -84,7 +88,18 @@ public class FormaDePagoPantalla extends javax.swing.JDialog {
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
+        txtDescripcion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDescripcionFocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtDescripcion);
+
+        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNombreFocusLost(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Baja"));
 
@@ -94,6 +109,11 @@ public class FormaDePagoPantalla extends javax.swing.JDialog {
 
         txtMotivo.setColumns(20);
         txtMotivo.setRows(5);
+        txtMotivo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtMotivoFocusLost(evt);
+            }
+        });
         jScrollPane2.setViewportView(txtMotivo);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -373,8 +393,16 @@ this.operacion= Operacion.nuevo;
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
          if(operacion==Operacion.nuevo){
             FormaPago tipo=new FormaPago();
-            tipo.setNombre(txtNombre.getText().toUpperCase());
-            tipo.setDescripcion(txtDescripcion.getText());
+            try {
+                tipo.setNombre(txtNombre.getText().toUpperCase());
+            } catch (TipoDatoException ex) {
+                Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                tipo.setDescripcion(txtDescripcion.getText().toUpperCase());
+            } catch (TipoDatoException ex) {
+                Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             gestor.guardar(tipo);
             Mensajes.mensajeInformacion("La forma de pago "+tipo.getNombre()+"\n ha sido guardado exitosamente");
@@ -385,8 +413,16 @@ this.operacion= Operacion.nuevo;
         }
 
         if(operacion==Operacion.modificar){
-            tipo_actual.setNombre(txtNombre.getText().toUpperCase());
-            tipo_actual.setDescripcion(txtDescripcion.getText());
+            try {
+                tipo_actual.setNombre(txtNombre.getText().toUpperCase());
+            } catch (TipoDatoException ex) {
+                Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                tipo_actual.setDescripcion(txtDescripcion.getText());
+            } catch (TipoDatoException ex) {
+                Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
+            }
             gestor.modificar(tipo_actual);
             Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido modificado exitosamente");
             tipo_actual=null;
@@ -396,7 +432,11 @@ this.operacion= Operacion.nuevo;
         }
         if(operacion==Operacion.baja){
             tipo_actual.setFecha(new Date());
-            tipo_actual.setMotivo(txtMotivo.getText());
+            try {
+                tipo_actual.setMotivo(txtMotivo.getText());
+            } catch (TipoDatoException ex) {
+                Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
+            }
             gestor.modificar(tipo_actual);
             Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido eliminado exitosamente");
                         tipo_actual=null;
@@ -406,7 +446,11 @@ this.operacion= Operacion.nuevo;
         }
           if(operacion==Operacion.reactivar){
             tipo_actual.setFecha(null);
-            tipo_actual.setMotivo(null);
+            try {
+                tipo_actual.setMotivo(null);
+            } catch (TipoDatoException ex) {
+                Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
+            }
             gestor.modificar(tipo_actual);
             this.inicializar();
             this.lstDisponible.setSelectedIndex(-1);
@@ -422,6 +466,40 @@ this.operacion= Operacion.nuevo;
         
         
     }//GEN-LAST:event_btnReactivarActionPerformed
+
+    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
+        // TODO add your handling code here:
+         try {
+            // TODO add your handling code here:
+            tipo_actual.setNombre(txtNombre.getText().toUpperCase());
+            Utilidades.componenteCorrecto(txtNombre);
+        } catch (TipoDatoException ex) {
+            txtNombre.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(txtNombre);}
+    }//GEN-LAST:event_txtNombreFocusLost
+
+    private void txtDescripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescripcionFocusLost
+            // TODO add your handling code here:
+        try {
+            tipo_actual.setDescripcion(txtDescripcion.getText().toUpperCase());
+            Utilidades.componenteCorrecto(txtDescripcion);
+        } catch (TipoDatoException ex) {
+            txtDescripcion.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(txtDescripcion);
+        }
+    }//GEN-LAST:event_txtDescripcionFocusLost
+
+    private void txtMotivoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMotivoFocusLost
+        // TODO add your handling code here:
+         try {
+            tipo_actual.setMotivo(txtMotivo.getText().toUpperCase());
+            Utilidades.componenteCorrecto(txtMotivo);
+        } catch (TipoDatoException ex) {
+            txtMotivo.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(txtMotivo);
+        }
+
+    }//GEN-LAST:event_txtMotivoFocusLost
  private void cargarDatos(FormaPago tipo_actual) {
 
         this.txtDescripcion.setText(tipo_actual.getDescripcion());
