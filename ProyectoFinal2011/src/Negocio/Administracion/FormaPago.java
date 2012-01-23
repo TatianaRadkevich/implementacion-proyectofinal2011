@@ -80,8 +80,12 @@ public class FormaPago  implements java.io.Serializable {
         return this.nombre;
     }
     
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+     public void setNombre(String nombre) throws TipoDatoException{
+        if(nombre.matches("[a-zA-Z ]*") && !nombre.trim().isEmpty())
+            this.nombre = nombre;
+        else
+            throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
+
     }
     
     
@@ -89,8 +93,11 @@ public class FormaPago  implements java.io.Serializable {
         return this.descripcion;
     }
     
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescripcion(String descripcion) throws TipoDatoException {
+          if(descripcion.matches("[a-zA-Z ]*") && !descripcion.trim().isEmpty())
+            this.descripcion = descripcion;
+        else
+            throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
     }
 
     public Set<Cobro> getTCobroses() {
@@ -112,8 +119,14 @@ public class FormaPago  implements java.io.Serializable {
     public Date getFecha()
     {return this.fecha;}
 
-    public void setMotivo(String motivo) {
-        this.motivo=motivo;
+    public void setMotivo(String motivo) throws TipoDatoException {
+
+          if(motivo.matches("[a-zA-Z ]*") && !motivo.trim().isEmpty())
+            this.motivo=motivo;
+        else
+            throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
+
+
     }
     public String getMotivo()
     {return this.motivo;}
