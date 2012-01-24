@@ -479,16 +479,17 @@ public class Empleado implements java.io.Serializable {
     }
 
     public boolean validarOk() throws TipoDatoException{
+        String mje="Algunos campos no han sido ingresado correctamente.";
         if(nombre==null)
-            throw new TipoDatoException("Error");
+            throw new TipoDatoException(mje);
         if(apellido==null)
-            throw new TipoDatoException("Error");
+            throw new TipoDatoException(mje);
         if(this.TTdocumento==null)
-            throw new TipoDatoException("Error");
+            throw new TipoDatoException(mje);
         if(this.numeroDocumento==null)
-            throw new TipoDatoException("Error");
+            throw new TipoDatoException(mje);
         if(TDomicilios.isOk())
-            throw new TipoDatoException("Error");
+            throw new TipoDatoException(mje);
 
 
         return true;
