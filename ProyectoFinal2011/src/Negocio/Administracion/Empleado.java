@@ -227,7 +227,11 @@ public class Empleado implements java.io.Serializable {
         if(nombre.matches("[a-zA-Z ]*") && !nombre.trim().isEmpty())
             this.nombre = nombre;
         else
+        {
+            this.nombre=null;
             throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
+        }
+            
         
     }
 
@@ -239,9 +243,10 @@ public class Empleado implements java.io.Serializable {
     public void setApellido(String apellido)  throws TipoDatoException {
        if(apellido.matches("[a-zA-Z ]*") && !apellido.trim().isEmpty())
             this.apellido = apellido;
-        else
-            throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
-        
+        else{
+           this.apellido=null;
+           throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
+            }       
     }
 
     public Long getCelular() {
@@ -261,10 +266,10 @@ public class Empleado implements java.io.Serializable {
     public void setCorreoElectronico(String correoElectronico) throws TipoDatoException {
        if( !correoElectronico.trim().isEmpty() && correoElectronico.matches("[^A-Za-z0-9\\.\\@_\\-~#]+") )
             this.correoElectronico = correoElectronico;
-        else
-            throw new TipoDatoException("Formato incorrecto.");
-
-        
+        else{
+           this.correoElectronico=null;
+           throw new TipoDatoException("Formato incorrecto.");
+        }
     }
 
     public Date getFecNacimiento() {
@@ -281,11 +286,15 @@ public class Empleado implements java.io.Serializable {
 
                 this.fecNacimiento = fecNacimiento;
                 }
-            else
+            else{
+                this.fecNacimiento=null;
                 throw new TipoDatoException("El empleado debe ser mayor de 18 años");
+            }
         }
-        else
+        else{
+            this.fecNacimiento=null;
             throw new TipoDatoException("Formato incorrecto. Seleccionar una fecha");
+        }
 
         
     }
@@ -296,8 +305,10 @@ public class Empleado implements java.io.Serializable {
     }
 
     public void setNumeroDocumento(int numeroDocumento)  throws TipoDatoException {
-       if(numeroDocumento==0)
-            throw new TipoDatoException("Formato incorrecto. Debe ser numérico");
+       if(numeroDocumento==0){
+           this.numeroDocumento=null;
+           throw new TipoDatoException("Formato incorrecto. Debe ser numérico");
+       }
         this.numeroDocumento = numeroDocumento;
     }
 
@@ -307,7 +318,11 @@ public class Empleado implements java.io.Serializable {
 
     public void setTelefono(Long telefono) throws TipoDatoException {
          if(telefono==0)
-            throw new TipoDatoException("Formato incorrecto. Debe ser numérico");
+         {
+             this.telefono=null;
+             throw new TipoDatoException("Formato incorrecto. Debe ser numérico");
+         }
+
         this.telefono = telefono;
         
     }
@@ -488,7 +503,7 @@ public class Empleado implements java.io.Serializable {
             throw new TipoDatoException(mje);
         if(this.numeroDocumento==null)
             throw new TipoDatoException(mje);
-        if(TDomicilios.isOk())
+        if(TDomicilios.validarOk())
             throw new TipoDatoException(mje);
 
 
