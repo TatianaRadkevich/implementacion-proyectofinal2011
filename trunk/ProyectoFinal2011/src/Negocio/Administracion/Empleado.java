@@ -478,7 +478,7 @@ public class Empleado implements java.io.Serializable {
         this.TAsignacionesHorario = TAsignacionesHorario;
     }
 
-    public boolean isOk() throws TipoDatoException{
+    public boolean validarOk() throws TipoDatoException{
         if(nombre==null)
             throw new TipoDatoException("Error");
         if(apellido==null)
