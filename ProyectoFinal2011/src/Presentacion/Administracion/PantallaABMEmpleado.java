@@ -686,7 +686,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             // TODO add your handling code here:
             empleado.validarOk();
         } catch (TipoDatoException ex) {
-            Logger.getLogger(PantallaABMEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            Mensajes.mensajeErrorGenerico("Algunos campos no han sido ingresado correctamente.");
         }
 
 
