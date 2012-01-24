@@ -386,6 +386,7 @@ this.operacion= Operacion.nuevo;
         this.activarBotones(false, true, true, true, true, false, false);
         if (tipo_actual.getFecha()!=null) {
          this.btnEliminar.setEnabled(false);
+         this.btnModificar.setEnabled(false);
         }
         }
     }//GEN-LAST:event_lstDisponibleMouseClicked
