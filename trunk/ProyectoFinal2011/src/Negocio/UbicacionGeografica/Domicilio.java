@@ -107,8 +107,11 @@ public class Domicilio  implements java.io.Serializable {
     public void setTBarrios(Barrio TBarrios) throws TipoDatoException{
          if(TBarrios!=null)
             this.TBarrios = TBarrios;
-        else
-            throw new TipoDatoException("Debe seleccionar un tipo documento");
+        else{
+             this.TBarrios=null;
+             throw new TipoDatoException("Debe seleccionar un tipo documento");
+        }
+            
 
     }
 
@@ -119,8 +122,10 @@ public class Domicilio  implements java.io.Serializable {
     public void setTProvincias(Provincia TProvincias) throws TipoDatoException{
         if(TProvincias!=null)
             this.TProvincias = TProvincias;
-        else
+        else{
+            this.TProvincias=null;
             throw new TipoDatoException("Debe seleccionar un tipo documento");
+        }
 
     }
 
@@ -131,8 +136,11 @@ public class Domicilio  implements java.io.Serializable {
     public void setTPaises(Pais TPaises) throws TipoDatoException{
          if(TPaises!=null)
             this.TPaises = TPaises;
-        else
-            throw new TipoDatoException("Debe seleccionar un tipo documento");
+        else{
+             this.TPaises=null;
+             throw new TipoDatoException("Debe seleccionar un tipo documento");
+        }
+            
         
     }
     
@@ -144,7 +152,12 @@ public class Domicilio  implements java.io.Serializable {
         if(!calle.trim().isEmpty())
             this.calle = calle;
         else
+        {
+            this.calle=null;
             throw new TipoDatoException("Debe ingresar una calle.");
+        }
+
+
     }
     
     public String getDepto() {
@@ -162,7 +175,11 @@ public class Domicilio  implements java.io.Serializable {
             
         }            
         else
+        {
+            this.depto=null;
             throw new TipoDatoException("Formato incorrecto. Como maximo deber tener 3 caracteres");
+        }
+
     }
     
     public Integer getNumero() {
@@ -182,10 +199,13 @@ public class Domicilio  implements java.io.Serializable {
         if(piso==null || piso<=200 )
              this.piso = piso;
         else
+        {
+            this.piso=null;
             throw new TipoDatoException("Formato incorrecto. Numero de piso no valido");
+        }
     }
 
-    public boolean isOk()  throws TipoDatoException{
+    public boolean validarOk()  throws TipoDatoException{
         if(calle==null)
             throw new TipoDatoException("Error");
         if(numero==null)
