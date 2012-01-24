@@ -390,39 +390,46 @@ this.operacion= Operacion.nuevo;
         }
     }//GEN-LAST:event_lstDisponibleMouseClicked
 
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-         if(operacion==Operacion.nuevo){
-            FormaPago tipo=new FormaPago();
-            try {
-                tipo.setNombre(txtNombre.getText().toUpperCase());
-            } catch (TipoDatoException ex) {
-                Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                tipo.setDescripcion(txtDescripcion.getText().toUpperCase());
-            } catch (TipoDatoException ex) {
-                Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
-            gestor.guardar(tipo);
+    private boolean validar(){
+        return true;
+    }
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+
+          try {
+            // TODO add your handling code here:
+            tipo_actual.isOk();
+        } catch (TipoDatoException ex) {
+            Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+
+        try{
+          if(validar()){
+
+              tipo_actual.setNombre(txtNombre.getText().toUpperCase());
+
+              if(operacion==Operacion.nuevo){
+
+              FormaPago tipo=new FormaPago();
+
+              tipo.setNombre(txtNombre.getText().toUpperCase());
+              tipo.setDescripcion(txtDescripcion.getText());
+
+              gestor.guardar(tipo);
             Mensajes.mensajeInformacion("La forma de pago "+tipo.getNombre()+"\n ha sido guardado exitosamente");
             this.cargarFormaPago();
             this.inicializar();
-           this.lstDisponible.setSelectedIndex(-1);
+            this.lstDisponible.setSelectedIndex(-1);
             return;
         }
 
         if(operacion==Operacion.modificar){
-            try {
+
                 tipo_actual.setNombre(txtNombre.getText().toUpperCase());
-            } catch (TipoDatoException ex) {
-                Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
                 tipo_actual.setDescripcion(txtDescripcion.getText());
-            } catch (TipoDatoException ex) {
-                Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
             gestor.modificar(tipo_actual);
             Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido modificado exitosamente");
             tipo_actual=null;
@@ -432,30 +439,30 @@ this.operacion= Operacion.nuevo;
         }
         if(operacion==Operacion.baja){
             tipo_actual.setFecha(new Date());
-            try {
+
                 tipo_actual.setMotivo(txtMotivo.getText());
-            } catch (TipoDatoException ex) {
-                Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
             gestor.modificar(tipo_actual);
             Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido eliminado exitosamente");
-                        tipo_actual=null;
+            tipo_actual=null;
             this.inicializar();
             this.lstDisponible.setSelectedIndex(-1);
             return;
         }
           if(operacion==Operacion.reactivar){
             tipo_actual.setFecha(null);
-            try {
-                tipo_actual.setMotivo(null);
-            } catch (TipoDatoException ex) {
-                Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            tipo_actual.setMotivo(null);
+
             gestor.modificar(tipo_actual);
             this.inicializar();
             this.lstDisponible.setSelectedIndex(-1);
             Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido dado reactivado exitosamente");
         }
+          }
+        } catch(TipoDatoException e){
+            Mensajes.mensajeErrorGenerico("Algunos campos no han sido ingresado correctamente.");
+        }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnReactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReactivarActionPerformed

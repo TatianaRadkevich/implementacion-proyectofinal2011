@@ -131,7 +131,11 @@ public class FormaPago  implements java.io.Serializable {
     public String getMotivo()
     {return this.motivo;}
 
-
+  public boolean isOk() throws TipoDatoException{
+        if(nombre==null)
+            throw new TipoDatoException("Error");
+            return true;
+    }
 
 
 
