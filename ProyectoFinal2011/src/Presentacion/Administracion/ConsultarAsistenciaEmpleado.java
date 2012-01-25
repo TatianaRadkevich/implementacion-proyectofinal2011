@@ -215,10 +215,7 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        tablita.setDatos(
-                HorarioBD.getHorarios(
-                txtCodigo.getText(),
-                txtNombre.getText()));
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
