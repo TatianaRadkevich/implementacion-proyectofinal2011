@@ -131,6 +131,9 @@ public class PedidoBD
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 
+    public static List<Pedido> getPedidosPendientesPago(){
+        return HibernateUtil.ejecutarConsulta("FROM Pedido as p WHERE LOWER(p.TEpedido.nombre) like  LOWER('Pendiente de pago')");
+    }
  
   
 }

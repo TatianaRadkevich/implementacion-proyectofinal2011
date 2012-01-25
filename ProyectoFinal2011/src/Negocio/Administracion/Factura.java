@@ -6,8 +6,10 @@ import Negocio.Administracion.Empleado;
 import Negocio.Administracion.Cobro;
 import Negocio.Administracion.DetalleFactura;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -118,25 +120,26 @@ public class Factura  implements java.io.Serializable {
         this.recargo = recargo;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TFacturas")
-    public Set<DetalleFactura> getTDetallesFacturas() {
-        return this.TDetallesFacturas;
+    public List<DetalleFactura> getTDetallesFacturas() {
+        return new ArrayList<DetalleFactura>(this.TDetallesFacturas);
+       
     }
     
     public void setTDetallesFacturas(Set<DetalleFactura> TDetallesFacturas) {
         this.TDetallesFacturas = TDetallesFacturas;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TFacturas")
-    public Set<Cobro> getTCobroses() {
-        return this.TCobroses;
+    public List<Cobro> getTCobroses() {
+            return new ArrayList<Cobro>(this.TCobroses);
     }
     
-    public void setTCobroses(Set<Cobro> TCobroses) {
-        this.TCobroses = TCobroses;
+    public void setTCobroses(List<Cobro> TCobroses) {
+        this.TCobroses.clear();
+        for (Cobro dt : TCobroses) {
+            dt.setTFacturas(this);
+            TCobroses.add(dt);
     }
 
-
-
-
+    }
 }
-
 
