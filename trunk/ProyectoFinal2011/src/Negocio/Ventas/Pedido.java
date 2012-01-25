@@ -1,6 +1,7 @@
 package Negocio.Ventas;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
+import Negocio.Administracion.Factura;
 import Negocio.Produccion.PlanProduccion;
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,6 +66,13 @@ public class Pedido implements java.io.Serializable {
     private Date fecBaja;
     @Column(name = "MOTIVO_BAJA", length = 100)
     private String motivoBaja;
+    //___________________________________________________________________
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_FACTURA")
+    private Factura TFacturas;
+    //_____________________________________________________________________
+
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")
     private Set<PlanProduccion> TPlanesProduccions = new HashSet<PlanProduccion>(0);
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")
@@ -227,5 +235,13 @@ public class Pedido implements java.io.Serializable {
 
     public void setFechaClienteRecep(Date fechaClienteRecep) {
         this.fechaClienteRecep = fechaClienteRecep;
+    }
+
+     public Factura getTFacturas() {
+        return this.TFacturas;
+    }
+
+    public void setTFacturas(Factura TFacturas) {
+        this.TFacturas = TFacturas;
     }
 }

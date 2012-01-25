@@ -28,12 +28,12 @@ public class DetalleFactura  implements java.io.Serializable {
      private Factura TFacturas;
      private DetallePedido TDetallesPedido;
      private int cantidad;
-     private BigDecimal precio;
+     private Float precio;
 
     public DetalleFactura() {
     }
 
-    public DetalleFactura(int idDetalleFactura, Factura TFacturas, DetallePedido TDetallesPedido, int cantidad, BigDecimal precio) {
+    public DetalleFactura(int idDetalleFactura, Factura TFacturas, DetallePedido TDetallesPedido, int cantidad, Float precio) {
        this.idDetalleFactura = idDetalleFactura;
        this.TFacturas = TFacturas;
        this.TDetallesPedido = TDetallesPedido;
@@ -80,11 +80,11 @@ public class DetalleFactura  implements java.io.Serializable {
     }
     
     @Column(name="PRECIO", nullable=false, precision=6)
-    public BigDecimal getPrecio() {
+    public Float getPrecio() {
         return this.precio;
     }
     
-    public void setPrecio(BigDecimal precio) {
+    public void setPrecio(Float precio) {
         this.precio = precio;
     }
 

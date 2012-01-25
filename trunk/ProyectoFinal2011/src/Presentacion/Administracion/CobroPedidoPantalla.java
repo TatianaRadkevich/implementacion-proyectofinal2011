@@ -11,7 +11,10 @@
 
 package Presentacion.Administracion;
 
+import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.Cobro;
+import Negocio.Administracion.DetalleFactura;
+import Negocio.Administracion.Factura;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.Pedido;
 import Presentacion.TablaManager;
@@ -26,9 +29,12 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
 
     private TablaManager<Pedido> tmPedido;
     private TablaManager<Cobro> tmCobro;
+    private Pedido pedido_actual=null;
     /** Creates new form CobroPedidoPantalla */
     public CobroPedidoPantalla() {
         initComponents();
+        inicializarTablas();
+        tmPedido.setDatos(PedidoBD.getPedidosPendientesPago());
     }
 
     /** This method is called from within the constructor to
@@ -70,7 +76,7 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
         txtNroPedidoDetalle = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         txtEstadoPedido = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtFechaFactura = new javax.swing.JTextField();
         txtNroFactura = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -98,11 +104,6 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
         tbPedidoPendientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbPedidoPendientesMouseClicked(evt);
-            }
-        });
-        tbPedidoPendientes.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                tbPedidoPendientesPropertyChange(evt);
             }
         });
         jScrollPane2.setViewportView(tbPedidoPendientes);
@@ -159,6 +160,16 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
         jLabel3.setText("Monto total:");
 
         jLabel4.setText("Monto a pagar:");
+
+        txtMontoTotal.setEnabled(false);
+
+        txtMontoAdeudado.setEnabled(false);
+
+        txtMontoPagar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtMontoPagarFocusLost(evt);
+            }
+        });
 
         jLabel5.setText("Monto adeudado:");
 
@@ -239,7 +250,17 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
 
         jLabel9.setText("Empleado responsable:");
 
+        txtEmpeladoResponsable.setEnabled(false);
+
+        txtNroPedidoDetalle.setEnabled(false);
+
         jLabel10.setText("Estado pedido:");
+
+        txtEstadoPedido.setEnabled(false);
+
+        txtFechaFactura.setEnabled(false);
+
+        txtNroFactura.setEnabled(false);
 
         jLabel6.setText("Número de factura:");
 
@@ -276,7 +297,7 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtFechaFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -299,7 +320,7 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
                             .addComponent(txtNroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(8, 8, 8)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFechaFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)))
                     .addComponent(jLabel8))
                 .addGap(18, 18, 18)
@@ -362,13 +383,16 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
 
     private void tbPedidoPendientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPedidoPendientesMouseClicked
         // TODO add your handling code here:
-       
-}//GEN-LAST:event_tbPedidoPendientesMouseClicked
+       pedido_actual=(Pedido)tmPedido.getSeletedObject();
+       tmCobro.setDatos(pedido_actual.getTFacturas().getTCobroses());
+       this.txtNroPedidoDetalle.setText(pedido_actual.getIdPedido()+"");
+       this.txtEmpeladoResponsable.setText(pedido_actual.getTFacturas().getTEmpleados().getApellido()+", "+pedido_actual.getTFacturas().getTEmpleados().getNombre());
+       this.txtEstadoPedido.setText(pedido_actual.getEstadoPedido().getNombre());
+       this.txtNroFactura.setText(pedido_actual.getTFacturas().getIdFactura()+"");
+       this.txtFechaFactura.setText(Utilidades.parseFechaHora(pedido_actual.getTFacturas().getFecFactura()));
+       this.pendienteSeleccionado();
 
-    private void tbPedidoPendientesPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbPedidoPendientesPropertyChange
-        // TODO add your handling code here:
-        
-}//GEN-LAST:event_tbPedidoPendientesPropertyChange
+}//GEN-LAST:event_tbPedidoPendientesMouseClicked
 
     private void tbDetallePagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDetallePagoMouseClicked
         // TODO add your handling code here:
@@ -379,6 +403,7 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
     }//GEN-LAST:event_tbDetallePagoPropertyChange
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+
         
 }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -386,6 +411,14 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
 }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtMontoPagarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMontoPagarFocusLost
+        // TODO add your handling code here:
+
+        float pagar=Float.parseFloat(txtMontoPagar.getText());
+        float adeudado=Float.parseFloat(txtMontoTotal.getText()) - pagar ;
+        txtMontoAdeudado.setText(adeudado+"");
+    }//GEN-LAST:event_txtMontoPagarFocusLost
 
     /**
     * @param args the command line arguments
@@ -420,11 +453,11 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable tbDetallePago;
     private javax.swing.JTable tbPedidoPendientes;
     private javax.swing.JTextField txtEmpeladoResponsable;
     private javax.swing.JTextField txtEstadoPedido;
+    private javax.swing.JTextField txtFechaFactura;
     private javax.swing.JTextField txtMontoAdeudado;
     private javax.swing.JTextField txtMontoPagar;
     private javax.swing.JTextField txtMontoTotal;
@@ -500,11 +533,18 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
     }
 
         public void pendienteSeleccionado()
-    {
+        {
+//            Pedido elemento=(Pedido)tmPedido.getSeletedObject();
+//             float montoTotal=0f;
+//                for(DetallePedido dp:elemento.getDetallePedido())
+//                    montoTotal+=dp.getCantidad()*dp.getPrecio();
+//
+//             txtMontoTotal.setText(montoTotal+ "");
             Pedido elemento=(Pedido)tmPedido.getSeletedObject();
+            Factura fac=(Factura)elemento.getTFacturas();
              float montoTotal=0f;
-                for(DetallePedido dp:elemento.getDetallePedido())
-                    montoTotal+=dp.getCantidad()*dp.getPrecio();
+                for(DetalleFactura dp:fac.getTDetallesFacturas())
+                    montoTotal=montoTotal + (dp.getCantidad() * dp.getPrecio());
 
              txtMontoTotal.setText(montoTotal+ "");
         }
