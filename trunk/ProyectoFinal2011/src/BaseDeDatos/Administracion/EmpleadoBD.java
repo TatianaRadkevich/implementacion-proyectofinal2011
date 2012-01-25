@@ -97,5 +97,8 @@ public class EmpleadoBD {
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 
+    public static List<Empleado> getEmpleadosVigentes(){
+        return HibernateUtil.ejecutarConsulta("FROM Empleado as p WHERE p.fecBaja IS NULL ");
+    }
     
 }
