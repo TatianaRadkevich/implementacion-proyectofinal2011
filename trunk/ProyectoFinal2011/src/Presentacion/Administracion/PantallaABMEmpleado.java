@@ -685,6 +685,12 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         try {
             // TODO add your handling code here:
             empleado.validarOk();
+            try {
+                    gestor.ejecutarOperacion(empleado);
+                    Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido()+", "+empleado.getNombre()));
+                    this.vaciar();
+                    this.dispose();
+                } catch (ExceptionGestor ex) {    }
         } catch (TipoDatoException ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
