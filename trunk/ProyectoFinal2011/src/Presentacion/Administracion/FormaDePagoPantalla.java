@@ -44,6 +44,7 @@ public class FormaDePagoPantalla extends javax.swing.JDialog {
         initComponents();
         inicializar();
         cargarFormaPago();
+        this.setTitle("Forma de Pago");
     }
 
     /** This method is called from within the constructor to
@@ -340,7 +341,7 @@ public class FormaDePagoPantalla extends javax.swing.JDialog {
  this.btnCancelar.setEnabled(true);
 
 this.operacion= Operacion.nuevo;
-
+ this.tipo_actual= new FormaPago();
 
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -372,6 +373,7 @@ this.operacion= Operacion.nuevo;
         String fecha=formato.format(new Date());
         this.txtFecha.setText(fecha);
         this.operacion= Operacion.baja;
+        tipo_actual=(FormaPago) lstDisponible.getSelectedValue();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
 
@@ -400,26 +402,13 @@ this.operacion= Operacion.nuevo;
 
           try {
             // TODO add your handling code here:
-            tipo_actual.isOk();
-        } catch (TipoDatoException ex) {
-            Logger.getLogger(FormaDePagoPantalla.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
+            tipo_actual.ValidarOk();
+            this.lstDisponible.setSelectedIndex(-1);
+                 if(operacion==Operacion.nuevo){
 
-        try{
-          if(validar()){
-
-              tipo_actual.setNombre(txtNombre.getText().toUpperCase());
-
-              if(operacion==Operacion.nuevo){
-
-              FormaPago tipo=new FormaPago();
-
-              tipo.setNombre(txtNombre.getText().toUpperCase());
-              tipo.setDescripcion(txtDescripcion.getText());
-
-              gestor.guardar(tipo);
-            Mensajes.mensajeInformacion("La forma de pago "+tipo.getNombre()+"\n ha sido guardado exitosamente");
+                 gestor.guardar(tipo_actual);
+            Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido guardado exitosamente");
+            tipo_actual=null;
             this.cargarFormaPago();
             this.inicializar();
             this.lstDisponible.setSelectedIndex(-1);
@@ -427,9 +416,6 @@ this.operacion= Operacion.nuevo;
         }
 
         if(operacion==Operacion.modificar){
-
-                tipo_actual.setNombre(txtNombre.getText().toUpperCase());
-                tipo_actual.setDescripcion(txtDescripcion.getText());
 
             gestor.modificar(tipo_actual);
             Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido modificado exitosamente");
@@ -440,8 +426,6 @@ this.operacion= Operacion.nuevo;
         }
         if(operacion==Operacion.baja){
             tipo_actual.setFecha(new Date());
-
-                tipo_actual.setMotivo(txtMotivo.getText());
 
             gestor.modificar(tipo_actual);
             Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido eliminado exitosamente");
@@ -459,11 +443,14 @@ this.operacion= Operacion.nuevo;
             this.lstDisponible.setSelectedIndex(-1);
             Mensajes.mensajeInformacion("La forma de pago "+tipo_actual.getNombre()+"\n ha sido dado reactivado exitosamente");
         }
-          }
-        } catch(TipoDatoException e){
-            Mensajes.mensajeErrorGenerico("Algunos campos no han sido ingresado correctamente.");
+            
+        } catch (TipoDatoException ex) {
+            Mensajes.mensajeConfirmacionGenerico(ex.getMessage());
+
         }
-        
+       
+
+                
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnReactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReactivarActionPerformed
@@ -471,6 +458,11 @@ this.operacion= Operacion.nuevo;
          this.activarBotones(false, false, false, false, false, true, true);
          tipo_actual=(FormaPago) lstDisponible.getSelectedValue();
          this.operacion= Operacion.reactivar;
+         this.txtNombre.setEnabled(false);
+         this.txtDescripcion.setEnabled(false);
+         this.txtFecha.setEnabled(false);
+         this.txtMotivo.setEnabled(false);
+         
         
         
     }//GEN-LAST:event_btnReactivarActionPerformed
@@ -512,6 +504,8 @@ this.operacion= Operacion.nuevo;
 
         this.txtDescripcion.setText(tipo_actual.getDescripcion());
         this.txtNombre.setText(tipo_actual.getNombre());
+        this.txtFecha.setText(Utilidades.parseFecha(tipo_actual.getFecha()));
+        this.txtMotivo.setText (tipo_actual.getMotivo());
 
     }
 
