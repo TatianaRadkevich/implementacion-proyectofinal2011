@@ -28,4 +28,9 @@ public class AsistenciaEmpleadoBD {
 
         return HibernateUtil.ejecutarConsulta(HQL);
     }
+    
+        public static AsistenciaEmpleado guardar(AsistenciaEmpleado asist){
+        HibernateUtil.guardarObjeto(asist);
+        return asist;
+    }
 }

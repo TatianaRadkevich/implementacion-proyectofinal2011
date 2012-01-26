@@ -21,7 +21,7 @@ public class CargoBD {
 
      public static List<Cargo> listarCargos() throws ExceptionInInitializerError{
        
-        List<Cargo> result=new ArrayList<Cargo>(0);
+        List<Cargo> result=new ArrayList<Cargo>();
 
         try{
             result = HibernateUtil.ejecutarConsulta("from Cargo");

@@ -3,6 +3,7 @@ package Negocio.Administracion;
 
 
 import Negocio.Administracion.Empleado;
+import Negocio.TipoDatoException;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -61,8 +62,14 @@ public class TipoDocumento  implements java.io.Serializable {
         return this.nombre;
     }
     
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre(String nombre) throws TipoDatoException {
+       if(nombre.matches("[a-zA-Z ]*") && !nombre.trim().isEmpty())
+            this.nombre = nombre;
+       else
+       {
+            this.nombre= null;
+            throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
+       }
     }
     
     @Column(name="DESCRIPCION", length=200)
@@ -86,10 +93,11 @@ public class TipoDocumento  implements java.io.Serializable {
         return this.getNombre();
     }
 
-    
-
-
-
+    public boolean validarOk() throws TipoDatoException{
+        if(nombre==null)
+            throw new TipoDatoException("Algunos campos no han sido ingresado correctamente");
+        return true;
+    }
 
 }
 

@@ -14,8 +14,10 @@ import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Operacion;
 import Negocio.Administracion.GestorTipoDocumento;
 import Negocio.Administracion.TipoDocumento;
+import Negocio.TipoDatoException;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
+import Presentacion.Utilidades;
 import gui.GUILocal;
 import java.util.List;
 import java.util.logging.Level;
@@ -74,10 +76,16 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Documento"));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNombreFocusLost(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Nombre:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Descripción:");
 
         txtDescripcion.setColumns(20);
@@ -214,7 +222,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(509, Short.MAX_VALUE)
+                .addContainerGap(519, Short.MAX_VALUE)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58))
         );
@@ -235,28 +243,39 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+
+
+
+
         
+        try {
+        tipo_actual.validarOk();
+        } catch (TipoDatoException ex) {
+           Mensajes.mensajeErrorGenerico(ex.getMessage());
+           return;
+        }
 
         
       if(operacion==Operacion.nuevo){
-           if(validar()){
-            TipoDocumento tipo=new TipoDocumento();
-            tipo.setNombre(txtNombre.getText().toUpperCase());
-            tipo.setDescripcion(txtDescripcion.getText());
+          
+//            try{
+//            tipo_actual.setNombre(txtNombre.getText().toUpperCase());
+//            } catch(TipoDatoException e){
+//            Mensajes.mensajeErrorGenerico("Algunos campos no han sido ingresados correctamente.");
+//               }
+            tipo_actual.setDescripcion(txtDescripcion.getText());
 
-            gestor.guardar(tipo);
-            Mensajes.mensajeInformacion("El tipo de documento "+tipo.getNombre()+"\n ha sido guardado exitosamente");
+            gestor.guardar(tipo_actual);
+            Mensajes.mensajeInformacion("El tipo de documento "+tipo_actual.getNombre()+"\n ha sido guardado exitosamente");
             this.vaciar();
             cancelar();
             this.cargarTipoDocumento();
             return;
         }
-       else return;
-      }
 
         if(operacion==Operacion.modificar){
-            if(validar()){
-            tipo_actual.setNombre(txtNombre.getText().toUpperCase());
+            
+
             tipo_actual.setDescripcion(txtDescripcion.getText());
             gestor.modificar(tipo_actual);
             Mensajes.mensajeInformacion("El tipo de documento "+tipo_actual.getNombre()+"\n ha sido modificado exitosamente");
@@ -265,8 +284,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
             tipo_actual=null;
             return;
         }
-        else return;
-        }
+        
          if(operacion==Operacion.baja){
            gestor.eliminar(tipo_actual);
            Mensajes.mensajeInformacion("El tipo de documento "+tipo_actual.getNombre()+"\n ha sido eliminado exitosamente");
@@ -276,6 +294,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
             this.cargarTipoDocumento();
             return;
         }
+
      
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -285,6 +304,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
        nuevo();
+
        txtNombre.requestFocus();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -334,6 +354,16 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
        this.activarBotones(true, false, false, false, false);
        this.vaciar();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
+        try {
+            tipo_actual.setNombre(txtNombre.getText().toUpperCase());
+            Utilidades.componenteCorrecto(txtNombre);
+        } catch (TipoDatoException ex) {
+            txtNombre.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(txtNombre);
+        }
+    }//GEN-LAST:event_txtNombreFocusLost
 
     /**
     * @param args the command line arguments
@@ -427,6 +457,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
         this.activarTipoDocumento(true);
         this.activarBotones(false, false, false, true, true);
         this.operacion = Operacion.nuevo;
+        tipo_actual = new TipoDocumento();
     }
 
     private void cargarDatos(TipoDocumento tipo_actual) {
@@ -437,12 +468,6 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
     }
 
     private boolean validar() {
-               if (txtNombre.getText().compareTo("")==0)
-        {
-            Mensajes.mensajeErrorGenerico("Debe ingresar el nombre");
-            txtNombre.requestFocus();
-            return false;
-        }
         return true;
     }
 }

@@ -693,76 +693,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 } catch (ExceptionGestor ex) {    }
         } catch (TipoDatoException ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
-        }
-
-
-        
-
-
-        try{
-          if(validar()){
-           empleado.setNombre(txtNombre.getText().toUpperCase());
-           empleado.setApellido(txtApellido.getText().toUpperCase());
-           empleado.setTTdocumento((TipoDocumento) cmbTipoDocumento.getSelectedItem());
-           empleado.setNumeroDocumento(Integer.parseInt(txtNumeroDocumento.getText()));
-           empleado.setFecNacimiento(dtcFechaNacimiento.getDate());
-           empleado.setTSexos((Sexo) cmbSexo.getSelectedItem());
-           empleado.setTelefono(Long.parseLong(txtTelefono.getText()));
-           empleado.setCelular(Long.parseLong(txtCelular.getText()));
-           empleado.setCorreoElectronico(txtEmail.getText());
-           empleado.setCargos(lstCargos.getSelectedItems());
-           empleado.setTEstadosEmpleado(EstadoEmpleadoBD.traerEstadoDisponible());
-
-           Domicilio domicilio=empleado.getTDomicilios();
-           domicilio.setTPaises((Pais) cmbPais.getSelectedItem());
-           domicilio.setTProvincias((Provincia) cmbProvincia.getSelectedItem());
-           domicilio.setTLocalidades((Localidad) cmbLocalidad.getSelectedItem());
-           domicilio.setTBarrios((Barrio) cmbBarrio.getSelectedItem());
-           domicilio.setCalle(txtCalle.getText());
-           domicilio.setNumero(Integer.parseInt(txtNumero.getText()));
-           if(txtFechaBaja.getText().compareTo("")!=0)
-           {
-               empleado.setFecBaja(new Date());
-               empleado.setMotivoBaja(this.txtMotivoBaja.getText());
-           }
-
-
-
-
-          try{
-           domicilio.setDepto(txtDepto.getText());
-           domicilio.setPiso(Short.parseShort(txtPiso.getText()));
-              }catch(Exception e){}
-
-        if(gestor instanceof GestorRegistrarEmpleado)
-                    DomicilioBD.guardar(domicilio);
-
-            try {
-                    gestor.ejecutarOperacion(empleado);
-                   //---------------------------
-                     List<Cargo> cargos=this.lstCargos.getSelectedItems();
-    //            if(gestor instanceof GestorRegistrarEmpleado){
-    //                EmpleadosXCargo temp;
-    //
-    //
-    //                for(int i=0; i<cargos.size();i++){
-    //                    temp= new EmpleadosXCargo();
-    //                    temp.setTCargos(cargos.get(i));
-    //                    temp.setTEmpleados(empleado);
-    //
-    //                    TEmpleadosXCargoBD.guardar(temp);
-    //                }
-    //
-    //            }
-                     //-----------------------------------
-                    Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido()+", "+empleado.getNombre()));
-                    this.vaciar();
-                    this.dispose();
-                } catch (ExceptionGestor ex) {    }
-            }
-        } catch(TipoDatoException e){
-            Mensajes.mensajeErrorGenerico("Algunos campos no han sido ingresado correctamente.");
-        }
+      }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void dtcFechaNacimientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dtcFechaNacimientoMouseClicked
