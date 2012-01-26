@@ -13,14 +13,18 @@ package Presentacion.Administracion;
 
 import Negocio.Administracion.Cargo;
 import Negocio.Administracion.GestorCargo;
+import Negocio.TipoDatoException;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.Operacion;
+import Presentacion.Utilidades;
 import gui.GUILocal;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 /**
@@ -81,6 +85,12 @@ public class PantallaABMCargo extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         pnlCargo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cargo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+
+        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNombreFocusLost(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Nombre:");
@@ -189,7 +199,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
                 .addComponent(pnlBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar)))
         );
 
@@ -298,13 +308,23 @@ public class PantallaABMCargo extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
-        if(validar()){
 
+        try {
+        cargo_actual.validarOk();
+        } catch (TipoDatoException ex) {
+           Mensajes.mensajeErrorGenerico(ex.getMessage());
+           return;
         }
+     
         if(operacion==Operacion.nuevo){
             Cargo tipo=new Cargo();
+                        try{
             tipo.setNombre(txtNombre.getText().toUpperCase());
+            } catch(TipoDatoException e){
+            Mensajes.mensajeErrorGenerico("Algunos campos no han sido ingresados correctamente.");
+               }
+
+
             tipo.setDescripcion(txtDescripcion.getText());
 
             gestor.guardar(tipo);
@@ -316,7 +336,11 @@ public class PantallaABMCargo extends javax.swing.JDialog {
         }
 
         if(operacion==Operacion.modificar){
+            try{
             cargo_actual.setNombre(txtNombre.getText().toUpperCase());
+            } catch(TipoDatoException e){
+            Mensajes.mensajeErrorGenerico("Algunos campos no han sido ingresados correctamente.");
+               }
             cargo_actual.setDescripcion(txtDescripcion.getText());
             gestor.modificar(cargo_actual);
             Mensajes.mensajeInformacion("El cargo "+cargo_actual.getNombre()+"\n ha sido modificado exitosamente");
@@ -351,7 +375,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
 
-        this.cargarCargos();
+      //  this.cargarCargos();
 
         this.cargo_actual=null;
         this.cancelar();
@@ -427,12 +451,23 @@ public class PantallaABMCargo extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         nuevo();
+
 }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         this.dispose();
 }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
+           try {
+            cargo_actual.setNombre(txtNombre.getText().toUpperCase());
+            Utilidades.componenteCorrecto(txtNombre);
+        } catch (TipoDatoException ex) {
+            txtNombre.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(txtNombre);
+        }
+    }//GEN-LAST:event_txtNombreFocusLost
 
     /**
     * @param args the command line arguments
@@ -572,6 +607,7 @@ public class PantallaABMCargo extends javax.swing.JDialog {
         this.activarBotones(false, false, false, true, true,false,false);
         this.operacion = Operacion.nuevo;
         this.txtNombre.requestFocus();
+        cargo_actual = new Cargo();
     }
 
 
