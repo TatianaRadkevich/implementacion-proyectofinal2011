@@ -2,7 +2,9 @@ package Negocio.Administracion;
 // Generated 21/10/2011 13:42:06 by Hibernate Tools 3.2.1.GA
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -84,8 +86,8 @@ public class Horarios  implements java.io.Serializable {
         this.descripcion = descripcion;
     }
 
-    public Set<AsignacionesDias> getTAsignacionesDiases() {
-        return this.TAsignacionesDiases;
+    public List<AsignacionesDias> getTAsignacionesDiases() {
+        return new ArrayList<AsignacionesDias>(this.TAsignacionesDiases);
     }
     
     public void setTAsignacionesDiases(Set<AsignacionesDias> TAsignacionesDiases) {
@@ -100,6 +102,10 @@ public class Horarios  implements java.io.Serializable {
         return salida;
     }
 
+
+    public String toString() {
+                return this.getNombre();
+    }
 
 
 //@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="THorarios")

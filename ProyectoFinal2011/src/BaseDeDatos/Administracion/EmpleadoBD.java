@@ -18,6 +18,10 @@ import java.util.List;
  */
 public class EmpleadoBD {
 
+    public static List<Empleado> getEmpleadosSHorario() {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
 
      public EmpleadoBD() {
 
