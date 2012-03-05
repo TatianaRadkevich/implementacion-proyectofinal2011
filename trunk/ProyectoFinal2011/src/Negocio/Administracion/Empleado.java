@@ -510,6 +510,8 @@ public class Empleado implements java.io.Serializable {
             throw new TipoDatoException(mje);
         if(this.numeroDocumento==null)
             throw new TipoDatoException(mje);
+        if(this.fecNacimiento==null)
+            throw new TipoDatoException(mje);
       try{
           TDomicilios.validarOk();
       }catch(TipoDatoException ex){
