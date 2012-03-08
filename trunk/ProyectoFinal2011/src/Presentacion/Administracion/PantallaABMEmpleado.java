@@ -31,6 +31,8 @@ import Presentacion.Mensajes;
 import Presentacion.Utilidades;
 import java.awt.Color;
 import java.awt.Dialog;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,6 +54,13 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.cargarCargos();
+        dtcFechaNacimiento.addPropertyChangeListener(
+       new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+               dtcFechaNacimientoFocusLost(null);
+//                       tuClase.setFecha(**dtpCalendario**.getDate());
+            }
+        });
         
         
     }
@@ -70,6 +79,22 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
        this.cargarComboPais();
        this.setTitle(titulo);
+
+       dtcFechaNacimiento.addPropertyChangeListener(
+       new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+                      if(empleado!=null)
+                {
+                     try{
+                        empleado.setFecNacimiento(dtcFechaNacimiento.getDate());
+                        Utilidades.componenteCorrecto(dtcFechaNacimiento);
+                    }catch(TipoDatoException ex){
+                        dtcFechaNacimiento.setToolTipText(ex.getMessage());
+                        Utilidades.componenteError(dtcFechaNacimiento);
+                    }
+                }
+                    }
+                });
       
     }
 
@@ -799,12 +824,15 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
 
     private void dtcFechaNacimientoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dtcFechaNacimientoFocusLost
         // TODO add your handling code here:
-         try{
-            empleado.setFecNacimiento(dtcFechaNacimiento.getDate());
-            Utilidades.componenteCorrecto(dtcFechaNacimiento);
-        }catch(TipoDatoException ex){
-            dtcFechaNacimiento.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(dtcFechaNacimiento);
+        if(empleado!=null)
+        {
+             try{
+                empleado.setFecNacimiento(dtcFechaNacimiento.getDate());
+                Utilidades.componenteCorrecto(dtcFechaNacimiento);
+            }catch(TipoDatoException ex){
+                dtcFechaNacimiento.setToolTipText(ex.getMessage());
+                Utilidades.componenteError(dtcFechaNacimiento);
+            }
         }
     }//GEN-LAST:event_dtcFechaNacimientoFocusLost
 
