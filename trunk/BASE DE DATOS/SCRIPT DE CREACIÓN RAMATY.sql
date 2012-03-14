@@ -266,8 +266,8 @@ CREATE TABLE T_DETALLES_PLAN (
        CANTIDAD_PLANIFICADA numeric(5) NOT NULL,
        FEC_HORA_PREVISTA_FIN datetime NOT NULL,
        FEC_HORA_PREVISTA_INICIO datetime NOT NULL,
-       FEC_HORA_REAL_INICIO datetime NOT NULL,
-       FEC_HORA_REAL_FIN    datetime NOT NULL,
+       FEC_HORA_REAL_INICIO datetime NULL,
+       FEC_HORA_REAL_FIN    datetime NULL,
        ID_ETAPA_PRODUCCION_ESPECIFICA numeric(5) NOT NULL,
        ID_EMPLEADO          numeric(5) NOT NULL,
        ID_PLAN_PRODUCCION   numeric(8) NOT NULL,
@@ -717,7 +717,7 @@ CREATE TABLE T_MATERIALES (
        STOCK_ACTUAL         numeric(3) NOT NULL,
        STOCK_MINIMO         numeric(3) NOT NULL,
        STOCK_RESERVADO      numeric(3) NOT NULL,
-       CODIGO               varchar(2) NOT NULL,
+       CODIGO               varchar(6) NOT NULL,
        ID_UNIDAD_MEDIDA     numeric(5) NOT NULL
 )
 go
@@ -831,8 +831,8 @@ CREATE TABLE T_PLANES_PRODUCCION (
        FEC_GENERACION       datetime NOT NULL,
        FEC_HORA_PREVISTA_FIN datetime NOT NULL,
        FEC_HORA_PREVISTA_INICIO datetime NOT NULL,
-       FEC_HORA_REAL_FIN    datetime NOT NULL,
-       FEC_HORA_REAL_INICIO datetime NOT NULL,
+       FEC_HORA_REAL_FIN    datetime NULL,
+       FEC_HORA_REAL_INICIO datetime NULL,
        OBSERVACIONES        varchar(200) NULL,
        ID_PEDIDO            numeric(8) NOT NULL,
        FEC_ULTIMA_MODIFICACION datetime NULL,
