@@ -56,4 +56,7 @@
   <table-filter match-name="T_EORDEN_TRABAJO"/>
   <table-filter match-name="T_PLANES_PRODUCCION"/>
   <table-filter match-name="T_EDETALLE_PLAN"/>
+  <table-filter match-name="T_TMAQUINA"/>
+  <table-filter match-name="T_THERRAMIENTA"/>
+
 </hibernate-reverse-engineering>

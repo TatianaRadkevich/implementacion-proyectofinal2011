@@ -6,6 +6,7 @@ import Negocio.Deposito.Faltante;
 import Negocio.Produccion.MaquinaHerramientaParticular;
 import Negocio.Produccion.EtapaProduccionEspecifica;
 import Negocio.Produccion.PlanProduccion;
+import Negocio.Ventas.DetallePedido;
 import Presentacion.Utilidades;
 import java.util.Date;
 import java.util.HashSet;
@@ -34,44 +35,60 @@ public class DetallePlanProduccion implements java.io.Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_DETALLE_PLAN", unique = true, nullable = false, precision = 8, scale = 0)
-    private int idDetallePlan;
+    private int idDetallePlan;;
+    //___________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_ETAPA_PRODUCCION_ESPECIFICA", nullable = true)
-    private EtapaProduccionEspecifica TEtapasProduccionEspecifica;
+    private EtapaProduccionEspecifica TEtapasProduccionEspecifica;;
+    //___________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EMPLEADO", nullable = true)
-    private Empleado TEmpleados;
+    private Empleado TEmpleados;;
+    //___________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PLAN_PRODUCCION", nullable = true)
-    private PlanProduccion TPlanesProduccion;
+    private PlanProduccion TPlanesProduccion;;
+    //___________________________________________________________________________________________//
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_DETALLE_PEDIDO", nullable=false)
+    private DetallePedido TDetallesPedido;;
+    //___________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_MAQUINA_HERRAMIENTA_PARTICULAR", nullable = true)
     private MaquinaHerramientaParticular TMaquinasHerramientaParticular;
+    //___________________________________________________________________________________________//
     @Column(name = "CANTIDAD_PLANIFICADA", nullable = true, precision = 5, scale = 0)
-    private Integer cantidadPlanificada;
+    private Integer cantidadPlanificada;;
+    //___________________________________________________________________________________________//
     @Column(name = "CANTIDAD_PRODUCIDA", precision = 5, scale = 0)
-    private Integer cantidadProducida;
+    private Integer cantidadProducida;;
+    //___________________________________________________________________________________________//
     @Column(name = "OBSERVACIONES", length = 200)
-    private String observaciones;
+    private String observaciones;;
+    //___________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_PREVISTA_FIN", nullable = true, length = 23)
-    private Date fecHoraPrevistaFin;
+    private Date fecHoraPrevistaFin;;
+    //___________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_PREVISTA_INICIO", nullable = true, length = 23)
-    private Date fecHoraPrevistaInicio;
+    private Date fecHoraPrevistaInicio;;
+    //___________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_REAL_INICIO", nullable = true, length = 23)
-    private Date fecHoraRealInicio;
+    private Date fecHoraRealInicio;;
+    //___________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_REAL_FIN", nullable = true, length = 23)
-    private Date fecHoraRealFin;
+    private Date fecHoraRealFin;;
+    //___________________________________________________________________________________________//
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TDetallesPlan")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
     /*------------------------------------------------------------------------*/
      @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="ID_ORDEN_TRABAJO", nullable=true)
-    private OrdenTrabajo TOrdenesTrabajo;
+    private OrdenTrabajo TOrdenesTrabajo;;
 /*------------------------------------------------------------------------*/
       @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="ID_EDETALLE_PLAN", nullable=true)
@@ -150,6 +167,14 @@ public class DetallePlanProduccion implements java.io.Serializable {
 
     public void setTPlanesProduccion(PlanProduccion TPlanesProduccion) {
         this.TPlanesProduccion = TPlanesProduccion;
+    }
+
+    public DetallePedido getTDetallesPedido() {
+        return this.TDetallesPedido;
+    }
+
+    public void setTDetallesPedido(DetallePedido TDetallesPedido) {
+        this.TDetallesPedido = TDetallesPedido;
     }
 
     public MaquinaHerramientaParticular getTMaquinasHerramientaParticular() {

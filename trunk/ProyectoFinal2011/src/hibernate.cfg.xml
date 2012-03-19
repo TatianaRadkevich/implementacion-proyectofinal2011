@@ -55,6 +55,9 @@
     <mapping class="Negocio.Produccion.EstadoPlanProduccion"/>
     <mapping class="Negocio.Produccion.MaqHerrPartXDetPlan"/>
     <mapping class="Negocio.Produccion.EstadoDetallePlan"/>
+    <mapping class="Negocio.Produccion.TipoMaquina"/>
+    <mapping class="Negocio.Produccion.TipoHerramienta"/>
+
     <mapping class="Negocio.UbicacionGeografica.Barrio"/>
     <mapping class="Negocio.UbicacionGeografica.Domicilio"/>
     <mapping class="Negocio.UbicacionGeografica.Localidad"/>

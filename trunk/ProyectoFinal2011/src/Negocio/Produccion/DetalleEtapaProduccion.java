@@ -24,27 +24,34 @@ public class DetalleEtapaProduccion implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_DETALLE_ETAPA", unique = true, nullable = false, precision = 5, scale = 0)
     private int idDetalleEtapa;
+    //_______________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_ETAPA_PRODUCCION_ESPECIFICA")//, nullable = false)
     private EtapaProduccionEspecifica TEtapasProduccionEspecifica;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_TMAQUINA_HERRAMIENTA")
-    private TipoMaquinaHerramienta TTmaquinaHerramienta;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_MATERIAL")//, nullable = false)
-    private Material TMateriales;
+    //_______________________________________________________________________________________________//
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_THERRAMIENTA")
+    private TipoHerramienta TTherramienta;
+     //_______________________________________________________________________________________________//
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_DETALLE_PRODUCTO")
+    private DetalleProducto TDetallesProducto;
+    //_______________________________________________________________________________________________//
     @Column(name = "CANTIDAD_NECESARIA", precision = 6)//, nullable = false
     private Integer cantidadNecesaria;
+    //_______________________________________________________________________________________________//
     @Column(name = "CANTIDAD_REPETICIONES", precision = 6)//, nullable = false
     private BigDecimal cantidadRepeticiones=new BigDecimal(0);
+    //_______________________________________________________________________________________________//
     @Column(name = "HORAS_MAQUINA", precision = 6)// nullable = false,
     private BigDecimal horasMaquina;
+    //_______________________________________________________________________________________________//
 
     public DetalleEtapaProduccion() {
     }
 
-     public DetalleEtapaProduccion(TipoMaquinaHerramienta tipoMaq) {
-         this.TTmaquinaHerramienta=tipoMaq;
+     public DetalleEtapaProduccion(TipoHerramienta tipoMaq) {
+         this.TTherramienta=tipoMaq;
     }
 
     public int getId() {
@@ -63,21 +70,22 @@ public class DetalleEtapaProduccion implements java.io.Serializable {
         this.TEtapasProduccionEspecifica = etapa;
     }
 
-    public TipoMaquinaHerramienta getTipoMaquinaHerramienta() {
-        return this.TTmaquinaHerramienta;
+    public TipoHerramienta getTipoMaquinaHerramienta() {
+        return this.TTherramienta;
     }
 
-    public void setTipoMaquinaHerramienta(TipoMaquinaHerramienta tipo) {
-        this.TTmaquinaHerramienta = tipo;
+    public void setTipoMaquinaHerramienta(TipoHerramienta tipo) {
+        this.TTherramienta = tipo;
     }
 
-    public Material getMaterial() {
-        return this.TMateriales;
+    public DetalleProducto getTDetallesProducto() {
+        return this.TDetallesProducto;
     }
-
-    public void setMaterial(Material material) {
-        this.TMateriales = material;
+    
+    public void setTDetallesProducto(DetalleProducto TDetallesProducto) {
+        this.TDetallesProducto = TDetallesProducto;
     }
+    
 
     public Integer getCantidadNecesaria() {
         return this.cantidadNecesaria;

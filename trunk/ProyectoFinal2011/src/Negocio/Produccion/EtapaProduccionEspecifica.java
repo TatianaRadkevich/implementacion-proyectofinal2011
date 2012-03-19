@@ -32,29 +32,43 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_ETAPA_PRODUCCION_ESPECIFICA", unique = true, nullable = false, precision = 5, scale = 0)
     private int idEtapaProduccionEspecifica;
+    //_________________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CARGO")//, nullable = false)
     private Cargo TCargos;
+    //_________________________________________________________________________________________________//
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_TMAQUINA")
+    private TipoMaquina TTmaquina;
+    //_________________________________________________________________________________________________//
     @Column(name = "DURACION", precision = 5)
     private Integer duracion;
+    //_________________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_ETAPA_PRODUCCION")//, nullable = false)
     private EtapaProduccion TEtapasProduccion;
+    //_________________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PRODUCTO")//, nullable = false)
     private Producto TProductos;
+    //_________________________________________________________________________________________________//
     @Column(name = "DESCRIPCION_ESPECIFICA", length = 200)//, nullable = false
     private String descripcionEspecifica;
+    //_________________________________________________________________________________________________//
     @Column(name = "HORAS_HOMBRE", precision = 6)//nullable = false,
     private BigDecimal horasHombre;
+    //_________________________________________________________________________________________________//
     @Column(name = "NUMERO_ORDEN", precision = 2, scale = 0)//nullable = false,
     private Byte numeroOrden;
+    //_________________________________________________________________________________________________//
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEtapasProduccionEspecifica")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<DetalleEtapaProduccion> TDetallesEtapas = new HashSet<DetalleEtapaProduccion>(0);
+    //_________________________________________________________________________________________________//
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEtapasProduccionEspecifica")
     private Set<DetallePlanProduccion> TDetallesPlans = new HashSet<DetallePlanProduccion>(0);
     //private Set<TipoMaquinaHerramienta> TTmaquinaHerramientas = new HashSet<TipoMaquinaHerramienta>(0);
+    //_________________________________________________________________________________________________//
 
     public EtapaProduccionEspecifica() {
     }
@@ -96,6 +110,15 @@ public class EtapaProduccionEspecifica implements java.io.Serializable {
     public void setCargo(Cargo TCargos) {
         this.TCargos = TCargos;
     }
+
+    public TipoMaquina getTTmaquina() {
+        return this.TTmaquina;
+    }
+
+    public void setTTmaquina(TipoMaquina TTmaquina) {
+        this.TTmaquina = TTmaquina;
+    }
+
 
     public EtapaProduccion getEtapaProduccion() {
         return this.TEtapasProduccion;
