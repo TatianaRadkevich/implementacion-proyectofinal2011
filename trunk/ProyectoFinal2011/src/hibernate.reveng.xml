@@ -18,7 +18,6 @@
   <table-filter match-name="T_EMAQUINA"/>
   <table-filter match-name="T_TDOCUMENTO"/>
   <table-filter match-name="T_PRODUCTOS"/>
-  <table-filter match-name="T_TMAQUINA_HERRAMIENTA"/>
   <table-filter match-name="T_ASISTENCIAS_EMPLEADO"/>
   <table-filter match-name="T_USUARIOS"/>
   <table-filter match-name="T_ETAPAS_PRODUCCION"/>
@@ -36,7 +35,6 @@
   <table-filter match-name="T_EMPLEADOS"/>
   <table-filter match-name="T_LOCALIDADES"/>
   <table-filter match-name="T_PAISES"/>
-  <table-filter match-name="T_MAQUINAS_HERRAMIENTA_PARTICULAR"/>
   <table-filter match-name="T_TCLIENTE"/>
   <table-filter match-name="T_DOMICILIOS"/>
   <table-filter match-name="T_CLIENTES"/>
@@ -58,5 +56,7 @@
   <table-filter match-name="T_EDETALLE_PLAN"/>
   <table-filter match-name="T_TMAQUINA"/>
   <table-filter match-name="T_THERRAMIENTA"/>
+  <table-filter match-name="T_HERRAMIENTAS_PARTICULAR"/>
+  <table-filter match-name="T_MAQUINAS_PARTICULAR"/>
 
 </hibernate-reverse-engineering>
