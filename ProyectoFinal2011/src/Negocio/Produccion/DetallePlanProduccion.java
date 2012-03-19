@@ -53,10 +53,7 @@ public class DetallePlanProduccion implements java.io.Serializable {
     @JoinColumn(name="ID_DETALLE_PEDIDO", nullable=false)
     private DetallePedido TDetallesPedido;;
     //___________________________________________________________________________________________//
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_MAQUINA_HERRAMIENTA_PARTICULAR", nullable = true)
-    private MaquinaHerramientaParticular TMaquinasHerramientaParticular;
-    //___________________________________________________________________________________________//
+   
     @Column(name = "CANTIDAD_PLANIFICADA", nullable = true, precision = 5, scale = 0)
     private Integer cantidadPlanificada;;
     //___________________________________________________________________________________________//
@@ -111,7 +108,6 @@ public class DetallePlanProduccion implements java.io.Serializable {
         this.TEtapasProduccionEspecifica = TEtapasProduccionEspecifica;
         this.TEmpleados = TEmpleados;
         this.TPlanesProduccion = TPlanesProduccion;
-        this.TMaquinasHerramientaParticular = TMaquinasHerramientaParticular;
         this.cantidadPlanificada = cantidad;
         this.fecHoraPrevistaFin = fecHoraPrevistaFin;
         this.fecHoraPrevistaInicio = fecHoraPrevistaInicio;
@@ -126,7 +122,6 @@ public class DetallePlanProduccion implements java.io.Serializable {
         this.TEtapasProduccionEspecifica = TEtapasProduccionEspecifica;
         this.TEmpleados = TEmpleados;
         this.TPlanesProduccion = TPlanesProduccion;
-        this.TMaquinasHerramientaParticular = TMaquinasHerramientaParticular;
         this.cantidadPlanificada = cantidad;
         this.fecHoraPrevistaFin = fecHoraPrevistaFin;
         this.fecHoraPrevistaInicio = fecHoraPrevistaInicio;
@@ -175,16 +170,7 @@ public class DetallePlanProduccion implements java.io.Serializable {
 
     public void setTDetallesPedido(DetallePedido TDetallesPedido) {
         this.TDetallesPedido = TDetallesPedido;
-    }
-
-    public MaquinaHerramientaParticular getTMaquinasHerramientaParticular() {
-        return this.TMaquinasHerramientaParticular;
-    }
-
-    public void setTMaquinasHerramientaParticular(MaquinaHerramientaParticular TMaquinasHerramientaParticular) {
-        this.TMaquinasHerramientaParticular = TMaquinasHerramientaParticular;
-    }
-
+    }    
     public Integer getCantidad() {
         return this.cantidadPlanificada;
     }

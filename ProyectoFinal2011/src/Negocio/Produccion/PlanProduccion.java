@@ -36,35 +36,46 @@ public class PlanProduccion implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_PLAN_PRODUCCION", unique = true, nullable = false, precision = 8, scale = 0)
     private int idPlanProduccion;
+    //_______________________________________________________________________________________________//
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="ID_EPLAN_PRODUCCION")
     private EstadoPlanProduccion TEplanProduccion;
+    //_______________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_ENCARGADO")//, nullable=false)
     private Empleado TEmpleados;
+    //_______________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PEDIDO")//, nullable=false)
     private Pedido TPedidos;
+    //_______________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_GENERACION", length = 23)// nullable = false,
     private Date fecGeneracion;
+    //_______________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_PREVISTA_FIN", length = 23)//, nullable = false
     private Date fecHoraPrevistaFin;
+    //_______________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_PREVISTA_INICIO", length = 23)//, nullable = false
     private Date fecHoraPrevistaInicio;
+    //_______________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_REAL_FIN", length = 23)//nullable = false,
     private Date fecHoraRealFin;
+    //_______________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_REAL_INICIO", length = 23)//, nullable = false
     private Date fecHoraRealInicio;
+    //_______________________________________________________________________________________________//
     @Column(name = "OBSERVACIONES", length = 200)
     private String observaciones;
+    //_______________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_ULTIMA_MODIFICACION", length = 23)
     private Date fecUltimaModificacion;
+    //_______________________________________________________________________________________________//
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPlanesProduccion")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<DetallePlanProduccion> TDetallesPlans = new HashSet<DetallePlanProduccion>(0);

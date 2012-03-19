@@ -21,22 +21,23 @@ public class MaqHerrPartXDetPlan implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_MAQ_HERR_PART_X_DET_PLAN", unique = true, nullable = false, precision = 10, scale = 0)
     private long idMaqHerrPartXDetPlan;
+    //____________________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_DETALLE_PLAN", nullable = false)
     private DetallePlanProduccion TDetallesPlan;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_MAQUINA_HERRAMIENTA_PARTICULAR", nullable = false)
-    private MaquinaHerramientaParticular TMaquinasHerramientaParticular;
+    //____________________________________________________________________________________________________//
+   @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_HERRAMIENTA_PARTICULAR")
+    private HerramientaParticular THerramientasParticular;
+    //____________________________________________________________________________________________________//
+   @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_MAQUINA_PARTICULAR")
+   private MaquinaParticular TMaquinasParticular;
 
     public MaqHerrPartXDetPlan() {
     }
 
-    public MaqHerrPartXDetPlan(long idMaqHerrPartXDetPlan, DetallePlanProduccion TDetallesPlan, MaquinaHerramientaParticular TMaquinasHerramientaParticular) {
-        this.idMaqHerrPartXDetPlan = idMaqHerrPartXDetPlan;
-        this.TDetallesPlan = TDetallesPlan;
-        this.TMaquinasHerramientaParticular = TMaquinasHerramientaParticular;
-    }
-
+   
     public long getIdMaqHerrPartXDetPlan() {
         return this.idMaqHerrPartXDetPlan;
     }
@@ -53,11 +54,21 @@ public class MaqHerrPartXDetPlan implements java.io.Serializable {
         this.TDetallesPlan = TDetallesPlan;
     }
 
-    public MaquinaHerramientaParticular getTMaquinasHerramientaParticular() {
-        return this.TMaquinasHerramientaParticular;
+
+
+    public HerramientaParticular getTHerramientasParticular() {
+        return this.THerramientasParticular;
     }
 
-    public void setTMaquinasHerramientaParticular(MaquinaHerramientaParticular TMaquinasHerramientaParticular) {
-        this.TMaquinasHerramientaParticular = TMaquinasHerramientaParticular;
+    public void setTHerramientasParticular(HerramientaParticular THerramientasParticular) {
+        this.THerramientasParticular = THerramientasParticular;
+    }
+
+    public MaquinaParticular getTMaquinasParticular() {
+        return this.TMaquinasParticular;
+    }
+
+    public void setTMaquinasParticular(MaquinaParticular TMaquinasParticular) {
+        this.TMaquinasParticular = TMaquinasParticular;
     }
 }

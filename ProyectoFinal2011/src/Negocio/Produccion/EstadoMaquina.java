@@ -29,7 +29,7 @@ public class EstadoMaquina implements java.io.Serializable {
     @Column(name = "DESCRIPCION", length = 200)
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TEmaquina")
-    private Set<MaquinaHerramientaParticular> TMaquinasHerramientaParticulars = new HashSet<MaquinaHerramientaParticular>(0);
+    private Set<MaquinaParticular> TMaquinasHerramientaParticulars = new HashSet<MaquinaParticular>(0);
 
     public EstadoMaquina() {
     }
@@ -39,7 +39,7 @@ public class EstadoMaquina implements java.io.Serializable {
         this.nombre = nombre;
     }
 
-    public EstadoMaquina(int idEmaquina, String nombre, String descripcion, Set<MaquinaHerramientaParticular> TMaquinasHerramientaParticulars) {
+    public EstadoMaquina(int idEmaquina, String nombre, String descripcion, Set<MaquinaParticular> TMaquinasHerramientaParticulars) {
         this.idEmaquina = idEmaquina;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -70,11 +70,11 @@ public class EstadoMaquina implements java.io.Serializable {
         this.descripcion = descripcion;
     }
 
-    public Set<MaquinaHerramientaParticular> getMaquinaHerramientaParticular() {
+    public Set<MaquinaParticular> getMaquinaHerramientaParticular() {
         return this.TMaquinasHerramientaParticulars;
     }
 
-    public void setMaquinaHerramientaParticular(Set<MaquinaHerramientaParticular> maquinaHerramientaParticular) {
+    public void setMaquinaHerramientaParticular(Set<MaquinaParticular> maquinaHerramientaParticular) {
         this.TMaquinasHerramientaParticulars = maquinaHerramientaParticular;
     }
 

@@ -42,11 +42,11 @@
     <mapping class="Negocio.Produccion.EtapaProduccion"/>
     <mapping class="Negocio.Produccion.EstadoMaquina"/>
     <mapping class="Negocio.Produccion.EtapaProduccionEspecifica"/>
-    <mapping class="Negocio.Produccion.MaquinaHerramientaParticular"/>
+    
     <mapping class="Negocio.Produccion.PlanProduccion"/>
     <mapping class="Negocio.Produccion.Producto"/>
     <mapping class="Negocio.Produccion.CapacidadProductiva"/>
-    <mapping class="Negocio.Produccion.TipoMaquinaHerramienta"/>
+    
     <mapping class="Negocio.Produccion.TipoProducto"/>
     <mapping class="Negocio.Produccion.UnidadMedida"/>
     <mapping class="Negocio.Produccion.EstadoOrdenTrabajo"/>
@@ -57,6 +57,8 @@
     <mapping class="Negocio.Produccion.EstadoDetallePlan"/>
     <mapping class="Negocio.Produccion.TipoMaquina"/>
     <mapping class="Negocio.Produccion.TipoHerramienta"/>
+    <mapping class="Negocio.Produccion.MaquinaParticular"/>
+    <mapping class="Negocio.Produccion.HerramientaParticular"/>
 
     <mapping class="Negocio.UbicacionGeografica.Barrio"/>
     <mapping class="Negocio.UbicacionGeografica.Domicilio"/>
