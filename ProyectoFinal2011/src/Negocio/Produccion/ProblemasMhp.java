@@ -26,7 +26,7 @@ public class ProblemasMhp  implements java.io.Serializable {
 
 
      private short idProblemaMhp;
-     private MaquinaHerramientaParticular TMaquinasHerramientaParticular;
+     private MaquinaParticular TMaquinasParticular;
      private String descripcion;
      private Date fecHoraProblema;
      private Date fecHoraEstimadaSolucion;
@@ -40,9 +40,9 @@ public class ProblemasMhp  implements java.io.Serializable {
     public ProblemasMhp(short idProblemaMhp) {
         this.idProblemaMhp = idProblemaMhp;
     }
-    public ProblemasMhp(short idProblemaMhp, MaquinaHerramientaParticular TMaquinasHerramientaParticular, String descripcion, Date fecHoraProblema, Date fecHoraEstimadaSolucion, Date fecHoraRealSolucion, String observacionesSolucion) {
+    public ProblemasMhp(short idProblemaMhp, MaquinaParticular TMaquinasParticular, String descripcion, Date fecHoraProblema, Date fecHoraEstimadaSolucion, Date fecHoraRealSolucion, String observacionesSolucion) {
        this.idProblemaMhp = idProblemaMhp;
-       this.TMaquinasHerramientaParticular = TMaquinasHerramientaParticular;
+       this.TMaquinasParticular = TMaquinasParticular;
        this.descripcion = descripcion;
        this.fecHoraProblema = fecHoraProblema;
        this.fecHoraEstimadaSolucion = fecHoraEstimadaSolucion;
@@ -61,13 +61,13 @@ public class ProblemasMhp  implements java.io.Serializable {
         this.idProblemaMhp = idProblemaMhp;
     }
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_MAQUINA_HERRAMIENTA_PARTICULAR")
-    public MaquinaHerramientaParticular getTMaquinasHerramientaParticular() {
-        return this.TMaquinasHerramientaParticular;
+    @JoinColumn(name="ID_MAQUINA_PARTICULAR")
+    public MaquinaParticular getTMaquinasParticular() {
+        return this.TMaquinasParticular;
     }
     
-    public void setTMaquinasHerramientaParticular(MaquinaHerramientaParticular TMaquinasHerramientaParticular) {
-        this.TMaquinasHerramientaParticular = TMaquinasHerramientaParticular;
+    public void setTMaquinasParticular(MaquinaParticular TMaquinasParticular) {
+        this.TMaquinasParticular = TMaquinasParticular;
     }
     
     @Column(name="DESCRIPCION", length=500)

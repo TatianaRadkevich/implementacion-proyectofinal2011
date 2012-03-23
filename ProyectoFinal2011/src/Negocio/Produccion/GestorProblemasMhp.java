@@ -6,7 +6,7 @@
 package Negocio.Produccion;
 
 import BaseDeDatos.Produccion.ProblemasMhpBD;
-import BaseDeDatos.Produccion.TipoMaquinaHerramientaBD;
+import BaseDeDatos.Produccion.TipoMaquinaBD;
 import java.util.List;
 
 /**
@@ -16,23 +16,17 @@ import java.util.List;
 public class GestorProblemasMhp {
 
 
-    public List<TipoMaquinaHerramienta> listarTipoMaqYHerr() {
-        return TipoMaquinaHerramientaBD.listarTipoMaquinaHerramienta();
+    public List<TipoMaquina> listarTipoMaq() {
+        return TipoMaquinaBD.listarTipoMaquina();
     }
 
-    public List<TipoMaquinaHerramienta> listarTipoMaq() {
-        return TipoMaquinaHerramientaBD.listarTipoMaquina();
-    }
 
-    public List<TipoMaquinaHerramienta> listarTipoHerr() {
-        return TipoMaquinaHerramientaBD.listarTipoHerramienta();
-    }
 
-    public List<MaquinaHerramientaParticular> getMaquinas(TipoMaquinaHerramienta tmh) {
-        if (tmh == null) {
+    public List<MaquinaParticular> getMaquinas(TipoMaquina tm) {
+        if (tm == null) {
             throw new RuntimeException("GestorEstructura.getProductos\nTipo de producto null");
         }
-        return BaseDeDatos.Produccion.MaquinaHerramientaBD.getMaquinasHerramientas(tmh, true, false);
+        return BaseDeDatos.Produccion.MaquinaBD.getMaquinas(tm, true, false);
     }
 
     public ProblemasMhp guardar(ProblemasMhp pro){

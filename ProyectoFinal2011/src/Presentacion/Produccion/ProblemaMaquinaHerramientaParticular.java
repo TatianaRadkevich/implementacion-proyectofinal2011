@@ -17,8 +17,8 @@ import Presentacion.Operacion;
 import Presentacion.Utilidades;
 import Negocio.Produccion.ProblemasMhp;
 import Negocio.Produccion.GestorProblemasMhp;
-import Negocio.Produccion.MaquinaHerramientaParticular;
-import Negocio.Produccion.TipoMaquinaHerramienta;
+import Negocio.Produccion.MaquinaParticular;
+import Negocio.Produccion.TipoMaquina;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import com.toedter.calendar.JTextFieldDateEditor;
@@ -66,9 +66,6 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
         cmbMaqHerrParticular = new javax.swing.JComboBox();
         cmbTipoMaqHerr = new javax.swing.JComboBox();
         lblTipoMoH = new javax.swing.JLabel();
-        rdbMaquina1 = new javax.swing.JRadioButton();
-        rdbHerramienta1 = new javax.swing.JRadioButton();
-        jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -92,10 +89,10 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
 
         txtFechaActual.setEditable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Máquina/Herramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Máquina", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         lblMoHPart.setFont(new java.awt.Font("Tahoma", 1, 11));
-        lblMoHPart.setText("Herramienta particular:");
+        lblMoHPart.setText("Maquina particular:");
 
         cmbMaqHerrParticular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,29 +107,7 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
         });
 
         lblTipoMoH.setFont(new java.awt.Font("Tahoma", 1, 11));
-        lblTipoMoH.setText("Tipo de Herramienta:");
-
-        buttonGroup1.add(rdbMaquina1);
-        rdbMaquina1.setFont(new java.awt.Font("Tahoma", 1, 11));
-        rdbMaquina1.setText("Máquina");
-        rdbMaquina1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbMaquina1ActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(rdbHerramienta1);
-        rdbHerramienta1.setFont(new java.awt.Font("Tahoma", 1, 11));
-        rdbHerramienta1.setSelected(true);
-        rdbHerramienta1.setText("Herramienta");
-        rdbHerramienta1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbHerramienta1ActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel5.setText("Tipo:");
+        lblTipoMoH.setText("Tipo de Máquina:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -141,27 +116,17 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblMoHPart)
-                    .addComponent(jLabel5)
                     .addComponent(lblTipoMoH))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(rdbHerramienta1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rdbMaquina1))
                     .addComponent(cmbMaqHerrParticular, 0, 170, Short.MAX_VALUE)
                     .addComponent(cmbTipoMaqHerr, 0, 170, Short.MAX_VALUE))
-                .addGap(278, 278, 278))
+                .addGap(302, 302, 302))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(rdbMaquina1)
-                    .addComponent(rdbHerramienta1))
-                .addGap(18, 18, 18)
+                .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTipoMoH)
                     .addComponent(cmbTipoMaqHerr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -216,7 +181,7 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
             }
         });
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de Máquina o Herramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de Máquina", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Nro de Serie:");
@@ -334,8 +299,8 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
             problema_actual = new ProblemasMhp();
             problema_actual.setDescripcion(txtDescripcionProblema.getText());
             problema_actual.setFecHoraProblema(Utilidades.getFechaActual());
-            problema_actual.setTMaquinasHerramientaParticular((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem());
-           ((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).setEstadoMaquina(EstadoMaquinaBD.getEstadoCancelado());
+            problema_actual.setTMaquinasParticular((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem());
+           ((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).setTEmaquina(EstadoMaquinaBD.getEstadoCancelado());
             gestor.guardar(problema_actual);
             Mensajes.mensajeInformacion("El problema ha sido registrado exitosamente, máquina no disponible");
             txtDescripcionProblema.setText("");
@@ -350,24 +315,12 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
 
     private void cmbMaqHerrParticularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMaqHerrParticularActionPerformed
         if(cmbMaqHerrParticular.getSelectedIndex()!=-1){
-            txtNroSerie.setText(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getCodigo());
-            txtNombre.setText(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getNombre());
-            txtModelo.setText(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getModelo());
-            txtCapacidadProductiva.setText(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getCaracteristicas());
+            txtNroSerie.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getCodigo());
+            txtNombre.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getNombre());
+            txtModelo.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getModelo());
+            txtCapacidadProductiva.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getCaracteristicas());
         }
     }//GEN-LAST:event_cmbMaqHerrParticularActionPerformed
-
-    private void rdbMaquina1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbMaquina1ActionPerformed
-      cargarTiposMaqYHerr();
-      lblTipoMoH.setText("Tipo de Máquina:");
-      lblMoHPart.setText("Máquina Particular:");
-    }//GEN-LAST:event_rdbMaquina1ActionPerformed
-
-    private void rdbHerramienta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbHerramienta1ActionPerformed
-        cargarTiposMaqYHerr();
-        lblTipoMoH.setText("Tipo de Herramienta:");
-        lblMoHPart.setText("Herramienta Particular:");
-    }//GEN-LAST:event_rdbHerramienta1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
     dispose();
@@ -400,7 +353,6 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -409,8 +361,6 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblMoHPart;
     private javax.swing.JLabel lblTipoMoH;
-    private javax.swing.JRadioButton rdbHerramienta1;
-    private javax.swing.JRadioButton rdbMaquina1;
     private javax.swing.JTextField txtCapacidadProductiva;
     private javax.swing.JTextArea txtDescripcionProblema;
     private javax.swing.JTextField txtFechaActual;
@@ -420,22 +370,21 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void cargarTiposMaqYHerr() {
-         if (rdbMaquina1.isSelected())
+        
          cmbTipoMaqHerr.setModel(new DefaultComboBoxModel(gestor.listarTipoMaq().toArray()));
-         if(rdbHerramienta1.isSelected())
-         cmbTipoMaqHerr.setModel(new DefaultComboBoxModel(gestor.listarTipoHerr().toArray()));
+ 
          if(cmbTipoMaqHerr.getSelectedIndex()!=-1)
          cargarMaqYHerrParticulares();
     }
 
     private void cargarMaqYHerrParticulares() {
         if (cmbTipoMaqHerr.getSelectedIndex()!=-1)
-        cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getMaquinas((TipoMaquinaHerramienta) cmbTipoMaqHerr.getSelectedItem()).toArray()));
+        cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getMaquinas((TipoMaquina) cmbTipoMaqHerr.getSelectedItem()).toArray()));
         if (cmbMaqHerrParticular.getSelectedIndex()!=-1){
-        txtNroSerie.setText(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getCodigo());
-        txtNombre.setText(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getNombre());
-        txtModelo.setText(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getModelo());
-        txtCapacidadProductiva.setText(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getCaracteristicas());
+        txtNroSerie.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getCodigo());
+        txtNombre.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getNombre());
+        txtModelo.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getModelo());
+        txtCapacidadProductiva.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getCaracteristicas());
         }
         else
         {

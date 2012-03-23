@@ -5,7 +5,7 @@
 
 package Negocio.Produccion;
 
-import BaseDeDatos.Produccion.MaquinaHerramientaBD;
+import BaseDeDatos.Produccion.MaquinaBD;
 import BaseDeDatos.Produccion.*;
 
 import Negocio.Exceptiones.ExceptionGestor;
@@ -21,10 +21,10 @@ import java.util.List;
 public abstract class GestorMaquinaHerramienta {
 
     protected PantallaMaquinaHerramientaABM interfaz;
-    protected MaquinaHerramientaParticular maquinaHerramienta;
+    protected MaquinaParticular maquinaHerramienta;
 
     public abstract void iniciarCU();
-    public abstract void ejecutarCU(MaquinaHerramientaParticular p) throws ExceptionGestor;
+    public abstract void ejecutarCU(MaquinaParticular p) throws ExceptionGestor;
 
     public void finalizarCU()
     {
@@ -32,17 +32,17 @@ public abstract class GestorMaquinaHerramienta {
         interfaz.dispose();
     }
 
-    public MaquinaHerramientaParticular getMaquinaHerramientaParticular() {
+    public MaquinaParticular getMaquinaParticular() {
         return maquinaHerramienta;
     }
 
-    public List<TipoMaquinaHerramienta> getTipoMaquinaHerramienta() {
-        return MaquinaHerramientaBD.listarTipoMaquinaHerramienta();
+    public List<TipoMaquina> getTipoMaquinaHerramienta() {
+        return MaquinaBD.listarTipoMaquina();
     }
 
     public int getUltimoID() {
 
-        return MaquinaHerramientaBD.getUltimoID();
+        return MaquinaBD.getUltimoID();
 
     }
 
