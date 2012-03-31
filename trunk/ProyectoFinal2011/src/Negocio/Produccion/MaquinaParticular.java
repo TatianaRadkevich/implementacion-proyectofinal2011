@@ -31,7 +31,7 @@ public class MaquinaParticular  implements java.io.Serializable {
      private short idMaquinaParticular;
      private TipoMaquina TTmaquina;
      private EstadoMaquina TEmaquina;
-     private int capacidadProductiva;
+     private float capacidadProductiva;
      private String caracteristicas;
      private String modelo;
      private String nombre;
@@ -46,7 +46,7 @@ public class MaquinaParticular  implements java.io.Serializable {
     }
 
 	
-    public MaquinaParticular(short idMaquinaParticular, TipoMaquina TTmaquina, EstadoMaquina TEmaquina, int capacidadProductiva, String caracteristicas, String modelo, String nombre, String codigo) {
+    public MaquinaParticular(short idMaquinaParticular, TipoMaquina TTmaquina, EstadoMaquina TEmaquina, float capacidadProductiva, String caracteristicas, String modelo, String nombre, String codigo) {
         this.idMaquinaParticular = idMaquinaParticular;
         this.TTmaquina = TTmaquina;
         this.TEmaquina = TEmaquina;
@@ -102,11 +102,11 @@ public class MaquinaParticular  implements java.io.Serializable {
     }
     
     @Column(name="CAPACIDAD_PRODUCTIVA", nullable=false, precision=5, scale=0)
-    public int getCapacidadProductiva() {
+    public float getCapacidadProductiva() {
         return this.capacidadProductiva;
     }
     
-    public void setCapacidadProductiva(int capacidadProductiva) {
+    public void setCapacidadProductiva(float capacidadProductiva) {
         this.capacidadProductiva = capacidadProductiva;
     }
     
