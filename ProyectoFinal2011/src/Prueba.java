@@ -1,5 +1,7 @@
 
+import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
+import java.awt.Color;
 
 /*
  * To change this template, choose Tools | Templates
@@ -22,6 +24,7 @@ public class Prueba extends javax.swing.JFrame {
     public Prueba() {
         initComponents();
         ValidarTexbox.validarInt(txt1);
+        Utilidades.componenteCorrecto(ff);
 
 
     }
@@ -39,6 +42,7 @@ public class Prueba extends javax.swing.JFrame {
         btn1 = new javax.swing.JButton();
         txt2 = new javax.swing.JTextField();
         txt22 = new javax.swing.JTextField();
+        ff = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,6 +59,22 @@ public class Prueba extends javax.swing.JFrame {
 
         txt22.setText("jTextField1");
 
+        ff.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ffMouseClicked(evt);
+            }
+        });
+        ff.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ffFocusLost(evt);
+            }
+        });
+        ff.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                ffPropertyChange(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -68,7 +88,10 @@ public class Prueba extends javax.swing.JFrame {
                             .addComponent(txt1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(btn1))
-                    .addComponent(txt22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txt22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addComponent(ff, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -80,9 +103,14 @@ public class Prueba extends javax.swing.JFrame {
                     .addComponent(btn1))
                 .addGap(18, 18, 18)
                 .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(txt22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(txt22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(ff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(277, Short.MAX_VALUE))
         );
 
         pack();
@@ -98,6 +126,38 @@ public class Prueba extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txt1KeyTyped
 
+    private void ffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ffMouseClicked
+        // TODO add your handling code here:
+
+        //  txtFechaEstimada.setText(Utilidades.parseFecha(dtcFechaNacimiento.getDate()));
+}//GEN-LAST:event_ffMouseClicked
+
+    private void ffFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ffFocusLost
+        // TODO add your handling code here:
+//        if(empleado!=null) {
+//            try{
+//                empleado.setFecNacimiento(dtcFechaNacimiento.getDate());
+//                Utilidades.componenteCorrecto(dtcFechaNacimiento);
+//            }catch(TipoDatoException ex){
+//                dtcFechaNacimiento.setToolTipText(ex.getMessage());
+//                Utilidades.componenteError(dtcFechaNacimiento);
+//            }
+//        }
+}//GEN-LAST:event_ffFocusLost
+
+    private void ffPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ffPropertyChange
+        // TODO add your handling code here:
+//        if(empleado!=null) {
+//            try{
+//                empleado.setFecNacimiento(dtcFechaNacimiento.getDate());
+//                Utilidades.componenteCorrecto(dtcFechaNacimiento);
+//            }catch(TipoDatoException ex){
+//                dtcFechaNacimiento.setToolTipText(ex.getMessage());
+//                Utilidades.componenteError(dtcFechaNacimiento);
+//            }
+//        }
+}//GEN-LAST:event_ffPropertyChange
+
     /**
     * @param args the command line arguments
     */
@@ -111,6 +171,7 @@ public class Prueba extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn1;
+    private com.toedter.calendar.JDateChooser ff;
     private javax.swing.JTextField txt1;
     private javax.swing.JTextField txt2;
     private javax.swing.JTextField txt22;
