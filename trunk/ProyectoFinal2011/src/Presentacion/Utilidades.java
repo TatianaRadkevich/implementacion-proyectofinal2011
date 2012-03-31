@@ -4,6 +4,7 @@
  */
 package Presentacion;
 
+import com.toedter.calendar.JCalendar;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -146,7 +147,15 @@ public class Utilidades {
         componente.setBackground(new Color(226, 90, 14));
     }
 
+    public static void componenteError( com.toedter.calendar.JDateChooser calendar){
+        calendar.getDateEditor().getUiComponent().setBackground(new Color(226, 90, 14));
+    }
+
     public static void componenteCorrecto(Component componente){
         componente.setBackground(Color.white);
+    }
+
+    public static void componenteCorrecto( com.toedter.calendar.JDateChooser calendar){
+         calendar.getDateEditor().getUiComponent().setBackground(Color.white);
     }
 }
