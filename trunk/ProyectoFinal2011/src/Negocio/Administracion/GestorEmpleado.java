@@ -46,4 +46,8 @@ public abstract class GestorEmpleado {
        return (Empleado) HibernateUtil.getObjeto(Empleado.class, legajo);
     }
 
+    public boolean existeEmpleado(TipoDocumento tipodocumento, int numeroDoc) {
+        return EmpleadoBD.existeEmpleado(tipodocumento.getIdTdocumento(), numeroDoc);
+    }
+
 }

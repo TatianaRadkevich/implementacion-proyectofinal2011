@@ -70,6 +70,16 @@ public class EmpleadoBD {
     public static Empleado traerEmpleado(int id){
         return (Empleado) HibernateUtil.getObjeto(Empleado.class, id);
     }
+    public static boolean existeEmpleado(short tipoDoc, int numeroDoc){
+
+        String HQL=String.format("FROM Empleado as p WHERE p.TTdocumento.idTdocumento="+tipoDoc + "AND p.numeroDocumento="+numeroDoc);
+        List temp=HibernateUtil.ejecutarConsulta(HQL);
+        if(temp.isEmpty())
+            return false;
+        else
+            return true;
+
+    }
 
     public static List<Empleado> getEmpleados(
             String nombre, String apellido,String legajo,TipoDocumento tipo, String numeroDoc, boolean vigentes,boolean cancelados){
