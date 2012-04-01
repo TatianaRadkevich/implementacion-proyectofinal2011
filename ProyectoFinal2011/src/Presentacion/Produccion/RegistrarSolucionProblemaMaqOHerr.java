@@ -39,7 +39,7 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
      private ProblemasMhp problema_actual= new ProblemasMhp();
 
     /** Creates new form RegistrarSolucionProblemaMaqOHerr */
-    public RegistrarSolucionProblemaMaqOHerr(java.awt.Frame parent, boolean modal,int tipoMaq, int MaqHerrPart, boolean ban) {
+    public RegistrarSolucionProblemaMaqOHerr(java.awt.Frame parent, boolean modal,int tipoMaq, int MaqHerrPart) {
         super(parent, modal);
         initComponents();
         HibernateUtil.getSessionFactory();
@@ -280,7 +280,7 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                RegistrarSolucionProblemaMaqOHerr dialog = new RegistrarSolucionProblemaMaqOHerr(new javax.swing.JFrame(), true,-1,-1,true);
+                RegistrarSolucionProblemaMaqOHerr dialog = new RegistrarSolucionProblemaMaqOHerr(new javax.swing.JFrame(), true,-1,-1);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);

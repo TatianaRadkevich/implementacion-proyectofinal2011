@@ -16,8 +16,8 @@ import Presentacion.Utilidades;
 import Negocio.Produccion.ProblemasMhp;
 import BaseDeDatos.Produccion.ProblemasMhpBD;
 import Negocio.Produccion.GestorProblemasMhp;
-import Negocio.Produccion.MaquinaHerramientaParticular;
-import Negocio.Produccion.TipoMaquinaHerramienta;
+import Negocio.Produccion.MaquinaParticular;
+import Negocio.Produccion.TipoMaquina;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
@@ -60,9 +60,6 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
         cmbMaqHerrParticular = new javax.swing.JComboBox();
         cmbTipoMaqHerr = new javax.swing.JComboBox();
         lblTipoMoH = new javax.swing.JLabel();
-        rdbMaquina1 = new javax.swing.JRadioButton();
-        rdbHerramienta1 = new javax.swing.JRadioButton();
-        jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -82,11 +79,11 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Máquina/Herramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Máquina", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         lblMoHPart.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblMoHPart.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblMoHPart.setText("Herramienta particular:");
+        lblMoHPart.setText("Máquina particular:");
 
         cmbMaqHerrParticular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,30 +99,7 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
 
         lblTipoMoH.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblTipoMoH.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTipoMoH.setText("Tipo de Herramienta:");
-
-        buttonGroup1.add(rdbMaquina1);
-        rdbMaquina1.setFont(new java.awt.Font("Tahoma", 1, 11));
-        rdbMaquina1.setText("Máquina");
-        rdbMaquina1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbMaquina1ActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(rdbHerramienta1);
-        rdbHerramienta1.setFont(new java.awt.Font("Tahoma", 1, 11));
-        rdbHerramienta1.setSelected(true);
-        rdbHerramienta1.setText("Herramienta");
-        rdbHerramienta1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbHerramienta1ActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Tipo:");
+        lblTipoMoH.setText("Tipo de Máquina:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -135,27 +109,17 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
                 .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblMoHPart)
-                    .addComponent(jLabel5)
                     .addComponent(lblTipoMoH))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(rdbHerramienta1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rdbMaquina1))
                     .addComponent(cmbMaqHerrParticular, 0, 170, Short.MAX_VALUE)
                     .addComponent(cmbTipoMaqHerr, 0, 170, Short.MAX_VALUE))
-                .addGap(946, 946, 946))
+                .addGap(970, 970, 970))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(rdbMaquina1)
-                    .addComponent(rdbHerramienta1))
-                .addGap(18, 18, 18)
+                .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTipoMoH)
                     .addComponent(cmbTipoMaqHerr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -357,27 +321,6 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rdbHerramienta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbHerramienta1ActionPerformed
-
-        dtcFechaGeneracionDesde.setDate(null);
-        dtcFechaGeneracionHasta.setDate(null);
-        cargarTiposMaqYHerr();
-        cargarTodosProblemasHerramientas();
-        lblTipoMoH.setText("Tipo de Herramienta:");
-        lblMoHPart.setText("Herramienta Particular:");
-        cmbMaqHerrParticular.removeAllItems();
-    }//GEN-LAST:event_rdbHerramienta1ActionPerformed
-
-    private void rdbMaquina1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbMaquina1ActionPerformed
-        dtcFechaGeneracionDesde.setDate(null);
-        dtcFechaGeneracionHasta.setDate(null);
-        cargarTiposMaqYHerr();
-        cargarTodosProblemasMaquinas();
-        lblTipoMoH.setText("Tipo de Máquina:");
-        lblMoHPart.setText("Máquina Particular:");
-        cmbMaqHerrParticular.removeAllItems();
-    }//GEN-LAST:event_rdbMaquina1ActionPerformed
-
     private void cmbTipoMaqHerrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoMaqHerrActionPerformed
         if (cmbTipoMaqHerr.getSelectedIndex()!=-1)
             cargarMaqYHerrParticulares();
@@ -385,26 +328,25 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
 
     private void cmbMaqHerrParticularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMaqHerrParticularActionPerformed
         if(cmbMaqHerrParticular.getSelectedIndex()!=-1){
-        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
-        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
+        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
+        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
         }
     }//GEN-LAST:event_cmbMaqHerrParticularActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        RegistrarSolucionProblemaMaqOHerr pantalla=new RegistrarSolucionProblemaMaqOHerr(null, true,cmbTipoMaqHerr.getSelectedIndex(),cmbMaqHerrParticular.getSelectedIndex(),rdbHerramienta1.isSelected());
+        RegistrarSolucionProblemaMaqOHerr pantalla=new RegistrarSolucionProblemaMaqOHerr(null, true,cmbTipoMaqHerr.getSelectedIndex(),cmbMaqHerrParticular.getSelectedIndex());
         pantalla.setVisible(true);
         if(cmbMaqHerrParticular.getSelectedIndex()!=-1){
-        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
-        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
+        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
+        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
         }
         else
         {
-            if (rdbHerramienta1.isSelected())
-                cargarTodosProblemasHerramientas();
-            else
-            {
+
+            
+            
                 cargarTodosProblemasMaquinas();
-            }
+            
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -414,16 +356,8 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
 
     private void cmbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBuscarActionPerformed
 
-        if (validarFechas()){
-        if (rdbHerramienta1.isSelected())
-        {
-            cargarTodosProblemasHerramientas(dtcFechaGeneracionDesde.getDate(),dtcFechaGeneracionHasta.getDate());
-        }
-        else
-         {
-            cargarTodosProblemasMaquinas(dtcFechaGeneracionDesde.getDate(),dtcFechaGeneracionHasta.getDate());
-            }
-        }
+   if (validarFechas())
+      cargarTodosProblemasMaquinas(dtcFechaGeneracionDesde.getDate(),dtcFechaGeneracionHasta.getDate());   
     }//GEN-LAST:event_cmbBuscarActionPerformed
 
     /**
@@ -456,7 +390,6 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -465,8 +398,6 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblMoHPart;
     private javax.swing.JLabel lblTipoMoH;
-    private javax.swing.JRadioButton rdbHerramienta1;
-    private javax.swing.JRadioButton rdbMaquina1;
     private javax.swing.JTable tblHistorico;
     private javax.swing.JTable tblProbActuales;
     // End of variables declaration//GEN-END:variables
@@ -494,8 +425,8 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
 
                 Vector fila = new Vector();
 
-                fila.add(elemento.getTMaquinasHerramientaParticular().getId());
-                fila.add(elemento.getTMaquinasHerramientaParticular().getNombre());
+                fila.add(elemento.getTMaquinasParticular().getIdMaquinaParticular());
+                fila.add(elemento.getTMaquinasParticular().getNombre());
                 fila.add(elemento.getDescripcion());
                 fila.add(elemento.getObservacionesSolucion());
                 fila.add(Utilidades.parseFecha(elemento.getFecHoraProblema()));
@@ -527,8 +458,8 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
 
                 Vector fila = new Vector();
 
-                fila.add(elemento.getTMaquinasHerramientaParticular().getId());
-                fila.add(elemento.getTMaquinasHerramientaParticular().getNombre());
+                fila.add(elemento.getTMaquinasParticular().getIdMaquinaParticular());
+                fila.add(elemento.getTMaquinasParticular().getNombre());
                 fila.add(elemento.getDescripcion());
                 fila.add(Utilidades.parseFecha(elemento.getFecHoraProblema()));
                 
@@ -539,10 +470,10 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
     }
 
     private void cargarTiposMaqYHerr() {
-         if (rdbMaquina1.isSelected())
+        
          cmbTipoMaqHerr.setModel(new DefaultComboBoxModel(gestor.listarTipoMaq().toArray()));
-         if(rdbHerramienta1.isSelected())
-         cmbTipoMaqHerr.setModel(new DefaultComboBoxModel(gestor.listarTipoHerr().toArray()));
+       
+        
          cmbTipoMaqHerr.setSelectedIndex(-1);
          cmbMaqHerrParticular.setSelectedIndex(-1);
          
@@ -550,10 +481,10 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
 
     private void cargarMaqYHerrParticulares() {
         if (cmbTipoMaqHerr.getSelectedIndex()!=-1)
-        cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getMaquinas((TipoMaquinaHerramienta) cmbTipoMaqHerr.getSelectedItem()).toArray()));
+        cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getMaquinas((TipoMaquina) cmbTipoMaqHerr.getSelectedItem()).toArray()));
         if(cmbMaqHerrParticular.getSelectedIndex()!=-1){
-        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
-        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(((MaquinaHerramientaParticular)cmbMaqHerrParticular.getSelectedItem()).getId()));
+        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
+        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
         }
         else
         {
@@ -563,21 +494,21 @@ public class ConsultaProblemasMHP extends javax.swing.JDialog {
     }
 
     private void cargarTodosProblemasHerramientas() {
-        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(true));
-        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(true));
+        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
+        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
     }
 
     private void cargarTodosProblemasHerramientas(Date fechaDesde, Date fechaHasta) {
-        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasNoResueltosConFecha(true,fechaDesde,fechaHasta));
+        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasNoResueltosConFecha(fechaDesde,fechaHasta));
     }
 
     private void cargarTodosProblemasMaquinas() {
-        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(false));
-        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(false));
+        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
+        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
     }
 
     private void cargarTodosProblemasMaquinas(Date fechaDesde, Date fechaHasta) {
-        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasNoResueltosConFecha(false,fechaDesde,fechaHasta));
+        tmProblemasResueltos.setDatos(ProblemasMhpBD.listarProblemasNoResueltosConFecha(fechaDesde,fechaHasta));
     }
 
     private boolean validarFechas() {
