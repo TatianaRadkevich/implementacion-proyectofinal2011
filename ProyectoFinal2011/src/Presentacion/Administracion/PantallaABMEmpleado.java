@@ -788,6 +788,13 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         // TODO add your handling code here:
         try{
             int temp=Integer.parseInt(txtNumeroDocumento.getText());
+            if(gestor.existeEmpleado(((TipoDocumento)(cmbTipoDocumento.getSelectedItem())),temp))
+            {
+                Mensajes.mensajeErrorGenerico("El empleado ya se encuentra registrado.");
+                txtNumeroDocumento.selectAll();
+                txtNumeroDocumento.requestFocus();
+                return;
+            }
             empleado.setNumeroDocumento(temp);
             Utilidades.componenteCorrecto(txtNumeroDocumento);
         }catch(TipoDatoException ex){
