@@ -32,7 +32,7 @@ public class CapacidadProductiva  implements java.io.Serializable {
      private Material TMateriales;
      @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="idMaquinaHerramienta")
-     private MaquinaHerramientaParticular TMaquinasHerramientaParticular;
+     private MaquinaParticular TMaquinasHerramientaParticular;
     @Column(name = "capacidad")
      private Integer capacidad;
 
@@ -43,7 +43,7 @@ public class CapacidadProductiva  implements java.io.Serializable {
     public CapacidadProductiva(int id) {
         this.id = id;
     }
-    public CapacidadProductiva(int id, Material TMateriales, MaquinaHerramientaParticular MaquinasHerramientaParticular, Integer capacidad) {
+    public CapacidadProductiva(int id, Material TMateriales, MaquinaParticular MaquinasHerramientaParticular, Integer capacidad) {
        this.id = id;
        this.TMateriales = TMateriales;
        this.TMaquinasHerramientaParticular = MaquinasHerramientaParticular;
@@ -67,11 +67,11 @@ public class CapacidadProductiva  implements java.io.Serializable {
         this.TMateriales = TMateriales;
     }
 
-    public MaquinaHerramientaParticular getMaquinaHerramientaParticular() {
+    public MaquinaParticular getMaquinaParticular() {
         return this.TMaquinasHerramientaParticular;
     }
     
-    public void setMaquinaHerramientaParticular(MaquinaHerramientaParticular MaquinasHerramientaParticular) {
+    public void setMaquinaParticular(MaquinaParticular MaquinasHerramientaParticular) {
         this.TMaquinasHerramientaParticular = MaquinasHerramientaParticular;
     }
     

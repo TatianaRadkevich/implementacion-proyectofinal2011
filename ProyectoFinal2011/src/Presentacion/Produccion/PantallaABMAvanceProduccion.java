@@ -60,7 +60,7 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
                 fila.add(elemento.getTEtapasProduccionEspecifica().getNumeroOrden());
                 fila.add(elemento.getTEtapasProduccionEspecifica().getEtapaProduccion().getNombre());
                 fila.add(elemento.getTEmpleados().getApellido() +", "+ elemento.getTEmpleados().getNombre());
-                fila.add(elemento.getTMaquinasHerramientaParticular().getNombre());
+                fila.add(elemento.getMaquinaParticular().getNombre());
                 fila.add(Utilidades.parseFechaHora(elemento.getFecHoraPrevistaInicio()));
                 fila.add(elemento.getTEdetallePlan().getNombre());
 

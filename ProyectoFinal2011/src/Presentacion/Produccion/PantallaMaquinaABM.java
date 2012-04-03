@@ -31,19 +31,19 @@ import javax.swing.JOptionPane;
  *
  * @author Heber Parrucci
  */
-public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
+public class PantallaMaquinaABM extends javax.swing.JDialog {
 
     /** Creates new form PantallaABMMaquinaOHerramienta */
-    private GestorMaquinaHerramienta gestor;
+    private GestorMaquina gestor;
 //    private TablaManager<CapacidadProductiva> tmCapacidad;
-    private PantallaMaquinaHerramientaABM(java.awt.Frame parent, boolean modal) {
+    private PantallaMaquinaABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);        
         initComponents();
-        txtCapacidad.setVisible(false);
+        //txtCapacidad.setVisible(false);
         pnlBaja.setVisible(false);
     }
 
-    public PantallaMaquinaHerramientaABM(GestorMaquinaHerramienta g)
+    public PantallaMaquinaABM(GestorMaquina g)
     {
         this(null,true);
         gestor=g;
@@ -78,7 +78,7 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
         txtFechaBaja.setText(Utilidades.parseFecha(fecha));
         this.pack();
     }
-    public void cargar(MaquinaHerramientaParticular m) {
+    public void cargar(MaquinaParticular m) {
 
         //txtCapacidadProductiva.setText(Utilidades.parseString(m.getCapacidadProductiva()));
 
@@ -88,17 +88,17 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
         txtModelo.setText(Utilidades.parseString(m.getModelo()));
         txtNombre.setText(Utilidades.parseString(m.getNombre()));
         txtObservaciones.setText(Utilidades.parseString(m.getObservaciones()));
-        cmbTipoMaquinaHerramienta.setSelectedItem(m.getTipoMaquinaHerramienta());
-             if(m.getFechaBaja()!=null)
+        cmbTipoMaquinaHerramienta.setSelectedItem(m.getTTmaquina());
+             if(m.getFecBaja()!=null)
         {
             pnlBaja.setVisible(true);
-            txtFechaBaja.setText(Utilidades.parseFecha(m.getFechaBaja()));
+            txtFechaBaja.setText(Utilidades.parseFecha(m.getFecBaja()));
             txtMotivoBaja.setText(Utilidades.parseString(m.getMotivoBaja()));
         }
     }
 
     public void habilitarTodo(boolean b) {
-        txtCapacidad.setEnabled(b);
+        //txtCapacidad.setEnabled(b);
         txtCaracteristicas.setEditable(b);
         txtCodigo.setEditable(b);
         txtModelo.setEditable(b);
@@ -142,7 +142,6 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtCaracteristicas = new javax.swing.JTextArea();
         btnAgregarTipo = new javax.swing.JButton();
-        txtCapacidad = new javax.swing.JTextField();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         pnlBaja = new javax.swing.JPanel();
@@ -153,9 +152,9 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
         txtMotivoBaja = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Nueva Máquina o Herramienta ");
+        setTitle("Nueva Máquina");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Maquina/Herramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Máquina", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setText("Características:");
@@ -232,8 +231,7 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel7)
-                            .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2)
@@ -261,10 +259,7 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -364,20 +359,20 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
 
-        MaquinaHerramientaParticular maqHer = gestor.getMaquinaHerramientaParticular();
+        MaquinaParticular maq = gestor.getMaquinaParticular();
 //        maqHer.setCapacidadProductiva(tmCapacidad.getDatos());
-        maqHer.setCaracteristicas(txtCaracteristicas.getText());
+        maq.setCaracteristicas(txtCaracteristicas.getText());
 //        if(maqHer.getCapacidadProductiva().isEmpty())
 //            maqHer.getCapacidadProductiva().add(new CapacidadProductiva());
 //        maqHer.getCapacidadProductiva().get(0).setCapacidad(Utilidades.parseInteger(txtCapacidad.getText()));
-        maqHer.setCodigo(txtCodigo.getText());
-        maqHer.setModelo(txtModelo.getText());
-        maqHer.setNombre(txtNombre.getText());
-        maqHer.setObservaciones(txtObservaciones.getText());
-        maqHer.setTipoMaquinaHerramienta((TipoMaquinaHerramienta) cmbTipoMaquinaHerramienta.getSelectedItem());
-        maqHer.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
+        maq.setCodigo(txtCodigo.getText());
+        maq.setModelo(txtModelo.getText());
+        maq.setNombre(txtNombre.getText());
+        maq.setObservaciones(txtObservaciones.getText());
+        maq.setTTmaquina((TipoMaquina) cmbTipoMaquinaHerramienta.getSelectedItem());
+        maq.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
         try {
-            gestor.ejecutarCU(maqHer);
+            gestor.ejecutarCU(maq);
             this.setVisible(false);
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
@@ -392,7 +387,7 @@ public class PantallaMaquinaHerramientaABM extends javax.swing.JDialog {
 
     private void btnAgregarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTipoActionPerformed
         // TODO add your handling code here:
-        new GestorTipoMaquinaHerramienta().administar();
+        new GestorTipoMaquina().administar();
         recargarComboTipoMaquina();
     }//GEN-LAST:event_btnAgregarTipoActionPerformed
 
@@ -412,7 +407,7 @@ generarCodigo();
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               new GestorMaquinaHerramientaAlta().iniciarCU();
+               new GestorMaquinaAlta().iniciarCU();
             }
         });
     }
@@ -435,7 +430,6 @@ generarCodigo();
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel pnlBaja;
-    private javax.swing.JTextField txtCapacidad;
     private javax.swing.JTextArea txtCaracteristicas;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtFechaBaja;

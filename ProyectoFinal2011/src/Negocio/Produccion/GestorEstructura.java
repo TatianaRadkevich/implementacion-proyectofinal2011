@@ -7,8 +7,10 @@ package Negocio.Produccion;
 import BaseDeDatos.Administracion.CargoBD;
 import BaseDeDatos.Compras.MaterialBD;
 import BaseDeDatos.Produccion.EtapaProduccionBD;
+import BaseDeDatos.Produccion.HerramientaBD;
 import BaseDeDatos.Produccion.ProductoBD;
-import BaseDeDatos.Produccion.TipoMaquinaHerramientaBD;
+import BaseDeDatos.Produccion.TipoHerramientaBD;
+import BaseDeDatos.Produccion.TipoMaquinaBD;
 import BaseDeDatos.Produccion.TipoProductoBD;
 import Negocio.Administracion.Cargo;
 import Negocio.Compras.Material;
@@ -124,25 +126,13 @@ public class GestorEstructura {
         return EtapaProduccionBD.listarEtapaProduccionAlta();
     }
 
-    public List<TipoMaquinaHerramienta> listarTipoMaquinas() {
-        List<TipoMaquinaHerramienta> salida = TipoMaquinaHerramientaBD.listarTipoMaquinaHerramienta();
-        for (int i = 0; i < salida.size(); i++) {
-            if (salida.get(i).isEsHerramienta()) {
-                salida.remove(i);
-                i--;
-            }
-        }
+    public List<TipoMaquina> listarTipoMaquinas() {
+        List<TipoMaquina> salida = TipoMaquinaBD.listarTipoMaquina();
         return salida;
     }
     
-      public List<TipoMaquinaHerramienta> listarTipoHerramientas() {
-        List<TipoMaquinaHerramienta> salida = TipoMaquinaHerramientaBD.listarTipoMaquinaHerramienta();
-        for (int i = 0; i < salida.size(); i++) {
-            if (salida.get(i).isEsHerramienta()==false) {
-                salida.remove(i);
-                i--;
-            }
-        }
+      public List<TipoHerramienta> listarTipoHerramientas() {
+        List<TipoHerramienta> salida = HerramientaBD.listarTipoHerramienta();
         return salida;
     }
 

@@ -6,19 +6,19 @@
 package Negocio.Produccion;
 
 
-import BaseDeDatos.Produccion.MaquinaHerramientaBD;
+import BaseDeDatos.Produccion.MaquinaBD;
 import Negocio.Exceptiones.ExceptionGestor;
-import Presentacion.Produccion.PantallaMaquinaHerramientaABM;
+import Presentacion.Produccion.PantallaMaquinaABM;
 
 /**
  *
  * @author Ivan
  */
-public class GestorMaquinaHerramientaModificar extends GestorMaquinaHerramienta
+public class GestorMaquinaModificar extends GestorMaquina
 {
 
 
-    public GestorMaquinaHerramientaModificar(MaquinaHerramientaParticular mh)
+    public GestorMaquinaModificar(MaquinaParticular mh)
     {
         maquinaHerramienta=mh;
     }
@@ -28,12 +28,12 @@ public class GestorMaquinaHerramientaModificar extends GestorMaquinaHerramienta
          if(maquinaHerramienta==null)
             throw new RuntimeException("GestorMaquinaHerramientaModificar: Se debe definir el pedido a modificar");
 
-        interfaz=new PantallaMaquinaHerramientaABM(this);
+        interfaz=new PantallaMaquinaABM(this);
         interfaz.cargar(maquinaHerramienta);
         interfaz.setVisible(true);
     }
 
-    private void validar(MaquinaHerramientaParticular p) throws ExceptionGestor
+    private void validar(MaquinaParticular p) throws ExceptionGestor
     {
         String mensage="";
         
@@ -49,9 +49,9 @@ public class GestorMaquinaHerramientaModificar extends GestorMaquinaHerramienta
     }
 
     @Override
-    public void ejecutarCU(MaquinaHerramientaParticular p) throws ExceptionGestor {
+    public void ejecutarCU(MaquinaParticular p) throws ExceptionGestor {
         validar(p);
-        MaquinaHerramientaBD.modificar(p);
+        MaquinaBD.modificar(p);
     }
 
 

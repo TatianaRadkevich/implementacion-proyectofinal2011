@@ -76,9 +76,9 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             public Vector ObjetoFila(DetalleEtapaProduccion elemento) {
                 Vector fila = new Vector();
                 fila.add(elemento.getEtapaProduccionEspecifica().getNumeroOrden());
-                fila.add(elemento.getMaterial().getNombre());
+                fila.add(elemento.getTDetallesProducto().getTMateriales().getNombre());
                 fila.add(elemento.getCantidadNecesaria());
-                fila.add(elemento.getMaterial().getUnidadMedida().getNombre());;
+                fila.add(elemento.getTDetallesProducto().getTMateriales().getUnidadMedida().getNombre());;
                 return fila;
             }
 
@@ -130,7 +130,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             public void fireTableCellUpdated(int row, int column) {
                 Object value = tbHerramientas.getValueAt(row, column);
                 if (column == 0) {
-                    tmHerramientas.getDato(row).setTipoMaquinaHerramienta((TipoMaquinaHerramienta) value);
+                    tmHerramientas.getDato(row).setTipoMaquinaHerramienta((TipoHerramienta) value);
                 }
                 if (column == 1) {
                     tmHerramientas.getDato(row).setCantidadNecesaria(new Integer(value.toString()));
@@ -152,9 +152,10 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(DetalleEtapaProduccion elemento) {
                 Vector fila = new Vector();
-                fila.add(elemento.getMaterial());
+                fila.add(elemento.getTDetallesProducto().getTMateriales());
                 fila.add((elemento.getCantidadNecesaria() == null) ? "" : elemento.getCantidadNecesaria());
-                fila.add((elemento.getMaterial() == null) ? "" : elemento.getMaterial().getUnidadMedida());
+                fila.add((elemento.getTDetallesProducto().getTMateriales() == null) ?
+                    "" : elemento.getTDetallesProducto().getTMateriales().getUnidadMedida());
                 return fila;
             }
 
@@ -178,7 +179,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             public void fireTableCellUpdated(int row, int column) {
                 Object value = tbMaterial.getValueAt(row, column);
                 if (column == 0) {
-                    tmMateriales.getDato(row).setMaterial((Material) value);
+                    tmMateriales.getDato(row).getTDetallesProducto().setTMateriales((Material) value);
                 }
                 if (column == 1) {
                     tmMateriales.getDato(row).setCantidadNecesaria(new Integer(value.toString()));
@@ -308,13 +309,13 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         List<DetalleEtapaProduccion> herramientas = new ArrayList<DetalleEtapaProduccion>();
 
         for (DetalleEtapaProduccion det : ep.getDetalleEtapaProduccion()) {
-            if (det.getTipoMaquinaHerramienta() != null&& det.getTipoMaquinaHerramienta().isEsHerramienta()==false) {
-                cmbTipoMaquina.setSelectedItem(det.getTipoMaquinaHerramienta());
+            if (ep.getTTmaquina() != null) {
+                cmbTipoMaquina.setSelectedItem(ep.getTTmaquina());
             }
-            if (det.getTipoMaquinaHerramienta() != null&& det.getTipoMaquinaHerramienta().isEsHerramienta()) {
+            if (det.getTipoMaquinaHerramienta() != null) {
                 herramientas.add(det);
             }
-            if (det.getMaterial() != null) {
+            if (det.getTDetallesProducto()!= null) {
                 materiales.add(det);
             }
          
@@ -359,7 +360,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         tmComposicion.limpiar();
         for (EtapaProduccionEspecifica epe : tmEtapaEspecifica.getDatos()) {
             for (DetalleEtapaProduccion dep : epe.getDetalleEtapaProduccion()) {
-                if (dep.getMaterial() != null) {
+                if (dep.getTDetallesProducto() != null) {
                     tmComposicion.add(dep);
                 }
             }
@@ -425,12 +426,12 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             if(dep.getCantidadNecesaria()==null||dep.getCantidadNecesaria()<=0)
                 mensaje+="\nMaterial fila "+i+1+": La cantidad ingresada es invalida";
 
-            if(dep.getMaterial()==null)
+            if(dep.getTDetallesProducto()==null)
                  mensaje+="\nMaterial fila "+i+1+": No se eligió un Material correcto";
             else
             for(int x=0;x<tmMateriales.getSize();x++)
             {
-                if(x<i && dep.getMaterial().equals(tmMateriales.getDato(x)))
+                if(x<i && dep.getTDetallesProducto().getTMateriales().equals(tmMateriales.getDato(x)))
                 {
                     mensaje+="\nMaterial fila "+i+1+": Se ha elegido más de una vez el mismo material";
                     break;
@@ -1169,9 +1170,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
         etapa.limpiarDetalleEtapaProduccion();
 
-        etapa.addDetalleEtapaProduccion(
-                new DetalleEtapaProduccion(
-                (TipoMaquinaHerramienta) cmbTipoMaquina.getSelectedItem()));
+        etapa.setTTmaquina((TipoMaquina) cmbTipoMaquina.getSelectedItem());
 
         for (DetalleEtapaProduccion dep : tmMateriales.getDatos()) {
             etapa.addDetalleEtapaProduccion(dep);
@@ -1234,7 +1233,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
     private void btnCargarTipoMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarTipoMaquinaActionPerformed
         // TODO add your handling code here:
-        new GestorTipoMaquinaHerramienta().administar();
+        new GestorTipoMaquina().administar();
         cmbTipoMaquina.setModel(new DefaultComboBoxModel(gestor.listarTipoMaquinas().toArray()));
         cmbTipoMaquina.setSelectedIndex(-1);
 
