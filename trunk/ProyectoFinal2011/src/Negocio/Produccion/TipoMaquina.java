@@ -135,6 +135,12 @@ public class TipoMaquina  implements java.io.Serializable {
         this.TEtapasProduccionEspecificas = TEtapasProduccionEspecificas;
     }
 
+    @Override
+    public String toString() {
+        return this.nombre;
+    }
+
+
 
 
 

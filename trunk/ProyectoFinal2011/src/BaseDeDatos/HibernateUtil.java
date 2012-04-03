@@ -30,7 +30,7 @@ public class HibernateUtil {
             // Create the SessionFactory from standard
             sessionFactory = addClases(new AnnotationConfiguration()).configure().buildSessionFactory();
             session = sessionFactory.openSession();
-        //    session.setFlushMode(FlushMode.MANUAL);
+            session.setFlushMode(FlushMode.COMMIT);
 
         } catch (Throwable ex) {
             // Log the exception.
