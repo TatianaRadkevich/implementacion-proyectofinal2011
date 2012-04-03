@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,15 +29,35 @@ import javax.persistence.TemporalType;
 public class HerramientaParticular  implements java.io.Serializable {
 
 
+     @Id
+    @GeneratedValue
+    @Column(name="ID_HERRAMIENTA_PARTICULAR", unique=true, nullable=false, precision=3, scale=0)
      private short idHerramientaParticular;
+     //_________________________________________________________________________________________________//
+     @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_THERRAMIENTA", nullable=false)
      private TipoHerramienta TTherramienta;
+     //_________________________________________________________________________________________________//
+      @Column(name="CARACTERISTICAS", nullable=false, length=200)
      private String caracteristicas;
-     private String modelo;
+     //_________________________________________________________________________________________________//
+     @Column(name="MODELO", nullable=false, length=50)
+      private String modelo;
+     //_________________________________________________________________________________________________//
+     @Column(name="NOMBRE", nullable=false, length=50)
      private String nombre;
+     //_________________________________________________________________________________________________//
+     @Column(name="OBSERVACIONES", length=200)
      private String observaciones;
+     //_________________________________________________________________________________________________//
+     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="FEC_BAJA", length=23)
      private Date fecBaja;
+     //_________________________________________________________________________________________________//
+     @Column(name="MOTIVO_BAJA", length=50)
      private String motivoBaja;
-     private Set TMaqHerrPartXDetPlans = new HashSet(0);
+     //_________________________________________________________________________________________________//
+//     private Set TMaqHerrPartXDetPlans = new HashSet(0);
 
     public HerramientaParticular() {
     }
@@ -49,7 +70,7 @@ public class HerramientaParticular  implements java.io.Serializable {
         this.modelo = modelo;
         this.nombre = nombre;
     }
-    public HerramientaParticular(short idHerramientaParticular, TipoHerramienta TTherramienta, String caracteristicas, String modelo, String nombre, String observaciones, Date fecBaja, String motivoBaja, Set TMaqHerrPartXDetPlans) {
+    public HerramientaParticular(short idHerramientaParticular, TipoHerramienta TTherramienta, String caracteristicas, String modelo, String nombre, String observaciones, Date fecBaja, String motivoBaja/*, Set TMaqHerrPartXDetPlans*/) {
        this.idHerramientaParticular = idHerramientaParticular;
        this.TTherramienta = TTherramienta;
        this.caracteristicas = caracteristicas;
@@ -58,12 +79,10 @@ public class HerramientaParticular  implements java.io.Serializable {
        this.observaciones = observaciones;
        this.fecBaja = fecBaja;
        this.motivoBaja = motivoBaja;
-       this.TMaqHerrPartXDetPlans = TMaqHerrPartXDetPlans;
+//       this.TMaqHerrPartXDetPlans = TMaqHerrPartXDetPlans;
     }
    
-     @Id 
-    
-    @Column(name="ID_HERRAMIENTA_PARTICULAR", unique=true, nullable=false, precision=3, scale=0)
+     
     public short getIdHerramientaParticular() {
         return this.idHerramientaParticular;
     }
@@ -71,8 +90,7 @@ public class HerramientaParticular  implements java.io.Serializable {
     public void setIdHerramientaParticular(short idHerramientaParticular) {
         this.idHerramientaParticular = idHerramientaParticular;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_THERRAMIENTA", nullable=false)
+
     public TipoHerramienta getTTherramienta() {
         return this.TTherramienta;
     }
@@ -81,7 +99,7 @@ public class HerramientaParticular  implements java.io.Serializable {
         this.TTherramienta = TTherramienta;
     }
     
-    @Column(name="CARACTERISTICAS", nullable=false, length=200)
+   
     public String getCaracteristicas() {
         return this.caracteristicas;
     }
@@ -90,7 +108,7 @@ public class HerramientaParticular  implements java.io.Serializable {
         this.caracteristicas = caracteristicas;
     }
     
-    @Column(name="MODELO", nullable=false, length=50)
+    
     public String getModelo() {
         return this.modelo;
     }
@@ -108,7 +126,7 @@ public class HerramientaParticular  implements java.io.Serializable {
         this.nombre = nombre;
     }
     
-    @Column(name="OBSERVACIONES", length=200)
+    
     public String getObservaciones() {
         return this.observaciones;
     }
@@ -116,8 +134,7 @@ public class HerramientaParticular  implements java.io.Serializable {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="FEC_BAJA", length=23)
+    
     public Date getFecBaja() {
         return this.fecBaja;
     }
@@ -126,7 +143,7 @@ public class HerramientaParticular  implements java.io.Serializable {
         this.fecBaja = fecBaja;
     }
     
-    @Column(name="MOTIVO_BAJA", length=50)
+    
     public String getMotivoBaja() {
         return this.motivoBaja;
     }
@@ -134,6 +151,7 @@ public class HerramientaParticular  implements java.io.Serializable {
     public void setMotivoBaja(String motivoBaja) {
         this.motivoBaja = motivoBaja;
     }
+    /**
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="THerramientasParticular")
     public Set getTMaqHerrPartXDetPlans() {
         return this.TMaqHerrPartXDetPlans;
@@ -142,6 +160,7 @@ public class HerramientaParticular  implements java.io.Serializable {
     public void setTMaqHerrPartXDetPlans(Set TMaqHerrPartXDetPlans) {
         this.TMaqHerrPartXDetPlans = TMaqHerrPartXDetPlans;
     }
+      */
 
 
 
