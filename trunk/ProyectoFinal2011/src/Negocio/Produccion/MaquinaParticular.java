@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,19 +29,50 @@ import javax.persistence.TemporalType;
 public class MaquinaParticular  implements java.io.Serializable {
 
 
+     @Id
+    @GeneratedValue
+    @Column(name="ID_MAQUINA_PARTICULAR", unique=true, nullable=false, precision=3, scale=0)
      private short idMaquinaParticular;
+     //___________________________________________________________________________________//
+     @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_TMAQUINA", nullable=false)
      private TipoMaquina TTmaquina;
+     //___________________________________________________________________________________//
+     @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_EMAQUINA", nullable=false)
      private EstadoMaquina TEmaquina;
+     //___________________________________________________________________________________//
+     @Column(name="CAPACIDAD_PRODUCTIVA", nullable=false, precision=5, scale=0)
      private float capacidadProductiva;
+     //___________________________________________________________________________________//
+     @Column(name="CARACTERISTICAS", nullable=false, length=200)
      private String caracteristicas;
+     //___________________________________________________________________________________//
+     @Column(name="MODELO", nullable=false, length=50)
      private String modelo;
+     //___________________________________________________________________________________//
+     @Column(name="NOMBRE", nullable=false, length=50)
      private String nombre;
+     //___________________________________________________________________________________//
+     @Column(name="OBSERVACIONES", length=200)
      private String observaciones;
+     //___________________________________________________________________________________//
+
+     @Column(name="CODIGO", nullable=false, length=2)
      private String codigo;
+     //___________________________________________________________________________________//
+     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="FEC_BAJA", length=23)
      private Date fecBaja;
+     //___________________________________________________________________________________//
+     @Column(name="MOTIVO_BAJA", length=100)
      private String motivoBaja;
-     private Set TProblemasMhps = new HashSet(0);
-     private Set TMaqHerrPartXDetPlans = new HashSet(0);
+     //___________________________________________________________________________________//
+//     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TMaquinasParticular")
+//     private Set TProblemasMhps = new HashSet(0);
+     //___________________________________________________________________________________//
+   //  private Set TMaqHerrPartXDetPlans = new HashSet(0);
+     //___________________________________________________________________________________//
 
     public MaquinaParticular() {
     }
@@ -56,7 +88,7 @@ public class MaquinaParticular  implements java.io.Serializable {
         this.nombre = nombre;
         this.codigo = codigo;
     }
-    public MaquinaParticular(short idMaquinaParticular, TipoMaquina TTmaquina, EstadoMaquina TEmaquina, int capacidadProductiva, String caracteristicas, String modelo, String nombre, String observaciones, String codigo, Date fecBaja, String motivoBaja, Set TProblemasMhps, Set TMaqHerrPartXDetPlans) {
+    public MaquinaParticular(short idMaquinaParticular, TipoMaquina TTmaquina, EstadoMaquina TEmaquina, int capacidadProductiva, String caracteristicas, String modelo, String nombre, String observaciones, String codigo, Date fecBaja, String motivoBaja /*, Set TProblemasMhps, Set TMaqHerrPartXDetPlans*/) {
        this.idMaquinaParticular = idMaquinaParticular;
        this.TTmaquina = TTmaquina;
        this.TEmaquina = TEmaquina;
@@ -68,13 +100,11 @@ public class MaquinaParticular  implements java.io.Serializable {
        this.codigo = codigo;
        this.fecBaja = fecBaja;
        this.motivoBaja = motivoBaja;
-       this.TProblemasMhps = TProblemasMhps;
-       this.TMaqHerrPartXDetPlans = TMaqHerrPartXDetPlans;
+//       this.TProblemasMhps = TProblemasMhps;
+       //this.TMaqHerrPartXDetPlans = TMaqHerrPartXDetPlans;
     }
    
-     @Id 
     
-    @Column(name="ID_MAQUINA_PARTICULAR", unique=true, nullable=false, precision=3, scale=0)
     public short getIdMaquinaParticular() {
         return this.idMaquinaParticular;
     }
@@ -82,8 +112,7 @@ public class MaquinaParticular  implements java.io.Serializable {
     public void setIdMaquinaParticular(short idMaquinaParticular) {
         this.idMaquinaParticular = idMaquinaParticular;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_TMAQUINA", nullable=false)
+
     public TipoMaquina getTTmaquina() {
         return this.TTmaquina;
     }
@@ -91,8 +120,7 @@ public class MaquinaParticular  implements java.io.Serializable {
     public void setTTmaquina(TipoMaquina TTmaquina) {
         this.TTmaquina = TTmaquina;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_EMAQUINA", nullable=false)
+
     public EstadoMaquina getTEmaquina() {
         return this.TEmaquina;
     }
@@ -101,7 +129,7 @@ public class MaquinaParticular  implements java.io.Serializable {
         this.TEmaquina = TEmaquina;
     }
     
-    @Column(name="CAPACIDAD_PRODUCTIVA", nullable=false, precision=5, scale=0)
+    
     public float getCapacidadProductiva() {
         return this.capacidadProductiva;
     }
@@ -110,7 +138,7 @@ public class MaquinaParticular  implements java.io.Serializable {
         this.capacidadProductiva = capacidadProductiva;
     }
     
-    @Column(name="CARACTERISTICAS", nullable=false, length=200)
+    
     public String getCaracteristicas() {
         return this.caracteristicas;
     }
@@ -119,7 +147,7 @@ public class MaquinaParticular  implements java.io.Serializable {
         this.caracteristicas = caracteristicas;
     }
     
-    @Column(name="MODELO", nullable=false, length=50)
+    
     public String getModelo() {
         return this.modelo;
     }
@@ -128,7 +156,7 @@ public class MaquinaParticular  implements java.io.Serializable {
         this.modelo = modelo;
     }
     
-    @Column(name="NOMBRE", nullable=false, length=50)
+    
     public String getNombre() {
         return this.nombre;
     }
@@ -137,7 +165,7 @@ public class MaquinaParticular  implements java.io.Serializable {
         this.nombre = nombre;
     }
     
-    @Column(name="OBSERVACIONES", length=200)
+    
     public String getObservaciones() {
         return this.observaciones;
     }
@@ -146,7 +174,7 @@ public class MaquinaParticular  implements java.io.Serializable {
         this.observaciones = observaciones;
     }
     
-    @Column(name="CODIGO", nullable=false, length=2)
+    
     public String getCodigo() {
         return this.codigo;
     }
@@ -154,8 +182,7 @@ public class MaquinaParticular  implements java.io.Serializable {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="FEC_BAJA", length=23)
+    
     public Date getFecBaja() {
         return this.fecBaja;
     }
@@ -164,7 +191,7 @@ public class MaquinaParticular  implements java.io.Serializable {
         this.fecBaja = fecBaja;
     }
     
-    @Column(name="MOTIVO_BAJA", length=100)
+    
     public String getMotivoBaja() {
         return this.motivoBaja;
     }
@@ -172,23 +199,23 @@ public class MaquinaParticular  implements java.io.Serializable {
     public void setMotivoBaja(String motivoBaja) {
         this.motivoBaja = motivoBaja;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TMaquinasParticular")
-    public Set getTProblemasMhps() {
-        return this.TProblemasMhps;
-    }
-    
-    public void setTProblemasMhps(Set TProblemasMhps) {
-        this.TProblemasMhps = TProblemasMhps;
-    }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TMaquinasParticular")
-    public Set getTMaqHerrPartXDetPlans() {
-        return this.TMaqHerrPartXDetPlans;
-    }
-    
-    public void setTMaqHerrPartXDetPlans(Set TMaqHerrPartXDetPlans) {
-        this.TMaqHerrPartXDetPlans = TMaqHerrPartXDetPlans;
-    }
 
+//    public Set getTProblemasMhps() {
+//        return this.TProblemasMhps;
+//    }
+//
+//    public void setTProblemasMhps(Set TProblemasMhps) {
+//        this.TProblemasMhps = TProblemasMhps;
+//    }
+//@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TMaquinasParticular")
+//    public Set getTMaqHerrPartXDetPlans() {
+//        return this.TMaqHerrPartXDetPlans;
+//    }
+//
+//    public void setTMaqHerrPartXDetPlans(Set TMaqHerrPartXDetPlans) {
+//        this.TMaqHerrPartXDetPlans = TMaqHerrPartXDetPlans;
+//    }
+//
 
 
 
