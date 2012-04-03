@@ -6,38 +6,38 @@
 package Negocio.Produccion;
 
 
+import BaseDeDatos.Produccion.HerramientaBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.PantallaEliminar;
-import Presentacion.Produccion.PantallaMaquinaHerramientaABM;
+import Presentacion.Produccion.PantallaHerramientaABM;
 import Presentacion.Utilidades;
-import BaseDeDatos.Produccion.MaquinaHerramientaBD;
 
 
 /**
  *
  * @author Ivan
  */
-public class GestorMaquinaHerramientaBaja extends GestorMaquinaHerramienta
+public class GestorHerramientaBaja extends GestorHerramienta
 {
 
-    public GestorMaquinaHerramientaBaja(MaquinaHerramientaParticular mh)
+    public GestorHerramientaBaja(HerramientaParticular mh)
     {
-        maquinaHerramienta=mh;
+        HerramientaHerramienta=mh;
     }
 
     @Override
     public void iniciarCU() {
-        if(maquinaHerramienta==null)
-            throw new RuntimeException("GestorMaquinaHerramienteBaja: Se debe definir el pedido a eliminar");
+        if(HerramientaHerramienta==null)
+            throw new RuntimeException("GestorHerramientaHerramienteBaja: Se debe definir el pedido a eliminar");
         
-        interfaz=new PantallaMaquinaHerramientaABM(this);
-        interfaz.cargar(maquinaHerramienta);
+        interfaz=new PantallaHerramientaABM(this);
+        interfaz.cargar(HerramientaHerramienta);
         interfaz.habilitarTodo(false);
         interfaz.habilitarBaja(true, true, Utilidades.getFechaActual(), "");
         interfaz.setVisible(true);
     }
 
-    private void validar(MaquinaHerramientaParticular p) throws ExceptionGestor
+    private void validar(HerramientaParticular p) throws ExceptionGestor
     {
         String mensage="";
 
@@ -52,12 +52,12 @@ public class GestorMaquinaHerramientaBaja extends GestorMaquinaHerramienta
     }
 
     @Override
-    public void ejecutarCU(MaquinaHerramientaParticular mh) throws ExceptionGestor {
+    public void ejecutarCU(HerramientaParticular mh) throws ExceptionGestor {
         validar(mh);
         
-        mh.setEstadoMaquina(null);
-        mh.setFechaBaja(Utilidades.getFechaActual());
-        MaquinaHerramientaBD.modificar(mh);
+        //mh.setTEHerramienta(null);
+        mh.setFecBaja(Utilidades.getFechaActual());
+        HerramientaBD.modificar(mh);
     }
 
 

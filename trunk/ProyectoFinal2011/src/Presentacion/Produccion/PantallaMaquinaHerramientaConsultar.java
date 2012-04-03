@@ -12,11 +12,11 @@
 package Presentacion.Produccion;
 
 
+import BaseDeDatos.Produccion.MaquinaBD;
 import Negocio.Produccion.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import BaseDeDatos.Produccion.MaquinaHerramientaBD;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.ValidarTexbox;
@@ -29,12 +29,12 @@ import javax.swing.event.ListSelectionListener;
  */
 public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
   
-    private TablaManager<MaquinaHerramientaParticular> tablita;
+    private TablaManager<MaquinaParticular> tablita;
     /** Creates new form consultarMaquinaOHerramienta */
     public PantallaMaquinaHerramientaConsultar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        tablita = new TablaManager<MaquinaHerramientaParticular>(tbMaquinaHerramienta) {
+        tablita = new TablaManager<MaquinaParticular>(tbMaquinaHerramienta) {
 
             @Override
             public Vector getCabecera() {
@@ -47,12 +47,12 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
             }
 
             @Override
-            public Vector ObjetoFila(MaquinaHerramientaParticular elemento) {
+            public Vector ObjetoFila(MaquinaParticular elemento) {
                 Vector fila = new Vector();
                 fila.add(elemento.getCodigo());
                  fila.add(elemento.getNombre());
                   fila.add(elemento.getModelo());
-                   fila.add(elemento.getEstadoMaquina());
+                   fila.add(elemento.getTEmaquina());
                 return fila;
             }
         };
@@ -267,7 +267,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
              // TODO add your handling code here:
-        tablita.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(
+        tablita.setDatos(MaquinaBD.getMaquinas(
                 txtCodigo.getText(),
                 txtModelo.getText(),
                 txtNombre.getText(),
@@ -279,7 +279,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
    
 
 
-        new GestorMaquinaHerramientaAlta().iniciarCU();
+        new GestorMaquinaAlta().iniciarCU();
 
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -287,7 +287,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
         // TODO add your handling code here:
 
                try {
-            new GestorMaquinaHerramientaModificar(tablita.getSeletedObject()).iniciarCU();
+            new GestorMaquinaModificar(tablita.getSeletedObject()).iniciarCU();
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
@@ -297,7 +297,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
                              try {
-            new GestorMaquinaHerramientaBaja(tablita.getSeletedObject()).iniciarCU();
+            new GestorMaquinaBaja(tablita.getSeletedObject()).iniciarCU();
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }

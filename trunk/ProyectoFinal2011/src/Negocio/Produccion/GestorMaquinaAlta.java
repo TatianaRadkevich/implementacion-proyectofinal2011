@@ -6,9 +6,9 @@
 package Negocio.Produccion;
 
 import BaseDeDatos.Produccion.EstadoMaquinaBD;
-import BaseDeDatos.Produccion.MaquinaHerramientaBD;
+import BaseDeDatos.Produccion.MaquinaBD;
 import Negocio.Exceptiones.ExceptionGestor;
-import Presentacion.Produccion.PantallaMaquinaHerramientaABM;
+import Presentacion.Produccion.PantallaMaquinaABM;
 import Presentacion.Utilidades;
 import Presentacion.Ventas.PantallaPedidoABM;
 
@@ -16,17 +16,18 @@ import Presentacion.Ventas.PantallaPedidoABM;
  *
  * @author Ivan
  */
-public class GestorMaquinaHerramientaAlta extends GestorMaquinaHerramienta
+public class GestorMaquinaAlta extends GestorMaquina
 {
 
     @Override
     public void iniciarCU() {
-        interfaz=new PantallaMaquinaHerramientaABM(this);
-        maquinaHerramienta=new MaquinaHerramientaParticular();
+
+        interfaz=new PantallaMaquinaABM(this);
+        maquinaHerramienta=new MaquinaParticular();
         interfaz.setVisible(true);
     }
 
-    private void validar(MaquinaHerramientaParticular mh) throws ExceptionGestor
+    private void validar(MaquinaParticular mh) throws ExceptionGestor
     {
         String mensage="";
        
@@ -40,11 +41,11 @@ public class GestorMaquinaHerramientaAlta extends GestorMaquinaHerramienta
     }
 
     @Override
-    public void ejecutarCU(MaquinaHerramientaParticular mh) throws ExceptionGestor {
-        mh.setEstadoMaquina(EstadoMaquinaBD.getEstadoDisponible());
+    public void ejecutarCU(MaquinaParticular mh) throws ExceptionGestor {
+        mh.setTEmaquina(EstadoMaquinaBD.getEstadoDisponible());
         validar(mh);
         //mh.setEstadoMaquina(null);
-        MaquinaHerramientaBD.guardar(mh);
+        MaquinaBD.guardar(mh);
     }
 
 

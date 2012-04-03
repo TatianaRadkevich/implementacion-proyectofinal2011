@@ -14,16 +14,17 @@ import BaseDeDatos.Administracion.EmpleadoBD;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Produccion.EstadoDetallePlanBD;
 import BaseDeDatos.Produccion.EstadoPlanBD;
-import BaseDeDatos.Produccion.MaquinaHerramientaBD;
+import BaseDeDatos.Produccion.MaquinaBD;
 import BaseDeDatos.Ventas.EstadoPedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.Empleado;
 import Negocio.Produccion.DetalleEtapaProduccion;
 import Negocio.Produccion.DetallePlanProduccion;
 import Negocio.Produccion.EtapaProduccionEspecifica;
-import Negocio.Produccion.MaquinaHerramientaParticular;
+import Negocio.Produccion.MaquinaParticular;
 import Negocio.Produccion.PlanProduccion;
-import Negocio.Produccion.TipoMaquinaHerramienta;
+import Negocio.Produccion.TipoMaquina;
+
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.Pedido;
 import Presentacion.Mensajes;
@@ -55,7 +56,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
     private Pedido pedido;
     private TablaManager<DetallePedido> tmDetallePedido;
     private TablaManager<EtapaProduccionEspecifica> tmEstructura;
-    private TablaManager<MaquinaHerramientaParticular> tmMaquina;
+    private TablaManager<MaquinaParticular> tmMaquina;
     private TablaManager<Empleado> tmEmpleado;
     private TablaManager<DetalleEtapaProduccion> tmHerramientas;
     private PlanProduccion plan;
@@ -170,13 +171,13 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             }
         });
         /******************************************************************************/
-        tmMaquina = new TablaManager<MaquinaHerramientaParticular>(tbMaquinas) {
+        tmMaquina = new TablaManager<MaquinaParticular>(tbMaquinas) {
 
             @Override
-            public Vector ObjetoFila(MaquinaHerramientaParticular elemento) {
+            public Vector ObjetoFila(MaquinaParticular elemento) {
                 Vector salida = new Vector();
                 salida.add(elemento.getCodigo());
-                salida.add(elemento.getTipoMaquinaHerramienta().getNombre());
+                salida.add(elemento.getTTmaquina().getNombre());
                 salida.add(elemento.getNombre());
                 salida.add(null);
                 return salida;
@@ -318,20 +319,17 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 
     private void cargarDatosPlanificacionEtapa(EtapaProduccionEspecifica epe) {
         limpiarDatosEtapaPlanificacion();
-        TipoMaquinaHerramienta tipoMaq = null;
+        TipoMaquina tipoMaq = epe.getTTmaquina();
         List<DetalleEtapaProduccion> herramientas = new ArrayList<DetalleEtapaProduccion>();
-        for (DetalleEtapaProduccion det : epe.getDetalleEtapaProduccion()) {
+        for (DetalleEtapaProduccion det : epe.getDetalleEtapaProduccion()) {           
             if (det.getTipoMaquinaHerramienta() != null) {
-                tipoMaq = det.getTipoMaquinaHerramienta();
-            }
-            if (det.getTipoMaquinaHerramienta() != null && det.getTipoMaquinaHerramienta().isEsHerramienta()) {
                 herramientas.add(det);
             }
         }
 
         tmHerramientas.setDatos(herramientas);
         tmEmpleado.setDatos(EmpleadoBD.getEmpleados(epe.getCargo(), true, false));
-        tmMaquina.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(tipoMaq, true, false));
+        tmMaquina.setDatos(MaquinaBD.getMaquinas(tipoMaq, true, false));
 
         Date inicio = fhInicioPlan.getDate();
         if (epe.getNumeroOrden() == 1) {
@@ -361,7 +359,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         txtTiempoFin.setText(Utilidades.parseFechaHora(detalle.getFecHoraPrevistaFin()));
 
 //        tmMaquina.setDatos(MaquinaHerramientaBD.getMaquinasHerramientas(tipoMaq, true, false));
-        tmMaquina.setSelectedRow(detalle.getTMaquinasHerramientaParticular());
+        tmMaquina.setSelectedRow(detalle.getMaquinaParticular());
 
 //        tmEmpleado.setDatos(EmpleadoBD.getEmpleados(detalle.getTEtapasProduccionEspecifica().getCargo(), true, false));
         tmEmpleado.setSelectedRow(detalle.getTEmpleados());
@@ -931,7 +929,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
 //                fhInicioDetallePlan.getDate(), tmEstructura.getSeletedObject().getDuracion(), 0, 0, 0, 0));
         det.setObservaciones(txtObservaciones.getText());
         det.setTEmpleados(tmEmpleado.getSeletedObject());
-        det.setTMaquinasHerramientaParticular(tmMaquina.getSeletedObject());
+        det.setMaquinaParticular(tmMaquina.getSeletedObject());
         det.setCantidad(tmDetallePedido.getSeletedObject().getCantidad());
         det.setTEdetallePlan(EstadoDetallePlanBD.getEstadoPendiente());
 

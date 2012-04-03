@@ -37,6 +37,14 @@ public class MaqHerrPartXDetPlan implements java.io.Serializable {
     public MaqHerrPartXDetPlan() {
     }
 
+    public MaqHerrPartXDetPlan(HerramientaParticular THerramientasParticular) {
+        this.THerramientasParticular = THerramientasParticular;
+    }
+
+    public MaqHerrPartXDetPlan(MaquinaParticular TMaquinasParticular) {
+        this.TMaquinasParticular = TMaquinasParticular;
+    }
+
    
     public long getIdMaqHerrPartXDetPlan() {
         return this.idMaqHerrPartXDetPlan;

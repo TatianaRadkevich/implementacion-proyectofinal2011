@@ -2,6 +2,7 @@ package Negocio.Produccion;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
 import Negocio.Administracion.Empleado;
+import Negocio.Compras.Material;
 import Negocio.Deposito.Faltante;
 import Negocio.Ventas.DetallePedido;
 import Presentacion.Utilidades;
@@ -100,7 +101,7 @@ public class DetallePlanProduccion implements java.io.Serializable {
         TEtapasProduccionEspecifica.addDetallePlanProduccion(this);
     }
 
-    public DetallePlanProduccion(int idDetallePlan, EtapaProduccionEspecifica TEtapasProduccionEspecifica, Empleado TEmpleados, PlanProduccion TPlanesProduccion, MaquinaHerramientaParticular TMaquinasHerramientaParticular, int cantidad, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealInicio, Date fecHoraRealFin, OrdenTrabajo TOrdenesTrabajo,EstadoDetallePlan TEdetallePlan) {
+    public DetallePlanProduccion(int idDetallePlan, EtapaProduccionEspecifica TEtapasProduccionEspecifica, Empleado TEmpleados, PlanProduccion TPlanesProduccion, MaquinaParticular TMaquinasHerramientaParticular, int cantidad, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealInicio, Date fecHoraRealFin, OrdenTrabajo TOrdenesTrabajo,EstadoDetallePlan TEdetallePlan) {
         this.idDetallePlan = idDetallePlan;
         this.TEtapasProduccionEspecifica = TEtapasProduccionEspecifica;
         this.TEmpleados = TEmpleados;
@@ -114,7 +115,7 @@ public class DetallePlanProduccion implements java.io.Serializable {
         this.TEdetallePlan = TEdetallePlan;
     }
 
-    public DetallePlanProduccion(int idDetallePlan, EtapaProduccionEspecifica TEtapasProduccionEspecifica, Empleado TEmpleados, PlanProduccion TPlanesProduccion, MaquinaHerramientaParticular TMaquinasHerramientaParticular, int cantidad, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealInicio, Date fecHoraRealFin, Set<Faltante> TFaltanteses, OrdenTrabajo TOrdenesTrabajo,EstadoDetallePlan TEdetallePlan) {
+    public DetallePlanProduccion(int idDetallePlan, EtapaProduccionEspecifica TEtapasProduccionEspecifica, Empleado TEmpleados, PlanProduccion TPlanesProduccion, MaquinaParticular TMaquinasHerramientaParticular, int cantidad, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealInicio, Date fecHoraRealFin, Set<Faltante> TFaltanteses, OrdenTrabajo TOrdenesTrabajo,EstadoDetallePlan TEdetallePlan) {
         this.idDetallePlan = idDetallePlan;
         this.TEtapasProduccionEspecifica = TEtapasProduccionEspecifica;
         this.TEmpleados = TEmpleados;
@@ -235,12 +236,12 @@ public class DetallePlanProduccion implements java.io.Serializable {
     public void generarFaltantes() {
         this.TFaltanteses.clear();
         for( DetalleEtapaProduccion dep: this.getTEtapasProduccionEspecifica().getDetalleEtapaProduccion())
-            if(dep.getMaterial()!=null)
+            if(dep.getTDetallesProducto()!=null)
             {
-
+                Material mat=dep.getTDetallesProducto().getTMateriales();
                 Faltante f=new Faltante();              
-                f.setCantidad((int)Math.ceil(1f*dep.getCantidadNecesaria()*this.getCantidad()/dep.getMaterial().getLogitud()));
-                f.setMaterial(dep.getMaterial());
+                f.setCantidad((int)Math.ceil(1f*dep.getCantidadNecesaria()*this.getCantidad()/mat.getLogitud()));
+                f.setMaterial(mat);
                 f.setDetallePlan(this);
                 f.setFecGeneracion(Utilidades.getFechaActual());
                 f.setFecNecesidad(this.getFecHoraPrevistaInicio());
@@ -265,6 +266,40 @@ public class DetallePlanProduccion implements java.io.Serializable {
         this.TEdetallePlan = TEdetallePlan;
     }
     
+    public void setMaquinaParticular(MaquinaParticular mq)
+    {      
+         MaqHerrPartXDetPlan aux=null;
+         for(MaqHerrPartXDetPlan item:this.TMaqHerrPartXDetPlans)            
+                if(item.getTMaquinasParticular()!=null)
+                    aux=item;
+         
+        if(mq==null)
+        {
+            if(aux!=null)
+                this.TMaqHerrPartXDetPlans.remove(aux);  
+        }
+        else
+        {
+             aux.setTMaquinasParticular(mq);
+        }    
+    }
+
+    public MaquinaParticular getMaquinaParticular()
+    {
+        for(MaqHerrPartXDetPlan item:this.TMaqHerrPartXDetPlans)
+        {
+            if(item.getTMaquinasParticular()!=null)
+                return item.getTMaquinasParticular();
+        }
+        return null;
+    }
+
+    public void addHerramientaParticular(HerramientaParticular hp) {
+        MaqHerrPartXDetPlan aux=new MaqHerrPartXDetPlan(hp);
+        aux.setTDetallesPlan(this);
+        this.TMaqHerrPartXDetPlans.add(aux);
+    }
+
     public Set<MaqHerrPartXDetPlan> getTMaqHerrPartXDetPlans() {
         return this.TMaqHerrPartXDetPlans;
     }

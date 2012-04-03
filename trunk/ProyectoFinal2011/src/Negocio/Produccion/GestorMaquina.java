@@ -9,7 +9,7 @@ import BaseDeDatos.Produccion.MaquinaBD;
 import BaseDeDatos.Produccion.*;
 
 import Negocio.Exceptiones.ExceptionGestor;
-import Presentacion.Produccion.PantallaMaquinaHerramientaABM;
+import Presentacion.Produccion.PantallaMaquinaABM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +18,9 @@ import java.util.List;
  *
  * @author Rodrigo
  */
-public abstract class GestorMaquinaHerramienta {
+public abstract class GestorMaquina {
 
-    protected PantallaMaquinaHerramientaABM interfaz;
+    protected PantallaMaquinaABM interfaz;
     protected MaquinaParticular maquinaHerramienta;
 
     public abstract void iniciarCU();
@@ -47,6 +47,6 @@ public abstract class GestorMaquinaHerramienta {
     }
 
     public List<EstadoMaquina> getEstadoMaquina() {
-        return MaquinaHerramientaBD.listarEstadoMaquina();
+        return MaquinaBD.listarEstadoMaquina();
     }
 }
