@@ -99,6 +99,9 @@ public class EmpleadoBD {
        if(tipo.getIdTdocumento()!=-1){
             HQL+="AND p.TTdocumento.idTdocumento="+tipo.getIdTdocumento();
        }
+        if(numeroDoc.compareTo("")!=0){
+            HQL+="AND p.numeroDocumento="+Integer.parseInt(numeroDoc);
+       }
        if(vigentes==true&&cancelados==true)
             return HibernateUtil.ejecutarConsulta(HQL);
 

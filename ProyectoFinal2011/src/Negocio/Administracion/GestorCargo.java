@@ -20,6 +20,11 @@ public class GestorCargo {
         PantallaABMCargo cargo=new PantallaABMCargo(null, true);
         cargo.setVisible(true);
     }
+    public static void nuevoCargo(Dialog parent){
+        PantallaABMCargo cargo=new PantallaABMCargo(null, true);
+        cargo.nuevo();
+        cargo.setVisible(true);
+    }
 
     public static List<Cargo> listarCargosAlta(){
         return CargoBD.listarCargosAlta();

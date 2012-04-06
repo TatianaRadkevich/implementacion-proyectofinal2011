@@ -15,6 +15,7 @@ import BaseDeDatos.Administracion.EstadoEmpleadoBD;
 import BaseDeDatos.UbicacionGeografica.DomicilioBD;
 import Negocio.Administracion.Cargo;
 import Negocio.Administracion.Empleado;
+import Negocio.Administracion.GestorCargo;
 import Negocio.Administracion.GestorEmpleado;
 import Negocio.Administracion.GestorRegistrarEmpleado;
 import Negocio.Administracion.Sexo;
@@ -153,6 +154,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         txtEmail = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         lstCargos = new Presentacion.JCheckList();
+        btnAgregarCargo = new javax.swing.JButton();
         pnlBaja = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -254,8 +256,8 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNumeroDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                            .addComponent(cmbTipoDocumento, 0, 163, Short.MAX_VALUE)))
+                            .addComponent(txtNumeroDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                            .addComponent(cmbTipoDocumento, 0, 166, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -268,12 +270,12 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
+                        .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(87, 87, 87)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbSexo, 0, 160, Short.MAX_VALUE)))
+                        .addComponent(cmbSexo, 0, 163, Short.MAX_VALUE)))
                 .addGap(108, 108, 108))
         );
         jPanel1Layout.setVerticalGroup(
@@ -303,7 +305,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
                     .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Domicilio"));
@@ -599,6 +601,13 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             }
         });
 
+        btnAgregarCargo.setText("Agregar");
+        btnAgregarCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarCargoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -606,12 +615,16 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(lstCargos, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnAgregarCargo)
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(lstCargos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lstCargos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarCargo))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -668,7 +681,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                    .addComponent(pnlBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1056,6 +1069,14 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_dtcFechaNacimientoPropertyChange
 
+    private void btnAgregarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCargoActionPerformed
+        // TODO add your handling code here:
+            GestorCargo.nuevoCargo(this);
+            this.cargarCargos();
+            this.repaint();
+
+    }//GEN-LAST:event_btnAgregarCargoActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -1077,6 +1098,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     private javax.swing.JLabel Apellido;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregarBarrio;
+    private javax.swing.JButton btnAgregarCargo;
     private javax.swing.JButton btnAgregarLocalidad;
     private javax.swing.JButton btnAgregarPais;
     private javax.swing.JButton btnAgregarProvincia;
@@ -1345,12 +1367,12 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
       cmbPais.repaint();
     }
     private void cargarComboProvicias(Pais pais){
-         Iterator<Provincia> provincias= pais.getTProvinciases().iterator();
+         List<Provincia> provincias= gestor.listarProvincias(pais);
          cmbProvincia.removeAllItems();
 
 
-         while(provincias.hasNext()){
-             cmbProvincia.addItem(provincias.next());
+         for(int i=0;i<provincias.size();i++){
+             cmbProvincia.addItem(provincias.get(i));
          }
          cmbProvincia.setSelectedIndex(-1);
             
@@ -1362,11 +1384,11 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         cmbProvincia.repaint();
     }
     private void cargarComboLocalidades(Provincia provincia){
-        Iterator<Localidad> localidad= provincia.getTLocalidadeses().iterator();
+        List<Localidad> localidad= gestor.listarLocalidades(provincia);
          cmbLocalidad.removeAllItems();
 
-         while(localidad.hasNext()){
-             cmbLocalidad.addItem(localidad.next());
+         for(int i=0;i<localidad.size();i++){
+             cmbLocalidad.addItem(localidad.get(i));
          }             cmbBarrio.removeAllItems();
              cmbBarrio.repaint();
 
@@ -1376,11 +1398,11 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
 
     private void cargarComboBarrio(Localidad localidad){
 
-         Iterator<Barrio> barrio=localidad.getTBarrioses().iterator();
+         List<Barrio> barrio=gestor.listarBarrios(localidad);
          cmbBarrio.removeAllItems();
 
-         while(barrio.hasNext()){
-             cmbBarrio.addItem(barrio.next());
+         for(int i=0;i<barrio.size();i++){
+             cmbBarrio.addItem(barrio.get(i));
          }
          this.cmbBarrio.setSelectedIndex(-1);
          this.cmbBarrio.repaint();
