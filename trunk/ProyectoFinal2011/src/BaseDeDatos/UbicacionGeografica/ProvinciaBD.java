@@ -39,12 +39,13 @@ public class ProvinciaBD {
 
     public static List<Provincia> listarProvincias()throws ExceptionInInitializerError{
 
-        List<Provincia> var=HibernateUtil.ejecutarConsulta("from Provincia");
+        List<Provincia> var=HibernateUtil.ejecutarConsulta("from Provincia order by nombre");
         return var;
     }
 
+   
     public static List<Provincia> listarProvincias(Pais p){
-        String hql="from Provincia as pro where pro.TPaises.idPais="+p.getIdPais();
+        String hql="from Provincia as pro where pro.TPaises.idPais="+p.getIdPais()+" order by nombre";
         return HibernateUtil.ejecutarConsulta(hql);
     }
 

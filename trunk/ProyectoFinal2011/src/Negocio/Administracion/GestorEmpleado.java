@@ -7,9 +7,16 @@ package Negocio.Administracion;
 
 import BaseDeDatos.Administracion.EmpleadoBD;
 import BaseDeDatos.HibernateUtil;
+import BaseDeDatos.UbicacionGeografica.BarrioBD;
+import BaseDeDatos.UbicacionGeografica.LocalidadBD;
 import BaseDeDatos.UbicacionGeografica.PaisBD;
+import BaseDeDatos.UbicacionGeografica.ProvinciaBD;
 import Negocio.Exceptiones.ExceptionGestor;
+import Negocio.UbicacionGeografica.Barrio;
+import Negocio.UbicacionGeografica.Localidad;
 import Negocio.UbicacionGeografica.Pais;
+import Negocio.UbicacionGeografica.Provincia;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -48,6 +55,18 @@ public abstract class GestorEmpleado {
 
     public boolean existeEmpleado(TipoDocumento tipodocumento, int numeroDoc) {
         return EmpleadoBD.existeEmpleado(tipodocumento.getIdTdocumento(), numeroDoc);
+    }
+
+    public List<Provincia> listarProvincias(Pais pais) {
+        return  ProvinciaBD.listarProvincias(pais);
+    }
+
+    public List<Localidad> listarLocalidades(Provincia provincia) {
+        return LocalidadBD.listarLocalidades(provincia);
+    }
+
+    public List<Barrio> listarBarrios(Localidad localidad) {
+        return BarrioBD.listarBarrios(localidad);
     }
 
 }

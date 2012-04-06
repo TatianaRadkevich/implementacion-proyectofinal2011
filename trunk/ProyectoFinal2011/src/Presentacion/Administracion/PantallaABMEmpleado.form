@@ -26,7 +26,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="pnlBaja" alignment="1" max="32767" attributes="2"/>
+                  <Component id="pnlBaja" alignment="1" pref="430" max="32767" attributes="2"/>
                   <Component id="jPanel3" alignment="1" max="32767" attributes="3"/>
                   <Component id="jPanel1" alignment="0" max="32767" attributes="3"/>
               </Group>
@@ -163,7 +163,7 @@
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <Component id="dtcFechaNacimiento" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="68" max="32767" attributes="0"/>
+                  <EmptySpace pref="67" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -683,14 +683,19 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   <Component id="lstCargos" min="-2" pref="308" max="-2" attributes="0"/>
-                  <EmptySpace pref="152" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btnAgregarCargo" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="63" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="lstCargos" min="-2" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="lstCargos" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnAgregarCargo" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -700,6 +705,14 @@
         <Component class="Presentacion.JCheckList" name="lstCargos">
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="lstCargosFocusLost"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnAgregarCargo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Agregar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarCargoActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
