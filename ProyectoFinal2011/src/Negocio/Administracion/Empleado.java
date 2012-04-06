@@ -286,20 +286,62 @@ public class Empleado implements java.io.Serializable {
     public void setFecNacimiento(Date fecNacimiento) throws TipoDatoException {
         Date today= new Date();
 
+        int var=today.getYear()-fecNacimiento.getYear();
         if(fecNacimiento!=null ){
-            if (today.getDate() >= fecNacimiento.getDate() && today.getMonth() >=fecNacimiento.getMonth()
-                && today.getYear() >= fecNacimiento.getYear() && (fecNacimiento.getYear()-today.getYear())>=18)
-            {
+            if(var==18){
+                if (today.getMonth() ==fecNacimiento.getMonth())                
+                {
+                    if(today.getDate()==fecNacimiento.getDate())
+                    {
+                        this.fecNacimiento = fecNacimiento;
+                        System.out.println("Por fin entro......");
+                    }  
+                    else{
+                        if(today.getDate()>fecNacimiento.getDate())
+                        {
+                            this.fecNacimiento = fecNacimiento;
+                            System.out.println("Por fin entro......");
+                        }  
+                        else{
+                            this.fecNacimiento=null;
+                            System.out.println("Es menor de 18 años");
+                            throw new TipoDatoException("El empleado debe ser mayor de 18 años");
+                        }
+                    }
 
-                this.fecNacimiento = fecNacimiento;
+                     
                 }
+                else{
+                    if(today.getMonth()>fecNacimiento.getMonth())
+                    {
+                        this.fecNacimiento = fecNacimiento;
+                        System.out.println("Por fin entro......");
+                    }
+                    else{
+                        this.fecNacimiento=null;
+                        System.out.println("Es menor de 18 años");
+                        throw new TipoDatoException("El empleado debe ser mayor de 18 años");
+                    }
+                    
+                }
+           }
             else{
-                this.fecNacimiento=null;
-                throw new TipoDatoException("El empleado debe ser mayor de 18 años");
+                if (var>18)
+                {
+                    this.fecNacimiento = fecNacimiento;
+                    System.out.println("Por fin entro......");
+                    }
+                else{
+                    this.fecNacimiento=null;
+                    System.out.println("Es menor de 18 años");
+                    throw new TipoDatoException("El empleado debe ser mayor de 18 años");
+                }
             }
+            
         }
         else{
             this.fecNacimiento=null;
+            System.out.println("Es menor de 18 años");
             throw new TipoDatoException("Formato incorrecto. Seleccionar una fecha");
         }
 
