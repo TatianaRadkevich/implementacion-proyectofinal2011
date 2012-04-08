@@ -89,9 +89,15 @@ public class Horarios  implements java.io.Serializable {
     public List<AsignacionesDias> getTAsignacionesDiases() {
         return new ArrayList<AsignacionesDias>(this.TAsignacionesDiases);
     }
-    
-    public void setTAsignacionesDiases(Set<AsignacionesDias> TAsignacionesDiases) {
-        this.TAsignacionesDiases = TAsignacionesDiases;
+
+    public void setTAsignacionesDiases(List<AsignacionesDias> datos) {
+        this.TAsignacionesDiases.clear();
+
+        for(AsignacionesDias item:datos)
+        {
+            item.setTHorarios(this);
+            this.TAsignacionesDiases.add(item);
+        }       
     }
 
 
@@ -106,6 +112,8 @@ public class Horarios  implements java.io.Serializable {
     public String toString() {
                 return this.getNombre();
     }
+
+
 
 
 //@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="THorarios")
