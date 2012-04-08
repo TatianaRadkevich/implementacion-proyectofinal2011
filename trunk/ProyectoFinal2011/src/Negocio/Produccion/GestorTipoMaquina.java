@@ -35,13 +35,11 @@ public class GestorTipoMaquina {
     protected PantallaTipoMaquinaABM interfaz;
     protected TipoMaquina TipoMaquina;
 
-    public GestorTipoMaquina()
-    {
+    public GestorTipoMaquina() {
         this.interfaz=new PantallaTipoMaquinaABM(this);
     }
 
-    public void administar()
-    {
+    public void administar() {
         interfaz.setVisible(true);
     }
 
@@ -91,8 +89,7 @@ public class GestorTipoMaquina {
         return TipoMaquinaBD.listarTipoMaquina();
     }
 
-
-
+    /*************************************************************************/
 
     private gestor nuevo = new gestor() {
 
@@ -191,7 +188,7 @@ public void ejecutarCU(TipoMaquina tmh) throws ExceptionGestor {
         }
     };
 
-        private gestor Alta = new gestor() {
+    private gestor Alta = new gestor() {
 
         public void iniciarCU() {
                if(TipoMaquina==null&& TipoMaquina.getFecBaja()==null)

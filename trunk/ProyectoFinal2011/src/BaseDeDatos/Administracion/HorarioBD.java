@@ -30,7 +30,7 @@ public class HorarioBD {
     }
 
 
-    public static void guardarHoraios(Horarios hora){
+    public static void guardar(Horarios hora){
 
     HibernateUtil.guardarObjeto(hora);
 
@@ -41,6 +41,14 @@ public class HorarioBD {
         String hql="from Horarios h WHERE h.idHorario LIKE '%s%%' AND h.nombre LIKE '%s%%'";
         //el String.format() reemplaza los '%s' por los argumentos, el codigo queda mas limpio!!.
         return HibernateUtil.ejecutarConsulta(String.format(hql, codigo,nombre));
+    }
+
+    public static void modificar(Horarios tmh) {
+        HibernateUtil.modificarObjeto(tmh);
+    }
+
+    public static void elminiar(Horarios tmh) {
+        HibernateUtil.EliminarObjeto(tmh);
     }
 
 }
