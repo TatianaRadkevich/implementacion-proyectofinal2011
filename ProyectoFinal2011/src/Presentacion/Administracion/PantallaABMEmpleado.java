@@ -1057,6 +1057,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
 
     private void dtcFechaNacimientoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dtcFechaNacimientoPropertyChange
         // TODO add your handling code here:
+       try{
         if(empleado!=null)
         {
              try{
@@ -1067,6 +1068,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 Utilidades.componenteError(dtcFechaNacimiento);
             }
         }
+        }catch(Exception ex){}
     }//GEN-LAST:event_dtcFechaNacimientoPropertyChange
 
     private void btnAgregarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCargoActionPerformed
