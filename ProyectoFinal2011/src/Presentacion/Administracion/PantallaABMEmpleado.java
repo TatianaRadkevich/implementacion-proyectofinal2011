@@ -92,7 +92,8 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                     }catch(TipoDatoException ex){
                         dtcFechaNacimiento.setToolTipText(ex.getMessage());
                         Utilidades.componenteError(dtcFechaNacimiento);
-                    }
+                    }catch(Exception e){};
+
                 }
                     }
                 });

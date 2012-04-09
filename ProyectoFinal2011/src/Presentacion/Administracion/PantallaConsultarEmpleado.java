@@ -76,7 +76,7 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consultar empleado");
+        setTitle("Administrar empleado");
 
         btnBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
 
@@ -96,7 +96,7 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
             }
         });
 
-        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11));
         chkMostrarTodos.setText("Mostrar vigentes");
 
         chkMostrarDadosBaja.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -175,7 +175,7 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Empleados"));
 
-        tbEmpleados.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tbEmpleados.setFont(new java.awt.Font("Tahoma", 1, 11));
         tbEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -325,7 +325,7 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
         GestorBajaEmpleado gestor=new GestorBajaEmpleado();
 
        String var=tbEmpleados.getValueAt(tbEmpleados.getSelectedRow(),0)+"";
-        gestor.bajaProducto(this, Integer.parseInt(var));
+        gestor.bajaEmpleado(this, Integer.parseInt(var));
         this.iniciarBusqueda();
       
 }//GEN-LAST:event_btnBajaActionPerformed
