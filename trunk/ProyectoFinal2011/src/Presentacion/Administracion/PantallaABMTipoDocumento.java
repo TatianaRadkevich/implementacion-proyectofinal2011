@@ -73,6 +73,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Administrar tipo de documento");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Documento"));
 
