@@ -319,7 +319,7 @@ public class PantallaConsultarEmpleado extends javax.swing.JDialog {
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
         // TODO add your handling code here:
         if(tbEmpleados.getSelectedRow()==-1){
-            Mensajes.mensajeErrorGenerico("Debe seleccion un producto");
+            Mensajes.mensajeErrorGenerico("Debe seleccion un empleado");
             return;
         }
         GestorBajaEmpleado gestor=new GestorBajaEmpleado();
