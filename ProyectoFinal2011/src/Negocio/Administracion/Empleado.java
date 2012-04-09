@@ -454,8 +454,8 @@ public class Empleado implements java.io.Serializable {
         this.TDiasHoraLaborables = TDiasHoraLaborables;
     }
 
-    public Set<AsistenciaEmpleado> getTAsistenciasEmpleados() {
-        return this.TAsistenciasEmpleados;
+    public List<AsistenciaEmpleado> getTAsistenciasEmpleados() {
+        return new ArrayList<AsistenciaEmpleado>(this.TAsistenciasEmpleados);
     }
 
     public void setTAsistenciasEmpleados(Set<AsistenciaEmpleado> TAsistenciasEmpleados) {
