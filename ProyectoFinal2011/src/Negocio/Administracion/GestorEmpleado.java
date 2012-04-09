@@ -6,6 +6,7 @@
 package Negocio.Administracion;
 
 import BaseDeDatos.Administracion.EmpleadoBD;
+import BaseDeDatos.Administracion.EstadoEmpleadoBD;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.UbicacionGeografica.BarrioBD;
 import BaseDeDatos.UbicacionGeografica.LocalidadBD;
@@ -67,6 +68,10 @@ public abstract class GestorEmpleado {
 
     public List<Barrio> listarBarrios(Localidad localidad) {
         return BarrioBD.listarBarrios(localidad);
+    }
+
+    public EstadosEmpleado getEstadoDisponible() {
+        return EstadoEmpleadoBD.traerEstadoDisponible();
     }
 
 }
