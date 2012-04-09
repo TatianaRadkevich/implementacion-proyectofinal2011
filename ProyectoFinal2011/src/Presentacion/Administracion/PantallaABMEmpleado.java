@@ -15,6 +15,7 @@ import BaseDeDatos.Administracion.EstadoEmpleadoBD;
 import BaseDeDatos.UbicacionGeografica.DomicilioBD;
 import Negocio.Administracion.Cargo;
 import Negocio.Administracion.Empleado;
+import Negocio.Administracion.GestorBajaEmpleado;
 import Negocio.Administracion.GestorCargo;
 import Negocio.Administracion.GestorEmpleado;
 import Negocio.Administracion.GestorRegistrarEmpleado;
@@ -742,7 +743,12 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             // TODO add your handling code here:
             empleado.validarOk();
             try {
-                    gestor.ejecutarOperacion(empleado);
+                if(gestor instanceof GestorBajaEmpleado)
+                {
+                    empleado.setFecBaja(new Date());
+                    empleado.setMotivoBaja(txtMotivoBaja.getText());
+                }
+                gestor.ejecutarOperacion(empleado);
                     Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido()+", "+empleado.getNombre()));
                     this.vaciar();
                     this.dispose();
@@ -1283,6 +1289,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     public void nuevo(){
        empleado=new Empleado();
        this.txtMotivoBaja.setEnabled(false);
+       empleado.setTEstadosEmpleado(gestor.getEstadoDisponible());
 
     }
 
