@@ -75,15 +75,14 @@ public class EmpleadoBD {
         String HQL = "FROM Empleado e WHERE ";
         HQL += " e.idEmpleado LIKE '" + legajo + "%'";
         HQL += " AND e.nombre LIKE '" + nombre + "%'";
-        HQL += " AND e.apellido LIKE '" + apellido + "%'";
-        HQL += " AND e.apellido LIKE '" + apellido + "%'";
+        HQL += " AND e.apellido LIKE '" + apellido + "%'";        
 
         if (vigentes == true && cancelados == false) {
-            HQL += " AND e.TEmpleados.fecBaja IS NULL ";
+            HQL += " AND e.fecBaja IS NULL ";
         }
 
         if (vigentes == false && cancelados == true) {
-            HQL += " AND e.TEmpleados.fecBaja IS NOT NULL ";
+            HQL += " AND e.fecBaja IS NOT NULL ";
         }
 
         return HibernateUtil.ejecutarConsulta(HQL);

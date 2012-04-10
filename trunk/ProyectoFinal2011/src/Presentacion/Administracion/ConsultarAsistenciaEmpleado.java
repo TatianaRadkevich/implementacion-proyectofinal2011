@@ -12,12 +12,15 @@ package Presentacion.Administracion;
 
 import BaseDeDatos.Administracion.AsistenciaEmpleadoBD;
 import BaseDeDatos.Administracion.EmpleadoBD;
+import Negocio.Administracion.AsignacionesDias;
 import Negocio.Administracion.AsistenciaEmpleado;
 import Negocio.Administracion.Empleado;
+import Negocio.Administracion.Horarios;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import com.toedter.calendar.JTextFieldDateEditor;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -32,6 +35,7 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
 
     private TablaManager<AsistenciaEmpleado> tmAsistencia;
     private TablaManager<Empleado> tmEmpleado;
+    private TablaManager<AsignacionesDias> tmAsignacionDia;
 
     /** Creates new form ConsultarAsistenciaEmpleado */
     public ConsultarAsistenciaEmpleado(java.awt.Frame parent, boolean modal) {
@@ -64,7 +68,7 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
 
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 dtcFechaDesde.setMaxSelectableDate(dtcFechaHasta.getDate());
-                cargarAsistencias();
+                cargarAsistenciaHorario();
             }
         });
 
@@ -72,7 +76,7 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
 
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 dtcFechaHasta.setMinSelectableDate(dtcFechaDesde.getDate());
-                cargarAsistencias();
+                cargarAsistenciaHorario();
             }
         });
 
@@ -130,42 +134,72 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
         tmEmpleado.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
-                cargarAsistencias();
+                cargarAsistenciaHorario();
             }
         });
+
+        tmAsignacionDia=new TablaManager<AsignacionesDias>(tbAsignacionDia) {
+
+            @Override
+            public Vector ObjetoFila(AsignacionesDias elemento) {
+                Vector salida=new Vector();
+                salida.add(elemento.getTDias().getNombre());
+                salida.add(Utilidades.parseHora(elemento.getHoraDesde()));
+                salida.add(Utilidades.parseHora(elemento.getHoraHasta()));
+                return salida;
+            }
+
+            @Override
+            public Vector getCabecera() {
+                Vector salida=new Vector();
+                salida.add("Día");
+                salida.add("Desde (hs.)");
+                salida.add("Hasta (hs.)");
+                return salida;
+            }
+        };
     }
 
-    private void cargarAsistencias() {
+    private void cargarAsistenciaHorario() {
+        limpiarAsistenciaHorario();
 
         Empleado emp=tmEmpleado.getSeletedObject();
         Date desde=dtcFechaDesde.getDate();
         Date hasta=dtcFechaHasta.getDate();
-
-        if (emp == null) {
-            limpiarAsistencias();
-            return;
-        }
+        if (emp == null)
+             return;
 
         List<AsistenciaEmpleado> resultado=AsistenciaEmpleadoBD.getAsistencia(emp.getIdEmpleado()+"", desde, hasta);
         tmAsistencia.setDatos(resultado);
-        limpiarObs();
+        
+        if(emp.getTAsignacionesHorario()==null)
+            return;
+
+        Horarios h=emp.getTAsignacionesHorario().getTHorarios();
+        tmAsignacionDia.setDatos(h.getTAsignacionesDiases());
+        txtNombreHorario.setText(h.getNombre());
+        txtDescripcionHorario.setText(h.getDescripcion());
     }
 
-    private void limpiarAsistencias() {
+    private void limpiarAsistenciaHorario() {
         tmAsistencia.limpiar();
-        limpiarObs();
+        limpiarObservaciones();
+
+        tmAsignacionDia.limpiar();
+        txtNombreHorario.setText("");
+        txtDescripcionHorario.setText("");
     }
 
-    private void limpiarObs() {
+    private void limpiarObservaciones() {
         txtObsEgreso.setText("");
         txtObsIngreso.setText("");
     }
 
     private void cargarObs(AsistenciaEmpleado ae) {
-        if (ae == null) {
-            limpiarObs();
+        limpiarObservaciones();
+        if (ae == null)            
             return;
-        }
+        
         txtObsEgreso.setText(ae.getObservEgreso());
         txtObsIngreso.setText(ae.getObservIngreso());
     }
@@ -191,13 +225,12 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbEmpledos = new javax.swing.JTable();
+        btnModificar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        tbPnlHorario = new javax.swing.JTabbedPane();
         pnlClientes = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbAsistencia = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
-        dtcFechaDesde = new com.toedter.calendar.JDateChooser();
-        jLabel2 = new javax.swing.JLabel();
-        dtcFechaHasta = new com.toedter.calendar.JDateChooser();
         pnlObservaciones = new javax.swing.JPanel();
         scrlPnlEgreso = new javax.swing.JScrollPane();
         txtObsEgreso = new javax.swing.JTextArea();
@@ -205,8 +238,19 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
         scrlPnlIngreso = new javax.swing.JScrollPane();
         txtObsIngreso = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
-        btnModificar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        dtcFechaHasta = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        dtcFechaDesde = new com.toedter.calendar.JDateChooser();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtNombreHorario = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtDescripcionHorario = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tbAsignacionDia = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -326,119 +370,6 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlClientes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Asistencia", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
-
-        tbAsistencia.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Fecha", "Hora Ingreso", "Hora Egreso"
-            }
-        ));
-        jScrollPane1.setViewportView(tbAsistencia);
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel5.setText("Fehca Desde:");
-
-        dtcFechaDesde.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dtcFechaDesdeMouseClicked(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel2.setText("Fecha Hasta:");
-
-        dtcFechaHasta.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dtcFechaHastaMouseClicked(evt);
-            }
-        });
-
-        pnlObservaciones.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Obsevaciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
-
-        txtObsEgreso.setColumns(20);
-        txtObsEgreso.setEditable(false);
-        txtObsEgreso.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        txtObsEgreso.setLineWrap(true);
-        txtObsEgreso.setWrapStyleWord(true);
-        scrlPnlEgreso.setViewportView(txtObsEgreso);
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel7.setText("Egreso:");
-
-        txtObsIngreso.setColumns(20);
-        txtObsIngreso.setEditable(false);
-        txtObsIngreso.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        txtObsIngreso.setLineWrap(true);
-        txtObsIngreso.setWrapStyleWord(true);
-        scrlPnlIngreso.setViewportView(txtObsIngreso);
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel6.setText("Ingreso:");
-
-        javax.swing.GroupLayout pnlObservacionesLayout = new javax.swing.GroupLayout(pnlObservaciones);
-        pnlObservaciones.setLayout(pnlObservacionesLayout);
-        pnlObservacionesLayout.setHorizontalGroup(
-            pnlObservacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlObservacionesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlObservacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(scrlPnlEgreso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                    .addComponent(scrlPnlIngreso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
-                .addContainerGap())
-        );
-        pnlObservacionesLayout.setVerticalGroup(
-            pnlObservacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlObservacionesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrlPnlIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrlPnlEgreso, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout pnlClientesLayout = new javax.swing.GroupLayout(pnlClientes);
-        pnlClientes.setLayout(pnlClientesLayout);
-        pnlClientesLayout.setHorizontalGroup(
-            pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlClientesLayout.createSequentialGroup()
-                .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlClientesLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dtcFechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dtcFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(pnlObservaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlClientesLayout.setVerticalGroup(
-            pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlClientesLayout.createSequentialGroup()
-                .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(dtcFechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dtcFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlObservaciones, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
         btnModificar.setText("Salir");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -453,19 +384,195 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
             }
         });
 
+        tbAsistencia.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Fecha", "Hora Ingreso", "Hora Egreso"
+            }
+        ));
+        jScrollPane1.setViewportView(tbAsistencia);
+
+        pnlObservaciones.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Obsevaciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+
+        txtObsEgreso.setColumns(20);
+        txtObsEgreso.setEditable(false);
+        txtObsEgreso.setFont(new java.awt.Font("Tahoma", 0, 11));
+        txtObsEgreso.setLineWrap(true);
+        txtObsEgreso.setWrapStyleWord(true);
+        scrlPnlEgreso.setViewportView(txtObsEgreso);
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel7.setText("Egreso:");
+
+        txtObsIngreso.setColumns(20);
+        txtObsIngreso.setEditable(false);
+        txtObsIngreso.setFont(new java.awt.Font("Tahoma", 0, 11));
+        txtObsIngreso.setLineWrap(true);
+        txtObsIngreso.setWrapStyleWord(true);
+        scrlPnlIngreso.setViewportView(txtObsIngreso);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel6.setText("Ingreso:");
+
+        javax.swing.GroupLayout pnlObservacionesLayout = new javax.swing.GroupLayout(pnlObservaciones);
+        pnlObservaciones.setLayout(pnlObservacionesLayout);
+        pnlObservacionesLayout.setHorizontalGroup(
+            pnlObservacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlObservacionesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlObservacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(scrlPnlEgreso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                    .addComponent(scrlPnlIngreso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap())
+        );
+        pnlObservacionesLayout.setVerticalGroup(
+            pnlObservacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlObservacionesLayout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrlPnlIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrlPnlEgreso, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel2.setText("Fecha Hasta:");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel5.setText("Fecha Desde:");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(dtcFechaDesde, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dtcFechaHasta, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addComponent(jLabel2)))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addComponent(jLabel2)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(dtcFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addComponent(jLabel5)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(dtcFechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        javax.swing.GroupLayout pnlClientesLayout = new javax.swing.GroupLayout(pnlClientes);
+        pnlClientes.setLayout(pnlClientesLayout);
+        pnlClientesLayout.setHorizontalGroup(
+            pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlClientesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(pnlObservaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnlClientesLayout.setVerticalGroup(
+            pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlClientesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlObservaciones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlClientesLayout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        tbPnlHorario.addTab("Asistencia del empleado", pnlClientes);
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel8.setText("Descripción:");
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel9.setText("Nombre:");
+
+        txtNombreHorario.setEditable(false);
+
+        txtDescripcionHorario.setEditable(false);
+        txtDescripcionHorario.setFont(new java.awt.Font("Tahoma", 0, 11));
+        txtDescripcionHorario.setLineWrap(true);
+        txtDescripcionHorario.setWrapStyleWord(true);
+        jScrollPane3.setViewportView(txtDescripcionHorario);
+
+        tbAsignacionDia.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Día", "Desde", "Hasta"
+            }
+        ));
+        jScrollPane4.setViewportView(tbAsignacionDia);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel9)
+                    .addComponent(txtNombreHorario, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                    .addComponent(jLabel8)
+                    .addComponent(jScrollPane3))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombreHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        tbPnlHorario.addTab("Horario del empleado", jPanel3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tbPnlHorario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 534, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 491, Short.MAX_VALUE)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE))
+                    .addComponent(pnlBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -473,8 +580,8 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tbPnlHorario, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModificar)
@@ -505,14 +612,6 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         this.dispose();
 }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void dtcFechaDesdeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dtcFechaDesdeMouseClicked
-        // TODO add your handling code here:
-}//GEN-LAST:event_dtcFechaDesdeMouseClicked
-
-    private void dtcFechaHastaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dtcFechaHastaMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dtcFechaHastaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -545,20 +644,30 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel pnlBuscar;
     private javax.swing.JPanel pnlClientes;
     private javax.swing.JPanel pnlObservaciones;
     private javax.swing.JScrollPane scrlPnlEgreso;
     private javax.swing.JScrollPane scrlPnlIngreso;
+    private javax.swing.JTable tbAsignacionDia;
     private javax.swing.JTable tbAsistencia;
     private javax.swing.JTable tbEmpledos;
+    private javax.swing.JTabbedPane tbPnlHorario;
     private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextArea txtDescripcionHorario;
     private javax.swing.JTextField txtLegajo;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNombreHorario;
     private javax.swing.JTextArea txtObsEgreso;
     private javax.swing.JTextArea txtObsIngreso;
     // End of variables declaration//GEN-END:variables
