@@ -8,8 +8,8 @@
  *
  * Created on 13/08/2011, 18:40:32
  */
-
 package Presentacion.Administracion;
+
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Operacion;
 import Negocio.Administracion.GestorTipoDocumento;
@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Ivan
@@ -30,20 +31,20 @@ import javax.swing.DefaultListModel;
 public class PantallaABMTipoDocumento extends javax.swing.JDialog {
 
     private int operacion;
-    private TipoDocumento tipo_actual=null;
-    private GestorTipoDocumento gestor=new GestorTipoDocumento();
+    private TipoDocumento tipo_actual = null;
+    private GestorTipoDocumento gestor = new GestorTipoDocumento();
 
     /** Creates new form AdministrarTipoDocumento */
-   public PantallaABMTipoDocumento(java.awt.Frame parent, boolean modal) {
+    public PantallaABMTipoDocumento(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
-       this.activarTipoDocumento(false);
-       this.btnBaja.setEnabled(false);
-       this.activarDisponible(true);
-       this.activarBotones(true, false, false, false, false);
-       this.cargarTipoDocumento();
-       IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+        this.activarTipoDocumento(false);
+        this.btnBaja.setEnabled(false);
+        this.activarDisponible(true);
+        this.activarBotones(true, false, false, false, false);
+        this.cargarTipoDocumento();
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
 
     }
 
@@ -67,15 +68,16 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstDisponible = new javax.swing.JList();
+        jPanel3 = new javax.swing.JPanel();
+        btnNuevo = new javax.swing.JButton();
         btnBaja = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        btnNuevo = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administrar tipo de documento");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Documento"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tipo Documento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -90,7 +92,8 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
         jLabel2.setText("Descripción:");
 
         txtDescripcion.setColumns(20);
-        txtDescripcion.setRows(5);
+        txtDescripcion.setLineWrap(true);
+        txtDescripcion.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txtDescripcion);
 
         btnCancelar.setText("Cancelar");
@@ -117,19 +120,18 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
                         .addGap(27, 27, 27)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(179, Short.MAX_VALUE)
+                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(131, Short.MAX_VALUE)
-                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,14 +142,15 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
-                    .addComponent(btnCancelar)))
+                    .addComponent(btnCancelar))
+                .addContainerGap())
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Disponible"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Disponible", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         lstDisponible.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -155,6 +158,13 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
             }
         });
         jScrollPane2.setViewportView(lstDisponible);
+
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnBaja.setText("Eliminar");
         btnBaja.addActionListener(new java.awt.event.ActionListener() {
@@ -170,39 +180,43 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
             }
         });
 
-        btnNuevo.setText("Nuevo");
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(btnNuevo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnModificar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnBaja)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnNuevo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBaja)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         btnSalir.setText("Salir");
@@ -218,25 +232,23 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(519, Short.MAX_VALUE)
-                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSalir))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSalir)
                 .addContainerGap())
         );
 
@@ -248,17 +260,17 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
 
 
 
-        
+
         try {
-        tipo_actual.validarOk();
+            tipo_actual.validarOk();
         } catch (TipoDatoException ex) {
-           Mensajes.mensajeErrorGenerico(ex.getMessage());
-           return;
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+            return;
         }
 
-        
-      if(operacion==Operacion.nuevo){
-          
+
+        if (operacion == Operacion.nuevo) {
+
 //            try{
 //            tipo_actual.setNombre(txtNombre.getText().toUpperCase());
 //            } catch(TipoDatoException e){
@@ -267,36 +279,39 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
             tipo_actual.setDescripcion(txtDescripcion.getText());
 
             gestor.guardar(tipo_actual);
-            Mensajes.mensajeInformacion("El tipo de documento "+tipo_actual.getNombre()+"\n ha sido guardado exitosamente");
+            Mensajes.mensajeInformacion("El tipo de documento " + tipo_actual.getNombre() + "\n ha sido guardado exitosamente");
             this.vaciar();
             cancelar();
             this.cargarTipoDocumento();
             return;
         }
 
-        if(operacion==Operacion.modificar){
-            
-
+        if (operacion == Operacion.modificar) {
             tipo_actual.setDescripcion(txtDescripcion.getText());
             gestor.modificar(tipo_actual);
-            Mensajes.mensajeInformacion("El tipo de documento "+tipo_actual.getNombre()+"\n ha sido modificado exitosamente");
+            Mensajes.mensajeInformacion("El tipo de documento " + tipo_actual.getNombre() + "\n ha sido modificado exitosamente");
             this.vaciar();
             cancelar();
-            tipo_actual=null;
-            return;
-        }
-        
-         if(operacion==Operacion.baja){
-           gestor.eliminar(tipo_actual);
-           Mensajes.mensajeInformacion("El tipo de documento "+tipo_actual.getNombre()+"\n ha sido eliminado exitosamente");
-            this.vaciar();
-            tipo_actual=null;
-            cancelar();
-            this.cargarTipoDocumento();
+            tipo_actual = null;
             return;
         }
 
-     
+        if (operacion == Operacion.baja) {
+            try {
+                gestor.eliminar(tipo_actual);
+                Mensajes.mensajeInformacion("El tipo de documento " + tipo_actual.getNombre() + "\n ha sido eliminado exitosamente");
+                this.vaciar();
+                tipo_actual = null;
+                cancelar();
+                this.cargarTipoDocumento();
+                return;
+            } catch (Exception e) {
+                Mensajes.mensajeErrorGenerico(e.getMessage());
+                return;
+            }
+        }
+
+
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -304,13 +319,13 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-       nuevo();
+        nuevo();
 
-       txtNombre.requestFocus();
+        txtNombre.requestFocus();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-           if(lstDisponible.getSelectedIndex()==-1){
+        if (lstDisponible.getSelectedIndex() == -1) {
             Mensajes.mensajeErrorGenerico("Debe seleccionar el tipo de documento que desea modificar");
             return;
         }
@@ -318,42 +333,42 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
         this.btnBaja.setEnabled(false);
         this.activarTipoDocumento(true);
         this.activarBotones(false, false, false, true, true);
-        tipo_actual=(TipoDocumento) lstDisponible.getSelectedValue();
+        tipo_actual = (TipoDocumento) lstDisponible.getSelectedValue();
         this.cargarDatos(tipo_actual);
-        this.operacion=Operacion.modificar;
+        this.operacion = Operacion.modificar;
         this.txtNombre.requestFocus();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        if(lstDisponible.getSelectedIndex()==-1){
+        if (lstDisponible.getSelectedIndex() == -1) {
             Mensajes.mensajeErrorGenerico("Debe seleccionar el tipo de documento que desea dar de baja");
-         return;
+            return;
         }
 
-        tipo_actual=(TipoDocumento) lstDisponible.getSelectedValue();
+        tipo_actual = (TipoDocumento) lstDisponible.getSelectedValue();
         this.cargarDatos(tipo_actual);
         this.activarTipoDocumento(false);
         this.activarDisponible(false);
         this.activarBotones(false, false, false, true, true);
-        this.operacion=Operacion.baja;
+        this.operacion = Operacion.baja;
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void lstDisponibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDisponibleMouseClicked
-        if(lstDisponible.getSelectedIndex()!=-1){
-         TipoDocumento temp= (TipoDocumento) lstDisponible.getSelectedValue();
-        this.cargarDatos(temp);
-        this.activarDisponible(true);
-        this.activarTipoDocumento(false);
-        this.activarBotones(true, true, true, false, false);
+        if (lstDisponible.getSelectedIndex() != -1) {
+            TipoDocumento temp = (TipoDocumento) lstDisponible.getSelectedValue();
+            this.cargarDatos(temp);
+            this.activarDisponible(true);
+            this.activarTipoDocumento(false);
+            this.activarBotones(true, true, true, false, false);
         }
     }//GEN-LAST:event_lstDisponibleMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       this.activarTipoDocumento(false);
-       this.btnBaja.setEnabled(false);
-       this.activarDisponible(true);
-       this.activarBotones(true, false, false, false, false);
-       this.vaciar();
+        this.activarTipoDocumento(false);
+        this.btnBaja.setEnabled(false);
+        this.activarDisponible(true);
+        this.activarBotones(true, false, false, false, false);
+        this.vaciar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
@@ -367,13 +382,15 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNombreFocusLost
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 PantallaABMTipoDocumento dialog = new PantallaABMTipoDocumento(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
@@ -382,7 +399,6 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnBaja;
@@ -394,6 +410,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList lstDisponible;
@@ -401,16 +418,16 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
-      private void cargarTipoDocumento(){
+    private void cargarTipoDocumento() {
         try {
             lstDisponible.removeAll();
             DefaultListModel modelo = new DefaultListModel();
 
             List<TipoDocumento> tipo = GestorTipoDocumento.listarTipoDocumentos();
-            for(int i=0;i<tipo.size();i++){
+            for (int i = 0; i < tipo.size(); i++) {
                 modelo.addElement(tipo.get(i));
 
-            lstDisponible.setModel(modelo);
+                lstDisponible.setModel(modelo);
 
 
             }
@@ -418,39 +435,38 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
             Logger.getLogger(PantallaABMTipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void activarTipoDocumento(boolean flag){
+
+    private void activarTipoDocumento(boolean flag) {
         this.txtNombre.setEnabled(flag);
         this.txtDescripcion.setEnabled(flag);
     }
-    
-    private void activarDisponible(boolean  flag)
-    {
+
+    private void activarDisponible(boolean flag) {
         this.lstDisponible.setEnabled(flag);
     }
 
-    private void activarBotones(boolean nuevo, boolean modificar, boolean baja, boolean aceptar, boolean cancelar){
+    private void activarBotones(boolean nuevo, boolean modificar, boolean baja, boolean aceptar, boolean cancelar) {
         this.btnNuevo.setEnabled(nuevo);
         this.btnModificar.setEnabled(modificar);
         this.btnBaja.setEnabled(baja);
         this.btnAceptar.setEnabled(aceptar);
         this.btnCancelar.setEnabled(cancelar);
-}
-
-       private void vaciar(){
-        this.txtDescripcion.setText("");
-        this.txtNombre.setText("");
- }
-
-
-     private void cancelar(){
-       this.activarTipoDocumento(false);
-       this.btnBaja.setEnabled(false);
-       this.activarDisponible(true);
-       this.activarBotones(true, false, false,  false, false);
-       this.vaciar();
     }
 
-     public void nuevo() {
+    private void vaciar() {
+        this.txtDescripcion.setText("");
+        this.txtNombre.setText("");
+    }
+
+    private void cancelar() {
+        this.activarTipoDocumento(false);
+        this.btnBaja.setEnabled(false);
+        this.activarDisponible(true);
+        this.activarBotones(true, false, false, false, false);
+        this.vaciar();
+    }
+
+    public void nuevo() {
         // TODO add your handling code here:
         this.vaciar();
         this.activarDisponible(false);

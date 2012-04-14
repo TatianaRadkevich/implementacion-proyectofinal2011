@@ -41,6 +41,12 @@ public class GestorTipoDocumento {
     }
 
     public void eliminar(TipoDocumento tipoDoc){
+        if(tipoDoc.getTEmpleadoses().isEmpty()==false)
+        {
+            throw new RuntimeException(
+                    "El tipo de documento que intenta borrar "
+                    + "está asignado a uno o más empleados");           
+        }
         TipoDocumentoBD.eliminar(tipoDoc);
     }
 
