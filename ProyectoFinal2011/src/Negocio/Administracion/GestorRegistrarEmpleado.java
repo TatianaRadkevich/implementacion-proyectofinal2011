@@ -6,6 +6,7 @@
 package Negocio.Administracion;
 
 import BaseDeDatos.Administracion.EmpleadoBD;
+import BaseDeDatos.UbicacionGeografica.DomicilioBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Administracion.PantallaABMEmpleado;
 import java.awt.Dialog;
@@ -25,6 +26,7 @@ public class GestorRegistrarEmpleado extends GestorEmpleado{
 
     @Override
     public Empleado ejecutarOperacion(Empleado empleado) throws ExceptionGestor {
+        DomicilioBD.guardar(empleado.getTDomicilios());
         return EmpleadoBD.guardar(empleado);
     }
 

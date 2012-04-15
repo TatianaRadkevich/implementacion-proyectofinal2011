@@ -602,6 +602,11 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 lstCargosFocusLost(evt);
             }
         });
+        lstCargos.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                lstCargosPropertyChange(evt);
+            }
+        });
 
         btnAgregarCargo.setText("Agregar");
         btnAgregarCargo.addActionListener(new java.awt.event.ActionListener() {
@@ -683,7 +688,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                    .addComponent(pnlBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1085,6 +1090,11 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             this.repaint();
 
     }//GEN-LAST:event_btnAgregarCargoActionPerformed
+
+    private void lstCargosPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_lstCargosPropertyChange
+        // TODO add your handling code here:
+        System.out.println("Entro");
+    }//GEN-LAST:event_lstCargosPropertyChange
 
     /**
     * @param args the command line arguments

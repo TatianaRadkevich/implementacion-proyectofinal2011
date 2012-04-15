@@ -705,6 +705,7 @@
         <Component class="Presentacion.JCheckList" name="lstCargos">
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="lstCargosFocusLost"/>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="lstCargosPropertyChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnAgregarCargo">
