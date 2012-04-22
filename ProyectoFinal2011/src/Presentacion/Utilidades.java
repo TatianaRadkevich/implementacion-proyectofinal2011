@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -95,6 +96,12 @@ public class Utilidades {
         return GregorianCalendar.getInstance();
     }
 
+    public static String fechaHoraMinutoSegundoActual() {
+    Date fecha = new Date();
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+    return formato.format(fecha);
+}
      public static BigDecimal parseBigDecimal(String value) {
         try {
             return new BigDecimal(value);
