@@ -17,9 +17,11 @@ import Negocio.UbicacionGeografica.Barrio;
 import Negocio.UbicacionGeografica.Localidad;
 import Negocio.UbicacionGeografica.Pais;
 import Negocio.UbicacionGeografica.Provincia;
+import Presentacion.Administracion.PantallaABMEmpleado;
 import Presentacion.Administracion.PantallaRegistrarAsistenciaEmpleado;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JDialog;
 
 /**
  *
@@ -75,8 +77,8 @@ public abstract class GestorEmpleado {
         return EstadoEmpleadoBD.traerEstadoDisponible();
     }
 
-    public void registrarAsistenciaEmpleado(Dialog parent,int legajo) {
-        PantallaRegistrarAsistenciaEmpleado pantalla_producto=new PantallaABMEmpleado(parent, true, this,"Modificar Empleado");
+    public void registrarAsistenciaEmpleado(JDialog parent,int legajo) {
+        PantallaABMEmpleado pantalla_producto=new PantallaABMEmpleado(parent, true, this,"Modificar Empleado");
         pantalla_producto.modificar(EmpleadoBD.traerEmpleado(legajo));
         pantalla_producto.setVisible(true);
     }
