@@ -82,6 +82,7 @@ public class Principal extends javax.swing.JFrame {
         btnCargo = new javax.swing.JButton();
         btnTipoDocumento = new javax.swing.JButton();
         btnTipoDocumento1 = new javax.swing.JButton();
+        btnAsistencia = new javax.swing.JButton();
         pnlCompras = new Presentacion.Fondo();
         txtComp = new javax.swing.JTextField();
         btnProveedor = new javax.swing.JButton();
@@ -185,6 +186,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnAsistencia.setText("Asistencia Empleados");
+        btnAsistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsistenciaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlAdministracionLayout = new javax.swing.GroupLayout(pnlAdministracion);
         pnlAdministracion.setLayout(pnlAdministracionLayout);
         pnlAdministracionLayout.setHorizontalGroup(
@@ -201,6 +209,10 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnTipoDocumento1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(556, Short.MAX_VALUE))
+            .addGroup(pnlAdministracionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(556, Short.MAX_VALUE))
         );
         pnlAdministracionLayout.setVerticalGroup(
             pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,7 +226,9 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnTipoDocumento1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(179, 179, 179))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(118, 118, 118))
         );
 
         pnlContenerdor.add(pnlAdministracion, "card2");
@@ -631,6 +645,10 @@ public class Principal extends javax.swing.JFrame {
         new FormaDePagoPantalla(this, true).setVisible(true);
     }//GEN-LAST:event_btnTipoDocumento1ActionPerformed
 
+    private void btnAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsistenciaActionPerformed
+        new PantallaRegistrarAsistenciaEmpleado().setVisible(true);
+    }//GEN-LAST:event_btnAsistenciaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -644,6 +662,7 @@ public class Principal extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdministracion;
+    private javax.swing.JButton btnAsistencia;
     private javax.swing.JButton btnAvance;
     private javax.swing.JButton btnCargo;
     private javax.swing.JButton btnCompras;

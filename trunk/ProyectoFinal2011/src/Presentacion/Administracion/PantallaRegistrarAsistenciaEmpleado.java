@@ -17,8 +17,12 @@ import BaseDeDatos.HibernateUtil;
 import Negocio.Administracion.AsistenciaEmpleado;
 import Negocio.Administracion.Empleado;
 import Negocio.Administracion.GestorEmpleado;
+import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 import java.util.Vector;
 
 /**
@@ -30,12 +34,13 @@ Empleado empleado = null;
 EmpleadoBD empleadoBD = new EmpleadoBD();
 TablaManager<Empleado> tmEmpleados;
 AsistenciaEmpleado asistencia=null;
+Timer tiempo;
 
     /** Creates new form PantallaRegistrarAsistenciaEmpleado */
     public PantallaRegistrarAsistenciaEmpleado() {
         initComponents();
         HibernateUtil.getSessionFactory();
-        this.txtFechaActual.setText(Utilidades.parseFechaHora(Utilidades.getFechaActual()));
+        iniciarReloj();
         this.inicializarTablas();
         this.cargarEmpleados();
     }
@@ -103,6 +108,8 @@ AsistenciaEmpleado asistencia=null;
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Fecha:");
 
+        txtFechaActual.setEditable(false);
+
         txtObservaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtObservacionesActionPerformed(evt);
@@ -130,21 +137,6 @@ AsistenciaEmpleado asistencia=null;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(645, Short.MAX_VALUE)
-                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addContainerGap(715, Short.MAX_VALUE))
@@ -152,12 +144,26 @@ AsistenciaEmpleado asistencia=null;
                 .addContainerGap()
                 .addComponent(txtObservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(460, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(431, Short.MAX_VALUE)
-                .addComponent(btnSalir1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalir2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(104, 104, 104))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnSalir1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnSalir2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,11 +204,17 @@ AsistenciaEmpleado asistencia=null;
      asistencia.setEmpleado(tmEmpleados.getSeletedObject());
      asistencia.setFecAsistencia(Utilidades.getFechaActual());
      asistencia.setHoraIngreso(Utilidades.parseHora(Utilidades.getFechaActual()));
+     asistencia.setObservIngreso(txtObservaciones.getText());
      AsistenciaEmpleadoBD.guardar(asistencia);
+     Mensajes.mensajeInformacion("El ingreso del empleado" +" "+tmEmpleados.getSeletedObject().getApellido() + ", " + tmEmpleados.getSeletedObject().getNombre() +" "+"ha sido registrado exitosamente" );
+     tmEmpleados.removeSelectedRow();
+     tmEmpleados.updateTabla();
+     txtObservaciones.setText("");
     }//GEN-LAST:event_btnSalir1ActionPerformed
 
     private void btnSalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir2ActionPerformed
-        // TODO add your handling code here:
+        tmEmpleados.setDatos(EmpleadoBD.getEmpleadosVigentesSinAsistenciaActual());
+        txtObservaciones.setText("");
     }//GEN-LAST:event_btnSalir2ActionPerformed
 
     /**
@@ -230,10 +242,22 @@ AsistenciaEmpleado asistencia=null;
     // End of variables declaration//GEN-END:variables
 
     private void cargarEmpleados() {
-        tmEmpleados.setDatos(EmpleadoBD.getEmpleadosVigentes());
+        tmEmpleados.setDatos(EmpleadoBD.getEmpleadosVigentesSinAsistenciaActual());
     }
 
-  
+private void iniciarReloj() {
+
+tiempo = new Timer (1000, new ActionListener ()
+{
+    public void actionPerformed(ActionEvent e)
+    {
+        txtFechaActual.setText(Utilidades.fechaHoraMinutoSegundoActual());
+    }
+}); 
+
+tiempo.start();
+    }
+
     private void inicializarTablas() {
 
         tmEmpleados = new TablaManager<Empleado>(tbEmpleado) {

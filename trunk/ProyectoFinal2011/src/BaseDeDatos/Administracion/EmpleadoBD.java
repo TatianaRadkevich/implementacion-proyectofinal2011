@@ -8,7 +8,9 @@ import BaseDeDatos.HibernateUtil;
 import Negocio.Administracion.Cargo;
 import Negocio.Administracion.Empleado;
 import Negocio.Administracion.TipoDocumento;
+import Presentacion.Utilidades;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -142,5 +144,9 @@ public class EmpleadoBD {
 
     public static List<Empleado> getEmpleadosVigentes() {
         return HibernateUtil.ejecutarConsulta("FROM Empleado as p WHERE p.fecBaja IS NULL ");
+    }
+
+    public static List<Empleado> getEmpleadosVigentesSinAsistenciaActual() {
+        return HibernateUtil.ejecutarConsulta("FROM Empleado as p WHERE p.fecBaja IS NULL AND "+ Utilidades.parseFecha(Utilidades.getFechaActual())+" NOT IN (select fecAsistencia from AsistenciaEmpleado where TEmpleados=p.idEmpleado)");
     }
 }
