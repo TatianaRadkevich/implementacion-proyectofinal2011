@@ -200,6 +200,7 @@ Timer tiempo;
 }//GEN-LAST:event_txtObservacionesActionPerformed
 
     private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
+     if(tmEmpleados.getSelectedRow()!= -1){
      asistencia = new AsistenciaEmpleado();
      asistencia.setEmpleado(tmEmpleados.getSeletedObject());
      asistencia.setFecAsistencia(Utilidades.getFechaActual());
@@ -210,6 +211,9 @@ Timer tiempo;
      tmEmpleados.removeSelectedRow();
      tmEmpleados.updateTabla();
      txtObservaciones.setText("");
+        }
+     else
+      Mensajes.mensajeErrorGenerico("Debe seleccionar un empleado");
     }//GEN-LAST:event_btnSalir1ActionPerformed
 
     private void btnSalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir2ActionPerformed
