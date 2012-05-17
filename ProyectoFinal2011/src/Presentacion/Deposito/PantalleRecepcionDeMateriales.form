@@ -193,10 +193,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="pnlDetalle" max="32767" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="pnlRecepcion" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnGenerarReclamo" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="pnlRecepcion" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -265,13 +262,8 @@
                       <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="pnlRecepcion" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnGenerarReclamo" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="pnlDetalle" max="32767" attributes="0"/>
+                          <Component id="pnlRecepcion" max="32767" attributes="0"/>
+                          <Component id="pnlDetalle" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -292,7 +284,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane2" alignment="0" pref="465" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" alignment="0" pref="487" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -466,7 +458,7 @@
                               <Component id="txtCantRecibida" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnConfirmar" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="51" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -529,11 +521,6 @@
             <Component class="javax.swing.JTextField" name="txtProveedor">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnGenerarReclamo">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Generar reclamo"/>
               </Properties>
             </Component>
           </SubComponents>

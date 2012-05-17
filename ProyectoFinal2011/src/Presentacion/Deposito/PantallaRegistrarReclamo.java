@@ -13,7 +13,7 @@ package Presentacion.Deposito;
 
 import BaseDeDatos.Deposito.EstadoReclamoBD;
 import BaseDeDatos.Deposito.ReclamoBD;
-import Negocio.Deposito.EstadoReclamo;
+import Negocio.Compras.OrdenCompra;
 import Negocio.Deposito.GestorReclamo;
 import Negocio.Deposito.Reclamo;
 import Presentacion.IniciadorDeVentanas;
@@ -29,7 +29,8 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
     private Reclamo reclamo=null;
     private GestorReclamo gestor=new GestorReclamo();
     private short cod = (short) (ReclamoBD.getCodigo()+1);
-    /** Creates new form PantallaRegistrarReclamo */
+    
+    /** Creates new form PantallaRegistrarReclamo */    
     public PantallaRegistrarReclamo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -38,6 +39,11 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
         txtFechaActual.setText((Utilidades.parseFecha(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 0, 0, 0))));
         txtDescripcion.requestFocus();
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
+    }
+    
+    public void cargarDatosOrden(OrdenCompra oc)
+    {
+        //TODO: cargar datos de orden en ventana
     }
 
     /** This method is called from within the constructor to
@@ -197,23 +203,6 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
     dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                PantallaRegistrarReclamo dialog = new PantallaRegistrarReclamo(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

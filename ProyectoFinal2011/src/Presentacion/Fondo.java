@@ -30,11 +30,11 @@ public class Fondo extends javax.swing.JPanel {
 
     public Fondo(String nombre) {        
         this();
-        imagen = new ImageIcon(getClass().getResource("/Presentacion/Imagenes/" + nombre));
+        imagen = new ImageIcon("/Presentacion/Imagenes/" + nombre);
     }
 
     public void setImagen(String nombre) {
-        imagen = new ImageIcon(getClass().getResource("/Presentacion/Imagenes/" + nombre));
+        imagen = new ImageIcon("/Presentacion/Imagenes/" + nombre);
         this.updateUI();
     }
 

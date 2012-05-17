@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class GestorReclamo {
 
-
     public static List<Reclamo> listarReclamos(){
         return ReclamoBD.listarReclamos();
     }
@@ -22,13 +21,11 @@ public class GestorReclamo {
         return ReclamoBD.guardar(r);
     }
 
-
     public Reclamo modificar(Reclamo r){
         return ReclamoBD.modificar(r);
     }
-
+    
     public void eliminar(Reclamo r){
         ReclamoBD.eliminar(r);
     }
-
 }
