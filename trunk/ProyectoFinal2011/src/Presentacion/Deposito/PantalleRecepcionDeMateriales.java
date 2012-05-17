@@ -150,7 +150,6 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
         txtMaterial = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtProveedor = new javax.swing.JTextField();
-        btnGenerarReclamo = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -215,7 +214,7 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
         pnlDetalle.setLayout(pnlDetalleLayout);
         pnlDetalleLayout.setHorizontalGroup(
             pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
         );
         pnlDetalleLayout.setVerticalGroup(
             pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,7 +255,7 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("Cant. pedida:");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -299,15 +298,13 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(txtCantRecibida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConfirmar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel7.setText("Proveedor:");
 
         txtProveedor.setEditable(false);
-
-        btnGenerarReclamo.setText("Generar reclamo");
 
         javax.swing.GroupLayout pnlOrdenLayout = new javax.swing.GroupLayout(pnlOrden);
         pnlOrden.setLayout(pnlOrdenLayout);
@@ -319,9 +316,7 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrdenLayout.createSequentialGroup()
                         .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addGroup(pnlOrdenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(pnlRecepcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnGenerarReclamo))
+                        .addComponent(pnlRecepcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(pnlOrdenLayout.createSequentialGroup()
                         .addGroup(pnlOrdenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -373,11 +368,7 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlOrdenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlOrdenLayout.createSequentialGroup()
-                        .addComponent(pnlRecepcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnGenerarReclamo)
-                        .addContainerGap())
+                    .addComponent(pnlRecepcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -469,17 +460,32 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
         
-        OrdenCompra oc=gestor.getOrdenCompra();
+        OrdenCompra oc= gestor.getOrdenCompra();
         oc.setFecRecepcion(Utilidades.getFechaActual());
+        
+        cargarCantidadesRecibidas(oc);
 
         try {
-            gestor.ejecutarCU(oc);
+            // Si es necesario el reclamo muestro la ventana
+            if (!gestor.ejecutarCU(oc))
+            {
+                PantallaRegistrarReclamo dialog = new PantallaRegistrarReclamo(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+            gestor.registrarRecepcionMateriales(oc);
             gestor.finalizarCU();
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+    /** Método que carga las cantidades recibidas de materiales en la orden que estamos trabajando
+     * @param oc la orden de compra que estamos trabajando
+     */
+    private void cargarCantidadesRecibidas(OrdenCompra oc) {
+        oc.setDetalle(tmDetalleOrden.getDatos());
+    }
+    
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         // TODO add your handling code here:
         try {
@@ -509,7 +515,6 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConfirmar;
-    private javax.swing.JButton btnGenerarReclamo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -539,4 +544,5 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
     private javax.swing.JTextField txtProveedor;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
+
 }

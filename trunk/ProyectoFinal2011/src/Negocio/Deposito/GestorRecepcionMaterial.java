@@ -35,6 +35,7 @@ public class GestorRecepcionMaterial {
     public  void iniciarCU(int nroOrden)
     {
         String mensaje="";
+        //TODO: traer orden según estado permitido
         ordenCompra=OrdenCompraBD.getOrdenCompra(nroOrden);
         
         if(ordenCompra==null)
@@ -58,20 +59,44 @@ public class GestorRecepcionMaterial {
         interfaz.habilitarCarga(true);
     }
 
-    public  void ejecutarCU(OrdenCompra oc) throws ExceptionGestor
+    /** Método ejecturaCU que valida si es necesario un reclamo a proveedor o no 
+     * @param oc la orden de compra que estamos trabajando
+     * @return devuelve true si no es necesario un reclamo y false si lo es
+     */
+    public boolean ejecutarCU(OrdenCompra oc) throws ExceptionGestor
     {
-        //validar(oc);
-        boolean ok=true;
-        for(DetalleOrdenCompra doc:oc.getDetalle())
-            if(doc.getEstado().equals(EstadoDetalleOrdenCompraBD.getEstadoConcretadaTotal())!=true)
-                ok=false;
-
-        if(ok)
+        this.ordenCompra = oc;
+        boolean recibidoIgualPedido = true;
+        for(DetalleOrdenCompra doc : oc.getDetalle())
+        {
+            if(!doc.getCantidadPedida().equals(doc.getCantidadRecibida()))
+            {
+                // Si lo pedido es distinto a lo recibido seteo estado parcial y activo la "bandera"
+                recibidoIgualPedido = false;
+                doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoConcretadaParcial());
+            }
+            else
+            {                
+                doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoConcretadaTotal());
+            }
+        }
+        
+        if (recibidoIgualPedido)
+        {
             oc.setEstado(EstadoOrdenCompraBD.getEstadoConcretadaTotal());
+            return true;
+        }
         else
+        {
             oc.setEstado(EstadoOrdenCompraBD.getEstadoConcretadaParcial());
- 
+            return false;
+        }
+    }
+    
+    public void registrarRecepcionMateriales(OrdenCompra oc)
+    { 
         OrdenCompraBD.modificar(oc);
+        //TODO: ingresar en depósito los materiales recibidos
         Mensajes.mensajeInformacion("La recepcion de materiales de la Orden de Compra \"Nro. "+oc.getId()+"\" ha sido guardado exitosamente.");
     }
 
