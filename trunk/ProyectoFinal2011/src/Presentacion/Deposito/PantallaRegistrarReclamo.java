@@ -69,6 +69,8 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
         lblTipoMoH1 = new javax.swing.JLabel();
         lblTipoMoH4 = new javax.swing.JLabel();
         txtNroOrden = new javax.swing.JTextField();
+        lblTipoMoH5 = new javax.swing.JLabel();
+        txtMotivo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -100,41 +102,46 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
 
         txtCodReclamo.setEditable(false);
 
-        lblTipoMoH2.setFont(new java.awt.Font("Tahoma", 1, 11));
+        lblTipoMoH2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblTipoMoH2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTipoMoH2.setText("Código Reclamo:");
 
-        lblTipoMoH1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        lblTipoMoH1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblTipoMoH1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTipoMoH1.setText("Descripción:");
 
-        lblTipoMoH4.setFont(new java.awt.Font("Tahoma", 1, 11));
+        lblTipoMoH4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblTipoMoH4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTipoMoH4.setText("Nro Orden de Compra:");
 
         txtNroOrden.setEditable(false);
+
+        lblTipoMoH5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblTipoMoH5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblTipoMoH5.setText("Motivo:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblTipoMoH4)
-                    .addComponent(lblTipoMoH2)
-                    .addComponent(lblTipoMoH1))
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNroOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTipoMoH5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTipoMoH1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTipoMoH4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTipoMoH2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtCodReclamo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                    .addComponent(txtMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNroOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTipoMoH2)
                     .addComponent(txtCodReclamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -142,11 +149,15 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTipoMoH4)
                     .addComponent(txtNroOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTipoMoH5)
+                    .addComponent(txtMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTipoMoH1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(63, 63, 63))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -154,37 +165,35 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(257, 257, 257)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(lblTipoMoH3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(23, 23, 23)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(39, 39, 39))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblTipoMoH3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTipoMoH3)
-                    .addComponent(txtFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(txtFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTipoMoH3))
+                .addGap(7, 7, 7)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(48, Short.MAX_VALUE))
+                    .addComponent(jButton2)))
         );
 
         pack();
@@ -194,6 +203,7 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
         if(validar()){
             reclamo = new Reclamo();
             reclamo.setFecReclamo(Utilidades.getFechaActual());
+            reclamo.setMotivo(txtMotivo.getText());
             reclamo.setDescripcion(txtDescripcion.getText());
             reclamo.setTEreclamo(EstadoReclamoBD.getEst_Generado());
             reclamo.setTOrdenesCompra(ordenCompra);
@@ -216,14 +226,21 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
     private javax.swing.JLabel lblTipoMoH2;
     private javax.swing.JLabel lblTipoMoH3;
     private javax.swing.JLabel lblTipoMoH4;
+    private javax.swing.JLabel lblTipoMoH5;
     private javax.swing.JTextField txtCodReclamo;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtFechaActual;
+    private javax.swing.JTextField txtMotivo;
     private javax.swing.JTextField txtNroOrden;
     // End of variables declaration//GEN-END:variables
 
     private boolean validar() {
-        if(txtDescripcion.getText().compareTo("")==0){
+        if(txtMotivo.getText().trim().compareTo("")==0){
+            Mensajes.mensajeErrorGenerico("Debe ingresar el motivo del reclamo");
+            txtMotivo.requestFocus();
+            return false;
+        }
+        if(txtDescripcion.getText().trim().compareTo("")==0){
             Mensajes.mensajeErrorGenerico("Debe ingresar la descripción del reclamo");
             txtDescripcion.requestFocus();
             return false;
