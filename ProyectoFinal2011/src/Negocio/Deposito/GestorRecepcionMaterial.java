@@ -95,9 +95,17 @@ public class GestorRecepcionMaterial {
     
     public void registrarRecepcionMateriales(OrdenCompra oc)
     { 
+        actualizarStockMateriales(oc);
         OrdenCompraBD.modificar(oc);
-        //TODO: ingresar en depósito los materiales recibidos
         Mensajes.mensajeInformacion("La recepcion de materiales de la Orden de Compra \"Nro. "+oc.getId()+"\" ha sido guardado exitosamente.");
+    }
+
+    private void actualizarStockMateriales(OrdenCompra oc) {
+        for (DetalleOrdenCompra detalle : oc.getDetalle())
+        {
+            //Sumamos al stock actual la cantidad recibida en la orden de compra
+            detalle.getMaterial().setStockActual((short)(detalle.getMaterial().getStockActual().shortValue() + detalle.getCantidadRecibida().shortValue()));
+        }
     }
 
     public void finalizarCU() {

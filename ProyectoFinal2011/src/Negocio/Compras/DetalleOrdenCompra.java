@@ -35,6 +35,7 @@ public class DetalleOrdenCompra implements java.io.Serializable {
     private OrdenCompra TOrdenesCompra;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_MATERIAL")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE) //TODO: revisar esto
     private Material TMateriales;
     @Column(name="PRECIO_UNITARIO", precision=6)
     private Float precioUnitario;
