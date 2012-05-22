@@ -29,6 +29,7 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
     private Reclamo reclamo=null;
     private GestorReclamo gestor=new GestorReclamo();
     private short cod = (short) (ReclamoBD.getCodigo()+1);
+    private OrdenCompra ordenCompra;
     
     /** Creates new form PantallaRegistrarReclamo */    
     public PantallaRegistrarReclamo(java.awt.Frame parent, boolean modal) {
@@ -43,7 +44,8 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
     
     public void cargarDatosOrden(OrdenCompra oc)
     {
-        //TODO: cargar datos de orden en ventana
+        ordenCompra = oc;
+        txtNroOrden.setText(oc.getId()+"");
     }
 
     /** This method is called from within the constructor to
@@ -193,7 +195,8 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
             reclamo = new Reclamo();
             reclamo.setFecReclamo(Utilidades.getFechaActual());
             reclamo.setDescripcion(txtDescripcion.getText());
-            reclamo.setTEreclamo(EstadoReclamoBD.getEst_Generado() );
+            reclamo.setTEreclamo(EstadoReclamoBD.getEst_Generado());
+            reclamo.setTOrdenesCompra(ordenCompra);
             gestor.guardar(reclamo);
             Mensajes.mensajeInformacion("El reclamo ha sido registrado exitosamente");
             txtDescripcion.setText("");

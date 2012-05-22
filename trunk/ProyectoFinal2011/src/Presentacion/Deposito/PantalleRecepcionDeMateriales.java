@@ -470,6 +470,7 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
             if (!gestor.ejecutarCU(oc))
             {
                 PantallaRegistrarReclamo dialog = new PantallaRegistrarReclamo(new javax.swing.JFrame(), true);
+                dialog.cargarDatosOrden(oc);
                 dialog.setVisible(true);
             }
             gestor.registrarRecepcionMateriales(oc);
