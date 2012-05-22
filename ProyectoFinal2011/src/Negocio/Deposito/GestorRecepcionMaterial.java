@@ -45,6 +45,14 @@ public class GestorRecepcionMaterial {
             Mensajes.mensajeErrorGenerico(mensaje);
             return;
         }
+        
+        if(ordenCompra.getEstado() == EstadoOrdenCompraBD.getEstadoConcretadaTotal())
+        {
+            mensaje="La orden de compra con el nro. "+nroOrden+ " se encuentra en estado CONCRETADA TOTAL" +
+                    "\nPor favor busque una orden que no haya sido completada aún";
+            Mensajes.mensajeErrorGenerico(mensaje);
+            return;
+        }
 //        if(ordenCompra.getEstado().equals(EstadoOrdenCompraBD.getEstadoEnviada())!=true
 //                ||ordenCompra.getEstado().equals(EstadoOrdenCompraBD.getEstadoConcretadaParcial())!=true)
 //        {
@@ -94,8 +102,11 @@ public class GestorRecepcionMaterial {
     }
     
     public void registrarRecepcionMateriales(OrdenCompra oc)
-    { 
-        actualizarStockMateriales(oc);
+    {
+        if (oc.getEstado() != EstadoOrdenCompraBD.getEstadoConcretadaTotal())
+        {
+            actualizarStockMateriales(oc);
+        }
         OrdenCompraBD.modificar(oc);
         Mensajes.mensajeInformacion("La recepcion de materiales de la Orden de Compra \"Nro. "+oc.getId()+"\" ha sido guardado exitosamente.");
     }
