@@ -6,13 +6,11 @@ package Negocio.Deposito;
 import BaseDeDatos.Compras.EstadoDetalleOrdenCompraBD;
 import BaseDeDatos.Compras.EstadoOrdenCompraBD;
 import BaseDeDatos.Compras.OrdenCompraBD;
-import BaseDeDatos.HibernateUtil;
 import Negocio.Compras.DetalleOrdenCompra;
 import Negocio.Compras.OrdenCompra;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Deposito.PantalleRecepcionDeMateriales;
 import Presentacion.Mensajes;
-import org.hibernate.Hibernate;
 
 /**
  *
@@ -46,22 +44,14 @@ public class GestorRecepcionMaterial {
             return;
         }
         
-        if(ordenCompra.getEstado() == EstadoOrdenCompraBD.getEstadoConcretadaTotal())
+        //Valido que el estado aceptado de la orden sea enviada o concretado parcial
+        if(ordenCompra.getEstado() != EstadoOrdenCompraBD.getEstadoEnviada() && ordenCompra.getEstado() != EstadoOrdenCompraBD.getEstadoConcretadaParcial())
         {
-            mensaje="La orden de compra con el nro. "+nroOrden+ " se encuentra en estado CONCRETADA TOTAL" +
+            mensaje="La orden de compra con el nro. "+nroOrden+ " no se encuentra en estado ENVIADA o CONCRETADA PARCIAL" +
                     "\nPor favor busque una orden que no haya sido completada aún";
             Mensajes.mensajeErrorGenerico(mensaje);
             return;
         }
-//        if(ordenCompra.getEstado().equals(EstadoOrdenCompraBD.getEstadoEnviada())!=true
-//                ||ordenCompra.getEstado().equals(EstadoOrdenCompraBD.getEstadoConcretadaParcial())!=true)
-//        {
-//            mensaje="La orden de comprada con el nro. "+ordenCompra.getId()+" es invalida.\n"+
-//                "Solo las ordenes enviadas o con recepcion parcial pueden ser recibidas";
-//            Mensajes.mensajeErrorGenerico(mensaje);
-//            return;
-//        }
-        /************************************************/
 
         interfaz.cargarOrden(ordenCompra);   
         interfaz.habilitarCarga(true);
