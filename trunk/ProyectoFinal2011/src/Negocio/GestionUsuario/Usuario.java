@@ -48,8 +48,7 @@ public class Usuario  implements java.io.Serializable {
        this.TClienteses = TClienteses;
     }
    
-     @Id 
-    
+    @Id    
     @Column(name="ID_USUARIO", unique=true, nullable=false, precision=5, scale=0)
     public int getIdUsuario() {
         return this.idUsuario;
@@ -92,10 +91,6 @@ public class Usuario  implements java.io.Serializable {
     public void setTClienteses(Set<Cliente> TClienteses) {
         this.TClienteses = TClienteses;
     }
-
-
-
-
 }
 
 

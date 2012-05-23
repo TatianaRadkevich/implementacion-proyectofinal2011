@@ -32,6 +32,7 @@ public class ReajusteStock  implements java.io.Serializable {
      private Material Material;
      private Date fechaReajuste;
      private Short diferencia;
+     private Short cantidad;
      private String observaciones;
 
     public ReajusteStock() {
@@ -95,6 +96,15 @@ public class ReajusteStock  implements java.io.Serializable {
     
     public void setDiferencia(Short diferencia) {
         this.diferencia = diferencia;
+    }
+    
+    @Column(name="CANTIDAD", precision=4, scale=0)
+    public Short getCantidad() {
+        return this.cantidad;
+    }
+    
+    public void setCantidad(Short cantidad) {
+        this.cantidad = cantidad;
     }
     
     @Column(name="OBSERVACIONES", length=50)

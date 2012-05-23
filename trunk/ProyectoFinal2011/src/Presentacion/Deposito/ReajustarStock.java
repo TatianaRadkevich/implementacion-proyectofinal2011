@@ -23,8 +23,8 @@ import Presentacion.Utilidades;
  */
 public class ReajustarStock extends javax.swing.JDialog {
 
-    private GestorReajustarStock Gestor;
-    private ReajusteStock Reajuste;
+    private GestorReajustarStock gestor;
+    private ReajusteStock reajuste;
     private Material matActual;
 
 
@@ -32,7 +32,7 @@ public class ReajustarStock extends javax.swing.JDialog {
     public ReajustarStock(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        Gestor=new GestorReajustarStock();
+        gestor=new GestorReajustarStock();
     }
 
     public void cargarMaterial(Material obj)
@@ -40,17 +40,15 @@ public class ReajustarStock extends javax.swing.JDialog {
         txtCodigo.setText(obj.getCodigo());
         txtNombre.setText(obj.getNombre());
         txtCant.setText(obj.getStockActual()+"");
-
-
     }
+    
      public void limpiarDatos(){
-     txtNombre.setText("");
-     txtCant.setText("");
-     txtCantDif.setText("");
-
-
+         txtNombre.setText("");
+         txtCant.setText("");
+         txtCantDif.setText("");
+         txtObs.setText("");
+         txtCantReal.setText("");
      }
-
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -81,12 +79,6 @@ public class ReajustarStock extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Reajuste de Stock");
         setIconImage(null);
-
-        txtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtCodigoKeyReleased(evt);
-            }
-        });
 
         jLabel1.setText("Código:");
 
@@ -121,6 +113,11 @@ public class ReajustarStock extends javax.swing.JDialog {
         btnCancelar.setText("Cancelar");
 
         btnBuscarMat.setText("Buscar Material");
+        btnBuscarMat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarMatActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Observaciones:");
 
@@ -217,64 +214,49 @@ public class ReajustarStock extends javax.swing.JDialog {
        // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void txtCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyReleased
-        // TODO add your handling code here:
-        matActual= Gestor.buscarMaterial(txtCodigo.getText());
-        if (matActual==null)
-            limpiarDatos();
-        else
-            cargarMaterial( Gestor.buscarMaterial(txtCodigo.getText()));
-
-   
-
-    }//GEN-LAST:event_txtCodigoKeyReleased
-
     private void txtCantRealKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantRealKeyReleased
-            // TODO add your handling code here:
         try{
         int cantidad = Integer.parseInt(txtCantReal.getText());
         if(matActual!=null)
             txtCantDif.setText(cantidad  - matActual.getStockActual()+"");
-
-        }catch(Exception e){}
-        
+        }
+        catch(Exception e){}        
     }//GEN-LAST:event_txtCantRealKeyReleased
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
-
-
-        Reajuste=new ReajusteStock();
-        Reajuste.setMaterial(matActual);
-        Reajuste.setDiferencia(Short.parseShort(txtCantDif.getText()));
-        Reajuste.setObservaciones(txtObs.getText());
-        Reajuste.setFechaReajuste(Utilidades.getFechaActual());
-        try{
-        Gestor.Ejecutar(Reajuste);
-        Mensajes.mensajeGuardoCorrectamente();
-        this.dispose();
-        }catch(Exception e)
+        reajuste = new ReajusteStock();
+        reajuste.setMaterial(matActual);
+        reajuste.setDiferencia(Short.parseShort(txtCantDif.getText()));
+        reajuste.setCantidad(Short.parseShort(txtCantReal.getText()));
+        reajuste.setObservaciones(txtObs.getText());
+        reajuste.setFechaReajuste(Utilidades.getFechaActual());
+        try
         {
+            gestor.Ejecutar(reajuste);
+            Mensajes.mensajeGuardoCorrectamente();
+            this.dispose();
+        }
+        catch(Exception e)
+        {
+            Mensajes.mensajeErrorGuardar("No se pudo guardar el Reajuste");
         }
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ReajustarStock dialog = new ReajustarStock(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+private void btnBuscarMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarMatActionPerformed
+    String codigoMaterial = txtCodigo.getText().trim();
+    matActual= gestor.buscarMaterial(codigoMaterial);
+    if (matActual == null)
+    {
+        Mensajes.mensajeErrorGenerico("El material con código " + codigoMaterial + " no ha sido encontrado");
+        limpiarDatos();
     }
+    else
+    {
+        limpiarDatos();
+        cargarMaterial(matActual);
+    }        
+}//GEN-LAST:event_btnBuscarMatActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;

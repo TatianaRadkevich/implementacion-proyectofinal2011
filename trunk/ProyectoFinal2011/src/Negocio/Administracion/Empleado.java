@@ -462,14 +462,6 @@ public class Empleado implements java.io.Serializable {
         this.TAsistenciasEmpleados = TAsistenciasEmpleados;
     }
 
-//    public Set<EmpleadosXCargo> getTEmpleadosXCargos() {
-//        return this.TEmpleadosXCargos;
-//    }
-//
-//    public void setTEmpleadosXCargos(Set<EmpleadosXCargo> TEmpleadosXCargos) {
-//        this.TEmpleadosXCargos = TEmpleadosXCargos;
-//    }
-
     public List<Cargo> getCargos() {
         ArrayList<Cargo> salida = new ArrayList<Cargo>(TEmpleadosXCargos.size());
         for (EmpleadosXCargo mxp : this.TEmpleadosXCargos) {
