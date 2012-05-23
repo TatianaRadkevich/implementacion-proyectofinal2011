@@ -412,13 +412,13 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             }
         });
 
-        btnAgregarProvincia.setText("Agregar");
+        btnAgregarProvincia.setText("+");
 
-        btnAgregarPais.setText("Agregar");
+        btnAgregarPais.setText("+");
 
-        btnAgregarLocalidad.setText("Agregar");
+        btnAgregarLocalidad.setText("+");
 
-        btnAgregarBarrio.setText("Agregar");
+        btnAgregarBarrio.setText("+");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -650,6 +650,11 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         txtMotivoBaja.setColumns(20);
         txtMotivoBaja.setFont(new java.awt.Font("Tahoma", 0, 11));
         txtMotivoBaja.setRows(5);
+        txtMotivoBaja.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtMotivoBajaFocusLost(evt);
+            }
+        });
         jScrollPane3.setViewportView(txtMotivoBaja);
 
         javax.swing.GroupLayout pnlBajaLayout = new javax.swing.GroupLayout(pnlBaja);
@@ -688,7 +693,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1095,6 +1100,12 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         // TODO add your handling code here:
         System.out.println("Entro");
     }//GEN-LAST:event_lstCargosPropertyChange
+
+    private void txtMotivoBajaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMotivoBajaFocusLost
+        // TODO add your handling code here:
+        if(txtMotivoBaja.getText().compareTo("")!=0)
+            empleado.setMotivoBaja(txtMotivoBaja.getText());
+    }//GEN-LAST:event_txtMotivoBajaFocusLost
 
     /**
     * @param args the command line arguments

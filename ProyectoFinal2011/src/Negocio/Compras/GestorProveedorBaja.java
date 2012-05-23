@@ -51,4 +51,9 @@ public class GestorProveedorBaja extends GestorProveedor{
         ProveedorBD.modificar(p);
     }
 
+    @Override
+    public String mensajeResultado(String nombreProveedor) {
+        return "El proveedor "+nombreProveedor+ " ha sido dado de baja exitosamente";
+    }
+
 }

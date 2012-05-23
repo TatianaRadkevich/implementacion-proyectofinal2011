@@ -14,10 +14,14 @@ package Presentacion.Compras;
 import Negocio.Compras.Proveedor;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Compras.GestorProveedor;
+import Negocio.Compras.GestorProveedorBaja;
+import Negocio.TipoDatoException;
 import Presentacion.Mensajes;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -133,18 +137,60 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        pnlDomicilio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                pnlDomicilioFocusLost(evt);
+            }
+        });
+
         pnlCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("CUIT:");
 
+        txtCorreoElectronico.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCorreoElectronicoFocusLost(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Razon social:");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel5.setText("Correo electronico:");
+        jLabel5.setText("E-Mail");
+
+        txtRazonSocial.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtRazonSocialFocusLost(evt);
+            }
+        });
+
+        txtCUIT.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCUITFocusLost(evt);
+            }
+        });
 
         pnlResponsable.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Responsable", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+
+        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNombreFocusLost(evt);
+            }
+        });
+
+        txtApellido.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtApellidoFocusLost(evt);
+            }
+        });
+
+        txtTelefono.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTelefonoFocusLost(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel6.setText("Nombre:");
@@ -167,9 +213,9 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlResponsableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
-                    .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                    .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlResponsableLayout.setVerticalGroup(
@@ -190,6 +236,12 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        txtPaginaWeb.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPaginaWebFocusLost(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Pagina web:");
 
@@ -199,40 +251,34 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
             pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlClienteLayout.createSequentialGroup()
                 .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlClienteLayout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE))
                     .addGroup(pnlClienteLayout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCUIT, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(pnlResponsable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlClienteLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtPaginaWeb, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                            .addComponent(txtCorreoElectronico, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)))
-                    .addGroup(pnlClienteLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnlResponsable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+                            .addComponent(txtPaginaWeb, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+                            .addComponent(txtCorreoElectronico, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+                            .addComponent(txtCUIT, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         pnlClienteLayout.setVerticalGroup(
             pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlClienteLayout.createSequentialGroup()
                 .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtCUIT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCUIT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCorreoElectronico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -260,6 +306,11 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
 
         txtMotivoBaja.setLineWrap(true);
         txtMotivoBaja.setWrapStyleWord(true);
+        txtMotivoBaja.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtMotivoBajaFocusLost(evt);
+            }
+        });
         scrollBaja.setViewportView(txtMotivoBaja);
 
         javax.swing.GroupLayout pnlBajaLayout = new javax.swing.GroupLayout(pnlBaja);
@@ -344,20 +395,18 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         Proveedor pro = gestor.getProveedor();
-        pro.setApellidoResponsable(txtApellido.getText());
-        pro.setCorreoElectronico(txtCorreoElectronico.getText());
-        pro.setCuit(Utilidades.parseString(txtCUIT.getText()));
-        pro.setNombreResponsable(txtNombre.getText());
-        pro.setRazonSocial(txtRazonSocial.getText());
-        pro.setPaginaWeb(txtPaginaWeb.getText());
-        pro.setTelefonoResponsable(txtTelefono.getText());      
-        pro.setDomicilio(pnlDomicilio.getDomicilio());
-        pro.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
-        pro.setMotivoBaja(null);
-
+         try {
+            // TODO add your handling code here:
+            pro.validarOk();
+            
+        } catch (TipoDatoException ex) {
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+      }
         try {
             gestor.ejecutarCU(pro);
             gestor.finalizarCU();
+            Mensajes.mensajeInformacion(gestor.mensajeResultado(pro.getRazonSocial()));
+            this.dispose();
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
@@ -367,6 +416,105 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
         // TODO add your handling code here:
         gestor.finalizarCU();
 }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtRazonSocialFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRazonSocialFocusLost
+        // TODO add your handling code here:
+        try{
+            
+            gestor.getProveedor().setRazonSocial(txtRazonSocial.getText());
+            Utilidades.componenteCorrecto(txtRazonSocial);
+        }catch(TipoDatoException ex){
+             txtRazonSocial.setToolTipText(ex.getMessage());
+             Utilidades.componenteError(txtRazonSocial);
+        }
+    }//GEN-LAST:event_txtRazonSocialFocusLost
+
+    private void txtCUITFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCUITFocusLost
+        // TODO add your handling code here:
+        try{
+
+            gestor.getProveedor().setCuit(txtCUIT.getText());
+            Utilidades.componenteCorrecto(txtCUIT);
+        }catch(TipoDatoException ex){
+             txtCUIT.setToolTipText(ex.getMessage());
+             Utilidades.componenteError(txtCUIT);
+        }
+    }//GEN-LAST:event_txtCUITFocusLost
+
+    private void txtCorreoElectronicoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoElectronicoFocusLost
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            gestor.getProveedor(). setCorreoElectronico(txtCorreoElectronico.getText());
+            Utilidades.componenteCorrecto(txtCorreoElectronico);
+        } catch (TipoDatoException ex) {
+            txtCorreoElectronico.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(txtCorreoElectronico);
+        }
+    }//GEN-LAST:event_txtCorreoElectronicoFocusLost
+
+    private void txtPaginaWebFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPaginaWebFocusLost
+        // TODO add your handling code here:
+        try {
+            gestor.getProveedor(). setPaginaWeb(txtPaginaWeb.getText());
+            Utilidades.componenteCorrecto(txtPaginaWeb);
+        } catch (TipoDatoException ex) {
+            txtPaginaWeb.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(txtPaginaWeb);
+        }
+    }//GEN-LAST:event_txtPaginaWebFocusLost
+
+    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
+        // TODO add your handling code here:
+        try {
+            gestor.getProveedor().setNombreResponsable(txtNombre.getText());
+            Utilidades.componenteCorrecto(txtNombre);
+        } catch (TipoDatoException ex) {
+            txtNombre.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(txtNombre);
+        }
+    }//GEN-LAST:event_txtNombreFocusLost
+
+    private void txtApellidoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtApellidoFocusLost
+        // TODO add your handling code here:
+        try {
+            gestor.getProveedor().setApellidoResponsable(txtApellido.getText());
+            Utilidades.componenteCorrecto(txtApellido);
+        } catch (TipoDatoException ex) {
+            txtApellido.setToolTipText(ex.getMessage());
+            Utilidades.componenteError(txtApellido);
+        }
+    }//GEN-LAST:event_txtApellidoFocusLost
+
+    private void txtTelefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusLost
+        // TODO add your handling code here:
+         try{
+            long temp=Long.parseLong(txtTelefono.getText());
+            gestor.getProveedor().setTelefonoResponsable(txtTelefono.getText());
+            Utilidades.componenteCorrecto(txtTelefono);
+        }catch(TipoDatoException ex){
+             txtTelefono.setToolTipText(ex.getMessage());
+             Utilidades.componenteError(txtTelefono);
+        }catch(Exception e){
+             Utilidades.componenteError(txtTelefono);
+             txtTelefono.setToolTipText("Formato incorrecto. Debe ser numérico");
+        }
+    }//GEN-LAST:event_txtTelefonoFocusLost
+
+    private void pnlDomicilioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pnlDomicilioFocusLost
+        try {
+            // TODO add your handling code here:
+            gestor.getProveedor().setDomicilio(pnlDomicilio.getDomicilio());
+        } catch (TipoDatoException ex) {
+
+        }
+    }//GEN-LAST:event_pnlDomicilioFocusLost
+
+    private void txtMotivoBajaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMotivoBajaFocusLost
+        // TODO add your handling code here:
+        if(txtMotivoBaja.getText().compareTo("")!=0)
+            gestor.getProveedor().setMotivoBaja(txtMotivoBaja.getText());
+    }//GEN-LAST:event_txtMotivoBajaFocusLost
 
     /**
     * @param args the command line arguments
@@ -413,4 +561,7 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 
+     public void vaciar(){
+
+    }
 }
