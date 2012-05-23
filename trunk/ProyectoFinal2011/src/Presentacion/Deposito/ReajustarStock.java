@@ -238,7 +238,7 @@ public class ReajustarStock extends javax.swing.JDialog {
         }
         catch(Exception e)
         {
-            Mensajes.mensajeErrorGuardar("No se pudo guardar el Reajuste");
+            Mensajes.mensajeErrorGuardar("No se pudo ejecutar el Reajuste");
         }
 
     }//GEN-LAST:event_btnAceptarActionPerformed
