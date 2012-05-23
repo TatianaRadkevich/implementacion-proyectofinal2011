@@ -2,12 +2,8 @@ package Negocio.Compras;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
 import Negocio.Deposito.Faltante;
-import Negocio.Produccion.DetalleEtapaProduccion;
-import Negocio.Compras.DetalleOrdenCompra;
-import Negocio.Produccion.DetalleProducto;
 import Negocio.Produccion.UnidadMedida;
 import Presentacion.Utilidades;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
