@@ -16,21 +16,13 @@ import Negocio.Compras.Material;
 public class GestorReajustarStock {
 
     public Material buscarMaterial(String Cod) {
-
        return MaterialBD.getMaterial(Cod);
-
-
     }
 
-
     public void Ejecutar(ReajusteStock re)
-    {
-
-       
-        re.getMaterial().setStockActual((short)(re.getMaterial().getStockActual()+re.getDiferencia()));
+    {       
+        re.getMaterial().setStockActual((short)re.getCantidad());
         ReajusteStockBD.guardar(re);
-
-
     }
 
 }
