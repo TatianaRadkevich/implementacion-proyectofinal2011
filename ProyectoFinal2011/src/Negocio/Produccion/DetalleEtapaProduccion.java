@@ -1,8 +1,6 @@
 package Negocio.Produccion;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
-import Negocio.Compras.Material;
-import Negocio.Produccion.EtapaProduccionEspecifica;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
