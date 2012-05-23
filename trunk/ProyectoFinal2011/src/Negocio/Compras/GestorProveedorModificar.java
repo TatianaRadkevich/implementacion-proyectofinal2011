@@ -53,4 +53,9 @@ public class GestorProveedorModificar extends GestorProveedor{
         validar(p);
         ProveedorBD.modificar(p);
     }
+
+    @Override
+    public String mensajeResultado(String nombreProveedor) {
+        return "El preveedor "+nombreProveedor+ "\nha sido modificado exitosamente";
+    }
 }

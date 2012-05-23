@@ -43,5 +43,10 @@ public class GestorProveedorAlta extends GestorProveedor{
         ProveedorBD.guardar(p);
     }
 
+    @Override
+    public String mensajeResultado(String nombreProveedor) {
+        return "El proveedor "+nombreProveedor+ "\nha sido dado de registrado exitosamente";
+    }
+
 
 }

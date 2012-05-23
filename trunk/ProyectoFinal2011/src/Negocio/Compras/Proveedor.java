@@ -1,6 +1,7 @@
 package Negocio.Compras;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
+import Negocio.TipoDatoException;
 import Negocio.UbicacionGeografica.Domicilio;
 import java.util.ArrayList;
 import java.util.Date;
@@ -94,7 +95,7 @@ public class Proveedor implements java.io.Serializable {
         return razonSocial;
     }
 
-    public void setRazonSocial(String razonSocial) {
+    public void setRazonSocial(String razonSocial) throws TipoDatoException{
         this.razonSocial = razonSocial;
     }
 
@@ -102,7 +103,7 @@ public class Proveedor implements java.io.Serializable {
         return this.TDomicilios;
     }
 
-    public void setDomicilio(Domicilio TDomicilios) {
+    public void setDomicilio(Domicilio TDomicilios) throws TipoDatoException{
         this.TDomicilios = TDomicilios;
     }
 
@@ -110,7 +111,7 @@ public class Proveedor implements java.io.Serializable {
         return this.nombreResponsable;
     }
 
-    public void setNombreResponsable(String nombre) {
+    public void setNombreResponsable(String nombre) throws TipoDatoException{
         this.nombreResponsable = nombre;
     }
 
@@ -118,7 +119,7 @@ public class Proveedor implements java.io.Serializable {
         return this.paginaWeb;
     }
 
-    public void setPaginaWeb(String paginaWeb) {
+    public void setPaginaWeb(String paginaWeb) throws TipoDatoException{
         this.paginaWeb = paginaWeb;
     }
 
@@ -126,7 +127,7 @@ public class Proveedor implements java.io.Serializable {
         return this.telefono;
     }
 
-    public void setTelefonoResponsable(String telefono) {
+    public void setTelefonoResponsable(String telefono) throws TipoDatoException {
         this.telefono = telefono;
     }
 
@@ -134,7 +135,7 @@ public class Proveedor implements java.io.Serializable {
         return this.correoElectronico;
     }
 
-    public void setCorreoElectronico(String correoElectronico) {
+    public void setCorreoElectronico(String correoElectronico)throws TipoDatoException {
         this.correoElectronico = correoElectronico;
     }
 
@@ -142,7 +143,7 @@ public class Proveedor implements java.io.Serializable {
         return this.cuit;
     }
 
-    public void setCuit(String cuit) {
+    public void setCuit(String cuit)throws TipoDatoException {
         this.cuit = cuit;
     }
 
@@ -158,7 +159,7 @@ public class Proveedor implements java.io.Serializable {
         return this.motivoBaja;
     }
 
-    public void setMotivoBaja(String motivoBaja) {
+    public void setMotivoBaja(String motivoBaja){
         this.motivoBaja = motivoBaja;
     }
 
@@ -166,7 +167,7 @@ public class Proveedor implements java.io.Serializable {
         return this.apellidoResponsable;
     }
 
-    public void setApellidoResponsable(String apellido) {
+    public void setApellidoResponsable(String apellido)throws TipoDatoException {
         this.apellidoResponsable = apellido;
     }
 
@@ -209,5 +210,30 @@ public class Proveedor implements java.io.Serializable {
     @Override
     public String toString() {
         return this.getRazonSocial();
+    }
+
+    public boolean validarOk() throws TipoDatoException{
+        String mje="Algunos campos no han sido ingresado correctamente.";
+        if(this.razonSocial==null)
+            throw new TipoDatoException(mje);
+        if(this.cuit==null)
+            throw new TipoDatoException(mje);
+        if(this.correoElectronico==null)
+            throw new TipoDatoException(mje);
+        if(this.nombreResponsable==null)
+            throw new TipoDatoException(mje);
+        if(this.apellidoResponsable==null)
+            throw new TipoDatoException(mje);
+        if(this.telefono==null)
+            throw new TipoDatoException(mje);
+        
+      try{
+          TDomicilios.validarOk();
+      }catch(TipoDatoException ex){
+      throw new TipoDatoException(mje);}
+
+
+
+        return true;
     }
 }

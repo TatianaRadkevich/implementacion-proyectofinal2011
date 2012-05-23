@@ -33,4 +33,5 @@ public abstract class GestorProveedor {
     }
 
 
+    public abstract String mensajeResultado(String nombreProveedor);
 }
