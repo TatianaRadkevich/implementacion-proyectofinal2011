@@ -31,18 +31,16 @@ import javax.persistence.TemporalType;
     ,catalog="Ramaty"
 )
 public class OrdenTrabajo  implements java.io.Serializable {
-
-
-     @Id
+    @Id
     @GeneratedValue
     @Column(name="ID_ORDEN_TRABAJO", unique=true, nullable=false, precision=10, scale=0)
      private long idOrdenTrabajo;
 
-     @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="ID_EMPLEADO", nullable=false)
      private Empleado TEmpleados;
 
-     @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="ID_EORDEN_TRABAJO", nullable=false)
      private EstadoOrdenTrabajo TEordenTrabajo;
 
