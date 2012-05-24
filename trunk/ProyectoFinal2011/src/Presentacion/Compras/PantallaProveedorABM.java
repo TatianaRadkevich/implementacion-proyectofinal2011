@@ -395,6 +395,11 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         Proveedor pro = gestor.getProveedor();
+        try {
+            pro.setDomicilio(pnlDomicilio.getDomicilio());
+        } catch (TipoDatoException ex) {
+
+        }
          try {
             // TODO add your handling code here:
             pro.validarOk();
@@ -404,9 +409,9 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
       }
         try {
             gestor.ejecutarCU(pro);
-            gestor.finalizarCU();
+            
             Mensajes.mensajeInformacion(gestor.mensajeResultado(pro.getRazonSocial()));
-            this.dispose();
+            gestor.finalizarCU();
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
