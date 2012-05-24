@@ -96,6 +96,8 @@ public class Proveedor implements java.io.Serializable {
     }
 
     public void setRazonSocial(String razonSocial) throws TipoDatoException{
+        if(razonSocial.trim().compareTo("")==0)
+            throw new TipoDatoException("Debe introduccir la razon social");
         this.razonSocial = razonSocial;
     }
 
@@ -104,6 +106,8 @@ public class Proveedor implements java.io.Serializable {
     }
 
     public void setDomicilio(Domicilio TDomicilios) throws TipoDatoException{
+        if(TDomicilios==null)
+            throw new TipoDatoException("");
         this.TDomicilios = TDomicilios;
     }
 
@@ -112,6 +116,8 @@ public class Proveedor implements java.io.Serializable {
     }
 
     public void setNombreResponsable(String nombre) throws TipoDatoException{
+        if(nombre.trim().compareTo("")==0)
+            throw new TipoDatoException("Debe introduccir el nombre del responsable");
         this.nombreResponsable = nombre;
     }
 
@@ -120,6 +126,8 @@ public class Proveedor implements java.io.Serializable {
     }
 
     public void setPaginaWeb(String paginaWeb) throws TipoDatoException{
+        if(paginaWeb.trim().compareTo("")==0)
+            this.paginaWeb=null;
         this.paginaWeb = paginaWeb;
     }
 
@@ -128,6 +136,8 @@ public class Proveedor implements java.io.Serializable {
     }
 
     public void setTelefonoResponsable(String telefono) throws TipoDatoException {
+        if(telefono.trim().compareTo("")==0)
+            throw new TipoDatoException("Debe introduccir el telefono del responsable");
         this.telefono = telefono;
     }
 
@@ -136,6 +146,8 @@ public class Proveedor implements java.io.Serializable {
     }
 
     public void setCorreoElectronico(String correoElectronico)throws TipoDatoException {
+        if(correoElectronico.trim().compareTo("")==0)
+            throw new TipoDatoException("Debe introduccir un e-mail del responsable");
         this.correoElectronico = correoElectronico;
     }
 
@@ -164,10 +176,13 @@ public class Proveedor implements java.io.Serializable {
     }
 
     public String getApellidoResponsable() {
+
         return this.apellidoResponsable;
     }
 
     public void setApellidoResponsable(String apellido)throws TipoDatoException {
+        if(apellido.trim().compareTo("")==0)
+            throw new TipoDatoException("Debe introduccir el apellido del responsable");
         this.apellidoResponsable = apellido;
     }
 
