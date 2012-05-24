@@ -16,7 +16,6 @@ import Negocio.Ventas.Pedido;
 import Presentacion.Produccion.PantallaABMOrdenTrabajo;
 import java.util.List;
 import javax.swing.JDialog;
-import org.hibernate.Hibernate;
 
 /**
  *
@@ -35,6 +34,11 @@ public class GestorOrdenTrabajo {
     public void ejecutarOperacion(OrdenTrabajo orden){
         
     }
+    
+    public OrdenTrabajo buscarOrdenTrabajo (int nro)
+    {
+        return OrdenTrabajoBD.traerOrdenTrabajo((long)nro);
+    }
 
     public EstadoOrdenTrabajo estadoGenerado() {
         return EstadoOrdenTrabajoBD.traerEstadoGenerado();
@@ -47,6 +51,7 @@ public class GestorOrdenTrabajo {
     public void guardarOrdenTrabajo(OrdenTrabajo tempOrden) {
         OrdenTrabajoBD.guardar(tempOrden);
     }
+    
     public void actualizarDetalle(List<DetallePlanProduccion> detalles){
         for(int i=0;i<detalles.size();i++)
         {

@@ -625,7 +625,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRecepcionActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        new GestorOrdenTrabajo().iniciarCU(null);
+        new GestorOrdenTrabajo();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void btnAvanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvanceActionPerformed
