@@ -15,7 +15,7 @@ import Negocio.Compras.Material;
 import Negocio.Deposito.GestorReajustarStock;
 import Negocio.Deposito.ReajusteStock;
 import Presentacion.Mensajes;
-import Presentacion.Utilidades;
+import Presentacion.*;
 
 /**
  *
@@ -111,6 +111,11 @@ public class ReajustarStock extends javax.swing.JDialog {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnBuscarMat.setText("Buscar Material");
         btnBuscarMat.addActionListener(new java.awt.event.ActionListener() {
@@ -257,6 +262,11 @@ private void btnBuscarMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
         cargarMaterial(matActual);
     }        
 }//GEN-LAST:event_btnBuscarMatActionPerformed
+
+private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+
+    //gestor.finalizarCU();
+}//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;

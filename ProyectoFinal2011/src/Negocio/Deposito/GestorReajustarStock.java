@@ -8,6 +8,7 @@ package Negocio.Deposito;
 import BaseDeDatos.Compras.MaterialBD;
 import BaseDeDatos.Deposito.ReajusteStockBD;
 import Negocio.Compras.Material;
+//import Presentacion.Deposito.ReajustarStock;
 
 /**
  *
@@ -15,6 +16,7 @@ import Negocio.Compras.Material;
  */
 public class GestorReajustarStock {
 
+    //protected ReajustarStock interfaz;
     public Material buscarMaterial(String Cod) {
        return MaterialBD.getMaterial(Cod);
     }
@@ -24,5 +26,12 @@ public class GestorReajustarStock {
         re.getMaterial().setStockActual((short)re.getCantidad());
         ReajusteStockBD.guardar(re);
     }
+/*
+  public void finalizarCU() {
+        interfaz.setVisible(false);
+        interfaz.dispose();
+    }
+    */
+
 
 }
