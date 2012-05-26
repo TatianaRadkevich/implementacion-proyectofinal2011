@@ -116,6 +116,14 @@ public class ReajusteStock  implements java.io.Serializable {
         this.observaciones = observaciones;
     }
 
+    void dispose() {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    void setVisible(boolean b) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
 
 
 

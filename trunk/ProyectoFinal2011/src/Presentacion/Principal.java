@@ -92,7 +92,6 @@ public class Principal extends javax.swing.JFrame {
         btnProveedor = new javax.swing.JButton();
         btnOrdenCompra = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        btnRecepcion = new javax.swing.JButton();
         pnlProduccion = new Presentacion.Fondo();
         txtProd = new javax.swing.JTextField();
         btnProducto = new javax.swing.JButton();
@@ -112,7 +111,8 @@ public class Principal extends javax.swing.JFrame {
         txtVentas1 = new javax.swing.JTextField();
         btnRecepMat = new javax.swing.JButton();
         btnReajustar = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        btnPedido = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pantalla Principal");
@@ -174,6 +174,11 @@ public class Principal extends javax.swing.JFrame {
         txtAdm.setEditable(false);
         txtAdm.setText("Administracion");
         txtAdm.setFocusable(false);
+        txtAdm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAdmActionPerformed(evt);
+            }
+        });
 
         btnEmpleado.setText("Empleado");
         btnEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -275,13 +280,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnRecepcion.setText("Recepcion de Materiales");
-        btnRecepcion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRecepcionActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlComprasLayout = new javax.swing.GroupLayout(pnlCompras);
         pnlCompras.setLayout(pnlComprasLayout);
         pnlComprasLayout.setHorizontalGroup(
@@ -299,10 +297,6 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnOrdenCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(578, Short.MAX_VALUE))
-            .addGroup(pnlComprasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnRecepcion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(578, Short.MAX_VALUE))
         );
         pnlComprasLayout.setVerticalGroup(
             pnlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,9 +308,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btnProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnOrdenCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRecepcion, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(179, 179, 179))
+                .addGap(240, 240, 240))
         );
 
         pnlContenerdor.add(pnlCompras, "card3");
@@ -516,10 +508,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton10.setText("Pedido");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        btnPedido.setText("Pedido");
+        btnPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                btnPedidoActionPerformed(evt);
             }
         });
 
@@ -527,19 +519,19 @@ public class Principal extends javax.swing.JFrame {
         pnlDeposito.setLayout(pnlDepositoLayout);
         pnlDepositoLayout.setHorizontalGroup(
             pnlDepositoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtVentas1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
+            .addComponent(txtVentas1, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
             .addGroup(pnlDepositoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnReajustar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(430, Short.MAX_VALUE))
+                .addContainerGap(578, Short.MAX_VALUE))
             .addGroup(pnlDepositoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(430, Short.MAX_VALUE))
+                .addComponent(btnPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(578, Short.MAX_VALUE))
             .addGroup(pnlDepositoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnRecepMat, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(430, Short.MAX_VALUE))
+                .addContainerGap(578, Short.MAX_VALUE))
         );
         pnlDepositoLayout.setVerticalGroup(
             pnlDepositoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -550,11 +542,22 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRecepMat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
-                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addComponent(btnPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(228, Short.MAX_VALUE))
         );
 
         pnlContenerdor.add(pnlDeposito, "card6");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -566,6 +569,11 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(pnlContenerdor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
                     .addComponent(pnlMenu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 331, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 331, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -575,6 +583,11 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(pnlContenerdor, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 210, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 211, Short.MAX_VALUE)))
         );
 
         pack();
@@ -699,11 +712,6 @@ public class Principal extends javax.swing.JFrame {
         new PantallaClienteConsultar(this, true).setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void btnRecepcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecepcionActionPerformed
-        // TODO add your handling code here:
-        new GestorRecepcionMaterial();
-    }//GEN-LAST:event_btnRecepcionActionPerformed
-
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         new GestorOrdenTrabajo();
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -739,7 +747,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDepositoActionPerformed
 
     private void btnRecepMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecepMatActionPerformed
-        // TODO add your handling code here:
+
+        new GestorRecepcionMaterial();
     }//GEN-LAST:event_btnRecepMatActionPerformed
 
     private void btnReajustarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReajustarActionPerformed
@@ -759,9 +768,13 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtVentas1ActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void btnPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_btnPedidoActionPerformed
+
+    private void txtAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAdmActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAdmActionPerformed
 
     /**
      * @param args the command line arguments
@@ -784,26 +797,26 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnDeposito;
     private javax.swing.JButton btnEmpleado;
     private javax.swing.JButton btnOrdenCompra;
+    private javax.swing.JButton btnPedido;
     private javax.swing.JButton btnProblemas;
     private javax.swing.JButton btnProduccion;
     private javax.swing.JButton btnProducto;
     private javax.swing.JButton btnProveedor;
     private javax.swing.JButton btnReajustar;
     private javax.swing.JButton btnRecepMat;
-    private javax.swing.JButton btnRecepcion;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnTipoDocumento;
     private javax.swing.JButton btnTipoDocumento1;
     private javax.swing.JButton btnTipoProducto;
     private javax.swing.JButton btnVenta;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JPanel jPanel1;
     private Presentacion.Fondo pnlAdministracion;
     private Presentacion.Fondo pnlCompras;
     private javax.swing.JPanel pnlContenerdor;
