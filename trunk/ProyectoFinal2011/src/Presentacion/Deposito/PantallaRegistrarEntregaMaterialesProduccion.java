@@ -12,17 +12,16 @@
 package Presentacion.Deposito;
 
 import BaseDeDatos.Compras.MaterialBD;
-import Negocio.Compras.GestorMaterial;
 import Negocio.Compras.Material;
 import Negocio.Produccion.DetalleEtapaProduccion;
 import Negocio.Produccion.DetallePlanProduccion;
 import Negocio.Produccion.GestorOrdenTrabajo;
 import Negocio.Produccion.OrdenTrabajo;
 import Presentacion.Mensajes;
-import Presentacion.TablaManager;
+import Presentacion.Utilidades;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -43,6 +42,7 @@ public class PantallaRegistrarEntregaMaterialesProduccion extends javax.swing.JD
         super(parent, modal);
         gestor = new GestorOrdenTrabajo();
         initComponents();
+        txtFechaActual.setText(Utilidades.parseFecha(Utilidades.getFechaActual()));
     }
 
     /** This method is called from within the constructor to
@@ -270,30 +270,37 @@ this.dispose();
     private void cargarMateriales() {
         //Creo el mapa de materiales y sus cantidades necesarias
         mapa = new HashMap<Material, Integer>();
-        //Armo la lista de todos los detalleEtapaProd de la orden
-        for (DetallePlanProduccion det : ordenTrabajo.getTDetallesPlans())
+        List<DetallePlanProduccion> detallesPlan = ordenTrabajo.getTDetallesPlans();
+        if (detallesPlan.isEmpty())
         {
-            for (DetalleEtapaProduccion detEtapa : det.getTEtapasProduccionEspecifica().getDetalleEtapaProduccion())
-            {
-                if (mapa.containsKey(detEtapa.getTDetallesProducto().getTMateriales())) // Si el material ya existe voy sumando
-                {
-                    mapa.put(detEtapa.getTDetallesProducto().getTMateriales(),mapa.get(detEtapa.getTDetallesProducto().getTMateriales()) + detEtapa.getCantidadNecesaria());
-                }
-                else // Si el material no existe lo inserto con el primer valor
-                {
-                    mapa.put(detEtapa.getTDetallesProducto().getTMateriales(),detEtapa.getCantidadNecesaria());                    
-                }
-            }
-        }
-        jTableMateriales.setModel(toTableModel(mapa));
-        if (stockInsuficiente)
-        {
-            Mensajes.mensajeErrorGenerico("El stock es insuficiente para ejecutar la orden de trabajo, deberá efectuar una orden de compra para abastecer material");
-            btnAceptar.setEnabled(false);
+            Mensajes.mensajeErrorGenerico("La orden de trabajo buscada no posee Detalles de Plan de Producción, intente con una Orden completa");
         }
         else
         {
-            btnAceptar.setEnabled(true);            
+            for (DetallePlanProduccion det : detallesPlan)
+            {
+                for (DetalleEtapaProduccion detEtapa : det.getTEtapasProduccionEspecifica().getDetalleEtapaProduccion())
+                {
+                    if (mapa.containsKey(detEtapa.getTDetallesProducto().getTMateriales())) // Si el material ya existe voy sumando
+                    {
+                        mapa.put(detEtapa.getTDetallesProducto().getTMateriales(),mapa.get(detEtapa.getTDetallesProducto().getTMateriales()) + detEtapa.getCantidadNecesaria());
+                    }
+                    else // Si el material no existe lo inserto con el primer valor
+                    {
+                        mapa.put(detEtapa.getTDetallesProducto().getTMateriales(),detEtapa.getCantidadNecesaria());                    
+                    }
+                }
+            }
+            jTableMateriales.setModel(toTableModel(mapa));
+            if (stockInsuficiente)
+            {
+                Mensajes.mensajeErrorGenerico("El stock es insuficiente para ejecutar la orden de trabajo, deberá efectuar una orden de compra para abastecer material");
+                btnAceptar.setEnabled(false);
+            }
+            else
+            {
+                btnAceptar.setEnabled(true);            
+            }
         }
     }
     

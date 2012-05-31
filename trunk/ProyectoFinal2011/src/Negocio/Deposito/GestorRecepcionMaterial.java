@@ -33,7 +33,6 @@ public class GestorRecepcionMaterial {
     public  void iniciarCU(int nroOrden)
     {
         String mensaje="";
-        //TODO: traer orden según estado permitido
         ordenCompra=OrdenCompraBD.getOrdenCompra(nroOrden);
         
         if(ordenCompra==null)
