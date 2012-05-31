@@ -26,12 +26,7 @@ public class GestorReajustarStock {
         re.getMaterial().setStockActual((short)re.getCantidad());
         ReajusteStockBD.guardar(re);
     }
-/*
-  public void finalizarCU() {
-        interfaz.setVisible(false);
-        interfaz.dispose();
-    }
-    */
+
 
 
 }

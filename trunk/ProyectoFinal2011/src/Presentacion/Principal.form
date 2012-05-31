@@ -542,20 +542,15 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="txtVentas1" alignment="0" pref="738" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnReajustar" min="-2" pref="150" max="-2" attributes="1"/>
-                      <EmptySpace pref="578" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnPedido" min="-2" pref="150" max="-2" attributes="1"/>
-                      <EmptySpace pref="578" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnRecepMat" min="-2" pref="150" max="-2" attributes="1"/>
-                      <EmptySpace pref="578" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="btnReajustar" alignment="0" pref="177" max="32767" attributes="1"/>
+                          <Component id="btnRecepMat" alignment="0" pref="177" max="32767" attributes="1"/>
+                          <Component id="btnPedido" alignment="0" pref="177" max="32767" attributes="1"/>
+                          <Component id="jButton8" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="551" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -569,7 +564,9 @@
                       <Component id="btnRecepMat" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       <Component id="btnPedido" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace pref="228" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jButton8" min="-2" pref="51" max="-2" attributes="0"/>
+                      <EmptySpace pref="159" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -607,6 +604,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPedidoActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton8">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Entrega Materiales Producci&#xf3;n"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
