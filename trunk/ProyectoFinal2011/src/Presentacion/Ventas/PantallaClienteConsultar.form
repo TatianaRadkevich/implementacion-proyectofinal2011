@@ -219,10 +219,10 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jScrollPane1" pref="204" max="32767" attributes="0"/>
                       <Component id="pnlBotones" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" alignment="0" pref="204" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -251,14 +251,17 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="btnCancelar" alignment="1" max="32767" attributes="1"/>
-                          <Component id="btnModificar" alignment="1" max="32767" attributes="1"/>
-                          <Component id="btnNuevo" alignment="1" min="-2" pref="89" max="-2" attributes="1"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="btnCancelar" alignment="1" max="32767" attributes="1"/>
+                              <Component id="btnModificar" alignment="1" max="32767" attributes="1"/>
+                              <Component id="btnNuevo" alignment="0" pref="89" max="32767" attributes="1"/>
+                          </Group>
+                          <Component id="btnSeleccionar" alignment="1" pref="89" max="32767" attributes="1"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -271,6 +274,8 @@
                       <Component id="btnModificar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnSeleccionar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -299,6 +304,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnSeleccionar">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Seleccionar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSeleccionarActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
