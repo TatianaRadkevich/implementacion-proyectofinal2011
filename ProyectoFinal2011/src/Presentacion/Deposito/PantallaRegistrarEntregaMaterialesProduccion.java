@@ -194,6 +194,11 @@ public class PantallaRegistrarEntregaMaterialesProduccion extends javax.swing.JD
         );
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnAceptar.setText("Aceptar");
         btnAceptar.setEnabled(false);
@@ -257,6 +262,10 @@ private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         }
         Mensajes.mensajeConfirmacion("La orden de trabajo a entrado a producción con éxito y se ha descontado el material del stock");
 }//GEN-LAST:event_btnAceptarActionPerformed
+
+private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+this.dispose();
+}//GEN-LAST:event_btnCancelarActionPerformed
 
     private void cargarMateriales() {
         //Creo el mapa de materiales y sus cantidades necesarias

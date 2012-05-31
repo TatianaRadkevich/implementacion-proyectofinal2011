@@ -244,6 +244,7 @@ public class ReajustarStock extends javax.swing.JDialog {
         catch(Exception e)
         {
             Mensajes.mensajeErrorGuardar("No se pudo ejecutar el Reajuste");
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -264,8 +265,8 @@ private void btnBuscarMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 }//GEN-LAST:event_btnBuscarMatActionPerformed
 
 private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-
-    //gestor.finalizarCU();
+     this.dispose();
+    
 }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

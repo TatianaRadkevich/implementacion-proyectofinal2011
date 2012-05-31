@@ -18,6 +18,7 @@ import Presentacion.Administracion.*;
 import Presentacion.Compras.PantallaMaterialConsultar;
 import Presentacion.Compras.PantallaOrdenCompraConsultar;
 import Presentacion.Compras.PantallaProveedorConsultar;
+import Presentacion.Deposito.PantallaRegistrarEntregaMaterialesProduccion;
 import Presentacion.Deposito.ReajustarStock;
 import Presentacion.Produccion.PantallaABMTipoProducto;
 import Presentacion.Produccion.PantallaConsultarPedido;
@@ -112,6 +113,7 @@ public class Principal extends javax.swing.JFrame {
         btnRecepMat = new javax.swing.JButton();
         btnReajustar = new javax.swing.JButton();
         btnPedido = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -515,23 +517,26 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jButton8.setText("Entrega Materiales Producción");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlDepositoLayout = new javax.swing.GroupLayout(pnlDeposito);
         pnlDeposito.setLayout(pnlDepositoLayout);
         pnlDepositoLayout.setHorizontalGroup(
             pnlDepositoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(txtVentas1, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
-            .addGroup(pnlDepositoLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDepositoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnReajustar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(578, Short.MAX_VALUE))
-            .addGroup(pnlDepositoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(578, Short.MAX_VALUE))
-            .addGroup(pnlDepositoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnRecepMat, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(578, Short.MAX_VALUE))
+                .addGroup(pnlDepositoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnReajustar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                    .addComponent(btnRecepMat, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                    .addComponent(btnPedido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(551, 551, 551))
         );
         pnlDepositoLayout.setVerticalGroup(
             pnlDepositoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -543,7 +548,9 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btnRecepMat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
                 .addComponent(btnPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(159, Short.MAX_VALUE))
         );
 
         pnlContenerdor.add(pnlDeposito, "card6");
@@ -776,6 +783,10 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAdmActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+  new PantallaRegistrarEntregaMaterialesProduccion(this, true).setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -816,6 +827,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JPanel jPanel1;
     private Presentacion.Fondo pnlAdministracion;
     private Presentacion.Fondo pnlCompras;
