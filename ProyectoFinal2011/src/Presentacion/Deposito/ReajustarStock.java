@@ -216,7 +216,7 @@ public class ReajustarStock extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-       // TODO add your handling code here:
+
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void txtCantRealKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantRealKeyReleased
