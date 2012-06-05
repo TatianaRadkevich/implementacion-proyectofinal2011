@@ -93,6 +93,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             }
         };
 
+        tbStock.setDefaultRenderer(Object.class, new FormatoTabla());
         tmStock = new TablaManager<Material>(tbStock) {
 
             @Override
