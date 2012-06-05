@@ -11,6 +11,8 @@
 
 package Presentacion.Deposito;
 
+import Negocio.Ventas.Cliente;
+import Presentacion.Mensajes;
 import Presentacion.Ventas.PantallaClienteConsultar;
 
 /**
@@ -18,13 +20,25 @@ import Presentacion.Ventas.PantallaClienteConsultar;
  * @author Heber Parrucci
  */
 public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
+    private PantallaClienteConsultar pantallaCliente;
 
     /** Creates new form PantallaRegistrarEntregaPedido */
     public PantallaRegistrarEntregaPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        PantallaClienteConsultar p  = new PantallaClienteConsultar(parent, true, true);
-        p.setVisible(true);
+        pantallaCliente  = new PantallaClienteConsultar(parent, true, true);
+        pantallaCliente.setVisible(true);
+        cargarClienteYPedidos();
+    }
+    
+    
+    private void cargarClienteYPedidos() {
+       Cliente c = pantallaCliente.getCliente();
+       jTextFieldRazonSocial.setText(c.getRazonSocial());
+       jTextFieldMail.setText(c.getCorreoElectronico());
+       jTextFieldResponsable.setText(c.getApellidoResponsable() + ", " + c.getNombreResponsable());
+       jTextFieldTelefono.setText(c.getTelefonoResponsable().toString());
+       jTextFieldDomicilio.setText(c.getDomicilio().getCalle() + c.getDomicilio().getNumero());
     }
 
     /** This method is called from within the constructor to
@@ -43,12 +57,12 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        jTextFieldRazonSocial = new javax.swing.JTextField();
+        jTextFieldMail = new javax.swing.JTextField();
+        jTextFieldDomicilio = new javax.swing.JTextField();
+        jTextFieldTipo = new javax.swing.JTextField();
+        jTextFieldResponsable = new javax.swing.JTextField();
+        jTextFieldTelefono = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -69,6 +83,18 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
 
         jLabel6.setText("Teléfono Responsable:");
 
+        jTextFieldRazonSocial.setEditable(false);
+
+        jTextFieldMail.setEditable(false);
+
+        jTextFieldDomicilio.setEditable(false);
+
+        jTextFieldTipo.setEditable(false);
+
+        jTextFieldResponsable.setEditable(false);
+
+        jTextFieldTelefono.setEditable(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -81,9 +107,9 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
+                    .addComponent(jTextFieldDomicilio, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextFieldMail, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextFieldRazonSocial, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -91,9 +117,9 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                    .addComponent(jTextField5)
-                    .addComponent(jTextField6))
+                    .addComponent(jTextFieldTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                    .addComponent(jTextFieldResponsable)
+                    .addComponent(jTextFieldTelefono))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -102,20 +128,20 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -183,12 +209,13 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextFieldDomicilio;
+    private javax.swing.JTextField jTextFieldMail;
+    private javax.swing.JTextField jTextFieldRazonSocial;
+    private javax.swing.JTextField jTextFieldResponsable;
+    private javax.swing.JTextField jTextFieldTelefono;
+    private javax.swing.JTextField jTextFieldTipo;
     // End of variables declaration//GEN-END:variables
+
 
 }

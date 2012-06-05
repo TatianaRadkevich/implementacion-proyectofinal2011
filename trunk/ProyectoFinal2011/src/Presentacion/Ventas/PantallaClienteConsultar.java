@@ -418,7 +418,10 @@ private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GE
             cliente = null;
         }
     }
-    Mensajes.mensajeErrorGenerico("No se ha seleccionado un Cliente correcto");
+    else
+    {
+        Mensajes.mensajeErrorGenerico("No se ha seleccionado un Cliente correcto");
+    }
 }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private boolean validarPedidosCliente() {
