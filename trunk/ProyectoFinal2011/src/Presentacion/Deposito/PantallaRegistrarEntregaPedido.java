@@ -11,6 +11,8 @@
 
 package Presentacion.Deposito;
 
+import Presentacion.Ventas.PantallaClienteConsultar;
+
 /**
  *
  * @author Heber Parrucci
@@ -21,6 +23,8 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
     public PantallaRegistrarEntregaPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        PantallaClienteConsultar p  = new PantallaClienteConsultar(parent, true);
+        p.setVisible(true);
     }
 
     /** This method is called from within the constructor to
