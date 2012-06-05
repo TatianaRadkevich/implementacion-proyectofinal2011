@@ -31,12 +31,15 @@ import javax.swing.event.ListSelectionListener;
  */
 public class PantallaClienteConsultar extends javax.swing.JDialog {
 private TablaManager<Cliente> tablita;
+private Cliente cliente;
+
     /** Creates new form PantallaClienteConsultar */
     public PantallaClienteConsultar(java.awt.Frame parent, boolean modal) {
     super(parent, modal);
 //        GUILocal.establecerGUILocal(this);
         initComponents();
         HibernateUtil.getSessionFactory();
+        cliente = null;
         tablita = new TablaManager<Cliente>(tbClientes) {
 
             @Override
@@ -67,6 +70,14 @@ private TablaManager<Cliente> tablita;
         cargarValidaciones();
         btnSeleccionar.setVisible(false);
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     private void cargarValidaciones() {
@@ -381,7 +392,8 @@ private TablaManager<Cliente> tablita;
     }
     
 private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
-        //TODO: seleccionar el cliente y mandarlo a la ventana de entrega de pedido
+        cliente = tablita.getSeletedObject();
+        this.dispose();
 }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
