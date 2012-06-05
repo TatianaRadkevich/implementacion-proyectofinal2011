@@ -161,12 +161,12 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="pnlDetalleABM" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <EmptySpace pref="624" max="32767" attributes="0"/>
+                              <EmptySpace pref="635" max="32767" attributes="0"/>
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtTotal" min="-2" pref="101" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane2" pref="771" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" pref="782" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -297,7 +297,7 @@
                           <Component id="txtCantidad" min="-2" pref="35" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblUnidad" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="120" max="32767" attributes="0"/>
+                          <EmptySpace pref="131" max="32767" attributes="0"/>
                           <Component id="btnDetalleAceptar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnDetalleCancelar" min="-2" max="-2" attributes="0"/>
@@ -431,7 +431,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jScrollPane1" pref="566" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="588" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="pnlFlatante" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -537,7 +537,7 @@
                           <Component id="btnAgregarTodosFaltantes" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane3" alignment="0" pref="124" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" alignment="0" pref="130" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>

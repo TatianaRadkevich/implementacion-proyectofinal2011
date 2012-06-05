@@ -196,7 +196,7 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
         jLabel6.setText("Nombre:");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel7.setText("Aplellido:");
+        jLabel7.setText("Apellido:");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel8.setText("Telefono:");
@@ -250,12 +250,10 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
         pnlClienteLayout.setHorizontalGroup(
             pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlClienteLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlResponsable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlClienteLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnlResponsable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlClienteLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3)

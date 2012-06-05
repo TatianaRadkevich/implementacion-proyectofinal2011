@@ -46,8 +46,9 @@ private TablaManager<Proveedor> tablita;
                 Vector cabcera = new Vector();
                 cabcera.add("CUIT");//col 1
                 cabcera.add("Razon Social");//col 2
-                cabcera.add("Mail");//col 3
+                
                 cabcera.add("Responsable");//col 3
+                cabcera.add("Mail");//col 3
                 cabcera.add("Telefono Responsable");//col 4
 
                 return cabcera;
@@ -59,10 +60,11 @@ private TablaManager<Proveedor> tablita;
                 Vector fila = new Vector();
                 fila.add(elemento.getCuit());
                 fila.add(elemento.getRazonSocial());//col 3
-                fila.add(elemento.getCorreoElectronico());//col 4
+                
 
                 fila.add(elemento.getApellidoResponsable()+", "+
                         elemento.getNombreResponsable());//col 1
+                fila.add(elemento.getCorreoElectronico());//col 4
                 fila.add(elemento.getTelefonoResponsable());//col 2
                 return fila;
             }
@@ -326,9 +328,21 @@ private TablaManager<Proveedor> tablita;
                 chkMostrarCancelados.isSelected()));
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    public void actualizarTabla(){
+        tablita.setDatos(
+                ProveedorBD.getProveedores(
+                txtCUIT.getText(),
+                txtRazonSocial.getText(),
+                txtNombre.getText(),
+                txtApellido.getText(),
+                chkMostrarVigentes.isSelected(),
+                chkMostrarCancelados.isSelected()));
+    }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
             new GestorProveedorModificar(tablita.getSeletedObject()).iniciarCU();
+            this.actualizarTabla();
+
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
@@ -338,6 +352,7 @@ private TablaManager<Proveedor> tablita;
         // TODO add your handling code here:
         new GestorProveedorAlta().iniciarCU();
         tbProveedores.clearSelection();
+        this.actualizarTabla();
 }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
