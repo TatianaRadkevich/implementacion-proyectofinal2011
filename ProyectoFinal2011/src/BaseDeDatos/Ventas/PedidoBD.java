@@ -6,6 +6,7 @@
 package BaseDeDatos.Ventas;
 
 import BaseDeDatos.HibernateUtil;
+import Negocio.Ventas.Cliente;
 import Negocio.Ventas.Pedido;
 import Negocio.Ventas.TipoPedido;
 import Presentacion.Utilidades;
@@ -62,6 +63,16 @@ public class PedidoBD
         
         if(vigentes==false&&cancelados==true)
             HQL+="AND p.fecBaja IS NOT NULL ";
+             
+        return HibernateUtil.ejecutarConsulta(HQL);
+    }
+    
+    public static List<Pedido> getPedidosAlamacenadoYTerminado(Cliente cliente)
+    {
+        String HQL=String.format(
+                "FROM Pedido as p "
+                + "WHERE p.TClientes.idCliente = " + cliente.getIdCliente()
+                + "AND p.EstadoPedido.nombre like 'ALMACENADO Y TERMINADO'");
              
         return HibernateUtil.ejecutarConsulta(HQL);
     }

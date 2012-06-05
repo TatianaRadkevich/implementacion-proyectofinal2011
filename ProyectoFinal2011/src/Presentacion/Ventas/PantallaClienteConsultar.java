@@ -13,14 +13,17 @@ package Presentacion.Ventas;
 
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.ClienteBD;
+import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Ventas.Cliente;
 import Negocio.Ventas.GestorClienteAlta;
 import Negocio.Ventas.GestorClienteBaja;
 import Negocio.Ventas.GestorClienteModificar;
+import Negocio.Ventas.Pedido;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.ValidarTexbox;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -383,7 +386,6 @@ private Cliente cliente;
 
     public void prepararVentanaParaEntregaPedido()
     {
-        //TODO: Preparar la ventana para cuando se llame desde entrega de pedido
         btnSeleccionar.setVisible(true);
         
         btnCancelar.setVisible(false);
@@ -392,10 +394,28 @@ private Cliente cliente;
     }
     
 private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
+    if (tablita.getSeletedObject() instanceof Cliente)
+    {
         cliente = tablita.getSeletedObject();
-        this.dispose();
+        if (validarPedidosCliente())
+        {
+            this.dispose();
+        }
+        else
+        {
+            Mensajes.mensajeErrorGenerico("El Cliente seleccionado no posee pedidos para retirar, seleccione uno que posea pedidos");
+            cliente = null;
+        }
+    }
+    Mensajes.mensajeErrorGenerico("No se ha seleccionado un Cliente correcto");
 }//GEN-LAST:event_btnSeleccionarActionPerformed
 
+    private boolean validarPedidosCliente() {
+        //Valido los pedidos del cliente
+        List<Pedido> pedidos = PedidoBD.getPedidosAlamacenadoYTerminado(cliente);        
+        return pedidos.size() > 0;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
