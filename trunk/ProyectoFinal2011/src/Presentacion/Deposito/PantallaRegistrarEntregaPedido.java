@@ -39,6 +39,8 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
        jTextFieldResponsable.setText(c.getApellidoResponsable() + ", " + c.getNombreResponsable());
        jTextFieldTelefono.setText(c.getTelefonoResponsable().toString());
        jTextFieldDomicilio.setText(c.getDomicilio().getCalle() + c.getDomicilio().getNumero());
+       jTextFieldTipo.setText(c.getTipoCliente().getNombre());
+       //TODO: cargar pedidos
     }
 
     /** This method is called from within the constructor to
