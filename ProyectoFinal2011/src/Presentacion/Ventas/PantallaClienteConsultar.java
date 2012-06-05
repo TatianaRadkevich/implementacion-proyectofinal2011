@@ -37,7 +37,7 @@ private TablaManager<Cliente> tablita;
 private Cliente cliente;
 
     /** Creates new form PantallaClienteConsultar */
-    public PantallaClienteConsultar(java.awt.Frame parent, boolean modal) {
+    public PantallaClienteConsultar(java.awt.Frame parent, boolean modal, boolean pedido) {
     super(parent, modal);
 //        GUILocal.establecerGUILocal(this);
         initComponents();
@@ -73,6 +73,10 @@ private Cliente cliente;
         cargarValidaciones();
         btnSeleccionar.setVisible(false);
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+        if (pedido)
+        {
+            prepararVentanaParaEntregaPedido();
+        }
     }
 
     public Cliente getCliente() {
@@ -347,14 +351,21 @@ private Cliente cliente;
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        tablita.setDatos(
-                ClienteBD.getClientes(
+        List<Cliente> clientes = ClienteBD.getClientes(
                 txtCUIT.getText(),
                 txtRazonSocial.getText(),
                 txtNombre.getText(),
                 txtApellido.getText(),
                 chkMostrarVigentes.isSelected(),
-                chkMostrarCancelados.isSelected()));
+                chkMostrarCancelados.isSelected());
+        if (clientes.size() > 0)
+        {
+            tablita.setDatos(clientes);
+        }
+        else
+        {
+            Mensajes.mensajeErrorGenerico("No se encontraron clientes con los parámetros establecidos");
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -412,7 +423,7 @@ private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GE
 
     private boolean validarPedidosCliente() {
         //Valido los pedidos del cliente
-        List<Pedido> pedidos = PedidoBD.getPedidosAlamacenadoYTerminado(cliente);        
+        List<Pedido> pedidos = PedidoBD.getPedidosAlamacenadoYTerminado(cliente);
         return pedidos.size() > 0;
     }
     
