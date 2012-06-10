@@ -19,6 +19,7 @@ import Presentacion.Compras.PantallaMaterialConsultar;
 import Presentacion.Compras.PantallaOrdenCompraConsultar;
 import Presentacion.Compras.PantallaProveedorConsultar;
 import Presentacion.Deposito.PantallaRegistrarEntregaMaterialesProduccion;
+import Presentacion.Deposito.PantallaRegistrarEntregaPedido;
 import Presentacion.Deposito.ReajustarStock;
 import Presentacion.Produccion.PantallaABMTipoProducto;
 import Presentacion.Produccion.PantallaConsultarPedido;
@@ -774,7 +775,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtVentas1ActionPerformed
 
     private void btnPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidoActionPerformed
-        // TODO add your handling code here:
+     new PantallaRegistrarEntregaPedido(this, true).setVisible(true);
     }//GEN-LAST:event_btnPedidoActionPerformed
 
     private void txtAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAdmActionPerformed
