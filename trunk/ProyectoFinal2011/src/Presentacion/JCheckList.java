@@ -11,6 +11,7 @@
 package Presentacion;
 
 import java.awt.Component;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -64,34 +65,36 @@ public class JCheckList<E> extends javax.swing.JPanel {
         listaModel.removeAllElements();
         for (E algo : items) {
             listaModel.addElement(new CheckListItem(algo));
-            
+
         }
     }
 
     public List<E> getSelectedItems() {
-        ArrayList<E> salida=new ArrayList<E>();
+        ArrayList<E> salida = new ArrayList<E>();
         CheckListItem item;
-        for(int i=0;i<listaModel.getSize();i++)
-        {
-            item=(CheckListItem) listaModel.get(i);
-            if(item.isSelected)
+        for (int i = 0; i < listaModel.getSize(); i++) {
+            item = (CheckListItem) listaModel.get(i);
+            if (item.isSelected) {
                 salida.add(item.getContenido());
+            }
         }
         return salida;
     }
 
     public void setSelectedItems(List<E> selection) {
 
-        for (int i = 0; i < listaModel.getSize(); i++)
+        for (int i = 0; i < listaModel.getSize(); i++) {
             ((CheckListItem) listaModel.get(i)).setSelected(false);
+        }
 
-        for (E item : selection)
-            for (int i = 0; i < listaModel.getSize(); i++)
-                if (((CheckListItem) listaModel.get(i)).equals(item))
-                {
+        for (E item : selection) {
+            for (int i = 0; i < listaModel.getSize(); i++) {
+                if (((CheckListItem) listaModel.get(i)).equals(item)) {
                     ((CheckListItem) listaModel.get(i)).setSelected(true);
                     break;
                 }
+            }
+        }
 
         this.repaint();
     }
@@ -102,7 +105,10 @@ public class JCheckList<E> extends javax.swing.JPanel {
         lista.setEnabled(enabled);
     }
 
-
+    @Override
+    public synchronized void addFocusListener(FocusListener l) {
+        lista.addFocusListener(l);
+    }
 
     private void iniciar() {
         // Use a CheckListRenderer (see below)
@@ -118,17 +124,19 @@ public class JCheckList<E> extends javax.swing.JPanel {
             @Override
             public void mouseClicked(MouseEvent event) {
 
-                if(lista.isEnabled()==false)
+                if (lista.isEnabled() == false) {
                     return;
-                
-               
+                }
+
+
 
                 JList list = (JList) event.getSource();
 
                 // Get index of item clicked
                 int index = list.locationToIndex(event.getPoint());
-                if(index<0)
+                if (index < 0) {
                     return;
+                }
                 CheckListItem item = (CheckListItem) list.getModel().getElementAt(index);
 
                 // Toggle selected state
@@ -136,12 +144,13 @@ public class JCheckList<E> extends javax.swing.JPanel {
 
                 // Repaint cell
                 list.repaint(list.getCellBounds(index, index));
-               
+
             }
         });
 
     }
 
+// Check list item class
     private class CheckListItem {
 
         private String label;
