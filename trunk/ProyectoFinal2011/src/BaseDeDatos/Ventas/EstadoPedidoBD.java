@@ -20,6 +20,7 @@ public class EstadoPedidoBD {
     private static final String EP_Planificado="Planificado";
     private static final String EP_Cancelado="Cancelado";
     private static final String EP_Produccion="Produccion";
+    private static final String EP_Retirado="Retirado";
 
     public static EstadoPedido getEstadoProduccion()
     {
@@ -33,6 +34,11 @@ public class EstadoPedidoBD {
        public static EstadoPedido getEstadoCancelado()
     {
         return getEstoadoPedido(EP_Cancelado);
+    }
+
+       public static EstadoPedido getEstadoRetirado()
+    {
+        return getEstoadoPedido(EP_Retirado);
     }
 
           public static EstadoPedido getEstadoNoAutorizado()
