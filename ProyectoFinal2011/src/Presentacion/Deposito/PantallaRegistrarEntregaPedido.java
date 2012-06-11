@@ -11,9 +11,20 @@
 
 package Presentacion.Deposito;
 
+import BaseDeDatos.Ventas.EstadoPedidoBD;
+import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Ventas.Cliente;
+import Negocio.Ventas.DetallePedido;
+import Negocio.Ventas.EstadoPedido;
+import Negocio.Ventas.Pedido;
 import Presentacion.Mensajes;
+import Presentacion.TablaManager;
 import Presentacion.Ventas.PantallaClienteConsultar;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -21,6 +32,9 @@ import Presentacion.Ventas.PantallaClienteConsultar;
  */
 public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
     private PantallaClienteConsultar pantallaCliente;
+    private TablaManager<Pedido> managerPedidos;
+    private TablaManager<DetallePedido> managerDetalles;
+    private Cliente cliente;
 
     /** Creates new form PantallaRegistrarEntregaPedido */
     public PantallaRegistrarEntregaPedido(java.awt.Frame parent, boolean modal) {
@@ -28,19 +42,79 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
         initComponents();
         pantallaCliente  = new PantallaClienteConsultar(parent, true, true);
         pantallaCliente.setVisible(true);
+        
+        managerPedidos = new TablaManager<Pedido>(jTablePedidos) {
+            @Override
+            public Vector getCabecera() {
+                Vector cabcera = new Vector();
+                cabcera.add("ID Pedido");//col 1
+                cabcera.add("Estado Pedido");//col 2
+                cabcera.add("Tipo Pedido");//col 3
+                cabcera.add("Cantidad de Detalles");//col 3
+
+                return cabcera;
+            }
+
+            @Override
+            public Vector ObjetoFila(Pedido elemento) {
+                Vector fila = new Vector();
+                fila.add(elemento.getIdPedido());
+                fila.add(elemento.getEstadoPedido());//col 3
+                fila.add(elemento.getTipoPedido().getNombre());//col 4
+                fila.add(elemento.getDetallePedido().size());//col 1
+                return fila;
+            }
+        };
+        jTablePedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        managerDetalles = new TablaManager<DetallePedido>(jTableDetalles) {
+            @Override
+            public Vector getCabecera() {
+                Vector cabcera = new Vector();
+                cabcera.add("Producto");//col 1
+                cabcera.add("Precio");//col 2
+                cabcera.add("Cantidad");//col 3
+                cabcera.add("Estado");//col 3
+
+                return cabcera;
+            }
+
+            @Override
+            public Vector ObjetoFila(DetallePedido elemento) {
+                Vector fila = new Vector();
+                fila.add(elemento.getProducto().getNombre());
+                fila.add("$ " + elemento.getPrecio());//col 3
+                fila.add(elemento.getCantidad());//col 1
+                fila.add(elemento.getEstadoDetallePedido().getNombre());//col 4
+                return fila;
+            }
+        };
+        
+        managerPedidos.addSelectionListener(new ListSelectionListener() {
+
+            public void valueChanged(ListSelectionEvent e) {
+                boolean var = false;
+                Pedido p = managerPedidos.getSeletedObject();
+                if (p != null)
+                {
+                    managerDetalles.setDatos(p.getDetallePedido());
+                }
+            }
+        });
         cargarClienteYPedidos();
     }
     
     
     private void cargarClienteYPedidos() {
-       Cliente c = pantallaCliente.getCliente();
-       jTextFieldRazonSocial.setText(c.getRazonSocial());
-       jTextFieldMail.setText(c.getCorreoElectronico());
-       jTextFieldResponsable.setText(c.getApellidoResponsable() + ", " + c.getNombreResponsable());
-       jTextFieldTelefono.setText(c.getTelefonoResponsable().toString());
-       jTextFieldDomicilio.setText(c.getDomicilio().getCalle() + c.getDomicilio().getNumero());
-       jTextFieldTipo.setText(c.getTipoCliente().getNombre());
-       //TODO: cargar pedidos
+       cliente = pantallaCliente.getCliente();
+       jTextFieldRazonSocial.setText(cliente.getRazonSocial());
+       jTextFieldMail.setText(cliente.getCorreoElectronico());
+       jTextFieldResponsable.setText(cliente.getApellidoResponsable() + ", " + cliente.getNombreResponsable());
+       jTextFieldTelefono.setText(cliente.getTelefonoResponsable().toString());
+       jTextFieldDomicilio.setText(cliente.getDomicilio().getCalle() + cliente.getDomicilio().getNumero());
+       jTextFieldTipo.setText(cliente.getTipoCliente().getNombre());
+        List<Pedido> pedidos = PedidoBD.getPedidosAlamacenadoYTerminado(cliente);
+       managerPedidos.setDatos(pedidos);
     }
 
     /** This method is called from within the constructor to
@@ -52,6 +126,7 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -67,7 +142,15 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
         jTextFieldTelefono = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTablePedidos = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableDetalles = new javax.swing.JTable();
+
+        jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -149,7 +232,7 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Pedidos"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTablePedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -160,7 +243,7 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTablePedidos);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -173,18 +256,60 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+        );
+
+        jButton1.setText("Entregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton1);
+
+        jButton3.setText("Cancelar");
+        jPanel3.add(jButton3);
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalles"));
+
+        jTableDetalles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(jTableDetalles);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -194,13 +319,40 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Pedido p  = managerPedidos.getSeletedObject();
+        if (p != null)
+        {
+            boolean ret = Mensajes.mensajeConfirmacionGenerico("¿Está seguro que desea entregar el pedido " + p.getIdPedido() + "?");
+            if (ret)
+            {
+                //TODO: set estado pedido correcto "Retirado"
+                p.setEstadoPedido(EstadoPedidoBD.getEstadoRetirado());
+                PedidoBD.guardar(p);
+                Mensajes.mensajeConfirmacion("Se ha entregado con éxito el pedido " + p.getIdPedido());
+                this.dispose();
+            }
+        }
+        else
+        {
+            Mensajes.mensajeErrorGenerico("Seleccione un pedido correcto a entregar");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -209,8 +361,12 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableDetalles;
+    private javax.swing.JTable jTablePedidos;
     private javax.swing.JTextField jTextFieldDomicilio;
     private javax.swing.JTextField jTextFieldMail;
     private javax.swing.JTextField jTextFieldRazonSocial;
@@ -218,6 +374,4 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldTelefono;
     private javax.swing.JTextField jTextFieldTipo;
     // End of variables declaration//GEN-END:variables
-
-
 }
