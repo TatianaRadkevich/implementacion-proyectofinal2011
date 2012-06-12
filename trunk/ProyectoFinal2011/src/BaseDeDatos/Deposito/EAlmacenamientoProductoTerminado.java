@@ -9,12 +9,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author fbobbio
  */
 @Entity
+@Table(name = "T_EALMACENAMIENTO_PRODUCTO_TERMINADO", schema = "dbo", catalog = "Ramaty")
 public class EAlmacenamientoProductoTerminado implements Serializable {
         
     @Id

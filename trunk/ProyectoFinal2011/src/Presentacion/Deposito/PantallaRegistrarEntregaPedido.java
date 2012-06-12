@@ -11,6 +11,9 @@
 
 package Presentacion.Deposito;
 
+import BaseDeDatos.Deposito.AlmacenamientoProductoTerminado;
+import BaseDeDatos.Deposito.AlmacenamientoProductoTerminadoBD;
+import BaseDeDatos.Deposito.EAlmacenamientoProductoTerminado;
 import BaseDeDatos.Ventas.EstadoPedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Ventas.Cliente;
@@ -102,6 +105,10 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
             }
         });
         cargarClienteYPedidos();
+        AlmacenamientoProductoTerminado a = new AlmacenamientoProductoTerminado();
+        EAlmacenamientoProductoTerminado estado = new EAlmacenamientoProductoTerminado();
+        a.setEstado(estado);
+        AlmacenamientoProductoTerminadoBD.listarAlmacenamientos();
     }
     
     
