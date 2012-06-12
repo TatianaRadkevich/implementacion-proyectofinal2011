@@ -3,7 +3,7 @@ package Negocio.Ventas;
 
 import Negocio.Produccion.Producto;
 import Negocio.Administracion.DetalleFactura;
-import Negocio.Deposito.AlmacenamientoProductoTerminado;
+import BaseDeDatos.Deposito.AlmacenamientoProductoTerminado;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;

@@ -1,7 +1,8 @@
-package Negocio.Deposito;
+package BaseDeDatos.Deposito;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
 
+import Negocio.Deposito.Reclamo;
 import Negocio.Deposito.Reclamo;
 import java.util.HashSet;
 import java.util.Set;
