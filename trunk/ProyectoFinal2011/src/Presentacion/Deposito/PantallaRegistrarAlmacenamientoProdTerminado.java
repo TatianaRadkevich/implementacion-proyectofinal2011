@@ -4,11 +4,11 @@
  */
 
 /*
- * PantallaConsultarPedido.java
+ * PantallaRegistrarAlmacenamientoProdTerminado.java
  *
  * Created on 27/06/2011, 15:24:35
  */
-package Presentacion.Ventas;
+package Presentacion.Deposito;
 
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
@@ -23,7 +23,6 @@ import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import com.toedter.calendar.JTextFieldDateEditor;
-import gui.GUILocal;
 import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -32,13 +31,13 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author Rodrigo
  */
-public class PantallaPedidoConsultar extends javax.swing.JDialog {
+public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JDialog {
 
     private TablaManager<Pedido> tmPedido;
     private TablaManager<DetallePedido> tmDetalle;
 
     /** Creates new form PantallaConsultarPedido */
-    public PantallaPedidoConsultar(java.awt.Frame parent, boolean modal) {
+    public PantallaRegistrarAlmacenamientoProdTerminado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
 
         initComponents();
@@ -46,8 +45,6 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
         inicializarTablas();
         cargarValidaciones();
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
-
-
     }
 
     private void inicializarTablas() {
@@ -218,11 +215,11 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
 
         pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        chkMostrarVigentes.setFont(new java.awt.Font("Tahoma", 1, 11));
+        chkMostrarVigentes.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkMostrarVigentes.setSelected(true);
         chkMostrarVigentes.setText("Mostrar Vigentes");
 
-        chkMostrarCancelados.setFont(new java.awt.Font("Tahoma", 1, 11));
+        chkMostrarCancelados.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkMostrarCancelados.setText("Mostrar Cancelados");
 
         btnBuscar.setText("Buscar");
@@ -234,10 +231,10 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha Generación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Desde:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Hasta:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -270,13 +267,13 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Razón Social:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Nro. Pedido:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("CUIT:");
 
         javax.swing.GroupLayout pnlBuscarLayout = new javax.swing.GroupLayout(pnlBuscar);
