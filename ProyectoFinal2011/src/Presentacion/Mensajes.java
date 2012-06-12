@@ -65,6 +65,6 @@ public class Mensajes
        */
 
       public static void mensajeInformacion(String mensaje){
-        JOptionPane.showMessageDialog(null, mensaje,"Informacion",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, mensaje,"Información",JOptionPane.INFORMATION_MESSAGE);
       }
 }

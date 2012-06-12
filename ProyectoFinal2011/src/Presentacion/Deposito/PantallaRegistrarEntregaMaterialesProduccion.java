@@ -252,6 +252,9 @@ public class PantallaRegistrarEntregaMaterialesProduccion extends javax.swing.JD
 private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         int nro = new Integer(txtNroOrdenBuscar.getText());
         ordenTrabajo = gestor.buscarOrdenTrabajo(nro);
+        txtNroOrden.setText(ordenTrabajo.getIdOrdenTrabajo() + "");
+        txtFecGeneracion.setText(Utilidades.parseFecha(ordenTrabajo.getFecEmision()));
+        txtEstado.setText(ordenTrabajo.getTEordenTrabajo().getNombre());
         cargarMateriales();
 }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -260,7 +263,7 @@ private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             entry.getKey().setStockActual((short)(entry.getKey().getStockActual() - entry.getValue()));
             MaterialBD.guardar(entry.getKey());
         }
-        Mensajes.mensajeConfirmacion("La orden de trabajo a entrado a producción con éxito y se ha descontado el material del stock");
+        Mensajes.mensajeInformacion("La orden de trabajo a entrado a producción con éxito y se ha descontado el material del stock");
 }//GEN-LAST:event_btnAceptarActionPerformed
 
 private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
