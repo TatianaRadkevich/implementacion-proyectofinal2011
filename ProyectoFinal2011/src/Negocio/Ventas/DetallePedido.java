@@ -3,6 +3,7 @@ package Negocio.Ventas;
 
 import Negocio.Produccion.Producto;
 import Negocio.Administracion.DetalleFactura;
+import Negocio.Deposito.AlmacenamientoProductoTerminado;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -43,6 +44,8 @@ public class DetallePedido implements java.io.Serializable {
     private BigDecimal precio;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TDetallesPedido")
     private Set<DetalleFactura> TDetallesFacturas = new HashSet<DetalleFactura>(0);
+    @OneToMany(cascade = CascadeType.ALL, fetch= FetchType.LAZY, mappedBy="TDetallesPedido")
+    private Set<AlmacenamientoProductoTerminado> almacenado;
 
     public DetallePedido() {
     }
@@ -125,6 +128,14 @@ public class DetallePedido implements java.io.Serializable {
 
     public void setEstadoDetallePedido(EstadoDetallePedido estadoDetallePedido) {
         this.TEdetallePedido = estadoDetallePedido;
+    }
+
+    public Set<AlmacenamientoProductoTerminado> getAlmacenado() {
+        return almacenado;
+    }
+
+    public void setAlmacenado(Set<AlmacenamientoProductoTerminado> almacenado) {
+        this.almacenado = almacenado;
     }
 
 
