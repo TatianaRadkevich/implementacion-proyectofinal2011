@@ -2,6 +2,7 @@ package Negocio.Deposito;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
 
+import BaseDeDatos.Deposito.EstadoReclamo;
 import Negocio.Compras.OrdenCompra;
 import java.util.Date;
 import javax.persistence.Column;

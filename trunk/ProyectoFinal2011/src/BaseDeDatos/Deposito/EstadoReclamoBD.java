@@ -6,7 +6,6 @@
 package BaseDeDatos.Deposito;
 
 import BaseDeDatos.HibernateUtil;
-import Negocio.Deposito.EstadoReclamo;
 import Negocio.Deposito.Reclamo;
 import java.util.List;
 

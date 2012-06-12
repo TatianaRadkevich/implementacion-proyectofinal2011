@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Negocio.Deposito;
+package BaseDeDatos.Deposito;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -26,5 +26,31 @@ public class EAlmacenamientoProductoTerminado implements Serializable {
     private String nombre;
     
     @Column(name = "DESCRIPCION", length = 200)
-    private String descripcion;    
+    private String descripcion;
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public int getIdEstado() {
+        return idEstado;
+    }
+
+    public void setIdEstado(int idEstado) {
+        this.idEstado = idEstado;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    
 }
