@@ -71,8 +71,8 @@ public class PedidoBD
     {
         String HQL=String.format(
                 "FROM Pedido as p "
-                + "WHERE p.TClientes.idCliente = " + cliente.getId()
-                + "AND p.TEpedido.nombre like 'ALMACENADO Y TERMINADO'");
+                + "WHERE p.TClientes.id = " + cliente.getId()
+                + " AND p.TEpedido.nombre like 'ALMACENADO Y TERMINADO'");
              
         return HibernateUtil.ejecutarConsulta(HQL);
     }

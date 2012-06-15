@@ -8,7 +8,6 @@
  *
  * Created on 11-oct-2011, 10:19:38
  */
-
 package Presentacion.Deposito;
 
 import BaseDeDatos.Deposito.AlmacenamientoProductoTerminado;
@@ -16,6 +15,7 @@ import BaseDeDatos.Deposito.AlmacenamientoProductoTerminadoBD;
 import BaseDeDatos.Deposito.EAlmacenamientoProductoTerminado;
 import BaseDeDatos.Ventas.EstadoPedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
+import Negocio.NegocioException;
 import Negocio.Ventas.Cliente;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.EstadoPedido;
@@ -35,9 +35,11 @@ import javax.swing.event.ListSelectionListener;
  */
 public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
     //private PantallaClienteConsultar pantallaCliente;
+
     private TablaManager<Pedido> managerPedidos;
     private TablaManager<DetallePedido> managerDetalles;
     private Cliente cliente;
+    private Cliente clienteSeleccionado;
 
     /** Creates new form PantallaRegistrarEntregaPedido */
     public PantallaRegistrarEntregaPedido(java.awt.Frame parent, boolean modal) {
@@ -45,8 +47,27 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
         initComponents();
         //pantallaCliente  = new PantallaClienteConsultar(parent, true, true);
         //pantallaCliente.setVisible(true);
-        cliente=PantallaClienteConsultar.iniciarConsultarCliente(parent);
+
+        while (true) {
+            clienteSeleccionado = PantallaClienteConsultar.iniciarConsultarCliente(parent);
+            if (clienteSeleccionado == null) {
+                boolean respuesta = Mensajes.mensajeConfirmacionGenerico("Necesita elegir un cliente para poder proseguir.\n"
+                        + "¿Desea volver a la pantalla de busqueda?");
+                if (respuesta == false) {
+                    this.setVisible(false);
+                    this.dispose();
+                    //return;//me voy a la mierda
+                    throw new NegocioException("No se elgió ningun cliente");
+                }
+            } else if (PedidoBD.getPedidosAlamacenadoYTerminado(clienteSeleccionado).isEmpty()) {
+                Mensajes.mensajeErrorGenerico("El cliente debe tener al menos un pedido que este 'Almacenado' y/o 'Terminado'");
+            } else {//el cliente no es null y tiene pedidos
+                break;//salgo del while
+            }
+        }
+
         managerPedidos = new TablaManager<Pedido>(jTablePedidos) {
+
             @Override
             public Vector getCabecera() {
                 Vector cabcera = new Vector();
@@ -69,8 +90,9 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
             }
         };
         jTablePedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
+
         managerDetalles = new TablaManager<DetallePedido>(jTableDetalles) {
+
             @Override
             public Vector getCabecera() {
                 Vector cabcera = new Vector();
@@ -92,14 +114,13 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
                 return fila;
             }
         };
-        
+
         managerPedidos.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
                 boolean var = false;
                 Pedido p = managerPedidos.getSeletedObject();
-                if (p != null)
-                {
+                if (p != null) {
                     managerDetalles.setDatos(p.getDetallePedido());
                 }
             }
@@ -110,18 +131,17 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
         a.setEstado(estado);
         AlmacenamientoProductoTerminadoBD.listarAlmacenamientos();
     }
-    
-    
+
     private void cargarClienteYPedidos() {
-       //cliente = pantallaCliente.getCliente(); el cliente ya esta cargado
-       jTextFieldRazonSocial.setText(cliente.getRazonSocial());
-       jTextFieldMail.setText(cliente.getCorreoElectronico());
-       jTextFieldResponsable.setText(cliente.getApellidoResponsable() + ", " + cliente.getNombreResponsable());
-       jTextFieldTelefono.setText(cliente.getTelefonoResponsable().toString());
-       jTextFieldDomicilio.setText(cliente.getDomicilio().getCalle() + cliente.getDomicilio().getNumero());
-       jTextFieldTipo.setText(cliente.getTipoCliente().getNombre());
+        cliente = clienteSeleccionado;//pantallaCliente.getCliente(); el cliente ya esta cargado
+        jTextFieldRazonSocial.setText(cliente.getRazonSocial());
+        jTextFieldMail.setText(cliente.getCorreoElectronico());
+        jTextFieldResponsable.setText(cliente.getApellidoResponsable() + ", " + cliente.getNombreResponsable());
+        jTextFieldTelefono.setText(cliente.getTelefonoResponsable().toString());
+        jTextFieldDomicilio.setText(cliente.getDomicilio().getCalle() + cliente.getDomicilio().getNumero());
+        jTextFieldTipo.setText(cliente.getTipoCliente().getNombre());
         List<Pedido> pedidos = PedidoBD.getPedidosAlamacenadoYTerminado(cliente);
-       managerPedidos.setDatos(pedidos);
+        managerPedidos.setDatos(pedidos);
     }
 
     /** This method is called from within the constructor to
@@ -276,6 +296,11 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
         jPanel3.add(jButton1);
 
         jButton3.setText("Cancelar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton3);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalles"));
@@ -316,7 +341,7 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -338,24 +363,24 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Pedido p  = managerPedidos.getSeletedObject();
-        if (p != null)
-        {
+        Pedido p = managerPedidos.getSeletedObject();
+        if (p != null) {
             boolean ret = Mensajes.mensajeConfirmacionGenerico("¿Está seguro que desea entregar el pedido " + p.getIdPedido() + "?");
-            if (ret)
-            {
+            if (ret) {
                 //TODO: set estado pedido correcto "Retirado"
                 p.setEstadoPedido(EstadoPedidoBD.getEstadoRetirado());
                 PedidoBD.guardar(p);
                 Mensajes.mensajeConfirmacion("Se ha entregado con éxito el pedido " + p.getIdPedido());
                 this.dispose();
             }
-        }
-        else
-        {
+        } else {
             Mensajes.mensajeErrorGenerico("Seleccione un pedido correcto a entregar");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

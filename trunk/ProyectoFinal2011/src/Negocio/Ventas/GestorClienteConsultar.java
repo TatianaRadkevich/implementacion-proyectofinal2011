@@ -33,11 +33,11 @@ public class GestorClienteConsultar {
         return resultado;
     }
 
-    public Cliente getObjetoSelecionado() {
+    public Cliente getClienteSelecionado() {
         return selecionado;
     }
 
-    public void setObjetoSelecionado(Cliente selecionado) {
+    public void setClienteSelecionado(Cliente selecionado) {
         this.selecionado = selecionado;
     }
 
