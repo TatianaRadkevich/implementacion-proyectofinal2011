@@ -11,8 +11,11 @@
 package Presentacion.Ventas;
 
 import BaseDeDatos.Administracion.EmpleadoBD;
+import BaseDeDatos.Ventas.EstadoPedidoBD;
+import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.DetalleFactura;
 import Negocio.Administracion.Factura;
+import Negocio.NegocioException;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.Pedido;
 import Presentacion.Mensajes;
@@ -32,8 +35,13 @@ import javax.swing.event.ListSelectionListener;
  */
 public class PantallaFacturaGenerar extends javax.swing.JDialog {
 
-    public static void iniciarGeneracionFactura(Window parent) {
-        new PantallaFacturaGenerar(parent).setVisible(true);
+    public static void iniciarGeneracionFactura(Window parent) throws NegocioException {
+
+        if(PedidoBD.getPedidos(EstadoPedidoBD.getEstadoRetirado()).isEmpty())
+            throw new NegocioException("No hay pedidos para facturar");
+        PantallaFacturaGenerar interfaz =new PantallaFacturaGenerar(parent);
+        interfaz.limpiarCampos();
+        interfaz.setVisible(true);
     }
 
     public static void iniciarVerFactura(Window parent, Factura factura) {
@@ -41,7 +49,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
 
         interfaz.pnlPedidos.setVisible(false);
         Utilidades.habilitarPanel(interfaz.pnlFactura, false);
-
+        interfaz.limpiarCampos();
         interfaz.setFactura(factura);
 
         interfaz.pack();
@@ -112,6 +120,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
             }
         };
 
+        tmPedido.setDatos(PedidoBD.getPedidos(EstadoPedidoBD.getEstadoRetirado()));
         ValidarTexbox.validarFloat(txtDescuentoPorcentaje);
         //ValidarTexbox.validarFloat(txtDescuentoMonto);
         ValidarTexbox.validarFloat(txtRecargoPorcentaje);
@@ -206,7 +215,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         btnGenerar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Generar Factura");
 
         pnlPedidos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedidos entregados (Seleccione el pedido que de sea facturar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
