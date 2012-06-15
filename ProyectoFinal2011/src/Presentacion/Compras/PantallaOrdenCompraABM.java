@@ -25,6 +25,7 @@ import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -224,27 +225,11 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                 }
                 tmOrdenCompra.limpiar();
                 proveedor = (Proveedor) cmbProveedor.getSelectedItem();
-                if (proveedor != null) {
-                    cmbMaterial.setModel(new DefaultComboBoxModel(proveedor.getMateriales().toArray()));
-                    cmbMaterial.setSelectedIndex(-1);
-                }
+                
             }
-        });
-        cmbProveedor.setSelectedIndex(-1);
-        cmbMaterial.addActionListener(new ActionListener() {
+      
 
-            public void actionPerformed(ActionEvent e) {
-                if (cmbMaterial.getSelectedIndex() == -1) {
-                    lblUnidad.setText("");
-                    txtCantidad.setText("");
-                    txtUnidades.setEditable(false);
-                    return;
-                }
-                txtUnidades.setEditable(true);
-                Material m = (Material) cmbMaterial.getSelectedItem();
-                lblUnidad.setText(m.getUnidadMedida().getNombre());
-                calcularCantidades();
-            }
+            
         });
 
     }
@@ -257,15 +242,15 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
     public void habilitarCargaDetalle(boolean valor) {
 
-        Utilidades.habilitarPanel(pnlCompra, !valor);
+        Utilidades.habilitarPanel(pnlCompra, valor);
         Utilidades.habilitarPanel(pnlDetalleABM, valor);
     }
 
     public void limpiarCargaDetalle() {
         txtUnidades.setText("");
-        cmbMaterial.setSelectedIndex(-1);
+       
         txtCantidad.setText("");
-        lblUnidad.setText("");
+        lblUnidadam.setText("");
     }
 
     private void updateTablaStock() {
@@ -280,15 +265,17 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
     public void cargarDetalle(DetalleOrdenCompra doc) {
         txtUnidades.setText(Utilidades.parseString(doc.getCantidadPedida()));
-        cmbMaterial.setSelectedItem(doc.getMaterial());
+//        cmbMaterial.setSelectedItem(doc.getMaterial());
     }
 
     private void calcularCantidades() {
         try {
             int unid = Integer.parseInt(txtUnidades.getText());
-            Material m = (Material) cmbMaterial.getSelectedItem();
+            Material m = tmStock.getSeletedObject();
             int cant = unid * m.getLogitud();
             txtCantidad.setText(cant + "");
+
+
         } catch (Exception e) {
         }
     }
@@ -323,13 +310,11 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
         pnlDetalleABM = new javax.swing.JPanel();
-        cmbMaterial = new javax.swing.JComboBox();
-        jLabel5 = new javax.swing.JLabel();
         txtUnidades = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         btnDetalleAceptar = new javax.swing.JButton();
         btnDetalleCancelar = new javax.swing.JButton();
-        lblUnidad = new javax.swing.JLabel();
+        lblUnidadam = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -392,22 +377,13 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
         pnlDetalleABM.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        cmbMaterial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbMaterialActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel5.setText("Material:");
-
         txtUnidades.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtUnidadesKeyReleased(evt);
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("Unidades:");
 
         btnDetalleAceptar.setText("Aceptar");
@@ -424,34 +400,30 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             }
         });
 
-        lblUnidad.setFont(new java.awt.Font("Tahoma", 1, 11));
-        lblUnidad.setText(" ");
+        lblUnidadam.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblUnidadam.setText(" ");
 
         txtCantidad.setEditable(false);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Cantidad");
 
         javax.swing.GroupLayout pnlDetalleABMLayout = new javax.swing.GroupLayout(pnlDetalleABM);
         pnlDetalleABM.setLayout(pnlDetalleABMLayout);
         pnlDetalleABMLayout.setHorizontalGroup(
             pnlDetalleABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDetalleABMLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetalleABMLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblUnidad)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                .addGap(14, 14, 14)
+                .addComponent(lblUnidadam, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
                 .addComponent(btnDetalleAceptar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDetalleCancelar)
@@ -462,15 +434,13 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             .addGroup(pnlDetalleABMLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDetalleABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(cmbMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
                     .addComponent(btnDetalleAceptar)
                     .addComponent(btnDetalleCancelar)
+                    .addComponent(lblUnidadam)
                     .addComponent(jLabel7)
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUnidad))
+                    .addComponent(txtUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -532,6 +502,11 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                 "Material", "Stock Actua", "Stock Reservado", "Stock Disponible", "Stock Minimo", "Stock Faltante"
             }
         ));
+        tbStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbStockMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbStock);
 
         pnlFlatante.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Faltantes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
@@ -740,7 +715,8 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
     private void btnDetalleAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleAceptarActionPerformed
         // TODO add your handling code here:
 
-        if (cmbMaterial.getSelectedIndex() == -1) {
+        if(tmStock.getSeletedObject()==null)
+        {
             Mensajes.mensajeErrorGenerico("Debe seleccionar un material");
             return;
         }
@@ -754,7 +730,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
         DetalleOrdenCompra doc = new DetalleOrdenCompra();
         doc.setCantidadPedida(Utilidades.parseShort(txtUnidades.getText()));        
-        doc.setMaterial((Material) cmbMaterial.getSelectedItem());
+        doc.setMaterial(tmStock.getSeletedObject());
         doc.setPrecioUnitario(doc.getMaterial().getPrecio((Proveedor) cmbProveedor.getSelectedItem()));
         doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoPendiente());
         tmOrdenCompra.add(doc);
@@ -808,19 +784,52 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
      
 
         try{
+            tmStock.updateTabla();
             if (proveedor.getMateriales().isEmpty()) {
             Mensajes.mensajeInformacion("El proveedor  seleccionado no tiene asignado ningún material");
             cmbProveedor.setSelectedIndex(-1);
             cmbProveedor.requestFocus();
+            this.updateTablaStock();
             return;
-        }
+             }
+            List<Material> materialProveedor=proveedor.getMateriales();
+            List<Material> material=gestor.listarMateriales();
+            List<Material> temp=new ArrayList<Material>();
+            for (Material m : material){
+                if(materialProveedor.contains(m))
+                    temp.add(m);
+            }
+            tmStock.setDatos(temp);
+            tmStock.updateTabla();
+
         }catch(Exception e){}
 
     }//GEN-LAST:event_cmbProveedorActionPerformed
 
-    private void cmbMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMaterialActionPerformed
+    private void tbStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbStockMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_cmbMaterialActionPerformed
+        if (tmStock.getSeletedObject() == null) {
+                    lblUnidadam.setText("");
+                    txtCantidad.setText("");
+                    txtUnidades.setEditable(false);
+                    return;
+                }
+        Material m= tmStock.getSeletedObject();
+       this.lblUnidadam.setText(m.getUnidadMedida().getNombre());
+       txtUnidades.setEditable(true);
+        int cant=0;
+        if(m.getCantidadFaltante()>0){
+            cant=m.getCantidadFaltante();
+        }
+        else
+        {
+            if(m.getStockDisponible()<= m.getStockMinimo())
+                cant= m.getStockMinimo()-m.getStockDisponible() + m.getCantidadFaltante();
+        }
+        txtCantidad.setText(cant+"");
+       
+        calcularCantidades();
+    }//GEN-LAST:event_tbStockMouseClicked
 
     /**
      * @param args the command line arguments
@@ -842,19 +851,17 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
     private javax.swing.JButton btnDetalleCancelar;
     private javax.swing.JButton btnEliminarDetalle;
     private javax.swing.JButton btnNuevoDetalle;
-    private javax.swing.JComboBox cmbMaterial;
     private javax.swing.JComboBox cmbProveedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel lblUnidad;
+    private javax.swing.JLabel lblUnidadam;
     private javax.swing.JPanel pnlCompra;
     private javax.swing.JPanel pnlDetalle;
     private javax.swing.JPanel pnlDetalleABM;

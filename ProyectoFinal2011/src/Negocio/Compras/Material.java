@@ -263,7 +263,7 @@ public class Material implements java.io.Serializable {
         Integer faltantes = 0;
 
         for (Faltante f : this.getFaltantes()) {
-            if (f.getFecNecesidad().compareTo(Utilidades.getFechaActual()) <= 0) {
+            if (f.getFecNecesidad().compareTo(Utilidades.getFechaActual()) <= 0 && f.getDetalleOrdenCompra()==null) {
                 faltantes += f.getCantidad().intValue();
             }
         }        

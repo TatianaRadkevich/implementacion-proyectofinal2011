@@ -108,7 +108,7 @@ public class PantallaMaterialConsultar extends javax.swing.JDialog {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gestionar Pedido");
+        setTitle("Consultar material");
 
         pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
 
@@ -304,7 +304,8 @@ public class PantallaMaterialConsultar extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNombreKeyPressed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:     
+        // TODO add your handling code here:
+        this.dispose();
 }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
