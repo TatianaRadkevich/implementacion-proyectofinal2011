@@ -25,10 +25,10 @@ public class FormatoTabla extends DefaultTableCellRenderer{
 
 
         //si la celda esta vacia se reemplaza por el texto "<vacio>" y se rellena la celda de color negro y fuente color blanco
-        String var=String.valueOf(table.getValueAt(row,table.getColumnCount()-3));//stock actual
-        String var1=String.valueOf(table.getValueAt(row,table.getColumnCount()-2));//stock minimo
-        int num=Integer.parseInt((var));
-        int num1=Integer.parseInt((var1));
+        String stockDisponible=String.valueOf(table.getValueAt(row,table.getColumnCount()-3));//stock disponible
+        String stockMinimo=String.valueOf(table.getValueAt(row,table.getColumnCount()-2));//stock minimo
+        int num=Integer.parseInt((stockDisponible));
+        int num1=Integer.parseInt((stockMinimo));
 
         
         if(num <= num1){
