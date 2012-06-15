@@ -280,16 +280,16 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnNuevo" alignment="0" pref="75" max="32767" attributes="1"/>
                   <Component id="btnModificar" alignment="0" max="32767" attributes="1"/>
-                  <Component id="btnEliminar" alignment="0" max="32767" attributes="1"/>
-                  <Component id="btnVer" alignment="0" pref="75" max="32767" attributes="1"/>
+                  <Component id="btnVer" alignment="1" pref="75" max="32767" attributes="1"/>
+                  <Component id="btnEliminar" alignment="1" max="32767" attributes="1"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="btnModificar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="btnNuevo" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnModificar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -348,6 +348,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSalir">
       <Properties>

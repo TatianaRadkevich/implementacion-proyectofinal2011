@@ -88,7 +88,7 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
         tablita.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
-                gestor.setObjetoSelecionado(tablita.getSeletedObject());
+                gestor.setClienteSelecionado(tablita.getSeletedObject());
             }
         });
         cargarValidaciones();
@@ -314,15 +314,15 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
             .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnVer, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+            .addComponent(btnVer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlBotonesLayout.setVerticalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBotonesLayout.createSequentialGroup()
-                .addComponent(btnModificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnNuevo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -358,6 +358,11 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -467,6 +472,8 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
+        gestor.setClienteSelecionado(tablita.getSeletedObject());
+        this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
@@ -483,6 +490,12 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
     }//GEN-LAST:event_btnVerActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        gestor.setClienteSelecionado(null);
+        this.dispose();        
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -511,11 +524,15 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
         PantallaClienteConsultar interfaz =new PantallaClienteConsultar(parent, true, gestor);
         
         interfaz.setTitle("Consultar Cliente");
+
+        interfaz.pnlBotones.setVisible(false);
+        interfaz.btnSalir.setVisible(false);
+
         interfaz.btnAceptar.setVisible(true);
         interfaz.btnCancelar.setVisible(true);
-        interfaz.btnSalir.setVisible(false);
+
         interfaz.setVisible(true);
-        return gestor.getObjetoSelecionado();
+        return gestor.getClienteSelecionado();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
