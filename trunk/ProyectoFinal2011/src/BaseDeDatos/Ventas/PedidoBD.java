@@ -71,9 +71,28 @@ public class PedidoBD
     {
         String HQL=String.format(
                 "FROM Pedido as p "
-                + "WHERE p.TClientes.idCliente = " + cliente.getIdCliente()
+                + "WHERE p.TClientes.idCliente = " + cliente.getId()
                 + "AND p.TEpedido.nombre like 'ALMACENADO Y TERMINADO'");
              
+        return HibernateUtil.ejecutarConsulta(HQL);
+    }
+
+
+    public static List<Pedido> getPedidosConFacturas(
+            String nroFactura,String NroPedido,String RazonSocial,
+            Date desde,Date hasta){
+
+        String auxDesde=Utilidades.parseFecha(Utilidades.agregarTiempoFecha(desde, -1, 0, 0));
+        String auxHasta=Utilidades.parseFecha(Utilidades.agregarTiempoFecha(hasta, 1, 0, 0));
+
+        String HQL=
+                "FROM Pedido as p "
+                + "WHERE LOWER(p.TClientes.razonSocial) like  LOWER('"+RazonSocial+"%') "
+                + "AND p.TFacturas.numero  like '"+nroFactura+"%' "
+                + "AND p.idPedido like '"+NroPedido+"%' "
+                + ((auxDesde==null)?"":"AND p.TFacturas.fecFactura >= '"+auxDesde+"' ")
+                + ((auxHasta==null)?"":"AND p.TFacturas.fecFactura <= '"+auxHasta+"' ");
+
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 

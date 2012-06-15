@@ -3,7 +3,7 @@ package Presentacion;
 
 import BaseDeDatos.HibernateUtil;
 import Negocio.Ventas.Cliente;
-import Negocio.Ventas.GestorClienteAlta;
+import Presentacion.Ventas.PantallaClienteABM;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -320,7 +320,7 @@ public class BuscadorCliente extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new GestorClienteAlta().iniciarCU();
+        PantallaClienteABM.iniciarClienteAlta(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

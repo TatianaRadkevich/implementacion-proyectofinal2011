@@ -1,9 +1,13 @@
 package Negocio.Ventas;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 import java.util.Date;
+import BaseDeDatos.Ventas.ClienteBD;
 import Negocio.Web.ClienteWeb;
 import Negocio.UbicacionGeografica.Domicilio;
 import Negocio.GestionUsuario.Usuario;
+import Negocio.NegocioException;
+import Presentacion.Utilidades;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -29,39 +33,52 @@ public class Cliente implements java.io.Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_CLIENTE", unique = true, nullable = false, precision = 5, scale = 0)
-    private int idCliente;
+    private int id=-1;
+    //
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_DOMICILIO")
-    private Domicilio TDomicilios;
+    private Domicilio domicilio;//domicilio;//TDomicilios
+    //
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CLIENTE_WEB")//, nullable=false)
     private ClienteWeb TClientesWeb;
+    //
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_USUARIO")//, nullable=false)
     private Usuario TUsuarios;
+    //
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_TCLIENTE")//, nullable=false)
-    private TipoCliente TTcliente;
+    @JoinColumn(name = "ID_TCLIENTE", nullable = false)
+    private TipoCliente tipoCliente;//TTcliente
+    //
     @Column(name = "CORREO_ELECTRONICO", length = 50)
     private String correoElectronico;
-    @Column(name="CUIT", length=20)
+    //
+    @Column(name = "CUIT", length = 20, nullable = false)
     private String cuit;
+    //
     @Column(name = "RAZON_SOCIAL", nullable = false, length = 50)
     private String razonSocial;
-    @Column(name = "NOMBRE_RESPONSABLE")
+    //
+    @Column(name = "NOMBRE_RESPONSABLE", nullable = false, length = 50)
     private String nombreResponsable;
-    @Column(name = "APELLIDO_RESPONSABLE")
+    //
+    @Column(name = "APELLIDO_RESPONSABLE", nullable = false, length = 50)
     private String apellidoResponsable;
-    @Column(name = "TELEFONO_RESPONSABLE")
+    //
+    @Column(name = "TELEFONO_RESPONSABLE", precision = 13)
     private Long telefonoResponsable;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FEC_BAJA", length = 23)
-    private Date fecBaja;
+    private Date fechaBaja;
+    //
     @Column(name = "MOTIVO_BAJA", length = 100)
     private String motivoBaja;
+    //
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TClientes")
     private Set<Pedido> TPedidoses = new HashSet<Pedido>(0);
 
+    // <editor-fold defaultstate="collapsed" desc="Constructores">
     public Cliente() {
     }
 
@@ -71,10 +88,10 @@ public class Cliente implements java.io.Serializable {
     }
 
     public Cliente(int idCliente, ClienteWeb TClientesWeb, Usuario TUsuarios, TipoCliente TTcliente, String cuil, String razonSocial, String nombreResponsable, String apellidoResponsable, Long telefonoResponsable) {
-        this.idCliente = idCliente;
+        this.id = idCliente;
         this.TClientesWeb = TClientesWeb;
         this.TUsuarios = TUsuarios;
-        this.TTcliente = TTcliente;
+        this.tipoCliente = TTcliente;
         this.cuit = cuil;
         this.razonSocial = razonSocial;
         this.nombreResponsable = nombreResponsable;
@@ -83,11 +100,11 @@ public class Cliente implements java.io.Serializable {
     }
 
     public Cliente(int idCliente, Domicilio TDomicilios, ClienteWeb TClientesWeb, Usuario TUsuarios, TipoCliente TTcliente, String correoElectronico, String cuil, String razonSocial, String nombreResponsable, String apellidoResponsable, Long telefonoResponsable, Set<Pedido> TPedidoses) {
-        this.idCliente = idCliente;
-        this.TDomicilios = TDomicilios;
+        this.id = idCliente;
+        this.domicilio = TDomicilios;
         this.TClientesWeb = TClientesWeb;
         this.TUsuarios = TUsuarios;
-        this.TTcliente = TTcliente;
+        this.tipoCliente = TTcliente;
         this.correoElectronico = correoElectronico;
         this.cuit = cuil;
         this.razonSocial = razonSocial;
@@ -96,21 +113,19 @@ public class Cliente implements java.io.Serializable {
         this.telefonoResponsable = telefonoResponsable;
         this.TPedidoses = TPedidoses;
     }
+    // </editor-fold>
 
-    public int getIdCliente() {
-        return this.idCliente;
-    }
-
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    // <editor-fold defaultstate="collapsed" desc="set/get">
+    public int getId() {
+        return this.id;
     }
 
     public Domicilio getDomicilio() {
-        return this.TDomicilios;
+        return this.domicilio;
     }
 
     public void setDomicilio(Domicilio domicilio) {
-        this.TDomicilios = domicilio;
+        this.domicilio = domicilio;
     }
 
     public ClienteWeb getClienteWeb() {
@@ -118,6 +133,7 @@ public class Cliente implements java.io.Serializable {
     }
 
     public void setClienteWeb(ClienteWeb clienteWeb) {
+
         this.TClientesWeb = clienteWeb;
     }
 
@@ -130,11 +146,11 @@ public class Cliente implements java.io.Serializable {
     }
 
     public TipoCliente getTipoCliente() {
-        return this.TTcliente;
+        return this.tipoCliente;
     }
 
     public void setTipoCliente(TipoCliente tipoCliente) {
-        this.TTcliente = tipoCliente;
+        this.tipoCliente = Utilidades.validarNULL(tipoCliente);
     }
 
     public String getCorreoElectronico() {
@@ -142,7 +158,7 @@ public class Cliente implements java.io.Serializable {
     }
 
     public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+        this.correoElectronico = Utilidades.validarString(correoElectronico, true, 50, Utilidades.RegexType.MAIL);
     }
 
     public String getCuit() {
@@ -150,7 +166,7 @@ public class Cliente implements java.io.Serializable {
     }
 
     public void setCuit(String cuit) {
-        this.cuit = cuit;
+        this.cuit = Utilidades.validarString(cuit, false, 20, Utilidades.RegexType.CUIT);
     }
 
     public String getRazonSocial() {
@@ -158,7 +174,7 @@ public class Cliente implements java.io.Serializable {
     }
 
     public void setRazonSocial(String razonSocial) {
-        this.razonSocial = razonSocial;
+        this.razonSocial = Utilidades.validarString(razonSocial, false, 50);
     }
 
     public String getNombreResponsable() {
@@ -166,7 +182,7 @@ public class Cliente implements java.io.Serializable {
     }
 
     public void setNombreResponsable(String nombreResponsable) {
-        this.nombreResponsable = nombreResponsable;
+        this.nombreResponsable = Utilidades.validarString(nombreResponsable, false, 50);
     }
 
     public String getApellidoResponsable() {
@@ -174,7 +190,7 @@ public class Cliente implements java.io.Serializable {
     }
 
     public void setApellidoResponsable(String apellidoResponsable) {
-        this.apellidoResponsable = apellidoResponsable;
+        this.apellidoResponsable = Utilidades.validarString(apellidoResponsable, false, 50);;
     }
 
     public Long getTelefonoResponsable() {
@@ -185,12 +201,12 @@ public class Cliente implements java.io.Serializable {
         this.telefonoResponsable = telefonoResponsable;
     }
 
-    public Date getFecBaja() {
-        return this.fecBaja;
+    public Date getFechaBaja() {
+        return this.fechaBaja;
     }
 
-    public void setFecBaja(Date fecBaja) {
-        this.fecBaja = fecBaja;
+    private void setFechaBaja(Date fechaBaja) {
+        this.fechaBaja = fechaBaja;
     }
 
     public String getMotivoBaja() {
@@ -208,9 +224,58 @@ public class Cliente implements java.io.Serializable {
     public void setPedidos(Set<Pedido> pedidos) {
         this.TPedidoses = pedidos;
     }
+// </editor-fold>
 
     @Override
     public String toString() {
         return this.razonSocial;//+"("+this.cuil+")";
+    }
+
+    private void isOK() throws NegocioException {
+        ArrayList<String> aux = new ArrayList<String>();
+        if (this.razonSocial == null) {
+            aux.add("'Razon Social'");
+        }
+        if (this.tipoCliente == null) {
+            aux.add("'Tipo Cliente'");
+        }
+        if (this.nombreResponsable == null) {
+            aux.add("'Nombre del Responsable'");
+        }
+        if (this.apellidoResponsable == null) {
+            aux.add("'Apellido del Responsable'");
+        }
+        if (this.cuit == null) {
+            aux.add("'CUIT'");
+        }
+
+        if (!aux.isEmpty()) {
+            String mensaje = "Estos campos no pueden estar vacíos:";
+            for (String s : aux) {
+                mensaje += "\n>> " +s;
+            }
+            throw new NegocioException(mensaje);
+        }
+
+    }
+
+    public void guardar() throws NegocioException {
+        isOK();
+        //validaciones Negocio
+
+        if(this.getId()==-1)
+            ClienteBD.guardar(this);
+        else
+            ClienteBD.modificar(this);
+    }
+
+    public void eliminar(String motivoBaja) throws NegocioException {
+        isOK();
+        //validaciones Negocio
+
+        this.setFechaBaja(Utilidades.getFechaActual());
+        this.setMotivoBaja(motivoBaja);
+
+        ClienteBD.modificar(this);
     }
 }

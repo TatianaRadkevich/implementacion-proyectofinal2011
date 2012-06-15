@@ -384,12 +384,12 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
     private void tbPedidoPendientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPedidoPendientesMouseClicked
         // TODO add your handling code here:
        pedido_actual=(Pedido)tmPedido.getSeletedObject();
-       tmCobro.setDatos(pedido_actual.getTFacturas().getTCobroses());
+       tmCobro.setDatos(pedido_actual.getFactura().getTCobroses());
        this.txtNroPedidoDetalle.setText(pedido_actual.getIdPedido()+"");
-       this.txtEmpeladoResponsable.setText(pedido_actual.getTFacturas().getTEmpleados().getApellido()+", "+pedido_actual.getTFacturas().getTEmpleados().getNombre());
+       this.txtEmpeladoResponsable.setText(pedido_actual.getFactura().getTEmpleados().getApellido()+", "+pedido_actual.getFactura().getTEmpleados().getNombre());
        this.txtEstadoPedido.setText(pedido_actual.getEstadoPedido().getNombre());
-       this.txtNroFactura.setText(pedido_actual.getTFacturas().getIdFactura()+"");
-       this.txtFechaFactura.setText(Utilidades.parseFechaHora(pedido_actual.getTFacturas().getFecFactura()));
+       this.txtNroFactura.setText(pedido_actual.getFactura().getIdFactura()+"");
+       this.txtFechaFactura.setText(Utilidades.parseFechaHora(pedido_actual.getFactura().getFecFactura()));
        this.pendienteSeleccionado();
 
 }//GEN-LAST:event_tbPedidoPendientesMouseClicked
@@ -541,9 +541,9 @@ public class CobroPedidoPantalla extends javax.swing.JFrame {
 //
 //             txtMontoTotal.setText(montoTotal+ "");
             Pedido elemento=(Pedido)tmPedido.getSeletedObject();
-            Factura fac=(Factura)elemento.getTFacturas();
+            Factura fac=(Factura)elemento.getFactura();
              float montoTotal=0f;
-                for(DetalleFactura dp:fac.getTDetallesFacturas())
+                for(DetalleFactura dp:fac.getDetalleFactura())
                     montoTotal=montoTotal + (dp.getCantidad() * dp.getPrecio());
 
              txtMontoTotal.setText(montoTotal+ "");

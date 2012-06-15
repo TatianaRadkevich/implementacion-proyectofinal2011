@@ -4,6 +4,7 @@
  */
 package Negocio.Ventas;
 
+import BaseDeDatos.Ventas.EstadoDetallePedidoBD;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -21,6 +22,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "T_EDETALLE_PEDIDO", schema = "dbo", catalog = "Ramaty")
 public class EstadoDetallePedido implements java.io.Serializable {
+
 
     @Id
     @GeneratedValue
@@ -75,5 +77,17 @@ public class EstadoDetallePedido implements java.io.Serializable {
         return nombre;
     }
 
+        public static EstadoDetallePedido getEstadoPendiente()
+    {
+        return EstadoDetallePedidoBD.getEstadoPendiente();
+    }
+    public static EstadoDetallePedido getEstadoProduccion()
+    {
+        return EstadoDetallePedidoBD.getEstadoProduccion();
+    }
+    public static EstadoDetallePedido getEstadoTerminado()
+    {
+        return EstadoDetallePedidoBD.getEstadoTerminado();
+    }
 
 }

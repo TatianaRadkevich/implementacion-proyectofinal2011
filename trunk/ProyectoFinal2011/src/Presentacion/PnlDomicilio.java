@@ -12,9 +12,13 @@ package Presentacion;
 
 import BaseDeDatos.UbicacionGeografica.PaisBD;
 import Negocio.Administracion.GestorEmpleado;
+import Negocio.NegocioException;
 import Negocio.TipoDatoException;
 import Negocio.UbicacionGeografica.*;
 import Negocio.UbicacionGeografica.Pais;
+import Presentacion.ZLinkers.ZLinkerComboBox;
+import Presentacion.ZLinkers.ZLinkerObject;
+import Presentacion.ZLinkers.ZLinkerTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -28,129 +32,93 @@ public class PnlDomicilio extends javax.swing.JPanel {
 
     /** Creates new form Domicilio */
     private Domicilio domicilio;
-    private boolean inicializado=false;
-
+    private boolean inicializado = false;
+    private ZLinkerObject<Domicilio> link;
 
     public PnlDomicilio() {
-        initComponents(); 
-        cargarValidaciones();
-        domicilio = new Domicilio();
+        initComponents();
+        
+        cmbProvincia.setEnabled(false);
+        cmbLocalidad.setEnabled(false);
+        cmbBarrio.setEnabled(false);
+
+        this.domicilio = new Domicilio();
+        Class dc = Domicilio.class;
+        link = new ZLinkerObject<Domicilio>(dc, domicilio);
+        link.add(new ZLinkerComboBox<Domicilio, Pais>(dc, "pais", cmbPais));
+        link.add(new ZLinkerComboBox<Domicilio, Provincia>(dc, "provincia", cmbProvincia));
+        link.add(new ZLinkerComboBox<Domicilio, Localidad>(dc, "localidad", cmbLocalidad));
+        link.add(new ZLinkerComboBox<Domicilio, Barrio>(dc, "barrio", cmbBarrio));
+        link.add(new ZLinkerTextField<Domicilio>(dc, "calle", txtCalle));
+        link.add(new ZLinkerTextField<Domicilio>(dc, "depto", txtDepto));
+        link.add(new ZLinkerTextField<Domicilio>(dc, "numero", txtNumero));
+        link.add(new ZLinkerTextField<Domicilio>(dc, "piso", txtPiso));
+
     }
 
-    public void inicializar()
-    {
-        if(inicializado)
+    public void inicializar() {
+        if (inicializado) {
             return;
-        cargarCombos();
+        }
+        Utilidades.comboCargar(cmbPais, gestorPais.listarPaises());
         setDefaul();
-        inicializado=true;
-    }
-
-    private void cargarValidaciones() {
-        ValidarTexbox.validarShort(txtPiso);
-        ValidarTexbox.validarLongitud(txtPiso, 2);
-
-        ValidarTexbox.validarInt(txtNumero);
-        ValidarTexbox.validarLongitud(txtPiso, 5);
-
-        ValidarTexbox.validarLongitud(txtCalle, 20);
-        ValidarTexbox.validarLongitud(txtDepto, 3);
-    }
-
-    private void cargarCombos() {
-        cmbPais.setModel(new DefaultComboBoxModel(PaisBD.listarPaises().toArray()));
-        cmbPais.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                if (cmbPais.getSelectedIndex() != -1) {
-                    Pais p = (Pais) cmbPais.getSelectedItem();
-                    cmbProvincia.setModel(new DefaultComboBoxModel(p.getTProvinciases().toArray()));
-                } else {
-                    cmbProvincia.removeAllItems();
-                }
-                cmbProvincia.setSelectedIndex(-1);
-            }
-        });
-
-        cmbProvincia.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                if (cmbProvincia.getSelectedIndex() != -1) {
-                    Provincia p = (Provincia) cmbProvincia.getSelectedItem();
-                    cmbLocalidad.setModel(new DefaultComboBoxModel(p.getTLocalidadeses().toArray()));
-                } else {
-                    cmbLocalidad.removeAllItems();
-                }
-                cmbLocalidad.setSelectedIndex(-1);
-            }
-        });
-
-        cmbLocalidad.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                if (cmbLocalidad.getSelectedIndex() != -1) {
-                    Localidad b = (Localidad) cmbLocalidad.getSelectedItem();
-                    cmbBarrio.setModel(new DefaultComboBoxModel(b.getTBarrioses().toArray()));
-                } else {
-                    cmbBarrio.removeAllItems();
-                }
-                cmbBarrio.setSelectedIndex(-1);
-            }
-        });
-        cmbPais.setSelectedIndex(-1);
+        inicializado = true;
     }
 
     private void setDefaul() {
         cmbPais.setSelectedItem(new Pais("Argentina"));
         cmbProvincia.setSelectedItem(new Provincia("Córdoba"));
-        cmbLocalidad.setSelectedItem(new Localidad("Córdoba"));
+        cmbLocalidad.setSelectedItem(new Localidad("capital"));
         txtCalle.setText("");
         txtDepto.setText("");
         txtNumero.setText("");
         txtPiso.setText("");
-       
+
     }
 
-    public Domicilio getDomicilio() {
-        try{
-        domicilio.setCalle(txtCalle.getText());
-        domicilio.setDepto(txtDepto.getText());
-        domicilio.setNumero(Utilidades.parseInteger(txtNumero.getText()));
-        domicilio.setPiso(Utilidades.parseShort(txtPiso.getText()));
-        domicilio.setTBarrios((Barrio) cmbBarrio.getSelectedItem());
-        domicilio.setTLocalidades((Localidad) cmbLocalidad.getSelectedItem());
-        domicilio.setTPaises((Pais) cmbPais.getSelectedItem());
-        domicilio.setTProvincias((Provincia) cmbProvincia.getSelectedItem());
+    public Domicilio getDomicilio()throws NegocioException {
 
-        } catch (TipoDatoException ex) {
-            return null;
-        }
+//            domicilio.setCalle(txtCalle.getText());
+//            domicilio.setDepto(txtDepto.getText());
+//            domicilio.setNumero(Utilidades.parseInteger(txtNumero.getText()));
+//            domicilio.setPiso(Utilidades.parseShort(txtPiso.getText()));
+//            domicilio.setTBarrios((Barrio) cmbBarrio.getSelectedItem());
+//            domicilio.setTLocalidades((Localidad) cmbLocalidad.getSelectedItem());
+//            domicilio.setTPaises((Pais) cmbPais.getSelectedItem());
+//            domicilio.setTProvincias((Provincia) cmbProvincia.getSelectedItem());
+            link.save();
+
+//        } catch (TipoDatoException ex) {
+//            return null;
+
         return domicilio;
     }
 
     public void setDomicilio(Domicilio dom) {
-        if(dom==null)
-        {
+        if (dom == null) {
             setDefaul();
             return;
         }
-        cmbProvincia.setEnabled(true);
-        cmbLocalidad.setEnabled(true);
-        cmbBarrio.setEnabled(true);
-
-        domicilio = dom;
-        cmbPais.setSelectedItem(dom.getTPaises());
-        cmbProvincia.setSelectedItem(dom.getTProvincias());
-        cmbLocalidad.setSelectedItem(dom.getTLocalidades());
-        cmbBarrio.setSelectedItem(dom.getTBarrios());
-        txtCalle.setText(dom.getCalle());
-        txtDepto.setText(dom.getDepto());
-        txtNumero.setText(Utilidades.parseString(dom.getNumero()));
-        txtPiso.setText(Utilidades.parseString(dom.getPiso()));
+        domicilio=dom;
+        link.setObjeto(domicilio);
+        link.load();
+//        cmbProvincia.setEnabled(true);
+//        cmbLocalidad.setEnabled(true);
+//        cmbBarrio.setEnabled(true);
+//
+//        domicilio = dom;
+//        cmbPais.setSelectedItem(dom.getTPaises());
+//        cmbProvincia.setSelectedItem(dom.getTProvincias());
+//        cmbLocalidad.setSelectedItem(dom.getTLocalidades());
+//        cmbBarrio.setSelectedItem(dom.getTBarrios());
+//        txtCalle.setText(dom.getCalle());
+//        txtDepto.setText(dom.getDepto());
+//        txtNumero.setText(Utilidades.parseString(dom.getNumero()));
+//        txtPiso.setText(Utilidades.parseString(dom.getPiso()));
     }
 
     public void habilitar(boolean enabled) {
-       
+
         Utilidades.habilitarPanel(this, enabled);
     }
 
@@ -187,37 +155,40 @@ public class PnlDomicilio extends javax.swing.JPanel {
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Domicilio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         btnAgregarPais.setText("+");
+        btnAgregarPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarPaisActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel7.setText("Provincia:");
 
         btnAgregarLocalidad.setText("+");
+        btnAgregarLocalidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarLocalidadActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel6.setText("País:");
-
-        txtCalle.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCalleFocusLost(evt);
-            }
-        });
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel9.setText("Barrio:");
 
         btnAgregarProvincia.setText("+");
+        btnAgregarProvincia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarProvinciaActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel8.setText("Localidad:");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel11.setText("Número:");
-
-        txtNumero.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNumeroFocusLost(evt);
-            }
-        });
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel10.setText("Calle:");
@@ -227,33 +198,29 @@ public class PnlDomicilio extends javax.swing.JPanel {
                 cmbPaisActionPerformed(evt);
             }
         });
-        cmbPais.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cmbPaisFocusLost(evt);
-            }
-        });
 
-        cmbLocalidad.setEnabled(false);
-        cmbLocalidad.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cmbLocalidadFocusLost(evt);
+        cmbLocalidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbLocalidadActionPerformed(evt);
             }
         });
 
         btnAgregarBarrio.setText("+");
-
-        cmbProvincia.setEnabled(false);
-        cmbProvincia.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cmbProvinciaFocusLost(evt);
+        btnAgregarBarrio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarBarrioActionPerformed(evt);
             }
         });
 
-        cmbBarrio.setEnabled(false);
+        cmbProvincia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbProvinciaActionPerformed(evt);
+            }
+        });
 
-        txtPiso.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPisoFocusLost(evt);
+        cmbBarrio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBarrioActionPerformed(evt);
             }
         });
 
@@ -263,219 +230,179 @@ public class PnlDomicilio extends javax.swing.JPanel {
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel14.setText("Depto:");
 
-        txtDepto.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtDeptoFocusLost(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel14))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbBarrio, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDepto, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAgregarPais)
-                            .addComponent(btnAgregarProvincia)
-                            .addComponent(btnAgregarLocalidad)
-                            .addComponent(btnAgregarBarrio)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(jLabel6))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cmbProvincia, 0, 142, Short.MAX_VALUE)
+                            .addComponent(cmbPais, 0, 142, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAgregarProvincia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAgregarPais)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12)
                             .addComponent(jLabel11)
-                            .addComponent(jLabel12))
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel14))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                            .addComponent(txtPiso, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cmbBarrio, 0, 142, Short.MAX_VALUE)
+                                    .addComponent(cmbLocalidad, 0, 142, Short.MAX_VALUE))
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(btnAgregarBarrio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnAgregarLocalidad)))
+                            .addComponent(txtCalle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtDepto, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtPiso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
+                    .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarPais))
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
+                    .addComponent(cmbProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarProvincia))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
+                    .addComponent(cmbLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarLocalidad))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbBarrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
+                    .addComponent(cmbBarrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarBarrio))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
+                    .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
                     .addComponent(txtDepto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
-                .addContainerGap(67, Short.MAX_VALUE))
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(txtPiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    // <editor-fold defaultstate="collapsed" desc="botones">
+    private void btnAgregarPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPaisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarPaisActionPerformed
+
+    private void btnAgregarProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProvinciaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarProvinciaActionPerformed
+
+    private void btnAgregarLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLocalidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarLocalidadActionPerformed
+
+    private void btnAgregarBarrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarBarrioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarBarrioActionPerformed
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Combos">
     private void cmbPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPaisActionPerformed
         // TODO add your handling code here:
+        Object o = cmbPais.getSelectedItem();
+        if (o != null && o instanceof Pais) {
+            Utilidades.comboCargar(cmbProvincia, GestorProvincia.listarProvincias((Pais) o));
+            cmbProvincia.setEnabled(true);
+            if (cmbProvincia.getItemCount() == 0) {
+                cmbProvincia.addItem("<vacio>");
+                cmbProvincia.setSelectedIndex(0);
+                cmbProvincia.setEnabled(false);
+            }
+        } else {
+            cmbProvincia.removeAllItems();
+            cmbProvincia.addItem("Seleccione un pais");
+            cmbProvincia.setSelectedIndex(0);
+            cmbProvincia.setEnabled(false);
+        }
+
     }//GEN-LAST:event_cmbPaisActionPerformed
 
-    private void cmbPaisFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbPaisFocusLost
+    private void cmbProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProvinciaActionPerformed
         // TODO add your handling code here:
-       
+        Object o = cmbProvincia.getSelectedItem();
+        if (o != null && o instanceof Provincia) {
+            Utilidades.comboCargar(cmbLocalidad, GestorLocalidad.listarLocalidades((Provincia) o));
+            cmbLocalidad.setEnabled(true);
 
-
-        try{
-            domicilio.setTPaises((Pais)cmbPais.getSelectedItem());
-            Utilidades.componenteCorrecto(cmbPais);
-        }catch(TipoDatoException ex){
-            cmbPais.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(cmbPais);
-        }
-
-         if(cmbPais.getSelectedItem()!=null){
-        this.cargarComboProvicias((Pais)cmbPais.getSelectedItem());
-        this.cmbProvincia.setEnabled(true);
-        }
-        else
-            this.cmbProvincia.setEnabled(false);
-    }//GEN-LAST:event_cmbPaisFocusLost
-
-    private void cmbProvinciaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbProvinciaFocusLost
-        // TODO add your handling code here:
-        try{
-            domicilio.setTProvincias((Provincia)cmbProvincia.getSelectedItem());
-            Utilidades.componenteCorrecto(cmbProvincia);
-        }catch(TipoDatoException ex){
-            cmbProvincia.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(cmbProvincia);
-        }
-
-        if(cmbProvincia.getSelectedItem()!=null){
-            this.cmbLocalidad.setEnabled(true);
-            this.cargarComboLocalidades((Provincia)cmbProvincia.getSelectedItem());
-        }
-        else
-            this.cmbLocalidad.setEnabled(false);
-        this.repaint();
-
-
-    }//GEN-LAST:event_cmbProvinciaFocusLost
-
-    private void cmbLocalidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbLocalidadFocusLost
-        // TODO add your handling code here:
-        try{
-            domicilio.setTLocalidades((Localidad)cmbLocalidad.getSelectedItem());
-            Utilidades.componenteCorrecto(cmbLocalidad);
-        }catch(TipoDatoException ex){
-            cmbLocalidad.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(cmbLocalidad);
-        }
-
-         if(cmbLocalidad.getSelectedItem()!=null){
-            this.cmbBarrio.setEnabled(true);
-            this.cargarComboBarrio((Localidad)cmbLocalidad.getSelectedItem());
-
-        }
-        else
-            this.cmbBarrio.setEnabled(false);
-
-        this.repaint();
-    }//GEN-LAST:event_cmbLocalidadFocusLost
-
-    private void txtCalleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCalleFocusLost
-        // TODO add your handling code here:
-        try{
-            domicilio.setCalle(txtCalle.getText());
-            Utilidades.componenteCorrecto(txtCalle);
-        }catch(TipoDatoException ex){
-             txtCalle.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtCalle);
-        }
-    }//GEN-LAST:event_txtCalleFocusLost
-
-    private void txtNumeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroFocusLost
-        // TODO add your handling code here:
-        try{
-            int temp=Integer.parseInt(txtNumero.getText());
-            domicilio.setNumero(temp);
-            Utilidades.componenteCorrecto(txtNumero);
-        }catch(TipoDatoException ex){
-             txtNumero.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtNumero);
-        }catch(Exception e){
-             Utilidades.componenteError(txtNumero);
-             txtNumero.setToolTipText("Formato incorrecto. Debe ser numérico");
-        }
-    }//GEN-LAST:event_txtNumeroFocusLost
-
-    private void txtDeptoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeptoFocusLost
-        // TODO add your handling code here:
-        try{
-           domicilio.setDepto(txtDepto.getText());
-            Utilidades.componenteCorrecto(txtDepto);
-        }catch(TipoDatoException ex){
-             txtDepto.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtDepto);
-        }
-    }//GEN-LAST:event_txtDeptoFocusLost
-
-    private void txtPisoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPisoFocusLost
-        // TODO add your handling code here:
-        try{
-            if(txtPiso.getText().trim().length()!=0){
-                short temp=Short.parseShort(txtPiso.getText());
-                domicilio.setPiso(temp);
+            if (cmbLocalidad.getItemCount() == 0) {
+                cmbLocalidad.addItem("<vacio>");
+                cmbLocalidad.setSelectedIndex(0);
+                cmbLocalidad.setEnabled(false);
             }
-            else
-                domicilio.setPiso(null);
-            Utilidades.componenteCorrecto(txtPiso);
-        }catch(TipoDatoException ex){
-             txtPiso.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtPiso);
-        }catch(Exception e){
-             Utilidades.componenteError(txtPiso);
-             txtPiso.setToolTipText("Formato incorrecto. Debe ser numérico");
-        }
-    }//GEN-LAST:event_txtPisoFocusLost
 
+        } else {
+            cmbLocalidad.removeAllItems();
+            cmbLocalidad.addItem("Seleccione una provincia");
+            cmbLocalidad.setSelectedIndex(0);
+            cmbLocalidad.setEnabled(false);
+        }
+    }//GEN-LAST:event_cmbProvinciaActionPerformed
+
+    private void cmbLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbLocalidadActionPerformed
+        // TODO add your handling code here:
+        Object o = cmbLocalidad.getSelectedItem();
+        if (o != null && o instanceof Localidad) {
+            Utilidades.comboCargar(cmbBarrio, GestorBarrio.listarBarrios((Localidad) o));
+            cmbBarrio.setEnabled(true);
+            if (cmbBarrio.getItemCount() == 0) {
+                cmbBarrio.addItem("<vacio>");
+                cmbBarrio.setSelectedIndex(0);
+                cmbBarrio.setEnabled(false);
+            }
+        } else {
+            cmbBarrio.removeAllItems();
+            cmbBarrio.addItem("Seleccione un barrio");
+            cmbBarrio.setSelectedIndex(0);
+            cmbBarrio.setEnabled(false);
+        }
+    }//GEN-LAST:event_cmbLocalidadActionPerformed
+
+    private void cmbBarrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBarrioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbBarrioActionPerformed
+    // </editor-fold>
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarBarrio;
     private javax.swing.JButton btnAgregarLocalidad;
@@ -498,50 +425,4 @@ public class PnlDomicilio extends javax.swing.JPanel {
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtPiso;
     // End of variables declaration//GEN-END:variables
-
-private void cargarComboProvicias(Pais pais){
-         List<Provincia> provincias= GestorProvincia.listarProvincias(pais);
-         cmbProvincia.removeAllItems();
-
-
-         for(int i=0;i<provincias.size();i++){
-             cmbProvincia.addItem(provincias.get(i));
-         }
-         cmbProvincia.setSelectedIndex(-1);
-
-            cmbLocalidad.removeAllItems();
-             cmbLocalidad.repaint();
-             cmbBarrio.removeAllItems();
-             cmbBarrio.repaint();
-
-        cmbProvincia.repaint();
-    }
-
-
-private void cargarComboLocalidades(Provincia provincia){
-        List<Localidad> localidad= GestorLocalidad.listarLocalidades(provincia);
-         cmbLocalidad.removeAllItems();
-
-         for(int i=0;i<localidad.size();i++){
-             cmbLocalidad.addItem(localidad.get(i));
-         }             cmbBarrio.removeAllItems();
-             cmbBarrio.repaint();
-
-         this.cmbLocalidad.setSelectedIndex(-1);
-         this.cmbLocalidad.repaint();
-    }
-
-private void cargarComboBarrio(Localidad localidad){
-
-         List<Barrio> barrio=GestorBarrio.listarBarrios(localidad);
-         cmbBarrio.removeAllItems();
-
-         for(int i=0;i<barrio.size();i++){
-             cmbBarrio.addItem(barrio.get(i));
-         }
-         this.cmbBarrio.setSelectedIndex(-1);
-         this.cmbBarrio.repaint();
-
-    }
-
 }

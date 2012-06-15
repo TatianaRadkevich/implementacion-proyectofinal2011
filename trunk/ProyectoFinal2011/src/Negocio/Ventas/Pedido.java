@@ -1,6 +1,7 @@
 package Negocio.Ventas;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
+import Negocio.Administracion.Empleado;
 import Negocio.Administracion.Factura;
 import Negocio.Produccion.PlanProduccion;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,37 +35,48 @@ public class Pedido implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_PEDIDO", unique = true, nullable = false, precision = 8, scale = 0)
     private int idPedido;
+    //
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_TPEDIDO")//, nullable=false)
     private TipoPedido TTpedido;
+    //
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CLIENTE")//, nullable=false)
     private Cliente TClientes;
+    //
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EPEDIDO")//, nullable=false)
     private EstadoPedido TEpedido;
+    //
 //    @Column(name = "ENTREGA_MATERIAL")
 //    private Boolean entregaMaterial;
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_ESTIMADA_ENTREGA")
     private Date fecHoraEstimadaEntrega;
+    //
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_GENERACION")
     private Date fecHoraGeneracion;
+    //
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_CLI_REC")
     private Date fechaClienteRecep;
+    //
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_REAL_ENTREGA")
     private Date fecHoraRealEntrega;
+    //
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_SOLICITADA")
     private Date fecNecesidad;
+    //
     @Column(name = "PRIORIDAD")
     private byte prioridad;
+    //
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FEC_BAJA")
     private Date fecBaja;
+    //
     @Column(name = "MOTIVO_BAJA", length = 100)
     private String motivoBaja;
     //___________________________________________________________________
@@ -71,7 +84,9 @@ public class Pedido implements java.io.Serializable {
     @JoinColumn(name="ID_FACTURA")
     private Factura TFacturas;
     //_____________________________________________________________________
-
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_EMPLEADO",nullable=false)
+    private Empleado empleado;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")
     private Set<PlanProduccion> TPlanesProduccions = new HashSet<PlanProduccion>(0);
@@ -182,6 +197,16 @@ public class Pedido implements java.io.Serializable {
         this.prioridad = prioridad;
     }
 
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+
+
     public PlanProduccion getPlanProduccion() {
         if (this.TPlanesProduccions.isEmpty()) {
             return null;
@@ -237,7 +262,7 @@ public class Pedido implements java.io.Serializable {
         this.fechaClienteRecep = fechaClienteRecep;
     }
 
-     public Factura getTFacturas() {
+     public Factura getFactura() {
         return this.TFacturas;
     }
 

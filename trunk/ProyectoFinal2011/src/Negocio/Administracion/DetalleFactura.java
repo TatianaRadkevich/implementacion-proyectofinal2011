@@ -62,7 +62,7 @@ public class DetalleFactura  implements java.io.Serializable {
     }
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="ID_DETALLE_PEDIDO", nullable=false)
-    public DetallePedido getTDetallesPedido() {
+    public DetallePedido getDetallePedido() {
         return this.TDetallesPedido;
     }
     
