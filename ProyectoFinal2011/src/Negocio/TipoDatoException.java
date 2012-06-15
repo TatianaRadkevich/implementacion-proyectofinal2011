@@ -9,7 +9,7 @@ package Negocio;
  *
  * @author Ivan
  */
-public class TipoDatoException extends Exception {
+public class TipoDatoException extends NegocioException {
 
     public TipoDatoException(String message) {
         super(message);

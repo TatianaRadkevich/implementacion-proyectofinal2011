@@ -4,10 +4,18 @@
  */
 package Presentacion;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.ToolTipManager;
+import javax.swing.border.LineBorder;
 import javax.swing.text.JTextComponent;
 
 /**
@@ -15,6 +23,11 @@ import javax.swing.text.JTextComponent;
  * @author Gabriela
  */
 public class ValidarTexbox {
+
+    static{
+        ToolTipManager.sharedInstance().setInitialDelay(250);
+        ToolTipManager.sharedInstance().setReshowDelay(200);
+    }
 
     public static void validarInt(final JTextField txt) {
         txt.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -198,5 +211,48 @@ public class ValidarTexbox {
                 }
             }
         });
+    }
+
+    public static void validarNumero(final JTextComponent txt, final int digitos, final int decimales) {
+        //ToolTipManager.sharedInstance().setInitialDelay(1);
+        txt.addKeyListener(new java.awt.event.KeyAdapter() {
+
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+
+                txt.setToolTipText("");
+                int pos = txt.getCaretPosition();
+                String texto = txt.getText();
+                texto = texto.substring(0, pos) + evt.getKeyChar() + texto.substring(pos);
+
+                //\d{0,X}(\.\d{0,X})?
+                if (texto.matches("^\\d{0," + (digitos - decimales) + "}(\\.\\d{0," + decimales + "})?$") == false) {
+                    String mensage = "Solo se permiten numeros con " + (digitos - decimales) + " dígitos como máximo";
+                    mensage += (decimales == 0) ? "" : " y " + decimales + " dígitos decimales";
+                    txt.setToolTipText(mensage);
+                    evt.consume();
+
+                }
+
+
+            }
+        });
+    }
+
+    public static void campoObligatorio(final JComponent comp) {
+        comp.setBorder(new LineBorder(Color.black, 1, true));
+        final JLabel lab = new JLabel();
+        lab.setFont(new java.awt.Font("Tahoma", Font.BOLD, 10)); // NOI18N
+        lab.setText("*");
+        lab.setToolTipText("Este campo es obligatorio");
+        lab.setSize(lab.getPreferredSize());
+        lab.setLocation(comp.getX() + comp.getWidth(), comp.getY());
+        comp.addComponentListener(new ComponentAdapter() {
+
+            @Override
+            public void componentResized(ComponentEvent e) {
+                lab.setLocation(comp.getX() + comp.getWidth(), comp.getY());
+            }
+        });
+        comp.getParent().add(lab);
     }
 }

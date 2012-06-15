@@ -5,11 +5,13 @@
 
 package Negocio.Exceptiones;
 
+import Negocio.NegocioException;
+
 /**
  *
  * @author Ivan
  */
-public class ExceptionGestor extends Exception{
+public class ExceptionGestor extends NegocioException{
 
     public ExceptionGestor(String message) {
         super(message);

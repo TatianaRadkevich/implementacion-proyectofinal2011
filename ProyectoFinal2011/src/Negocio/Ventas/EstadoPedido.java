@@ -1,6 +1,7 @@
 package Negocio.Ventas;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
+import BaseDeDatos.Ventas.EstadoDetallePedidoBD;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -35,8 +36,8 @@ public class EstadoPedido implements java.io.Serializable {
         this.nombre = nombre;
     }
 
-    public EstadoPedido(int idEpedido, String nombre) {
-        this.idEpedido = idEpedido;
+    public EstadoPedido(String nombre,String descripcion) {
+        this.descripcion = descripcion;
         this.nombre = nombre;
     }
 
@@ -81,7 +82,6 @@ public class EstadoPedido implements java.io.Serializable {
     public String toString() {
         return getNombre();
     }
-
 
 
 }

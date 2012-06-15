@@ -9,7 +9,7 @@ package Negocio;
  *
  * @author Ivan
  */
-public class NegocioException extends Exception {
+public class NegocioException extends RuntimeException {
 
     public NegocioException(String message) {
         super(message);

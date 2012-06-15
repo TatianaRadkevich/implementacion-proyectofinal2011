@@ -10,8 +10,11 @@
  */
 package Presentacion.Ventas;
 
+import BaseDeDatos.Ventas.EstadoDetallePedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
+import Negocio.Administracion.GestorEmpleado;
 import Negocio.Exceptiones.ExceptionGestor;
+import Negocio.NegocioException;
 import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
 import Negocio.Ventas.*;
@@ -107,6 +110,8 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         ((JTextFieldDateEditor) dtcFechaNecesidad.getDateEditor()).setEditable(false);
         dtcFechaNecesidad.setMinSelectableDate(Utilidades.getFechaActual());
         ValidarTexbox.validarLongitud(txtMotivoBaja, 200);
+        ValidarTexbox.validarInt(txtCantidad);
+        ValidarTexbox.validarLongitud(txtCantidad, 5);
     }
 
     private void cargarCombos() {
@@ -136,7 +141,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
     }
 
     public void habilitarCargaDetalle(boolean valor) {
-        Utilidades.habilitarPanel(pnlDetalle,!valor);
+        Utilidades.habilitarPanel(pnlDetalle, !valor);
         Utilidades.habilitarPanel(pnlDetalleCarga, valor);
     }
 
@@ -569,21 +574,45 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Pedido pedido = gestor.getPedido();
-        pedido.setCliente(pnlCliente.getCliente());
-        pedido.setDetallePedido(tmDetalle.getDatos());
-        pedido.setFechaNecesidad(dtcFechaNecesidad.getDate());
-        pedido.setFechaEstimadaEntrega(dtcFechaNecesidad.getDate());
-        pedido.setFechaGeneracion(Utilidades.getFechaActual());
-        pedido.setPrioridad((byte) cmbPrioridad.getSelectedIndex());
-        pedido.setTipoPedido((TipoPedido) cmbTipoPedido.getSelectedItem());
-        pedido.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
-
         try {
+
+
+            if (pnlCliente.getCliente() == null) {
+                throw new NegocioException("Es necesario elegir un cliente para asignarle el pedido");
+            }
+
+            if(tmDetalle.getDatos().isEmpty())
+                throw new NegocioException("Es necesario que el detalle del pedido tenga un item");
+
+            if (dtcFechaNecesidad.getDate() == null) {
+                throw new NegocioException("Es necesario cargar un fecha de necesidad");
+            }
+                        Pedido pedido = gestor.getPedido();
+                        pedido.setDetallePedido(tmDetalle.getDatos());
+            pedido.setCliente(pnlCliente.getCliente());
+            pedido.setFechaNecesidad(dtcFechaNecesidad.getDate());
+            pedido.setFechaEstimadaEntrega(dtcFechaNecesidad.getDate());
+            pedido.setFechaGeneracion(Utilidades.getFechaActual());
+            pedido.setPrioridad((byte) cmbPrioridad.getSelectedIndex());
+            pedido.setTipoPedido((TipoPedido) cmbTipoPedido.getSelectedItem());
+            pedido.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
+
+            try {
+                if (pedido.getEmpleado() == null)//temporal hasta que se programe las seciones
+                {
+                    pedido.setEmpleado(GestorEmpleado.listarProductos().get(0));
+                }
+            } catch (IndexOutOfBoundsException e) {
+                throw new NegocioException("No hay ningun emplado cargado");
+            }
+
+
+
+
             gestor.ejecutarCU(pedido);
             gestor.finalizarCU();
 
-        } catch (ExceptionGestor ex) {
+        } catch (NegocioException ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
 
@@ -618,7 +647,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         if (tbDetalle.getSelectedRow() != -1) {
             tmDetalle.removeSelectedRow();
             limpiarDetalle();
-             txtFechaEstimada.setText(Utilidades.parseFecha(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 20+3*tmDetalle.getSize(), 0, 0)));
+            txtFechaEstimada.setText(Utilidades.parseFecha(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 20 + 3 * tmDetalle.getSize(), 0, 0)));
         }
 
     }//GEN-LAST:event_btnDetalleElminarActionPerformed
@@ -643,6 +672,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         nuevoDetalle.setCantidad(Integer.parseInt(txtCantidad.getText()));
         nuevoDetalle.setProducto(prod);
         nuevoDetalle.setPrecio(prod.getPrecioUnitario().floatValue());
+        nuevoDetalle.setEstadoDetallePedido(EstadoDetallePedidoBD.getEstadoPendiente());
 
 
         for (DetallePedido dp : tmDetalle.getDatos()) {
@@ -653,18 +683,18 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
                 if (Mensajes.mensajeConfirmacionGenerico(mensage)) {
                     dp.setCantidad(dp.getCantidad() + nuevoDetalle.getCantidad());
                     tmDetalle.updateTabla();
-                     limpiarDetalle();
+                    limpiarDetalle();
                     habilitarCargaDetalle(false);
                 }
                 return;
             }
         }
 
-        
+
         tmDetalle.add(nuevoDetalle);
         limpiarDetalle();
         habilitarCargaDetalle(false);
-         txtFechaEstimada.setText(Utilidades.parseFecha(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 20+3*tmDetalle.getSize(), 0, 0)));
+        txtFechaEstimada.setText(Utilidades.parseFecha(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 20 + 3 * tmDetalle.getSize(), 0, 0)));
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

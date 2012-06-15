@@ -46,10 +46,10 @@ public class ClienteBD {
             return HibernateUtil.ejecutarConsulta(HQL);
 
         if(vigentes==true&&cancelados==false)
-            HQL+="AND c.fecBaja IS NULL ";
+            HQL+="AND c.fechaBaja IS NULL ";
 
         if(vigentes==false&&cancelados==true)
-            HQL+="AND c.fecBaja IS NOT NULL ";
+            HQL+="AND c.fechaBaja IS NOT NULL ";
 
         return HibernateUtil.ejecutarConsulta(HQL);
     }

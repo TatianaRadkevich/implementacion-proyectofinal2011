@@ -34,7 +34,7 @@ import javax.swing.event.ListSelectionListener;
  * @author Heber Parrucci
  */
 public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
-    private PantallaClienteConsultar pantallaCliente;
+    //private PantallaClienteConsultar pantallaCliente;
     private TablaManager<Pedido> managerPedidos;
     private TablaManager<DetallePedido> managerDetalles;
     private Cliente cliente;
@@ -43,9 +43,9 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
     public PantallaRegistrarEntregaPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        pantallaCliente  = new PantallaClienteConsultar(parent, true, true);
-        pantallaCliente.setVisible(true);
-        
+        //pantallaCliente  = new PantallaClienteConsultar(parent, true, true);
+        //pantallaCliente.setVisible(true);
+        cliente=PantallaClienteConsultar.iniciarConsultarCliente(parent);
         managerPedidos = new TablaManager<Pedido>(jTablePedidos) {
             @Override
             public Vector getCabecera() {
@@ -113,7 +113,7 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
     
     
     private void cargarClienteYPedidos() {
-       cliente = pantallaCliente.getCliente();
+       //cliente = pantallaCliente.getCliente(); el cliente ya esta cargado
        jTextFieldRazonSocial.setText(cliente.getRazonSocial());
        jTextFieldMail.setText(cliente.getCorreoElectronico());
        jTextFieldResponsable.setText(cliente.getApellidoResponsable() + ", " + cliente.getNombreResponsable());

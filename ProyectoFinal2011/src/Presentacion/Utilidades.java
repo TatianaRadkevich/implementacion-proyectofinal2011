@@ -4,15 +4,37 @@
  */
 package Presentacion;
 
+// <editor-fold defaultstate="collapsed" desc="imports">
+
+import Negocio.NegocioException;
 import com.toedter.calendar.JCalendar;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.lang.String;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.ToolTipManager;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+// </editor-fold>
 
 /**
  *
@@ -20,6 +42,7 @@ import java.util.GregorianCalendar;
  */
 public class Utilidades {
 
+    //// <editor-fold defaultstate="collapsed" desc="Utilidades Fechas">
     public static String parseFecha(Date fecha) {
         if (fecha == null) {
             return "";
@@ -29,13 +52,13 @@ public class Utilidades {
         return String.format("%s/%s/%s", c.get(Calendar.DATE), c.get(Calendar.MONTH) + 1, c.get(Calendar.YEAR));
     }
 
-        public static String parseHora(Date fecha) {
+    public static String parseHora(Date fecha) {
         if (fecha == null) {
             return "";
         }
         Calendar c = GregorianCalendar.getInstance();
         c.setTime(fecha);
-        return String.format("%s:%s Hs.",c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+        return String.format("%s:%s Hs.", c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
     }
 
     public static String parseFechaHora(Date fecha) {
@@ -49,7 +72,7 @@ public class Utilidades {
                 c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
     }
 
-    public static Date agregarTiempoFecha(Date fecha ,int dia, int mes, int año) {
+    public static Date agregarTiempoFecha(Date fecha, int dia, int mes, int año) {
         if (fecha == null) {
             return null;
         }
@@ -63,7 +86,7 @@ public class Utilidades {
         return c.getTime();
     }
 
-       public static Date agregarTiempoFecha(Date fecha ,int min,int hora,int dia, int mes, int año) {
+    public static Date agregarTiempoFecha(Date fecha, int min, int hora, int dia, int mes, int año) {
         if (fecha == null) {
             return null;
         }
@@ -79,13 +102,14 @@ public class Utilidades {
         return c.getTime();
     }
 
-    public static void habilitarPanel(Container panel,boolean valor)
-    {
+    public static void habilitarPanel(Container panel, boolean valor) {
         panel.setEnabled(valor);
-        for(Component componente:panel.getComponents())
-            if(componente instanceof Container)
-                habilitarPanel((Container) componente,valor);
-        
+        for (Component componente : panel.getComponents()) {
+            if (componente instanceof Container) {
+                habilitarPanel((Container) componente, valor);
+            }
+        }
+
     }
 
     public static Date getFechaActual() {
@@ -97,12 +121,15 @@ public class Utilidades {
     }
 
     public static String fechaHoraMinutoSegundoActual() {
-    Date fecha = new Date();
-    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date fecha = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-    return formato.format(fecha);
-}
-     public static BigDecimal parseBigDecimal(String value) {
+        return formato.format(fecha);
+    }
+    // </editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="Utilidades Parsers">
+
+    public static BigDecimal parseBigDecimal(String value) {
         try {
             return new BigDecimal(value);
         } catch (Exception ex) {
@@ -134,7 +161,7 @@ public class Utilidades {
         }
     }
 
-   public static Byte parseByte(String value) {
+    public static Byte parseByte(String value) {
         try {
             return new Byte(value);
         } catch (Exception ex) {
@@ -150,19 +177,184 @@ public class Utilidades {
         }
     }
 
-    public static void componenteError(Component componente){
+    //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="Utilidades Tratamiento Errores">
+    public static void componenteError(Component componente) {
         componente.setBackground(new Color(226, 90, 14));
     }
 
-    public static void componenteError( com.toedter.calendar.JDateChooser calendar){
+    public static void componenteError(com.toedter.calendar.JDateChooser calendar) {
         calendar.getDateEditor().getUiComponent().setBackground(new Color(226, 90, 14));
     }
 
-    public static void componenteCorrecto(Component componente){
+    public static void componenteCorrecto(Component componente) {
         componente.setBackground(Color.white);
     }
 
-    public static void componenteCorrecto( com.toedter.calendar.JDateChooser calendar){
-         calendar.getDateEditor().getUiComponent().setBackground(Color.white);
+    public static void componenteCorrecto(com.toedter.calendar.JDateChooser calendar) {
+        calendar.getDateEditor().getUiComponent().setBackground(Color.white);
     }
+    private static HashMap<JComponent, Border> cache = new HashMap(100);
+    private static Border bordeError = new LineBorder(Color.red, 1, true);
+
+    public static void componenteError(JComponent componente, String sms) {
+        if (componente == null) {
+            return;
+        }
+        ToolTipManager.sharedInstance().setInitialDelay(500);
+        componente.setToolTipText(sms);
+        cache.put(componente, componente.getBorder());
+        componente.setBorder(bordeError);
+    }
+
+    public static void componenteCorrecto(JComponent componente) {
+        if (componente == null) {
+            return;
+        }
+        componente.setToolTipText(null);
+        if (cache.containsKey(componente)) {
+            componente.setBorder(cache.remove(componente));
+        }
+
+//        else {
+//            componente.setBorder(componente.getClass().newInstance().getBorder());
+//        }
+    }
+
+    public static void registrarPilaError(Throwable error) {
+        registrarPilaError(error, 5);
+    }
+
+    public static void registrarPilaError(Throwable error, int nivel) {
+
+        System.err.println(extraerMensajeError(error));
+        StackTraceElement[] st = error.getStackTrace();
+        for (int i = 0; i < nivel && i < st.length; i++) {
+            System.err.println(st[i]);
+        }
+    }
+
+    public static String extraerMensajeError(Throwable ex) {
+        String mensaje = ex.getMessage();
+        if (mensaje == null || mensaje.isEmpty()) {
+            if (ex.getCause() != null) {
+                mensaje = ex.getCause().getMessage();
+            } else {
+                mensaje = ex.getLocalizedMessage();
+            }
+        }
+        return mensaje;
+    }
+
+    //</editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Validaciones">
+    public static <T> T validarNULL(T obj) throws NegocioException {
+        if (obj == null) {
+            throw new NegocioException("Este campo es obligatorio, debe ingresar un valor válido.");
+        }
+
+        return obj;
+    }
+
+    public static enum RegexType {
+
+        MAIL("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", "mi_mail@mi_cuenta.com"),
+        CUIT("\\d{2}-\\d{8}-\\d$", "21-89656598-7 (##-########-#)");
+        private String regex;
+        private String ejemplo;
+
+        private RegexType(String regex, String ejemplo) {
+            this.regex = regex;
+            this.ejemplo = ejemplo;
+        }
+    }
+
+    public static String validarString(String obj, boolean permitNull, int maxLen) throws NegocioException {
+        return validarString(obj, permitNull, 0, maxLen, null);
+    }
+
+    public static String validarString(String obj, boolean permitNull, int maxLen, RegexType regex) throws NegocioException {
+        return validarString(obj, permitNull, 0, maxLen, regex);
+    }
+
+    public static String validarString(String obj, boolean permitNull, int minLen, int maxLen, RegexType regex) throws NegocioException {
+        obj = (obj == null || obj.trim().isEmpty()) ? null : obj;
+
+        if (permitNull == true && obj == null)//si se permite nulos y es nulo se las toma
+        {
+            return null;
+        }
+
+        validarNULL(obj);
+        if (obj.length() < minLen) {
+            throw new NegocioException("Eeste campo debe tener como mínimo " + minLen + " caracter/es.");
+        } else if (maxLen < obj.length()) {
+            throw new NegocioException("Este campo puede tener como máximo " + maxLen + " caracter/es.");
+        }
+
+        if (regex != null) {
+            if (obj.matches(regex.regex) == false) {
+                String mensaje = "Ingrese un valor con un formato válido";
+                mensaje += (regex.ejemplo.isEmpty()) ? "." : ", por ejemplo: " + regex.ejemplo + " .";
+                throw new NegocioException(mensaje);
+            }
+        }
+
+        return obj.trim();
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Otros">
+    public static void comboCargar(JComboBox combo, Collection l) {
+        String msg = "Cargue un item";
+        String nullItem = "<Vacio>";
+
+        if (combo.getSelectedItem()!=null && combo.getSelectedItem().equals(nullItem)) {
+            combo.removeAllItems();
+            combo.setEnabled(true);
+            combo.setToolTipText(null);
+        }
+
+        l = (l == null) ? new ArrayList() : l;
+        Object o = combo.getSelectedItem();
+        DefaultComboBoxModel model = new DefaultComboBoxModel(l.toArray());
+        model.setSelectedItem((l.contains(o)) ? o : null);
+        combo.setModel(model);
+
+        if (l.isEmpty()) {
+            combo.addItem(nullItem);
+            combo.setSelectedIndex(0);
+            combo.setEnabled(false);
+            combo.setToolTipText(msg);
+        }
+
+    }
+
+    public static ActionListener getComboNullListener()
+    {
+        return new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource()instanceof JComboBox)//valido para combos
+                {
+                    JComboBox cmb=(JComboBox) e.getSource();
+                    if(cmb.getSelectedItem()==null)
+                    {
+
+                    }
+                }
+            }
+        };
+    }
+
+    public static void comboSeleccionarSinEvento(JComboBox combo, Object o) {
+        ActionListener[] actionListeners = combo.getActionListeners();
+        for (ActionListener al : actionListeners) {
+            combo.removeActionListener(al);
+        }
+        combo.setSelectedItem(o);
+        for (ActionListener al : actionListeners) {
+            combo.addActionListener(al);
+        }
+    }
+    // </editor-fold>
 }

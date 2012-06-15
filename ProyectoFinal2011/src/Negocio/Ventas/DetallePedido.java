@@ -118,7 +118,7 @@ public class DetallePedido implements java.io.Serializable {
         return this.TDetallesFacturas;
     }
 
-    public void setDetalleFactura(Set<DetalleFactura> detalleFactura) {
+        public void setDetalleFactura(Set<DetalleFactura> detalleFactura) {
         this.TDetallesFacturas = detalleFactura;
     }
 
