@@ -46,6 +46,13 @@ public class DetalleFactura implements java.io.Serializable {
         this.precio = precio;
     }
 
+    public DetalleFactura(DetallePedido detPed) {
+
+        this.TDetallesPedido = detPed;
+        this.cantidad = detPed.getCantidad();
+        this.precio = detPed.getPrecio();
+    }
+
     public int getIdDetalleFactura() {
         return this.idDetalleFactura;
     }
