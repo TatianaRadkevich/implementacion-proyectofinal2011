@@ -5,12 +5,12 @@
 package Presentacion;
 
 // <editor-fold defaultstate="collapsed" desc="imports">
-
 import Negocio.NegocioException;
 import com.toedter.calendar.JCalendar;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.PrintWriter;
@@ -304,11 +304,12 @@ public class Utilidades {
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Otros">
+
     public static void comboCargar(JComboBox combo, Collection l) {
         String msg = "Cargue un item";
         String nullItem = "<Vacio>";
 
-        if (combo.getSelectedItem()!=null && combo.getSelectedItem().equals(nullItem)) {
+        if (combo.getSelectedItem() != null && combo.getSelectedItem().equals(nullItem)) {
             combo.removeAllItems();
             combo.setEnabled(true);
             combo.setToolTipText(null);
@@ -329,17 +330,14 @@ public class Utilidades {
 
     }
 
-    public static ActionListener getComboNullListener()
-    {
+    public static ActionListener getComboNullListener() {
         return new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource()instanceof JComboBox)//valido para combos
+                if (e.getSource() instanceof JComboBox)//valido para combos
                 {
-                    JComboBox cmb=(JComboBox) e.getSource();
-                    if(cmb.getSelectedItem()==null)
-                    {
-
+                    JComboBox cmb = (JComboBox) e.getSource();
+                    if (cmb.getSelectedItem() == null) {
                     }
                 }
             }
@@ -355,6 +353,16 @@ public class Utilidades {
         for (ActionListener al : actionListeners) {
             combo.addActionListener(al);
         }
+    }
+
+    public static void iniciarVentana(Window ventana) {
+
+        IniciadorDeVentanas.iniciarVentana(ventana, ventana.getWidth(), ventana.getHeight());
+    }
+
+    public static void iniciarVentana(Window ventana, int anchoComponente, int altoComponente) {
+
+        IniciadorDeVentanas.iniciarVentana(ventana, anchoComponente, altoComponente);
     }
     // </editor-fold>
 }

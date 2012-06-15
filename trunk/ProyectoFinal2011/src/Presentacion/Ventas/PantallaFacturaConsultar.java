@@ -51,9 +51,7 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
         HibernateUtil.getSessionFactory();
         inicializarTablas();
         cargarValidaciones();
-        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
-
-
+        Utilidades.iniciarVentana(this);
     }
 
     private void inicializarTablas() {
@@ -61,8 +59,8 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
 
             @Override
             public Vector getCabecera() {
-                Vector cabcera = new Vector();                
-                
+                Vector cabcera = new Vector();
+
                 cabcera.add("Nro Factura");//col 2
                 cabcera.add("Fecha generación");//col 4
                 cabcera.add("Razón social");//col 1
@@ -85,20 +83,22 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
                 fila.add(elemento.getIdPedido());
                 fila.add("<te la debo>");
                 //calculo monto total
-                float montoTotal=0f;
-                for(DetalleFactura dp:elemento.getFactura().getDetalleFactura())
-                    montoTotal+=dp.getCantidad()*dp.getPrecio();
-                fila.add("$ "+montoTotal);
+                float montoTotal = 0f;
+                for (DetalleFactura dp : elemento.getFactura().getDetalleFactura()) {
+                    montoTotal += dp.getCantidad() * dp.getPrecio();
+                }
+                fila.add("$ " + montoTotal);
                 return fila;
             }
         };
         tmPedido.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
-              if(tmPedido.getSeletedObject()!=null)
-                  tmDetalle.setDatos(tmPedido.getSeletedObject().getFactura().getDetalleFactura());
-              else
-                  tmDetalle.limpiar();
+                if (tmPedido.getSeletedObject() != null) {
+                    tmDetalle.setDatos(tmPedido.getSeletedObject().getFactura().getDetalleFactura());
+                } else {
+                    tmDetalle.limpiar();
+                }
             }
         });
         ////////////////////////////////////////////////////////
@@ -106,12 +106,12 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
 
             @Override
             public Vector ObjetoFila(DetalleFactura elemento) {
-                Vector salida = new Vector(6);            
+                Vector salida = new Vector(6);
                 salida.add(elemento.getDetallePedido().getProducto().getNombre());
                 salida.add(elemento.getDetallePedido().getProducto().getDescripcion());
-                salida.add("$ "+elemento.getPrecio());
-                salida.add(elemento.getCantidad());               
-                salida.add("$ "+elemento.getCantidad() * elemento.getPrecio());
+                salida.add("$ " + elemento.getPrecio());
+                salida.add(elemento.getCantidad());
+                salida.add("$ " + elemento.getCantidad() * elemento.getPrecio());
                 return salida;
             }
 
@@ -165,8 +165,6 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
         });
 
         /************************Validacion de botones **********************************/
-        
-       
     }
 
     /** This method is called from within the constructor to
@@ -455,7 +453,7 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
                 txtRazonSocial.getText(),
                 dtcFechaGeneracionDesde.getDate(),
                 dtcFechaGeneracionHasta.getDate()));
- 
+
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -463,33 +461,22 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
         // TODO add your handling code here:
 
         try {
-            Pedido p=tmPedido.getSeletedObject();
-            if(p==null)
-                throw new NegocioException("Elija el pedido que quiere modificar");
-            //new GestorPedidoAlta().iniciarCU();
-        tbFactura.clearSelection();
-        btnBuscarActionPerformed(evt);
+            PantallaFacturaGenerar.iniciarGeneracionFactura(this);
+            tbFactura.clearSelection();
+            btnBuscarActionPerformed(evt);
 
-          } catch (Exception ex) {
+        } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
         try {
-            Pedido p=tmPedido.getSeletedObject();
-            if(p==null)
-                throw new NegocioException("Elija el pedido que quiere modificar");
-            
-            if(p.getEstadoPedido().equals(EstadoPedidoBD.getEstadoNoAutorizado())==false)
-                if(p.getEstadoPedido().equals(EstadoPedidoBD.getEstadoAutorizadoPendiente())==false)
-                    if(p.getEstadoPedido().equals(EstadoPedidoBD.getEstadoPlanificado())==false)
-                        throw new NegocioException(
-                                "Solo los pedidos 'No Autorizados', 'Autorizados/Pendientes'"
-                                + " o 'Planificados pueden ser modificados'");
-
-
-            //new GestorPedidoModificar(tmPedido.getSeletedObject()).iniciarCU();
+            Pedido p = tmPedido.getSeletedObject();
+            if (p == null) {
+                throw new NegocioException("Elija una factura");
+            }
+            PantallaFacturaGenerar.iniciarVerFactura(this, p.getFactura());
             btnBuscarActionPerformed(evt);
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
@@ -500,7 +487,7 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        
+
     }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
