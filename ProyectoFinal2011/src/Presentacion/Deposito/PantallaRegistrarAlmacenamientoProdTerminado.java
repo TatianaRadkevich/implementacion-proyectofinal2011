@@ -10,6 +10,8 @@
  */
 package Presentacion.Deposito;
 
+import BaseDeDatos.Deposito.AlmacenamientoProductoTerminado;
+import BaseDeDatos.Deposito.EAlmacenamientoProductoTerminado;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Ventas.DetallePedido;
@@ -99,9 +101,11 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
                 salida.add(elemento.getProducto().getNombre());
                 salida.add(elemento.getProducto().getDescripcion());
                 salida.add("$ "+elemento.getPrecio());
-                salida.add(elemento.getCantidad());
                 salida.add(elemento.getEstadoDetallePedido().getNombre());
                 salida.add("$ "+elemento.getCantidad() * elemento.getPrecio());
+                salida.add(elemento.getCantidad());
+                salida.add(getCantidadAlmacenada(elemento));
+                salida.add(getEstadoAlmacenado(elemento));
                 return salida;
             }
 
@@ -113,13 +117,93 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
                 cabcera.add("Precio unit.");//col 1
                 cabcera.add("Estado");
                 cabcera.add("Sub total");
-                cabcera.add("Cantidad");//col 2
-                cabcera.add("Cantidad");//col 2
+                cabcera.add("Cantidad Total");//col 2
+                cabcera.add("Cantidad Almacenada");//col 2
+                cabcera.add("Estado Almacenado");//col 2
                 return cabcera;
             }
+
+            private Object getCantidadAlmacenada(DetallePedido elemento) {
+                Double ret;
+                double r = 0;
+                for (AlmacenamientoProductoTerminado alm : elemento.getAlmacenado())
+                {
+                    r+=alm.getCantidad();
+                }
+                ret = new Double(r);
+                return ret;
+            }
+
+            private Object getEstadoAlmacenado(DetallePedido elemento) {
+                if (elemento.getAlmacenado().isEmpty())
+                {
+                    return "Sin almacenamiento";
+                }
+                else
+                {
+                    int last = elemento.getAlmacenado().size() - 1;
+                    return elemento.getAlmacenado().toArray()[last];
+                }
+            }
         };
+        
+        
+        tmDetalle.addSelectionListener(new ListSelectionListener() {
+
+            public void valueChanged(ListSelectionEvent e) {
+                limpiarAlmacenamiento();
+                if (tmDetalle.getSeletedObject() != null) {
+                    cargarAlmacenamiento(tmDetalle.getSeletedObject());
+                }
+
+            }
+        });
 
 
+    }
+
+    private void limpiarAlmacenamiento() {
+        jComboBoxEstado.setSelectedIndex(-1);
+        jTextFieldCantidad.setText("");
+    }
+
+    private void cargarAlmacenamiento(DetallePedido seletedObject) {
+        EAlmacenamientoProductoTerminado estado = (EAlmacenamientoProductoTerminado)jComboBoxEstado.getSelectedItem();
+        if (estado == null)
+        {
+            Mensajes.mensajeErrorGenerico("Debe seleccionar un estado de producto válido");
+            return;
+        }
+        int cantidad;
+        try
+        {
+            cantidad = Integer.parseInt(jTextFieldCantidad.getText().trim());
+            int cantAlm = getCantAlmacenada(seletedObject);
+            if (cantidad + cantAlm > seletedObject.getCantidad())
+            {
+                Mensajes.mensajeErrorGenerico("Existe una cantidad almacenada de " + getCantAlmacenada(seletedObject) + " y no puede superar el total de " + seletedObject.getCantidad() + " producida");
+                return;
+            }
+        }
+        catch (Exception e)
+        {
+            Mensajes.mensajeErrorGenerico("Ingrese una cantidad válida");
+            return;
+        }
+        
+        AlmacenamientoProductoTerminado alm = new AlmacenamientoProductoTerminado();
+        alm.setEstado(estado);
+        alm.setCantidad(cantidad);
+        seletedObject.getAlmacenado().add(alm);
+    }
+    
+    private int getCantAlmacenada(DetallePedido seletedObject) {
+        int ret = 0;
+        for (AlmacenamientoProductoTerminado a : seletedObject.getAlmacenado())
+        {
+            ret+= a.getCantidad();
+        }
+        return ret;
     }
 
     private void cargarValidaciones() {
@@ -198,7 +282,14 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         pnlDetalle = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbDetalle = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBoxEstado = new javax.swing.JComboBox();
+        jTextFieldCantidad = new javax.swing.JTextField();
+        jButtonGuardarAlmac = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        jButtonAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registrar Almacenamiento Producto Terminado");
@@ -214,10 +305,10 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha Generación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Desde:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Hasta:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -256,7 +347,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Nro. Pedido:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("CUIT:");
 
         javax.swing.GroupLayout pnlBuscarLayout = new javax.swing.GroupLayout(pnlBuscar);
@@ -333,7 +424,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
             pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetalleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
         pnlDetalleLayout.setVerticalGroup(
@@ -343,15 +434,62 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
                 .addContainerGap())
         );
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Almacenamiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+
+        jLabel6.setText("Estado:");
+
+        jLabel7.setText("Cantidad:");
+
+        jButtonGuardarAlmac.setText("Guardar");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldCantidad)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonGuardarAlmac)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jComboBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonGuardarAlmac)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout pnlPedidosLayout = new javax.swing.GroupLayout(pnlPedidos);
         pnlPedidos.setLayout(pnlPedidosLayout);
         pnlPedidosLayout.setHorizontalGroup(
             pnlPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPedidosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlDetalle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE))
+                .addGroup(pnlPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+                    .addGroup(pnlPedidosLayout.createSequentialGroup()
+                        .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlPedidosLayout.setVerticalGroup(
@@ -359,14 +497,23 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPedidosLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        btnSalir.setText("Salir");
+        btnSalir.setText("Cancelar");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
+            }
+        });
+
+        jButtonAceptar.setText("Aceptar");
+        jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAceptarActionPerformed(evt);
             }
         });
 
@@ -378,8 +525,12 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -390,7 +541,9 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btnSalir)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalir)
+                    .addComponent(jButtonAceptar))
                 .addContainerGap())
         );
 
@@ -412,24 +565,41 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
         this.dispose();
         
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
+        if (!tmPedido.getDatos().isEmpty())
+        {
+                for (Pedido p : tmPedido.getDatos())
+            {
+                PedidoBD.guardar(p);
+            }
+            Mensajes.mensajeInformacion("Se han guardado correctamente los almacenamientos");
+        }
+    }//GEN-LAST:event_jButtonAceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnSalir;
     private com.toedter.calendar.JDateChooser dtcFechaGeneracionDesde;
     private com.toedter.calendar.JDateChooser dtcFechaGeneracionHasta;
+    private javax.swing.JButton jButtonAceptar;
+    private javax.swing.JButton jButtonGuardarAlmac;
+    private javax.swing.JComboBox jComboBoxEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextFieldCantidad;
     private javax.swing.JPanel pnlBuscar;
     private javax.swing.JPanel pnlDetalle;
     private javax.swing.JPanel pnlPedidos;
@@ -439,4 +609,6 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
     private javax.swing.JTextField txtNroPedido;
     private javax.swing.JTextField txtRazonSocial;
     // End of variables declaration//GEN-END:variables
+
+
 }
