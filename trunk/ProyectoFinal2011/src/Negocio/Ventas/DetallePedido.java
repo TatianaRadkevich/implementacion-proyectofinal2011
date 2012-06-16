@@ -131,6 +131,10 @@ public class DetallePedido implements java.io.Serializable {
     }
 
     public Set<AlmacenamientoProductoTerminado> getAlmacenado() {
+        if (this.almacenado == null)
+        {
+            almacenado = new HashSet<AlmacenamientoProductoTerminado>();
+        }
         return almacenado;
     }
 
