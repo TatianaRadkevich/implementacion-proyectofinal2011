@@ -12,12 +12,10 @@ package Presentacion.Deposito;
 
 import BaseDeDatos.Deposito.AlmacenamientoProductoTerminado;
 import BaseDeDatos.Deposito.EAlmacenamientoProductoTerminado;
+import BaseDeDatos.Deposito.EAlmacenamientoProductoTerminadoBD;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Ventas.DetallePedido;
-import Negocio.Ventas.GestorPedidoBaja;
-import Negocio.Ventas.GestorPedidoModificar;
-import Negocio.Ventas.GestorPedidoAlta;
 import Negocio.Ventas.Pedido;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
@@ -25,7 +23,9 @@ import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import com.toedter.calendar.JTextFieldDateEditor;
+import java.util.List;
 import java.util.Vector;
+import javax.swing.JComboBox;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -47,6 +47,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         inicializarTablas();
         cargarValidaciones();
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
+        cargarComboEstados();
     }
 
     private void inicializarTablas() {
@@ -158,8 +159,14 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
 
             }
         });
-
-
+    }
+    
+    private void cargarComboEstados() {
+        List<EAlmacenamientoProductoTerminado> estados = EAlmacenamientoProductoTerminadoBD.listarAlmacenamientos();
+        Vector items = new Vector();
+        items.add("Seleccionar...");
+        items.addAll(estados);        
+        jComboBoxEstado = new JComboBox(items);
     }
 
     private void limpiarAlmacenamiento() {
@@ -609,6 +616,5 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
     private javax.swing.JTextField txtNroPedido;
     private javax.swing.JTextField txtRazonSocial;
     // End of variables declaration//GEN-END:variables
-
 
 }
