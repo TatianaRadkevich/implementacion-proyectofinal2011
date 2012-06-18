@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -210,6 +210,7 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
             gestor.guardar(reclamo);
             Mensajes.mensajeInformacion("El reclamo ha sido registrado exitosamente");
             txtDescripcion.setText("");
+            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
