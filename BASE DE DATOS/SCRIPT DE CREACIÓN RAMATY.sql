@@ -732,7 +732,8 @@ CREATE TABLE T_MATERIALES_X_PROVEEDOR (
        ID_MATERIAL_X_PROVEEDOR numeric(3) IDENTITY,
        ID_PROVEEDOR         numeric(3) NULL,
        ID_MATERIAL          numeric(3) NULL,
-       PRECIO_UNITARIO      numeric(6,2) NOT NULL
+       PRECIO_UNITARIO      numeric(6,2) NOT NULL,
+       PRESENTACION         numeric(6,2) NULL
 )
 go
 
