@@ -17,11 +17,7 @@ import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.Pedido;
-import Presentacion.IniciadorDeVentanas;
-import Presentacion.Mensajes;
-import Presentacion.TablaManager;
-import Presentacion.Utilidades;
-import Presentacion.ValidarTexbox;
+import Presentacion.*;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.util.List;
 import java.util.Vector;
@@ -558,16 +554,15 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-        tmPedido.setDatos(
-                PedidoBD.getPedidos(
+        List<Pedido> pedidos = PedidoBD.getPedidos(
                 txtRazonSocial.getText(),
                 txtCUIL.getText(),
                 txtNroPedido.getText(),
                 dtcFechaGeneracionDesde.getDate(),
                 dtcFechaGeneracionHasta.getDate(),
-                false,
-                false));
+                true,
+                false);
+        tmPedido.setDatos(pedidos);
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
