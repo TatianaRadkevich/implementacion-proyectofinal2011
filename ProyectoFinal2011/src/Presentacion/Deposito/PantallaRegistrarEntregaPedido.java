@@ -138,7 +138,8 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
         jTextFieldMail.setText(cliente.getCorreoElectronico());
         jTextFieldResponsable.setText(cliente.getApellidoResponsable() + ", " + cliente.getNombreResponsable());
         jTextFieldTelefono.setText(cliente.getTelefonoResponsable().toString());
-        jTextFieldDomicilio.setText(cliente.getDomicilio().getCalle() + cliente.getDomicilio().getNumero());
+        if (cliente.getDomicilio() != null)
+            jTextFieldDomicilio.setText(cliente.getDomicilio().getCalle() + cliente.getDomicilio().getNumero());
         jTextFieldTipo.setText(cliente.getTipoCliente().getNombre());
         List<Pedido> pedidos = PedidoBD.getPedidosAlamacenadoYTerminado(cliente);
         managerPedidos.setDatos(pedidos);
@@ -367,10 +368,9 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
         if (p != null) {
             boolean ret = Mensajes.mensajeConfirmacionGenerico("¿Está seguro que desea entregar el pedido " + p.getIdPedido() + "?");
             if (ret) {
-                //TODO: set estado pedido correcto "Retirado"
                 p.setEstadoPedido(EstadoPedidoBD.getEstadoRetirado());
                 PedidoBD.guardar(p);
-                Mensajes.mensajeConfirmacion("Se ha entregado con éxito el pedido " + p.getIdPedido());
+                Mensajes.mensajeInformacion("Se ha entregado con éxito el pedido " + p.getIdPedido());
                 this.dispose();
             }
         } else {
