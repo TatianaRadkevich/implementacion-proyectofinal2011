@@ -257,7 +257,7 @@
                       <Group type="102" attributes="0">
                           <Component id="pnlDetalle" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="jPanel1" max="32767" attributes="0"/>
+                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -402,7 +402,7 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jComboBoxEstado" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jComboBoxEstado" alignment="0" pref="98" max="32767" attributes="0"/>
                                   <Component id="jTextFieldCantidad" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -452,13 +452,20 @@
                   <StringArray count="0"/>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox(cargarComboEstados())"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldCantidad">
             </Component>
             <Component class="javax.swing.JButton" name="jButtonGuardarAlmac">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Guardar"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonGuardarAlmacActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -20,6 +20,7 @@ import Negocio.Ventas.Pedido;
 import Presentacion.*;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.event.ListSelectionEvent;
@@ -42,8 +43,8 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         HibernateUtil.getSessionFactory();
         inicializarTablas();
         cargarValidaciones();
-        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
         cargarComboEstados();
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
     }
 
     private void inicializarTablas() {
@@ -139,7 +140,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
                 else
                 {
                     int last = elemento.getAlmacenado().size() - 1;
-                    return elemento.getAlmacenado().toArray()[last];
+                    return ((AlmacenamientoProductoTerminado)elemento.getAlmacenado().toArray()[last]).getEstado();
                 }
             }
         };
@@ -150,19 +151,31 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
             public void valueChanged(ListSelectionEvent e) {
                 limpiarAlmacenamiento();
                 if (tmDetalle.getSeletedObject() != null) {
-                    cargarAlmacenamiento(tmDetalle.getSeletedObject());
+                    tomarValores(tmDetalle.getSeletedObject());
+                    jButtonGuardarAlmac.setEnabled(true);
                 }
+                else
+                    jButtonGuardarAlmac.setEnabled(false);
 
             }
         });
     }
+
+    private void tomarValores(DetallePedido seletedObject) {
+        Set<AlmacenamientoProductoTerminado> almacenado = seletedObject.getAlmacenado();
+        if (almacenado != null && !almacenado.isEmpty())
+        {
+            jComboBoxEstado.setSelectedItem(almacenado.toArray()[almacenado.size() - 1]);
+            jTextFieldCantidad.setText(getCantAlmacenada(seletedObject)+"");
+        } 
+    }
     
-    private void cargarComboEstados() {
+    private Vector cargarComboEstados() {
         List<EAlmacenamientoProductoTerminado> estados = EAlmacenamientoProductoTerminadoBD.listarAlmacenamientos();
         Vector items = new Vector();
         items.add("Seleccionar...");
         items.addAll(estados);        
-        jComboBoxEstado = new JComboBox(items);
+        return items;
     }
 
     private void limpiarAlmacenamiento() {
@@ -225,7 +238,6 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         dtcFechaGeneracionDesde.setMaxSelectableDate(Utilidades.getFechaActual());
 
         dtcFechaGeneracionHasta.setDate(Utilidades.getFechaActual());
-        dtcFechaGeneracionDesde.setDate(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 0, -1, 0));
 
         //**********************Validacion de Fecha parte2********************//
 
@@ -288,7 +300,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBoxEstado = new javax.swing.JComboBox();
+        jComboBoxEstado = new javax.swing.JComboBox(cargarComboEstados());
         jTextFieldCantidad = new javax.swing.JTextField();
         jButtonGuardarAlmac = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
@@ -444,6 +456,12 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         jLabel7.setText("Cantidad:");
 
         jButtonGuardarAlmac.setText("Guardar");
+        jButtonGuardarAlmac.setEnabled(false);
+        jButtonGuardarAlmac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarAlmacActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -458,7 +476,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxEstado, 0, 98, Short.MAX_VALUE)
                             .addComponent(jTextFieldCantidad)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -492,7 +510,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
                     .addGroup(pnlPedidosLayout.createSequentialGroup()
                         .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnlPedidosLayout.setVerticalGroup(
@@ -567,8 +585,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        this.dispose();
-        
+        this.dispose();        
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
@@ -581,6 +598,14 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
             Mensajes.mensajeInformacion("Se han guardado correctamente los almacenamientos");
         }
     }//GEN-LAST:event_jButtonAceptarActionPerformed
+
+    private void jButtonGuardarAlmacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarAlmacActionPerformed
+        cargarAlmacenamiento(tmDetalle.getSeletedObject());
+        tmDetalle.setDatos(tmDetalle.getDatos());
+        jComboBoxEstado.setSelectedIndex(-1);
+        jTextFieldCantidad.setText("");
+        tmDetalle.setSelectedRow(-1);
+    }//GEN-LAST:event_jButtonGuardarAlmacActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
