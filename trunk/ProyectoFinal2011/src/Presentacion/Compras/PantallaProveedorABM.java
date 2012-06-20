@@ -16,9 +16,13 @@ import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Compras.GestorProveedor;
 import Negocio.Compras.GestorProveedorBaja;
 import Negocio.TipoDatoException;
+import Negocio.Ventas.Cliente;
 import Presentacion.Mensajes;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
+import Presentacion.ZLinkers.ZLinkerDomicilio;
+import Presentacion.ZLinkers.ZLinkerObject;
+import Presentacion.ZLinkers.ZLinkerTextField;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +34,7 @@ import java.util.logging.Logger;
 public class PantallaProveedorABM extends javax.swing.JDialog {
 
     private GestorProveedor gestor;
+    private ZLinkerObject<Proveedor> linker;
     /** Creates new form PantallaProveedorABM */
     private PantallaProveedorABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -44,7 +49,19 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
         habilitarBaja(false,false,null,"");
         cargarValidaciones();
         pnlDomicilio.inicializar();
-       
+
+
+         Class p=Proveedor.class;
+        linker=new ZLinkerObject<Proveedor> (p,gestor.getProveedor());
+        linker.add(new ZLinkerTextField<Proveedor>(p, "razonSocial", txtRazonSocial));
+        linker.add(new ZLinkerTextField<Proveedor>(p, "cuit", txtCUIT));
+        linker.add(new ZLinkerTextField<Proveedor>(p, "correoElectronico", txtCorreoElectronico));
+        linker.add(new ZLinkerTextField<Proveedor>(p, "paginaWeb", txtPaginaWeb));
+        linker.add(new ZLinkerTextField<Proveedor>(p, "nombreResponsable", txtNombre));
+        linker.add(new ZLinkerTextField<Proveedor>(p, "apellidoResponsable", txtApellido));
+        linker.add(new ZLinkerTextField<Proveedor>(p, "telefono", txtTelefono));
+        linker.add(new ZLinkerDomicilio<Proveedor>(p, "domicilio",pnlDomicilio));
+        linker.add(new ZLinkerTextField<Proveedor>(p,"motivoBaja", txtMotivoBaja));
     }
 
  
@@ -212,11 +229,11 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
                     .addComponent(jLabel6)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlResponsableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
-                    .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(pnlResponsableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtTelefono)
+                    .addComponent(txtApellido)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
+                .addContainerGap(220, Short.MAX_VALUE))
         );
         pnlResponsableLayout.setVerticalGroup(
             pnlResponsableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,11 +277,12 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
                             .addComponent(jLabel5)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                            .addComponent(txtPaginaWeb, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                            .addComponent(txtCorreoElectronico, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                            .addComponent(txtCUIT, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE))))
+                        .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtPaginaWeb)
+                            .addComponent(txtCorreoElectronico)
+                            .addComponent(txtCUIT)
+                            .addComponent(txtRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlClienteLayout.setVerticalGroup(
@@ -422,26 +440,26 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
 
     private void txtRazonSocialFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRazonSocialFocusLost
         // TODO add your handling code here:
-        try{
-            
-            gestor.getProveedor().setRazonSocial(txtRazonSocial.getText());
-            Utilidades.componenteCorrecto(txtRazonSocial);
-        }catch(TipoDatoException ex){
-             txtRazonSocial.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtRazonSocial);
-        }
+//        try{
+//
+//            gestor.getProveedor().setRazonSocial(txtRazonSocial.getText());
+//            Utilidades.componenteCorrecto(txtRazonSocial);
+//        }catch(TipoDatoException ex){
+//             txtRazonSocial.setToolTipText(ex.getMessage());
+//             Utilidades.componenteError(txtRazonSocial);
+//        }
     }//GEN-LAST:event_txtRazonSocialFocusLost
 
     private void txtCUITFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCUITFocusLost
         // TODO add your handling code here:
-        try{
-
-            gestor.getProveedor().setCuit(txtCUIT.getText());
-            Utilidades.componenteCorrecto(txtCUIT);
-        }catch(TipoDatoException ex){
-             txtCUIT.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtCUIT);
-        }
+//        try{
+//
+//            gestor.getProveedor().setCuit(txtCUIT.getText());
+//            Utilidades.componenteCorrecto(txtCUIT);
+//        }catch(TipoDatoException ex){
+//             txtCUIT.setToolTipText(ex.getMessage());
+//             Utilidades.componenteError(txtCUIT);
+//        }
     }//GEN-LAST:event_txtCUITFocusLost
 
     private void txtCorreoElectronicoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoElectronicoFocusLost
