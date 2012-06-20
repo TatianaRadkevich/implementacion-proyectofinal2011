@@ -22,14 +22,21 @@ public class MaterialesXProveedor implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_MATERIAL_X_PROVEEDOR", unique = true, nullable = false, precision = 3, scale = 0)
     private short idMaterialXProveedor;
+    //------------------------------------------------------------------------------------------
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PROVEEDOR")
     private Proveedor TProveedores;
+    //------------------------------------------------------------------------------------------
     @Column(name="PRECIO_UNITARIO", precision=6)
     private Float precioUnitario=5f;
+    //------------------------------------------------------------------------------------------
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_MATERIAL")
     private Material TMateriales;
+    //------------------------------------------------------------------------------------------
+     @Column(name="PRESENTACION", precision=6)
+    private BigDecimal presentacion;
+     //------------------------------------------------------------------------------------------
 
     public MaterialesXProveedor() {
     }
@@ -81,5 +88,16 @@ public class MaterialesXProveedor implements java.io.Serializable {
         this.precioUnitario = precio;
     }
 
+    public BigDecimal getPresentacion() {
+        return this.presentacion;
+    }
 
+    public void setPresentacion(BigDecimal presentacion) {
+        this.presentacion = presentacion;
+    }
+
+    public String toString()
+    {
+        return this.presentacion+"";
+    }
 }
