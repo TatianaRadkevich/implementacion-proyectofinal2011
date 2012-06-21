@@ -19,6 +19,7 @@ import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.Pedido;
 import Presentacion.*;
 import com.toedter.calendar.JTextFieldDateEditor;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -165,7 +166,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         Set<AlmacenamientoProductoTerminado> almacenado = seletedObject.getAlmacenado();
         if (almacenado != null && !almacenado.isEmpty())
         {
-            jComboBoxEstado.setSelectedItem(almacenado.toArray()[almacenado.size() - 1]);
+            jComboBoxEstado.setSelectedItem(((AlmacenamientoProductoTerminado)almacenado.toArray()[almacenado.size() - 1]).getEstado());
             jTextFieldCantidad.setText(getCantAlmacenada(seletedObject)+"");
         } 
     }
@@ -210,6 +211,8 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         AlmacenamientoProductoTerminado alm = new AlmacenamientoProductoTerminado();
         alm.setEstado(estado);
         alm.setCantidad(cantidad);
+        alm.setFechaAlmacenamiento(new Date());
+        alm.setTDetallesPedido(seletedObject);
         seletedObject.getAlmacenado().add(alm);
     }
     
