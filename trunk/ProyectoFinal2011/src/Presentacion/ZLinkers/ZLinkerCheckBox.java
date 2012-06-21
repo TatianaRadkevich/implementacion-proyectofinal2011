@@ -4,20 +4,21 @@
  */
 package Presentacion.ZLinkers;
 
+import Negocio.Exceptiones.NegocioException;
 import javax.swing.JCheckBox;
 
 /**
  *
  * @author Rodrigo
  */
-public class ZLinkerCheckBox<T> extends ZLinkerItem<T> {
+public class ZLinkerCheckBox extends ZLinkerItem {
 
     protected JCheckBox chekBox;
 
-    public ZLinkerCheckBox(Class<T> c,String campo, JCheckBox item) {
-        super(c,campo);
+    public ZLinkerCheckBox(JCheckBox item) {       
         this.chekBox = item;
-        atarcomponente(chekBox);
+        this.chekBox.addFocusListener(this.lostFocusEvent);
+        this.chekBox.addActionListener(this.actionEvnt);
     }
 
     @Override
@@ -29,5 +30,9 @@ public class ZLinkerCheckBox<T> extends ZLinkerItem<T> {
     @Override
     protected Object getJComponentValue() throws Exception {
         return chekBox.isSelected();
+    }
+
+    @Override
+    protected void setJComponentError(NegocioException ne) {
     }
 }

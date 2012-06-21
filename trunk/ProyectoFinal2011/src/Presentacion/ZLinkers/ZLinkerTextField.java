@@ -4,7 +4,11 @@
  */
 package Presentacion.ZLinkers;
 
+import Negocio.Exceptiones.NegocioException;
+import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import javax.swing.JTextField;
@@ -14,28 +18,45 @@ import javax.swing.text.JTextComponent;
  *
  * @author Rodrigo
  */
-public class ZLinkerTextField<T> extends ZLinkerItem<T> {
+public class ZLinkerTextField extends ZLinkerItem {
 
     protected JTextComponent txt;
+    protected KeyAdapter ka = new KeyAdapter() {
 
-    public ZLinkerTextField(Class<T> c, String campo, JTextComponent item) {
-        super(c, campo);
+        public void keyTyped(KeyEvent evt) {
+            txt.setToolTipText(null);
+            int pos = txt.getCaretPosition();
+            String texto = txt.getText();
+            texto = texto.substring(0, pos) + evt.getKeyChar() + texto.substring(pos);
+
+            //\d{0,X}(\.\d{0,X})?
+            if (prop.precision > 0) {
+                if (texto.matches("^\\d{0," + (prop.precision - prop.scale) + "}(\\.\\d{0," + prop.scale + "})?$") == false) {
+                    String mensage = "Solo se permiten numeros con " + (prop.precision - prop.scale) + " dígitos como máximo";
+                    mensage += (prop.scale == 0) ? "" : " y " + prop.scale + " dígitos decimales";
+                    txt.setToolTipText(mensage);
+                    evt.consume();
+
+                }
+            } else if (prop.length > 0) {
+                if (texto.length() > prop.length) {
+                    String mensage = "Solo se permiten como máximo " + prop.length + " caracter/es";
+                    txt.setToolTipText(mensage);
+                    evt.consume();
+                }
+            }
+        }
+    };
+
+    public ZLinkerTextField(JTextField item) {
+        this((JTextComponent) item);
+        item.addActionListener(actionEvnt);
+    }
+
+    public ZLinkerTextField(JTextComponent item) {
         this.txt = item;
-
-        if (nullable == false) {
-            ValidarTexbox.campoObligatorio(this.txt);
-        }
-
-        if (length > 0) {
-            ValidarTexbox.validarLongitud(txt, length);
-        }
-
-        if (precision > 0) {
-            ValidarTexbox.validarNumero(txt, precision, scale);
-        }
-
-        this.atarcomponente(txt);
-
+        txt.addFocusListener(lostFocusEvent);
+        txt.addKeyListener(ka);
     }
 
     @Override
@@ -48,7 +69,7 @@ public class ZLinkerTextField<T> extends ZLinkerItem<T> {
 
     @Override
     protected Object getJComponentValue() throws Exception {
-        Class c = atributo.getType();
+        Class c = prop.getTipoValor();
         String value = txt.getText().trim();
         Object salida = null;
 
@@ -75,5 +96,14 @@ public class ZLinkerTextField<T> extends ZLinkerItem<T> {
         }
 
         return salida;
+    }
+
+    @Override
+    protected void setJComponentError(NegocioException ne) {
+        if (ne == null) {
+            Utilidades.componenteCorrecto(txt);
+        } else {
+            Utilidades.componenteError(txt, ne.getMessage());
+        }
     }
 }

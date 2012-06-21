@@ -3,7 +3,7 @@ package Negocio.Administracion;
 
 
 import Negocio.Administracion.Empleado;
-import Negocio.TipoDatoException;
+import Negocio.Exceptiones.TipoDatoException;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;

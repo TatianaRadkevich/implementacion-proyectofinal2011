@@ -12,8 +12,8 @@ package Presentacion;
 
 import BaseDeDatos.UbicacionGeografica.PaisBD;
 import Negocio.Administracion.GestorEmpleado;
-import Negocio.NegocioException;
-import Negocio.TipoDatoException;
+import Negocio.Exceptiones.NegocioException;
+import Negocio.Exceptiones.TipoDatoException;
 import Negocio.UbicacionGeografica.*;
 import Negocio.UbicacionGeografica.Pais;
 import Presentacion.ZLinkers.ZLinkerComboBox;
@@ -42,17 +42,16 @@ public class PnlDomicilio extends javax.swing.JPanel {
         cmbLocalidad.setEnabled(false);
         cmbBarrio.setEnabled(false);
 
-        this.domicilio = new Domicilio();
-        Class dc = Domicilio.class;
-        link = new ZLinkerObject<Domicilio>(dc, domicilio);
-        link.add(new ZLinkerComboBox<Domicilio, Pais>(dc, "pais", cmbPais));
-        link.add(new ZLinkerComboBox<Domicilio, Provincia>(dc, "provincia", cmbProvincia));
-        link.add(new ZLinkerComboBox<Domicilio, Localidad>(dc, "localidad", cmbLocalidad));
-        link.add(new ZLinkerComboBox<Domicilio, Barrio>(dc, "barrio", cmbBarrio));
-        link.add(new ZLinkerTextField<Domicilio>(dc, "calle", txtCalle));
-        link.add(new ZLinkerTextField<Domicilio>(dc, "depto", txtDepto));
-        link.add(new ZLinkerTextField<Domicilio>(dc, "numero", txtNumero));
-        link.add(new ZLinkerTextField<Domicilio>(dc, "piso", txtPiso));
+        this.domicilio = new Domicilio();        
+        link = new ZLinkerObject<Domicilio>(Domicilio.class, domicilio);
+        link.add("pais",new ZLinkerComboBox(cmbPais));
+        link.add("provincia",new ZLinkerComboBox(cmbProvincia));
+        link.add("localidad",new ZLinkerComboBox(cmbLocalidad));
+        link.add("barrio",new ZLinkerComboBox(cmbBarrio));
+        link.add("calle", new ZLinkerTextField(txtCalle));
+        link.add("depto", new ZLinkerTextField(txtDepto));
+        link.add("numero", new ZLinkerTextField(txtNumero));
+        link.add("piso", new ZLinkerTextField(txtPiso));
 
     }
 

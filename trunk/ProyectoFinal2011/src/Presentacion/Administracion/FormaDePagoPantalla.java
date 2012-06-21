@@ -13,7 +13,7 @@ package Presentacion.Administracion;
 
 import Negocio.Administracion.FormaPago;
 import Negocio.Administracion.GestorFormaPago;
-import Negocio.TipoDatoException;
+import Negocio.Exceptiones.TipoDatoException;
 import Presentacion.Mensajes;
 import Presentacion.Operacion;
 import Presentacion.Utilidades;

@@ -5,7 +5,7 @@ import BaseDeDatos.Ventas.ClienteBD;
 import Negocio.Web.ClienteWeb;
 import Negocio.UbicacionGeografica.Domicilio;
 import Negocio.GestionUsuario.Usuario;
-import Negocio.NegocioException;
+import Negocio.Exceptiones.NegocioException;
 import Presentacion.Utilidades;
 import java.util.ArrayList;
 import java.util.HashSet;

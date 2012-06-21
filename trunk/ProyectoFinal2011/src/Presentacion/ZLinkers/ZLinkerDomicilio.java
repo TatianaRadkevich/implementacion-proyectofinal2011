@@ -5,6 +5,7 @@
 
 package Presentacion.ZLinkers;
 
+import Negocio.Exceptiones.NegocioException;
 import Negocio.UbicacionGeografica.Domicilio;
 import Presentacion.PnlDomicilio;
 
@@ -12,12 +13,11 @@ import Presentacion.PnlDomicilio;
  *
  * @author Rodrigo
  */
-public class ZLinkerDomicilio<T> extends ZLinkerItem<T>{
+public class ZLinkerDomicilio extends ZLinkerItem{
 
     private PnlDomicilio dom;
 
-    public ZLinkerDomicilio(Class<T> c,String atrib,PnlDomicilio dom) {
-        super(c,atrib);
+    public ZLinkerDomicilio(PnlDomicilio dom) {       
         this.dom=dom;
     }
 
@@ -29,6 +29,11 @@ public class ZLinkerDomicilio<T> extends ZLinkerItem<T>{
     @Override
     protected Object getJComponentValue() throws Exception {
         return dom.getDomicilio();
+    }
+
+    @Override
+    protected void setJComponentError(NegocioException ne) {
+       
     }
 
 }

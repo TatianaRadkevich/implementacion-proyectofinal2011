@@ -5,7 +5,7 @@
 package Negocio.Ventas;
 
 import BaseDeDatos.Ventas.*;
-import Negocio.NegocioException;
+import Negocio.Exceptiones.NegocioException;
 import Presentacion.Mensajes;
 import java.util.List;
 

@@ -15,7 +15,7 @@ import Negocio.Compras.Proveedor;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Compras.GestorProveedor;
 import Negocio.Compras.GestorProveedorBaja;
-import Negocio.TipoDatoException;
+import Negocio.Exceptiones.TipoDatoException;
 import Negocio.Ventas.Cliente;
 import Presentacion.Mensajes;
 import Presentacion.Utilidades;
@@ -51,17 +51,28 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
         pnlDomicilio.inicializar();
 
 
-         Class p=Proveedor.class;
-        linker=new ZLinkerObject<Proveedor> (p,gestor.getProveedor());
-        linker.add(new ZLinkerTextField<Proveedor>(p, "razonSocial", txtRazonSocial));
-        linker.add(new ZLinkerTextField<Proveedor>(p, "cuit", txtCUIT));
-        linker.add(new ZLinkerTextField<Proveedor>(p, "correoElectronico", txtCorreoElectronico));
-        linker.add(new ZLinkerTextField<Proveedor>(p, "paginaWeb", txtPaginaWeb));
-        linker.add(new ZLinkerTextField<Proveedor>(p, "nombreResponsable", txtNombre));
-        linker.add(new ZLinkerTextField<Proveedor>(p, "apellidoResponsable", txtApellido));
-        linker.add(new ZLinkerTextField<Proveedor>(p, "telefono", txtTelefono));
-        linker.add(new ZLinkerDomicilio<Proveedor>(p, "domicilio",pnlDomicilio));
-        linker.add(new ZLinkerTextField<Proveedor>(p,"motivoBaja", txtMotivoBaja));
+//         Class p=Proveedor.class;
+//        linker=new ZLinkerObject<Proveedor> (p,gestor.getProveedor());
+//        linker.add(new ZLinkerTextField<Proveedor>(p, "razonSocial", txtRazonSocial));
+//        linker.add(new ZLinkerTextField<Proveedor>(p, "cuit", txtCUIT));
+//        linker.add(new ZLinkerTextField<Proveedor>(p, "correoElectronico", txtCorreoElectronico));
+//        linker.add(new ZLinkerTextField<Proveedor>(p, "paginaWeb", txtPaginaWeb));
+//        linker.add(new ZLinkerTextField<Proveedor>(p, "nombreResponsable", txtNombre));
+//        linker.add(new ZLinkerTextField<Proveedor>(p, "apellidoResponsable", txtApellido));
+//        linker.add(new ZLinkerTextField<Proveedor>(p, "telefono", txtTelefono));
+//        linker.add(new ZLinkerDomicilio<Proveedor>(p, "domicilio",pnlDomicilio));
+//        linker.add(new ZLinkerTextField<Proveedor>(p,"motivoBaja", txtMotivoBaja));
+
+        linker=new ZLinkerObject (Proveedor.class,gestor.getProveedor());
+        linker.add("razonSocial", new ZLinkerTextField(txtRazonSocial));
+        linker.add("cuit", new ZLinkerTextField(txtCUIT));
+        linker.add("correoElectronico", new ZLinkerTextField(txtCorreoElectronico));
+        linker.add("paginaWeb", new ZLinkerTextField(txtPaginaWeb));
+        linker.add("nombreResponsable", new ZLinkerTextField(txtNombre));
+        linker.add("apellidoResponsable", new ZLinkerTextField(txtApellido));
+        linker.add("telefono", new ZLinkerTextField(txtTelefono));
+        linker.add("motivoBaja", new ZLinkerTextField(txtMotivoBaja));
+        linker.add("domicilio",new ZLinkerDomicilio(pnlDomicilio));
     }
 
  

@@ -15,7 +15,7 @@ import BaseDeDatos.Deposito.AlmacenamientoProductoTerminadoBD;
 import BaseDeDatos.Deposito.EAlmacenamientoProductoTerminado;
 import BaseDeDatos.Ventas.EstadoPedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
-import Negocio.NegocioException;
+import Negocio.Exceptiones.NegocioException;
 import Negocio.Ventas.Cliente;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.EstadoPedido;

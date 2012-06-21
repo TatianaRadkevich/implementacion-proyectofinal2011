@@ -4,7 +4,7 @@ package Negocio.Administracion;
 import Negocio.GestionUsuario.Usuario;
 import Negocio.Produccion.DetallePlanProduccion;
 import Negocio.Produccion.PlanProduccion;
-import Negocio.TipoDatoException;
+import Negocio.Exceptiones.TipoDatoException;
 import Negocio.UbicacionGeografica.Domicilio;
 import java.util.ArrayList;
 import java.util.Date;

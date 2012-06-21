@@ -15,7 +15,7 @@ import BaseDeDatos.Ventas.ClienteBD;
 import BaseDeDatos.Ventas.EstadoPedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Exceptiones.ExceptionGestor;
-import Negocio.NegocioException;
+import Negocio.Exceptiones.NegocioException;
 import Negocio.Ventas.Cliente;
 import Negocio.Ventas.GestorClienteConsultar;
 import Negocio.Ventas.Pedido;
@@ -95,12 +95,13 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
 
         Class c = GestorClienteConsultar.class;
         link = new ZLinkerObject<GestorClienteConsultar>(c, gestor);
-        link.add(new ZLinkerTextField(c, "cuit", txtCUIT));
-        link.add(new ZLinkerTextField(c, "razonSocial", txtRazonSocial));
-        link.add(new ZLinkerTextField(c, "nombreResponsable", txtNombre));
-        link.add(new ZLinkerTextField(c, "apellidoResponsable", txtApellido));
-        link.add(new ZLinkerCheckBox(c, "cancelados", chkMostrarCancelados));
-        link.add(new ZLinkerCheckBox(c, "vigentes", chkMostrarVigentes));
+        
+        link.add("cuit",new ZLinkerTextField(txtCUIT));
+        link.add("razonSocial",new ZLinkerTextField(txtRazonSocial));
+        link.add("apellidoResponsable",new ZLinkerTextField(txtApellido));
+        link.add("ombreResponsable",new ZLinkerTextField(txtNombre));
+        link.add("cancelados",new ZLinkerCheckBox(chkMostrarCancelados));
+        link.add("vigentes",new ZLinkerCheckBox(chkMostrarVigentes));
         link.load();
         //        GUILocal.establecerGUILocal(this);
     }  
