@@ -12,52 +12,27 @@ import javax.swing.JRadioButton;
  *
  * @author Rodrigo
  */
-public class ZLRadioButon<C,T> extends ZLItem<C,T> {
+public class ZLRadioButon<T> extends ZLItem<Object, T, JRadioButton> {
 
-    private class Detalle<T> {
+    protected T value;
 
-        JRadioButton rb;
-        T value;
-
-        public Detalle(JRadioButton rb, T value) {
-            this.rb = rb;
-            this.value = value;
-        }
-    }
-
-    protected ArrayList<Detalle> det;
-
-    public ZLRadioButon() {
-        this.det = new ArrayList<Detalle>();
-    }
-
-    public void addRadioButon(JRadioButton item, T valor) {
-        det.add(new Detalle(item, valor));
-
-        item.addFocusListener(lostFocusEvent);
-        item.addActionListener(actionEvnt);
+    public ZLRadioButon(JRadioButton item, T value) {
+        super(item);
+        this.value = value;
     }
 
     @Override
     protected void setJComponentValue(T value) throws Exception {
-        for (Detalle d : det) {
-            if (d.value.equals(value)) {
-                d.rb.setSelected(true);
-            }
+        if (value.equals(this.value)) {
+            this.jComp.setSelected(true);
+        } else if (this.jComp.isSelected()) {
+            this.jComp.setSelected(false);
         }
-    }
-   @Override
-    protected T getJComponentValue() throws Exception {
-        for (Detalle<T> d : det) {
-            if (d.rb.isSelected()) {
-                return d.value;
-            }
-        }
-        return null;
     }
 
     @Override
-    protected void setJComponentError(NegocioException ne) {
-       
+    protected T getJComponentValue() throws Exception {
+        T salida = (this.jComp.isSelected()) ? this.value : null;
+        return salida;
     }
 }

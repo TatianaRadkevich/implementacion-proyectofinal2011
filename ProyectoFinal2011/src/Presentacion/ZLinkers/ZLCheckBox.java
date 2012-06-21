@@ -11,28 +11,19 @@ import javax.swing.JCheckBox;
  *
  * @author Rodrigo
  */
-public class ZLCheckBox extends ZLItem {
-
-    protected JCheckBox chekBox;
+public class ZLCheckBox extends ZLItem<Object,Boolean,JCheckBox> {   
 
     public ZLCheckBox(JCheckBox item) {
-        this.chekBox = item;
-        this.chekBox.addFocusListener(this.lostFocusEvent);
-        this.chekBox.addActionListener(this.actionEvnt);
+        super(item);
     }
 
     @Override
-    protected void setJComponentValue(Object value) throws Exception {
-        Boolean valor=(Boolean) value;
-        chekBox.setSelected((valor==null)?false:valor);
+    protected void setJComponentValue(Boolean value) throws Exception {
+        this.jComp.setSelected((value==null)?false:value);
     }
 
     @Override
-    protected Object getJComponentValue() throws Exception {
-        return chekBox.isSelected();
-    }
-
-    @Override
-    protected void setJComponentError(NegocioException ne) {
+    protected Boolean getJComponentValue() throws Exception {
+        return this.jComp.isSelected();
     }
 }

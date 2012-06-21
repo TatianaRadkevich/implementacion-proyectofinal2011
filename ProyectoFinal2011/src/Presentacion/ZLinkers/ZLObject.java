@@ -10,6 +10,7 @@ import Presentacion.Utilidades;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComponent;
 
 /**
  *
@@ -65,16 +66,17 @@ public class ZLObject<C> {
         }
     }
 
-    public void add(String propRegex, ZLItem<C, Object> item) {
+    public void add(String propRegex, ZLItem item) {
 
         item.setProp(new Propiedad(clase, propRegex));
         item.setZLinkerObject(this);
         detalle.add(item);
     }
 
-    public void add(String propRegex, boolean soloLectura, ZLItem<C, Object> item) {
+    public void add(String propRegex, boolean editable, ZLItem item) {
 
         item.setProp(new Propiedad(clase, propRegex));
+        item.getProp().setEditable(editable);
         item.setZLinkerObject(this);
         detalle.add(item);
     }

@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -197,22 +198,23 @@ public class Utilidades {
     public static void componenteCorrecto(com.toedter.calendar.JDateChooser calendar) {
         calendar.getDateEditor().getUiComponent().setBackground(Color.white);
     }
-
     /////////////////////////////////////////////
-
-
     private static HashMap<JComponent, Border> cache = new HashMap(100);
-    private static Border bordeError = new LineBorder(Color.red, 1, true);
 
     public static void componenteError(JComponent componente, String sms) {
         if (componente == null) {
             return;
         }
+
+        cache.put(componente, componente.getBorder());
+
+        Border bIn = componente.getBorder();
+        Border bOut = BorderFactory.createLineBorder(Color.RED);
+        Border bComp = BorderFactory.createCompoundBorder(bOut, bIn);
+        componente.setBorder(bComp);
+
         ToolTipManager.sharedInstance().setInitialDelay(500);
         componente.setToolTipText(sms);
-        //cache.put(componente, componente.getBorder());
-        //componente.setBorder(bordeError);
-        componente.setBackground(new Color(226, 90, 14));
     }
 
     public static void componenteCorrecto(JComponent componente) {
@@ -220,12 +222,9 @@ public class Utilidades {
             return;
         }
         componente.setToolTipText(null);
-//        if (cache.containsKey(componente)) {
-//            componente.setBorder(cache.remove(componente));
-//        }
-
-        componente.setBackground(Color.white);
-
+        if (cache.containsKey(componente)) {
+            componente.setBorder(cache.remove(componente));
+        }
 
     }
 
@@ -375,7 +374,7 @@ public class Utilidades {
         }
         return salida;
     }
-    
+
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Otros">
     public static void comboCargar(JComboBox combo, Collection l) {

@@ -13,42 +13,30 @@ import javax.swing.JComboBox;
  *
  * @author Rodrigo
  */
-public class ZLComboBox extends ZLItem {
-
-    protected JComboBox combo;
+public class ZLComboBox<T> extends ZLItem<Object,T,JComboBox> {    
 
     public ZLComboBox( JComboBox cmb) {
-        this.combo = cmb;
-        this.combo.addFocusListener(lostFocusEvent);
-        this.combo.addActionListener(actionEvnt);
+        super(cmb);
     }
 
     @Override
-    protected void setJComponentValue(Object value) throws Exception {
+    protected void setJComponentValue(T value) throws Exception {
         if (this.prop.getTipoValor().isAssignableFrom(value.getClass()) == false) {
             throw new Exception("Debe asignar un elemento válido");
         }
-        combo.setSelectedItem(value);
+        this.jComp.setSelectedItem(value);
     }
 
     @Override
-    protected Object getJComponentValue() throws Exception {
-        Object value = combo.getSelectedItem();
+    protected T getJComponentValue() throws Exception {
+        Object value =  this.jComp.getSelectedItem();
 
         if(value ==null )
             return null;
 
         if (this.prop.getTipoValor().isAssignableFrom(value.getClass()) == false) {
-            throw new Exception("Debe elegir un elemento válido");
+            throw new NegocioException("Debe elegir un elemento válido");
         }
-        return value;
-    }
-
-    @Override
-    protected void setJComponentError(NegocioException ne) {
-        if(ne==null)
-            Utilidades.componenteCorrecto(combo);
-        else
-            Utilidades.componenteError(combo,ne.getMessage());
+        return (T) value;
     }
 }

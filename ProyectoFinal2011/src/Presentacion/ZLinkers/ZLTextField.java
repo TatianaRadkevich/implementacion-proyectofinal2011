@@ -18,9 +18,10 @@ import javax.swing.text.JTextComponent;
  *
  * @author Rodrigo
  */
-public class ZLTextField extends ZLItem {
+public class ZLTextField extends ZLItem<Object,Object,JTextComponent> {
 
     protected JTextComponent txt;
+
     protected KeyAdapter ka = new KeyAdapter() {
 
         public void keyTyped(KeyEvent evt) {
@@ -48,14 +49,9 @@ public class ZLTextField extends ZLItem {
         }
     };
 
-    public ZLTextField(JTextField item) {
-        this((JTextComponent) item);
-        item.addActionListener(actionEvnt);
-    }
-
     public ZLTextField(JTextComponent item) {
-        this.txt = item;
-        txt.addFocusListener(lostFocusEvent);
+        super(item);        
+        this.txt=super.jComp;
         txt.addKeyListener(ka);
     }
 
@@ -96,14 +92,5 @@ public class ZLTextField extends ZLItem {
         }
 
         return salida;
-    }
-
-    @Override
-    protected void setJComponentError(NegocioException ne) {
-        if (ne == null) {
-            Utilidades.componenteCorrecto(txt);
-        } else {
-            Utilidades.componenteError(txt, ne.getMessage());
-        }
     }
 }

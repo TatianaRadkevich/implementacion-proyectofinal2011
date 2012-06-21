@@ -13,27 +13,19 @@ import Presentacion.PnlDomicilio;
  *
  * @author Rodrigo
  */
-public class ZLDomicilio extends ZLItem{
-
-    private PnlDomicilio dom;
+public class ZLDomicilio extends ZLItem<Object,Domicilio,PnlDomicilio>{    
 
     public ZLDomicilio(PnlDomicilio dom) {
-        this.dom=dom;
+        super(dom);
     }
 
     @Override
-    protected void setJComponentValue(Object value) throws Exception {
-        dom.setDomicilio((Domicilio) value);
+    protected void setJComponentValue(Domicilio value) throws Exception {
+        this.jComp.setDomicilio(value);
     }
 
     @Override
-    protected Object getJComponentValue() throws Exception {
-        return dom.getDomicilio();
+    protected Domicilio getJComponentValue() throws Exception {
+        return this.jComp.getDomicilio();
     }
-
-    @Override
-    protected void setJComponentError(NegocioException ne) {
-       
-    }
-
 }
