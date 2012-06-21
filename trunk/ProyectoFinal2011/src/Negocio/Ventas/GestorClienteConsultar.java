@@ -7,7 +7,7 @@ package Negocio.Ventas;
 import BaseDeDatos.Ventas.*;
 import Negocio.Exceptiones.NegocioException;
 import Presentacion.Mensajes;
-import Presentacion.ZLinkers.validationTag;
+import Presentacion.ZLinkers.ZLTag;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class GestorClienteConsultar {
 
 
     // <editor-fold defaultstate="collapsed" desc="set/get filtros">
-    @validationTag(length = 50)
+    @ZLTag(length = 50)
     public String getApellidoResponsable() {
         return apellidoResponsable;
     }
@@ -62,7 +62,7 @@ public class GestorClienteConsultar {
         filterChange();
     }
 
-    @validationTag(length = 20)//cuit
+    @ZLTag(length = 20)//cuit
     public String getCuit() {
         return cuit;
     }
@@ -72,7 +72,7 @@ public class GestorClienteConsultar {
         filterChange();
     }
 
-    @validationTag(length = 50)
+    @ZLTag(length = 50)
     public String getNombreResponsable() {
         return nombreResponsable;
     }
@@ -82,7 +82,7 @@ public class GestorClienteConsultar {
         filterChange();
     }
 
-    @validationTag(length = 50)
+    @ZLTag(length = 50)
     public String getRazonSocial() {
         return razonSocial;
     }

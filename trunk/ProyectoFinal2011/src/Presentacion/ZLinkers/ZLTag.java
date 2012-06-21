@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 
 @Target(value = {ElementType.METHOD, ElementType.FIELD})
 @Retention(value = RetentionPolicy.RUNTIME)
-public @interface validationTag {
+public @interface ZLTag {
 
     public String name() default "";
 
