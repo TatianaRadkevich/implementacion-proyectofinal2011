@@ -14,7 +14,7 @@ import BaseDeDatos.Ventas.EstadoDetallePedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.GestorEmpleado;
 import Negocio.Exceptiones.ExceptionGestor;
-import Negocio.NegocioException;
+import Negocio.Exceptiones.NegocioException;
 import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
 import Negocio.Ventas.*;

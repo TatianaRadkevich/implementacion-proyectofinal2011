@@ -1,7 +1,7 @@
 package Negocio.Compras;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
-import Negocio.TipoDatoException;
+import Negocio.Exceptiones.TipoDatoException;
 import Negocio.UbicacionGeografica.Domicilio;
 import java.util.ArrayList;
 import java.util.Date;

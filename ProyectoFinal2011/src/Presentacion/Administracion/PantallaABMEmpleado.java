@@ -22,7 +22,7 @@ import Negocio.Administracion.GestorRegistrarEmpleado;
 import Negocio.Administracion.Sexo;
 import Negocio.Administracion.TipoDocumento;
 import Negocio.Exceptiones.ExceptionGestor;
-import Negocio.TipoDatoException;
+import Negocio.Exceptiones.TipoDatoException;
 import Negocio.UbicacionGeografica.Barrio;
 import Negocio.UbicacionGeografica.Domicilio;
 import Negocio.UbicacionGeografica.Localidad;

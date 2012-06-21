@@ -3,7 +3,7 @@ package Negocio.UbicacionGeografica;
 
 import Negocio.Administracion.Empleado;
 import Negocio.Compras.Proveedor;
-import Negocio.TipoDatoException;
+import Negocio.Exceptiones.TipoDatoException;
 import Negocio.Ventas.Cliente;
 import java.util.HashSet;
 import java.util.Set;

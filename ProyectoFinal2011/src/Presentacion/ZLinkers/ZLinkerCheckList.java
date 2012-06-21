@@ -4,6 +4,7 @@
  */
 package Presentacion.ZLinkers;
 
+import Negocio.Exceptiones.NegocioException;
 import Presentacion.JCheckList;
 import java.util.List;
 
@@ -11,23 +12,28 @@ import java.util.List;
  *
  * @author Rodrigo
  */
-public class ZLinkerCheckList<T,V> extends ZLinkerItem<T> {
+public class ZLinkerCheckList<T> extends ZLinkerItem {
 
-    protected JCheckList<V> chkList;
+    protected JCheckList<T> chkList;
 
-    public ZLinkerCheckList(Class<T> c, String campo,JCheckList item) {
-        super(c,campo);
+    public ZLinkerCheckList(JCheckList<T> item) {
         this.chkList = item;
-        this.atarcomponente(chkList);
+        this.chkList.addFocusListener(this.lostFocusEvent);
+        
     }
 
     @Override
     protected void setJComponentValue(Object value) throws Exception {
-        chkList.setSelectedItems((List<V>) value);
+        chkList.setSelectedItems((List<T>) value);
     }
 
     @Override
     protected Object getJComponentValue() throws Exception {
        return chkList.getSelectedItems();
+    }
+
+    @Override
+    protected void setJComponentError(NegocioException ne) {
+
     }
 }

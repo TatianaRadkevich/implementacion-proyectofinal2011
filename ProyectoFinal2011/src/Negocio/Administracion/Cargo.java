@@ -2,7 +2,7 @@ package Negocio.Administracion;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
 import Negocio.Produccion.EtapaProduccionEspecifica;
-import Negocio.TipoDatoException;
+import Negocio.Exceptiones.TipoDatoException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;

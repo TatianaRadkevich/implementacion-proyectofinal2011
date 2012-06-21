@@ -10,7 +10,7 @@
  */
 package Presentacion.Ventas;
 
-import Negocio.NegocioException;
+import Negocio.Exceptiones.NegocioException;
 import Negocio.Ventas.Cliente;
 import Negocio.Ventas.GestorClienteABM;
 import Negocio.Ventas.TipoCliente;
@@ -40,21 +40,21 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         this.gestor = g;
         /////////// Precargas Necesarias //////////
         habilitarBaja(false, false, null, "");
-       // cargarValidaciones();
+        // cargarValidaciones();
         pnlDomicilio.inicializar();
         recargarComboTipoCleinte();
 
-        Class c=Cliente.class;
-        linker=new ZLinkerObject<Cliente> (c,gestor.getCliente());
-        linker.add(new ZLinkerTextField<Cliente>(c, "apellidoResponsable", txtApellido));
-        linker.add(new ZLinkerTextField<Cliente>(c, "nombreResponsable", txtNombre));
-        linker.add(new ZLinkerTextField<Cliente>(c, "telefonoResponsable", txtTelefono));
-        linker.add(new ZLinkerTextField<Cliente>(c, "razonSocial", txtRazonSocial));
-        linker.add(new ZLinkerTextField<Cliente>(c, "cuit", txtCUIT));
-        linker.add(new ZLinkerTextField<Cliente>(c, "correoElectronico", txtCorreoElectronico));
-        linker.add(new ZLinkerComboBox<Cliente,TipoCliente>(c,"tipoCliente",cmbTipoCliente));
-        linker.add(new ZLinkerDomicilio<Cliente>(c, "domicilio",pnlDomicilio));
-        linker.add(new ZLinkerTextField<Cliente>(c,"motivoBaja", txtMotivoBaja));
+        linker = new ZLinkerObject<Cliente>(Cliente.class, gestor.getCliente());
+        linker.add("apellidoResponsable", new ZLinkerTextField(txtApellido));
+        linker.add("nombreResponsable", new ZLinkerTextField(txtNombre));
+        linker.add("telefonoResponsable", new ZLinkerTextField(txtTelefono));
+        linker.add("razonSocial", new ZLinkerTextField(txtRazonSocial));
+        linker.add("cuit", new ZLinkerTextField(txtCUIT));
+        linker.add("correoElectronico", new ZLinkerTextField(txtCorreoElectronico));
+        linker.add("motivoBaja", new ZLinkerTextField(txtMotivoBaja));
+
+        linker.add("tipoCliente", new ZLinkerComboBox(cmbTipoCliente));
+        linker.add("domicilio", new ZLinkerDomicilio(pnlDomicilio));
 
     }
 
@@ -113,8 +113,6 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         this.setVisible(false);
         this.dispose();
     }
-
-
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -439,15 +437,15 @@ public class PantallaClienteABM extends javax.swing.JDialog {
             }
         });
     }
-   
+
     public static Cliente iniciarClienteAlta(JDialog parent) {
-        GestorClienteABM g=GestorClienteABM.getGestorClienteAlta();
+        GestorClienteABM g = GestorClienteABM.getGestorClienteAlta();
         PantallaClienteABM interfaz = new PantallaClienteABM(parent, true, g);
         interfaz.setTitle("Registrar Cliente");
         interfaz.btnSalir.setVisible(false);
-        interfaz.setVisible(true);   
-        
-        return (g.isCorrecto())?g.getCliente():null;
+        interfaz.setVisible(true);
+
+        return (g.isCorrecto()) ? g.getCliente() : null;
     }
 
     public static void iniciarClienteBaja(JDialog parent, Cliente cli) {
@@ -492,12 +490,10 @@ public class PantallaClienteABM extends javax.swing.JDialog {
 
         PantallaClienteABM interfaz = new PantallaClienteABM(parent, true, GestorClienteABM.getGestorClienteModificar(cli));
         interfaz.btnSalir.setVisible(false);
-        interfaz.cargar(cli);   
+        interfaz.cargar(cli);
         interfaz.setTitle("Modificar Cliente");
         interfaz.setVisible(true);
     }
-
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;

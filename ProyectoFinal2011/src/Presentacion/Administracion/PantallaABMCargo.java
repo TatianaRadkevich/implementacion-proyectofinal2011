@@ -13,7 +13,7 @@ package Presentacion.Administracion;
 
 import Negocio.Administracion.Cargo;
 import Negocio.Administracion.GestorCargo;
-import Negocio.TipoDatoException;
+import Negocio.Exceptiones.TipoDatoException;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.Operacion;

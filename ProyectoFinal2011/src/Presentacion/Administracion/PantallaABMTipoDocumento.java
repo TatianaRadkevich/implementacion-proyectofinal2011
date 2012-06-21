@@ -14,7 +14,7 @@ import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Operacion;
 import Negocio.Administracion.GestorTipoDocumento;
 import Negocio.Administracion.TipoDocumento;
-import Negocio.TipoDatoException;
+import Negocio.Exceptiones.TipoDatoException;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.Utilidades;

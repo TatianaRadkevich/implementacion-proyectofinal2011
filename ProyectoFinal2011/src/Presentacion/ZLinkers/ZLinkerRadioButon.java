@@ -4,6 +4,7 @@
  */
 package Presentacion.ZLinkers;
 
+import Negocio.Exceptiones.NegocioException;
 import java.util.ArrayList;
 import javax.swing.JRadioButton;
 
@@ -11,58 +12,52 @@ import javax.swing.JRadioButton;
  *
  * @author Rodrigo
  */
-public class ZLinkerRadioButon<T, V> extends ZLinkerItem<T> {
+public class ZLinkerRadioButon<C,T> extends ZLinkerItem<C,T> {
 
-    private class Detalle<V> {
+    private class Detalle<T> {
 
         JRadioButton rb;
-        V value;
+        T value;
 
-        public Detalle(JRadioButton rb, V value) {
+        public Detalle(JRadioButton rb, T value) {
             this.rb = rb;
             this.value = value;
         }
     }
+
     protected ArrayList<Detalle> det;
 
-    public ZLinkerRadioButon(Class<T> c,String campo) {
-        super(c,campo);
+    public ZLinkerRadioButon() {        
         this.det = new ArrayList<Detalle>();
     }
 
-    public void addRadioButon(JRadioButton item, V valor) {
+    public void addRadioButon(JRadioButton item, T valor) {
         det.add(new Detalle(item, valor));
 
-        this.atarcomponente(item);
-
-//        item.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    saveAtributo();
-//                } catch (Exception ex) {
-//                    Logger.getLogger(LinkerRadioButon.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        });
-
+        item.addFocusListener(lostFocusEvent);
+        item.addActionListener(actionEvnt);
     }
 
     @Override
-    protected void setJComponentValue(Object value) throws Exception {
+    protected void setJComponentValue(T value) throws Exception {
         for (Detalle d : det) {
             if (d.value.equals(value)) {
                 d.rb.setSelected(true);
             }
         }
     }
-
-    @Override
-    protected Object getJComponentValue() throws Exception {
-        for (Detalle d : det) {
+   @Override
+    protected T getJComponentValue() throws Exception {
+        for (Detalle<T> d : det) {
             if (d.rb.isSelected()) {
                 return d.value;
             }
         }
         return null;
+    }
+
+    @Override
+    protected void setJComponentError(NegocioException ne) {
+       
     }
 }

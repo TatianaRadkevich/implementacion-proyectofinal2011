@@ -5,7 +5,7 @@
 package Presentacion;
 
 // <editor-fold defaultstate="collapsed" desc="imports">
-import Negocio.NegocioException;
+import Negocio.Exceptiones.NegocioException;
 import com.toedter.calendar.JCalendar;
 import java.awt.Color;
 import java.awt.Component;
@@ -16,6 +16,9 @@ import java.awt.event.ActionListener;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.String;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -278,7 +281,7 @@ public class Utilidades {
     }
 
     public static String validarString(String obj, boolean permitNull, int minLen, int maxLen, RegexType regex) throws NegocioException {
-        obj = (obj == null || obj.trim().isEmpty()) ? null : obj;
+        obj = (obj == null || obj.trim().isEmpty()) ? null : obj;//si obj es '' le meto Null
 
         if (permitNull == true && obj == null)//si se permite nulos y es nulo se las toma
         {
@@ -303,8 +306,73 @@ public class Utilidades {
         return obj.trim();
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Otros">
+    // <editor-fold defaultstate="collapsed" desc="Reflexion">
 
+    public static Object ejecutarMetodo(Object o, String regex, Object... params) throws Exception {
+        ArrayList<Class<?>> paramsType = new ArrayList();
+        for (Object p : params) {
+            paramsType.add(p.getClass());
+        }
+
+        return getMetodo(o.getClass(), regex, (Class<?>[]) paramsType.toArray()).invoke(o, params);
+    }
+
+    public static Method getMetodo(Class<?> clase, String regex, Class<?>... parameterTypes) {
+
+        Method salida = null;
+        regex = regex.trim().toUpperCase();
+        ArrayList<Method> candidatos = new ArrayList();
+
+        for (Method m : clase.getDeclaredMethods()) {
+            String nombreMetodo = m.getName().toUpperCase();
+            if (nombreMetodo.matches(regex)) {
+                try {
+                    candidatos.add(clase.getDeclaredMethod(m.getName(), parameterTypes));
+                } catch (Exception e) {
+                }
+            }
+        }
+
+        for (Method method : candidatos) {
+            if (salida == null || salida.getName().length() > method.getName().length()) {
+                salida = method;
+            }
+        }
+
+        if (salida == null) {
+            System.err.println("No se encontro ningun metodo en la clase " + clase.getName() + " que cumpla con la siguiente exprecion " + regex);
+        }
+
+        return salida;
+    }
+
+    public static Field getCampo(Class<?> clase, String regex) {
+
+        Field salida = null;
+        regex = regex.trim().toUpperCase();
+        ArrayList<Field> candidatos = new ArrayList();
+
+        for (Field f : clase.getDeclaredFields()) {
+            String nombre = f.getName().toUpperCase();
+            if (nombre.matches(regex)) {
+                candidatos.add(f);
+            }
+        }
+
+        for (Field f : candidatos) {
+            if (salida == null || salida.getName().length() > f.getName().length()) {
+                salida = f;
+            }
+        }
+
+        if (salida == null) {
+            System.err.println("No se encontro ningun campo en la clase " + clase.getName() + " que cumpla con la siguiente exprecion " + regex);
+        }
+        return salida;
+    }
+    
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Otros">
     public static void comboCargar(JComboBox combo, Collection l) {
         String msg = "Cargue un item";
         String nullItem = "<Vacio>";

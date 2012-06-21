@@ -4,6 +4,8 @@
  */
 package Presentacion.ZLinkers;
 
+import Negocio.Exceptiones.NegocioException;
+import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import javax.swing.JComboBox;
 
@@ -11,39 +13,42 @@ import javax.swing.JComboBox;
  *
  * @author Rodrigo
  */
-public class ZLinkerComboBox<T, V> extends ZLinkerItem<T> {
+public class ZLinkerComboBox extends ZLinkerItem {
 
-    protected JComboBox cmb;
+    protected JComboBox combo;
 
-    public ZLinkerComboBox(Class<T> c, String campo, JComboBox item) {
-        super(c, campo);
-        this.cmb = item;
-
-        if (nullable == false) {
-            ValidarTexbox.campoObligatorio(this.cmb);
-        }
-
-        this.atarcomponente(cmb);
+    public ZLinkerComboBox( JComboBox cmb) {
+        this.combo = cmb;
+        this.combo.addFocusListener(lostFocusEvent);
+        this.combo.addActionListener(actionEvnt);
     }
 
     @Override
     protected void setJComponentValue(Object value) throws Exception {
-        if (super.atributo.getType().isAssignableFrom(value.getClass()) == false) {
+        if (this.prop.getTipoValor().isAssignableFrom(value.getClass()) == false) {
             throw new Exception("Debe asignar un elemento válido");
         }
-        cmb.setSelectedItem(value);
+        combo.setSelectedItem(value);
     }
 
     @Override
     protected Object getJComponentValue() throws Exception {
-        Object value = cmb.getSelectedItem();
+        Object value = combo.getSelectedItem();
 
         if(value ==null )
             return null;
 
-        if (super.atributo.getType().isAssignableFrom(value.getClass()) == false) {
+        if (this.prop.getTipoValor().isAssignableFrom(value.getClass()) == false) {
             throw new Exception("Debe elegir un elemento válido");
         }
         return value;
+    }
+
+    @Override
+    protected void setJComponentError(NegocioException ne) {
+        if(ne==null)
+            Utilidades.componenteCorrecto(combo);
+        else
+            Utilidades.componenteError(combo,ne.getMessage());
     }
 }

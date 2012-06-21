@@ -5,8 +5,6 @@
 
 package Negocio.Exceptiones;
 
-import Negocio.NegocioException;
-
 /**
  *
  * @author Ivan

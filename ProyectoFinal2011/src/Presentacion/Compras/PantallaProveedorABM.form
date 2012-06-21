@@ -101,7 +101,7 @@
                               <Component id="txtCUIT" alignment="0" max="32767" attributes="1"/>
                               <Component id="txtRazonSocial" alignment="0" pref="183" max="32767" attributes="1"/>
                           </Group>
-                          <EmptySpace pref="220" max="32767" attributes="0"/>
+                          <EmptySpace pref="231" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
