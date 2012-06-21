@@ -12,28 +12,20 @@ import java.util.List;
  *
  * @author Rodrigo
  */
-public class ZLCheckList<T> extends ZLItem {
-
-    protected JCheckList<T> chkList;
+public class ZLCheckList<T> extends ZLItem<Object,List<T>,JCheckList<T>> {
 
     public ZLCheckList(JCheckList<T> item) {
-        this.chkList = item;
-        this.chkList.addFocusListener(this.lostFocusEvent);
+       super(item);
         
     }
 
     @Override
-    protected void setJComponentValue(Object value) throws Exception {
-        chkList.setSelectedItems((List<T>) value);
+    protected void setJComponentValue(List<T> value) throws Exception {
+        super.jComp.setSelectedItems( value);
     }
 
     @Override
-    protected Object getJComponentValue() throws Exception {
-       return chkList.getSelectedItems();
-    }
-
-    @Override
-    protected void setJComponentError(NegocioException ne) {
-
+    protected List<T> getJComponentValue() throws Exception {
+       return super.jComp.getSelectedItems();
     }
 }

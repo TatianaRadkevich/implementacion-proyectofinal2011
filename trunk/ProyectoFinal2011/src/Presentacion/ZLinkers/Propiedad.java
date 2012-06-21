@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author Rodrigo
  */
-public class Propiedad<C> {
+public class Propiedad<C,T> {
 
     protected Method set;
     protected Method get;
@@ -49,7 +49,6 @@ public class Propiedad<C> {
         if (set == null) {
             editable = false;
         }
-
     }
 
     private void cargarPropiedades(Annotation[] anns) {
@@ -78,7 +77,7 @@ public class Propiedad<C> {
             nulable=false;
     }
 
-    protected void setValue(C tarjet, Object value) throws TipoDatoException, NegocioException, Exception {
+    protected void setValue(C tarjet, T value) throws TipoDatoException, NegocioException, Exception {
         try {
 
             if(nulable==false)
@@ -101,8 +100,8 @@ public class Propiedad<C> {
         }
     }
 
-    protected Object getValue(C tarjet) throws Exception {
-        return get.invoke(tarjet);
+    protected T getValue(C tarjet) throws Exception {
+        return (T) get.invoke(tarjet);
     }
 
     public boolean isEditable() {

@@ -6,19 +6,22 @@ package Presentacion.ZLinkers;
 
 import Negocio.Exceptiones.NegocioException;
 import Negocio.Exceptiones.TipoDatoException;
+import Presentacion.Utilidades;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JComponent;
 
 /**
  *
  * @author Rodrigo
  */
-public abstract class ZLItem<C, T> {
+public abstract class ZLItem<C,T, J extends JComponent> {
 
-    protected Propiedad<C> prop;
+    protected Propiedad<C, T> prop;
     protected ZLObject<C> zlo;
+    protected J jComp;
     protected FocusAdapter lostFocusEvent = new FocusAdapter() {
 
         @Override
@@ -38,6 +41,15 @@ public abstract class ZLItem<C, T> {
             }
         }
     };
+
+    public ZLItem(J comp) {
+        this.jComp = comp;
+        this.jComp.addFocusListener(lostFocusEvent);
+        try {
+            Utilidades.ejecutarMetodo(this.jComp, "addActionListener", actionEvnt);
+        } catch (Exception e) {
+        }
+    }
 
     protected void setValue(T value) throws TipoDatoException, NegocioException, Exception {
         prop.setValue(zlo.getObjeto(), value);
@@ -61,23 +73,28 @@ public abstract class ZLItem<C, T> {
         }
     }
 
-    public Propiedad getProp() {
+    public Propiedad<C,T> getProp() {
         return prop;
     }
 
-    public void setProp(Propiedad prop) {
+    public void setProp(Propiedad<C,T> prop) {
         this.prop = prop;
     }
 
-    public ZLObject getZLinkerObject() {
+    public ZLObject<C> getZLinkerObject() {
         return zlo;
     }
 
-    public void setZLinkerObject(ZLObject zlo) {
+    public void setZLinkerObject(ZLObject<C> zlo) {
         this.zlo = zlo;
     }
 
-    protected abstract void setJComponentError(NegocioException ne);
+    protected void setJComponentError(NegocioException ne) {
+        Utilidades.componenteCorrecto(jComp);
+        if (ne != null) {
+            Utilidades.componenteError(jComp, ne.getMessage());
+        }
+    }
 
     protected abstract void setJComponentValue(T value) throws Exception;
 
