@@ -12,7 +12,7 @@ import javax.swing.JRadioButton;
  *
  * @author Rodrigo
  */
-public class ZLinkerRadioButon<C,T> extends ZLinkerItem<C,T> {
+public class ZLRadioButon<C,T> extends ZLItem<C,T> {
 
     private class Detalle<T> {
 
@@ -27,7 +27,7 @@ public class ZLinkerRadioButon<C,T> extends ZLinkerItem<C,T> {
 
     protected ArrayList<Detalle> det;
 
-    public ZLinkerRadioButon() {        
+    public ZLRadioButon() {
         this.det = new ArrayList<Detalle>();
     }
 

@@ -2,38 +2,38 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Presentacion.ZLinkers;
 
 import Negocio.Exceptiones.NegocioException;
-import Negocio.UbicacionGeografica.Domicilio;
-import Presentacion.PnlDomicilio;
+import Presentacion.JCheckList;
+import java.util.List;
 
 /**
  *
  * @author Rodrigo
  */
-public class ZLinkerDomicilio extends ZLinkerItem{
+public class ZLCheckList<T> extends ZLItem {
 
-    private PnlDomicilio dom;
+    protected JCheckList<T> chkList;
 
-    public ZLinkerDomicilio(PnlDomicilio dom) {       
-        this.dom=dom;
+    public ZLCheckList(JCheckList<T> item) {
+        this.chkList = item;
+        this.chkList.addFocusListener(this.lostFocusEvent);
+        
     }
 
     @Override
     protected void setJComponentValue(Object value) throws Exception {
-        dom.setDomicilio((Domicilio) value);
+        chkList.setSelectedItems((List<T>) value);
     }
 
     @Override
     protected Object getJComponentValue() throws Exception {
-        return dom.getDomicilio();
+       return chkList.getSelectedItems();
     }
 
     @Override
     protected void setJComponentError(NegocioException ne) {
-       
-    }
 
+    }
 }

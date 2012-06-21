@@ -5,35 +5,34 @@
 package Presentacion.ZLinkers;
 
 import Negocio.Exceptiones.NegocioException;
-import Presentacion.JCheckList;
-import java.util.List;
+import javax.swing.JCheckBox;
 
 /**
  *
  * @author Rodrigo
  */
-public class ZLinkerCheckList<T> extends ZLinkerItem {
+public class ZLCheckBox extends ZLItem {
 
-    protected JCheckList<T> chkList;
+    protected JCheckBox chekBox;
 
-    public ZLinkerCheckList(JCheckList<T> item) {
-        this.chkList = item;
-        this.chkList.addFocusListener(this.lostFocusEvent);
-        
+    public ZLCheckBox(JCheckBox item) {
+        this.chekBox = item;
+        this.chekBox.addFocusListener(this.lostFocusEvent);
+        this.chekBox.addActionListener(this.actionEvnt);
     }
 
     @Override
     protected void setJComponentValue(Object value) throws Exception {
-        chkList.setSelectedItems((List<T>) value);
+        Boolean valor=(Boolean) value;
+        chekBox.setSelected((valor==null)?false:valor);
     }
 
     @Override
     protected Object getJComponentValue() throws Exception {
-       return chkList.getSelectedItems();
+        return chekBox.isSelected();
     }
 
     @Override
     protected void setJComponentError(NegocioException ne) {
-
     }
 }

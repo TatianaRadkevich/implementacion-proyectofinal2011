@@ -16,9 +16,9 @@ import Negocio.Exceptiones.NegocioException;
 import Negocio.Exceptiones.TipoDatoException;
 import Negocio.UbicacionGeografica.*;
 import Negocio.UbicacionGeografica.Pais;
-import Presentacion.ZLinkers.ZLinkerComboBox;
-import Presentacion.ZLinkers.ZLinkerObject;
-import Presentacion.ZLinkers.ZLinkerTextField;
+import Presentacion.ZLinkers.ZLComboBox;
+import Presentacion.ZLinkers.ZLObject;
+import Presentacion.ZLinkers.ZLTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -33,7 +33,7 @@ public class PnlDomicilio extends javax.swing.JPanel {
     /** Creates new form Domicilio */
     private Domicilio domicilio;
     private boolean inicializado = false;
-    private ZLinkerObject<Domicilio> link;
+    private ZLObject<Domicilio> link;
 
     public PnlDomicilio() {
         initComponents();
@@ -43,15 +43,15 @@ public class PnlDomicilio extends javax.swing.JPanel {
         cmbBarrio.setEnabled(false);
 
         this.domicilio = new Domicilio();        
-        link = new ZLinkerObject<Domicilio>(Domicilio.class, domicilio);
-        link.add("pais",new ZLinkerComboBox(cmbPais));
-        link.add("provincia",new ZLinkerComboBox(cmbProvincia));
-        link.add("localidad",new ZLinkerComboBox(cmbLocalidad));
-        link.add("barrio",new ZLinkerComboBox(cmbBarrio));
-        link.add("calle", new ZLinkerTextField(txtCalle));
-        link.add("depto", new ZLinkerTextField(txtDepto));
-        link.add("numero", new ZLinkerTextField(txtNumero));
-        link.add("piso", new ZLinkerTextField(txtPiso));
+        link = new ZLObject<Domicilio>(Domicilio.class, domicilio);
+        link.add("pais",new ZLComboBox(cmbPais));
+        link.add("provincia",new ZLComboBox(cmbProvincia));
+        link.add("localidad",new ZLComboBox(cmbLocalidad));
+        link.add("barrio",new ZLComboBox(cmbBarrio));
+        link.add("calle", new ZLTextField(txtCalle));
+        link.add("depto", new ZLTextField(txtDepto));
+        link.add("numero", new ZLTextField(txtNumero));
+        link.add("piso", new ZLTextField(txtPiso));
 
     }
 

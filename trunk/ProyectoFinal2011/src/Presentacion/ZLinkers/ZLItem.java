@@ -15,10 +15,10 @@ import java.awt.event.FocusEvent;
  *
  * @author Rodrigo
  */
-public abstract class ZLinkerItem<C, T> {
+public abstract class ZLItem<C, T> {
 
     protected Propiedad<C> prop;
-    protected ZLinkerObject<C> zlo;
+    protected ZLObject<C> zlo;
     protected FocusAdapter lostFocusEvent = new FocusAdapter() {
 
         @Override
@@ -69,11 +69,11 @@ public abstract class ZLinkerItem<C, T> {
         this.prop = prop;
     }
 
-    public ZLinkerObject getZLinkerObject() {
+    public ZLObject getZLinkerObject() {
         return zlo;
     }
 
-    public void setZLinkerObject(ZLinkerObject zlo) {
+    public void setZLinkerObject(ZLObject zlo) {
         this.zlo = zlo;
     }
 

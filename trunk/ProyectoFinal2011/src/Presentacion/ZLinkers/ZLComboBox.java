@@ -13,11 +13,11 @@ import javax.swing.JComboBox;
  *
  * @author Rodrigo
  */
-public class ZLinkerComboBox extends ZLinkerItem {
+public class ZLComboBox extends ZLItem {
 
     protected JComboBox combo;
 
-    public ZLinkerComboBox( JComboBox cmb) {
+    public ZLComboBox( JComboBox cmb) {
         this.combo = cmb;
         this.combo.addFocusListener(lostFocusEvent);
         this.combo.addActionListener(actionEvnt);

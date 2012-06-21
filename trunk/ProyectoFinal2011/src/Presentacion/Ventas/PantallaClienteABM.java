@@ -32,7 +32,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
 
     /** Creates new form PantallaAMBCliente */
     private GestorClienteABM gestor;
-    private ZLinkerObject<Cliente> linker;
+    private ZLObject<Cliente> linker;
 
     private PantallaClienteABM(JDialog parent, boolean modal, GestorClienteABM g) {
         super(parent, modal);
@@ -44,17 +44,17 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         pnlDomicilio.inicializar();
         recargarComboTipoCleinte();
 
-        linker = new ZLinkerObject<Cliente>(Cliente.class, gestor.getCliente());
-        linker.add("apellidoResponsable", new ZLinkerTextField(txtApellido));
-        linker.add("nombreResponsable", new ZLinkerTextField(txtNombre));
-        linker.add("telefonoResponsable", new ZLinkerTextField(txtTelefono));
-        linker.add("razonSocial", new ZLinkerTextField(txtRazonSocial));
-        linker.add("cuit", new ZLinkerTextField(txtCUIT));
-        linker.add("correoElectronico", new ZLinkerTextField(txtCorreoElectronico));
-        linker.add("motivoBaja", new ZLinkerTextField(txtMotivoBaja));
+        linker = new ZLObject<Cliente>(Cliente.class, gestor.getCliente());
+        linker.add("apellidoResponsable", new ZLTextField(txtApellido));
+        linker.add("nombreResponsable", new ZLTextField(txtNombre));
+        linker.add("telefonoResponsable", new ZLTextField(txtTelefono));
+        linker.add("razonSocial", new ZLTextField(txtRazonSocial));
+        linker.add("cuit", new ZLTextField(txtCUIT));
+        linker.add("correoElectronico", new ZLTextField(txtCorreoElectronico));
+        linker.add("motivoBaja", new ZLTextField(txtMotivoBaja));
 
-        linker.add("tipoCliente", new ZLinkerComboBox(cmbTipoCliente));
-        linker.add("domicilio", new ZLinkerDomicilio(pnlDomicilio));
+        linker.add("tipoCliente", new ZLComboBox(cmbTipoCliente));
+        linker.add("domicilio", new ZLDomicilio(pnlDomicilio));
 
     }
 
