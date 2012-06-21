@@ -197,6 +197,10 @@ public class Utilidades {
     public static void componenteCorrecto(com.toedter.calendar.JDateChooser calendar) {
         calendar.getDateEditor().getUiComponent().setBackground(Color.white);
     }
+
+    /////////////////////////////////////////////
+
+
     private static HashMap<JComponent, Border> cache = new HashMap(100);
     private static Border bordeError = new LineBorder(Color.red, 1, true);
 
@@ -206,8 +210,9 @@ public class Utilidades {
         }
         ToolTipManager.sharedInstance().setInitialDelay(500);
         componente.setToolTipText(sms);
-        cache.put(componente, componente.getBorder());
-        componente.setBorder(bordeError);
+        //cache.put(componente, componente.getBorder());
+        //componente.setBorder(bordeError);
+        componente.setBackground(new Color(226, 90, 14));
     }
 
     public static void componenteCorrecto(JComponent componente) {
@@ -215,13 +220,13 @@ public class Utilidades {
             return;
         }
         componente.setToolTipText(null);
-        if (cache.containsKey(componente)) {
-            componente.setBorder(cache.remove(componente));
-        }
-
-//        else {
-//            componente.setBorder(componente.getClass().newInstance().getBorder());
+//        if (cache.containsKey(componente)) {
+//            componente.setBorder(cache.remove(componente));
 //        }
+
+        componente.setBackground(Color.white);
+
+
     }
 
     public static void registrarPilaError(Throwable error) {

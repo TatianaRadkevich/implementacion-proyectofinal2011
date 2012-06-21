@@ -18,8 +18,13 @@ public class GestorProveedorAlta extends GestorProveedor{
 
      @Override
     public void iniciarCU() {
-        interfaz=new PantallaProveedorABM(this);
+         //antes
+//        interfaz=new PantallaProveedorABM(this);
+//        proveedor=new Proveedor();
+
         proveedor=new Proveedor();
+        interfaz=new PantallaProveedorABM(this);
+
         interfaz.setTitle("Registrar Proveedor");
         interfaz.setVisible(true);
     }
