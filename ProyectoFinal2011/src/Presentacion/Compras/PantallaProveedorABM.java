@@ -20,9 +20,9 @@ import Negocio.Ventas.Cliente;
 import Presentacion.Mensajes;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
-import Presentacion.ZLinkers.ZLinkerDomicilio;
-import Presentacion.ZLinkers.ZLinkerObject;
-import Presentacion.ZLinkers.ZLinkerTextField;
+import Presentacion.ZLinkers.ZLDomicilio;
+import Presentacion.ZLinkers.ZLObject;
+import Presentacion.ZLinkers.ZLTextField;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +34,7 @@ import java.util.logging.Logger;
 public class PantallaProveedorABM extends javax.swing.JDialog {
 
     private GestorProveedor gestor;
-    private ZLinkerObject<Proveedor> linker;
+    private ZLObject<Proveedor> linker;
     /** Creates new form PantallaProveedorABM */
     private PantallaProveedorABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -63,16 +63,16 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
 //        linker.add(new ZLinkerDomicilio<Proveedor>(p, "domicilio",pnlDomicilio));
 //        linker.add(new ZLinkerTextField<Proveedor>(p,"motivoBaja", txtMotivoBaja));
 
-        linker=new ZLinkerObject (Proveedor.class,gestor.getProveedor());
-        linker.add("razonSocial", new ZLinkerTextField(txtRazonSocial));
-        linker.add("cuit", new ZLinkerTextField(txtCUIT));
-        linker.add("correoElectronico", new ZLinkerTextField(txtCorreoElectronico));
-        linker.add("paginaWeb", new ZLinkerTextField(txtPaginaWeb));
-        linker.add("nombreResponsable", new ZLinkerTextField(txtNombre));
-        linker.add("apellidoResponsable", new ZLinkerTextField(txtApellido));
-        linker.add("telefono", new ZLinkerTextField(txtTelefono));
-        linker.add("motivoBaja", new ZLinkerTextField(txtMotivoBaja));
-        linker.add("domicilio",new ZLinkerDomicilio(pnlDomicilio));
+        linker=new ZLObject (Proveedor.class,gestor.getProveedor());
+        linker.add("razonSocial", new ZLTextField(txtRazonSocial));
+        linker.add("cuit", new ZLTextField(txtCUIT));
+        linker.add("correoElectronico", new ZLTextField(txtCorreoElectronico));
+        linker.add("paginaWeb", new ZLTextField(txtPaginaWeb));
+        linker.add("nombreResponsable", new ZLTextField(txtNombre));
+        linker.add("apellidoResponsable", new ZLTextField(txtApellido));
+        linker.add("telefono", new ZLTextField(txtTelefono));
+        linker.add("motivoBaja", new ZLTextField(txtMotivoBaja));
+        linker.add("domicilio",new ZLDomicilio(pnlDomicilio));
     }
 
  

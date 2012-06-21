@@ -18,7 +18,7 @@ import javax.swing.text.JTextComponent;
  *
  * @author Rodrigo
  */
-public class ZLinkerTextField extends ZLinkerItem {
+public class ZLTextField extends ZLItem {
 
     protected JTextComponent txt;
     protected KeyAdapter ka = new KeyAdapter() {
@@ -48,12 +48,12 @@ public class ZLinkerTextField extends ZLinkerItem {
         }
     };
 
-    public ZLinkerTextField(JTextField item) {
+    public ZLTextField(JTextField item) {
         this((JTextComponent) item);
         item.addActionListener(actionEvnt);
     }
 
-    public ZLinkerTextField(JTextComponent item) {
+    public ZLTextField(JTextComponent item) {
         this.txt = item;
         txt.addFocusListener(lostFocusEvent);
         txt.addKeyListener(ka);

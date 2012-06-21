@@ -24,10 +24,10 @@ import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.ValidarTexbox;
-import Presentacion.ZLinkers.ZLinkerCheckBox;
-import Presentacion.ZLinkers.ZLinkerCheckList;
-import Presentacion.ZLinkers.ZLinkerObject;
-import Presentacion.ZLinkers.ZLinkerTextField;
+import Presentacion.ZLinkers.ZLCheckBox;
+import Presentacion.ZLinkers.ZLCheckList;
+import Presentacion.ZLinkers.ZLObject;
+import Presentacion.ZLinkers.ZLTextField;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
@@ -47,7 +47,7 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
 
     private TablaManager<Cliente> tablita;
     private GestorClienteConsultar gestor;
-    private ZLinkerObject<GestorClienteConsultar> link;
+    private ZLObject<GestorClienteConsultar> link;
 
     /** Creates new form PantallaClienteConsultar */
     private PantallaClienteConsultar(java.awt.Window parent, boolean modal, GestorClienteConsultar g) {
@@ -94,14 +94,14 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
         cargarValidaciones();
 
         Class c = GestorClienteConsultar.class;
-        link = new ZLinkerObject<GestorClienteConsultar>(c, gestor);
+        link = new ZLObject<GestorClienteConsultar>(c, gestor);
         
-        link.add("cuit",new ZLinkerTextField(txtCUIT));
-        link.add("razonSocial",new ZLinkerTextField(txtRazonSocial));
-        link.add("apellidoResponsable",new ZLinkerTextField(txtApellido));
-        link.add("ombreResponsable",new ZLinkerTextField(txtNombre));
-        link.add("cancelados",new ZLinkerCheckBox(chkMostrarCancelados));
-        link.add("vigentes",new ZLinkerCheckBox(chkMostrarVigentes));
+        link.add("cuit",new ZLTextField(txtCUIT));
+        link.add("razonSocial",new ZLTextField(txtRazonSocial));
+        link.add("apellidoResponsable",new ZLTextField(txtApellido));
+        link.add("ombreResponsable",new ZLTextField(txtNombre));
+        link.add("cancelados",new ZLCheckBox(chkMostrarCancelados));
+        link.add("vigentes",new ZLCheckBox(chkMostrarVigentes));
         link.load();
         //        GUILocal.establecerGUILocal(this);
     }  
