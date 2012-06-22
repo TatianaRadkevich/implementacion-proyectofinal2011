@@ -27,7 +27,7 @@ public abstract class AutoFill<E> {
 
     String busq = "";
     private JComboBox combo;
-    private JTextField txt;    
+    private JTextField txt;
     private E value;
 
     public E getValue() {
@@ -39,7 +39,7 @@ public abstract class AutoFill<E> {
         txt.setText(value.toString());
         combo.setSelectedItem(value);
         txt.requestFocus();
-       
+
     }
 
     public AutoFill(JTextField text) {
@@ -63,17 +63,15 @@ public abstract class AutoFill<E> {
             @Override
             public void focusGained(FocusEvent fe) {
 
-                    if (combo.isPopupVisible()==false) {
-                        combo.showPopup();
-                    }
+                if (combo.isPopupVisible() == false) {
+                    combo.showPopup();
+                }
 
             }
 
-
-
             @Override
             public void focusLost(FocusEvent e) {
-    
+
                 if (txt.hasFocus() == false && combo.hasFocus() == false) {
                     if (combo.isPopupVisible()) {
                         combo.hidePopup();
@@ -86,19 +84,18 @@ public abstract class AutoFill<E> {
         combo.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent ae) {
-                if(ae.getModifiers()==ae.MOUSE_EVENT_MASK&& combo.getSelectedItem()!=null)
-                {
-                    setValue((E)combo.getSelectedItem());
+                if (ae.getModifiers() == ae.MOUSE_EVENT_MASK && combo.getSelectedItem() != null) {
+                    setValue((E) combo.getSelectedItem());
                 }
-              
+
             }
         });
-        
+
         combo.addKeyListener(new KeyAdapter() {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                
+
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
                     if (combo.getSelectedIndex() == 0) {
                         txt.requestFocus();
@@ -108,15 +105,15 @@ public abstract class AutoFill<E> {
                         txt.requestFocus();
                     }
                 } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    txt.requestFocus();
                     setValue((E) combo.getSelectedItem());
+                    combo.hidePopup();
+
                 }
 
-                
+
             }
         });
-
-
-  
 
         txt.addMouseListener(new MouseAdapter() {
 
@@ -135,7 +132,7 @@ public abstract class AutoFill<E> {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                
+
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
                     int index = combo.getItemCount() - 1;
                     if (combo.getItemCount() > 1) {
@@ -156,10 +153,10 @@ public abstract class AutoFill<E> {
 
                     }
                 }
-                
-            }
 
-            String aux="";
+            }
+            String aux = "";
+
             @Override
             public void keyTyped(KeyEvent e) {
 
@@ -170,8 +167,10 @@ public abstract class AutoFill<E> {
                 if (l.isEmpty()) {
                     e.consume();
                 } else {
-                    if(aux.equals(texto)==false)
+                    if (aux.equals(texto) == false) {
                         updateList(l);
+                    }
+                    aux = texto;
                 }
             }
         });
@@ -180,8 +179,8 @@ public abstract class AutoFill<E> {
         txt.addFocusListener(new FocusAdapter() {
 
             @Override
-            public void focusGained(FocusEvent fe) {               
-                    updateList();                
+            public void focusGained(FocusEvent fe) {
+                updateList();
             }
         });
 
@@ -190,6 +189,7 @@ public abstract class AutoFill<E> {
             public void actionPerformed(ActionEvent e) {
                 if (combo.getSelectedItem() != null) {
                     setValue((E) combo.getSelectedItem());
+                    combo.hidePopup();
 
                 }
             }
@@ -198,18 +198,16 @@ public abstract class AutoFill<E> {
 
     }
 
-    public void addActionListener(ActionListener al)
-    {
+    public void addActionListener(ActionListener al) {
         combo.addActionListener(al);
     }
 
-        public void removeActionListener(ActionListener al)
-    {
+    public void removeActionListener(ActionListener al) {
         combo.removeActionListener(al);
     }
 
     public void updateList(List<E> l) {
-        
+
         combo.hidePopup();
         combo.setModel(new DefaultComboBoxModel(l.toArray()));
 
