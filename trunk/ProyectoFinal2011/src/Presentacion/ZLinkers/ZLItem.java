@@ -46,7 +46,7 @@ public abstract class ZLItem<C,T, J extends JComponent> {
         this.jComp = comp;
         this.jComp.addFocusListener(lostFocusEvent);
         try {
-            Utilidades.ejecutarMetodo(this.jComp, "addActionListener", actionEvnt);
+            Utilidades.getMetodo(this.jComp.getClass(), "addActionListener", ActionListener.class).invoke(this.jComp, actionEvnt);
         } catch (Exception e) {
         }
     }
