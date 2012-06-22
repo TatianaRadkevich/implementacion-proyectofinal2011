@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -326,13 +327,24 @@ public class Utilidades {
         Method salida = null;
         regex = regex.trim().toUpperCase();
         ArrayList<Method> candidatos = new ArrayList();
+        ArrayList<Class> clases = new ArrayList();
 
-        for (Method m : clase.getDeclaredMethods()) {
-            String nombreMetodo = m.getName().toUpperCase();
-            if (nombreMetodo.matches(regex)) {
-                try {
-                    candidatos.add(clase.getDeclaredMethod(m.getName(), parameterTypes));
-                } catch (Exception e) {
+        Class aux = clase;
+        clases.add(aux);
+        while (aux.getSuperclass() != null) {
+            aux = aux.getSuperclass();
+            clases.add(aux);
+        }
+
+        for (Class cc : clases) {
+
+            for (Method m : cc.getDeclaredMethods()) {
+                String nombreMetodo = m.getName().toUpperCase();
+                if (nombreMetodo.matches(regex)) {
+                    try {
+                        candidatos.add(cc.getDeclaredMethod(m.getName(), parameterTypes));
+                    } catch (Exception e) {
+                    }
                 }
             }
         }

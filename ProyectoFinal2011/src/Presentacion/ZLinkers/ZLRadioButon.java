@@ -18,7 +18,7 @@ public class ZLRadioButon<T> extends ZLItem<Object, T, JRadioButton> {
 
     public ZLRadioButon(JRadioButton item, T value) {
         super(item);
-        this.value = value;
+        this.value = value;        
     }
 
     @Override
