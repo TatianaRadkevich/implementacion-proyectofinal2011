@@ -204,7 +204,7 @@
                           <Component id="txtApellido" alignment="0" max="32767" attributes="1"/>
                           <Component id="txtNombre" alignment="0" pref="176" max="32767" attributes="1"/>
                       </Group>
-                      <EmptySpace pref="220" max="32767" attributes="0"/>
+                      <EmptySpace pref="231" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
