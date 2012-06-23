@@ -48,7 +48,7 @@ public class Proveedor implements java.io.Serializable {
     private String correoElectronico;
     @Column(name = "APELLIDO_RESPONSABLE")//, nullable = false, length = 100)
     private String apellidoResponsable;
-    @Column(name = "CUIT", length = 20)
+    @Column(name = "CUIT", nullable = false, length = 20)
     private String cuit;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FEC_BAJA", length = 23)
@@ -156,6 +156,8 @@ public class Proveedor implements java.io.Serializable {
     }
 
     public void setCuit(String cuit)throws TipoDatoException {
+        if(cuit.trim().compareTo("")==0)
+            throw new TipoDatoException("Debe introducir un cuit");
         this.cuit = cuit;
     }
 

@@ -475,62 +475,62 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
 
     private void txtCorreoElectronicoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoElectronicoFocusLost
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            gestor.getProveedor(). setCorreoElectronico(txtCorreoElectronico.getText());
-            Utilidades.componenteCorrecto(txtCorreoElectronico);
-        } catch (TipoDatoException ex) {
-            txtCorreoElectronico.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(txtCorreoElectronico);
-        }
+//        try {
+//            // TODO add your handling code here:
+//            gestor.getProveedor(). setCorreoElectronico(txtCorreoElectronico.getText());
+//            Utilidades.componenteCorrecto(txtCorreoElectronico);
+//        } catch (TipoDatoException ex) {
+//            txtCorreoElectronico.setToolTipText(ex.getMessage());
+//            Utilidades.componenteError(txtCorreoElectronico);
+//        }
     }//GEN-LAST:event_txtCorreoElectronicoFocusLost
 
     private void txtPaginaWebFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPaginaWebFocusLost
         // TODO add your handling code here:
-        try {
-            gestor.getProveedor(). setPaginaWeb(txtPaginaWeb.getText());
-            Utilidades.componenteCorrecto(txtPaginaWeb);
-        } catch (TipoDatoException ex) {
-            txtPaginaWeb.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(txtPaginaWeb);
-        }
+//        try {
+//            gestor.getProveedor(). setPaginaWeb(txtPaginaWeb.getText());
+//            Utilidades.componenteCorrecto(txtPaginaWeb);
+//        } catch (TipoDatoException ex) {
+//            txtPaginaWeb.setToolTipText(ex.getMessage());
+//            Utilidades.componenteError(txtPaginaWeb);
+//        }
     }//GEN-LAST:event_txtPaginaWebFocusLost
 
     private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
         // TODO add your handling code here:
-        try {
-            gestor.getProveedor().setNombreResponsable(txtNombre.getText());
-            Utilidades.componenteCorrecto(txtNombre);
-        } catch (TipoDatoException ex) {
-            txtNombre.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(txtNombre);
-        }
+//        try {
+//            gestor.getProveedor().setNombreResponsable(txtNombre.getText());
+//            Utilidades.componenteCorrecto(txtNombre);
+//        } catch (TipoDatoException ex) {
+//            txtNombre.setToolTipText(ex.getMessage());
+//            Utilidades.componenteError(txtNombre);
+//        }
     }//GEN-LAST:event_txtNombreFocusLost
 
     private void txtApellidoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtApellidoFocusLost
         // TODO add your handling code here:
-        try {
-            gestor.getProveedor().setApellidoResponsable(txtApellido.getText());
-            Utilidades.componenteCorrecto(txtApellido);
-        } catch (TipoDatoException ex) {
-            txtApellido.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(txtApellido);
-        }
+//        try {
+//            gestor.getProveedor().setApellidoResponsable(txtApellido.getText());
+//            Utilidades.componenteCorrecto(txtApellido);
+//        } catch (TipoDatoException ex) {
+//            txtApellido.setToolTipText(ex.getMessage());
+//            Utilidades.componenteError(txtApellido);
+//        }
     }//GEN-LAST:event_txtApellidoFocusLost
 
     private void txtTelefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusLost
         // TODO add your handling code here:
-         try{
-            long temp=Long.parseLong(txtTelefono.getText());
-            gestor.getProveedor().setTelefonoResponsable(txtTelefono.getText());
-            Utilidades.componenteCorrecto(txtTelefono);
-        }catch(TipoDatoException ex){
-             txtTelefono.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtTelefono);
-        }catch(Exception e){
-             Utilidades.componenteError(txtTelefono);
-             txtTelefono.setToolTipText("Formato incorrecto. Debe ser numérico");
-        }
+//         try{
+//            long temp=Long.parseLong(txtTelefono.getText());
+//            gestor.getProveedor().setTelefonoResponsable(txtTelefono.getText());
+//            Utilidades.componenteCorrecto(txtTelefono);
+//        }catch(TipoDatoException ex){
+//             txtTelefono.setToolTipText(ex.getMessage());
+//             Utilidades.componenteError(txtTelefono);
+//        }catch(Exception e){
+//             Utilidades.componenteError(txtTelefono);
+//             txtTelefono.setToolTipText("Formato incorrecto. Debe ser numérico");
+//        }
     }//GEN-LAST:event_txtTelefonoFocusLost
 
     private void pnlDomicilioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pnlDomicilioFocusLost
