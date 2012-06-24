@@ -196,11 +196,11 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         {
             cantidad = Integer.parseInt(jTextFieldCantidad.getText().trim());
             int cantAlm = getCantAlmacenada(seletedObject);
-            if (cantidad + cantAlm > seletedObject.getCantidad())
+           /* if (cantidad + cantAlm > seletedObject.getCantidad())
             {
                 Mensajes.mensajeErrorGenerico("Existe una cantidad almacenada de " + getCantAlmacenada(seletedObject) + " y no puede superar el total de " + seletedObject.getCantidad() + " producida");
                 return;
-            }
+            }*/
         }
         catch (Exception e)
         {
