@@ -42,6 +42,11 @@ public abstract class AutoFill<E> {
 
     }
 
+    public JTextField getJTextField()
+    {
+        return txt;
+    }
+
     public AutoFill(JTextField text) {
         combo = new JComboBox();
         txt = text;
@@ -88,6 +93,7 @@ public abstract class AutoFill<E> {
                     setValue((E) combo.getSelectedItem());
                 }
 
+                value=(E) combo.getSelectedItem();
             }
         });
 
@@ -99,10 +105,12 @@ public abstract class AutoFill<E> {
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
                     if (combo.getSelectedIndex() == 0) {
                         txt.requestFocus();
+                        value=null;
                     }
                 } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     if (combo.getSelectedIndex() == combo.getItemCount() - 1) {
                         txt.requestFocus();
+                        value=null;
                     }
                 } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     txt.requestFocus();

@@ -3,6 +3,7 @@ package Negocio.Ventas;
 
 import Negocio.Administracion.Empleado;
 import Negocio.Administracion.Factura;
+import Negocio.Exceptiones.NegocioException;
 import Negocio.Produccion.PlanProduccion;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,14 +81,13 @@ public class Pedido implements java.io.Serializable {
     @Column(name = "MOTIVO_BAJA", length = 100)
     private String motivoBaja;
     //___________________________________________________________________
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_FACTURA")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_FACTURA")
     private Factura TFacturas;
     //_____________________________________________________________________
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_EMPLEADO",nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_EMPLEADO", nullable = false)
     private Empleado empleado;
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")
     private Set<PlanProduccion> TPlanesProduccions = new HashSet<PlanProduccion>(0);
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")
@@ -205,8 +205,6 @@ public class Pedido implements java.io.Serializable {
         this.empleado = empleado;
     }
 
-
-
     public PlanProduccion getPlanProduccion() {
         if (this.TPlanesProduccions.isEmpty()) {
             return null;
@@ -231,6 +229,17 @@ public class Pedido implements java.io.Serializable {
             TDetallesPedidos.add(dt);
         }
 
+    }
+
+    public void addDetallePedido(DetallePedido dp) {
+        dp.setPedido(this);
+        this.TDetallesPedidos.add(dp);
+    }
+
+    public void removeDetallePedido(DetallePedido det) {
+        if (this.TDetallesPedidos.remove(det)) {
+            det.setPedido(null);
+        }
     }
 
     public Date getFecBaja() {
@@ -262,11 +271,19 @@ public class Pedido implements java.io.Serializable {
         this.fechaClienteRecep = fechaClienteRecep;
     }
 
-     public Factura getFactura() {
+    public Factura getFactura() {
         return this.TFacturas;
     }
 
     public void setTFacturas(Factura TFacturas) {
         this.TFacturas = TFacturas;
+    }
+
+    public void registrar()throws NegocioException {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public void cancelar(String motivo) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }
