@@ -18,7 +18,6 @@ import Negocio.Produccion.GestorOrdenTrabajo;
 import Negocio.Produccion.OrdenTrabajo;
 import Negocio.Produccion.PlanProduccion;
 import Negocio.Ventas.DetallePedido;
-import Negocio.Ventas.GestorPedidoBaja;
 import Negocio.Ventas.Pedido;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;

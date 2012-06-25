@@ -418,6 +418,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (Mensajes.mensajeConfirmacionGenerico("¿Realmentes desea salir?")) {
             salir();
+            gestor.cancelar();
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
 

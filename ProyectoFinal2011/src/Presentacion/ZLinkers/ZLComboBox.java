@@ -21,7 +21,7 @@ public class ZLComboBox<T> extends ZLItem<Object,T,JComboBox> {
 
     @Override
     protected void setJComponentValue(T value) throws Exception {
-        if (this.prop.getTipoValor().isAssignableFrom(value.getClass()) == false) {
+        if (value!=null && this.prop.getTipoValor().isAssignableFrom(value.getClass()) == false) {
             throw new Exception("Debe asignar un elemento válido");
         }
         this.jComp.setSelectedItem(value);

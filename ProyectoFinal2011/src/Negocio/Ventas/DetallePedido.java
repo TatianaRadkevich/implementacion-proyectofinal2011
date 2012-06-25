@@ -73,6 +73,16 @@ public class DetallePedido implements java.io.Serializable {
         this.TDetallesFacturas = TDetallesFacturas;
     }
 
+    public DetallePedido(DetallePedido dp) {
+        this.idDetallePedido = dp.idDetallePedido;
+        this.TPedidos = dp.TPedidos;
+        this.TProductos = dp.TProductos;
+        this.cantidad = dp.cantidad;
+        this.precio = dp.precio;
+        this.TDetallesFacturas =new HashSet<DetalleFactura>(dp.TDetallesFacturas);
+        this.almacenado =new HashSet<AlmacenamientoProductoTerminado>(dp.almacenado);
+    }
+
     /**************************************************/
     public int getIdDetallePedido() {
         return this.idDetallePedido;

@@ -17,17 +17,18 @@ import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Exceptiones.NegocioException;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.EstadoPedido;
-import Negocio.Ventas.GestorPedidoBaja;
-import Negocio.Ventas.GestorPedidoModificar;
-import Negocio.Ventas.GestorPedidoAlta;
+import Negocio.Ventas.GestorClienteConsultar;
+import Negocio.Ventas.GestorPedidoConsultar;
 import Negocio.Ventas.Pedido;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
+import Presentacion.ZLinkers.*;
 import com.toedter.calendar.JTextFieldDateEditor;
 import gui.GUILocal;
+import java.awt.Window;
 import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -40,16 +41,38 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
 
     private TablaManager<Pedido> tmPedido;
     private TablaManager<DetallePedido> tmDetalle;
+    private GestorPedidoConsultar gestor;
+    private ZLObject<GestorPedidoConsultar> lzg;
+
+    public static void main(String[] args) {
+        iniciarAdministracionPedidos(null);
+    }
+
+    public static void iniciarAdministracionPedidos(Window parent)
+    {
+        new PantallaPedidoConsultar(parent,new GestorPedidoConsultar()).setVisible(true);
+    }
 
     /** Creates new form PantallaConsultarPedido */
-    public PantallaPedidoConsultar(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-
+    private PantallaPedidoConsultar(Window parent, GestorPedidoConsultar gestor) {
+        super(parent, ModalityType.APPLICATION_MODAL);
+        this.gestor = gestor;
         initComponents();
-        HibernateUtil.getSessionFactory();
         inicializarTablas();
-        cargarValidaciones();
-        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
+        //cargarValidaciones();
+
+        lzg = new ZLObject<GestorPedidoConsultar>(gestor);
+        lzg.add("cuit", new ZLTextField(txtCUIT));
+        lzg.add("nroPedido", new ZLTextField(txtNroPedido));
+        lzg.add("razonSocial", new ZLTextField(txtRazonSocial));
+        lzg.add("fechaDesde", new ZLCalendar(dtcFechaGeneracionDesde).setMaxDate(dtcFechaGeneracionHasta));
+        lzg.add("fechaHasta", new ZLCalendar(dtcFechaGeneracionHasta).setMinDate(dtcFechaGeneracionDesde).setMaxDate(Utilidades.getFechaActual()));
+
+        lzg.add("vigente", new ZLCheckBox(chkMostrarVigentes));
+        lzg.add("cancelado", new ZLCheckBox(chkMostrarCancelados));
+        lzg.load();
+
+        Utilidades.iniciarVentana(this);
 
 
     }
@@ -81,20 +104,22 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                 fila.add(elemento.getCliente().getCuit());//col 2
                 fila.add(elemento.getEstadoPedido());
                 //calculo monto total
-                float montoTotal=0f;
-                for(DetallePedido dp:elemento.getDetallePedido())
-                    montoTotal+=dp.getCantidad()*dp.getPrecio();
-                fila.add("$ "+montoTotal);
+                float montoTotal = 0f;
+                for (DetallePedido dp : elemento.getDetallePedido()) {
+                    montoTotal += dp.getCantidad() * dp.getPrecio();
+                }
+                fila.add("$ " + montoTotal);
                 return fila;
             }
         };
         tmPedido.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
-              if(tmPedido.getSeletedObject()!=null)
-                  tmDetalle.setDatos(tmPedido.getSeletedObject().getDetallePedido());
-              else
-                  tmDetalle.limpiar();
+                if (tmPedido.getSeletedObject() != null) {
+                    tmDetalle.setDatos(tmPedido.getSeletedObject().getDetallePedido());
+                } else {
+                    tmDetalle.limpiar();
+                }
             }
         });
         ////////////////////////////////////////////////////////
@@ -105,10 +130,10 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                 Vector salida = new Vector(6);
                 salida.add(elemento.getProducto().getNombre());
                 salida.add(elemento.getProducto().getDescripcion());
-                salida.add("$ "+elemento.getPrecio());
+                salida.add("$ " + elemento.getPrecio());
                 salida.add(elemento.getCantidad());
                 salida.add(elemento.getEstadoDetallePedido().getNombre());
-                salida.add("$ "+elemento.getCantidad() * elemento.getPrecio());
+                salida.add("$ " + elemento.getCantidad() * elemento.getPrecio());
                 return salida;
             }
 
@@ -124,7 +149,21 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                 return cabcera;
             }
         };
+        tmPedido.addSelectionListener(new ListSelectionListener() {
 
+            public void valueChanged(ListSelectionEvent e) {
+                boolean var = false;
+                if (tmPedido.getSeletedObject() != null) {
+                    if (tmPedido.getSeletedObject().getFecBaja() == null) {
+                        var = true;
+                    }
+                }
+
+                btnCancelar.setEnabled(var);
+                btnModificar.setEnabled(var);
+                btnVer.setEnabled(var);
+            }
+        });
 
     }
 
@@ -132,8 +171,8 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
         //**********************Validacion de textBox********************//
         ValidarTexbox.validarInt(txtNroPedido);
         ValidarTexbox.validarLongitud(txtNroPedido, 8);
-        ValidarTexbox.validarLong(txtCUIL);
-        ValidarTexbox.validarLongitud(txtCUIL, 11);
+        ValidarTexbox.validarLong(txtCUIT);
+        ValidarTexbox.validarLongitud(txtCUIT, 11);
         ValidarTexbox.validarLongitud(txtRazonSocial, 50);
 
         //**********************Validacion de Fecha********************//
@@ -165,20 +204,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
         /************************Validacion de botones **********************************/
         btnCancelar.setEnabled(false);
         btnModificar.setEnabled(false);
-        tmPedido.addSelectionListener(new ListSelectionListener() {
 
-            public void valueChanged(ListSelectionEvent e) {
-                boolean var = false;
-                if (tmPedido.getSeletedObject() != null) {
-                    if (tmPedido.getSeletedObject().getFecBaja() == null) {
-                        var = true;
-                    }
-                }
-
-                btnCancelar.setEnabled(var);
-                btnModificar.setEnabled(var);
-            }
-        });
     }
 
     /** This method is called from within the constructor to
@@ -203,7 +229,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtRazonSocial = new javax.swing.JTextField();
-        txtCUIL = new javax.swing.JTextField();
+        txtCUIT = new javax.swing.JTextField();
         txtNroPedido = new javax.swing.JTextField();
         pnlPedidos = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -212,6 +238,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
         btnModificar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnVer = new javax.swing.JButton();
         pnlDetalle = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbDetalle = new javax.swing.JTable();
@@ -297,7 +324,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                     .addGroup(pnlBuscarLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCUIL, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtCUIT, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlBuscarLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -322,7 +349,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCUIL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCUIT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -373,27 +400,32 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
             }
         });
 
+        btnVer.setText("Ver");
+        btnVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBotonesLayout = new javax.swing.GroupLayout(pnlBotones);
         pnlBotones.setLayout(pnlBotonesLayout);
         pnlBotonesLayout.setHorizontalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBotonesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnVer, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
         );
         pnlBotonesLayout.setVerticalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBotonesLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(btnNuevo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCancelar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnVer)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -433,7 +465,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(pnlPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPedidosLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
@@ -488,39 +520,27 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        tmPedido.setDatos(
-                PedidoBD.getPedidos(
-                txtRazonSocial.getText(),
-                txtCUIL.getText(),
-                txtNroPedido.getText(),
-                dtcFechaGeneracionDesde.getDate(),
-                dtcFechaGeneracionHasta.getDate(),
-                chkMostrarVigentes.isSelected(),
-                chkMostrarCancelados.isSelected()));
+
+        tmPedido.setDatos(gestor.buscar());
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        new GestorPedidoAlta().iniciarCU();
-        tbPedidos.clearSelection();
-        btnBuscarActionPerformed(evt);
+        try {
+            PantallaPedidoABM.iniciarRegistrarPedido(this);
+            tbPedidos.clearSelection();
+            btnBuscarActionPerformed(evt);
+        } catch (Exception ex) {
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+        }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
-            Pedido p=tmPedido.getSeletedObject();
-            if(p==null)
-                throw new NegocioException("Elija el pedido que quiere modificar");
-            
-            if(p.getEstadoPedido().equals(EstadoPedidoBD.getEstadoNoAutorizado())==false)
-                if(p.getEstadoPedido().equals(EstadoPedidoBD.getEstadoAutorizadoPendiente())==false)
-                    if(p.getEstadoPedido().equals(EstadoPedidoBD.getEstadoPlanificado())==false)
-                        throw new NegocioException(
-                                "Solo los pedidos 'No Autorizados', 'Autorizados/Pendientes'"
-                                + " o 'Planificados pueden ser modificados'");
 
-            new GestorPedidoModificar(tmPedido.getSeletedObject()).iniciarCU();
+            PantallaPedidoABM.iniciarModificarPedido(this, tmPedido.getSeletedObject());
+            tbPedidos.clearSelection();
             btnBuscarActionPerformed(evt);
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
@@ -529,19 +549,11 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+
         try {
-            Pedido p=tmPedido.getSeletedObject();
-            if(p==null)
-                throw new NegocioException("Elija el pedido que quiere eliminar");
 
-            if(p.getEstadoPedido().equals(EstadoPedidoBD.getEstadoNoAutorizado())==false)
-                if(p.getEstadoPedido().equals(EstadoPedidoBD.getEstadoAutorizadoPendiente())==false)
-                    if(p.getEstadoPedido().equals(EstadoPedidoBD.getEstadoPlanificado())==false)
-                        throw new NegocioException(
-                                "Solo los pedidos 'No Autorizados', 'Autorizados/Pendientes'"
-                                + " o 'Planificados pueden ser cancelados'");
-
-            new GestorPedidoBaja(tmPedido.getSeletedObject()).iniciarCU();
+            PantallaPedidoABM.iniciarCancelarPedido(this, tmPedido.getSeletedObject());
+            tbPedidos.clearSelection();
             btnBuscarActionPerformed(evt);
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
@@ -552,15 +564,28 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        
+
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
+        // TODO add your handling code here:
+                try {
+
+            PantallaPedidoABM.iniciarVerPedido(this, tmPedido.getSeletedObject());
+
+        } catch (Exception ex) {
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+        }
+
+
+    }//GEN-LAST:event_btnVerActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnVer;
     private javax.swing.JCheckBox chkMostrarCancelados;
     private javax.swing.JCheckBox chkMostrarVigentes;
     private com.toedter.calendar.JDateChooser dtcFechaGeneracionDesde;
@@ -579,7 +604,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
     private javax.swing.JPanel pnlPedidos;
     private javax.swing.JTable tbDetalle;
     private javax.swing.JTable tbPedidos;
-    private javax.swing.JTextField txtCUIL;
+    private javax.swing.JTextField txtCUIT;
     private javax.swing.JTextField txtNroPedido;
     private javax.swing.JTextField txtRazonSocial;
     // End of variables declaration//GEN-END:variables

@@ -80,5 +80,10 @@ public abstract class GestorClienteABM {
         };
 
     }
+
+    public void cancelar() {
+        this.correcto=false;
+        this.cliente=null;
+    }
     // </editor-fold>
 }

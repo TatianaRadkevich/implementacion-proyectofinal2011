@@ -6,11 +6,9 @@ package Presentacion.ZLinkers;
 
 import Negocio.Exceptiones.NegocioException;
 import Negocio.Exceptiones.TipoDatoException;
-import Presentacion.Utilidades;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComponent;
 
 /**
  *
@@ -21,6 +19,11 @@ public class ZLObject<C> {
     private C objeto;
     private ArrayList<ZLItem> detalle;
     private Class<C> clase;
+
+
+    public ZLObject( C obj) {
+        this((Class<C>)obj.getClass(),obj);
+    }
 
     public ZLObject(Class<C> clase) {
         this.detalle = new ArrayList<ZLItem>();
