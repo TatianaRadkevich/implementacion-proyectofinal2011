@@ -52,12 +52,12 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
                 return GestorPedido.buscarClientes(texto);
             }
         };
-        auto.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                cargarCliente(auto.getValue());
-            }
-        });
+//        auto.addActionListener(new ActionListener() {
+//
+//            public void actionPerformed(ActionEvent e) {
+//                cargarCliente(auto.getValue());
+//            }
+//        });
 
 
 
