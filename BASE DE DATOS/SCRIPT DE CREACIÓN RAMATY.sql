@@ -791,7 +791,7 @@ go
 
 CREATE TABLE T_PEDIDOS (
        ID_PEDIDO            numeric(8) IDENTITY,
-       FEC_HORA_ESTIMADA_ENTREGA datetime NOT NULL,
+       FEC_HORA_ESTIMADA_ENTREGA datetime NULL,
        FEC_HORA_GENERACION  datetime NOT NULL,
        FEC_HORA_REAL_ENTREGA datetime NULL,
        FEC_SOLICITADA       datetime NOT NULL,
@@ -801,7 +801,7 @@ CREATE TABLE T_PEDIDOS (
        ID_CLIENTE           numeric(5) NOT NULL,
        FEC_BAJA             datetime NULL,
        MOTIVO_BAJA          varchar(100) NULL,
-       ID_EMPLEADO          numeric(5) NOT NULL,
+       ID_EMPLEADO          numeric(5) NULL,
        ID_FACTURA           numeric(8) NULL,
        FEC_CLI_REC          datetime NULL
 )
