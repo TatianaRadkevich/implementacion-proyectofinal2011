@@ -36,17 +36,23 @@ public abstract class AutoFill<E> {
         return value;
     }
 
-    public void setValue(E value) {
+    private void setValue(E value, boolean txtUpdate) {
         if (this.value == value) {
             return;
         }
         this.value = value;
-        txt.setText((value == null) ? "" : value.toString());
+        if (txtUpdate) {
+            txt.setText((value == null) ? "" : value.toString());
+        }
         combo.setSelectedItem(value);
 
         for (SelectionListener<E> s : objListener) {
             s.objectSelected(value);
         }
+    }
+
+    public void setValue(E value) {
+        setValue(value, true);
     }
 
     public JTextField getJTextField() {
@@ -69,58 +75,61 @@ public abstract class AutoFill<E> {
 
     private void cargarEventos() {
 
-        FocusAdapter focus = new FocusAdapter() {
+
+        final ActionListener cmbAct = new ActionListener() {
+
+            public void actionPerformed(ActionEvent ae) {
+                setValue((E) combo.getSelectedItem(), true);
+            }
+        };
+        combo.addActionListener(cmbAct);
+        combo.addFocusListener(new FocusAdapter() {
 
             @Override
-            public void focusGained(FocusEvent e) {
-                if (combo.getItemCount() != 0) {
+            public void focusGained(FocusEvent fe) {
+                if (combo.getItemCount() > 0) {
                     combo.showPopup();
                 }
             }
-
-            @Override
-            public void focusLost(FocusEvent fe) {
-                combo.hidePopup();
-            }
-        };
-        combo.addFocusListener(focus);
-        txt.addFocusListener(focus);
-
-
-
-
-        combo.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent ae) {
-                setValue((E) combo.getSelectedItem());
-            }
         });
 
+        txt.addFocusListener(new FocusAdapter() {
+
+            @Override
+            public void focusGained(FocusEvent fe) {
+                if (combo.getItemCount() > 0) {
+                    combo.showPopup();
+                }
+            }
+        });
 
         combo.addKeyListener(new KeyAdapter() {
 
             @Override
             public void keyPressed(KeyEvent e) {
 
+                combo.removeActionListener(cmbAct);
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
                     if (combo.getSelectedIndex() == 0) {
                         txt.requestFocus();
                         txt.setText(temp);
+                        combo.showPopup();
                     }
                 } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    if (combo.getSelectedIndex() == combo.getItemCount() - 1) {                        
+                    if (combo.getSelectedIndex() == (combo.getItemCount() - 1)) {
                         txt.requestFocus();
-                        txt.setText(temp);                        
+                        txt.setText(temp);
+                        combo.showPopup();
                     }
                 } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    setValue((E) combo.getSelectedItem(), true);
                     txt.requestFocus();
-                    setValue((E) combo.getSelectedItem());
                     combo.hidePopup();
                 }
-
-
+                combo.addActionListener(cmbAct);
             }
         });
+
 
         txt.addMouseListener(new MouseAdapter() {
 
@@ -133,56 +142,51 @@ public abstract class AutoFill<E> {
 
         txt.addKeyListener(new KeyAdapter() {
 
+            private boolean ban = true;
+
             @Override
-            public void keyReleased(KeyEvent e) {
-                if (combo.isPopupVisible()) {
-                    if (e.getKeyCode() == KeyEvent.VK_UP) {
-                        return;
-                    } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                        return;
-                    } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        if (combo.isPopupVisible()) {
-                            return;
-                        }
-                    }
-                }
-                showList();
+            public void keyPressed(KeyEvent ke) {
+                ban = true;
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {
+            public void keyReleased(KeyEvent e) {
+
+                if (ban == false) {
+                    return;
+                }
+                ban = false;
+
+                if (combo.isPopupVisible() == false) {
+                    showList();
+                    return;
+                } else {
+                    showList();
+                }
 
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
                     int index = combo.getItemCount() - 1;
                     if (combo.getItemCount() > 1) {
-
-                        combo.requestFocus();
                         combo.setSelectedIndex(index);
-                        combo.showPopup();
+                        combo.requestFocus();
+
                     }
                 } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     if (combo.getItemCount() > 1) {
-
+                        if (combo.getSelectedIndex() == 0) {
+                            combo.setSelectedIndex(1);
+                        } else {
+                            combo.setSelectedIndex(0);
+                        }
                         combo.requestFocus();
-                        combo.setSelectedIndex(1);
-                        combo.showPopup();
+
                     }
                 } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     if (combo.isPopupVisible()) {
-                        setValue((E) combo.getSelectedItem());
                         combo.hidePopup();
                     }
                 }
-
             }
-//
-//            @Override
-//            public void keyTyped(KeyEvent e) {
-//                int pos = txt.getCaretPosition();
-//                String texto = txt.getText();
-//                texto = texto.substring(0, pos) + e.getKeyChar() + texto.substring(pos);
-//                showList(texto);
-//            }
         });
 
     }
@@ -212,6 +216,7 @@ public abstract class AutoFill<E> {
 
         if (combo.getItemCount() != 0) {
             combo.showPopup();
+            setValue((E) combo.getSelectedItem(), false);
         }
 
     }
