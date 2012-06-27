@@ -86,7 +86,7 @@ public class Pedido implements java.io.Serializable {
     private Factura TFacturas;
     //_____________________________________________________________________
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_EMPLEADO", nullable = false)
+    @JoinColumn(name = "ID_EMPLEADO", nullable = true)
     private Empleado empleado;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")
     private Set<PlanProduccion> TPlanesProduccions = new HashSet<PlanProduccion>(0);
