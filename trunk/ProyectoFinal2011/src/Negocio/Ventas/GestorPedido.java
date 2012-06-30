@@ -26,26 +26,26 @@ public abstract class GestorPedido {
 
             @Override
             public void aceptar() throws NegocioException {
-                this.pedido.registrar();
+                this.pedido.guardarModificar();
                 Mensajes.mensajeInformacion("El Pedido Nro. '" + this.pedido.getIdPedido() + "' ha sido registrado exitosamente.");
             }
         };
     }
 
-    public static GestorPedido getGestorPedidoModificar() throws NegocioException {
+    public static GestorPedido getGestorPedidoModificar(Pedido p) throws NegocioException {
 
-        return new GestorPedido(new Pedido()) {
+        return new GestorPedido(p) {
 
             @Override
             public void aceptar() throws NegocioException {
-                this.pedido.registrar();
+                this.pedido.guardarModificar();
                 Mensajes.mensajeInformacion("El Pedido Nro. '" + this.pedido.getIdPedido() + "' ha sido modificado exitosamente.");
             }
         };
     }
 
-    public static GestorPedido getGestorPedidoCancelar() throws NegocioException {
-        return new GestorPedido(new Pedido()) {
+    public static GestorPedido getGestorPedidoCancelar(Pedido p) throws NegocioException {
+        return new GestorPedido(p) {
 
             @Override
             public void aceptar() throws NegocioException {
@@ -107,6 +107,16 @@ public abstract class GestorPedido {
 
             @Override
             public void aceptar() throws NegocioException {
+
+                String mensaje="";
+                if(detalle.getProducto()==null)
+                    mensaje+="Debe elegir un producto\n";
+                if(detalle.getCantidad()<=0)
+                    mensaje+="Debe ingresar una cantidad mayor a cero";
+
+                if(mensaje.isEmpty()==false)
+                    throw new NegocioException(mensaje);
+
                 for (DetallePedido dp : pedido.getDetallePedido()) {
                     if (dp.getProducto().getNombre().equals(detalle.getProducto().getNombre())) {
                         String mensage =
@@ -114,6 +124,7 @@ public abstract class GestorPedido {
                                 + "¿Desea agregar la cantidad ingresada al detalle existente?";
                         if (Mensajes.mensajeConfirmacionGenerico(mensage)) {
                             dp.setCantidad(dp.getCantidad() + detalle.getCantidad());
+                            return;
                         }
 
                     }
@@ -134,6 +145,8 @@ public abstract class GestorPedido {
     }
 
     public void eliminarDetallePedido(DetallePedido dp) throws NegocioException {
+        if(dp==null)
+            throw new NegocioException("Debe elegir un detalle");
         this.pedido.removeDetallePedido(dp);
     }
 

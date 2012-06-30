@@ -20,7 +20,7 @@ public class ZLCalendar extends ZLItem<Object, Date, JDateChooser> {
     public ZLCalendar(JDateChooser item) {
         super(item);
         ((JTextFieldDateEditor) item.getDateEditor()).setEditable(false);
-        item.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        item.addPropertyChangeListener("date",new java.beans.PropertyChangeListener() {
 
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 try {

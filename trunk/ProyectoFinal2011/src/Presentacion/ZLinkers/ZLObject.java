@@ -89,9 +89,9 @@ public class ZLObject<C> {
     }
 
     public void setObjeto(C objeto) {
-        if (objeto == null) {
-            throw new TipoDatoException("ZLObject: No se acepta objetos nulos");
-        }
+//        if (objeto == null) {
+//            throw new TipoDatoException("ZLObject: No se acepta objetos nulos");
+//        }
 
         this.objeto = objeto;
     }

@@ -48,12 +48,10 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
         iniciarAdministracionPedidos(null);
     }
 
-    public static void iniciarAdministracionPedidos(Window parent)
-    {
-        new PantallaPedidoConsultar(parent,new GestorPedidoConsultar()).setVisible(true);
+    public static void iniciarAdministracionPedidos(Window parent) {
+        new PantallaPedidoConsultar(parent, new GestorPedidoConsultar()).setVisible(true);
     }
 
-    /** Creates new form PantallaConsultarPedido */
     private PantallaPedidoConsultar(Window parent, GestorPedidoConsultar gestor) {
         super(parent, ModalityType.APPLICATION_MODAL);
         this.gestor = gestor;
@@ -73,7 +71,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
         lzg.load();
 
         Utilidades.iniciarVentana(this);
-
+        tmPedido.setDatos(gestor.buscar());
 
     }
 
@@ -164,47 +162,6 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                 btnVer.setEnabled(var);
             }
         });
-
-    }
-
-    private void cargarValidaciones() {
-        //**********************Validacion de textBox********************//
-        ValidarTexbox.validarInt(txtNroPedido);
-        ValidarTexbox.validarLongitud(txtNroPedido, 8);
-        ValidarTexbox.validarLong(txtCUIT);
-        ValidarTexbox.validarLongitud(txtCUIT, 11);
-        ValidarTexbox.validarLongitud(txtRazonSocial, 50);
-
-        //**********************Validacion de Fecha********************//
-        ((JTextFieldDateEditor) dtcFechaGeneracionHasta.getDateEditor()).setEditable(false);
-        ((JTextFieldDateEditor) dtcFechaGeneracionDesde.getDateEditor()).setEditable(false);
-
-        dtcFechaGeneracionHasta.setMaxSelectableDate(Utilidades.getFechaActual());
-        dtcFechaGeneracionDesde.setMaxSelectableDate(Utilidades.getFechaActual());
-
-        dtcFechaGeneracionHasta.setDate(Utilidades.getFechaActual());
-        dtcFechaGeneracionDesde.setDate(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 0, -1, 0));
-
-        //**********************Validacion de Fecha parte2********************//
-
-        dtcFechaGeneracionHasta.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dtcFechaGeneracionDesde.setMaxSelectableDate(dtcFechaGeneracionHasta.getDate());
-            }
-        });
-
-        dtcFechaGeneracionDesde.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dtcFechaGeneracionHasta.setMinSelectableDate(dtcFechaGeneracionDesde.getDate());
-            }
-        });
-
-        /************************Validacion de botones **********************************/
-        btnCancelar.setEnabled(false);
-        btnModificar.setEnabled(false);
-
     }
 
     /** This method is called from within the constructor to
@@ -569,7 +526,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
         // TODO add your handling code here:
-                try {
+        try {
 
             PantallaPedidoABM.iniciarVerPedido(this, tmPedido.getSeletedObject());
 
