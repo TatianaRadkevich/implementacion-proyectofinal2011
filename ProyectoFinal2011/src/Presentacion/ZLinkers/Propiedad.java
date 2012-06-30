@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author Rodrigo
  */
-public class Propiedad<C,T> {
+public class Propiedad<C, T> {
 
     protected Method set;
     protected Method get;
@@ -60,7 +60,7 @@ public class Propiedad<C,T> {
             }
 
             try {
-                this.length = (Integer)  a.getClass().getDeclaredMethod("length").invoke(a);
+                this.length = (Integer) a.getClass().getDeclaredMethod("length").invoke(a);
             } catch (Exception e) {
             }
             try {
@@ -68,22 +68,24 @@ public class Propiedad<C,T> {
             } catch (Exception e) {
             }
             try {
-                this.scale = (Integer)  a.getClass().getDeclaredMethod("scale").invoke(a);
+                this.scale = (Integer) a.getClass().getDeclaredMethod("scale").invoke(a);
             } catch (Exception e) {
             }
         }
 
-        if(set!=null&&set.getParameterTypes()[0].isPrimitive())//los set's solo tiene un parametro
-            nulable=false;
+        if (set != null && set.getParameterTypes()[0].isPrimitive())//los set's solo tiene un parametro
+        {
+            nulable = false;
+        }
     }
 
     protected void setValue(C tarjet, T value) throws TipoDatoException, NegocioException, Exception {
         try {
 
-            if(nulable==false)
-                Utilidades.validarNULL(value);
-
             if (set != null && editable == true) {
+                if (nulable == false) {
+                    Utilidades.validarNULL(value);
+                }
                 set.invoke(tarjet, value);
             }
         } catch (InvocationTargetException e) {

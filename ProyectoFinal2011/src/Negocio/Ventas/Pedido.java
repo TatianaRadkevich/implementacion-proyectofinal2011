@@ -1,10 +1,14 @@
 package Negocio.Ventas;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
+import BaseDeDatos.Ventas.EstadoDetallePedidoBD;
+import BaseDeDatos.Ventas.EstadoPedidoBD;
+import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.Empleado;
 import Negocio.Administracion.Factura;
 import Negocio.Exceptiones.NegocioException;
 import Negocio.Produccion.PlanProduccion;
+import Presentacion.Utilidades;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -32,10 +36,11 @@ import org.hibernate.annotations.Cascade;
 @Table(name = "T_PEDIDOS", schema = "dbo", catalog = "Ramaty")
 public class Pedido implements java.io.Serializable {
 
+    // <editor-fold defaultstate="collapsed" desc="atributos">
     @Id
     @GeneratedValue
     @Column(name = "ID_PEDIDO", unique = true, nullable = false, precision = 8, scale = 0)
-    private int idPedido;
+    private int idPedido = -1;
     //
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_TPEDIDO")//, nullable=false)
@@ -72,7 +77,7 @@ public class Pedido implements java.io.Serializable {
     private Date fecNecesidad;
     //
     @Column(name = "PRIORIDAD")
-    private byte prioridad;
+    private byte prioridad = -1;
     //
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FEC_BAJA")
@@ -80,20 +85,24 @@ public class Pedido implements java.io.Serializable {
     //
     @Column(name = "MOTIVO_BAJA", length = 100)
     private String motivoBaja;
-    //___________________________________________________________________
+    //
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_FACTURA")
     private Factura TFacturas;
-    //_____________________________________________________________________
+    //
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EMPLEADO", nullable = true)
     private Empleado empleado;
+    //
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")
     private Set<PlanProduccion> TPlanesProduccions = new HashSet<PlanProduccion>(0);
+    //
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPedidos")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<DetallePedido> TDetallesPedidos = new HashSet<DetallePedido>(0);
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="constructores">
     public Pedido() {
     }
 
@@ -123,14 +132,11 @@ public class Pedido implements java.io.Serializable {
         //this.TPlanesProduccions = TPlanesProduccions;
         this.TDetallesPedidos = TDetallesPedidos;
     }
+    // </editor-fold>
 
-    /*******************************************************/
+    // <editor-fold defaultstate="collapsed" desc="set/get">
     public int getIdPedido() {
         return this.idPedido;
-    }
-
-    public void setIdPedido(int idPedido) {
-        this.idPedido = idPedido;
     }
 
     public TipoPedido getTipoPedido() {
@@ -138,6 +144,7 @@ public class Pedido implements java.io.Serializable {
     }
 
     public void setTipoPedido(TipoPedido tipo) {
+        Utilidades.validarNULL(tipo);
         this.TTpedido = tipo;
     }
 
@@ -146,6 +153,7 @@ public class Pedido implements java.io.Serializable {
     }
 
     public void setCliente(Cliente cliente) {
+        Utilidades.validarNULL(cliente);
         this.TClientes = cliente;
     }
 
@@ -154,6 +162,7 @@ public class Pedido implements java.io.Serializable {
     }
 
     public void setEstadoPedido(EstadoPedido estado) {
+        Utilidades.validarNULL(estado);
         this.TEpedido = estado;
     }
 
@@ -162,6 +171,7 @@ public class Pedido implements java.io.Serializable {
     }
 
     public void setFechaEstimadaEntrega(Date fecha) {
+        Utilidades.validarNULL(fecha);
         this.fecHoraEstimadaEntrega = fecha;
     }
 
@@ -169,7 +179,7 @@ public class Pedido implements java.io.Serializable {
         return this.fecHoraGeneracion;
     }
 
-    public void setFechaGeneracion(Date fecha) {
+    private void setFechaGeneracion(Date fecha) {
         this.fecHoraGeneracion = fecha;
     }
 
@@ -186,6 +196,7 @@ public class Pedido implements java.io.Serializable {
     }
 
     public void setFechaNecesidad(Date fecha) {
+        Utilidades.validarNULL(fecha);
         this.fecNecesidad = fecha;
     }
 
@@ -194,6 +205,8 @@ public class Pedido implements java.io.Serializable {
     }
 
     public void setPrioridad(byte prioridad) {
+        if(prioridad<0)
+            throw new NegocioException("Valor incorrecto");
         this.prioridad = prioridad;
     }
 
@@ -202,6 +215,7 @@ public class Pedido implements java.io.Serializable {
     }
 
     public void setEmpleado(Empleado empleado) {
+        Utilidades.validarNULL(empleado);
         this.empleado = empleado;
     }
 
@@ -233,6 +247,7 @@ public class Pedido implements java.io.Serializable {
 
     public void addDetallePedido(DetallePedido dp) {
         dp.setPedido(this);
+        dp.setEstadoDetallePedido(EstadoDetallePedidoBD.getEstadoPendiente());
         this.TDetallesPedidos.add(dp);
     }
 
@@ -246,7 +261,7 @@ public class Pedido implements java.io.Serializable {
         return this.fecBaja;
     }
 
-    public void setFecBaja(Date fecBaja) {
+    private void setFecBaja(Date fecBaja) {
         this.fecBaja = fecBaja;
     }
 
@@ -254,13 +269,8 @@ public class Pedido implements java.io.Serializable {
         return this.motivoBaja;
     }
 
-    public void setMotivoBaja(String motivoBaja) {
+    private void setMotivoBaja(String motivoBaja) {
         this.motivoBaja = motivoBaja;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
     }
 
     public Date getFechaClienteRecep() {
@@ -279,11 +289,93 @@ public class Pedido implements java.io.Serializable {
         this.TFacturas = TFacturas;
     }
 
-    public void registrar()throws NegocioException {
-        throw new UnsupportedOperationException("Not yet implemented");
+    // </editor-fold>
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 
-    public void cancelar(String motivo) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    private void isOK() throws NegocioException {
+        String mensaje = "";
+        ArrayList<String> aux = new ArrayList<String>();
+        if (this.getCliente() == null) {
+            aux.add("'Cliente'");
+        }
+
+        if (this.getEmpleado() == null) {
+            aux.add("'Empleado'");
+        }
+
+        if (this.getFechaEstimadaEntrega() == null) {
+            aux.add("'Fecha Estimada Entrega'");
+        }
+        if (this.getFechaNecesidad() == null) {
+            aux.add("'Fecha Nesecidad'");
+        }
+        if (this.getPrioridad() == -1) {
+            aux.add("'Prioridad'");
+        }
+
+        if (!aux.isEmpty()) {
+            mensaje = "Estos campos no pueden estar vacíos:";
+            for (String s : aux) {
+                mensaje += "\n>> " + s;
+            }
+        }
+
+        if (this.getDetallePedido() == null || this.getDetallePedido().isEmpty()) {
+            mensaje += "\nEl pedido debe tener como mínimo un item en el detalle.";
+
+        }
+
+        if (mensaje.isEmpty()==false) {
+            throw new NegocioException(mensaje);
+        }
+    }
+
+    public void isModificable() throws NegocioException {
+        String mensaje = "";
+        try {
+            isOK();
+        } catch (NegocioException e) {
+            mensaje = e.getMessage();
+        }
+        if (this.getIdPedido() == -1) {
+            mensaje += "\nEl pedido debe estar estar Registrado";
+        }
+        if ((this.getEstadoPedido().equals(EstadoPedidoBD.getEstadoAutorizadoPendiente())
+                || this.getEstadoPedido().equals(EstadoPedidoBD.getEstadoNoAutorizado())
+                || this.getEstadoPedido().equals(EstadoPedidoBD.getEstadoPlanificado())) == false) {
+            mensaje += "Solo los pedidos 'No Autorizados', 'Autorizados/Pendientes' o 'Planificados'"
+                    + "pueden ser procesados";
+        }
+        if (mensaje.isEmpty()==false) {
+            throw new NegocioException(mensaje);
+        }
+    }
+
+    public void isCancelableble() throws NegocioException {
+        isModificable();
+    }
+
+    public void guardarModificar() throws NegocioException {
+        if (this.getIdPedido() == -1) {
+            isOK();
+            this.setFechaGeneracion(Utilidades.getFechaActual());
+            this.setEstadoPedido(EstadoPedidoBD.getEstadoAutorizadoPendiente());
+            PedidoBD.guardar(this);
+        } else {
+            isModificable();
+            PedidoBD.modificar(this);
+        }
+    }
+
+    public void cancelar(String motivo) throws NegocioException {
+        isCancelableble();
+
+        this.setFecBaja(Utilidades.getFechaActual());
+        this.setMotivoBaja(motivoBaja);
+        this.setEstadoPedido(EstadoPedidoBD.getEstadoCancelado());
+        PedidoBD.modificar(this);
     }
 }

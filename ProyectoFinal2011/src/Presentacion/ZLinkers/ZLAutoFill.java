@@ -5,12 +5,15 @@
 package Presentacion.ZLinkers;
 
 import Negocio.Exceptiones.NegocioException;
+import Negocio.Exceptiones.TipoDatoException;
 import Presentacion.AutoFill;
 import Presentacion.JCheckList;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextField;
 
 /**
@@ -23,6 +26,14 @@ public class ZLAutoFill extends ZLItem<Object,Object , JTextField> {
     public ZLAutoFill(AutoFill item) {
         super(item.getJTextField());
         this.autoFill=item;
+        item.addSelectionListener(new AutoFill.SelectionListener() {
+
+            public void objectSelected(Object object) {
+                try {
+                    save();
+                } catch (Exception ex) {}
+            }
+        });
     }   
 
   
