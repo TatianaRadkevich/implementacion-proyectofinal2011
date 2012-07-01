@@ -9,6 +9,7 @@ import Negocio.Exceptiones.NegocioException;
 import Presentacion.Utilidades;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class Cliente implements java.io.Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_CLIENTE", unique = true, nullable = false, precision = 5, scale = 0)
-    private int id=-1;
+    private int id = -1;
     //
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_DOMICILIO")
@@ -166,7 +167,19 @@ public class Cliente implements java.io.Serializable {
     }
 
     public void setCuit(String cuit) {
-        this.cuit = Utilidades.validarString(cuit, false, 20, Utilidades.RegexType.CUIT);
+
+        String CUITaux = Utilidades.validarString(cuit, false, 20, Utilidades.RegexType.CUIT);
+        if (CUITaux.equals(this.cuit) == false) {//si los CUIT's son = no hago nada
+            if (id != -1) {
+                throw new NegocioException("No se permite modificar este valor.");
+            }
+
+
+            if (ClienteBD.getClientePorCUIT(CUITaux)!=null) {
+                throw new NegocioException("Ya existe un cliente con ese CUIT.");
+            }
+            this.cuit = CUITaux;
+        }
     }
 
     public String getRazonSocial() {
@@ -174,7 +187,18 @@ public class Cliente implements java.io.Serializable {
     }
 
     public void setRazonSocial(String razonSocial) {
-        this.razonSocial = Utilidades.validarString(razonSocial, false, 50);
+
+        String RSaux = Utilidades.validarString(razonSocial, false, 50);
+        if (RSaux.equals(this.razonSocial) == false) {//si las RS's son = no hago nada
+            if (id != -1) {
+                throw new NegocioException("No se permite modificar este valor");
+            }
+
+            if (ClienteBD.getClientePorRazonSocial(RSaux)!=null) {
+                throw new NegocioException("Ya existe un cliente con esa razón social");
+            }
+            this.razonSocial = RSaux;
+        }
     }
 
     public String getNombreResponsable() {
@@ -190,7 +214,8 @@ public class Cliente implements java.io.Serializable {
     }
 
     public void setApellidoResponsable(String apellidoResponsable) {
-        this.apellidoResponsable = Utilidades.validarString(apellidoResponsable, false, 50);;
+        this.apellidoResponsable = Utilidades.validarString(apellidoResponsable, false, 50);
+        ;
     }
 
     public Long getTelefonoResponsable() {
@@ -252,7 +277,7 @@ public class Cliente implements java.io.Serializable {
         if (!aux.isEmpty()) {
             String mensaje = "Estos campos no pueden estar vacíos:";
             for (String s : aux) {
-                mensaje += "\n>> " +s;
+                mensaje += "\n>> " + s;
             }
             throw new NegocioException(mensaje);
         }
@@ -263,10 +288,11 @@ public class Cliente implements java.io.Serializable {
         isOK();
         //validaciones Negocio
 
-        if(this.getId()==-1)
+        if (this.getId() == -1) {
             ClienteBD.guardar(this);
-        else
+        } else {
             ClienteBD.modificar(this);
+        }
     }
 
     public void eliminar(String motivoBaja) throws NegocioException {

@@ -65,6 +65,9 @@ public abstract class ZLItem<C,T, J extends JComponent> {
 
     public void save() throws TipoDatoException, NegocioException, Exception {
         try {
+            if(this.getPropiedad().isEditable()==false)
+                return;
+            
             setJComponentError(null);
             setValue(getJComponentValue());
         } catch (NegocioException ne) {
@@ -73,11 +76,11 @@ public abstract class ZLItem<C,T, J extends JComponent> {
         }
     }
 
-    public Propiedad<C,T> getProp() {
+    public Propiedad<C,T> getPropiedad() {
         return prop;
     }
 
-    public void setProp(Propiedad<C,T> prop) {
+    public void setPropiedad(Propiedad<C,T> prop) {
         this.prop = prop;
     }
 

@@ -118,12 +118,12 @@ public abstract class AutoFill<E> {
                     if (combo.getSelectedIndex() == 0) {
                         txt.requestFocus();
                         txt.setText(temp);
-                   
+
                     }
                 } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     if (combo.getSelectedIndex() == (combo.getItemCount() - 1)) {
                         txt.requestFocus();
-                        txt.setText(temp);                
+                        txt.setText(temp);
                     }
                 } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     setValue((E) combo.getSelectedItem(), true);
@@ -211,6 +211,11 @@ public abstract class AutoFill<E> {
     }
 
     public void showList(String text) {
+
+        if (txt.isEditable() == false || txt.isEnabled() == false) {
+            combo.hidePopup();
+            return;
+        }
 
         if (temp.equals(text)) {
             if (combo.isVisible() && combo.getItemCount() != 0) {
