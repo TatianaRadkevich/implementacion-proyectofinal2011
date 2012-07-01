@@ -38,8 +38,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.gestor = g;
-        /////////// Precargas Necesarias //////////
-        habilitarBaja(false, false, null, "");
+        /////////// Precargas Necesarias //////////        
         // cargarValidaciones();
         pnlDomicilio.inicializar();
         recargarComboTipoCleinte();
@@ -52,10 +51,8 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         linker.add("cuit", new ZLTextField(txtCUIT));
         linker.add("correoElectronico", new ZLTextField(txtCorreoElectronico));
         linker.add("motivoBaja", new ZLTextField(txtMotivoBaja));
-
         linker.add("tipoCliente", new ZLComboBox(cmbTipoCliente));
         linker.add("domicilio", new ZLDomicilio(pnlDomicilio));
-
     }
 
     private void recargarComboTipoCleinte() {
@@ -99,14 +96,6 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         txtRazonSocial.setEditable(b);
         pnlDomicilio.setEnabled(b);
 
-    }
-
-    public void habilitarBaja(boolean visible, boolean edittable, Date fecha, String motivo) {
-        // pnlBaja.setVisible(visible);
-        scrollBaja.setEnabled(edittable);
-        txtMotivoBaja.setEnabled(edittable);
-        txtMotivoBaja.setText(Utilidades.parseString(motivo));
-        txtFechaBaja.setText(Utilidades.parseFecha(fecha));
     }
 
     private void salir() {
@@ -444,6 +433,8 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         PantallaClienteABM interfaz = new PantallaClienteABM(parent, true, g);
         interfaz.setTitle("Registrar Cliente");
         interfaz.btnSalir.setVisible(false);
+        interfaz.pnlBaja.setVisible(false);
+        interfaz.pack();
         interfaz.setVisible(true);
 
         return (g.isCorrecto()) ? g.getCliente() : null;
@@ -458,9 +449,10 @@ public class PantallaClienteABM extends javax.swing.JDialog {
 
         interfaz.cargar(cli);
         interfaz.btnSalir.setVisible(false);
-        interfaz.habilitarBaja(true, true, Utilidades.getFechaActual(), "");
+        interfaz.txtFechaBaja.setText(Utilidades.parseFecha(Utilidades.getFechaActual()));
         interfaz.habilitarCarga(false);
         interfaz.setTitle("Eliminar Cliente");
+        interfaz.pack();
         interfaz.setVisible(true);
     }
 
@@ -476,10 +468,14 @@ public class PantallaClienteABM extends javax.swing.JDialog {
 
         interfaz.btnAceptar.setVisible(false);
         interfaz.btnCancelar.setVisible(false);
-
         interfaz.btnSalir.setEnabled(true);
 
+        if (cli.getFechaBaja() == null) {
+            interfaz.pnlBaja.setVisible(false);
+        }
+
         interfaz.setTitle("Ver Cliente");
+        interfaz.pack();
         interfaz.setVisible(true);
     }
 
@@ -491,10 +487,15 @@ public class PantallaClienteABM extends javax.swing.JDialog {
 
         PantallaClienteABM interfaz = new PantallaClienteABM(parent, true, GestorClienteABM.getGestorClienteModificar(cli));
         interfaz.btnSalir.setVisible(false);
+        interfaz.txtCUIT.setEditable(false);
+        interfaz.txtRazonSocial.setEditable(false);
         interfaz.cargar(cli);
         interfaz.setTitle("Modificar Cliente");
+        interfaz.pnlBaja.setVisible(false);
+        interfaz.pack();
         interfaz.setVisible(true);
     }
+    // <editor-fold defaultstate="collapsed" desc="Veriables del Editor">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
@@ -524,4 +525,5 @@ public class PantallaClienteABM extends javax.swing.JDialog {
     private javax.swing.JTextField txtRazonSocial;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+// </editor-fold>
 }
