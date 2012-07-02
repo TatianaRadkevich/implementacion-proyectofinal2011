@@ -104,9 +104,10 @@ public class HibernateUtil {
 
     public static List ejecutarConsulta(String HQL) {
         List salida;
-        session.beginTransaction();
-        salida = session.createQuery(HQL).list();
-        session.getTransaction().commit();
+        session.clear();
+        //session.beginTransaction();
+        salida = session.createQuery(HQL).list();        
+        //session.getTransaction().commit();
 
         return salida;
     }

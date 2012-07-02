@@ -1,6 +1,7 @@
 package Negocio.Administracion;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
+import BaseDeDatos.Administracion.TipoDocumentoBD;
 import Negocio.Administracion.Empleado;
 import Negocio.Exceptiones.TipoDatoException;
 import java.util.HashSet;
@@ -21,9 +22,15 @@ import javax.persistence.Table;
 @Table(name = "T_TDOCUMENTO", schema = "dbo", catalog = "Ramaty")
 public class TipoDocumento implements java.io.Serializable {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "ID_TDOCUMENTO", unique = true, nullable = false, precision = 2, scale = 0)
     private short idTdocumento;
+    @Column(name = "NOMBRE", nullable = false, length = 50)
     private String nombre;
+    @Column(name = "DESCRIPCION", length = 200)
     private String descripcion;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TTdocumento")
     private Set<Empleado> TEmpleadoses = new HashSet<Empleado>(0);
 
     public TipoDocumento() {
@@ -41,9 +48,6 @@ public class TipoDocumento implements java.io.Serializable {
         this.TEmpleadoses = TEmpleadoses;
     }
 
-    @Id
-    @GeneratedValue
-    @Column(name = "ID_TDOCUMENTO", unique = true, nullable = false, precision = 2, scale = 0)
     public short getIdTdocumento() {
         return this.idTdocumento;
     }
@@ -52,21 +56,25 @@ public class TipoDocumento implements java.io.Serializable {
         this.idTdocumento = idTdocumento;
     }
 
-    @Column(name = "NOMBRE", nullable = false, length = 50)
     public String getNombre() {
         return this.nombre;
     }
 
     public void setNombre(String nombre) throws TipoDatoException {
-        if (nombre.matches("[a-zA-Z ]*") && !nombre.trim().isEmpty()) {
-            this.nombre = nombre;
-        } else {
-            this.nombre = null;
+        this.nombre=null;
+
+        if (nombre.trim().isEmpty() || nombre.matches("[a-zA-Z ]*") == false) {
             throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
         }
+        
+        TipoDocumento td=TipoDocumentoBD.getTipoDocumentoPorNombre(nombre);
+        if (td!=null && td.getIdTdocumento()!=this.idTdocumento) {
+            throw new TipoDatoException("Ya existe un tipo de documento con ese nombre");
+        }
+
+        this.nombre = nombre;
     }
 
-    @Column(name = "DESCRIPCION", length = 200)
     public String getDescripcion() {
         return this.descripcion;
     }
@@ -75,7 +83,6 @@ public class TipoDocumento implements java.io.Serializable {
         this.descripcion = descripcion;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TTdocumento")
     public Set<Empleado> getTEmpleadoses() {
         return this.TEmpleadoses;
     }
@@ -84,6 +91,7 @@ public class TipoDocumento implements java.io.Serializable {
         this.TEmpleadoses = TEmpleadoses;
     }
 
+    @Override
     public String toString() {
         return this.getNombre();
     }

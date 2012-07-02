@@ -94,6 +94,11 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
         txtDescripcion.setColumns(20);
         txtDescripcion.setLineWrap(true);
         txtDescripcion.setWrapStyleWord(true);
+        txtDescripcion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDescripcionFocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtDescripcion);
 
         btnCancelar.setText("Cancelar");
@@ -142,7 +147,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
@@ -152,9 +157,9 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Disponible", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        lstDisponible.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstDisponibleMouseClicked(evt);
+        lstDisponible.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstDisponibleValueChanged(evt);
             }
         });
         jScrollPane2.setViewportView(lstDisponible);
@@ -215,7 +220,7 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -257,17 +262,12 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
 
-
-
-
-
         try {
             tipo_actual.validarOk();
         } catch (TipoDatoException ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
             return;
         }
-
 
         if (operacion == Operacion.nuevo) {
 
@@ -353,7 +353,26 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
         this.operacion = Operacion.baja;
     }//GEN-LAST:event_btnBajaActionPerformed
 
-    private void lstDisponibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDisponibleMouseClicked
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.activarTipoDocumento(false);
+        this.btnBaja.setEnabled(false);
+        this.activarDisponible(true);
+        this.activarBotones(true, false, false, false, false);
+        this.vaciar();
+        this.cargarTipoDocumento();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
+        try {
+            Utilidades.componenteCorrecto(txtNombre);
+            tipo_actual.setNombre(txtNombre.getText().toUpperCase());
+        } catch (TipoDatoException ex) {
+            Utilidades.componenteError(txtNombre, ex.getMessage());
+        }
+    }//GEN-LAST:event_txtNombreFocusLost
+
+    private void lstDisponibleValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstDisponibleValueChanged
+        // TODO add your handling code here:
         if (lstDisponible.getSelectedIndex() != -1) {
             TipoDocumento temp = (TipoDocumento) lstDisponible.getSelectedValue();
             this.cargarDatos(temp);
@@ -361,25 +380,17 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
             this.activarTipoDocumento(false);
             this.activarBotones(true, true, true, false, false);
         }
-    }//GEN-LAST:event_lstDisponibleMouseClicked
+    }//GEN-LAST:event_lstDisponibleValueChanged
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.activarTipoDocumento(false);
-        this.btnBaja.setEnabled(false);
-        this.activarDisponible(true);
-        this.activarBotones(true, false, false, false, false);
-        this.vaciar();
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
+    private void txtDescripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescripcionFocusLost
+        // TODO add your handling code here:
         try {
-            tipo_actual.setNombre(txtNombre.getText().toUpperCase());
-            Utilidades.componenteCorrecto(txtNombre);
+            Utilidades.componenteCorrecto(txtDescripcion);
+            tipo_actual.setDescripcion(txtDescripcion.getText());
         } catch (TipoDatoException ex) {
-            txtNombre.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(txtNombre);
+            Utilidades.componenteError(txtDescripcion, ex.getMessage());
         }
-    }//GEN-LAST:event_txtNombreFocusLost
+    }//GEN-LAST:event_txtDescripcionFocusLost
 
     /**
      * @param args the command line arguments
@@ -425,12 +436,10 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
 
             List<TipoDocumento> tipo = GestorTipoDocumento.listarTipoDocumentos();
             for (int i = 0; i < tipo.size(); i++) {
-                modelo.addElement(tipo.get(i));
-
-                lstDisponible.setModel(modelo);
-
-
+                modelo.addElement(tipo.get(i));                
             }
+            lstDisponible.setModel(modelo);
+            lstDisponible.updateUI();
         } catch (Exception ex) {
             Logger.getLogger(PantallaABMTipoDocumento.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -456,6 +465,8 @@ public class PantallaABMTipoDocumento extends javax.swing.JDialog {
     private void vaciar() {
         this.txtDescripcion.setText("");
         this.txtNombre.setText("");
+        Utilidades.componenteCorrecto(txtDescripcion);
+        Utilidades.componenteCorrecto(txtNombre);
     }
 
     private void cancelar() {
