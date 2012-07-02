@@ -720,7 +720,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultaProblemasActionPerformed
 
     private void btnTipoDocumento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoDocumento1ActionPerformed
-        new FormaDePagoPantalla(this, true).setVisible(true);
+        new PantallaFormaDePago(this, true).setVisible(true);
     }//GEN-LAST:event_btnTipoDocumento1ActionPerformed
 
     private void btnAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsistenciaActionPerformed
