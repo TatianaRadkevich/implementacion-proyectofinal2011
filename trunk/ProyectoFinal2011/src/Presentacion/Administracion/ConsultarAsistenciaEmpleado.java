@@ -115,7 +115,7 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(Empleado elemento) {
                 Vector salida = new Vector();
-                salida.add(elemento.getIdEmpleado());
+                salida.add(elemento.getId());
                 salida.add(elemento.getNombre());
                 salida.add(elemento.getApellido());
 
@@ -169,7 +169,7 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
         if (emp == null)
              return;
 
-        List<AsistenciaEmpleado> resultado=AsistenciaEmpleadoBD.getAsistencia(emp.getIdEmpleado()+"", desde, hasta);
+        List<AsistenciaEmpleado> resultado=AsistenciaEmpleadoBD.getAsistencia(emp.getId()+"", desde, hasta);
         tmAsistencia.setDatos(resultado);
         
         if(emp.getTAsignacionesHorario()==null)

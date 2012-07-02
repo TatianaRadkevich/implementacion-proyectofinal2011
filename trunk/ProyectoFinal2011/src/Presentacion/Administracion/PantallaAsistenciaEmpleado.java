@@ -44,7 +44,7 @@ public class PantallaAsistenciaEmpleado extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(Empleado elemento) {
                 Vector fila = new Vector();
-                fila.add(elemento.getTTdocumento().getNombre());
+                fila.add(elemento.getTipoDocumento().getNombre());
                 fila.add(elemento.getNumeroDocumento());
                 fila.add(elemento.getNombre());
                 fila.add(elemento.getApellido());

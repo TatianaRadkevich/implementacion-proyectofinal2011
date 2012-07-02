@@ -103,7 +103,14 @@ public class Propiedad<C, T> {
     }
 
     protected T getValue(C tarjet) throws Exception {
-        return (T) get.invoke(tarjet);
+        try {
+            if (tarjet == null) {
+                return null;
+            }
+            return (T) get.invoke(tarjet);
+        } catch (InvocationTargetException e) {
+            throw (Exception)e.getCause();
+        }
     }
 
     public boolean isEditable() {

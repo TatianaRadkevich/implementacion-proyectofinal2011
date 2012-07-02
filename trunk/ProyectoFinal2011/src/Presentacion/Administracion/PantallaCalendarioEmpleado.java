@@ -44,10 +44,10 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(Empleado elemento) {
                 Vector fila = new Vector();
-                fila.add(elemento.getIdEmpleado());
+                fila.add(elemento.getId());
                 fila.add(elemento.getNombre());
                 fila.add(elemento.getApellido());
-                fila.add(elemento.getTSexos().getNombre());
+                fila.add(elemento.getSexo().getNombre());
 
                 return fila;
             }
@@ -68,10 +68,10 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(Empleado elemento) {
                 Vector fila = new Vector();
-                fila.add(elemento.getIdEmpleado());
+                fila.add(elemento.getId());
                 fila.add(elemento.getNombre());
                 fila.add(elemento.getApellido());
-                fila.add(elemento.getTSexos().getNombre());
+                fila.add(elemento.getSexo().getNombre());
                 fila.add(elemento.getTAsignacionesHorario().getTHorarios().getNombre());
 
                 return fila;

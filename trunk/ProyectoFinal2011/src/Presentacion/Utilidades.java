@@ -7,6 +7,7 @@ package Presentacion;
 // <editor-fold defaultstate="collapsed" desc="imports">
 import Negocio.Exceptiones.NegocioException;
 import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -215,18 +216,31 @@ public class Utilidades {
         componente.setBorder(bComp);
 
         ToolTipManager.sharedInstance().setInitialDelay(500);
-        componente.setToolTipText(sms);
+        setToolTipText(componente, sms);
+
     }
 
     public static void componenteCorrecto(JComponent componente) {
         if (componente == null) {
             return;
         }
-        componente.setToolTipText(null);
+        setToolTipText(componente, null);
+
         if (cache.containsKey(componente)) {
             componente.setBorder(cache.remove(componente));
         }
+    }
 
+    public static void setToolTipText(JComponent componente, String sms) {
+        componente.setToolTipText(sms);        
+        if (componente instanceof JDateChooser) {
+            for (Component c : componente.getComponents()) {
+                try {
+                    setToolTipText((JComponent) c, sms);
+                } catch (Exception e) {
+                }
+            }
+        }
     }
 
     public static void registrarPilaError(Throwable error) {
