@@ -21,12 +21,6 @@ public class GestorBajaEmpleado extends GestorEmpleado{
         return EmpleadoBD.modificar(empleado);
     }
 
-    public void bajaEmpleado(Dialog parent,int legajo) {
-        PantallaABMEmpleado pantalla_empleado=new PantallaABMEmpleado(parent, true, this,"Registar baja Empleado");
-        pantalla_empleado.baja(EmpleadoBD.traerEmpleado(legajo));
-        pantalla_empleado.setVisible(true);
-    }
-
     @Override
     public String mensajeResultado(String nombreEmpleado) {
         return "El empleado "+nombreEmpleado+ " ha sido dado de baja exitosamente";

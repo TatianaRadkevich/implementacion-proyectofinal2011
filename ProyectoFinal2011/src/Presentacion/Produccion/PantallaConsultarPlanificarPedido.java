@@ -28,12 +28,12 @@ import javax.swing.DefaultComboBoxModel;
  *
  * @author Ivan
  */
-public class PantallaConsultarPedido extends javax.swing.JDialog {
+public class PantallaConsultarPlanificarPedido extends javax.swing.JDialog {
 
     private TablaManager<Pedido> tmPedido;
 
     /** Creates new form PantallaConsultarPedido */
-    public PantallaConsultarPedido(java.awt.Frame parent, boolean modal) {
+    public PantallaConsultarPlanificarPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         tmPedido = new TablaManager<Pedido>(tbPedidos) {
@@ -162,10 +162,10 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Tipo de pedido:");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Razón social del cliente:");
 
         btnBuscar.setText("Buscar");
@@ -175,7 +175,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Prioridad del pedido:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -332,7 +332,7 @@ public class PantallaConsultarPedido extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                PantallaConsultarPedido dialog = new PantallaConsultarPedido(new javax.swing.JFrame(), true);
+                PantallaConsultarPlanificarPedido dialog = new PantallaConsultarPlanificarPedido(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     public void windowClosing(java.awt.event.WindowEvent e) {

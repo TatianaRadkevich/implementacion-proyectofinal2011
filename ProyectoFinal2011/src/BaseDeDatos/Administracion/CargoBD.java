@@ -38,6 +38,12 @@ public class CargoBD {
         return result;
     }
 
+    public static Cargo getCargoPorNombre(String nombre) {
+        String consulta="FROM Cargo as c WHERE LOWER(c.nombre) LIKE LOWER('"+nombre.trim()+"')";
+        List<Cargo> result = HibernateUtil.ejecutarConsulta(consulta);
+        return (result.isEmpty())?null:result.get(0);
+    }
+
     public CargoBD() {
         super();
     }

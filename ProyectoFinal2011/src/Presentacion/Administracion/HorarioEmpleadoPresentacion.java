@@ -54,7 +54,7 @@ private TablaManager<AsignacionesDias> tablita1;
             @Override
             public Vector ObjetoFila(Empleado elemento) {
                 Vector fila = new Vector();
-                fila.add(elemento.getIdEmpleado());
+                fila.add(elemento.getId());
                 fila.add(elemento.getNombre());//col 3
                 fila.add(elemento.getApellido());//col 4
 

@@ -29,8 +29,6 @@ import javax.swing.JDialog;
  */
 public abstract class GestorEmpleado {
 
-
-
     public abstract Empleado ejecutarOperacion(Empleado Empleado) throws ExceptionGestor;
 
     public static List<Empleado> listarProductos(){
@@ -75,11 +73,5 @@ public abstract class GestorEmpleado {
 
     public EstadosEmpleado getEstadoDisponible() {
         return EstadoEmpleadoBD.traerEstadoDisponible();
-    }
-
-    public void registrarAsistenciaEmpleado(JDialog parent,int legajo) {
-        PantallaABMEmpleado pantalla_producto=new PantallaABMEmpleado(parent, true, this,"Modificar Empleado");
-        pantalla_producto.modificar(EmpleadoBD.traerEmpleado(legajo));
-        pantalla_producto.setVisible(true);
     }
 }

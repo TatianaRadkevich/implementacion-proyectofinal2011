@@ -279,7 +279,7 @@ public class PrincipalProduccion extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        PantallaConsultarPedido pantalla=new PantallaConsultarPedido(this, true);
+        PantallaConsultarPlanificarPedido pantalla=new PantallaConsultarPlanificarPedido(this, true);
         pantalla.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 

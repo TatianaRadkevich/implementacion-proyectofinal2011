@@ -23,6 +23,13 @@ public class EmpleadoBD {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    public static int getLastID() {
+        try{
+        return (Integer) HibernateUtil.ejecutarConsulta("SELECT   max(idEmpleado) FROM Empleado").get(0);
+        }catch(Exception e)
+        {return 0;}
+    }
+
     public EmpleadoBD() {
     }
 
@@ -119,14 +126,13 @@ public class EmpleadoBD {
                 "FROM Empleado as p "
                 + "WHERE LOWER(p.nombre) like  LOWER('%s%%') "
                 + "AND LOWER(p.apellido) like  LOWER('%s%%') "
-                + "AND p.idEmpleado like '%s%%' ", nombre, apellido, legajo);
+                + "AND p.idEmpleado like '%s%%' "
+                + "AND p.numeroDocumento LIKE '%s%%' ", nombre, apellido, legajo,numeroDoc);
 
         if (tipo.getIdTdocumento() != -1) {
             HQL += "AND p.TTdocumento.idTdocumento=" + tipo.getIdTdocumento();
         }
-        if (numeroDoc.compareTo("") != 0) {
-            HQL += "AND p.numeroDocumento=" + Integer.parseInt(numeroDoc);
-        }
+   
         if (vigentes == true && cancelados == true) {
             return HibernateUtil.ejecutarConsulta(HQL);
         }

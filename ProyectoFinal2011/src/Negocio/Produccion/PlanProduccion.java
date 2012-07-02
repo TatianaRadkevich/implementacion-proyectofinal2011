@@ -227,7 +227,7 @@ public class PlanProduccion implements java.io.Serializable {
         }
 
         for (DetallePlanProduccion dpp : this.TDetallesPlans) {
-            if (dpp.getTEmpleados().getIdEmpleado() == emp.getIdEmpleado()) {
+            if (dpp.getTEmpleados().getId() == emp.getId()) {
                 salida.add(dpp);
             }
         }
@@ -251,7 +251,7 @@ public class PlanProduccion implements java.io.Serializable {
 
     private boolean existe(Empleado tEmpleados, List<Empleado> salida) {
         for(int i=0; i<salida.size();i++){
-            if(tEmpleados.getIdEmpleado()==salida.get(i).getIdEmpleado())
+            if(tEmpleados.getId()==salida.get(i).getId())
                 return true;
         }
         return false;

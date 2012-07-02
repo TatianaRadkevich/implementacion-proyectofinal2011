@@ -8,40 +8,27 @@
  *
  * Created on 04/06/2011, 19:47:32
  */
-
 package Presentacion.Administracion;
 
 import BaseDeDatos.Administracion.EstadoEmpleadoBD;
-import BaseDeDatos.UbicacionGeografica.DomicilioBD;
 import Negocio.Administracion.Cargo;
 import Negocio.Administracion.Empleado;
 import Negocio.Administracion.GestorBajaEmpleado;
 import Negocio.Administracion.GestorCargo;
 import Negocio.Administracion.GestorEmpleado;
+import Negocio.Administracion.GestorModificarEmpleado;
 import Negocio.Administracion.GestorRegistrarEmpleado;
 import Negocio.Administracion.Sexo;
 import Negocio.Administracion.TipoDocumento;
 import Negocio.Exceptiones.ExceptionGestor;
+import Negocio.Exceptiones.NegocioException;
 import Negocio.Exceptiones.TipoDatoException;
-import Negocio.UbicacionGeografica.Barrio;
-import Negocio.UbicacionGeografica.Domicilio;
-import Negocio.UbicacionGeografica.Localidad;
-import Negocio.UbicacionGeografica.Pais;
-import Negocio.UbicacionGeografica.Provincia;
-import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.Utilidades;
-import java.awt.Color;
-import java.awt.Dialog;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.text.Format;
-import java.text.SimpleDateFormat;
+import Presentacion.ZLinkers.*;
+import java.awt.Window;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -50,57 +37,38 @@ import java.util.logging.Logger;
 public class PantallaABMEmpleado extends javax.swing.JDialog {
 
     private GestorEmpleado gestor;
-    private Empleado empleado=null;
-    /** Creates new form PantallaABMEmpleado */
-    public PantallaABMEmpleado(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    private Empleado empleado = null;
+    private ZLObject<Empleado> link;
+
+    public PantallaABMEmpleado(Window parent, GestorEmpleado gestor) {
+        super(parent, ModalityType.APPLICATION_MODAL);
+        this.gestor = gestor;
         initComponents();
         this.cargarCargos();
-        dtcFechaNacimiento.addPropertyChangeListener(
-       new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent evt) {
-               dtcFechaNacimientoFocusLost(null);
-//                       tuClase.setFecha(**dtpCalendario**.getDate());
-            }
-        });
-        
-        
+        this.cargarTipoDocumento();
+        this.cargarSexo();
+        pnlDomicilio.inicializar();
+        Utilidades.iniciarVentana(this);
+
+        link = new ZLObject<Empleado>(Empleado.class);
+        this.link.add("id", true,new ZLTextField(txtLegajo));
+        this.link.add("apellido", new ZLTextField(txtApellido));
+        this.link.add("celular", new ZLTextField(txtCelular));
+        this.link.add("correo", new ZLTextField(txtEmail));
+        this.link.add("motivo",false ,new ZLTextField(txtMotivoBaja));
+        this.link.add("baja", false, new ZLTextField(txtFechaBaja));
+        this.link.add("nombre", new ZLTextField(txtNombre));
+        this.link.add("NumeroDocumento", new ZLTextField(txtNumeroDocumento));
+        this.link.add("telefono", new ZLTextField(txtTelefono));
+
+        this.link.add("sexo", new ZLComboBox(cmbSexo));
+        this.link.add("tipoDocumento", new ZLComboBox(cmbTipoDocumento));
+
+        this.link.add("nacimiento", new ZLCalendar(dtcFechaNacimiento));
+
+        this.link.add("cargo", new ZLCheckList(lstCargos));
+        this.link.add("domicilio", new ZLDomicilio(pnlDomicilio));
     }
-
-    public PantallaABMEmpleado(Dialog owner, boolean modal, GestorEmpleado gestor,String titulo) {
-        super(owner, modal);
-       
-        initComponents();
-        this.gestor=gestor;
-
-       cargarCargos();
-       this.cargarTipoDocumento();
-       this.cargarSexo();
-       this.btnAceptar.setVisible(true);
-       this.btnCancelar.setVisible(true);
-       IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
-       this.cargarComboPais();
-       this.setTitle(titulo);
-
-       dtcFechaNacimiento.addPropertyChangeListener(
-       new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent evt) {
-                      if(empleado!=null)
-                {
-                     try{
-                        empleado.setFecNacimiento(dtcFechaNacimiento.getDate());
-                        Utilidades.componenteCorrecto(dtcFechaNacimiento);
-                    }catch(TipoDatoException ex){
-                        dtcFechaNacimiento.setToolTipText(ex.getMessage());
-                        Utilidades.componenteError(dtcFechaNacimiento);
-                    }catch(Exception e){};
-
-                }
-                    }
-                });
-      
-    }
-
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -111,6 +79,15 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnAceptar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        pnlBaja = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        txtFechaBaja = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtMotivoBaja = new javax.swing.JTextArea();
+        pnlEmpleado = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         Apellido = new javax.swing.JLabel();
@@ -124,29 +101,12 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         cmbTipoDocumento = new javax.swing.JComboBox();
         cmbSexo = new javax.swing.JComboBox();
         dtcFechaNacimiento = new com.toedter.calendar.JDateChooser();
-        jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        cmbBarrio = new javax.swing.JComboBox();
-        cmbLocalidad = new javax.swing.JComboBox();
-        cmbProvincia = new javax.swing.JComboBox();
-        cmbPais = new javax.swing.JComboBox();
-        txtDepto = new javax.swing.JTextField();
-        txtPiso = new javax.swing.JTextField();
-        txtNumero = new javax.swing.JTextField();
-        txtCalle = new javax.swing.JTextField();
-        btnAgregarProvincia = new javax.swing.JButton();
-        btnAgregarPais = new javax.swing.JButton();
-        btnAgregarLocalidad = new javax.swing.JButton();
-        btnAgregarBarrio = new javax.swing.JButton();
-        btnAceptar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        txtLegajo = new javax.swing.JTextField();
+        pnlDomicilio = new Presentacion.PnlDomicilio();
+        jPanel4 = new javax.swing.JPanel();
+        lstCargos = new Presentacion.JCheckList();
+        btnAgregarCargo = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -154,20 +114,77 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         txtTelefono = new javax.swing.JTextField();
         txtCelular = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        jPanel4 = new javax.swing.JPanel();
-        lstCargos = new Presentacion.JCheckList();
-        btnAgregarCargo = new javax.swing.JButton();
-        pnlBaja = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        txtFechaBaja = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txtMotivoBaja = new javax.swing.JTextArea();
+        btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Empleado");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Personales"));
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Baja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel17.setText("Fecha:");
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel18.setText("Motivo:");
+
+        txtFechaBaja.setEditable(false);
+
+        txtMotivoBaja.setFont(new java.awt.Font("Tahoma", 0, 11));
+        txtMotivoBaja.setLineWrap(true);
+        txtMotivoBaja.setWrapStyleWord(true);
+        jScrollPane3.setViewportView(txtMotivoBaja);
+
+        javax.swing.GroupLayout pnlBajaLayout = new javax.swing.GroupLayout(pnlBaja);
+        pnlBaja.setLayout(pnlBajaLayout);
+        pnlBajaLayout.setHorizontalGroup(
+            pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBajaLayout.createSequentialGroup()
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(pnlBajaLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlBajaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel17)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3))
+                .addContainerGap())
+        );
+        pnlBajaLayout.setVerticalGroup(
+            pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBajaLayout.createSequentialGroup()
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBajaLayout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addContainerGap(45, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)))
+        );
+
+        pnlEmpleado.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Empleado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Personales", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Nombre:");
@@ -192,98 +209,50 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 txtNombreActionPerformed(evt);
             }
         });
-        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNombreFocusLost(evt);
-            }
-        });
-
-        txtApellido.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtApellidoFocusLost(evt);
-            }
-        });
-
-        txtNumeroDocumento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumeroDocumentoActionPerformed(evt);
-            }
-        });
-        txtNumeroDocumento.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNumeroDocumentoFocusLost(evt);
-            }
-        });
 
         cmbTipoDocumento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbTipoDocumento.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cmbTipoDocumentoFocusLost(evt);
-            }
-        });
 
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbSexo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cmbSexoFocusLost(evt);
-            }
-        });
 
-        dtcFechaNacimiento.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dtcFechaNacimientoMouseClicked(evt);
-            }
-        });
-        dtcFechaNacimiento.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                dtcFechaNacimientoFocusLost(evt);
-            }
-        });
-        dtcFechaNacimiento.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dtcFechaNacimientoPropertyChange(evt);
-            }
-        });
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel6.setText("Legajo:");
+
+        txtLegajo.setEditable(false);
+        txtLegajo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(Apellido)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNumeroDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                            .addComponent(cmbTipoDocumento, 0, 166, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Apellido)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombre)
-                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbSexo, 0, 163, Short.MAX_VALUE)))
-                .addGap(108, 108, 108))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                    .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                    .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtLegajo, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cmbTipoDocumento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtLegajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cmbTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -291,322 +260,26 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Apellido)
                     .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Domicilio"));
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel6.setText("País:");
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel7.setText("Provincia:");
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel8.setText("Localidad:");
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel9.setText("Barrio:");
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel10.setText("Calle:");
-
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel11.setText("Número:");
-
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel14.setText("Depto:");
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel12.setText("Piso:");
-
-        cmbBarrio.setEnabled(false);
-        cmbBarrio.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cmbBarrioFocusLost(evt);
-            }
-        });
-
-        cmbLocalidad.setEnabled(false);
-        cmbLocalidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbLocalidadActionPerformed(evt);
-            }
-        });
-        cmbLocalidad.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cmbLocalidadFocusLost(evt);
-            }
-        });
-
-        cmbProvincia.setEnabled(false);
-        cmbProvincia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbProvinciaActionPerformed(evt);
-            }
-        });
-        cmbProvincia.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cmbProvinciaFocusLost(evt);
-            }
-        });
-
-        cmbPais.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbPaisActionPerformed(evt);
-            }
-        });
-        cmbPais.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cmbPaisFocusLost(evt);
-            }
-        });
-
-        txtDepto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDeptoActionPerformed(evt);
-            }
-        });
-        txtDepto.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtDeptoFocusLost(evt);
-            }
-        });
-
-        txtPiso.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPisoFocusLost(evt);
-            }
-        });
-
-        txtNumero.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNumeroFocusLost(evt);
-            }
-        });
-
-        txtCalle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCalleActionPerformed(evt);
-            }
-        });
-        txtCalle.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCalleFocusLost(evt);
-            }
-        });
-
-        btnAgregarProvincia.setText("+");
-
-        btnAgregarPais.setText("+");
-
-        btnAgregarLocalidad.setText("+");
-
-        btnAgregarBarrio.setText("+");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel12))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAgregarProvincia)
-                            .addComponent(btnAgregarPais)
-                            .addComponent(btnAgregarLocalidad)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel11))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtPiso, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel14))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(cmbBarrio, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnAgregarBarrio)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDepto, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(153, 153, 153))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarPais))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(cmbProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarProvincia))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(cmbLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarLocalidad))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmbBarrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAgregarBarrio)))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(txtPiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel14)
-                            .addComponent(txtDepto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(39, Short.MAX_VALUE))
-        );
-
-        btnAceptar.setText("Aceptar");
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
-            }
-        });
-
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Contacto"));
-
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel13.setText("Teléfono:");
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel15.setText("Celular:");
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel16.setText("E-Mail:");
-
-        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefonoActionPerformed(evt);
-            }
-        });
-        txtTelefono.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTelefonoFocusLost(evt);
-            }
-        });
-
-        txtCelular.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCelularFocusLost(evt);
-            }
-        });
-
-        txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtEmailFocusLost(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel15))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCelular, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(173, 173, 173))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16)))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel15)
-                        .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
-        );
-
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Cargos"));
-
-        lstCargos.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                lstCargosFocusLost(evt);
-            }
-        });
-        lstCargos.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                lstCargosPropertyChange(evt);
-            }
-        });
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cargos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         btnAgregarCargo.setText("Agregar");
         btnAgregarCargo.addActionListener(new java.awt.event.ActionListener() {
@@ -619,114 +292,129 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(lstCargos, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnAgregarCargo)
-                .addContainerGap(63, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lstCargos, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAgregarCargo))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lstCargos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarCargo))
+                    .addComponent(btnAgregarCargo)
+                    .addComponent(lstCargos, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contacto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel13.setText("Teléfono:");
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel15.setText("Celular:");
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel16.setText("E-Mail:");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCelular, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Baja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        javax.swing.GroupLayout pnlEmpleadoLayout = new javax.swing.GroupLayout(pnlEmpleado);
+        pnlEmpleado.setLayout(pnlEmpleadoLayout);
+        pnlEmpleadoLayout.setHorizontalGroup(
+            pnlEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEmpleadoLayout.createSequentialGroup()
+                .addGroup(pnlEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlDomicilio, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        pnlEmpleadoLayout.setVerticalGroup(
+            pnlEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEmpleadoLayout.createSequentialGroup()
+                .addComponent(pnlDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlEmpleadoLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel17.setText("Fecha:");
-
-        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel18.setText("Motivo:");
-
-        txtFechaBaja.setEditable(false);
-
-        txtMotivoBaja.setColumns(20);
-        txtMotivoBaja.setFont(new java.awt.Font("Tahoma", 0, 11));
-        txtMotivoBaja.setRows(5);
-        txtMotivoBaja.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtMotivoBajaFocusLost(evt);
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
             }
         });
-        jScrollPane3.setViewportView(txtMotivoBaja);
-
-        javax.swing.GroupLayout pnlBajaLayout = new javax.swing.GroupLayout(pnlBaja);
-        pnlBaja.setLayout(pnlBajaLayout);
-        pnlBajaLayout.setHorizontalGroup(
-            pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBajaLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel18))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(99, 99, 99))
-        );
-        pnlBajaLayout.setVerticalGroup(
-            pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBajaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlBajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnlBaja, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlEmpleado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, 0, 494, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(20, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(btnSalir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAceptar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCancelar)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnAceptar)
-                        .addComponent(btnCancelar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnAceptar)
+                    .addComponent(btnSalir))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         pack();
@@ -736,416 +424,53 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void txtNumeroDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroDocumentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumeroDocumentoActionPerformed
-
-    private void txtDeptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeptoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDeptoActionPerformed
-
-    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefonoActionPerformed
-
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         try {
             // TODO add your handling code here:
+            link.save();
+            if (gestor instanceof GestorBajaEmpleado) {                
+                empleado.setMotivoBaja(txtMotivoBaja.getText());
+                empleado.setFecBaja(Utilidades.getFechaActual());
+            }
             empleado.validarOk();
-            try {
-                if(gestor instanceof GestorBajaEmpleado)
-                {
-                    empleado.setFecBaja(new Date());
-                    empleado.setMotivoBaja(txtMotivoBaja.getText());
-                }
-                gestor.ejecutarOperacion(empleado);
-                    Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido()+", "+empleado.getNombre()));
-                    this.vaciar();
-                    this.dispose();
-                } catch (ExceptionGestor ex) {    }
-        } catch (TipoDatoException ex) {
+            gestor.ejecutarOperacion(empleado);
+            Mensajes.mensajeInformacion(gestor.mensajeResultado(empleado.getApellido() + ", " + empleado.getNombre()));
+            this.dispose();
+
+        } catch (NegocioException ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
-      }
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
-
-    private void dtcFechaNacimientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dtcFechaNacimientoMouseClicked
-        // TODO add your handling code here:
-
-      //  txtFechaEstimada.setText(Utilidades.parseFecha(dtcFechaNacimiento.getDate()));
-}//GEN-LAST:event_dtcFechaNacimientoMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void cmbProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProvinciaActionPerformed
-        // TODO add your handling code here:
-        if(cmbProvincia.getSelectedItem()!=null){
-            this.cmbLocalidad.setEnabled(true);
-            this.cargarComboLocalidades((Provincia)cmbProvincia.getSelectedItem());
-        }
-        else
-            this.cmbLocalidad.setEnabled(false);
-        this.repaint();
-}//GEN-LAST:event_cmbProvinciaActionPerformed
-
-    private void cmbLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbLocalidadActionPerformed
-        // TODO add your handling code here:
-       
-        if(cmbLocalidad.getSelectedItem()!=null){
-            this.cmbBarrio.setEnabled(true);
-            this.cargarComboBarrio((Localidad)cmbLocalidad.getSelectedItem());
-            
-        }
-        else
-            this.cmbBarrio.setEnabled(false);
-            
-        this.repaint();
-}//GEN-LAST:event_cmbLocalidadActionPerformed
-
-    private void cmbPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPaisActionPerformed
-        // TODO add your handling code here:
-       if(cmbPais.getSelectedItem()!=null){        
-        this.cargarComboProvicias((Pais)cmbPais.getSelectedItem());
-        this.cmbProvincia.setEnabled(true);
-        }
-        else
-            this.cmbProvincia.setEnabled(false);
-    }//GEN-LAST:event_cmbPaisActionPerformed
-
-    private void txtNumeroDocumentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroDocumentoFocusLost
-        // TODO add your handling code here:
-        try{
-            int temp=Integer.parseInt(txtNumeroDocumento.getText());
-            if(gestor.existeEmpleado(((TipoDocumento)(cmbTipoDocumento.getSelectedItem())),temp))
-            {
-                Mensajes.mensajeErrorGenerico("El empleado ya se encuentra registrado.");
-                txtNumeroDocumento.selectAll();
-                txtNumeroDocumento.requestFocus();
-                return;
-            }
-            empleado.setNumeroDocumento(temp);
-            Utilidades.componenteCorrecto(txtNumeroDocumento);
-        }catch(TipoDatoException ex){
-             txtNumeroDocumento.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtNumeroDocumento);
-        }catch(Exception e){
-             Utilidades.componenteError(txtNumeroDocumento);
-             txtNumeroDocumento.setToolTipText("Formato incorrecto. Debe ser numérico");
-        }
-
-    }//GEN-LAST:event_txtNumeroDocumentoFocusLost
-
-    private void txtApellidoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtApellidoFocusLost
-        try {
-            // TODO add your handling code here:
-            empleado.setApellido(txtApellido.getText().toUpperCase());
-            Utilidades.componenteCorrecto(txtApellido);
-        } catch (TipoDatoException ex) {
-            txtApellido.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(txtApellido);
-            
-        }
-        
-
-    }//GEN-LAST:event_txtApellidoFocusLost
-
-    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
-        // TODO add your handling code here:
-         try {
-            // TODO add your handling code here:
-            empleado.setNombre(txtNombre.getText().toUpperCase());
-            Utilidades.componenteCorrecto(txtNombre);
-        } catch (TipoDatoException ex) {
-            txtNombre.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(txtNombre);
-        }
-
-    }//GEN-LAST:event_txtNombreFocusLost
-
-    private void cmbTipoDocumentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbTipoDocumentoFocusLost
-        // TODO add your handling code here:
-        try{
-            empleado.setTTdocumento((TipoDocumento)cmbTipoDocumento.getSelectedItem());
-            Utilidades.componenteCorrecto(cmbTipoDocumento);
-        }catch(TipoDatoException ex){
-            cmbTipoDocumento.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(cmbTipoDocumento);
-        }
-
-    }//GEN-LAST:event_cmbTipoDocumentoFocusLost
-
-    private void dtcFechaNacimientoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dtcFechaNacimientoFocusLost
-        // TODO add your handling code here:
-        if(empleado!=null)
-        {
-             try{
-                empleado.setFecNacimiento(dtcFechaNacimiento.getDate());
-                Utilidades.componenteCorrecto(dtcFechaNacimiento);
-            }catch(TipoDatoException ex){
-                dtcFechaNacimiento.setToolTipText(ex.getMessage());
-                Utilidades.componenteError(dtcFechaNacimiento);
-            }
-        }
-    }//GEN-LAST:event_dtcFechaNacimientoFocusLost
-
-    private void cmbSexoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbSexoFocusLost
-        // TODO add your handling code here:
-         try{
-            empleado.setTSexos((Sexo)cmbSexo.getSelectedItem());
-             Utilidades.componenteCorrecto(cmbSexo);
-        }catch(TipoDatoException ex){
-            cmbSexo.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(cmbSexo);
-        }
-    }//GEN-LAST:event_cmbSexoFocusLost
-
-    private void txtTelefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusLost
-        // TODO add your handling code here:
-       try{
-            long temp=Long.parseLong(txtTelefono.getText());
-            empleado.setTelefono(temp);
-            Utilidades.componenteCorrecto(txtTelefono);
-        }catch(TipoDatoException ex){
-             txtTelefono.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtTelefono);
-        }catch(Exception e){
-             Utilidades.componenteError(txtTelefono);
-             txtTelefono.setToolTipText("Formato incorrecto. Debe ser numérico");
-        }
-
-    }//GEN-LAST:event_txtTelefonoFocusLost
-
-    private void txtCelularFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCelularFocusLost
-        // TODO add your handling code here:
-        try{
-            long temp=Long.parseLong(txtCelular.getText());
-            empleado.setCelular(temp);
-            Utilidades.componenteCorrecto(txtCelular);
-        }catch(TipoDatoException ex){
-             txtCelular.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtCelular);
-        }catch(Exception e){
-             Utilidades.componenteError(txtCelular);
-             txtCelular.setToolTipText("Formato incorrecto. Debe ser numérico");
-        }
-    }//GEN-LAST:event_txtCelularFocusLost
-
-    private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
-        // TODO add your handling code here:
-
-        try {
-            // TODO add your handling code here:
-            empleado. setCorreoElectronico(txtEmail.getText());
-            Utilidades.componenteCorrecto(txtEmail);
-        } catch (TipoDatoException ex) {
-            txtEmail.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(txtEmail);
-        }
-
-    }//GEN-LAST:event_txtEmailFocusLost
-
-    private void cmbPaisFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbPaisFocusLost
-        // TODO add your handling code here:
-
-         try{
-            empleado.getTDomicilios().setTPaises((Pais)cmbPais.getSelectedItem());
-            Utilidades.componenteCorrecto(cmbPais);
-        }catch(TipoDatoException ex){
-            cmbPais.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(cmbPais);
-        }
-    }//GEN-LAST:event_cmbPaisFocusLost
-
-    private void cmbProvinciaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbProvinciaFocusLost
-        // TODO add your handling code here:
-        try{
-            empleado.getTDomicilios().setTProvincias((Provincia)cmbProvincia.getSelectedItem());
-            Utilidades.componenteCorrecto(cmbProvincia);
-        }catch(TipoDatoException ex){
-            cmbProvincia.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(cmbProvincia);
-        }
-    }//GEN-LAST:event_cmbProvinciaFocusLost
-
-    private void cmbLocalidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbLocalidadFocusLost
-        // TODO add your handling code here:
-        try{
-            empleado.getTDomicilios().setTLocalidades((Localidad)cmbLocalidad.getSelectedItem());
-            Utilidades.componenteCorrecto(cmbLocalidad);
-        }catch(TipoDatoException ex){
-            cmbLocalidad.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(cmbLocalidad);
-        }
-    }//GEN-LAST:event_cmbLocalidadFocusLost
-
-    private void cmbBarrioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbBarrioFocusLost
-        // TODO add your handling code here:
-        try{
-            empleado.getTDomicilios().setTBarrios((Barrio)cmbBarrio.getSelectedItem());
-            Utilidades.componenteCorrecto(cmbBarrio);
-        }catch(TipoDatoException ex){
-            cmbBarrio.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(cmbBarrio);
-        }
-    }//GEN-LAST:event_cmbBarrioFocusLost
-
-    private void txtCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCalleActionPerformed
-        // TODO add your handling code here:
-          try {
-            empleado.getTDomicilios().setCalle(txtCalle.getText());
-            Utilidades.componenteCorrecto(txtCalle);
-        } catch (TipoDatoException ex) {
-            txtCalle.setToolTipText(ex.getMessage());
-            Utilidades.componenteError(txtCalle);
-        }
-    }//GEN-LAST:event_txtCalleActionPerformed
-
-    private void txtNumeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroFocusLost
-        // TODO add your handling code here:
-         try{
-            int temp=Integer.parseInt(txtNumero.getText());
-            empleado.getTDomicilios().setNumero(temp);
-            Utilidades.componenteCorrecto(txtNumero);
-        }catch(TipoDatoException ex){
-             txtNumero.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtNumero);
-        }catch(Exception e){
-             Utilidades.componenteError(txtNumero);
-             txtNumero.setToolTipText("Formato incorrecto. Debe ser numérico");
-        }
-
-    }//GEN-LAST:event_txtNumeroFocusLost
-
-    private void txtPisoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPisoFocusLost
-        // TODO add your handling code here:
-        try{
-            if(txtPiso.getText().trim().length()!=0){
-                short temp=Short.parseShort(txtPiso.getText());
-                empleado.getTDomicilios().setPiso(temp);                
-            }
-            else
-                empleado.getTDomicilios().setPiso(null);
-            Utilidades.componenteCorrecto(txtPiso);
-        }catch(TipoDatoException ex){
-             txtPiso.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtPiso);
-        }catch(Exception e){
-             Utilidades.componenteError(txtPiso);
-             txtPiso.setToolTipText("Formato incorrecto. Debe ser numérico");
-        }
-
-    }//GEN-LAST:event_txtPisoFocusLost
-
-    private void txtDeptoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDeptoFocusLost
-        // TODO add your handling code here:
-        try{
-           empleado.getTDomicilios().setDepto(txtDepto.getText());
-            Utilidades.componenteCorrecto(txtDepto);
-        }catch(TipoDatoException ex){
-             txtDepto.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtDepto);
-        }
-    }//GEN-LAST:event_txtDeptoFocusLost
-
-    private void lstCargosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lstCargosFocusLost
-        // TODO add your handling code here:
-         try{
-             empleado.setCargos(lstCargos.getSelectedItems());
-             Utilidades.componenteCorrecto(lstCargos);
-        }catch(TipoDatoException ex){
-             lstCargos.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(lstCargos);
-        }
-
-    }//GEN-LAST:event_lstCargosFocusLost
-
-    private void txtCalleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCalleFocusLost
-        // TODO add your handling code here:
-        try{
-            empleado.getTDomicilios().setCalle(txtCalle.getText());
-            Utilidades.componenteCorrecto(txtCalle);
-        }catch(TipoDatoException ex){
-             txtCalle.setToolTipText(ex.getMessage());
-             Utilidades.componenteError(txtCalle);
-        }
-    }//GEN-LAST:event_txtCalleFocusLost
-
-    private void dtcFechaNacimientoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dtcFechaNacimientoPropertyChange
-        // TODO add your handling code here:
-       try{
-        if(empleado!=null)
-        {
-             try{
-                empleado.setFecNacimiento(dtcFechaNacimiento.getDate());
-                Utilidades.componenteCorrecto(dtcFechaNacimiento);
-            }catch(TipoDatoException ex){
-                dtcFechaNacimiento.setToolTipText(ex.getMessage());
-                Utilidades.componenteError(dtcFechaNacimiento);
-            }
-        }
-        }catch(Exception ex){}
-    }//GEN-LAST:event_dtcFechaNacimientoPropertyChange
-
     private void btnAgregarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCargoActionPerformed
         // TODO add your handling code here:
-            GestorCargo.nuevoCargo(this);
-            this.cargarCargos();
-            this.repaint();
+        GestorCargo.nuevoCargo(this);
+        this.cargarCargos();
+        this.repaint();
 
     }//GEN-LAST:event_btnAgregarCargoActionPerformed
 
-    private void lstCargosPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_lstCargosPropertyChange
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
-        System.out.println("Entro");
-    }//GEN-LAST:event_lstCargosPropertyChange
-
-    private void txtMotivoBajaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMotivoBajaFocusLost
-        // TODO add your handling code here:
-        if(txtMotivoBaja.getText().compareTo("")!=0)
-            empleado.setMotivoBaja(txtMotivoBaja.getText());
-    }//GEN-LAST:event_txtMotivoBajaFocusLost
-
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                PantallaABMEmpleado dialog = new PantallaABMEmpleado(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+    // <editor-fold defaultstate="collapsed" desc="variables del editor">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Apellido;
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnAgregarBarrio;
     private javax.swing.JButton btnAgregarCargo;
-    private javax.swing.JButton btnAgregarLocalidad;
-    private javax.swing.JButton btnAgregarPais;
-    private javax.swing.JButton btnAgregarProvincia;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox cmbBarrio;
-    private javax.swing.JComboBox cmbLocalidad;
-    private javax.swing.JComboBox cmbPais;
-    private javax.swing.JComboBox cmbProvincia;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox cmbSexo;
     private javax.swing.JComboBox cmbTipoDocumento;
     private com.toedter.calendar.JDateChooser dtcFechaNacimiento;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -1155,299 +480,124 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane3;
     private Presentacion.JCheckList lstCargos;
     private javax.swing.JPanel pnlBaja;
+    private Presentacion.PnlDomicilio pnlDomicilio;
+    private javax.swing.JPanel pnlEmpleado;
     private javax.swing.JTextField txtApellido;
-    private javax.swing.JTextField txtCalle;
     private javax.swing.JTextField txtCelular;
-    private javax.swing.JTextField txtDepto;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFechaBaja;
+    private javax.swing.JTextField txtLegajo;
     private javax.swing.JTextArea txtMotivoBaja;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtNumeroDocumento;
-    private javax.swing.JTextField txtPiso;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="cargas">
+    private void cargarCargos() {
+        try {
 
-    private boolean validar(){
-        return true;
-    }
-
-     private void cargarDatos(Empleado empleado){
-
-         this.txtNombre.setText(empleado.getNombre());
-         this.txtApellido.setText(empleado.getApellido());
-         TipoDocumento tipo=null;
-        for(int i=0; i<cmbTipoDocumento.getItemCount();i++){
-            tipo=(TipoDocumento) cmbTipoDocumento.getItemAt(i);
-            if(tipo.getNombre().compareTo(this.empleado.getTTdocumento().getNombre())==0){
-                cmbTipoDocumento.setSelectedIndex(i);
-                break;
-            }
-         }
-
-         Sexo sexo=null;
-        for(int i=0; i<cmbSexo.getItemCount();i++){
-            sexo=(Sexo) cmbSexo.getItemAt(i);
-            if(sexo.getNombre().compareTo(this.empleado.getTSexos().getNombre())==0){
-                cmbSexo.setSelectedIndex(i);
-                break;
-            }
-         }
-
-         this.dtcFechaNacimiento.setDate(empleado.getFecNacimiento());
-         this.txtNumeroDocumento.setText(empleado.getNumeroDocumento()+"");
-         this.txtTelefono.setText(empleado.getTelefono()+"");
-         this.txtCelular.setText(empleado.getCelular()+"");
-         this.txtEmail.setText(empleado.getCorreoElectronico());
-
-         Pais pais=null;
-        for(int i=0; i<cmbPais.getItemCount();i++){
-            pais=(Pais) cmbPais.getItemAt(i);
-            if(pais.getNombre().compareTo(this.empleado.getTDomicilios().getTPaises().getNombre())==0){
-                cmbPais.setSelectedIndex(i);
-                break;
-            }
-         }
-
-         this.cargarComboProvicias(pais);
-
-
-          Provincia provincia=null;
-        for(int i=0; i<cmbProvincia.getItemCount();i++){
-            provincia=(Provincia) cmbProvincia.getItemAt(i);
-            if(provincia.getNombre().compareTo(this.empleado.getTDomicilios().getTProvincias().getNombre())==0){
-                cmbProvincia.setSelectedIndex(i);
-                break;
-            }
-         }      
-
-            Localidad localidad=null;
-        for(int i=0; i<cmbLocalidad.getItemCount();i++){
-            localidad=(Localidad) cmbLocalidad.getItemAt(i);
-            if(localidad.getNombre().compareTo(this.empleado.getTDomicilios().getTLocalidades().getNombre())==0){
-                cmbLocalidad.setSelectedIndex(i);
-                break;
-            }
-         }
-
-
-
-             Barrio barrio=null;
-        for(int i=0; i<cmbBarrio.getItemCount();i++){
-            barrio=(Barrio) cmbBarrio.getItemAt(i);
-            if(barrio.getNombre().compareTo(this.empleado.getTDomicilios().getTBarrios().getNombre())==0){
-                cmbBarrio.setSelectedIndex(i);
-                break;
-            }
-         }
-
-          this.txtCalle.setText(empleado.getTDomicilios().getCalle());
-          this.txtPiso.setText(empleado.getTDomicilios().getPiso()+"");
-          this.txtNumero.setText(empleado.getTDomicilios().getNumero()+"");
-          this.txtDepto.setText(empleado.getTDomicilios().getDepto());
-
-          if(empleado.getFecBaja()==null){
-              this.txtFechaBaja.setText("");
-              this.txtMotivoBaja.setText("");
-          }
-          else
-          {
-              Format formato=new SimpleDateFormat("dd/MM/yyyy");
-              this.txtFechaBaja.setText(formato.format(empleado.getFecBaja()));
-              this.txtMotivoBaja.setText(empleado.getMotivoBaja());
-          }
-          lstCargos.setSelectedItems(empleado.getCargos());
-
-
-    }
-
-     private void cargarCargos(){
-       try {
-           
             List<Cargo> tipo = GestorEmpleado.listarCargos();
 
             lstCargos.setData(tipo);
 
         } catch (Exception ex) {
-            
         }
     }
 
-     private void cargarTipoDocumento(){
-            cmbTipoDocumento.removeAllItems();
+    private void cargarTipoDocumento() {
+        cmbTipoDocumento.removeAllItems();
 
-            List<TipoDocumento> tipo = gestor.listarTipoDocumento();
-            for(int i=0;i<tipo.size();i++){
-                cmbTipoDocumento.addItem(tipo.get(i));
-            }
-            cmbTipoDocumento.setSelectedIndex(-1);
-            cmbTipoDocumento.repaint();
-     }
+        List<TipoDocumento> tipo = gestor.listarTipoDocumento();
+        for (int i = 0; i < tipo.size(); i++) {
+            cmbTipoDocumento.addItem(tipo.get(i));
+        }
+        cmbTipoDocumento.setSelectedIndex(-1);
+        cmbTipoDocumento.repaint();
+    }
 
-     private void cargarSexo(){
-          cmbSexo.removeAllItems();
+    private void cargarSexo() {
+        cmbSexo.removeAllItems();
 
-            List<Sexo> tipo = gestor.listarSexo();
-            for(int i=0;i<tipo.size();i++){
-                cmbSexo.addItem(tipo.get(i));
-            }
-            cmbSexo.setSelectedIndex(-1);
+        List<Sexo> tipo = gestor.listarSexo();
+        for (int i = 0; i < tipo.size(); i++) {
+            cmbSexo.addItem(tipo.get(i));
+        }
+        cmbSexo.setSelectedIndex(-1);
         cmbSexo.repaint();
-     }
-
-    public void nuevo(){
-       empleado=new Empleado();
-       this.txtMotivoBaja.setEnabled(false);
-       empleado.setTEstadosEmpleado(gestor.getEstadoDisponible());
-
     }
 
-    public void modificar(Empleado emp){
-        empleado=emp;
-        this.cargarCargos();
-        this.cmbProvincia.setEnabled(true);
-        this.cmbLocalidad.setEnabled(true);
-        this.cmbBarrio.setEnabled(true);
-        this.txtNombre.requestFocus();
-       this.cargarDatos(empleado);
+    private void setEmpleado(Empleado e) {
+        this.link.setObjeto(e);
+        this.link.load();
+        this.empleado = e;
     }
 
-    private void cargarDomicilioEmpleado(){
-
-
-
-        this.txtCalle.setText(empleado.getTDomicilios().getCalle());
-        this.txtNumero.setText(empleado.getTDomicilios().getNumero()+"");
-        this.txtPiso.setText(empleado.getTDomicilios().getPiso()+"");
-        this.txtDepto.setText(empleado.getTDomicilios().getDepto());
+    // </editor-fold>
+    public static void iniciarRegistrarEmpleado(Window parent) {
+        PantallaABMEmpleado i = new PantallaABMEmpleado(parent, new GestorRegistrarEmpleado());
+        i.setTitle("Registrar Empleado");
+        Empleado e = new Empleado();
+        e.setEstado(EstadoEmpleadoBD.traerEstadoDisponible());
+        i.setEmpleado(e);
+        i.txtLegajo.setText(Empleado.getLastID()+1+"");
+        i.pnlBaja.setVisible(false);
+        i.btnSalir.setVisible(false);
+        i.pack();
+        i.setVisible(true);
     }
-    public void baja(Empleado emp) {
-        this.empleado=emp;
-        Format formato=new SimpleDateFormat("dd/MM/yyyy");
-        String fecha=formato.format(new Date());
-        this.cargarDatos(empleado);
-        this.txtFechaBaja.setText(fecha);        
-        this.desactivar();
 
+    public static void iniciarModificarEmpleado(Window parent, Empleado e) {
+        PantallaABMEmpleado i = new PantallaABMEmpleado(parent, new GestorModificarEmpleado());
+        i.setTitle("Modificar Empleado");
+        i.setEmpleado(e);
+        i.pnlBaja.setVisible(false);
+        i.btnSalir.setVisible(false);
+        i.pack();
+        i.setVisible(true);
+    }
 
-        txtMotivoBaja.requestFocus();
+    public static void iniciarCancelarEmpleado(Window parent, Empleado e) {
 
-       
+        PantallaABMEmpleado i = new PantallaABMEmpleado(parent, new GestorBajaEmpleado());
+        i.setTitle("Registar Baja Empleado");
+        i.setEmpleado(e);
+        i.txtFechaBaja.setText(Utilidades.parseFecha(Utilidades.getFechaActual()));
+        Utilidades.habilitarPanel(i.pnlEmpleado, false);
+        i.btnSalir.setVisible(false);
+        i.pack();
+        i.setVisible(true);
+    }
+
+    public static void iniciarVerEmpleado(Window parent, Empleado e) {
+        PantallaABMEmpleado i = new PantallaABMEmpleado(parent, new GestorModificarEmpleado());
+        i.setTitle("Ver Empleado");
+        i.setEmpleado(e);
+        Utilidades.habilitarPanel(i.pnlEmpleado, false);
+        Utilidades.habilitarPanel(i.pnlBaja, false);
+        if (e.getFecBaja() == null) {
+            i.pnlBaja.setVisible(false);
         }
-
-    private void desactivar(){
-        this.txtNombre.setEnabled(false);
-        this.txtApellido.setEnabled(false);
-        this.cmbTipoDocumento.setEnabled(false);
-        this.txtNumeroDocumento.setEnabled(false);
-        this.txtFechaBaja.setEnabled(false);
-        this.cmbSexo.setEnabled(false);
-        this.txtTelefono.setEnabled(false);
-        this.txtCelular.setEnabled(false);
-        this.txtEmail.setEnabled(false);        
-        this.cmbPais.setEnabled(false);
-        this.cmbProvincia.setEnabled(false);
-        this.cmbLocalidad.setEnabled(false);
-        this.cmbBarrio.setEnabled(false);
-        this.txtCalle.setEnabled(false);
-        this.txtPiso.setEnabled(false);
-        this.txtNumero.setEnabled(false);
-        this.txtDepto.setEnabled(false);
-        this.lstCargos.setEnabled(false);
+        i.btnAceptar.setVisible(false);
+        i.btnCancelar.setVisible(false);
+        i.pack();
+        i.setVisible(true);
 
     }
 
-    public void vaciar(){
-      
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
+            public void run() {
+                iniciarRegistrarEmpleado(null);
+            }
+        });
     }
-
-//    private void activarProducto(boolean flag){
-//
-//    }
-//
-//    private void activarBaja(boolean flag){
-//
-//    }
-//
-//    private void activarBotones(boolean aceptar,boolean cancelar){
-//
-//    }
-
-    private void cargarComboPais(){
-        List<Pais> pais=this.gestor.listarPais();
-         cmbPais.removeAllItems();
-
-
-            for(int i=0;i<pais.size();i++){
-                cmbPais.addItem(pais.get(i));
-            }        
-           
-       cmbPais.setSelectedIndex(-1);          
-      cmbPais.repaint();
-    }
-    private void cargarComboProvicias(Pais pais){
-         List<Provincia> provincias= gestor.listarProvincias(pais);
-         cmbProvincia.removeAllItems();
-
-
-         for(int i=0;i<provincias.size();i++){
-             cmbProvincia.addItem(provincias.get(i));
-         }
-         cmbProvincia.setSelectedIndex(-1);
-            
-            cmbLocalidad.removeAllItems();
-             cmbLocalidad.repaint();
-             cmbBarrio.removeAllItems();
-             cmbBarrio.repaint();
-
-        cmbProvincia.repaint();
-    }
-    private void cargarComboLocalidades(Provincia provincia){
-        List<Localidad> localidad= gestor.listarLocalidades(provincia);
-         cmbLocalidad.removeAllItems();
-
-         for(int i=0;i<localidad.size();i++){
-             cmbLocalidad.addItem(localidad.get(i));
-         }             cmbBarrio.removeAllItems();
-             cmbBarrio.repaint();
-
-         this.cmbLocalidad.setSelectedIndex(-1);
-         this.cmbLocalidad.repaint();
-    }
-
-    private void cargarComboBarrio(Localidad localidad){
-
-         List<Barrio> barrio=gestor.listarBarrios(localidad);
-         cmbBarrio.removeAllItems();
-
-         for(int i=0;i<barrio.size();i++){
-             cmbBarrio.addItem(barrio.get(i));
-         }
-         this.cmbBarrio.setSelectedIndex(-1);
-         this.cmbBarrio.repaint();
-
-    }
-
-
-
-    private void activarDomicilio(boolean pais,boolean provincia, boolean localidad, boolean barrio){
-        this.cmbPais.setEnabled(pais);
-        this.cmbProvincia.setEnabled(provincia);
-        this.cmbLocalidad.setEnabled(localidad);
-        this.cmbBarrio.setEnabled(barrio);
-        
-    }
-
 }

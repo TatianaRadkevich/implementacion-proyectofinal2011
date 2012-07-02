@@ -1,6 +1,7 @@
 package Negocio.Administracion;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
+import BaseDeDatos.Administracion.CargoBD;
 import Negocio.Produccion.EtapaProduccionEspecifica;
 import Negocio.Exceptiones.TipoDatoException;
 import java.util.Date;
@@ -70,6 +71,8 @@ public class Cargo implements java.io.Serializable {
 
     public void setNombre(String nombre) throws TipoDatoException {
         if (nombre.matches("[a-zA-Z ]*") && !nombre.trim().isEmpty()) {
+            if(CargoBD.getCargoPorNombre(nombre)!=null)
+                throw new TipoDatoException("Ya existe un cargo con ese nombre");
             this.nombre = nombre;
         } else {
             this.nombre = null;

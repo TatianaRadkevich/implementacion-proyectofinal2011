@@ -17,16 +17,9 @@ import java.awt.Dialog;
  */
 public class GestorRegistrarEmpleado extends GestorEmpleado{
 
-
-    public void nuevoEmpleado(Dialog parent){
-        PantallaABMEmpleado producto=new PantallaABMEmpleado(parent, true, this,"Registrar Empleado");
-        producto.nuevo();
-        producto.setVisible(true);
-    }
-
     @Override
     public Empleado ejecutarOperacion(Empleado empleado) throws ExceptionGestor {
-        DomicilioBD.guardar(empleado.getTDomicilios());
+        DomicilioBD.guardar(empleado.getDomicilio());
         return EmpleadoBD.guardar(empleado);
     }
 
@@ -34,7 +27,4 @@ public class GestorRegistrarEmpleado extends GestorEmpleado{
     public String mensajeResultado(String nombreEmpleado) {
         return "El empleado "+nombreEmpleado+ "\nha sido dado de registrado exitosamente";
     }
-
-   
-
 }

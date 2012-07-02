@@ -207,7 +207,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(Empleado elemento) {
                 Vector salida = new Vector();
-                salida.add(elemento.getIdEmpleado());
+                salida.add(elemento.getId());
                 salida.add(elemento.getApellido() + ", " + elemento.getNombre());
                 salida.add(null);
                 return salida;
