@@ -421,6 +421,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
                         .addContainerGap())))
         );
 
+        dtcFechaNecesidad.setDateFormatString("dd/MM/yyyy");
         dtcFechaNecesidad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 dtcFechaNecesidadMouseClicked(evt);

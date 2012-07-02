@@ -6,7 +6,7 @@
 package Negocio.Administracion;
 
 import BaseDeDatos.Administracion.FormaDePagoBD;
-import Presentacion.Administracion.FormaDePagoPantalla;
+import Presentacion.Administracion.PantallaFormaDePago;
 import java.awt.Dialog;
 import java.util.List;
 
@@ -19,11 +19,11 @@ public class GestorFormaPago {
 
 
     public static void administarFormPago(Dialog parent){
-        FormaDePagoPantalla FormaPago=new FormaDePagoPantalla(null, true);
+        PantallaFormaDePago FormaPago=new PantallaFormaDePago(null, true);
         FormaPago.setVisible(true);
     }
     public static void administrarFormaPagoAgregar(Dialog parent){
-        FormaDePagoPantalla FormaPago1=new FormaDePagoPantalla(null, true);
+        PantallaFormaDePago FormaPago1=new PantallaFormaDePago(null, true);
         FormaPago1.nuevo();
         FormaPago1.setVisible(true);
     }

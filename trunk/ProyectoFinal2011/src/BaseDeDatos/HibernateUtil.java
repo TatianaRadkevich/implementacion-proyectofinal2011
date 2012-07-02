@@ -108,7 +108,7 @@ public class HibernateUtil {
         //session.beginTransaction();
         salida = session.createQuery(HQL).list();        
         //session.getTransaction().commit();
-
+        session.clear();
         return salida;
     }
 }

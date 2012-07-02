@@ -58,8 +58,8 @@ public class ZLFormatedTextField extends ZLItem<Object, Object, JFormattedTextFi
 
     public enum Formato {
 
-        DateTime(new DateFormatter(new SimpleDateFormat("d/MM/yy - H:mm 'Hs.'"))),
-        Date(new DateFormatter(new SimpleDateFormat("d/MM/yy"))),
+        DateTime(new DateFormatter(new SimpleDateFormat("dd/MM/yyyy - HH:mm 'Hs.'"))),
+        Date(new DateFormatter(new SimpleDateFormat("dd/MM/yyyy"))),
         CUIT("##-########-#"),
         Default(new DefaultFormatter());
         private AbstractFormatter af;
