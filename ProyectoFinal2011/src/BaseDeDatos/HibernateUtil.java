@@ -7,7 +7,9 @@ package BaseDeDatos;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
+import org.hibernate.CacheMode;
 import org.hibernate.FlushMode;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;
@@ -24,13 +26,16 @@ public class HibernateUtil {
 
     private static final SessionFactory sessionFactory;
     private static Session session;
+    private static Session sessionQuery;
 
     static {
         try {
             // Create the SessionFactory from standard
             sessionFactory = addClases(new AnnotationConfiguration()).configure().buildSessionFactory();
             session = sessionFactory.openSession();
+            sessionQuery = sessionFactory.openSession();
             session.setFlushMode(FlushMode.COMMIT);
+            sessionQuery.setFlushMode(FlushMode.MANUAL);            
 
         } catch (Throwable ex) {
             // Log the exception.
@@ -81,7 +86,7 @@ public class HibernateUtil {
     public static Object getObjeto(Class type, Serializable srlzbl) {
         Object salida;
         session.beginTransaction();
-        salida=session.get(type, srlzbl);
+        salida = session.get(type, srlzbl);
         session.getTransaction().commit();
         return salida;
     }
@@ -91,24 +96,18 @@ public class HibernateUtil {
         session.beginTransaction();
         session.update(o);
         session.getTransaction().commit();
-         session.flush();
+        session.flush();
     }
-
 
     public static void EliminarObjeto(Object o) {
         session.beginTransaction();
         session.delete(o);
         session.getTransaction().commit();
-         session.flush();
+        session.flush();
     }
 
     public static List ejecutarConsulta(String HQL) {
-        List salida;
-        session.clear();
-        //session.beginTransaction();
-        salida = session.createQuery(HQL).list();        
-        //session.getTransaction().commit();
-        session.clear();
-        return salida;
+          Query q=sessionQuery.createQuery(HQL);         
+          return q.list();
     }
 }
