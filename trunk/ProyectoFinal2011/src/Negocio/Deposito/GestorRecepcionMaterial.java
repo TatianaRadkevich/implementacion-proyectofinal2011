@@ -104,7 +104,7 @@ public class GestorRecepcionMaterial {
         for (DetalleOrdenCompra detalle : oc.getDetalle())
         {
             //Sumamos al stock actual la cantidad recibida en la orden de compra
-            detalle.getMaterial().setStockActual((short)(detalle.getMaterial().getStockActual().shortValue() + detalle.getCantidadRecibida().shortValue()));
+            detalle.getMaterial().getMaterial().setStockActual((short)(detalle.getMaterial().getMaterial().getStockActual().shortValue() + detalle.getCantidadRecibida().shortValue()));
         }
     }
 

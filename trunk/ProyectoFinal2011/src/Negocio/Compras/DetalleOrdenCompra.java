@@ -36,7 +36,7 @@ public class DetalleOrdenCompra implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_MATERIAL")
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private Material TMateriales;
+    private MaterialesXProveedor TMateriales;
     @Column(name="PRECIO_UNITARIO", precision=6)
     private Float precioUnitario;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -53,7 +53,7 @@ public class DetalleOrdenCompra implements java.io.Serializable {
     public DetalleOrdenCompra() {
     }
 
-    public DetalleOrdenCompra(Material material, Short cantidad) {
+    public DetalleOrdenCompra(MaterialesXProveedor material, Short cantidad) {
         this.TMateriales = material;
         this.cantidadPedida = cantidad;
     }
@@ -65,7 +65,7 @@ public class DetalleOrdenCompra implements java.io.Serializable {
         this.cantidadRecibida = cantidadRecibida;
     }
 
-    public DetalleOrdenCompra(int idDetalleOrdenCompra, OrdenCompra TOrdenesCompra, Material TMateriales, short cantidadPedida, short cantidadRecibida, Set<Faltante> TFaltanteses) {
+    public DetalleOrdenCompra(int idDetalleOrdenCompra, OrdenCompra TOrdenesCompra, MaterialesXProveedor TMateriales, short cantidadPedida, short cantidadRecibida, Set<Faltante> TFaltanteses) {
         this.idDetalleOrdenCompra = idDetalleOrdenCompra;
         this.TOrdenesCompra = TOrdenesCompra;
         this.TMateriales = TMateriales;
@@ -90,11 +90,11 @@ public class DetalleOrdenCompra implements java.io.Serializable {
         this.TOrdenesCompra = TOrdenesCompra;
     }
 
-    public Material getMaterial() {
+    public MaterialesXProveedor getMaterial() {
         return this.TMateriales;
     }
 
-    public void setMaterial(Material TMateriales) {
+    public void setMaterial(MaterialesXProveedor TMateriales) {
         this.TMateriales = TMateriales;
     }
 
@@ -117,10 +117,10 @@ public class DetalleOrdenCompra implements java.io.Serializable {
         if(cantidadRecibida<0)
             throw new RuntimeException("La cantidad recibida no puede ser menor que cero(0) ");
          try{
-        int stock=this.getMaterial().getStockActual();
+        int stock=this.getMaterial().getMaterial().getStockActual();
         stock+=-this.cantidadRecibida;
         stock+=cantidadRecibida;
-        this.getMaterial().setStockActual(new Short(stock+""));
+        this.getMaterial().getMaterial().setStockActual(new Short(stock+""));
         }catch(Exception e){}
 
         this.cantidadRecibida = cantidadRecibida;      

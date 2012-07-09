@@ -43,13 +43,13 @@ public class PantallaOrdenCompraEnvio extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(DetalleOrdenCompra elemento) {
                 ///////////////////////////////
-                 Float precio=elemento.getMaterial().getPrecio(elemento.getOrdenCompra().getProveedor());
+                 Float precio=elemento.getMaterial().getMaterial().getPrecio(elemento.getOrdenCompra().getProveedor());
                 
                 if(precio==null)
                     precio=0f;
                 ////////////////////////////////
                 Vector fila = new Vector();
-                fila.add((elemento.getMaterial() == null) ? "" : elemento.getMaterial().getNombre());
+                fila.add((elemento.getMaterial() == null) ? "" : elemento.getMaterial().getMaterial().getNombre());
                 fila.add(precio);
                 fila.add(elemento.getCantidadPedida());
                 fila.add(elemento.getCantidadPedida() * precio);
