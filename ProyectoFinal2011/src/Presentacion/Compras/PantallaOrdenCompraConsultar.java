@@ -127,8 +127,8 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(DetalleOrdenCompra elemento) {
                 Vector salida = new Vector(6);
-                salida.add(elemento.getMaterial().getNombre());
-                salida.add(elemento.getMaterial().getDescripcion());
+                salida.add(elemento.getMaterial().getMaterial().getNombre());
+                salida.add(elemento.getMaterial().getMaterial().getDescripcion());
                 salida.add(elemento.getPrecioUnitario());
                 salida.add(elemento.getCantidadPedida());
                 salida.add(elemento.getCantidadRecibida());

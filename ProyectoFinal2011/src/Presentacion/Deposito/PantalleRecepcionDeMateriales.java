@@ -48,7 +48,7 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
             public Vector ObjetoFila(DetalleOrdenCompra elemento) {
                 Vector salida = new Vector();
                 salida.add(elemento.getMaterial());
-                salida.add(elemento.getMaterial().getDescripcion());
+                salida.add(elemento.getMaterial().getMaterial().getDescripcion());
                 salida.add(elemento.getCantidadPedida());
                 salida.add(elemento.getCantidadRecibida());
                 salida.add(elemento.getEstado());
@@ -102,7 +102,7 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
     public void cargarRecepcion(DetalleOrdenCompra doc) {
         txtCantPedida.setText(doc.getCantidadPedida() + "");
         txtCantRecibida.setText(doc.getCantidadRecibida() + "");
-        txtMaterial.setText(doc.getMaterial().getNombre());
+        txtMaterial.setText(doc.getMaterial().getMaterial().getNombre());
     }
 
     public void limpiarRecepcion() {

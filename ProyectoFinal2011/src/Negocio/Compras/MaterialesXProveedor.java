@@ -35,7 +35,7 @@ public class MaterialesXProveedor implements java.io.Serializable {
     private Material TMateriales;
     //------------------------------------------------------------------------------------------
      @Column(name="PRESENTACION", precision=6)
-    private BigDecimal presentacion;
+    private float presentacion;
      //------------------------------------------------------------------------------------------
 
     public MaterialesXProveedor() {
@@ -88,11 +88,11 @@ public class MaterialesXProveedor implements java.io.Serializable {
         this.precioUnitario = precio;
     }
 
-    public BigDecimal getPresentacion() {
+    public float getPresentacion() {
         return this.presentacion;
     }
 
-    public void setPresentacion(BigDecimal presentacion) {
+    public void setPresentacion(float presentacion) {
         this.presentacion = presentacion;
     }
 

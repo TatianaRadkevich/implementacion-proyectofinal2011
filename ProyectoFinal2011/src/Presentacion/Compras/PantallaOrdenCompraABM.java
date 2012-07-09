@@ -147,14 +147,14 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(DetalleOrdenCompra elemento) {
                 ///////////////////////////////
-                Float precio = elemento.getMaterial().getPrecio((Proveedor) cmbProveedor.getSelectedItem());
+                Float precio = elemento.getMaterial().getMaterial().getPrecio((Proveedor) cmbProveedor.getSelectedItem());
 
                 if (precio == null) {
                     precio = 0f;
                 }
                 ////////////////////////////////
                 Vector fila = new Vector();
-                fila.add((elemento.getMaterial() == null) ? "" : elemento.getMaterial().getNombre());
+                fila.add((elemento.getMaterial() == null) ? "" : elemento.getMaterial().getMaterial().getNombre());
                 fila.add(precio);
                 fila.add(elemento.getCantidadPedida());
                 fila.add(elemento.getCantidadPedida() * precio);
@@ -404,10 +404,15 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             }
         });
 
-        lblUnidad.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblUnidad.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblUnidad.setText(" ");
 
         txtCantidad.setEditable(false);
+        txtCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCantidadActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel7.setText("Cantidad");
@@ -416,8 +421,13 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         jLabel8.setText("Presentación:");
 
         cmbPresentacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPresentacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPresentacionActionPerformed(evt);
+            }
+        });
 
-        lblUnidadaPresentacion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblUnidadaPresentacion.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblUnidadaPresentacion.setText(" ");
 
         javax.swing.GroupLayout pnlDetalleABMLayout = new javax.swing.GroupLayout(pnlDetalleABM);
@@ -750,14 +760,15 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         }
 
         DetalleOrdenCompra doc = new DetalleOrdenCompra();
+        MaterialesXProveedor temp= (MaterialesXProveedor) cmbPresentacion.getSelectedItem();
         doc.setCantidadPedida(Utilidades.parseShort(txtUnidades.getText()));        
-        doc.setMaterial(tmStock.getSeletedObject());
-        doc.setPrecioUnitario(doc.getMaterial().getPrecio((Proveedor) cmbProveedor.getSelectedItem()));
+        doc.setMaterial(temp);
+        doc.setPrecioUnitario(temp.getPrecio());
         doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoPendiente());
         tmOrdenCompra.add(doc);
 
         int auxCant = doc.getCantidadPedida();
-        for (Faltante f : doc.getMaterial().getFaltantes()) {
+        for (Faltante f : doc.getMaterial().getMaterial().getFaltantes()) {
             if (f.getCantidad() <= auxCant) {
                 f.setDetalleOrdenCompra(doc);
                 auxCant = auxCant - f.getCantidad();
@@ -774,25 +785,25 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 //            Material mat = tmStock.getSeletedObject();
 //            tmOrdenCompra.add(new DetalleOrdenCompra(mat, mat.getCantidadFaltante().shortValue()));
 //        }
-
-        if (tmFaltante.getSeletedObject() != null) {
-            Faltante f = tmFaltante.getSeletedObject();
-            f.setDetalleOrdenCompra(new DetalleOrdenCompra(f.getMaterial(), f.getCantidad().shortValue()));
-            tmOrdenCompra.add(f.getDetalleOrdenCompra());
-            updateTablaStock();
-        }
+//
+//        if (tmFaltante.getSeletedObject() != null) {
+//            Faltante f = tmFaltante.getSeletedObject();
+//            f.setDetalleOrdenCompra(new DetalleOrdenCompra(f.getMaterial(), f.getCantidad().shortValue()));
+//            tmOrdenCompra.add(f.getDetalleOrdenCompra());
+//            updateTablaStock();
+//        }
 
     }//GEN-LAST:event_btnAgregarFaltanteActionPerformed
 
     private void btnAgregarTodosFaltantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTodosFaltantesActionPerformed
         // TODO add your handling code here:
-        if (tmStock.getSeletedObject() != null) {
-            for (Faltante f : tmStock.getSeletedObject().getFaltantes()) {
-                f.setDetalleOrdenCompra(new DetalleOrdenCompra(f.getMaterial(), f.getCantidad().shortValue()));
-                tmOrdenCompra.add(f.getDetalleOrdenCompra());
-            }
-            updateTablaStock();
-        }
+//        if (tmStock.getSeletedObject() != null) {
+//            for (Faltante f : tmStock.getSeletedObject().getFaltantes()) {
+//                f.setDetalleOrdenCompra(new DetalleOrdenCompra(f.getMaterial(), f.getCantidad().shortValue()));
+//                tmOrdenCompra.add(f.getDetalleOrdenCompra());
+//            }
+//            updateTablaStock();
+//        }
 
     }//GEN-LAST:event_btnAgregarTodosFaltantesActionPerformed
 
@@ -859,11 +870,34 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                 if(mpp.getProveedor().getId()==proveedor.getId())
                     temp.add(mpp);
             }
+        
+
 
         cmbPresentacion.setModel(new DefaultComboBoxModel(temp.toArray()));
 
         calcularCantidades();
     }//GEN-LAST:event_tbStockMouseClicked
+
+    private void cmbPresentacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPresentacionActionPerformed
+        // TODO add your handling code here:
+        this.obtenerUnidades();
+        
+    }//GEN-LAST:event_cmbPresentacionActionPerformed
+
+    private void obtenerUnidades(){
+        MaterialesXProveedor temp= (MaterialesXProveedor) cmbPresentacion.getSelectedItem();
+        int unidad= (int) (Float.parseFloat(txtCantidad.getText()) / temp.getPresentacion());
+        float var=(Float.parseFloat(txtCantidad.getText()) / temp.getPresentacion())- unidad;
+        if(var>0)
+            txtUnidades.setText((unidad+1) + "" );
+        else
+            txtUnidades.setText(unidad+"");
+    }
+    private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
+        // TODO add your handling code here:
+        this.obtenerUnidades();
+        
+    }//GEN-LAST:event_txtCantidadActionPerformed
 
     /**
      * @param args the command line arguments
