@@ -232,9 +232,9 @@ CREATE TABLE T_DETALLES_ORDEN_COMPRA (
        CANTIDAD_PEDIDA      numeric(3) NOT NULL,
        CANTIDAD_RECIBIDA    numeric(3) NOT NULL,
        ID_ORDEN_COMPRA      numeric(8) NOT NULL,
-       ID_MATERIAL          numeric(3) NULL,
        ID_EDETALLE_ORDEN_COMPRA numeric(2) NOT NULL,
-       PRECIO_UNITARIO      numeric(6,2) NOT NULL
+       PRECIO_UNITARIO      numeric(6,2) NOT NULL,
+       ID_MATERIAL_X_PROVEEDOR numeric(3) NULL
 )
 go
 
@@ -1328,6 +1328,15 @@ go
 
 
 ALTER TABLE T_DETALLES_ORDEN_COMPRA
+       ADD FOREIGN KEY (ID_MATERIAL_X_PROVEEDOR)
+                             REFERENCES T_MATERIALES_X_PROVEEDOR  (
+              ID_MATERIAL_X_PROVEEDOR)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_DETALLES_ORDEN_COMPRA
        ADD FOREIGN KEY (ID_EDETALLE_ORDEN_COMPRA)
                              REFERENCES T_EDETALLE_ORDEN_COMPRA  (
               ID_EDETALLE_ORDEN_COMPRA)
@@ -1340,14 +1349,6 @@ ALTER TABLE T_DETALLES_ORDEN_COMPRA
        ADD FOREIGN KEY (ID_ORDEN_COMPRA)
                              REFERENCES T_ORDENES_COMPRA  (
               ID_ORDEN_COMPRA)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_DETALLES_ORDEN_COMPRA
-       ADD FOREIGN KEY (ID_MATERIAL)
-                             REFERENCES T_MATERIALES  (ID_MATERIAL)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
