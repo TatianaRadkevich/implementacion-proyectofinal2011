@@ -82,7 +82,7 @@ private TablaManager<Proveedor> tablita;
 
 
         /************************Validacion de botones **********************************/
-        btnCancelar.setEnabled(false);
+        btnBaja.setEnabled(false);
         btnModificar.setEnabled(false);
         tablita.addSelectionListener(new ListSelectionListener() {
 
@@ -92,7 +92,7 @@ private TablaManager<Proveedor> tablita;
                     if(tablita.getSeletedObject().getFecBaja()==null)
                         var = true;
 
-                btnCancelar.setEnabled(var);
+                btnBaja.setEnabled(var);
                 btnModificar.setEnabled(var);
             }
         });
@@ -125,7 +125,8 @@ private TablaManager<Proveedor> tablita;
         pnlBotones = new javax.swing.JPanel();
         btnModificar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        btnBaja = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
         lbl_resultado_busqueda = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
 
@@ -233,10 +234,17 @@ private TablaManager<Proveedor> tablita;
             }
         });
 
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+        btnBaja.setText("Eliminar");
+        btnBaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+                btnBajaActionPerformed(evt);
+            }
+        });
+
+        btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
             }
         });
 
@@ -244,13 +252,14 @@ private TablaManager<Proveedor> tablita;
         pnlBotones.setLayout(pnlBotonesLayout);
         pnlBotonesLayout.setHorizontalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBotonesLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotonesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                    .addComponent(btnBaja, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                    .addComponent(btnConsultar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         pnlBotonesLayout.setVerticalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,8 +269,10 @@ private TablaManager<Proveedor> tablita;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnBaja)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(btnConsultar)
+                .addGap(22, 22, 22))
         );
 
         lbl_resultado_busqueda.setText("..");
@@ -286,7 +297,7 @@ private TablaManager<Proveedor> tablita;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_resultado_busqueda))
         );
@@ -367,18 +378,32 @@ private TablaManager<Proveedor> tablita;
         this.actualizarTabla();
 }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        try {
-            new GestorProveedorBaja(tablita.getSeletedObject()).iniciarCU();
-        } catch (Exception ex) {
-            Mensajes.mensajeErrorGenerico(ex.getMessage());
-        }
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         this.dispose();       
 }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
+        // TODO add your handling code here:
+        if (tbProveedores.getSelectedRow() == -1) {
+            Mensajes.mensajeErrorGenerico("Debe seleccion un empleado");
+            return;
+        }
+
+        PantallaProveedorABM.iniciarCancelarEmpleado(this, tablita.getSeletedObject());
+        this.actualizarTabla();
+//        this.iniciarBusqueda();
+    }//GEN-LAST:event_btnBajaActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        // TODO add your handling code here:
+
+//        if (tbEmpleados.getSelectedRow() == -1) {
+//            Mensajes.mensajeErrorGenerico("Debe seleccion un empleado");
+//            return;
+//        }
+//        PantallaABMEmpleado.iniciarVerEmpleado(this, tmEmpleado.getSeletedObject());
+    }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**
     * @param args the command line arguments
@@ -398,8 +423,9 @@ private TablaManager<Proveedor> tablita;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBaja;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;

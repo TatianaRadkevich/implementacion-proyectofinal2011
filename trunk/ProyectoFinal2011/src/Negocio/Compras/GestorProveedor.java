@@ -16,7 +16,7 @@ import Presentacion.Compras.PantallaProveedorABM;
 public abstract class GestorProveedor {
 
 
-    protected PantallaProveedorABM interfaz;
+    private PantallaProveedorABM interfaz;
     protected Proveedor proveedor;
 
     public abstract void iniciarCU();
@@ -24,8 +24,8 @@ public abstract class GestorProveedor {
 
     public void finalizarCU()
     {
-        interfaz.setVisible(false);
-        interfaz.dispose();
+        getInterfaz().setVisible(false);
+        getInterfaz().dispose();
     }
 
     public Proveedor getProveedor() {
@@ -34,4 +34,21 @@ public abstract class GestorProveedor {
 
 
     public abstract String mensajeResultado(String nombreProveedor);
+
+    /**
+     * @return the interfaz
+     */
+    public PantallaProveedorABM getInterfaz() {
+        return interfaz;
+    }
+
+    /**
+     * @param interfaz the interfaz to set
+     */
+    public void setInterfaz(PantallaProveedorABM interfaz) {
+        this.interfaz = interfaz;
+    }
+
+    
+
 }

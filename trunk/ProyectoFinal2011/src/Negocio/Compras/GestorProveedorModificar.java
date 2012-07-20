@@ -26,10 +26,10 @@ public class GestorProveedorModificar extends GestorProveedor{
          if(proveedor==null)
             throw new RuntimeException("GestorProveedorModificar: Se debe definir el Proveedor a modificar");
 
-        interfaz=new PantallaProveedorABM(this);
-        interfaz.cargar(proveedor);
-        interfaz.setTitle("Modificar Proveedor");
-        interfaz.setVisible(true);
+        setInterfaz(new PantallaProveedorABM(this));
+        getInterfaz().cargar(proveedor);
+        getInterfaz().setTitle("Modificar Proveedor");
+        getInterfaz().setVisible(true);
     }
 
     private void validar(Proveedor p) throws ExceptionGestor

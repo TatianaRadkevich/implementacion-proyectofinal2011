@@ -16,6 +16,7 @@ import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Compras.GestorProveedor;
 import Negocio.Compras.GestorProveedorBaja;
 import Negocio.Exceptiones.TipoDatoException;
+import Negocio.Produccion.GestorBajaProducto;
 import Negocio.Ventas.Cliente;
 import Presentacion.Mensajes;
 import Presentacion.Utilidades;
@@ -23,6 +24,7 @@ import Presentacion.ValidarTexbox;
 import Presentacion.ZLinkers.ZLDomicilio;
 import Presentacion.ZLinkers.ZLObject;
 import Presentacion.ZLinkers.ZLTextField;
+import java.awt.Window;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,6 +47,7 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
         this(null, true);
         gestor = g;
 
+        gestor.setInterfaz(this);
         /////////// Precargas Necesarias //////////
         habilitarBaja(false,false,null,"");
         cargarValidaciones();
@@ -544,8 +547,8 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
 
     private void txtMotivoBajaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMotivoBajaFocusLost
         // TODO add your handling code here:
-        if(txtMotivoBaja.getText().compareTo("")!=0)
-            gestor.getProveedor().setMotivoBaja(txtMotivoBaja.getText());
+//        if(txtMotivoBaja.getText().compareTo("")!=0)
+//            gestor.getProveedor().setMotivoBaja(txtMotivoBaja.getText());
     }//GEN-LAST:event_txtMotivoBajaFocusLost
 
     /**
@@ -593,7 +596,23 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 
-     public void vaciar(){
+     public void iniciarBaja(){
+         
+        Utilidades.habilitarPanel(pnlCliente, false);
+        Utilidades.habilitarPanel(pnlResponsable, false);
+        Utilidades.habilitarPanel(pnlDomicilio, false);
+        txtFechaBaja.setText(Utilidades.parseFecha(new Date()));
+        txtMotivoBaja.setEnabled(true);
+        cargar(gestor.getProveedor());
 
+    }
+     
+      public static void iniciarCancelarEmpleado(Window parent, Proveedor e) {
+
+        PantallaProveedorABM i = new PantallaProveedorABM(new GestorProveedorBaja(e));
+        i.setTitle("Registar Baja Proveedor");
+        i.iniciarBaja();
+        i.pack();
+        i.setVisible(true);
     }
 }

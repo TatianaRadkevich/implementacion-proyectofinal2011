@@ -45,7 +45,10 @@ public class GestorOrdenCompraAlta extends GestorOrdenCompra{
     public void ejecutarCU(OrdenCompra oc) throws ExceptionGestor {
         oc.setEstado(EstadoOrdenCompraBD.getEstadoPendiente());
         for(DetalleOrdenCompra doc:oc.getDetalle())
+        {
             doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoPendiente());
+            doc.getMaterial().getMaterial().setEsPendiente(true);
+        }
         
         oc.setFecGeneracion(Utilidades.getFechaActual());
 

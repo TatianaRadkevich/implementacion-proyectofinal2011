@@ -34,32 +34,49 @@ public class Material implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_MATERIAL", unique = true, nullable = false, precision = 3, scale = 0)
     private Short idMaterial;
+    //-----------------------------------------------------------------------------------
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_UNIDAD_MEDIDA")//, nullable=false)
     private UnidadMedida TUnidadesMedida;
+    //-----------------------------------------------------------------------------------
     @Column(name = "NOMBRE", nullable = true, length = 50)
     private String nombre;
+    //-----------------------------------------------------------------------------------
     @Column(name = "DESCRIPCION", length = 200)
     private String descripcion;
+    //-----------------------------------------------------------------------------------
     @Column(name = "DIAMETRO", precision = 6, scale = 0)
     private Integer diametro;
+    //-----------------------------------------------------------------------------------
     @Column(name = "ES_MATERIA_PRIMA", nullable = true)
     private boolean esMateriaPrima;
+    //-----------------------------------------------------------------------------------
     @Column(name = "LOGITUD", precision = 3, scale = 0)
     private Short logitud;
+    //-----------------------------------------------------------------------------------
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_BAJA", length = 23)
     private Date fecBaja;
+    //-----------------------------------------------------------------------------------
     @Column(name = "MOTIVO_BAJA", length = 200)
     private String motivoBaja;
+    //-----------------------------------------------------------------------------------
     @Column(name = "STOCK_ACTUAL", nullable = true, precision = 3, scale = 0)
     private Short stockActual;
+    //-----------------------------------------------------------------------------------
     @Column(name = "STOCK_MINIMO", nullable = true, precision = 3, scale = 0)
     private Short stockMinimo;
+    //-----------------------------------------------------------------------------------
     @Column(name = "STOCK_RESERVADO", nullable = true, precision = 3, scale = 0)
     private Short stockReservado=new Short("0");
+    //-----------------------------------------------------------------------------------
     @Column(name = "CODIGO", nullable = true, length = 6)
     private String codigo;
+    //-----------------------------------------------------------------------------------
+     @Column(name="ES_PENDIENTE")
+    private Boolean esPendiente;
+
+    //-----------------------------------------------------------------------------------
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<MaterialesXProveedor> TMaterialesXProveedors = new HashSet<MaterialesXProveedor>(0);
@@ -69,10 +86,9 @@ public class Material implements java.io.Serializable {
 //    private Set<DetalleEtapaProduccion> TDetallesEtapas = new HashSet<DetalleEtapaProduccion>(0);
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
     private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
-//    private Set<DetalleOrdenCompra> TDetallesOrdenCompras = new HashSet<DetalleOrdenCompra>(0);
 
     public Material() {
+        this.esPendiente=false;
     }
 
     public Material(Short idMaterial, String nombre, boolean esMateriaPrima, Short stockActual, Short stockMinimo, Short stockReservado, String codigo) {
@@ -83,6 +99,7 @@ public class Material implements java.io.Serializable {
         this.stockMinimo = stockMinimo;
         this.stockReservado = stockReservado;
         this.codigo = codigo;
+        this.esPendiente=false;
     }
 
     public Material(Short idMaterial, String nombre, String descripcion, Integer diametro, boolean esMateriaPrima, Short logitud, Date fecBaja, String motivoBaja, Short stockActual, Short stockMinimo, Short stockReservado, String codigo, Set<MaterialesXProveedor> TMaterialesXProveedors) {
@@ -99,6 +116,7 @@ public class Material implements java.io.Serializable {
         this.stockReservado = stockReservado;
         this.codigo = codigo;
         this.TMaterialesXProveedors = TMaterialesXProveedors;
+        this.esPendiente=false;
     }
 
     public Short getIdMaterial() {
@@ -289,6 +307,14 @@ public class Material implements java.io.Serializable {
         return new ArrayList<Faltante>(TFaltanteses);
     }
 
+
+    public Boolean getEsPendiente() {
+        return this.esPendiente;
+    }
+
+    public void setEsPendiente(Boolean esPendiente) {
+        this.esPendiente = esPendiente;
+    }
 //    public void setFaltantes(List<Faltante> faltantes) {
 //        TFaltanteses.clear();
 //        for (Faltante f : faltantes) {

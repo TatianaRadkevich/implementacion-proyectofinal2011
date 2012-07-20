@@ -21,12 +21,12 @@ public class ProveedorBD {
     }
 
     public static void guardar(Proveedor p) {
-        HibernateUtil.guardarModificarObjeto(p.getDomicilio());
+        HibernateUtil.guardarObjeto(p.getDomicilio());
         HibernateUtil.guardarObjeto(p);
     }
 
     public static void modificar(Proveedor p) {
-        HibernateUtil.guardarModificarObjeto(p.getDomicilio());
+        HibernateUtil.modificarObjeto(p.getDomicilio());
         HibernateUtil.modificarObjeto(p);
     }
 

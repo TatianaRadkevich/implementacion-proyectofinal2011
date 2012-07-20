@@ -27,12 +27,12 @@ public class GestorProveedorBaja extends GestorProveedor{
         if(proveedor==null)
             throw new RuntimeException("GestorProveedorEliminar: Se debe definir el proveedor a eliminar");
 
-        interfaz=new PantallaProveedorABM(this);
-        interfaz.cargar(proveedor);
-        interfaz.habilitarBaja(true, true, Utilidades.getFechaActual(), "");
-        interfaz.habilitarCarga(false);
-        interfaz.setTitle("Eliminar Proveedor");
-        interfaz.setVisible(true);
+        setInterfaz(new PantallaProveedorABM(this));
+        getInterfaz().cargar(proveedor);
+        getInterfaz().habilitarBaja(true, true, Utilidades.getFechaActual(), "");
+        getInterfaz().habilitarCarga(false);
+        getInterfaz().setTitle("Eliminar Proveedor");
+        getInterfaz().setVisible(true);
     }
 
     private void validar(Proveedor p) throws ExceptionGestor
