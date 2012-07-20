@@ -33,9 +33,9 @@ public class HibernateUtil {
             // Create the SessionFactory from standard
             sessionFactory = addClases(new AnnotationConfiguration()).configure().buildSessionFactory();
             session = sessionFactory.openSession();
-            sessionQuery = sessionFactory.openSession();
+            //sessionQuery = sessionFactory.openSession();
             session.setFlushMode(FlushMode.COMMIT);
-            sessionQuery.setFlushMode(FlushMode.MANUAL);            
+            //sessionQuery.setFlushMode(FlushMode.MANUAL);            
 
         } catch (Throwable ex) {
             // Log the exception.
@@ -107,7 +107,7 @@ public class HibernateUtil {
     }
 
     public static List ejecutarConsulta(String HQL) {
-          Query q=sessionQuery.createQuery(HQL);         
+          Query q=session.createQuery(HQL);         
           return q.list();
     }
 }
