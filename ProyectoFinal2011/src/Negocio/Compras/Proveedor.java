@@ -247,7 +247,7 @@ public class Proveedor implements java.io.Serializable {
       try{
           TDomicilios.validarOk();
       }catch(TipoDatoException ex){
-      throw new TipoDatoException(mje);}
+        throw new TipoDatoException(mje);}
 
 
 

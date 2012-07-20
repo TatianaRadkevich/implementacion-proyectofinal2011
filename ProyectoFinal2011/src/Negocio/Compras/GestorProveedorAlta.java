@@ -23,10 +23,10 @@ public class GestorProveedorAlta extends GestorProveedor{
 //        proveedor=new Proveedor();
 
         proveedor=new Proveedor();
-        interfaz=new PantallaProveedorABM(this);
+        setInterfaz(new PantallaProveedorABM(this));
 
-        interfaz.setTitle("Registrar Proveedor");
-        interfaz.setVisible(true);
+        getInterfaz().setTitle("Registrar Proveedor");
+        getInterfaz().setVisible(true);
     }
 
     private void validar(Proveedor p) throws ExceptionGestor

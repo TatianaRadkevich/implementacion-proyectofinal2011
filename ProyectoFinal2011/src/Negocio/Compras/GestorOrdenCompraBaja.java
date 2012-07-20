@@ -51,7 +51,11 @@ public class GestorOrdenCompraBaja extends GestorOrdenCompra{
 
         oc.setEstado(EstadoOrdenCompraBD.getEstadoCancelada());
         for(DetalleOrdenCompra doc:oc.getDetalle())
+        {
             doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoCancelada());
+            doc.getMaterial().getMaterial().setEsPendiente(false);
+        }
+
         OrdenCompraBD.modificar(oc);
     }
 

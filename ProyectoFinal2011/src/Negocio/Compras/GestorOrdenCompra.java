@@ -4,12 +4,14 @@
  */
 package Negocio.Compras;
 
+import BaseDeDatos.Compras.MaterialBD;
 import BaseDeDatos.Compras.ProveedorBD;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Compras.OrdenCompraBD;
 import Negocio.Deposito.Faltante;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Compras.PantallaOrdenCompraABM;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,6 +54,11 @@ public abstract class GestorOrdenCompra {
     }
 
     public List<Material> listarMateriales() {
-        return HibernateUtil.ejecutarConsulta("FROM Material ORDER BY nombre");
+                return HibernateUtil.ejecutarConsulta("FROM Material where esPendiente=False ORDER BY nombre");
+    }
+
+    public void eliminarDetalle(DetalleOrdenCompra seletedObject) {
+        seletedObject.getMaterial().getMaterial().setEsPendiente(false);
+        MaterialBD.modificar(seletedObject.getMaterial().getMaterial());
     }
 }

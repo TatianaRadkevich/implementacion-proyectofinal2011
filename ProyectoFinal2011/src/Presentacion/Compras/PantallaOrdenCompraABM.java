@@ -109,7 +109,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                 salida.add(elemento.getStockReservado());
                 salida.add(elemento.getStockDisponible());
                 salida.add(elemento.getStockMinimo());
-                salida.add(elemento.getCantidadFaltante());
+                salida.add(elemento.getCantidadRequerida());
                 return salida;
             }
 
@@ -709,6 +709,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
     private void btnEliminarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarDetalleActionPerformed
         // TODO add your handling code here:
         if (tmOrdenCompra.getSeletedObject() != null) {
+            gestor.eliminarDetalle(tmOrdenCompra.getSeletedObject());
             tmOrdenCompra.removeSelectedRow().removeFaltantes();
             updateTablaStock();
         }
