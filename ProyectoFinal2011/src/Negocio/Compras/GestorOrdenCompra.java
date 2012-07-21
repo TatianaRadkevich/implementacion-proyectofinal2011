@@ -37,7 +37,7 @@ public abstract class GestorOrdenCompra {
     }
 
     public List<Proveedor> getProveedores() {
-        return ProveedorBD.listarProveedores();
+        return ProveedorBD.listarProveedoresDisponibles();
     }
 
     public int getCodigo() {
