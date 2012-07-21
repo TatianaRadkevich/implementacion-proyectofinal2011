@@ -49,6 +49,8 @@ public abstract class GestorProveedor {
         this.interfaz = interfaz;
     }
 
+    public boolean existeProveedor(String text) { return false;}
+
     
 
 }

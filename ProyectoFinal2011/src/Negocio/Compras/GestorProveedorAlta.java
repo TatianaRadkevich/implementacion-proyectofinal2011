@@ -9,6 +9,7 @@ import BaseDeDatos.Compras.ProveedorBD;
 import Negocio.Compras.Proveedor;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Compras.PantallaProveedorABM;
+import java.util.List;
 
 /**
  *
@@ -53,5 +54,14 @@ public class GestorProveedorAlta extends GestorProveedor{
         return "El proveedor "+nombreProveedor+ "\nha sido dado de registrado exitosamente";
     }
 
+    @Override
+    public boolean existeProveedor(String cuit){
+        List<Proveedor> prov= ProveedorBD.getProveedor(cuit);
+        if(prov.isEmpty())
+            return false;
+        else
+            return true;
+
+    }
 
 }
