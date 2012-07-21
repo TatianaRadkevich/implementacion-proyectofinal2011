@@ -63,10 +63,11 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         habilitarCarga(true);
         IniciarTablas();
         cargarCombos();
+        cmbProveedor.setSelectedIndex(-1);
         cargarValidaciones();
         btnAgregarFaltante.setVisible(false);
         btnAgregarTodosFaltantes.setVisible(false);
-       // pnlFlatante.setVisible(false);
+        pnlFlatante.setVisible(false);
         tmStock.setDatos(gestor.listarMateriales());
     }
 
@@ -381,6 +382,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
         pnlDetalleABM.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        txtUnidades.setEnabled(false);
         txtUnidades.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtUnidadesKeyReleased(evt);
@@ -407,7 +409,6 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         lblUnidad.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblUnidad.setText(" ");
 
-        txtCantidad.setEditable(false);
         txtCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCantidadActionPerformed(evt);
@@ -420,7 +421,6 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel8.setText("Presentación:");
 
-        cmbPresentacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbPresentacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbPresentacionActionPerformed(evt);
@@ -704,6 +704,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             return;
         }
         habilitarCargaDetalle(true);
+        this.cmbProveedor.setEnabled(false);
     }//GEN-LAST:event_btnNuevoDetalleActionPerformed
 
     private void btnEliminarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarDetalleActionPerformed
@@ -747,6 +748,11 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
     private void btnDetalleAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleAceptarActionPerformed
         // TODO add your handling code here:
 
+        if(cmbPresentacion.getSelectedIndex() == -1)
+        {
+            Mensajes.mensajeErrorGenerico("Debe seleccionar una presentacion");
+            return;
+        }
         if(tmStock.getSeletedObject()==null)
         {
             Mensajes.mensajeErrorGenerico("Debe seleccionar un material");
@@ -850,19 +856,15 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                     return;
                 }
         Material m= tmStock.getSeletedObject();
-         List<MaterialesXProveedor> lala=m.getMaterialXProveedor();
-       this.lblUnidad.setText(m.getUnidadMedida().getNombre());
-       this.lblUnidadaPresentacion.setText(m.getUnidadMedida().getNombre());
-       txtUnidades.setEditable(true);
+           this.lblUnidad.setText(m.getUnidadMedida().getNombre());
+           this.lblUnidadaPresentacion.setText(m.getUnidadMedida().getNombre());
+           txtUnidades.setEditable(true);
         int cant=0;
-        if(m.getCantidadFaltante()>0){
-            cant=m.getCantidadFaltante();
-        }
-        else
-        {
-            if(m.getStockDisponible()<= m.getStockMinimo())
-                cant= m.getStockMinimo()-m.getStockDisponible() + m.getCantidadFaltante();
-        }
+       if(m.getStockDisponible()<= m.getStockMinimo())
+           cant= m.getStockMinimo()-m.getStockDisponible() + m.getCantidadRequerida();
+       else
+           cant= m.getCantidadRequerida();
+        
         txtCantidad.setText(cant+"");
 
         List<MaterialesXProveedor> materialProveedorPresentacion=m.getMaterialXProveedor();
@@ -875,8 +877,8 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
 
         cmbPresentacion.setModel(new DefaultComboBoxModel(temp.toArray()));
+        this.obtenerUnidades();
 
-        calcularCantidades();
     }//GEN-LAST:event_tbStockMouseClicked
 
     private void cmbPresentacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPresentacionActionPerformed

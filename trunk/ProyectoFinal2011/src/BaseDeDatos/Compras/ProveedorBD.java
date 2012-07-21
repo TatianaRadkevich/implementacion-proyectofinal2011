@@ -19,6 +19,9 @@ public class ProveedorBD {
     public static List<Proveedor> listarProveedores() {
         return HibernateUtil.ejecutarConsulta("FROM Proveedor");
     }
+    public static List<Proveedor> listarProveedoresDisponibles() {
+        return HibernateUtil.ejecutarConsulta("FROM Proveedor where fecBaja is null");
+    }
 
     public static void guardar(Proveedor p) {
         HibernateUtil.guardarObjeto(p.getDomicilio());
