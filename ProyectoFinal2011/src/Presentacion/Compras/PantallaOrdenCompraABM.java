@@ -69,6 +69,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         btnAgregarTodosFaltantes.setVisible(false);
         pnlFlatante.setVisible(false);
         tmStock.setDatos(gestor.listarMateriales());
+        tbStock.setEnabled(false);
     }
 
     private void IniciarTablas() {
@@ -823,6 +824,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
      
 
         try{
+            tbStock.setEnabled(true);
             tmStock.updateTabla();
             if (proveedor.getMateriales().isEmpty()) {
             Mensajes.mensajeInformacion("El proveedor  seleccionado no tiene asignado ningún material");
@@ -831,6 +833,8 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             this.updateTablaStock();
             return;
              }
+
+            tmStock.setDatos(new ArrayList<Material>());
             List<Material> materialProveedor=proveedor.getMateriales();
             List<Material> material=gestor.listarMateriales();
             List<Material> temp=new ArrayList<Material>();
@@ -838,8 +842,11 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                 if(materialProveedor.contains(m))
                     temp.add(m);
             }
+
             tmStock.setDatos(temp);
-            tmStock.updateTabla();
+            this.updateTablaStock();
+//            tmStock.updateTabla();
+//            tbStock.repaint();
 
 
 
@@ -849,6 +856,13 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
     private void tbStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbStockMouseClicked
         // TODO add your handling code here:
+        if(cmbProveedor.getSelectedItem()==null)
+        {
+            Mensajes.mensajeInformacion("Debe seleccionar un proveedor");
+            tmStock.setSelectedRow(-1);
+            return;
+            
+        }
         if (tmStock.getSeletedObject() == null) {
                     lblUnidad.setText("");
                     txtCantidad.setText("");
