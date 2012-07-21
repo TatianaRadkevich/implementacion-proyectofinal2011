@@ -37,17 +37,17 @@ public class PnlDomicilio extends javax.swing.JPanel {
 
     public PnlDomicilio() {
         initComponents();
-        
+
         cmbProvincia.setEnabled(false);
         cmbLocalidad.setEnabled(false);
         cmbBarrio.setEnabled(false);
 
-        this.domicilio = new Domicilio();        
+        this.domicilio = new Domicilio();
         link = new ZLObject<Domicilio>(Domicilio.class, domicilio);
-        link.add("pais",new ZLComboBox(cmbPais));
-        link.add("provincia",new ZLComboBox(cmbProvincia));
-        link.add("localidad",new ZLComboBox(cmbLocalidad));
-        link.add("barrio",new ZLComboBox(cmbBarrio));
+        link.add("pais", new ZLComboBox(cmbPais));
+        link.add("provincia", new ZLComboBox(cmbProvincia));
+        link.add("localidad", new ZLComboBox(cmbLocalidad));
+        link.add("barrio", new ZLComboBox(cmbBarrio));
         link.add("calle", new ZLTextField(txtCalle));
         link.add("depto", new ZLTextField(txtDepto));
         link.add("numero", new ZLTextField(txtNumero));
@@ -75,7 +75,7 @@ public class PnlDomicilio extends javax.swing.JPanel {
 
     }
 
-    public Domicilio getDomicilio()throws NegocioException {
+    public Domicilio getDomicilio() throws NegocioException {
 
 //            domicilio.setCalle(txtCalle.getText());
 //            domicilio.setDepto(txtDepto.getText());
@@ -85,7 +85,7 @@ public class PnlDomicilio extends javax.swing.JPanel {
 //            domicilio.setTLocalidades((Localidad) cmbLocalidad.getSelectedItem());
 //            domicilio.setTPaises((Pais) cmbPais.getSelectedItem());
 //            domicilio.setTProvincias((Provincia) cmbProvincia.getSelectedItem());
-            link.save();
+        link.save();
 
 //        } catch (TipoDatoException ex) {
 //            return null;
@@ -98,7 +98,7 @@ public class PnlDomicilio extends javax.swing.JPanel {
             setDefaul();
             return;
         }
-        domicilio=dom;
+        domicilio = dom;
         link.setObjeto(domicilio);
         link.load();
 //        cmbProvincia.setEnabled(true);
@@ -343,7 +343,7 @@ public class PnlDomicilio extends javax.swing.JPanel {
         Object o = cmbPais.getSelectedItem();
         if (o != null && o instanceof Pais) {
             Utilidades.comboCargar(cmbProvincia, GestorProvincia.listarProvincias((Pais) o));
-            cmbProvincia.setEnabled(true);
+            cmbProvincia.setEnabled(true && this.isEnabled());
             if (cmbProvincia.getItemCount() == 0) {
                 cmbProvincia.addItem("<vacio>");
                 cmbProvincia.setSelectedIndex(0);
@@ -363,7 +363,7 @@ public class PnlDomicilio extends javax.swing.JPanel {
         Object o = cmbProvincia.getSelectedItem();
         if (o != null && o instanceof Provincia) {
             Utilidades.comboCargar(cmbLocalidad, GestorLocalidad.listarLocalidades((Provincia) o));
-            cmbLocalidad.setEnabled(true);
+            cmbLocalidad.setEnabled(true && this.isEnabled());
 
             if (cmbLocalidad.getItemCount() == 0) {
                 cmbLocalidad.addItem("<vacio>");
@@ -384,7 +384,7 @@ public class PnlDomicilio extends javax.swing.JPanel {
         Object o = cmbLocalidad.getSelectedItem();
         if (o != null && o instanceof Localidad) {
             Utilidades.comboCargar(cmbBarrio, GestorBarrio.listarBarrios((Localidad) o));
-            cmbBarrio.setEnabled(true);
+            cmbBarrio.setEnabled(true && this.isEnabled());
             if (cmbBarrio.getItemCount() == 0) {
                 cmbBarrio.addItem("<vacio>");
                 cmbBarrio.setSelectedIndex(0);
