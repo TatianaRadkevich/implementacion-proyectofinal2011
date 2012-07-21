@@ -56,4 +56,10 @@ public class ProveedorBD {
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 
+    public static List<Proveedor> getProveedor(String cuit) {
+
+        String HQL= "FROM Proveedor where cuit like '"+ cuit+"'";
+        return HibernateUtil.ejecutarConsulta(HQL);
+    }
+
 }
