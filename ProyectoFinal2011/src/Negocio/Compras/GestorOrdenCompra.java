@@ -57,11 +57,7 @@ public abstract class GestorOrdenCompra {
                 return HibernateUtil.ejecutarConsulta("FROM Material where esPendiente=False ORDER BY nombre");
     }
 
-    public void eliminarDetalle(DetalleOrdenCompra seletedObject) {
-
-
-
-           }
+    public void eliminarDetalle(DetalleOrdenCompra seletedObject) {          }
 
 
 }

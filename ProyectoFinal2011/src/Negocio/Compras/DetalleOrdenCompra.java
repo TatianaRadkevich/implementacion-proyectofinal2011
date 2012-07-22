@@ -42,10 +42,10 @@ public class DetalleOrdenCompra implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EDETALLE_ORDEN_COMPRA", nullable = true)
     private EstadoDetalleOrdenCompra estado;
-    @Column(name = "CANTIDAD_PEDIDA", nullable = true, precision = 3, scale = 0)
-    private Short cantidadPedida;
-    @Column(name = "CANTIDAD_RECIBIDA", nullable = true, precision = 3, scale = 0)
-    private Short cantidadRecibida=Short.parseShort("0");
+    @Column(name = "CANTIDAD_PEDIDA", nullable = true, precision = 50, scale = 0)
+    private int cantidadPedida;
+    @Column(name = "CANTIDAD_RECIBIDA", nullable = true, precision = 50, scale = 0)
+    private int cantidadRecibida=Short.parseShort("0");
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TDetallesOrdenCompra")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
@@ -53,12 +53,12 @@ public class DetalleOrdenCompra implements java.io.Serializable {
     public DetalleOrdenCompra() {
     }
 
-    public DetalleOrdenCompra(MaterialesXProveedor material, Short cantidad) {
+    public DetalleOrdenCompra(MaterialesXProveedor material, int cantidad) {
         this.TMateriales = material;
         this.cantidadPedida = cantidad;
     }
 
-    public DetalleOrdenCompra(int idDetalleOrdenCompra, OrdenCompra TOrdenesCompra, short cantidadPedida, short cantidadRecibida) {
+    public DetalleOrdenCompra(int idDetalleOrdenCompra, OrdenCompra TOrdenesCompra, int cantidadPedida, short cantidadRecibida) {
         this.idDetalleOrdenCompra = idDetalleOrdenCompra;
         this.TOrdenesCompra = TOrdenesCompra;
         this.cantidadPedida = cantidadPedida;
@@ -98,19 +98,19 @@ public class DetalleOrdenCompra implements java.io.Serializable {
         this.TMateriales = TMateriales;
     }
 
-    public Short getCantidadPedida() {
+    public Integer getCantidadPedida() {
         return this.cantidadPedida;
     }
 
-    public void setCantidadPedida(Short cantidadPedida) {
+    public void setCantidadPedida(int cantidadPedida) {
         this.cantidadPedida = cantidadPedida;
     }
 
-    public Short getCantidadRecibida() {
+    public Integer getCantidadRecibida() {
         return this.cantidadRecibida;
     }
 
-    public void setCantidadRecibida(Short cantidadRecibida) {
+    public void setCantidadRecibida(Integer cantidadRecibida) {
         if(cantidadRecibida>cantidadPedida)
             throw new RuntimeException("La cantidad recibida no puede ser mayor que la cantidad pedida");
         

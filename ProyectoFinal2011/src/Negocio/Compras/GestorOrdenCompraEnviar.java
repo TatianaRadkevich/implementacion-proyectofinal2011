@@ -59,8 +59,7 @@ public class GestorOrdenCompraEnviar extends GestorOrdenCompra {
     public void ejecutarCU(OrdenCompra oc) throws ExceptionGestor {
      
         validar(oc);
-        oc.setEstado(EstadoOrdenCompraBD.getEstadoEnviada());      
-
+        oc.setEstado(EstadoOrdenCompraBD.getEstadoEnviada());   
         OrdenCompraBD.modificar(oc);
     }
     

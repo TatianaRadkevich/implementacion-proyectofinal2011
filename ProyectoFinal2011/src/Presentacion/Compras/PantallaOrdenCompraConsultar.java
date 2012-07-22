@@ -580,6 +580,8 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
 
+        cargarTmOrdenes();
+        tbOrdenes.clearSelection();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -587,10 +589,12 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
             if(!this.verificarEstado())
                 return;
             new GestorOrdenCompraBaja(tmOrdenes.getSeletedObject()).iniciarCU();
-            cargarTmOrdenes();
+            
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
+        cargarTmOrdenes();
+        tbOrdenes.clearSelection();
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -609,6 +613,8 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
+        cargarTmOrdenes();
+        tbOrdenes.clearSelection();
 
     }//GEN-LAST:event_btnRegistrarEnvioActionPerformed
 

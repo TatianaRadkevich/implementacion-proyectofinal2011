@@ -833,25 +833,41 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             return;
         }
 
-        DetalleOrdenCompra doc = new DetalleOrdenCompra();
-        MaterialesXProveedor temp= (MaterialesXProveedor) cmbPresentacion.getSelectedItem();
-        doc.setCantidadPedida(Utilidades.parseShort(txtUnidades.getText()));        
-        doc.setMaterial(temp);
-        doc.setPrecioUnitario(temp.getPrecio());
-        doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoPendiente());
-        
-        tmOrdenCompra.add(doc);
-
-        int auxCant = doc.getCantidadPedida();
-        for (Faltante f : doc.getMaterial().getMaterial().getFaltantes()) {
-            if (f.getCantidad() <= auxCant) {
-                f.setDetalleOrdenCompra(doc);
-                auxCant = auxCant - f.getCantidad();
+        DetalleOrdenCompra det=existeMaterial();
+        if(det!=null)
+        {
+            if(Mensajes.mensajeConfirmacionGenerico("El material y ha sido ingresado,"
+                    + "\n ¿Desea agregar la cantidad ingresada al material?"))
+            {
+                det.setCantidadPedida(det.getCantidadPedida() + Utilidades.parseShort(txtUnidades.getText()));
+                tmOrdenCompra.updateTabla();
             }
         }
+        else
+        {
+            DetalleOrdenCompra doc = new DetalleOrdenCompra();
+            MaterialesXProveedor temp= (MaterialesXProveedor) cmbPresentacion.getSelectedItem();
+            doc.setCantidadPedida(Utilidades.parseShort(txtUnidades.getText()));
+            doc.setMaterial(temp);
+            doc.setPrecioUnitario(temp.getPrecio());
+            doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoPendiente());
+
+            tmOrdenCompra.add(doc);
+        }
+        
+
+//        int auxCant = doc.getCantidadPedida();
+//        for (Faltante f : doc.getMaterial().getMaterial().getFaltantes()) {
+//            if (f.getCantidad() <= auxCant) {
+//                f.setDetalleOrdenCompra(doc);
+//                auxCant = auxCant - f.getCantidad();
+//            }
+//        }
 
         limpiarCargaDetalle();
         habilitarCargaDetalle(false);
+        btnNuevoDetalle.setEnabled(true);
+        tbStock.clearSelection();
     }//GEN-LAST:event_btnDetalleAceptarActionPerformed
 
     private void btnAgregarFaltanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFaltanteActionPerformed
@@ -1048,5 +1064,15 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
     public void cargarFechaBaja() {
         txtFechaBaja.setText(Utilidades.parseFecha(Utilidades.getFechaActual()));
+    }
+
+    private DetalleOrdenCompra existeMaterial() {
+        Material materia=tmStock.getSeletedObject();
+
+        for(DetalleOrdenCompra det:tmOrdenCompra.getDatos()){
+            if(det.getMaterial().getMaterial().equals(materia))
+                return det;
+        }
+        return null;
     }
 }
