@@ -5,9 +5,11 @@
 
 package Negocio.Compras;
 
+import BaseDeDatos.Compras.MaterialBD;
 import BaseDeDatos.Compras.OrdenCompraBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Compras.PantallaOrdenCompraABM;
+import Presentacion.Mensajes;
 
 /**
  *
@@ -27,9 +29,10 @@ public class GestorOrdenCompraModificar extends GestorOrdenCompra{
             throw new RuntimeException("GestorOrdenCompraModificar: Se debe definir la orden a modificar");
 
         interfaz.cargar(ordenCompra);
+        interfaz.habilitarPanelBaja(false);
         interfaz.setTitle("Modificar Orden de Compra");
         interfaz.setVisible(true);
-        interfaz.habilitarPanelBaja(false);
+        
     }
 
        private void validar(OrdenCompra oc) throws ExceptionGestor
@@ -47,6 +50,12 @@ public class GestorOrdenCompraModificar extends GestorOrdenCompra{
 
         validar(oc);
         OrdenCompraBD.modificar(oc);
+        for(DetalleOrdenCompra doc:oc.getDetalle())
+        {
+            doc.getMaterial().getMaterial().setEsPendiente(true);
+            MaterialBD.modificar(doc.getMaterial().getMaterial());
+        }
+        Mensajes.mensajeInformacion("La Orden de Compra \"Nro. "+oc.getId()+"\" ha sido modificado exitosamente.");
     }
 
 }

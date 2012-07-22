@@ -30,8 +30,9 @@ public class GestorOrdenCompraAlta extends GestorOrdenCompra{
     public void iniciarCU() {
         interfaz.setTitle("Generar Orden de Compra");
         interfaz.setNro(getCodigo()+1);
-        interfaz.setVisible(true);
         interfaz.habilitarPanelBaja(false);
+        interfaz.setVisible(true);
+        
     }
 
      private void validar(OrdenCompra oc) throws ExceptionGestor

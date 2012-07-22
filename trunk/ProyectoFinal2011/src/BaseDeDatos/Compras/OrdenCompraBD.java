@@ -60,14 +60,21 @@ public class OrdenCompraBD {
                 + ((hasta==null)?"":" AND oc.fecGeneracion <= '%3$s' ")
                 ,nro,auxDesde,auxHasta);
 
-        if(vigentes==true&&cancelados==true)
+        if(vigentes==true && cancelados==true)
             return HibernateUtil.ejecutarConsulta(HQL);
+        else
+        {
+            if(vigentes ==true)
+                HQL+="AND oc.fecCancelacion IS NULL ";
+            else
+                HQL+="AND oc.fecCancelacion IS NOT NULL ";
+        }
         
 //        if(vigentes==true&&cancelados==false)
-//            HQL+="AND oc.fecBaja IS NULL ";
-//        
+//            
+//
 //        if(vigentes==false&&cancelados==true)
-//            HQL+="AND oc.fecBaja IS NOT NULL ";
+//            H
              
         return HibernateUtil.ejecutarConsulta(HQL);
     }

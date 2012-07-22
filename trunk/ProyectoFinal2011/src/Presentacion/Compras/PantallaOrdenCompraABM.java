@@ -839,6 +839,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         doc.setMaterial(temp);
         doc.setPrecioUnitario(temp.getPrecio());
         doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoPendiente());
+        
         tmOrdenCompra.add(doc);
 
         int auxCant = doc.getCantidadPedida();
@@ -850,7 +851,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         }
 
         limpiarCargaDetalle();
-        habilitarCargaDetalle(false);
+//        habilitarCargaDetalle(false);
     }//GEN-LAST:event_btnDetalleAceptarActionPerformed
 
     private void btnAgregarFaltanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFaltanteActionPerformed
@@ -929,6 +930,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
             return;
             
         }
+
         if (tmStock.getSeletedObject() == null) {
                     lblUnidad.setText("");
                     txtCantidad.setText("");
@@ -1039,12 +1041,12 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
     public void habilitarPanelBaja(boolean habilitar)
     {
-        txtFechaBaja.setEditable(habilitar);
-        txtMotivoBaja.setEditable(habilitar);
+        
+        txtMotivoBaja.setEnabled(habilitar);
 //        Utilidades.habilitarPanel(pnlBaja, habilitar);
     }
 
     public void cargarFechaBaja() {
-        txtFecha.setText(Utilidades.parseFecha(Utilidades.getFechaActual()));
+        txtFechaBaja.setText(Utilidades.parseFecha(Utilidades.getFechaActual()));
     }
 }
