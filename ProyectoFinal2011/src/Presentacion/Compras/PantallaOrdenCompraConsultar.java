@@ -93,7 +93,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
                 Vector fila = new Vector();
 
                 fila.add(elemento.getId());//col 3
-                fila.add(elemento.getFecGeneracion());
+                fila.add(elemento.stringFechaGeneracion());
                 fila.add(elemento.getProveedor().getRazonSocial());
                 fila.add(elemento.getProveedor().getCuit());
                 fila.add(elemento.getEstado());
@@ -115,6 +115,18 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
 
             public void valueChanged(ListSelectionEvent e) {
                 if (tmOrdenes.getSeletedObject() != null) {
+                    if(tmOrdenes.getSeletedObject().getEstado().esCancelado())
+                    {
+                        btnCancelar.setEnabled(false);
+                        btnModificar.setEnabled(false);
+                        btnRegistrarEnvio.setEnabled(false);
+                    }
+                    else
+                    {
+                        btnCancelar.setEnabled(true);
+                        btnModificar.setEnabled(true);
+                        btnRegistrarEnvio.setEnabled(true);
+                    }
                     tmDetalle.setDatos(tmOrdenes.getSeletedObject().getDetalle());
                 } else {
                     tmDetalle.limpiar();
@@ -192,6 +204,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
         /************************Validacion de botones **********************************/
         btnCancelar.setEnabled(false);
         btnModificar.setEnabled(false);
+        btnRegistrarEnvio.setEnabled(false);
         tmOrdenes.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
@@ -238,7 +251,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
         btnModificar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnRegistrarEnvio = new javax.swing.JButton();
         pnlDetalle = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbDetalle = new javax.swing.JTable();
@@ -401,10 +414,10 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("<html>Registrar<br>envío</html>");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrarEnvio.setText("<html>Registrar<br>envío</html>");
+        btnRegistrarEnvio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRegistrarEnvioActionPerformed(evt);
             }
         });
 
@@ -415,7 +428,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
             .addGroup(pnlBotonesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                    .addComponent(btnRegistrarEnvio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -432,7 +445,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRegistrarEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -533,6 +546,11 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
+        this.cargarTmOrdenes();
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    public void cargarTmOrdenes(){
         tmOrdenes.setDatos(
                 OrdenCompraBD.getOrdenes(
                 txtNroOrden.getText(),
@@ -544,17 +562,19 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
                 chkMostrarCancelados.isSelected()));
 
         lbl_resultado_busqueda.setText("Resultado de la busqueda: "+ tmOrdenes.getDatos().size());
-
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
+    }
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         new GestorOrdenCompraAlta().iniciarCU();
+        cargarTmOrdenes();
         tbOrdenes.clearSelection();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
+            if(!this.verificarEstado())
+                return;
+            
             new GestorOrdenCompraModificar(tmOrdenes.getSeletedObject()).iniciarCU();
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
@@ -564,7 +584,10 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         try {
+            if(!this.verificarEstado())
+                return;
             new GestorOrdenCompraBaja(tmOrdenes.getSeletedObject()).iniciarCU();
+            cargarTmOrdenes();
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
@@ -577,15 +600,17 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnRegistrarEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEnvioActionPerformed
         // TODO add your handling code here:
         try {
+            if(!this.verificarEstado())
+                return;
             new GestorOrdenCompraEnviar(tmOrdenes.getSeletedObject()).iniciarCU();
         } catch (Exception ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnRegistrarEnvioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -610,6 +635,7 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnRegistrarEnvio;
     private javax.swing.JButton btnSalir;
     private javax.swing.JCheckBox chkMostrarCancelados;
     private javax.swing.JCheckBox chkMostrarVigentes;
@@ -617,7 +643,6 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
     private javax.swing.JComboBox cmbProveedor;
     private com.toedter.calendar.JDateChooser dtcFechaGeneracionDesde;
     private com.toedter.calendar.JDateChooser dtcFechaGeneracionHasta;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -635,4 +660,13 @@ public class PantallaOrdenCompraConsultar extends javax.swing.JDialog {
     private javax.swing.JTable tbOrdenes;
     private javax.swing.JTextField txtNroOrden;
     // End of variables declaration//GEN-END:variables
+
+    private boolean verificarEstado() {
+        if(!tmOrdenes.getSeletedObject().getEstado().esPendiente())
+            {
+                Mensajes.mensajeInformacion("La orden de compra no se encuentra en estado pendiente");
+                return false;
+            }
+        return true;
+    }
 }

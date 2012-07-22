@@ -80,6 +80,20 @@ public class EstadoOrdenCompra implements java.io.Serializable {
         return false;
     }
 
+    public boolean esCancelado() {
+        if(this.nombre.compareTo("Cancelada")==0)
+            return true;
+        else
+            return false;
+    }
+
+    public boolean esPendiente() {
+         if(this.nombre.compareTo("Pendiente")==0)
+            return true;
+        else
+            return false;
+    }
+
 
 
 //    public Set<OrdenCompra> getTOrdenesCompras() {

@@ -10,6 +10,7 @@ import BaseDeDatos.Compras.EstadoOrdenCompraBD;
 import BaseDeDatos.Compras.OrdenCompraBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Compras.PantallaOrdenCompraABM;
+import Presentacion.Mensajes;
 import Presentacion.Utilidades;
 
 /**
@@ -62,6 +63,7 @@ public class GestorOrdenCompraBaja extends GestorOrdenCompra{
         }
 
         OrdenCompraBD.modificar(oc);
+        Mensajes.mensajeInformacion("La Orden de Compra \"Nro. "+oc.getId()+"\" ha sido cancelado exitosamente.");
     }
 
 }
