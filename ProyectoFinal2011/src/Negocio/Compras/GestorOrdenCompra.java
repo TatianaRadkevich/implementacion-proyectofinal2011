@@ -58,7 +58,10 @@ public abstract class GestorOrdenCompra {
     }
 
     public void eliminarDetalle(DetalleOrdenCompra seletedObject) {
-        seletedObject.getMaterial().getMaterial().setEsPendiente(false);
-        MaterialBD.modificar(seletedObject.getMaterial().getMaterial());
-    }
+
+
+
+           }
+
+
 }

@@ -5,10 +5,7 @@
 
 package Negocio.Compras;
 
-import BaseDeDatos.Compras.EstadoDetalleOrdenCompraBD;
-import BaseDeDatos.Compras.EstadoOrdenCompraBD;
 import BaseDeDatos.Compras.OrdenCompraBD;
-import Negocio.Deposito.Faltante;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Compras.PantallaOrdenCompraABM;
 import Presentacion.Mensajes;
@@ -56,7 +53,7 @@ public class GestorOrdenCompraAlta extends GestorOrdenCompra{
 //
 //        }
 //
-//        oc.setFecGeneracion(Utilidades.getFechaActual());
+        oc.setFecGeneracion(Utilidades.getFechaActual());
         validar(oc);
         OrdenCompraBD.guardarAlta(oc);
         Mensajes.mensajeInformacion("La Orden de Compra \"Nro. "+oc.getId()+"\" ha sido guardado exitosamente.");

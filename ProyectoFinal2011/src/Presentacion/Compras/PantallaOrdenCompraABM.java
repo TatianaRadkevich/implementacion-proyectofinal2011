@@ -851,7 +851,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         }
 
         limpiarCargaDetalle();
-//        habilitarCargaDetalle(false);
+        habilitarCargaDetalle(false);
     }//GEN-LAST:event_btnDetalleAceptarActionPerformed
 
     private void btnAgregarFaltanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFaltanteActionPerformed

@@ -52,17 +52,17 @@ public class GestorOrdenCompraBaja extends GestorOrdenCompra{
 
     @Override
     public void ejecutarCU(OrdenCompra oc) throws ExceptionGestor {
-        validar(oc);
-        
+        validar(oc);        
         oc.setFecCancelacion(Utilidades.getFechaActual());
-        oc.setEstado(EstadoOrdenCompraBD.getEstadoCancelada());
-        for(DetalleOrdenCompra doc:oc.getDetalle())
-        {
-            doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoCancelada());
-            doc.getMaterial().getMaterial().setEsPendiente(false);
-        }
+//        oc.setEstado(EstadoOrdenCompraBD.getEstadoCancelada());
+//        for(DetalleOrdenCompra doc:oc.getDetalle())
+//        {
+//            doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoCancelada());
+//            doc.getMaterial().getMaterial().setEsPendiente(false);
+//        }
 
-        OrdenCompraBD.modificar(oc);
+//        OrdenCompraBD.modificar(oc);
+        OrdenCompraBD.guardarBaja(oc);
         Mensajes.mensajeInformacion("La Orden de Compra \"Nro. "+oc.getId()+"\" ha sido cancelado exitosamente.");
     }
 

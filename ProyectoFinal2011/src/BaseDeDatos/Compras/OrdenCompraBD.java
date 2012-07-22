@@ -47,6 +47,27 @@ public class OrdenCompraBD {
         sesion.getTransaction().commit();
         sesion.flush();
     }
+    public static void guardarBaja(OrdenCompra oc){
+         Session sesion=HibernateUtil.getSession();
+        sesion.beginTransaction();
+       
+        oc.setEstado(EstadoOrdenCompraBD.getEstadoCancelada());
+        for(DetalleOrdenCompra doc:oc.getDetalle())
+        {
+            doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoCancelada());
+            doc.getMaterial().getMaterial().setEsPendiente(false);
+            sesion.update(doc.getMaterial().getMaterial());
+
+            for(Faltante falt: doc.getFaltantes())
+           {
+               falt.setDetalleOrdenCompra(null);
+               sesion.update(falt);
+           }
+        }
+        sesion.update(oc);
+        sesion.getTransaction().commit();
+        sesion.flush();
+    }
 
     public static void modificar(OrdenCompra oc) {
         HibernateUtil.modificarObjeto(oc);
@@ -100,6 +121,49 @@ public class OrdenCompraBD {
 //            H
              
         return HibernateUtil.ejecutarConsulta(HQL);
+    }
+
+    public static void eliminarDetalle(DetalleOrdenCompra seletedObject) {
+         Session sesion=HibernateUtil.getSession();
+        sesion.beginTransaction();
+        seletedObject.getMaterial().getMaterial().setEsPendiente(true);
+        sesion.update(seletedObject.getMaterial().getMaterial());
+        sesion.getTransaction().commit();
+        sesion.flush();
+    }
+    
+    
+    public static void guardarModificacion(OrdenCompra oc, ArrayList<DetalleOrdenCompra> detalle){
+        Session sesion=HibernateUtil.getSession();
+        sesion.beginTransaction();
+
+        for(DetalleOrdenCompra det:detalle){
+            det.getMaterial().getMaterial().setEsPendiente(false);
+            sesion.update(det.getMaterial().getMaterial());
+            for(Faltante falt: det.getFaltantes())
+           {
+               falt.setDetalleOrdenCompra(null);
+               sesion.update(falt);
+           }
+        }
+
+        sesion.update(oc);
+       for(DetalleOrdenCompra doc:oc.getDetalle())
+        {
+            doc.getMaterial().getMaterial().setEsPendiente(true);
+            sesion.update(doc.getMaterial().getMaterial());
+
+            for(Faltante falt: doc.getMaterial().getMaterial().faltantesPendientes())
+           {
+               falt.setDetalleOrdenCompra(doc);
+               sesion.update(falt);
+           }
+        }
+        sesion.getTransaction().commit();
+        sesion.flush();
+        
+        
+        
     }
 
 
