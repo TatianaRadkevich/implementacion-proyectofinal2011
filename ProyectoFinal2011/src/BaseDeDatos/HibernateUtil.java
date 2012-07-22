@@ -44,6 +44,10 @@ public class HibernateUtil {
         }
     }
 
+    public static Session getSession()
+    {
+        return session;
+    }
     private static AnnotationConfiguration addClases(AnnotationConfiguration ac) throws Exception {
         //metodo super groso mapea automaticamente todas las clases del proyecto con @entity
         // the following will detect all classes that are annotated as @Entity

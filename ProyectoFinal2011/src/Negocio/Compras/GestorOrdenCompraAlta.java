@@ -8,6 +8,7 @@ package Negocio.Compras;
 import BaseDeDatos.Compras.EstadoDetalleOrdenCompraBD;
 import BaseDeDatos.Compras.EstadoOrdenCompraBD;
 import BaseDeDatos.Compras.OrdenCompraBD;
+import Negocio.Deposito.Faltante;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Compras.PantallaOrdenCompraABM;
 import Presentacion.Mensajes;
@@ -46,19 +47,32 @@ public class GestorOrdenCompraAlta extends GestorOrdenCompra{
 
     @Override
     public void ejecutarCU(OrdenCompra oc) throws ExceptionGestor {
-        oc.setEstado(EstadoOrdenCompraBD.getEstadoPendiente());
-        for(DetalleOrdenCompra doc:oc.getDetalle())
-        {
-            doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoPendiente());
-            doc.getMaterial().getMaterial().setEsPendiente(true);
-        }
-        
-        oc.setFecGeneracion(Utilidades.getFechaActual());
-
+//        oc.setEstado(EstadoOrdenCompraBD.getEstadoPendiente());
+//        for(DetalleOrdenCompra doc:oc.getDetalle())
+//        {
+//            doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoPendiente());
+//            doc.getMaterial().getMaterial().setEsPendiente(true);
+//
+//
+//        }
+//
+//        oc.setFecGeneracion(Utilidades.getFechaActual());
         validar(oc);
-        OrdenCompraBD.guardar(oc);
+        OrdenCompraBD.guardarAlta(oc);
         Mensajes.mensajeInformacion("La Orden de Compra \"Nro. "+oc.getId()+"\" ha sido guardado exitosamente.");
+
+//        List<Materiales> lista=
     }
+
+//    private void asigarDetalleAMaterial(Material material, DetalleOrdenCompra detalle){
+//       for(Faltante falt: material.faltantesPendientes())
+//       {
+//           falt.setDetalleOrdenCompra(detalle);
+//
+//       }
+
+//    }
+
 
 
 }

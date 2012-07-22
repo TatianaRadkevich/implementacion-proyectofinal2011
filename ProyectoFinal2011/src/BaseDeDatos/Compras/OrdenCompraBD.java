@@ -6,13 +6,16 @@
 package BaseDeDatos.Compras;
 
 import BaseDeDatos.HibernateUtil;
+import Negocio.Compras.DetalleOrdenCompra;
 import Negocio.Compras.EstadoOrdenCompra;
 import Negocio.Compras.OrdenCompra;
 import Negocio.Compras.Proveedor;
+import Negocio.Deposito.Faltante;
 import Presentacion.Utilidades;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.Session;
 
 /**
  *
@@ -23,6 +26,26 @@ public class OrdenCompraBD {
     public static void guardar(OrdenCompra oc)
     {
         HibernateUtil.guardarObjeto(oc);
+    }
+
+    public static void guardarAlta(OrdenCompra oc){
+        Session sesion=HibernateUtil.getSession();
+        sesion.beginTransaction();
+        oc.setEstado(EstadoOrdenCompraBD.getEstadoPendiente());
+        for(DetalleOrdenCompra doc:oc.getDetalle())
+        {
+            doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoPendiente());
+            doc.getMaterial().getMaterial().setEsPendiente(true);
+            sesion.update(doc.getMaterial().getMaterial());
+            for(Faltante falt: doc.getMaterial().getMaterial().faltantesPendientes())
+           {
+               falt.setDetalleOrdenCompra(doc);
+               sesion.update(falt);
+           }
+        }
+        sesion.save(oc);
+        sesion.getTransaction().commit();
+        sesion.flush();
     }
 
     public static void modificar(OrdenCompra oc) {
