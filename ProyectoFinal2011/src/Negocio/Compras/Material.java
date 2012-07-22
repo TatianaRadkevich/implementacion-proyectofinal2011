@@ -280,7 +280,7 @@ public class Material implements java.io.Serializable {
 
         Integer faltantes = 0;
 
-        for (Faltante f : this.getFaltantes()) {
+        for (Faltante f : this.faltantesPendientes()) {
             if (f.getFecNecesidad().compareTo(Utilidades.getFechaActual()) <= 0 && f.getDetalleOrdenCompra()==null) {
                 faltantes += f.getCantidad().intValue();
             }
@@ -307,6 +307,14 @@ public class Material implements java.io.Serializable {
         return new ArrayList<Faltante>(TFaltanteses);
     }
 
+    public List<Faltante> faltantesPendientes(){
+        ArrayList<Faltante> faltantesPendiente=new ArrayList<Faltante>();
+        for (Faltante f : TFaltanteses) {
+            if(f.getDetalleOrdenCompra() == null)
+                faltantesPendiente.add(f);
+        }
+        return faltantesPendiente;
+    }
 
     public Boolean getEsPendiente() {
         return this.esPendiente;
