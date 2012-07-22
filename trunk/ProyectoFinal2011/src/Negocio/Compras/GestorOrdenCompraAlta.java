@@ -21,8 +21,9 @@ public class GestorOrdenCompraAlta extends GestorOrdenCompra{
 
     public GestorOrdenCompraAlta()
     {
-        interfaz=new PantallaOrdenCompraABM(this);
         ordenCompra=new OrdenCompra();
+        interfaz=new PantallaOrdenCompraABM(this);
+        
     }
 
     @Override
@@ -30,6 +31,7 @@ public class GestorOrdenCompraAlta extends GestorOrdenCompra{
         interfaz.setTitle("Generar Orden de Compra");
         interfaz.setNro(getCodigo()+1);
         interfaz.setVisible(true);
+        interfaz.habilitarPanelBaja(false);
     }
 
      private void validar(OrdenCompra oc) throws ExceptionGestor

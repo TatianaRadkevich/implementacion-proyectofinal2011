@@ -29,6 +29,7 @@ public class GestorOrdenCompraModificar extends GestorOrdenCompra{
         interfaz.cargar(ordenCompra);
         interfaz.setTitle("Modificar Orden de Compra");
         interfaz.setVisible(true);
+        interfaz.habilitarPanelBaja(false);
     }
 
        private void validar(OrdenCompra oc) throws ExceptionGestor

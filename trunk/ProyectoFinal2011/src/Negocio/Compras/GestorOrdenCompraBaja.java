@@ -10,6 +10,7 @@ import BaseDeDatos.Compras.EstadoOrdenCompraBD;
 import BaseDeDatos.Compras.OrdenCompraBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Compras.PantallaOrdenCompraABM;
+import Presentacion.Utilidades;
 
 /**
  *
@@ -30,9 +31,12 @@ public class GestorOrdenCompraBaja extends GestorOrdenCompra{
 
         interfaz.cargar(ordenCompra);
         //interfaz.habilitarBaja(true, true, Utilidades.getFechaActual(), "");
-        interfaz.habilitarCarga(false);
+        interfaz.cargarFechaBaja();
+        interfaz.habilitarCargaDetalle(false);
+        interfaz.habilitarPanelBaja(true);
         interfaz.setTitle("Eliminar Orden de Compra");
         interfaz.setVisible(true);
+        
     }
 
     private void validar(OrdenCompra p) throws ExceptionGestor
@@ -48,7 +52,8 @@ public class GestorOrdenCompraBaja extends GestorOrdenCompra{
     @Override
     public void ejecutarCU(OrdenCompra oc) throws ExceptionGestor {
         validar(oc);
-
+        
+        oc.setFecCancelacion(Utilidades.getFechaActual());
         oc.setEstado(EstadoOrdenCompraBD.getEstadoCancelada());
         for(DetalleOrdenCompra doc:oc.getDetalle())
         {

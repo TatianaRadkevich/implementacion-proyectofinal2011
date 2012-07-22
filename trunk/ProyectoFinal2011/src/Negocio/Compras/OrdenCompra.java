@@ -33,26 +33,41 @@ public class OrdenCompra implements java.io.Serializable {
     @GeneratedValue
     @Column(name = "ID_ORDEN_COMPRA", unique = true, nullable = false, precision = 8, scale = 0)
     private int idOrdenCompra;
+    //-----------------------------------------------------------------------------------------------------------
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PROVEEDOR", nullable = true)
     private Proveedor TProveedores;
+    //-----------------------------------------------------------------------------------------------------------
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EORDEN_COMPRA", nullable = true)
     private EstadoOrdenCompra TEordenCompra;
+    //-----------------------------------------------------------------------------------------------------------
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_ENVIO", nullable = true, length = 23)
     private Date fecEnvio;
+    //-----------------------------------------------------------------------------------------------------------
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_GENERACION", nullable = true, length = 23)
     private Date fecGeneracion;
+    //-----------------------------------------------------------------------------------------------------------
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_RECEPCION", nullable = true, length = 23)
     private Date fecRecepcion;
+    //-----------------------------------------------------------------------------------------------------------
+     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="FEC_CANCELACION", length=23)
+    private Date fecCancelacion;
+    //-----------------------------------------------------------------------------------------------------------
+     @Column(name="MOTIVO_CANCELACION", length=200)
+     private String motivoCancelacion;
+    //-----------------------------------------------------------------------------------------------------------
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TOrdenesCompra")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<DetalleOrdenCompra> TDetallesOrdenCompras = new HashSet<DetalleOrdenCompra>(0);
+    //-----------------------------------------------------------------------------------------------------------
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TOrdenesCompra")
     private Set<Reclamo> TReclamoses = new HashSet<Reclamo>(0);
+    //-----------------------------------------------------------------------------------------------------------
 
     public OrdenCompra() {
     }
@@ -144,4 +159,22 @@ public class OrdenCompra implements java.io.Serializable {
     public void setReclamos(Set<Reclamo> TReclamoses) {
         this.TReclamoses = TReclamoses;
     }
+
+
+    public Date getFecCancelacion() {
+        return this.fecCancelacion;
+    }
+
+    public void setFecCancelacion(Date fecCancelacion) {
+        this.fecCancelacion = fecCancelacion;
+    }
+
+    public String getMotivoCancelacion() {
+        return this.motivoCancelacion;
+    }
+
+    public void setMotivoCancelacion(String motivoCancelacion) {
+        this.motivoCancelacion = motivoCancelacion;
+    }
 }
+
