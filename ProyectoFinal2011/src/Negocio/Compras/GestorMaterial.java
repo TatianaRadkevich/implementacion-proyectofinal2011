@@ -47,4 +47,6 @@ protected PantallaMaterialABM interfaz;
     public int getUltimoID() {
         return MaterialBD.getUltimoID();
     }
+
+
 }
