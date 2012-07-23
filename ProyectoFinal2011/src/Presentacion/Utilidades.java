@@ -128,7 +128,7 @@ public class Utilidades {
 
     public static String fechaHoraMinutoSegundoActual() {
         Date fecha = new Date();
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss 'Hs.'");
 
         return formato.format(fecha);
     }
