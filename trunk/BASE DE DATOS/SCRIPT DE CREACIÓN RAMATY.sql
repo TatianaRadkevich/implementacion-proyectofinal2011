@@ -2,7 +2,6 @@
 
 /*SCRIPT DE CREACION RAMATY*/
 
-
 CREATE TABLE T_ALMACENAMIENTOS_PRODUCTO_TERMINADO (
        ID_ALMACENAMIENTO_PRODUCTO_TERMINADO numeric(8) IDENTITY,
        FEC_HORA_ALMACENAMIENTO datetime NOT NULL,
@@ -715,9 +714,9 @@ CREATE TABLE T_MATERIALES (
        LOGITUD              numeric(3) NULL,
        FEC_BAJA             datetime NULL,
        MOTIVO_BAJA          varchar(200) NULL,
-       STOCK_ACTUAL         numeric(3) NOT NULL,
-       STOCK_MINIMO         numeric(3) NOT NULL,
-       STOCK_RESERVADO      numeric(3) NOT NULL,
+       STOCK_ACTUAL         numeric(6,2) NOT NULL,
+       STOCK_MINIMO         numeric(6,2) NOT NULL,
+       STOCK_RESERVADO      numeric(6,2) NOT NULL,
        CODIGO               varchar(6) NOT NULL,
        ID_UNIDAD_MEDIDA     numeric(5) NOT NULL,
        ES_PENDIENTE         bit NULL
