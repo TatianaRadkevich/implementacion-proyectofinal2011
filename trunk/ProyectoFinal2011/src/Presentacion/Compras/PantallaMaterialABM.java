@@ -426,9 +426,9 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         material.setNombre(txtNombre.getText());
         material.setDescripcion(txtDescripcion.getText());
         material.setDiametro(Utilidades.parseInteger(txtDiametro.getText()));
-        material.setLogitud(Utilidades.parseShort(txtLongitud.getText()));
-        material.setStockActual(Utilidades.parseShort(txtStockActual.getText()));
-        material.setStockMinimo(Utilidades.parseShort(txtStockMinimo.getText()));
+        material.setLogitud(Utilidades.parseInteger(txtLongitud.getText()));
+        material.setStockActual(Utilidades.parseInteger(txtStockActual.getText()));
+        material.setStockMinimo(Utilidades.parseInteger(txtStockMinimo.getText()));
         material.setEsMateriaPrima(rdbMateriaPrima.isSelected());
         material.setProveedores(lstProveedores.getSelectedItems());
         material.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));

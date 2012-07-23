@@ -27,13 +27,32 @@ import javax.persistence.TemporalType;
 public class ReajusteStock  implements java.io.Serializable {
 
 
+    @Id
+    @GeneratedValue
+    @Column(name="ID_REAJUSTE_STOCK", unique=true, nullable=false)
      private int id;
-     private Empleado Empleado;
-     private Material Material;
-     private Date fechaReajuste;
-     private Short diferencia;
-     private Short cantidad;
-     private String observaciones;
+     //-------------------------------------------------------------------------------------------------------
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_EMPLEADO")
+    private Empleado Empleado;
+     //-------------------------------------------------------------------------------------------------------
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_MATERIAL")
+    private Material Material;
+     //-------------------------------------------------------------------------------------------------------
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="FEC_REAJUSTE", length=23)
+    private Date fechaReajuste;
+     //-------------------------------------------------------------------------------------------------------
+    @Column(name="DIFERENCIA", precision=6, scale=0)
+    private int diferencia;
+     //-------------------------------------------------------------------------------------------------------
+    @Column(name="CANTIDAD", precision=6, scale=0)
+    private int cantidad;
+     //-------------------------------------------------------------------------------------------------------
+    @Column(name="OBSERVACIONES", length=50)
+    private String observaciones;
+     //-------------------------------------------------------------------------------------------------------
 
     public ReajusteStock() {
     }
@@ -51,9 +70,7 @@ public class ReajusteStock  implements java.io.Serializable {
        this.observaciones = observaciones;
     }
    
-     @Id 
-    @GeneratedValue
-    @Column(name="ID_REAJUSTE_STOCK", unique=true, nullable=false)
+     
     public int getId() {
         return this.id;
     }
@@ -61,8 +78,7 @@ public class ReajusteStock  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_EMPLEADO")
+
     public Empleado getEmpleado() {
         return this.Empleado;
     }
@@ -70,8 +86,7 @@ public class ReajusteStock  implements java.io.Serializable {
     public void setEmpleado(Empleado Empleado) {
         this.Empleado = Empleado;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_MATERIAL")
+
     public Material getMaterial() {
         return this.Material;
     }
@@ -79,8 +94,7 @@ public class ReajusteStock  implements java.io.Serializable {
     public void setMaterial(Material Material) {
         this.Material = Material;
     }
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="FEC_REAJUSTE", length=23)
+    
     public Date getFechaReajuste() {
         return this.fechaReajuste;
     }
@@ -89,25 +103,25 @@ public class ReajusteStock  implements java.io.Serializable {
         this.fechaReajuste = fechaReajuste;
     }
     
-    @Column(name="DIFERENCIA", precision=4, scale=0)
-    public Short getDiferencia() {
+    
+    public int getDiferencia() {
         return this.diferencia;
     }
     
-    public void setDiferencia(Short diferencia) {
+    public void setDiferencia(int diferencia) {
         this.diferencia = diferencia;
     }
     
-    @Column(name="CANTIDAD", precision=4, scale=0)
-    public Short getCantidad() {
+    
+    public int getCantidad() {
         return this.cantidad;
     }
     
-    public void setCantidad(Short cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
     
-    @Column(name="OBSERVACIONES", length=50)
+    
     public String getObservaciones() {
         return this.observaciones;
     }
