@@ -120,7 +120,7 @@ public class DetalleOrdenCompra implements java.io.Serializable {
         int stock=this.getMaterial().getMaterial().getStockActual();
         stock+=-this.cantidadRecibida;
         stock+=cantidadRecibida;
-        this.getMaterial().getMaterial().setStockActual(new Short(stock+""));
+        this.getMaterial().getMaterial().setStockActual(new Integer(stock+""));
         }catch(Exception e){}
 
         this.cantidadRecibida = cantidadRecibida;      

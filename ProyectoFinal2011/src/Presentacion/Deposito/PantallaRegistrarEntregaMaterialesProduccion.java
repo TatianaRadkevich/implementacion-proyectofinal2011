@@ -261,7 +261,7 @@ private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 
 private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         for (Map.Entry<Material,Integer> entry : mapa.entrySet()) {
-            entry.getKey().setStockActual((short)(entry.getKey().getStockActual() - entry.getValue()));
+            entry.getKey().setStockActual((int)(entry.getKey().getStockActual() - entry.getValue()));
             MaterialBD.guardar(entry.getKey());
         }
         Mensajes.mensajeInformacion("La orden de trabajo a entrado a producción con éxito y se ha descontado el material del stock");

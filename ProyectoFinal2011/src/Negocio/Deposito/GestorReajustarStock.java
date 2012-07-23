@@ -22,9 +22,9 @@ public class GestorReajustarStock {
     }
 
     public void Ejecutar(ReajusteStock re)
-    {       
-        re.getMaterial().setStockActual((short)re.getCantidad());
+    {               
         ReajusteStockBD.guardar(re);
+        
     }
 
      public void EjecutarMaterial(Material m)

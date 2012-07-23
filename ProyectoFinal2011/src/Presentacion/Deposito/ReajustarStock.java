@@ -234,7 +234,7 @@ public class ReajustarStock extends javax.swing.JDialog {
      public void guardarMaterial()
     {
          if (matActual!=null) {
-        matActual.setStockActual(Short.parseShort(txtCantReal.getText()));
+        matActual.setStockActual(Integer.parseInt(txtCantReal.getText()));
         gestor.EjecutarMaterial(matActual);
          }
     }
