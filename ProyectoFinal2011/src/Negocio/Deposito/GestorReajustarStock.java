@@ -27,9 +27,6 @@ public class GestorReajustarStock {
         
     }
 
-     public void EjecutarMaterial(Material m)
-      {
-        MaterialBD.guardar(m);
-     }
+    
 
 }
