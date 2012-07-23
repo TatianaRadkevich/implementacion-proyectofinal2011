@@ -231,13 +231,7 @@ public class ReajustarStock extends javax.swing.JDialog {
         catch(Exception e){}        
     }//GEN-LAST:event_txtCantRealKeyReleased
 
-     public void guardarMaterial()
-    {
-         if (matActual!=null) {
-        matActual.setStockActual(Integer.parseInt(txtCantReal.getText()));
-        gestor.EjecutarMaterial(matActual);
-         }
-    }
+  
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         reajuste = new ReajusteStock();
@@ -250,7 +244,6 @@ public class ReajustarStock extends javax.swing.JDialog {
         try
         {
             gestor.Ejecutar(reajuste);
-            //guardarMaterial();
             Mensajes.mensajeGuardoCorrectamente();
             this.dispose();
         }
