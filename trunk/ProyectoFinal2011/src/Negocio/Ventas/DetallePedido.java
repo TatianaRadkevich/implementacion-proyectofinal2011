@@ -124,6 +124,11 @@ return this.cantidad;
         return this.precio.floatValue();
     }
 
+    public float getSubTotal()
+    {
+        return this.getPrecio()*this.getCantidad();
+    }
+
     public EstadoDetallePedido getEstadoDetallePedido() {
         return TEdetallePedido;
     }
