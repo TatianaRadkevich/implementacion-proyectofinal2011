@@ -11,9 +11,11 @@
 
 package Presentacion.Deposito;
 
+import Negocio.Compras.GestorMaterial;
 import Negocio.Compras.Material;
 import Negocio.Deposito.GestorReajustarStock;
 import Negocio.Deposito.ReajusteStock;
+import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Mensajes;
 import Presentacion.*;
 
@@ -33,6 +35,7 @@ public class ReajustarStock extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         gestor=new GestorReajustarStock();
+
     }
 
     public void cargarMaterial(Material obj)
@@ -228,6 +231,14 @@ public class ReajustarStock extends javax.swing.JDialog {
         catch(Exception e){}        
     }//GEN-LAST:event_txtCantRealKeyReleased
 
+     public void guardarMaterial()
+    {
+         if (matActual!=null) {
+        matActual.setStockActual(Short.parseShort(txtCantReal.getText()));
+        gestor.EjecutarMaterial(matActual);
+         }
+    }
+
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         reajuste = new ReajusteStock();
         reajuste.setMaterial(matActual);
@@ -235,9 +246,11 @@ public class ReajustarStock extends javax.swing.JDialog {
         reajuste.setCantidad(Short.parseShort(txtCantReal.getText()));
         reajuste.setObservaciones(txtObs.getText());
         reajuste.setFechaReajuste(Utilidades.getFechaActual());
+       
         try
         {
             gestor.Ejecutar(reajuste);
+            //guardarMaterial();
             Mensajes.mensajeGuardoCorrectamente();
             this.dispose();
         }
@@ -247,6 +260,7 @@ public class ReajustarStock extends javax.swing.JDialog {
             e.printStackTrace();
         }
 
+         
     }//GEN-LAST:event_btnAceptarActionPerformed
 
 private void btnBuscarMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarMatActionPerformed
