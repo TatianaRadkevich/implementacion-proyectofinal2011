@@ -18,6 +18,7 @@ import Presentacion.Mensajes;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import Presentacion.ZLinkers.*;
+import Presentacion.ZLinkers.ZLFormatedTextField.Formato;
 import java.awt.Frame;
 import java.awt.Window;
 import java.util.Date;

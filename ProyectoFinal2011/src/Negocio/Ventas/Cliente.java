@@ -214,8 +214,7 @@ public class Cliente implements java.io.Serializable {
     }
 
     public void setApellidoResponsable(String apellidoResponsable) {
-        this.apellidoResponsable = Utilidades.validarString(apellidoResponsable, false, 50);
-        ;
+        this.apellidoResponsable = Utilidades.validarString(apellidoResponsable, false, 50);        
     }
 
     public Long getTelefonoResponsable() {

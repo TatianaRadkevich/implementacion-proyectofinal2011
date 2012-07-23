@@ -1,14 +1,21 @@
 package Negocio.Administracion;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
+import BaseDeDatos.Administracion.EmpleadoBD;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.Empleado;
 import Negocio.Administracion.Cobro;
 import Negocio.Administracion.DetalleFactura;
+import Negocio.Exceptiones.NegocioException;
+import Negocio.UbicacionGeografica.Domicilio;
 import Negocio.Ventas.Pedido;
 import Presentacion.Utilidades;
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -40,7 +47,6 @@ public class Factura implements java.io.Serializable {
     public static int getUltimoNro() {
         return PedidoBD.getUltimoNroFactura();
     }
-
     @Id
     @GeneratedValue
     @Column(name = "ID_FACTURA", unique = true, nullable = false, precision = 8, scale = 0)
@@ -57,7 +63,7 @@ public class Factura implements java.io.Serializable {
     @Column(name = "FEC_FACTURA", nullable = false, length = 23)
     private Date fecFactura;
     //
-    @OneToOne(mappedBy="TFacturas")
+    @OneToOne(mappedBy = "TFacturas")
     private Pedido pedido;
     //
     @Column(name = "NUMERO", nullable = false, precision = 8, scale = 0)
@@ -94,35 +100,62 @@ public class Factura implements java.io.Serializable {
         this.TCobroses = TCobroses;
     }
 
-    public int getIdFactura() {
+    public int getId() {
         return this.idFactura;
     }
 
-    public void setIdFactura(int idFactura) {
-        this.idFactura = idFactura;
-    }
-
-    public Empleado getTEmpleados() {
+    public Empleado getEmpleado() {
         return this.TEmpleados;
     }
 
-    public void setTEmpleados(Empleado TEmpleados) {
+    public void setEmpleado(Empleado TEmpleados) {
         this.TEmpleados = TEmpleados;
     }
 
-    public BigDecimal getDescuento() {
+    public BigDecimal getDescuentoPorcentaje() {
         return this.descuento;
     }
 
-    public void setDescuento(BigDecimal descuento) {
+    public void setDescuentoPorcentaje(BigDecimal descuento) {
         this.descuento = descuento;
+    }    
+
+    public BigDecimal getRecargoPorcentaje() {
+        return this.recargo;
     }
 
-    public Date getFecFactura() {
+    public void setRecargoPorcentaje(BigDecimal recargo) {
+        this.recargo = recargo;
+    }
+
+    public BigDecimal getDescuentoMonto() {
+        float resultado = (this.getDescuentoPorcentaje().floatValue() * this.getTotalBruto()) * 100;
+        return new BigDecimal(resultado, new MathContext(2, RoundingMode.UP));
+    }
+
+    public BigDecimal getRecargoMonto() {
+        float resultado = (this.getRecargoPorcentaje().floatValue() * this.getTotalBruto()) * 100;
+        return new BigDecimal(resultado, new MathContext(2, RoundingMode.UP));
+    }
+
+    public float getTotalBruto() {
+        float total = 0;
+        for (DetalleFactura df : this.getDetalleFactura()) {
+            total += df.getCantidad() * df.getPrecio();
+        }
+        return new BigDecimal(total).round(new MathContext(2, RoundingMode.UP)).floatValue();
+    }
+
+    public float getTotalNeto() {
+        float salida = this.getTotalBruto() - this.getDescuentoMonto().floatValue() + this.getRecargoMonto().floatValue();
+        return new BigDecimal(salida).round(new MathContext(2, RoundingMode.UP)).floatValue();
+    }
+
+    public Date getFechaGeneracion() {
         return this.fecFactura;
     }
 
-    public void setFecFactura(Date fecFactura) {
+    public void setFechaGeneracion(Date fecFactura) {
         this.fecFactura = fecFactura;
     }
 
@@ -135,6 +168,18 @@ public class Factura implements java.io.Serializable {
         this.pedido = pedido;
     }
 
+    public String getCUITCliente() {
+        return pedido.getCliente().getCuit();
+    }
+
+    public String getRazonSocialCliente() {
+        return pedido.getCliente().getRazonSocial();
+    }
+
+    public Domicilio getRazonDomicilio() {
+        return pedido.getCliente().getDomicilio();
+    }    
+
     public int getNumero() {
         return this.numero;
     }
@@ -143,20 +188,12 @@ public class Factura implements java.io.Serializable {
         this.numero = numero;
     }
 
-    public BigDecimal getRecargo() {
-        return this.recargo;
-    }
-
-    public void setRecargo(BigDecimal recargo) {
-        this.recargo = recargo;
-    }
-
     public List<DetalleFactura> getDetalleFactura() {
         return new ArrayList<DetalleFactura>(this.TDetallesFacturas);
 
     }
 
-    public void setTDetallesFacturas(List<DetalleFactura> detalle) {
+    public void setDetalleFactura(List<DetalleFactura> detalle) {
 
         for (DetalleFactura df : detalle) {
             df.setTFacturas(this);
@@ -166,21 +203,50 @@ public class Factura implements java.io.Serializable {
         this.TDetallesFacturas.addAll(detalle);
     }
 
-    public List<Cobro> getTCobroses() {
+    public List<Cobro> getCobros() {
         return new ArrayList<Cobro>(this.TCobroses);
     }
 
-    public void setTCobroses(List<Cobro> TCobroses) {
-        this.TCobroses.clear();
-        for (Cobro dt : TCobroses) {
-            dt.setTFacturas(this);
-            TCobroses.add(dt);
-        }
+    public void addCobro(Cobro c)
+    {
+        if(c==null)
+            throw new NegocioException("Error el cobro no puede ser nulo");
+
+        if(c.getImporte().floatValue()>getTotalAdeudado())
+            throw new NegocioException("El importe no puede superar el monto adeudado");
+
+        if(c.getImporte().floatValue()<=0)
+            throw new NegocioException("El importe debe ser mayor que cero");
+
+        c.setFactura(this);
+        this.TCobroses.add(c);
 
     }
 
+    public void setCobros(List<Cobro> TCobroses) {
+        this.TCobroses.clear();
+        for (Cobro dt : TCobroses) {
+            dt.setFactura(this);
+            TCobroses.add(dt);
+        }
+    }
+
+    public float getTotalCobrado()
+    {
+        BigDecimal salida=new BigDecimal(0);
+        for(Cobro c:this.getCobros())
+            salida=salida.add(c.getImporte());
+         return salida.round(new MathContext(2, RoundingMode.UP)).floatValue();
+    }
+
+    public float getTotalAdeudado()
+    {
+        return this.getTotalNeto()-this.getTotalCobrado();
+    }
+
     public void guardar() {
-        this.setFecFactura(Utilidades.getFechaActual());
-       HibernateUtil.guardarObjeto(this);
+        this.setFechaGeneracion(Utilidades.getFechaActual());
+        this.setEmpleado(EmpleadoBD.listarEmpleado().get(0));
+        HibernateUtil.guardarObjeto(this);
     }
 }

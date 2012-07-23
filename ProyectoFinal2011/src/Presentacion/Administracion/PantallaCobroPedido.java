@@ -8,8 +8,18 @@
  *
  * Created on 16-jun-2012, 2:07:30
  */
-
 package Presentacion.Administracion;
+
+import Negocio.Administracion.GestorCobroPedido;
+import Negocio.Administracion.Cheque;
+import Negocio.Administracion.Cobro;
+import Negocio.Administracion.Factura;
+import Negocio.Ventas.Pedido;
+import Presentacion.TablaManager;
+import Presentacion.ZLinkers.*;
+import Presentacion.ZLinkers.ZLFormatedTextField.Formato;
+import java.awt.Window;
+import java.util.Vector;
 
 /**
  *
@@ -18,9 +28,87 @@ package Presentacion.Administracion;
 public class PantallaCobroPedido extends javax.swing.JDialog {
 
     /** Creates new form PantallaCobroPedido */
-    public PantallaCobroPedido(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    private GestorCobroPedido gestor;
+    private ZLObject<Factura> linkFactura;
+    private TablaManager<Cobro> tmCobros;
+    private ZLObject<Cobro> linkCobro;
+    private ZLObject<Cheque> linkCheque;
+
+    public PantallaCobroPedido(Window parent, GestorCobroPedido gestor) {
+        super(parent, ModalityType.APPLICATION_MODAL);
+        this.gestor = gestor;
         initComponents();
+        cofigurarControles();
+        setFactura(gestor.getFactura());
+    }
+
+    private void cofigurarControles() {
+        linkFactura = new ZLObject<Factura>(Factura.class);
+        linkFactura.add("cuit", false, new ZLTextField(txtCUIT));
+        linkFactura.add("razonSocial", false, new ZLTextField(txtRazonSocial));
+        linkFactura.add("numero", false, new ZLTextField(txtNroFactura));
+        linkFactura.add("Generacion", false, new ZLFormatedTextField(txtFechaGeneracion, Formato.Date));
+        linkFactura.add("domicilio", false, new ZLTextField(txtDomicilio));
+        linkFactura.add("DescuentoMonto", false, new ZLTextField(txtDescuentoMonto));
+        linkFactura.add("DescuentoPorcentaje", false, new ZLTextField(txtDescuentoPorcentaje));
+        linkFactura.add("RecargoMonto", false, new ZLTextField(txtRecargoMonto));
+        linkFactura.add("RecargoPorcentaje", false, new ZLTextField(txtRecargoPorcentaje));
+        linkFactura.add("neto", false, new ZLTextField(txtTotalNeto));
+        linkFactura.add("bruto", false, new ZLTextField(txtTotalBruto));
+
+        this.tmCobros = new TablaManager<Cobro>(tbCobros) {
+
+            @Override
+            public Vector ObjetoFila(Cobro elemento) {
+                Vector salida = new Vector();
+                salida.add(elemento.getId());
+                salida.add(elemento.getFechaCobro());
+                salida.add(elemento.getFormaPago().getNombre());
+                salida.add(elemento.getImporte());
+                return salida;
+
+            }
+
+            @Override
+            public Vector getCabecera() {
+                Vector salida = new Vector();
+                salida.add("Nro. Recibo");
+                salida.add("Fecha");
+                salida.add("Forma de Pago");
+                salida.add("Importe ($)");
+                return salida;
+            }
+        };
+
+        linkCobro = new ZLObject<Cobro>(Cobro.class);
+        linkCobro.add("id", false, new ZLTextField(txtNroCobro));
+        linkCobro.add("fecha", false, new ZLFormatedTextField(txtFechaCobro, Formato.Date));
+        linkCobro.add("importe", new ZLTextField(txtMontoCobro));
+        linkCobro.add("observacion", new ZLTextField(txtDescripcionCobro));
+        linkCobro.add("formaPago", new ZLComboBox(cmbFormaPagoCobro));
+
+        linkCheque = new ZLObject<Cheque>(Cheque.class);
+        linkCobro.add("cuit", new ZLTextField(txtChequeCUIT));
+        linkCobro.add("razonSocial", new ZLTextField(txtChequeRazonSocial));
+        linkCobro.add("NroSucursal", new ZLTextField(txtChequeNroSucursal));
+        linkCobro.add("Banco", new ZLTextField(txtChequeBanco));
+        linkCobro.add("Emision", new ZLCalendar(dtcChequeFechaEmision));
+        linkCobro.add("Vencimiento", new ZLCalendar(dtcChequeFechaVencimiento));
+    }
+
+    private void setFactura(Factura f)
+    {
+
+    }
+
+    private void setCobroFactura(Cobro c)
+    {
+
+    }
+
+    private void actualizarDatosCobros()
+    {
+
     }
 
     /** This method is called from within the constructor to
@@ -42,7 +130,6 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         txtNroFactura = new javax.swing.JTextField();
         txtRazonSocial = new javax.swing.JTextField();
         txtDomicilio = new javax.swing.JTextField();
-        txtFechaGeneracion = new javax.swing.JTextField();
         txtCUIT = new javax.swing.JTextField();
         pnlResumen = new javax.swing.JPanel();
         pnlDescuento = new javax.swing.JPanel();
@@ -56,44 +143,47 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         txtRecargoPorcentaje = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         pnlTotal = new javax.swing.JPanel();
-        txtTotal = new javax.swing.JTextField();
+        txtTotalNeto = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        txtTotalBruto = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
+        txtFechaGeneracion = new javax.swing.JFormattedTextField();
         pnlCobrosRegistrados = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbCobros = new javax.swing.JTable();
         jLabel22 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        txtSaldoActual = new javax.swing.JTextField();
+        txtSaldoRestante = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         pnlCobro = new javax.swing.JPanel();
         pnlCheque = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        txtChequeNroSucursal = new javax.swing.JTextField();
+        txtChequeBanco = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         pnlClienteCheque = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        dtcFechaVencimiento = new com.toedter.calendar.JDateChooser();
-        dtcFechaEmision = new com.toedter.calendar.JDateChooser();
+        txtChequeCUIT = new javax.swing.JTextField();
+        txtChequeRazonSocial = new javax.swing.JTextField();
+        dtcChequeFechaVencimiento = new com.toedter.calendar.JDateChooser();
+        dtcChequeFechaEmision = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jComboBox1 = new javax.swing.JComboBox();
+        txtDescripcionCobro = new javax.swing.JTextArea();
+        cmbFormaPagoCobro = new javax.swing.JComboBox();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        txtMontoCobro = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtNroCobro = new javax.swing.JTextField();
+        txtFechaCobro = new javax.swing.JFormattedTextField();
+        btnAceptar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -115,11 +205,12 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         jLabel1.setText("Nro. Factura:");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel2.setText("Fecha generacion:");
+        jLabel2.setText("Fecha generación:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Razón Social:");
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("CUIT:");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -127,21 +218,14 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
 
         txtNroFactura.setEditable(false);
         txtNroFactura.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtNroFactura.setText("XXXXXXXX");
 
         txtRazonSocial.setEditable(false);
         txtRazonSocial.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtRazonSocial.setText("XXXXXXXXXXXXXXXXX");
 
         txtDomicilio.setEditable(false);
 
-        txtFechaGeneracion.setEditable(false);
-        txtFechaGeneracion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtFechaGeneracion.setText("XX/XX/XXXX");
-
         txtCUIT.setEditable(false);
         txtCUIT.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtCUIT.setText("XX-XXXXXXXX-X");
 
         pnlDescuento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Descuento (-)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
@@ -215,27 +299,37 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
 
         pnlTotal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        txtTotal.setEditable(false);
-        txtTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtTotal.setText("XXXXX");
+        txtTotalNeto.setEditable(false);
+        txtTotalNeto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel10.setText("$");
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel10.setText("Neto:  $ ");
+
+        txtTotalBruto.setEditable(false);
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel24.setText("Bruto:  $ ");
 
         javax.swing.GroupLayout pnlTotalLayout = new javax.swing.GroupLayout(pnlTotal);
         pnlTotal.setLayout(pnlTotalLayout);
         pnlTotalLayout.setHorizontalGroup(
             pnlTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTotalLayout.createSequentialGroup()
+                .addComponent(jLabel24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTotalBruto, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                .addComponent(txtTotalNeto, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlTotalLayout.setVerticalGroup(
             pnlTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel10))
+                .addComponent(jLabel24)
+                .addComponent(txtTotalBruto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel10)
+                .addComponent(txtTotalNeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout pnlResumenLayout = new javax.swing.GroupLayout(pnlResumen);
@@ -246,7 +340,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                 .addComponent(pnlDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlRecargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
                 .addComponent(pnlTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlResumenLayout.setVerticalGroup(
@@ -255,6 +349,9 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             .addComponent(pnlDescuento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnlTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        txtFechaGeneracion.setEditable(false);
+        txtFechaGeneracion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout pnlFacturaLayout = new javax.swing.GroupLayout(pnlFactura);
         pnlFactura.setLayout(pnlFacturaLayout);
@@ -269,10 +366,10 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 426, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 449, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFechaGeneracion, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtFechaGeneracion, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(pnlResumen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(pnlFacturaLayout.createSequentialGroup()
                                 .addComponent(jLabel3)
@@ -286,7 +383,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                         .addGap(30, 30, 30)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDomicilio, javax.swing.GroupLayout.DEFAULT_SIZE, 674, Short.MAX_VALUE)))
+                        .addComponent(txtDomicilio, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlFacturaLayout.setVerticalGroup(
@@ -323,8 +420,14 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tbCobros);
 
+        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel22.setText("Saldo actual:");
 
+        txtSaldoActual.setEditable(false);
+
+        txtSaldoRestante.setEditable(false);
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel23.setText("Saldo restante:");
 
         javax.swing.GroupLayout pnlCobrosRegistradosLayout = new javax.swing.GroupLayout(pnlCobrosRegistrados);
@@ -333,17 +436,17 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             pnlCobrosRegistradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCobrosRegistradosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlCobrosRegistradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlCobrosRegistradosLayout.createSequentialGroup()
                         .addComponent(jLabel22)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtSaldoActual, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlCobrosRegistradosLayout.createSequentialGroup()
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txtSaldoRestante, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         pnlCobrosRegistradosLayout.setVerticalGroup(
             pnlCobrosRegistradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -351,35 +454,43 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                 .addGroup(pnlCobrosRegistradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCobrosRegistradosLayout.createSequentialGroup()
                         .addGroup(pnlCobrosRegistradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSaldoActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel22))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlCobrosRegistradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSaldoRestante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel23)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        pnlCobro.setBorder(javax.swing.BorderFactory.createTitledBorder("Nuevo Cobro"));
+        pnlCobro.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nuevo Cobro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        pnlCheque.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Cheque"));
+        pnlCheque.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Cheque", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel16.setText("Fecha Emision:");
 
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel17.setText("   Fecha Vencimiento:");
 
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel18.setText("Nro Sucursal:");
 
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel19.setText("Banco:");
 
-        pnlClienteCheque.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
+        pnlClienteCheque.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel20.setText("CUIT:");
 
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel21.setText("Razon social:");
 
-        jTextField9.setText("X-XXXXXXXX-X");
+        txtChequeCUIT.setEditable(false);
+
+        txtChequeRazonSocial.setEditable(false);
 
         javax.swing.GroupLayout pnlClienteChequeLayout = new javax.swing.GroupLayout(pnlClienteCheque);
         pnlClienteCheque.setLayout(pnlClienteChequeLayout);
@@ -388,18 +499,18 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             .addGroup(pnlClienteChequeLayout.createSequentialGroup()
                 .addComponent(jLabel21)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                .addComponent(txtChequeRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel20)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtChequeCUIT, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlClienteChequeLayout.setVerticalGroup(
             pnlClienteChequeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlClienteChequeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel21)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtChequeRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtChequeCUIT, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jLabel20))
         );
 
@@ -413,19 +524,19 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlChequeLayout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dtcFechaEmision, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dtcChequeFechaEmision, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dtcFechaVencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(dtcChequeFechaVencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlChequeLayout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                        .addComponent(txtChequeBanco, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel18)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtChequeNroSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnlChequeLayout.setVerticalGroup(
@@ -435,74 +546,81 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlChequeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
-                    .addComponent(dtcFechaEmision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dtcFechaVencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dtcChequeFechaEmision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dtcChequeFechaVencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlChequeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtChequeBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtChequeNroSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18)
                     .addComponent(jLabel19)))
         );
 
-        jLabel6.setText("Tipo Cobro:");
+        txtDescripcionCobro.setBackground(new java.awt.Color(255, 255, 255));
+        txtDescripcionCobro.setLineWrap(true);
+        txtDescripcionCobro.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(txtDescripcionCobro);
 
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setWrapStyleWord(true);
-        jScrollPane2.setViewportView(jTextArea1);
+        cmbFormaPagoCobro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Efectivo", "Cheque", " " }));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel14.setText("  Monto:  $");
 
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel15.setText("Descripción:");
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("Fecha:");
 
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel13.setText("Forma pago:");
 
-        jTextField1.setText("XX/XX/XXXX");
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel6.setText("Nro. Cobro:");
+
+        txtNroCobro.setEditable(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel15)
-                .addContainerGap())
             .addComponent(jScrollPane2)
+            .addComponent(jLabel15)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(cmbFormaPagoCobro, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMontoCobro, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtNroCobro, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtFechaCobro, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtNroCobro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFechaCobro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addGap(11, 11, 11)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMontoCobro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbFormaPagoCobro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -516,7 +634,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             .addGroup(pnlCobroLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(pnlCheque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -526,9 +644,9 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jButton2.setText("Aceptar");
+        btnAceptar.setText("Aceptar");
 
-        jButton3.setText("Cancelar");
+        btnCancelar.setText("Cancelar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -541,9 +659,9 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                     .addComponent(pnlFactura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlCobro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(btnAceptar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(btnCancelar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -557,8 +675,8 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                 .addComponent(pnlCobro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnAceptar))
                 .addContainerGap())
         );
 
@@ -566,28 +684,26 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
-                PantallaCobroPedido dialog = new PantallaCobroPedido(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+             
             }
         });
     }
 
+    public static void iniciarCobroPedido(Window parent, Factura f) {
+        PantallaCobroPedido i = new PantallaCobroPedido(parent, new GestorCobroPedido(f));
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser dtcFechaEmision;
-    private com.toedter.calendar.JDateChooser dtcFechaVencimiento;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JComboBox cmbFormaPagoCobro;
+    private com.toedter.calendar.JDateChooser dtcChequeFechaEmision;
+    private com.toedter.calendar.JDateChooser dtcChequeFechaVencimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -604,6 +720,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -615,16 +732,6 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JPanel pnlCheque;
     private javax.swing.JPanel pnlClienteCheque;
     private javax.swing.JPanel pnlCobro;
@@ -636,15 +743,25 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
     private javax.swing.JPanel pnlTotal;
     private javax.swing.JTable tbCobros;
     private javax.swing.JTextField txtCUIT;
+    private javax.swing.JTextField txtChequeBanco;
+    private javax.swing.JTextField txtChequeCUIT;
+    private javax.swing.JTextField txtChequeNroSucursal;
+    private javax.swing.JTextField txtChequeRazonSocial;
+    private javax.swing.JTextArea txtDescripcionCobro;
     private javax.swing.JTextField txtDescuentoMonto;
     private javax.swing.JTextField txtDescuentoPorcentaje;
     private javax.swing.JTextField txtDomicilio;
-    private javax.swing.JTextField txtFechaGeneracion;
+    private javax.swing.JFormattedTextField txtFechaCobro;
+    private javax.swing.JFormattedTextField txtFechaGeneracion;
+    private javax.swing.JTextField txtMontoCobro;
+    private javax.swing.JTextField txtNroCobro;
     private javax.swing.JTextField txtNroFactura;
     private javax.swing.JTextField txtRazonSocial;
     private javax.swing.JTextField txtRecargoMonto;
     private javax.swing.JTextField txtRecargoPorcentaje;
-    private javax.swing.JTextField txtTotal;
+    private javax.swing.JTextField txtSaldoActual;
+    private javax.swing.JTextField txtSaldoRestante;
+    private javax.swing.JTextField txtTotalBruto;
+    private javax.swing.JTextField txtTotalNeto;
     // End of variables declaration//GEN-END:variables
-
 }

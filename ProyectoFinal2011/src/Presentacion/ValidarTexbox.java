@@ -24,7 +24,7 @@ import javax.swing.text.JTextComponent;
  */
 public class ValidarTexbox {
 
-    static{
+    static {
         ToolTipManager.sharedInstance().setInitialDelay(250);
         ToolTipManager.sharedInstance().setReshowDelay(200);
     }
@@ -214,6 +214,10 @@ public class ValidarTexbox {
     }
 
     public static void validarNumero(final JTextComponent txt, final int digitos, final int decimales) {
+       validarNumero(txt,digitos,decimales,null,null);
+    }
+
+    public static void validarNumero(final JTextComponent txt, final int digitos, final int decimales, final Float maxValue, final Float minValue) {
         //ToolTipManager.sharedInstance().setInitialDelay(1);
         txt.addKeyListener(new java.awt.event.KeyAdapter() {
 
@@ -231,6 +235,15 @@ public class ValidarTexbox {
                     txt.setToolTipText(mensage);
                     evt.consume();
 
+                }
+
+                try {
+                    float aux = Float.parseFloat(texto);
+                    if ((maxValue != null && maxValue < aux) || (minValue != null && aux < minValue)) {
+                        evt.consume();
+                    }
+                } catch (Exception e) {
+                    evt.consume();
                 }
 
 

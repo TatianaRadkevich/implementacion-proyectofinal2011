@@ -67,7 +67,7 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
                 Vector fila = new Vector();
 
                 fila.add(elemento.getFactura().getNumero());
-                fila.add(Utilidades.parseFecha(elemento.getFactura().getFecFactura()));
+                fila.add(Utilidades.parseFecha(elemento.getFactura().getFechaGeneracion()));
                 fila.add(elemento.getCliente().getRazonSocial());
                 fila.add(elemento.getCliente().getCuit());
                 fila.add(elemento.getIdPedido());

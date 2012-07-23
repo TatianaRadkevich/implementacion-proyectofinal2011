@@ -37,9 +37,9 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
 
     public static void iniciarGeneracionFactura(Window parent) throws NegocioException {
 
-        if(PedidoBD.getPedidos(EstadoPedidoBD.getEstadoRetirado()).isEmpty())
-            throw new NegocioException("No hay pedidos para facturar");
-        PantallaFacturaGenerar interfaz =new PantallaFacturaGenerar(parent);
+//        if(PedidoBD.getPedidos(EstadoPedidoBD.getEstadoRetirado()).isEmpty())
+//            throw new NegocioException("No hay pedidos para facturar");
+        PantallaFacturaGenerar interfaz = new PantallaFacturaGenerar(parent);
         interfaz.limpiarCampos();
         interfaz.setVisible(true);
     }
@@ -55,7 +55,6 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         interfaz.pack();
         interfaz.setVisible(true);
     }
-
     /** Creates new form PantallaFacturaGenerar */
     private TablaManager<Pedido> tmPedido;
     private TablaManager<DetalleFactura> tmDetFac;
@@ -65,6 +64,16 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         super(parent, ModalityType.APPLICATION_MODAL);
         initComponents();
         Utilidades.iniciarVentana(this);
+
+        inicializarTablas();
+        //tmPedido.setDatos(PedidoBD.getPedidos(EstadoPedidoBD.getEstadoRetirado()));
+        tmPedido.setDatos(PedidoBD.getPedidos(EstadoPedidoBD.getEstadoAutorizadoPendiente()));
+        ValidarTexbox.validarNumero(txtRecargoPorcentaje, 5, 2, 100f, 0f);
+        ValidarTexbox.validarNumero(txtDescuentoPorcentaje, 5, 2, 100f, 0f);
+
+    }
+
+    private void inicializarTablas() {
         this.tmPedido = new TablaManager<Pedido>(this.tbPedidos) {
 
             @Override
@@ -114,17 +123,11 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
                 cabcera.add("Producto");//col 3
                 cabcera.add("Descripción");//col 4
                 cabcera.add("Precio unit.");//col 1
-                cabcera.add("Cantidad");//col 2                
+                cabcera.add("Cantidad");//col 2
                 cabcera.add("Sub total");
                 return cabcera;
             }
         };
-
-        tmPedido.setDatos(PedidoBD.getPedidos(EstadoPedidoBD.getEstadoRetirado()));
-        ValidarTexbox.validarFloat(txtDescuentoPorcentaje);
-        //ValidarTexbox.validarFloat(txtDescuentoMonto);
-        ValidarTexbox.validarFloat(txtRecargoPorcentaje);
-        //ValidarTexbox.validarFloat(txtRecargoMonto);
     }
 
     private void limpiarCampos() {
@@ -148,8 +151,10 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
     }
 
     private void setPedido(Pedido p) {
+        float subTotal = 0, recPor = 0, descPor = 0;
+
         limpiarCampos();
-        this.pedidoSelec=p;
+        this.pedidoSelec = p;
         btnGenerar.setEnabled(false);
         if (p == null) {
             return;
@@ -157,9 +162,11 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
 
         btnGenerar.setEnabled(true);
 
+
         ArrayList<DetalleFactura> detFac = new ArrayList<DetalleFactura>();
         for (DetallePedido detPed : p.getDetallePedido()) {
             detFac.add(new DetalleFactura(detPed));
+            subTotal += detPed.getSubTotal();
         }
         tmDetFac.setDatos(detFac);
         txtCUIT.setText(p.getCliente().getRazonSocial());
@@ -167,7 +174,39 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         txtFechaGeneracion.setText(Utilidades.parseFecha(p.getFechaGeneracion()));
         txtNroFactura.setText(Factura.getUltimoNro() + 1 + "");
         txtRazonSocial.setText(p.getCliente().getRazonSocial());
+        txtSubTotal.setText("" + subTotal);
+        actualizarTotal();
+    }
 
+    private void actualizarTotal() {
+        float subTotal = getSubTotal();
+        float recPor = 0, descPor = 0;
+        float recMonto = 0, descMonto = 0;
+
+        try {
+            txtRecargoMonto.setText("0");
+            recPor = new Float(txtRecargoPorcentaje.getText());
+            recMonto = subTotal * recPor / 100;
+            txtRecargoMonto.setText("" + recMonto);
+        } catch (Exception e) {
+        }
+        try {
+            txtDescuentoMonto.setText("0");
+            descPor = new Float(txtDescuentoPorcentaje.getText());
+            descMonto = subTotal * descPor / 100;
+            txtDescuentoMonto.setText("" + descMonto);
+        } catch (Exception e) {
+        }
+
+        txtTotal.setText("" + (subTotal - descMonto + recMonto));
+    }
+
+    private float getSubTotal() {
+        try {
+            return new Float(txtSubTotal.getText());
+        } catch (Exception e) {
+        }
+        return 0;
     }
 
     /** This method is called from within the constructor to
@@ -234,7 +273,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         pnlPedidos.setLayout(pnlPedidosLayout);
         pnlPedidosLayout.setHorizontalGroup(
             pnlPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
         );
         pnlPedidosLayout.setVerticalGroup(
             pnlPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,7 +337,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         pnlDetFactura.setLayout(pnlDetFacturaLayout);
         pnlDetFacturaLayout.setHorizontalGroup(
             pnlDetFacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetFacturaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
@@ -322,10 +361,10 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel7.setText("%");
 
-        txtDescuentoPorcentaje.setToolTipText("Precionar Enter para que las modificaciones tomen efecto");
-        txtDescuentoPorcentaje.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDescuentoPorcentajeActionPerformed(evt);
+        txtDescuentoPorcentaje.setToolTipText("null");
+        txtDescuentoPorcentaje.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDescuentoPorcentajeKeyReleased(evt);
             }
         });
 
@@ -361,10 +400,9 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel8.setText("%");
 
-        txtRecargoPorcentaje.setToolTipText("Precionar Enter para que las modificaciones tomen efecto");
-        txtRecargoPorcentaje.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRecargoPorcentajeActionPerformed(evt);
+        txtRecargoPorcentaje.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRecargoPorcentajeKeyReleased(evt);
             }
         });
 
@@ -449,7 +487,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtFechaGeneracion, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -467,7 +505,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
                         .addGap(30, 30, 30)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDomicilio, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)))
+                        .addComponent(txtDomicilio, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlFacturaLayout.setVerticalGroup(
@@ -545,15 +583,15 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         try {
             Factura f = new Factura();
             f.setPedido(tmPedido.getSeletedObject());
-            f.setTDetallesFacturas(tmDetFac.getDatos());
+            f.setDetalleFactura(tmDetFac.getDatos());
             try {
-                f.setTEmpleados(EmpleadoBD.listarEmpleado().get(0));
+                f.setEmpleado(EmpleadoBD.listarEmpleado().get(0));
             } catch (IndexOutOfBoundsException e) {
                 Mensajes.mensajeErrorGenerico("No se ha cargado ningun empleado");
                 return;
             }
-            f.setDescuento(new BigDecimal(txtDescuentoMonto.getText()));
-            f.setRecargo(new BigDecimal(txtRecargoMonto.getText()));
+            f.setDescuentoPorcentaje(new BigDecimal(txtDescuentoMonto.getText()));
+            f.setRecargoPorcentaje(new BigDecimal(txtRecargoMonto.getText()));
             f.guardar();
         } catch (Exception e) {
             Mensajes.mensajeErrorGenerico("Datos incorrectos");
@@ -566,31 +604,25 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void txtRecargoPorcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRecargoPorcentajeActionPerformed
+    private void txtRecargoPorcentajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRecargoPorcentajeKeyReleased
         // TODO add your handling code here:
-        float subTotal = new Float(txtSubTotal.getText());
-        float porc = new Float(txtRecargoPorcentaje.getText());
-        txtRecargoMonto.setText("" + subTotal * porc);
-    }//GEN-LAST:event_txtRecargoPorcentajeActionPerformed
+        actualizarTotal();
+    }//GEN-LAST:event_txtRecargoPorcentajeKeyReleased
 
-    private void txtDescuentoPorcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescuentoPorcentajeActionPerformed
+    private void txtDescuentoPorcentajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescuentoPorcentajeKeyReleased
         // TODO add your handling code here:
-        float subTotal = new Float(txtSubTotal.getText());
-        float porc = new Float(txtDescuentoPorcentaje.getText());
-        txtDescuentoMonto.setText("" + subTotal * porc);
-    }//GEN-LAST:event_txtDescuentoPorcentajeActionPerformed
+        actualizarTotal();
+    }//GEN-LAST:event_txtDescuentoPorcentajeKeyReleased
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new PantallaFacturaGenerar(null).setVisible(true);
+                iniciarGeneracionFactura(null);
             }
         });
     }
+    // <editor-fold defaultstate="collapsed" desc="Variables del Editor">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGenerar;
@@ -628,4 +660,5 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
     private javax.swing.JTextField txtSubTotal;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
+// </editor-fold>
 }
