@@ -748,7 +748,7 @@ go
 CREATE TABLE T_ORDENES_COMPRA (
        ID_ORDEN_COMPRA      numeric(8) IDENTITY,
        FEC_GENERACION       datetime NOT NULL,
-       FEC_RECEPCION        datetime NOT NULL,
+       FEC_RECEPCION        datetime NULL,
        ID_PROVEEDOR         numeric(3) NOT NULL,
        ID_EORDEN_COMPRA     numeric(2) NOT NULL,
        FEC_CANCELACION      datetime NULL,
