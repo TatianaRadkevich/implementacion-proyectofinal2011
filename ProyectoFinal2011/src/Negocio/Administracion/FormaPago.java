@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "T_FORMAS_PAGO", schema = "dbo", catalog = "Ramaty")
 public class FormaPago implements java.io.Serializable {
-  
+
     @Id
     @GeneratedValue
     @Column(name = "ID_FORMA_PAGO", unique = true, nullable = false, precision = 2, scale = 0)
@@ -118,10 +118,7 @@ public class FormaPago implements java.io.Serializable {
     }
 
     public void setMotivo(String motivo) throws TipoDatoException {
-
-
         this.motivo = motivo;
-
     }
 
     public String getMotivo() {
@@ -133,6 +130,12 @@ public class FormaPago implements java.io.Serializable {
             throw new TipoDatoException("Algunos campos no han sido ingresado correctamente.");
         }
         return true;
+    }
+
+    public enum Tipo{Efectivo,Cheque;}
+
+    public static FormaPago getFormaPago() {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
 //    @Override

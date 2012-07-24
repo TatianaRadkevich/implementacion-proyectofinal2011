@@ -35,7 +35,6 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
 
     private TablaManager<AsistenciaEmpleado> tmAsistencia;
     private TablaManager<Empleado> tmEmpleado;
-    private TablaManager<AsignacionesDias> tmAsignacionDia;
 
     /** Creates new form ConsultarAsistenciaEmpleado */
     public ConsultarAsistenciaEmpleado(java.awt.Frame parent, boolean modal) {
@@ -106,7 +105,7 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
         tmAsistencia.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
-                cargarObs(tmAsistencia.getSeletedObject());
+                cargarObservaciones(tmAsistencia.getSeletedObject());
             }
         });
 
@@ -136,33 +135,15 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
             public void valueChanged(ListSelectionEvent e) {
                 cargarAsistenciaHorario();
             }
-        });
-
-        tmAsignacionDia=new TablaManager<AsignacionesDias>(tbAsignacionDia) {
-
-            @Override
-            public Vector ObjetoFila(AsignacionesDias elemento) {
-                Vector salida=new Vector();
-                salida.add(elemento.getTDias().getNombre());
-                salida.add(Utilidades.parseHora(elemento.getHoraDesde()));
-                salida.add(Utilidades.parseHora(elemento.getHoraHasta()));
-                return salida;
-            }
-
-            @Override
-            public Vector getCabecera() {
-                Vector salida=new Vector();
-                salida.add("Día");
-                salida.add("Desde (hs.)");
-                salida.add("Hasta (hs.)");
-                return salida;
-            }
-        };
+        });       
     }
 
     private void cargarAsistenciaHorario() {
         limpiarAsistenciaHorario();
 
+        if(tmEmpleado.getSeletedObject()==null)
+            return;
+        
         Empleado emp=tmEmpleado.getSeletedObject();
         Date desde=dtcFechaDesde.getDate();
         Date hasta=dtcFechaHasta.getDate();
@@ -170,24 +151,12 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
              return;
 
         List<AsistenciaEmpleado> resultado=AsistenciaEmpleadoBD.getAsistencia(emp.getId()+"", desde, hasta);
-        tmAsistencia.setDatos(resultado);
-        
-        if(emp.getTAsignacionesHorario()==null)
-            return;
-
-        Horarios h=emp.getTAsignacionesHorario().getTHorarios();
-        tmAsignacionDia.setDatos(h.getTAsignacionesDiases());
-        txtNombreHorario.setText(h.getNombre());
-        txtDescripcionHorario.setText(h.getDescripcion());
+        tmAsistencia.setDatos(resultado); 
     }
 
     private void limpiarAsistenciaHorario() {
         tmAsistencia.limpiar();
-        limpiarObservaciones();
-
-        tmAsignacionDia.limpiar();
-        txtNombreHorario.setText("");
-        txtDescripcionHorario.setText("");
+        limpiarObservaciones();     
     }
 
     private void limpiarObservaciones() {
@@ -195,7 +164,7 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
         txtObsIngreso.setText("");
     }
 
-    private void cargarObs(AsistenciaEmpleado ae) {
+    private void cargarObservaciones(AsistenciaEmpleado ae) {
         limpiarObservaciones();
         if (ae == null)            
             return;
@@ -226,8 +195,6 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         tbEmpledos = new javax.swing.JTable();
         btnModificar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
-        tbPnlHorario = new javax.swing.JTabbedPane();
         pnlClientes = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbAsistencia = new javax.swing.JTable();
@@ -243,16 +210,9 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         dtcFechaDesde = new com.toedter.calendar.JDateChooser();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        txtNombreHorario = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txtDescripcionHorario = new javax.swing.JTextArea();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tbAsignacionDia = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Consultar Asistencias de Empleados");
 
         pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Empleados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
@@ -315,7 +275,7 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
                 .addComponent(btnBuscar))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resultados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resultados (seleccione el empleado que desea consultar)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         tbEmpledos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -341,7 +301,7 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -358,15 +318,15 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
             .addGroup(pnlBuscarLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlBuscarLayout.setVerticalGroup(
             pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBuscarLayout.createSequentialGroup()
-                .addGroup(pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(pnlBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -377,12 +337,7 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
             }
         });
 
-        btnCancelar.setText("Imprimir");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
+        pnlClientes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Asistencias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         tbAsistencia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -423,8 +378,8 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
             .addGroup(pnlObservacionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlObservacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(scrlPnlEgreso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-                    .addComponent(scrlPnlIngreso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                    .addComponent(scrlPnlEgreso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                    .addComponent(scrlPnlIngreso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
@@ -434,11 +389,11 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
             .addGroup(pnlObservacionesLayout.createSequentialGroup()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrlPnlIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addComponent(scrlPnlIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrlPnlEgreso, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addComponent(scrlPnlEgreso, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -455,10 +410,10 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(dtcFechaDesde, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                    .addComponent(dtcFechaDesde, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dtcFechaHasta, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addComponent(dtcFechaHasta, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                     .addComponent(jLabel2)))
         );
         jPanel4Layout.setVerticalGroup(
@@ -482,7 +437,7 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(pnlObservaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -496,69 +451,9 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
                     .addGroup(pnlClientesLayout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-
-        tbPnlHorario.addTab("Asistencia del empleado", pnlClientes);
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel8.setText("Descripción:");
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel9.setText("Nombre:");
-
-        txtNombreHorario.setEditable(false);
-
-        txtDescripcionHorario.setEditable(false);
-        txtDescripcionHorario.setFont(new java.awt.Font("Tahoma", 0, 11));
-        txtDescripcionHorario.setLineWrap(true);
-        txtDescripcionHorario.setWrapStyleWord(true);
-        jScrollPane3.setViewportView(txtDescripcionHorario);
-
-        tbAsignacionDia.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Día", "Desde", "Hasta"
-            }
-        ));
-        jScrollPane4.setViewportView(tbAsignacionDia);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel9)
-                    .addComponent(txtNombreHorario, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-                    .addComponent(jLabel8)
-                    .addComponent(jScrollPane3))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombreHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-
-        tbPnlHorario.addTab("Horario del empleado", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -567,12 +462,9 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tbPnlHorario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 491, Short.MAX_VALUE)
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlClientes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -581,11 +473,9 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(pnlBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tbPnlHorario, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                .addComponent(pnlClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnModificar)
-                    .addComponent(btnCancelar))
+                .addComponent(btnModificar)
                 .addContainerGap())
         );
 
@@ -605,9 +495,6 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
         tmEmpleado.setDatos(resultado);
 
     }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-}//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         this.dispose();
@@ -633,7 +520,6 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
     private com.toedter.calendar.JDateChooser dtcFechaDesde;
     private com.toedter.calendar.JDateChooser dtcFechaHasta;
@@ -644,30 +530,21 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel pnlBuscar;
     private javax.swing.JPanel pnlClientes;
     private javax.swing.JPanel pnlObservaciones;
     private javax.swing.JScrollPane scrlPnlEgreso;
     private javax.swing.JScrollPane scrlPnlIngreso;
-    private javax.swing.JTable tbAsignacionDia;
     private javax.swing.JTable tbAsistencia;
     private javax.swing.JTable tbEmpledos;
-    private javax.swing.JTabbedPane tbPnlHorario;
     private javax.swing.JTextField txtApellido;
-    private javax.swing.JTextArea txtDescripcionHorario;
     private javax.swing.JTextField txtLegajo;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombreHorario;
     private javax.swing.JTextArea txtObsEgreso;
     private javax.swing.JTextArea txtObsIngreso;
     // End of variables declaration//GEN-END:variables

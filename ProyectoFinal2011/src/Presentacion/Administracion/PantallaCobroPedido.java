@@ -14,8 +14,10 @@ import Negocio.Administracion.GestorCobroPedido;
 import Negocio.Administracion.Cheque;
 import Negocio.Administracion.Cobro;
 import Negocio.Administracion.Factura;
+import Negocio.Administracion.FormaPago;
 import Negocio.Ventas.Pedido;
 import Presentacion.TablaManager;
+import Presentacion.Utilidades;
 import Presentacion.ZLinkers.*;
 import Presentacion.ZLinkers.ZLFormatedTextField.Formato;
 import java.awt.Window;
@@ -39,6 +41,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         this.gestor = gestor;
         initComponents();
         cofigurarControles();
+        Utilidades.comboCargar(cmbFormaPagoCobro,gestor.getFormaPagos());
         setFactura(gestor.getFactura());
     }
 
@@ -96,19 +99,16 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         linkCobro.add("Vencimiento", new ZLCalendar(dtcChequeFechaVencimiento));
     }
 
-    private void setFactura(Factura f)
-    {
-
+    private void setFactura(Factura f) {
+        linkFactura.setObjeto(f);
+        linkFactura.load();
+        tmCobros.setDatos(f.getCobros());
+        setCobroFactura(new Cobro(f));
     }
 
-    private void setCobroFactura(Cobro c)
-    {
-
-    }
-
-    private void actualizarDatosCobros()
-    {
-
+    private void setCobroFactura(Cobro c) {
+        linkCobro.setObjeto(c);
+        linkCobro.load();
     }
 
     /** This method is called from within the constructor to
@@ -563,6 +563,11 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         jScrollPane2.setViewportView(txtDescripcionCobro);
 
         cmbFormaPagoCobro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Efectivo", "Cheque", " " }));
+        cmbFormaPagoCobro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbFormaPagoCobroActionPerformed(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel14.setText("  Monto:  $");
@@ -685,6 +690,19 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmbFormaPagoCobroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFormaPagoCobroActionPerformed
+        // TODO add your handling code here:
+        if(cmbFormaPagoCobro.getSelectedItem()!=null && cmbFormaPagoCobro.getSelectedItem() instanceof FormaPago)
+        {
+            FormaPago fp= (FormaPago) cmbFormaPagoCobro.getSelectedItem();
+            if(fp.equals(FormaPago.getFormaPago()))
+            {
+                
+            }
+        }
+
+    }//GEN-LAST:event_cmbFormaPagoCobroActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -692,7 +710,6 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-             
             }
         });
     }

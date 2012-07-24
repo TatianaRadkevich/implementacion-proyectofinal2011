@@ -35,7 +35,7 @@ public class OrdenCompraBD {
         for(DetalleOrdenCompra doc:oc.getDetalle())
         {
             doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoPendiente());
-            doc.getMaterial().getMaterial().setEsPendiente(true);
+            //doc.getMaterial().getMaterial().setEsPendiente(true);
             sesion.update(doc.getMaterial().getMaterial());
             for(Faltante falt: doc.getMaterial().getMaterial().faltantesPendientes())
            {
@@ -55,7 +55,7 @@ public class OrdenCompraBD {
         for(DetalleOrdenCompra doc:oc.getDetalle())
         {
             doc.setEstado(EstadoDetalleOrdenCompraBD.getEstadoCancelada());
-            doc.getMaterial().getMaterial().setEsPendiente(false);
+            //doc.getMaterial().getMaterial().setEsPendiente(false);
             sesion.update(doc.getMaterial().getMaterial());
 
             for(Faltante falt: doc.getFaltantes())
@@ -126,7 +126,7 @@ public class OrdenCompraBD {
     public static void eliminarDetalle(DetalleOrdenCompra seletedObject) {
          Session sesion=HibernateUtil.getSession();
         sesion.beginTransaction();
-        seletedObject.getMaterial().getMaterial().setEsPendiente(true);
+        //seletedObject.getMaterial().getMaterial().setEsPendiente(true);
         sesion.update(seletedObject.getMaterial().getMaterial());
         sesion.getTransaction().commit();
         sesion.flush();
@@ -138,7 +138,7 @@ public class OrdenCompraBD {
         sesion.beginTransaction();
 
         for(DetalleOrdenCompra det:detalle){
-            det.getMaterial().getMaterial().setEsPendiente(false);
+           // det.getMaterial().getMaterial().setEsPendiente(false);
             sesion.update(det.getMaterial().getMaterial());
             for(Faltante falt: det.getFaltantes())
            {
@@ -150,7 +150,7 @@ public class OrdenCompraBD {
         sesion.update(oc);
        for(DetalleOrdenCompra doc:oc.getDetalle())
         {
-            doc.getMaterial().getMaterial().setEsPendiente(true);
+            //doc.getMaterial().getMaterial().setEsPendiente(true);
             sesion.update(doc.getMaterial().getMaterial());
 
             for(Faltante falt: doc.getMaterial().getMaterial().faltantesPendientes())

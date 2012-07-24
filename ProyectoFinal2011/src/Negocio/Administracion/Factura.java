@@ -2,6 +2,7 @@ package Negocio.Administracion;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
 import BaseDeDatos.Administracion.EmpleadoBD;
+import BaseDeDatos.Administracion.FacturaBD;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.Empleado;
@@ -72,6 +73,17 @@ public class Factura implements java.io.Serializable {
     @Column(name = "RECARGO", precision = 6, scale = 4)
     private BigDecimal recargo;
     //
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "FEC_BAJA")
+    private Date fecBaja;
+    //
+    @Column(name = "MOTIVO_BAJA", length = 100)
+    private String motivoBaja;
+    //
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_EPEDIDO")//, nullable=false)
+    private EstadoFactura TEFactura;
+    //
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TFacturas")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<DetalleFactura> TDetallesFacturas = new HashSet<DetalleFactura>(0);
@@ -118,7 +130,7 @@ public class Factura implements java.io.Serializable {
 
     public void setDescuentoPorcentaje(BigDecimal descuento) {
         this.descuento = descuento;
-    }    
+    }
 
     public BigDecimal getRecargoPorcentaje() {
         return this.recargo;
@@ -159,6 +171,18 @@ public class Factura implements java.io.Serializable {
         this.fecFactura = fecFactura;
     }
 
+    public EstadoFactura getEstadoFactura() {
+        return TEFactura;
+    }
+
+    public Date getFechaBaja() {
+        return fecBaja;
+    }
+
+    public String getMotivoBaja() {
+        return motivoBaja;
+    }
+
     public Pedido getPedido() {
         return pedido;
     }
@@ -178,7 +202,7 @@ public class Factura implements java.io.Serializable {
 
     public Domicilio getRazonDomicilio() {
         return pedido.getCliente().getDomicilio();
-    }    
+    }
 
     public int getNumero() {
         return this.numero;
@@ -207,16 +231,18 @@ public class Factura implements java.io.Serializable {
         return new ArrayList<Cobro>(this.TCobroses);
     }
 
-    public void addCobro(Cobro c)
-    {
-        if(c==null)
+    public void addCobro(Cobro c) {
+        if (c == null) {
             throw new NegocioException("Error el cobro no puede ser nulo");
+        }
 
-        if(c.getImporte().floatValue()>getTotalAdeudado())
+        if (c.getImporte().floatValue() > getTotalAdeudado()) {
             throw new NegocioException("El importe no puede superar el monto adeudado");
+        }
 
-        if(c.getImporte().floatValue()<=0)
+        if (c.getImporte().floatValue() <= 0) {
             throw new NegocioException("El importe debe ser mayor que cero");
+        }
 
         c.setFactura(this);
         this.TCobroses.add(c);
@@ -231,22 +257,30 @@ public class Factura implements java.io.Serializable {
         }
     }
 
-    public float getTotalCobrado()
-    {
-        BigDecimal salida=new BigDecimal(0);
-        for(Cobro c:this.getCobros())
-            salida=salida.add(c.getImporte());
-         return salida.round(new MathContext(2, RoundingMode.UP)).floatValue();
+    public float getTotalCobrado() {
+        BigDecimal salida = new BigDecimal(0);
+        for (Cobro c : this.getCobros()) {
+            salida = salida.add(c.getImporte());
+        }
+        return salida.round(new MathContext(2, RoundingMode.UP)).floatValue();
     }
 
-    public float getTotalAdeudado()
-    {
-        return this.getTotalNeto()-this.getTotalCobrado();
+    public float getTotalAdeudado() {
+        return this.getTotalNeto() - this.getTotalCobrado();
     }
 
-    public void guardar() {
+    public void generar() {
         this.setFechaGeneracion(Utilidades.getFechaActual());
         this.setEmpleado(EmpleadoBD.listarEmpleado().get(0));
+        this.TEFactura=FacturaBD.getEstadoFactura(FacturaBD.Estado.GeneradaPendienteCobro);
+        HibernateUtil.guardarObjeto(this);
+    }
+
+     public void anular(String motivo) {
+         this.fecBaja=Utilidades.getFechaActual();
+         this.motivoBaja=motivo;
+         this.TEFactura=FacturaBD.getEstadoFactura(FacturaBD.Estado.Anulada);
+
         HibernateUtil.guardarObjeto(this);
     }
 }

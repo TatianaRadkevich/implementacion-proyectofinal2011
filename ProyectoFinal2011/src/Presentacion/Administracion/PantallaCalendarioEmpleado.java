@@ -72,7 +72,7 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
                 fila.add(elemento.getNombre());
                 fila.add(elemento.getApellido());
                 fila.add(elemento.getSexo().getNombre());
-                fila.add(elemento.getTAsignacionesHorario().getTHorarios().getNombre());
+              //  fila.add(elemento.getTAsignacionesHorario().getTHorarios().getNombre());
 
                 return fila;
             }
@@ -84,7 +84,7 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
                 cabecera.add("Nombre");
                 cabecera.add("Apellido");
                 cabecera.add("Sexo");
-                cabecera.add("Turno");
+                //cabecera.add("Turno");
 
                 return cabecera;
             }
@@ -284,7 +284,7 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
     private void btnDetalleAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleAgregarActionPerformed
         // TODO add your handling code here:
         Empleado temp= tmEmpleados.getSeletedObject();
-        temp.setTAsignacionesHorario((AsignacionesHorario)cmbTurnos.getSelectedItem());
+       // temp.setTAsignacionesHorario((AsignacionesHorario)cmbTurnos.getSelectedItem());
 
         tmEmpleadosTurno.add(temp);
 
