@@ -5,7 +5,11 @@
 
 package Negocio.Administracion;
 
+import BaseDeDatos.HibernateUtil;
 import Negocio.Administracion.Factura;
+import Presentacion.Mensajes;
+import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -23,6 +27,13 @@ public class GestorCobroPedido {
     public Factura getFactura()
     {
         return factura;
+    }
+
+    public static List<FormaPago> getFormaPagos() {
+        List<FormaPago> l= HibernateUtil.ejecutarConsulta("FROM FormaPago");
+        if(l.isEmpty())
+            Mensajes.mensajeErrorGenerico("El sistema no tiene cargado formas de pago");
+        return l;
     }
 
 }

@@ -121,56 +121,13 @@ public class Empleado implements java.io.Serializable {
     @JoinColumn(name = "ID_ESTADO_EMPLEADO", nullable = false)
     private EstadosEmpleado TEstadosEmpleado;
     /*---------------------------------------------------------------------------------------------*/
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_ASIGNACION_HORARIO", nullable = true)
-    private AsignacionesHorario TAsignacionesHorario;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "ID_ASIGNACION_HORARIO", nullable = true)
+//    private AsignacionesHorario TAsignacionesHorario;
     /*---------------------------------------------------------------------------------------------*/
 // </editor-fold>
 
-    public Empleado() {        
-    }
-
-    public Empleado(int idEmpleado, Domicilio TDomicilios, TipoDocumento TTdocumento, Usuario TUsuarios, Sexo TSexos, String nombre, String apellido, Date fecNacimiento, int numeroDocumento, EstadosEmpleado TEstadosEmpleado, AsignacionesHorario TAsignacionesHorario) {
-        this.idEmpleado = idEmpleado;
-        this.TDomicilios = TDomicilios;
-        this.TTdocumento = TTdocumento;
-        this.TUsuarios = TUsuarios;
-        this.TSexos = TSexos;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.fecNacimiento = fecNacimiento;
-        this.numeroDocumento = numeroDocumento;
-        this.TEstadosEmpleado = TEstadosEmpleado;
-        this.TAsignacionesHorario = TAsignacionesHorario;
-    }
-
-    public Empleado(int idEmpleado, Domicilio TDomicilios, TipoDocumento TTdocumento, Usuario TUsuarios, Sexo TSexos, String nombre, String apellido, Long celular, String correoElectronico, Date fecNacimiento, int numeroDocumento, Long telefono, String observaciones, Integer idAsistenciaEmpleado, Short idDiasHorasLaborables, Date fecBaja, String motivoBaja, Set TCobroses, Set TFacturases, Set TDetallesPlans, Set TPlanesProduccions, Set TDiasHoraLaborables, Set<AsistenciaEmpleado> TAsistenciasEmpleados, Set TEmpleadosXCargos, EstadosEmpleado TEstadosEmpleado, AsignacionesHorario TAsignacionesHorario) {
-        this.idEmpleado = idEmpleado;
-        this.TDomicilios = TDomicilios;
-        this.TTdocumento = TTdocumento;
-        this.TUsuarios = TUsuarios;
-        this.TSexos = TSexos;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.celular = celular;
-        this.correoElectronico = correoElectronico;
-        this.fecNacimiento = fecNacimiento;
-        this.numeroDocumento = numeroDocumento;
-        this.telefono = telefono;
-        this.observaciones = observaciones;
-        this.idAsistenciaEmpleado = idAsistenciaEmpleado;
-        this.idDiasHorasLaborables = idDiasHorasLaborables;
-        this.fecBaja = fecBaja;
-        this.motivoBaja = motivoBaja;
-        this.TCobroses = TCobroses;
-        this.TFacturases = TFacturases;
-        this.TDetallesPlans = TDetallesPlans;
-        this.TPlanesProduccions = TPlanesProduccions;
-        this.TDiasHoraLaborables = TDiasHoraLaborables;
-        this.TAsistenciasEmpleados = TAsistenciasEmpleados;
-        this.TEmpleadosXCargos = TEmpleadosXCargos;
-        this.TEstadosEmpleado = TEstadosEmpleado;
-        this.TAsignacionesHorario = TAsignacionesHorario;
+    public Empleado() {
     }
 
     // <editor-fold defaultstate="collapsed" desc="set/get">
@@ -235,7 +192,6 @@ public class Empleado implements java.io.Serializable {
     }
 
     public String getApellido() {
-
         return this.apellido;
     }
 
@@ -246,6 +202,10 @@ public class Empleado implements java.io.Serializable {
             this.apellido = null;
             throw new TipoDatoException("Formato incorrecto. Debe ser alfabético");
         }
+    }
+
+    public String getApellidoNombre() {
+        return this.apellido + ", " + this.nombre;
     }
 
     public Long getCelular() {
@@ -282,7 +242,7 @@ public class Empleado implements java.io.Serializable {
         return this.fecNacimiento;
     }
 
-    public void setFecNacimiento(Date fecha){
+    public void setFecNacimiento(Date fecha) {
         Utilidades.validarNULL(fecha);
         Date fMin = Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 0, 0, -18);
         if (fecha.compareTo(fMin) > 0) {
@@ -297,7 +257,7 @@ public class Empleado implements java.io.Serializable {
     }
 
     public void setNumeroDocumento(Integer numeroDocumento) throws TipoDatoException {
-        if (numeroDocumento==null||numeroDocumento == 0) {
+        if (numeroDocumento == null || numeroDocumento == 0) {
             this.numeroDocumento = null;
             throw new TipoDatoException("Formato incorrecto. Debe ser numérico");
         }
@@ -365,18 +325,10 @@ public class Empleado implements java.io.Serializable {
     public void setEstado(EstadosEmpleado TEstadosEmpleado) {
         this.TEstadosEmpleado = TEstadosEmpleado;
     }
-
-    public AsignacionesHorario getTAsignacionesHorario() {
-        return this.TAsignacionesHorario;
-    }
-
-    public void setTAsignacionesHorario(AsignacionesHorario TAsignacionesHorario) {
-        this.TAsignacionesHorario = TAsignacionesHorario;
-    }
-
-// </editor-fold>
-
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="set/get Relaciones Indirectas">
+
     public Set<Cobro> getCobros() {
         return this.TCobroses;
     }
@@ -417,11 +369,21 @@ public class Empleado implements java.io.Serializable {
         this.TDiasHoraLaborables = TDiasHoraLaborables;
     }
 
-    public List<AsistenciaEmpleado> getTAsistenciasEmpleados() {
+    public List<AsistenciaEmpleado> getAsistencias() {
         return new ArrayList<AsistenciaEmpleado>(this.TAsistenciasEmpleados);
     }
 
-    public void setTAsistenciasEmpleados(Set<AsistenciaEmpleado> TAsistenciasEmpleados) {
+    public AsistenciaEmpleado getUltimaAsistencia() {
+        AsistenciaEmpleado salida = null;
+        for (AsistenciaEmpleado ae : getAsistencias()) {
+            if (salida == null || salida.getFecAsistencia().compareTo(ae.getFecAsistencia()) < 0) {
+                salida = ae;
+            }
+        }
+        return salida;
+    }
+
+    public void setAsistencias(Set<AsistenciaEmpleado> TAsistenciasEmpleados) {
         this.TAsistenciasEmpleados = TAsistenciasEmpleados;
     }
 
@@ -485,5 +447,4 @@ public class Empleado implements java.io.Serializable {
     public static int getLastID() {
         return EmpleadoBD.getLastID();
     }
-
 }

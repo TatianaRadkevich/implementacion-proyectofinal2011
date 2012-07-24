@@ -724,15 +724,12 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTipoDocumento1ActionPerformed
 
     private void btnAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsistenciaActionPerformed
-        new PantallaRegistrarAsistenciaEmpleado().setVisible(true);
+        PantallaRegistrarAsistenciaEmpleado.iniciarRegistroAsistencia();
     }//GEN-LAST:event_btnAsistenciaActionPerformed
 
     private void btnDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositoActionPerformed
         visible(false);
         pnlDeposito.setVisible(true);
-
-        
-
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDepositoActionPerformed
 
