@@ -33,7 +33,7 @@ import javax.swing.border.TitledBorder;
  *
  * @author Heber Parrucci
  */
-public class PantallaRegistrarAsistenciaEmpleado extends javax.swing.JFrame {
+public class PantallaAsistenciaEmpleadoRegistrar extends javax.swing.JFrame {
 
     Empleado empleado = null;
     EmpleadoBD empleadoBD = new EmpleadoBD();
@@ -43,7 +43,7 @@ public class PantallaRegistrarAsistenciaEmpleado extends javax.swing.JFrame {
     GestorAsistencia gestor;
 
     /** Creates new form PantallaRegistrarAsistenciaEmpleado */
-    public PantallaRegistrarAsistenciaEmpleado(GestorAsistencia gestor) {
+    public PantallaAsistenciaEmpleadoRegistrar(GestorAsistencia gestor) {
         this.gestor = gestor;
         initComponents();
         Utilidades.iniciarVentana(this);
@@ -314,7 +314,7 @@ public class PantallaRegistrarAsistenciaEmpleado extends javax.swing.JFrame {
         txtObservaciones.setWrapStyleWord(true);
         jScrollPane2.setViewportView(txtObservaciones);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Hora:");
 
         txtHoraIngresoEgreso.setEditable(false);
@@ -487,14 +487,14 @@ public class PantallaRegistrarAsistenciaEmpleado extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                PantallaRegistrarAsistenciaEmpleado.iniciarRegistroAsistencia();
+                PantallaAsistenciaEmpleadoRegistrar.iniciarRegistroAsistencia();
             }
         });
     }
 
     public static void iniciarRegistroAsistencia()
     {
-        new PantallaRegistrarAsistenciaEmpleado(new GestorAsistencia()).setVisible(true);
+        new PantallaAsistenciaEmpleadoRegistrar(new GestorAsistencia()).setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

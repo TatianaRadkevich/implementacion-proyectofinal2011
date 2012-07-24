@@ -8,7 +8,6 @@
  *
  * Created on 02/10/2011, 21:22:42
  */
-
 package Presentacion.Administracion;
 
 import BaseDeDatos.Administracion.EmpleadoBD;
@@ -28,7 +27,7 @@ import java.util.Vector;
  *
  * @author Ivan
  */
-public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
+public class PantallaHorarioAsignarEmpleado extends javax.swing.JDialog {
 
     private Empleado empleado;
     private TablaManager<Empleado> tmEmpleados;
@@ -36,11 +35,12 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
 //    private GestorDiaHoraLaborable gestor=new GestorDiaHoraLaborable();
 
     /** Creates new form PantallaCalendarioEmpleado */
-    public PantallaCalendarioEmpleado(java.awt.Frame parent, boolean modal) {
+    public PantallaHorarioAsignarEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-         //Seteo de variables//
+        //Seteo de variables//
         tmEmpleados = new TablaManager<Empleado>(tbEmpleados) {
+
             @Override
             public Vector ObjetoFila(Empleado elemento) {
                 Vector fila = new Vector();
@@ -59,12 +59,13 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
                 cabecera.add("Nombre");
                 cabecera.add("Apellido");
                 cabecera.add("Sexo");
-               
+
                 return cabecera;
             }
         };
 
         tmEmpleadosTurno = new TablaManager<Empleado>(tbEmpleadoTurno) {
+
             @Override
             public Vector ObjetoFila(Empleado elemento) {
                 Vector fila = new Vector();
@@ -72,7 +73,7 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
                 fila.add(elemento.getNombre());
                 fila.add(elemento.getApellido());
                 fila.add(elemento.getSexo().getNombre());
-              //  fila.add(elemento.getTAsignacionesHorario().getTHorarios().getNombre());
+                //  fila.add(elemento.getTAsignacionesHorario().getTHorarios().getNombre());
 
                 return fila;
             }
@@ -91,8 +92,8 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
         };
 
 
-        List<Empleado> listas= EmpleadoBD.listarEmpleado();
-        for(int i=0;i<listas.size();i++){
+        List<Empleado> listas = EmpleadoBD.listarEmpleado();
+        for (int i = 0; i < listas.size(); i++) {
             tmEmpleados.add(listas.get(i));
         }
         this.cargarComboDia();
@@ -283,13 +284,13 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
 
     private void btnDetalleAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleAgregarActionPerformed
         // TODO add your handling code here:
-        Empleado temp= tmEmpleados.getSeletedObject();
-       // temp.setTAsignacionesHorario((AsignacionesHorario)cmbTurnos.getSelectedItem());
+        Empleado temp = tmEmpleados.getSeletedObject();
+        // temp.setTAsignacionesHorario((AsignacionesHorario)cmbTurnos.getSelectedItem());
 
         tmEmpleadosTurno.add(temp);
 
         tmEmpleadosTurno.updateTabla();
-        
+
         limpiarDetalle();
         habilitarCargaDetalle(true);
 
@@ -297,38 +298,30 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
 
     private void btnDetalleElminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleElminarActionPerformed
         // TODO add your handling code here:
-
     }//GEN-LAST:event_btnDetalleElminarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-
 }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-      if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea salir?")) {
+        if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea salir?")) {
             this.dispose();
         }
 }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PantallaCalendarioEmpleado dialog = new PantallaCalendarioEmpleado(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                throw new UnsupportedOperationException("Not supported yet.");
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
@@ -347,18 +340,17 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
     private javax.swing.JTable tbEmpleados;
     // End of variables declaration//GEN-END:variables
 
-
-      public void limpiarDetalle() {
+    public void limpiarDetalle() {
         cmbTurnos.setSelectedIndex(-1);
-      
+
     }
 
-      public void habilitarCargaDetalle(boolean valor) {
-        Utilidades.habilitarPanel(pnlDetalle,!valor);
+    public void habilitarCargaDetalle(boolean valor) {
+        Utilidades.habilitarPanel(pnlDetalle, !valor);
         Utilidades.habilitarPanel(pnlDetalleCarga, valor);
     }
 
-      public void cargarComboDia(){
+    public void cargarComboDia() {
 //             cmbTurnos.removeAllItems();
 //
 //            List<Dia> tipo = this.gestor.getDias();
@@ -366,5 +358,5 @@ public class PantallaCalendarioEmpleado extends javax.swing.JDialog {
 //                cmbTurnos.addItem(tipo.get(i));
 //            }
 //        cmbTurnos.repaint();
-      }
+    }
 }

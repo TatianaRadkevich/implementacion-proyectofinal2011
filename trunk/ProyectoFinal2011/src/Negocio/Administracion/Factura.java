@@ -283,4 +283,8 @@ public class Factura implements java.io.Serializable {
 
         HibernateUtil.guardarObjeto(this);
     }
+
+    public void guardar() throws NegocioException{
+       HibernateUtil.modificarObjeto(this);
+    }
 }

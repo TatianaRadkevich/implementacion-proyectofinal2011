@@ -31,13 +31,13 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author Sebastian
  */
-public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
+public class PantallaAsistenciaEmpleadoConsultar extends javax.swing.JDialog {
 
     private TablaManager<AsistenciaEmpleado> tmAsistencia;
     private TablaManager<Empleado> tmEmpleado;
 
     /** Creates new form ConsultarAsistenciaEmpleado */
-    public ConsultarAsistenciaEmpleado(java.awt.Frame parent, boolean modal) {
+    public PantallaAsistenciaEmpleadoConsultar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         inicializarTablas();
@@ -507,7 +507,7 @@ public class ConsultarAsistenciaEmpleado extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                ConsultarAsistenciaEmpleado dialog = new ConsultarAsistenciaEmpleado(new javax.swing.JFrame(), true);
+                PantallaAsistenciaEmpleadoConsultar dialog = new PantallaAsistenciaEmpleadoConsultar(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     public void windowClosing(java.awt.event.WindowEvent e) {

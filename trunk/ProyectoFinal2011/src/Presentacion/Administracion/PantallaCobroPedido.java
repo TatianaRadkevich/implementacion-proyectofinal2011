@@ -15,12 +15,15 @@ import Negocio.Administracion.Cheque;
 import Negocio.Administracion.Cobro;
 import Negocio.Administracion.Factura;
 import Negocio.Administracion.FormaPago;
+import Negocio.Exceptiones.NegocioException;
 import Negocio.Ventas.Pedido;
+import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ZLinkers.*;
 import Presentacion.ZLinkers.ZLFormatedTextField.Formato;
 import java.awt.Window;
+import java.math.BigDecimal;
 import java.util.Vector;
 
 /**
@@ -41,7 +44,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         this.gestor = gestor;
         initComponents();
         cofigurarControles();
-        Utilidades.comboCargar(cmbFormaPagoCobro,gestor.getFormaPagos());
+        Utilidades.comboCargar(cmbFormaPagoCobro, gestor.getFormaPagos());
         setFactura(gestor.getFactura());
     }
 
@@ -84,7 +87,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         };
 
         linkCobro = new ZLObject<Cobro>(Cobro.class);
-        linkCobro.add("id", false, new ZLTextField(txtNroCobro));
+        linkCobro.add("lastId", false, new ZLTextField(txtNroCobro));
         linkCobro.add("fecha", false, new ZLFormatedTextField(txtFechaCobro, Formato.Date));
         linkCobro.add("importe", new ZLTextField(txtMontoCobro));
         linkCobro.add("observacion", new ZLTextField(txtDescripcionCobro));
@@ -110,6 +113,22 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         linkCobro.setObjeto(c);
         linkCobro.load();
     }
+
+    private void setCheque(Cheque c) {
+        if(c==null)
+        {
+            txtChequeCUIT.setText("");
+            txtChequeRazonSocial.setText("");
+            txtChequeBanco.setText("");
+            txtChequeNroSucursal.setText("");
+            dtcChequeFechaEmision.setDate(null);
+            dtcChequeFechaVencimiento.setDate(null);
+            return;
+        }
+        linkCheque.setObjeto(c);
+        linkCobro.load();
+    }
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -558,6 +577,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        txtDescripcionCobro.setBackground(new java.awt.Color(255, 255, 255));
         txtDescripcionCobro.setLineWrap(true);
         txtDescripcionCobro.setWrapStyleWord(true);
         jScrollPane2.setViewportView(txtDescripcionCobro);
@@ -652,8 +672,18 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         );
 
         btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -692,16 +722,39 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
 
     private void cmbFormaPagoCobroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFormaPagoCobroActionPerformed
         // TODO add your handling code here:
-        if(cmbFormaPagoCobro.getSelectedItem()!=null && cmbFormaPagoCobro.getSelectedItem() instanceof FormaPago)
-        {
-            FormaPago fp= (FormaPago) cmbFormaPagoCobro.getSelectedItem();
-            if(fp.equals(FormaPago.getFormaPago()))
-            {
-                
+        if (cmbFormaPagoCobro.getSelectedItem() != null && cmbFormaPagoCobro.getSelectedItem() instanceof FormaPago) {
+            FormaPago fp = (FormaPago) cmbFormaPagoCobro.getSelectedItem();
+            if (fp.equals(FormaPago.getFormaPago(FormaPago.Tipo.Efectivo))) {
+                Utilidades.habilitarPanel(pnlCheque, true);
+                setCheque(new Cheque());
+            } else {
+                Utilidades.habilitarPanel(pnlCheque, false);
+                setCheque(null);
             }
         }
 
     }//GEN-LAST:event_cmbFormaPagoCobroActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        // TODO add your handling code here:
+        try{
+        linkCobro.save();
+        if(linkCobro.getObjeto().getFormaPago().equals(FormaPago.getFormaPago(FormaPago.Tipo.Cheque)))
+        {
+            linkCheque.save();
+            linkCobro.getObjeto().setCheque(linkCheque.getObjeto());
+        }
+        gestor.getFactura().addCobro(linkCobro.getObjeto());
+        gestor.getFactura().guardar();
+        Mensajes.mensajeInformacion("El Cobro ha sido guardado con exito");
+        }catch(NegocioException ne){Mensajes.mensajeErrorGenerico(ne.getMessage());}
+
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -30,14 +30,14 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author Rodrigo
  */
-public class HorarioAdministracionPantalla extends javax.swing.JDialog {
+public class PantallaHorarioAdministar extends javax.swing.JDialog {
 
     private GestorHorario gestor;
     private TablaManager<AsignacionesDias> tmAsignacion;
     private boolean banderaNuevo=true;
 
     /** Creates new form PantallaMaquinaHerramientaTipoABM */
-    public HorarioAdministracionPantalla(GestorHorario g) {
+    public PantallaHorarioAdministar(GestorHorario g) {
         super((java.awt.Frame) null, true);
         initComponents();
         gestor = g;
@@ -278,7 +278,7 @@ public class HorarioAdministracionPantalla extends javax.swing.JDialog {
             pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDisponibleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -300,7 +300,7 @@ public class HorarioAdministracionPantalla extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Descripción:");
 
-        txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 11));
         txtDescripcion.setLineWrap(true);
         txtDescripcion.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txtDescripcion);
