@@ -49,7 +49,7 @@ public class Material implements java.io.Serializable {
     private Integer diametro;
     //-----------------------------------------------------------------------------------
     @Column(name = "ES_MATERIA_PRIMA", nullable = true)
-    private boolean esMateriaPrima;
+    private Boolean esMateriaPrima;
     //-----------------------------------------------------------------------------------
     @Column(name = "LOGITUD", precision = 6, scale = 0)
     private Integer logitud;
@@ -72,9 +72,6 @@ public class Material implements java.io.Serializable {
     //-----------------------------------------------------------------------------------
     @Column(name = "CODIGO", nullable = true, length = 6)
     private String codigo;
-    //-----------------------------------------------------------------------------------
-     @Column(name="ES_PENDIENTE")
-    private Boolean esPendiente;
 
     //-----------------------------------------------------------------------------------
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
@@ -88,7 +85,7 @@ public class Material implements java.io.Serializable {
     private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
 
     public Material() {
-        this.esPendiente=false;
+       
     }
 
     public Material(Short idMaterial, String nombre, boolean esMateriaPrima, Integer stockActual, Integer stockMinimo, Integer stockReservado, String codigo) {
@@ -99,7 +96,7 @@ public class Material implements java.io.Serializable {
         this.stockMinimo = stockMinimo;
         this.stockReservado = stockReservado;
         this.codigo = codigo;
-        this.esPendiente=false;
+       
     }
 
     public Material(Short idMaterial, String nombre, String descripcion, Integer diametro, boolean esMateriaPrima, Integer logitud, Date fecBaja, String motivoBaja, Integer stockActual, Integer stockMinimo, Integer stockReservado, String codigo, Set<MaterialesXProveedor> TMaterialesXProveedors) {
@@ -116,7 +113,7 @@ public class Material implements java.io.Serializable {
         this.stockReservado = stockReservado;
         this.codigo = codigo;
         this.TMaterialesXProveedors = TMaterialesXProveedors;
-        this.esPendiente=false;
+
     }
 
     public int getIdMaterial() {
@@ -316,13 +313,6 @@ public class Material implements java.io.Serializable {
         return faltantesPendiente;
     }
 
-    public Boolean getEsPendiente() {
-        return this.esPendiente;
-    }
-
-    public void setEsPendiente(Boolean esPendiente) {
-        this.esPendiente = esPendiente;
-    }
 //    public void setFaltantes(List<Faltante> faltantes) {
 //        TFaltanteses.clear();
 //        for (Faltante f : faltantes) {
