@@ -91,10 +91,16 @@ public class PantallaAsistenciaEmpleadoRegistrar extends javax.swing.JFrame {
                 fila.add(elemento.getApellidoNombre());
                 String documento = elemento.getTipoDocumento() + ": " + elemento.getNumeroDocumento();
                 fila.add(documento);
+                try{
                 AsistenciaEmpleado ae = elemento.getUltimaAsistencia();
                 String fecha = Utilidades.parseFecha(ae.getFecAsistencia());
                 fila.add(fecha + " - " + ae.getHoraIngreso() + " Hs.");
                 fila.add(fecha + " - " + ae.getHoraEgreso() + " Hs.");
+                }catch(Exception e)
+                {
+                    fila.add("");
+                    fila.add("");
+                }
                 return fila;
             }
         };

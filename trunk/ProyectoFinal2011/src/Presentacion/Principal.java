@@ -10,6 +10,7 @@
  */
 package Presentacion;
 
+import Negocio.Administracion.GestorHorario;
 import Negocio.Deposito.GestorRecepcionMaterial;
 import Negocio.Produccion.GestorEstructura;
 import Negocio.Produccion.GestorOrdenTrabajo;
@@ -88,6 +89,14 @@ public class Principal extends javax.swing.JFrame {
         btnTipoDocumento = new javax.swing.JButton();
         btnTipoDocumento1 = new javax.swing.JButton();
         btnAsistencia = new javax.swing.JButton();
+        btnHorarios = new javax.swing.JButton();
+        btnConsultarAsistencia = new javax.swing.JButton();
+        btnConsultarAsistencia1 = new javax.swing.JButton();
+        pnlVentas = new Presentacion.Fondo();
+        txtVentas = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        btnFactura = new javax.swing.JButton();
         pnlCompras = new Presentacion.Fondo();
         txtComp = new javax.swing.JTextField();
         btnProveedor = new javax.swing.JButton();
@@ -104,11 +113,6 @@ public class Principal extends javax.swing.JFrame {
         btnAvance = new javax.swing.JButton();
         btnProblemas = new javax.swing.JButton();
         btnConsultaProblemas = new javax.swing.JButton();
-        pnlVentas = new Presentacion.Fondo();
-        txtVentas = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        btnFactura = new javax.swing.JButton();
         pnlDeposito = new javax.swing.JPanel();
         txtVentas1 = new javax.swing.JTextField();
         btnRecepMat = new javax.swing.JButton();
@@ -211,10 +215,31 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnAsistencia.setText("Asistencia Empleados");
+        btnAsistencia.setText("Registrar Asistencia");
         btnAsistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAsistenciaActionPerformed(evt);
+            }
+        });
+
+        btnHorarios.setText("Horarios");
+        btnHorarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHorariosActionPerformed(evt);
+            }
+        });
+
+        btnConsultarAsistencia.setText("Consultar Asistencia");
+        btnConsultarAsistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarAsistenciaActionPerformed(evt);
+            }
+        });
+
+        btnConsultarAsistencia1.setText("Asignar Horario");
+        btnConsultarAsistencia1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarAsistencia1ActionPerformed(evt);
             }
         });
 
@@ -226,11 +251,21 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(pnlAdministracionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlAdministracionLayout.createSequentialGroup()
+                        .addComponent(btnCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnConsultarAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlAdministracionLayout.createSequentialGroup()
+                        .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnConsultarAsistencia1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTipoDocumento1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(410, Short.MAX_VALUE))
+            .addGroup(pnlAdministracionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnHorarios, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(578, Short.MAX_VALUE))
         );
         pnlAdministracionLayout.setVerticalGroup(
@@ -238,19 +273,78 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(pnlAdministracionLayout.createSequentialGroup()
                 .addComponent(txtAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConsultarAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConsultarAsistencia1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnTipoDocumento1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(118, 118, 118))
+                .addGap(18, 18, 18)
+                .addComponent(btnHorarios, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
         );
 
         pnlContenerdor.add(pnlAdministracion, "card2");
+
+        txtVentas.setEditable(false);
+        txtVentas.setText("Ventas");
+        txtVentas.setFocusable(false);
+
+        jButton4.setText("Pedido");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Cliente");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        btnFactura.setText("Facturas");
+        btnFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFacturaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlVentasLayout = new javax.swing.GroupLayout(pnlVentas);
+        pnlVentas.setLayout(pnlVentasLayout);
+        pnlVentasLayout.setHorizontalGroup(
+            pnlVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txtVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
+            .addGroup(pnlVentasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(578, Short.MAX_VALUE))
+        );
+        pnlVentasLayout.setVerticalGroup(
+            pnlVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlVentasLayout.createSequentialGroup()
+                .addComponent(txtVentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(240, Short.MAX_VALUE))
+        );
+
+        pnlContenerdor.add(pnlVentas, "card5");
 
         txtComp.setEditable(false);
         txtComp.setText("Compras");
@@ -427,59 +521,6 @@ public class Principal extends javax.swing.JFrame {
         );
 
         pnlContenerdor.add(pnlProduccion, "card4");
-
-        txtVentas.setEditable(false);
-        txtVentas.setText("Ventas");
-        txtVentas.setFocusable(false);
-
-        jButton4.setText("Pedido");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton6.setText("Cliente");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
-        btnFactura.setText("Facturas");
-        btnFactura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFacturaActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlVentasLayout = new javax.swing.GroupLayout(pnlVentas);
-        pnlVentas.setLayout(pnlVentasLayout);
-        pnlVentasLayout.setHorizontalGroup(
-            pnlVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
-            .addGroup(pnlVentasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(578, Short.MAX_VALUE))
-        );
-        pnlVentasLayout.setVerticalGroup(
-            pnlVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlVentasLayout.createSequentialGroup()
-                .addComponent(txtVentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(240, Short.MAX_VALUE))
-        );
-
-        pnlContenerdor.add(pnlVentas, "card5");
 
         txtVentas1.setEditable(false);
         txtVentas1.setText("Depósito");
@@ -776,6 +817,21 @@ public class Principal extends javax.swing.JFrame {
         new PantallaRegistrarAlmacenamientoProdTerminado(this, true).setVisible(true);
     }//GEN-LAST:event_jButtonAlmacenamientoProdTerminadoActionPerformed
 
+    private void btnHorariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHorariosActionPerformed
+        // TODO add your handling code here:
+        new PantallaHorarioAdministar(new GestorHorario()).setVisible(true);
+    }//GEN-LAST:event_btnHorariosActionPerformed
+
+    private void btnConsultarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAsistenciaActionPerformed
+        // TODO add your handling code here:
+        new PantallaAsistenciaEmpleadoConsultar(this,true).setVisible(true);
+    }//GEN-LAST:event_btnConsultarAsistenciaActionPerformed
+
+    private void btnConsultarAsistencia1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAsistencia1ActionPerformed
+        // TODO add your handling code here:
+        new PantallaHorarioAsignarEmpleado(this,true).setVisible(true);
+    }//GEN-LAST:event_btnConsultarAsistencia1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -794,9 +850,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnCargo;
     private javax.swing.JButton btnCompras;
     private javax.swing.JButton btnConsultaProblemas;
+    private javax.swing.JButton btnConsultarAsistencia;
+    private javax.swing.JButton btnConsultarAsistencia1;
     private javax.swing.JButton btnDeposito;
     private javax.swing.JButton btnEmpleado;
     private javax.swing.JButton btnFactura;
+    private javax.swing.JButton btnHorarios;
     private javax.swing.JButton btnOrdenCompra;
     private javax.swing.JButton btnPedido;
     private javax.swing.JButton btnProblemas;

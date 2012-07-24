@@ -667,7 +667,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-        try {
+//        try {
             Factura f = new Factura();
             f.setPedido(tmPedido.getSeletedObject());
             f.setDetalleFactura(tmDetFac.getDatos());
@@ -680,9 +680,9 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
             f.setDescuentoPorcentaje(new BigDecimal(txtDescuentoMonto.getText()));
             f.setRecargoPorcentaje(new BigDecimal(txtRecargoMonto.getText()));
             f.generar();
-        } catch (Exception e) {
-            Mensajes.mensajeErrorGenerico("Datos incorrectos");
-        }
+//        } catch (Exception e) {
+//            Mensajes.mensajeErrorGenerico("Datos incorrectos");
+//        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

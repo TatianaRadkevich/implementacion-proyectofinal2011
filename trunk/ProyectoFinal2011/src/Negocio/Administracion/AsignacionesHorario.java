@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "T_ASIGNACIONES_HORARIO", schema = "dbo", catalog = "Ramaty")
-public class AsignacionesHorario implements java.io.Serializable {
+public class AsignacionesHorario implements java.io.Serializable,Comparable<AsignacionesHorario> {
 
     @Id
     @GeneratedValue
@@ -54,6 +54,14 @@ public class AsignacionesHorario implements java.io.Serializable {
         this.fecDesde = fecDesde;
     }
 
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
 
 
     public short getIdAsignacionHorario() {
@@ -64,7 +72,7 @@ public class AsignacionesHorario implements java.io.Serializable {
         this.idAsignacionHorario = idAsignacionHorario;
     }
 
-    public Horarios getTHorarios() {
+    public Horarios getHorario() {
         return this.THorarios;
     }
 
@@ -86,5 +94,9 @@ public class AsignacionesHorario implements java.io.Serializable {
 
     public void setFecDesde(Date fecDesde) {
         this.fecDesde = fecDesde;
+    }
+
+    public int compareTo(AsignacionesHorario o) {
+        return this.getFecHasta().compareTo(o.getFecHasta());
     }
 }

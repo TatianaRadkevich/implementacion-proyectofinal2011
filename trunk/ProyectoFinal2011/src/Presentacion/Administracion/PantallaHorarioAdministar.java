@@ -571,6 +571,8 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         gestor.iniciarModificar((Horarios) lstDisponible.getSelectedValue());
+         Utilidades.habilitarPanel(pnlCargo, true);
+        Utilidades.habilitarPanel(pnlDetalleCarga, false);
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -595,6 +597,9 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         gestor.iniciarNuevo();
+        Utilidades.habilitarPanel(pnlCargo, true);
+        Utilidades.habilitarPanel(pnlDetalleCarga, false);
+
 }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
