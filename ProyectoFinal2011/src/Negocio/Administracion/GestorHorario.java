@@ -6,7 +6,7 @@ package Negocio.Administracion;
 
 import BaseDeDatos.Administracion.HorarioBD;
 import Negocio.Exceptiones.ExceptionGestor;
-import Presentacion.Administracion.HorarioAdministracionPantalla;
+import Presentacion.Administracion.PantallaHorarioAdministar;
 import Presentacion.Mensajes;
 import java.util.List;
 
@@ -27,11 +27,11 @@ public class GestorHorario {
     }
     /*************************************************************************/
     private gestor comportamiento;
-    protected HorarioAdministracionPantalla interfaz;
+    protected PantallaHorarioAdministar interfaz;
     protected Horarios elemento;
 
     public GestorHorario() {
-        this.interfaz = new HorarioAdministracionPantalla(this);
+        this.interfaz = new PantallaHorarioAdministar(this);
     }
 
     public void administar() {

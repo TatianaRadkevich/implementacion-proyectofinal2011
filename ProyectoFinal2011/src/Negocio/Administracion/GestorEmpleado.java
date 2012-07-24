@@ -18,7 +18,7 @@ import Negocio.UbicacionGeografica.Localidad;
 import Negocio.UbicacionGeografica.Pais;
 import Negocio.UbicacionGeografica.Provincia;
 import Presentacion.Administracion.PantallaABMEmpleado;
-import Presentacion.Administracion.PantallaRegistrarAsistenciaEmpleado;
+import Presentacion.Administracion.PantallaAsistenciaEmpleadoRegistrar;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JDialog;

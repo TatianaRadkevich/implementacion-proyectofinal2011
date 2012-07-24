@@ -5,8 +5,10 @@ import BaseDeDatos.Administracion.FormaDePagoBD;
 import BaseDeDatos.HibernateUtil;
 import Negocio.Administracion.Cobro;
 import Negocio.Exceptiones.TipoDatoException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,7 +34,7 @@ public class FormaPago implements java.io.Serializable {
     private short idFormaPago;
     @Column(name = "NOMBRE", nullable = false, length = 50)
     private String nombre;
-    @Column(name = "DESCRIPCION", length = 200)
+    @Column(name = "DESCRIPCION", nullable = true, length = 200)
     private String descripcion;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FEC_BAJA", nullable = true, length = 23)
@@ -45,8 +47,7 @@ public class FormaPago implements java.io.Serializable {
     public FormaPago() {
     }
 
-    public FormaPago(short idFormaPago, String nombre) {
-        this.idFormaPago = idFormaPago;
+    public FormaPago( String nombre) {        
         this.nombre = nombre;
     }
 
@@ -134,17 +135,33 @@ public class FormaPago implements java.io.Serializable {
 
     public enum Tipo{Efectivo,Cheque;}
 
-    public static FormaPago getFormaPago() {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public static FormaPago getFormaPago(Tipo t) {
+        String HQL = String.format("FROM FormaPago as fp WHERE LOWER(ep.nombre) = LOWER('%s')", t.name());
+        List<FormaPago> lst = HibernateUtil.ejecutarConsulta(HQL);
+        if (lst.isEmpty()) {
+            HibernateUtil.guardarObjeto(new FormaPago(t.name()));
+            return getFormaPago(t);
+        }
+        return lst.get(0);
     }
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        try{
-//            FormaPago fp=(FormaPago) obj;
-//            if(fp.getIdFormaPago()==this.idFormaPago)
-//                return true;
-//        }catch(Exception e){}
-//        return false;
-//    }
+    public static List<FormaPago> listarFormaPagos()
+    {
+        ArrayList<FormaPago> salida=new ArrayList<FormaPago>();
+        for(Tipo t:Tipo.values())
+        {
+            salida.add(getFormaPago(t));
+        }
+        return salida;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        try{
+            FormaPago fp=(FormaPago) obj;
+            if(fp.nombre.equals(this.nombre))
+                return true;
+        }catch(Exception e){}
+        return false;
+    }
 }

@@ -30,10 +30,7 @@ public class GestorCobroPedido {
     }
 
     public static List<FormaPago> getFormaPagos() {
-        List<FormaPago> l= HibernateUtil.ejecutarConsulta("FROM FormaPago");
-        if(l.isEmpty())
-            Mensajes.mensajeErrorGenerico("El sistema no tiene cargado formas de pago");
-        return l;
+        return FormaPago.listarFormaPagos();
     }
 
 }

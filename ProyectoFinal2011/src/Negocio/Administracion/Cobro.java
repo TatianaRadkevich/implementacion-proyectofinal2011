@@ -1,6 +1,7 @@
 package Negocio.Administracion;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
+import BaseDeDatos.HibernateUtil;
 import Negocio.Administracion.FormaPago;
 import Negocio.Administracion.Factura;
 import Negocio.Administracion.Empleado;
@@ -63,13 +64,24 @@ public class Cobro implements java.io.Serializable {
     @Transient
     private Factura facturaTemp;
 
+    public Cobro() {
+    }
+
     public Cobro(Factura f) {
         this.facturaTemp = f;
-        this.importe=new BigDecimal(0);
+        this.importe = new BigDecimal(0);
     }
 
     public int getId() {
         return this.idCobro;
+    }
+
+    public static int getLastId() {
+        try {
+            return (Integer) HibernateUtil.ejecutarConsulta("SELECT   max(idCobro) FROM Cobro").get(0);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public Factura getFactura() {
@@ -103,8 +115,9 @@ public class Cobro implements java.io.Serializable {
 
     public void setCheque(Cheque TCheques) {
         this.TCheques = TCheques;
-        if(TCheques!=null)
+        if (TCheques != null) {
             TCheques.setMonto(this.getImporte());
+        }
     }
 
     public Date getFechaCobro() {
@@ -131,7 +144,7 @@ public class Cobro implements java.io.Serializable {
         this.importe = importe;
         if (this.TCheques != null) {
             this.TCheques.setMonto(importe);
-            
+
         }
     }
 
