@@ -2,6 +2,7 @@ package Negocio.Administracion;
 // Generated 19/08/2011 20:33:26 by Hibernate Tools 3.2.1.GA
 
 import BaseDeDatos.Administracion.EmpleadoBD;
+import BaseDeDatos.HibernateUtil;
 import Negocio.Exceptiones.NegocioException;
 import Negocio.GestionUsuario.Usuario;
 import Negocio.Produccion.DetallePlanProduccion;
@@ -10,6 +11,7 @@ import Negocio.Exceptiones.TipoDatoException;
 import Negocio.UbicacionGeografica.Domicilio;
 import Presentacion.Utilidades;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +28,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
 
 /**
@@ -121,9 +124,9 @@ public class Empleado implements java.io.Serializable {
     @JoinColumn(name = "ID_ESTADO_EMPLEADO", nullable = false)
     private EstadosEmpleado TEstadosEmpleado;
     /*---------------------------------------------------------------------------------------------*/
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "ID_ASIGNACION_HORARIO", nullable = true)
-//    private AsignacionesHorario TAsignacionesHorario;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "empleado")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    private Set<AsignacionesHorario> asignacionesHorarias = new HashSet(0);;
     /*---------------------------------------------------------------------------------------------*/
 // </editor-fold>
 
@@ -326,9 +329,8 @@ public class Empleado implements java.io.Serializable {
         this.TEstadosEmpleado = TEstadosEmpleado;
     }
     // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="set/get Relaciones Indirectas">
 
+    // <editor-fold defaultstate="collapsed" desc="set/get Relaciones Indirectas">
     public Set<Cobro> getCobros() {
         return this.TCobroses;
     }
@@ -446,5 +448,51 @@ public class Empleado implements java.io.Serializable {
 
     public static int getLastID() {
         return EmpleadoBD.getLastID();
+    }
+
+    public AsignacionesHorario getAsignacionHorariaVigente() {
+        AsignacionesHorario salida = null;
+        Date fActual = Utilidades.getFechaActual();
+        for (AsignacionesHorario ah : this.asignacionesHorarias) {
+            if (ah.getFecDesde().compareTo(fActual) < 0) {
+                if (ah.getFecHasta().compareTo(fActual) > 0) {
+                    salida = ah;
+                    break;
+                }
+            }
+        }
+        return salida;
+    }
+
+    public ArrayList<AsignacionesHorario> getAsignacionHorariasProximas() {
+        ArrayList<AsignacionesHorario> salida = new ArrayList();
+        Date fActual = Utilidades.getFechaActual();
+        for (AsignacionesHorario ah : this.asignacionesHorarias) {
+            if (ah.getFecHasta().compareTo(fActual) > 0) {
+                salida.add(ah);
+                break;
+            }
+        }
+        Collections.sort(salida);
+
+        return salida;
+    }
+
+    public void addAsignacionHorario(AsignacionesHorario asignacionSel) {
+        asignacionSel.setEmpleado(this);
+        this.asignacionesHorarias.add(asignacionSel);
+    }
+
+    public void updateAsignacionHorario(AsignacionesHorario asignacionSel) {
+         asignacionSel.setEmpleado(this);
+         List aux=getAsignacionHorariasProximas();
+         int index=aux.indexOf(this);
+
+         try{
+             for(int i=index+1;i<aux.size();i++)
+             {
+
+             }
+         }catch(Exception e){}
     }
 }

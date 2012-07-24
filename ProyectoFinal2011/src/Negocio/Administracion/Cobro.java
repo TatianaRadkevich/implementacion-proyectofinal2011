@@ -59,16 +59,13 @@ public class Cobro implements java.io.Serializable {
     private BigDecimal importe;
     //
     @Column(name = "OBSERVACIONES", length = 200)
-    private String observaciones;
-    //
-    @Transient
-    private Factura facturaTemp;
+    private String observaciones;    
 
     public Cobro() {
     }
 
     public Cobro(Factura f) {
-        this.facturaTemp = f;
+        this.TFacturas = f;
         this.importe = new BigDecimal(0);
     }
 
@@ -85,12 +82,12 @@ public class Cobro implements java.io.Serializable {
     }
 
     public Factura getFactura() {
-        return (TFacturas == null) ? facturaTemp : TFacturas;
+        return TFacturas;//(TFacturas == null) ? facturaTemp : TFacturas;
     }
 
     public void setFactura(Factura f) {
         this.TFacturas = f;
-        this.facturaTemp = f;
+       // this.facturaTemp = f;
     }
 
     public FormaPago getFormaPago() {

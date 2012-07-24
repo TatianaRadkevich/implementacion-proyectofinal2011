@@ -9,6 +9,7 @@ import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Administracion.PantallaHorarioAdministar;
 import Presentacion.Mensajes;
 import java.util.List;
+import org.hibernate.Hibernate;
 
 /**
  *

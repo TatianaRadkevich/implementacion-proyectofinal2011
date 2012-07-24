@@ -83,12 +83,14 @@ public class GestorAsistencia {
         if (this.asistencia == null) {
             throw new NegocioException("Gestor Asistencia: Estado Inválido");
         }
-        if(this.asistencia.getHoraEgreso().trim().equals(""))
+
+        if(this.asistencia.getHoraEgreso()==null||this.asistencia.getHoraEgreso().trim().equals(""))
             this.asistencia.setObservIngreso(observaciones);
         else
             this.asistencia.setObservEgreso(observaciones);
         AsistenciaEmpleadoBD.guardar(asistencia);
          asistencia=null;
+
     }
 
     public void cancelar() {
