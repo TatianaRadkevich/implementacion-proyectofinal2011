@@ -2,6 +2,7 @@
 
 /*SCRIPT DE CREACION RAMATY*/
 
+
 CREATE TABLE T_ALMACENAMIENTOS_PRODUCTO_TERMINADO (
        ID_ALMACENAMIENTO_PRODUCTO_TERMINADO numeric(8) IDENTITY,
        FEC_HORA_ALMACENAMIENTO datetime NOT NULL,
@@ -36,7 +37,8 @@ CREATE TABLE T_ASIGNACIONES_HORARIO (
        ID_ASIGNACION_HORARIO numeric(4) IDENTITY,
        FEC_HASTA            datetime NULL,
        FEC_DESDE            datetime NOT NULL,
-       ID_HORARIO           numeric(2) NOT NULL
+       ID_HORARIO           numeric(2) NOT NULL,
+       ID_EMPLEADO          numeric(5) NULL
 )
 go
 
@@ -441,8 +443,7 @@ CREATE TABLE T_EMPLEADOS (
        ID_USUARIO           numeric(5) NULL,
        FEC_BAJA             datetime NULL,
        MOTIVO_BAJA          varchar(100) NULL,
-       ID_ESTADO_EMPLEADO   numeric(2) NOT NULL,
-       ID_ASIGNACION_HORARIO numeric(4) NULL
+       ID_ESTADO_EMPLEADO   numeric(2) NOT NULL
 )
 go
 
@@ -584,7 +585,9 @@ CREATE TABLE T_FACTURAS (
        NUMERO               numeric(8) NOT NULL,
        RECARGO              numeric(6,4) NULL,
        ID_EMPLEADO          numeric(5) NOT NULL,
-       ID_EFACTURA          numeric(2) NOT NULL
+       ID_EFACTURA          numeric(2) NOT NULL,
+       FEC_BAJA             datetime NULL,
+       MOTIVO_BAJA          varchar(100) NULL
 )
 go
 
@@ -1138,6 +1141,14 @@ go
 
 
 ALTER TABLE T_ASIGNACIONES_HORARIO
+       ADD FOREIGN KEY (ID_EMPLEADO)
+                             REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_ASIGNACIONES_HORARIO
        ADD FOREIGN KEY (ID_HORARIO)
                              REFERENCES T_HORARIOS  (ID_HORARIO)
                              ON DELETE NO ACTION
@@ -1493,15 +1504,6 @@ go
 ALTER TABLE T_EGRESOS
        ADD FOREIGN KEY (ID_RESPONSABLE_DEPOSITO)
                              REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_EMPLEADOS
-       ADD FOREIGN KEY (ID_ASIGNACION_HORARIO)
-                             REFERENCES T_ASIGNACIONES_HORARIO  (
-              ID_ASIGNACION_HORARIO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
