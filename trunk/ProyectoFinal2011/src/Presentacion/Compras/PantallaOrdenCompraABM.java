@@ -141,11 +141,14 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
             public void valueChanged(ListSelectionEvent e) {
                 tmFaltante.limpiar();
-                for (Faltante f : tmStock.getSeletedObject().getFaltantes()) {
+                try{
+                    for (Faltante f : tmStock.getSeletedObject().getFaltantes()) {
                     if (f.getFecNecesidad().compareTo(Utilidades.getFechaActual()) <= 0) {
                         tmFaltante.add(f);
                     }
                 }
+                }catch(Exception ex){ System.out.println("Excepcion faltantes");}
+                
             }
         });
 
@@ -166,7 +169,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                 fila.add((elemento.getMaterial() == null) ? "" : elemento.getMaterial().getMaterial().getNombre());
                 fila.add(precio);
                 fila.add(elemento.getCantidadPedida());
-                fila.add(elemento.getCantidadPedida() * precio);
+                fila.add("$ " +elemento.getCantidadPedida() * precio);
 
                 return fila;
             }
@@ -211,7 +214,8 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
         float total = 0;
         for (int i = 0; i < tbDetalle.getRowCount(); i++) {
-            total += Float.parseFloat(tbDetalle.getValueAt(i, 3).toString());//col 3 >> subtotal
+            String temp=tbDetalle.getValueAt(i, 3).toString();
+            total += Float.parseFloat(temp.substring(2, temp.length()));//col 3 >> subtotal
         }
         txtTotal.setText(total + "");
     }
