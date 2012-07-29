@@ -545,7 +545,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnPedido.setText("Pedido");
+        btnPedido.setText("Entregar Pedido");
         btnPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPedidoActionPerformed(evt);
