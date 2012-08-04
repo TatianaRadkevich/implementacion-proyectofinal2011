@@ -271,7 +271,6 @@ CREATE TABLE T_DETALLES_PLAN (
        FEC_HORA_REAL_FIN    datetime NULL,
        ID_ETAPA_PRODUCCION_ESPECIFICA numeric(5) NOT NULL,
        ID_EMPLEADO          numeric(5) NOT NULL,
-       ID_PLAN_PRODUCCION   numeric(8) NOT NULL,
        CANTIDAD_PRODUCIDA   numeric(5) NULL,
        ID_EDETALLE_PLAN     numeric(2) NOT NULL,
        OBSERVACIONES        varchar(200) NULL,
@@ -279,7 +278,9 @@ CREATE TABLE T_DETALLES_PLAN (
        FEC_HORA_CANCELACION datetime NULL,
        ID_ORDEN_TRABAJO     numeric(10) NOT NULL,
        ID_DETALLE_PEDIDO    numeric(8) NOT NULL,
-       ID_MAQUINA_PARTICULAR numeric(3) NULL
+       ID_MAQUINA_PARTICULAR numeric(3) NULL,
+       ID_PEDIDO            numeric(8) NULL,
+       VERSION              int NULL
 )
 go
 
@@ -831,7 +832,7 @@ go
 
 
 CREATE TABLE T_PLANES_PRODUCCION (
-       ID_PLAN_PRODUCCION   numeric(8) IDENTITY,
+       VERSION              int NOT NULL,
        ID_ENCARGADO         numeric(5) NOT NULL,
        FEC_GENERACION       datetime NOT NULL,
        FEC_HORA_PREVISTA_FIN datetime NOT NULL,
@@ -849,7 +850,7 @@ go
 
 
 ALTER TABLE T_PLANES_PRODUCCION
-       ADD PRIMARY KEY (ID_PLAN_PRODUCCION ASC)
+       ADD PRIMARY KEY (VERSION ASC, ID_PEDIDO ASC)
 go
 
 
@@ -1436,9 +1437,9 @@ go
 
 
 ALTER TABLE T_DETALLES_PLAN
-       ADD FOREIGN KEY (ID_PLAN_PRODUCCION)
-                             REFERENCES T_PLANES_PRODUCCION  (
-              ID_PLAN_PRODUCCION)
+       ADD FOREIGN KEY (VERSION, ID_PEDIDO)
+                             REFERENCES T_PLANES_PRODUCCION  (VERSION, 
+              ID_PEDIDO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
