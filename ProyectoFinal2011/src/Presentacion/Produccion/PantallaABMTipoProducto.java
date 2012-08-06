@@ -93,13 +93,13 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
         pnlCargo.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo producto"));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Nombre:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Descripción:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Código:");
 
         txtDescripcion.setColumns(20);
@@ -109,10 +109,10 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
         pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder("Baja"));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Fecha:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setText("Motivo:");
 
         txtMotivoBaja.setColumns(20);
@@ -155,10 +155,9 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
             }
         });
 
-        btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+                btnCancelarActionPerformed1(evt);
             }
         });
 
@@ -354,7 +353,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         if(lstDisponible.getSelectedIndex()==-1){
-            Mensajes.mensajeErrorGenerico("Debe seleccionar un tipo de producto que desea eliminado exitosamente");
+            Mensajes.mensajeErrorGenerico("Debe seleccionar un tipo de producto que desea eliminar");
             return;
         }      
 
@@ -462,6 +461,12 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnCancelarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed1
+        // TODO add your handling code here:
+        this.tipo_actual = null;
+        this.cancelar();
+    }//GEN-LAST:event_btnCancelarActionPerformed1
 
    
     /**

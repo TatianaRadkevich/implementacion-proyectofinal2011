@@ -15,10 +15,14 @@ import Negocio.Produccion.GestorTipoMaquina;
 import Negocio.Produccion.GestorTipoMaquina;
 import Negocio.Produccion.TipoMaquina;
 import Presentacion.Mensajes;
+import Presentacion.Operacion;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import gui.GUILocal;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -32,6 +36,9 @@ import javax.swing.event.ListSelectionListener;
 public class PantallaTipoMaquinaABM extends javax.swing.JDialog {
 
     private GestorTipoMaquina gestor;
+    private int operacion;
+    private TipoMaquina maquina_actual=null;
+   
 
     /** Creates new form PantallaMaquinaHerramientaTipoABM */
     public PantallaTipoMaquinaABM(GestorTipoMaquina g) {
@@ -190,6 +197,11 @@ public class PantallaTipoMaquinaABM extends javax.swing.JDialog {
 
         pnlDisponible.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Disponible", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
+        lstDisponible.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstDisponibleMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(lstDisponible);
 
         btnNuevo.setText("Nuevo");
@@ -374,7 +386,7 @@ public class PantallaTipoMaquinaABM extends javax.swing.JDialog {
                 .addGroup(pnlCargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnAceptar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         btnSalir.setText("Salir");
@@ -414,40 +426,102 @@ public class PantallaTipoMaquinaABM extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        // TODO add your handling code here:  
-         gestor.iniciarBaja((TipoMaquina) lstDisponible.getSelectedValue());
+        // TODO add your handling code here:           
+         if(lstDisponible.getSelectedIndex()==-1){
+            Mensajes.mensajeErrorGenerico("Debe seleccionar un tipo de maquina que desea eliminar");
+            return;
+        }
+
+        this.activarDisponible(false);
+        maquina_actual=(TipoMaquina) lstDisponible.getSelectedValue();
+        this.cargarDatos(maquina_actual);
+        Format formato=new SimpleDateFormat("dd/MM/yyyy");
+        String fecha=formato.format(new Date());
+        this.txtFechaBaja.setText(fecha);
+        this.activarBaja(true);
+        this.activarTipoProducto(false);
+        this.activarDisponible(false);
+        this.activarBotones(false, false, false, true, true,false,false);
+        txtMotivoBaja.requestFocus();
+        this.operacion=Operacion.baja;
 
 }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        gestor.iniciarModificar((TipoMaquina) lstDisponible.getSelectedValue());
+        if(lstDisponible.getSelectedIndex()==-1){
+            Mensajes.mensajeErrorGenerico("Debe seleccionar un tipo de producto que desea modificar");
+            return;
+        }
+        this.activarDisponible(false);
+        this.activarBaja(false);
+        this.activarTipoProducto(true);
+        this.activarBotones(false, false, false, true, true,false,false);
+
+        maquina_actual=(TipoMaquina) lstDisponible.getSelectedValue();
+        this.cargarDatos(maquina_actual);
+        this.operacion=Operacion.modificar;
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        TipoMaquina tipo = gestor.getTipoMaquina();
+         if(validar()){
 
-        tipo.setNombre(txtNombre.getText());
-        tipo.setDescripcion(txtDescripcion.getText());
-//        tipo.setEsHerramienta(rdbHerramienta.isSelected());
-
-
-        try {
-            gestor.ejecutarCU(tipo);            
-            cargarLista();
-        } catch (ExceptionGestor ex) {
-            Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
+      if(operacion==Operacion.nuevo){
+            TipoMaquina tipo=new TipoMaquina();
+            tipo.setNombre(txtNombre.getText().toUpperCase());           
+            tipo.setDescripcion(txtDescripcion.getText());
+
+            gestor.guardar(tipo);
+            Mensajes.mensajeInformacion("El tipo de producto "+tipo.getNombre()+"\n ha sido guardado exitosamente");
+            this.cargarTipoProductos();
+            cancelar();
+            this.lstDisponible.setSelectedIndex(-1);
+            return;
+        }
+
+        if(operacion==Operacion.modificar){
+            maquina_actual.setNombre(txtNombre.getText().toUpperCase());
+            maquina_actual.setDescripcion(txtDescripcion.getText());
+            gestor.modificar(maquina_actual);
+            Mensajes.mensajeInformacion("El tipo de producto "+maquina_actual.getNombre()+"\n ha sido modificado exitosamente");
+              maquina_actual=null;
+            cancelar();
+            this.lstDisponible.setSelectedIndex(-1);
+            return;
+        }
+         if(operacion==Operacion.baja){
+             maquina_actual.setFecBaja(new Date());
+            maquina_actual.setMotivoBaja(txtMotivoBaja.getText());
+            gestor.modificar(maquina_actual);
+            Mensajes.mensajeInformacion("El tipo de producto "+maquina_actual.getNombre()+"\n ha sido dado de baja exitosamente");
+
+            maquina_actual=null;
+            this.cancelar();
+            this.lstDisponible.setSelectedIndex(-1);
+            return;
+        }
+        if(operacion==Operacion.reactivar){
+            maquina_actual.setFecBaja(null);
+            maquina_actual.setMotivoBaja(null);
+            gestor.modificar(maquina_actual);
+            cancelar();
+            this.lstDisponible.setSelectedIndex(-1);
+            Mensajes.mensajeInformacion("El tipo de producto "+maquina_actual.getNombre()+"\n ha sido dado reactivado exitosamente");
+        }
+        this.cancelar();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        gestor.finalizarCU();
+         this.maquina_actual = null;
+        this.cancelar();
 }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        gestor.iniciarNuevo();
+        this.nuevo();
+        
 }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -457,20 +531,46 @@ public class PantallaTipoMaquinaABM extends javax.swing.JDialog {
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
         // TODO add your handling code here:
-         gestor.iniciarAlta((TipoMaquina) lstDisponible.getSelectedValue());
+        this.activarDisponible(false);
+        this.maquina_actual=(TipoMaquina) lstDisponible.getSelectedValue();
+        this.activarBaja(false);
+        this.activarTipoProducto(false);
+        this.activarBotones(false, false, false, true, true, false,false);
+        this.txtFechaBaja.setText("");
+        this.txtMotivoBaja.setText("");
+        this.operacion=Operacion.reactivar;
     }//GEN-LAST:event_btnAltaActionPerformed
+
+    private void lstDisponibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDisponibleMouseClicked
+        // TODO add your handling code here:
+         TipoMaquina temp= (TipoMaquina) lstDisponible.getSelectedValue();
+        this.cargarDatos(temp);
+        if(temp.getFecBaja()!=null){
+            this.activarBaja(false);
+            this.activarDisponible(true);
+            this.activarTipoProducto(false);
+            this.activarBotones(true, false, false, false, false, true,true);
+
+        }
+        else{
+            this.activarBaja(false);
+            this.activarDisponible(true);
+            this.activarTipoProducto(false);
+            this.activarBotones(true, true, true, false, false, false,true);
+        }
+    }//GEN-LAST:event_lstDisponibleMouseClicked
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-            new GestorTipoMaquina().administar();
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//
+//            public void run() {
+//            new GestorTipoMaquina().administar();
+//            }
+//        });
+//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btgTipo;
     private javax.swing.JButton btnAceptar;
@@ -497,4 +597,102 @@ public class PantallaTipoMaquinaABM extends javax.swing.JDialog {
     private javax.swing.JTextArea txtMotivoBaja;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+
+public void nuevo() {
+        // TODO add your handling code here:
+
+        this.activarDisponible(false);
+        this.activarDisponible(false);
+        this.activarBaja(false);
+        this.activarTipoProducto(true);
+        this.activarBotones(false, false, false, true, true,false,false);
+        this.operacion = Operacion.nuevo;
+        this.txtNombre.requestFocus();
+    }
+private void activarDisponible(boolean  flag)
+    {
+        this.lstDisponible.setEnabled(flag);
+    }
+
+private void activarTipoProducto(boolean flag){
+        this.txtNombre.setEnabled(flag);
+        this.txtDescripcion.setEnabled(flag);
+    }
+    private void activarBaja(boolean flag){
+        this.txtFechaBaja.setEnabled(false);
+        this.txtMotivoBaja.setEnabled(flag);
+    }
+
+    private void activarBotones(boolean nuevo, boolean modificar, boolean baja, boolean aceptar, boolean cancelar, boolean reactivar,boolean salir){
+        this.btnNuevo.setEnabled(nuevo);
+        this.btnModificar.setEnabled(modificar);
+        this.btnBaja.setEnabled(baja);
+        this.btnAceptar.setEnabled(aceptar);
+        this.btnCancelar.setEnabled(cancelar);
+        this.btnAlta.setEnabled(reactivar);
+        this.btnSalir.setEnabled(salir);
+
+    }
+
+    private void cargarDatos(TipoMaquina tipo){
+       
+        this.txtDescripcion.setText(tipo.getDescripcion());
+        this.txtNombre.setText(tipo.getNombre());
+
+        if(tipo.getFecBaja()==null)
+            this.txtFechaBaja.setText("");
+        else
+        {
+            Format formato=new SimpleDateFormat("dd/MM/yyyy");
+            String fecha=formato.format(tipo.getFecBaja());
+            this.txtFechaBaja.setText(fecha);
+        }
+
+        if(tipo.getMotivoBaja()==null)
+            this.txtMotivoBaja.setText("");
+        else
+            this.txtMotivoBaja.setText(tipo.getMotivoBaja());
+
+
+    }
+
+    private void cancelar(){
+       this.activarTipoProducto(false);
+       this.activarBaja(false);
+       this.activarDisponible(true);
+       this.activarBotones(true, false, false,  false, false,false,true);
+       this.vaciar();
+    }
+
+    private void vaciar(){
+        this.txtDescripcion.setText("");
+        this.txtNombre.setText("");
+        this.txtFechaBaja.setText("");
+        this.txtMotivoBaja.setText("");
+       this.lstDisponible.setSelectedIndex(-1);
+
+    }
+
+     private void cargarTipoProductos(){
+        try {
+            lstDisponible.removeAll();
+            DefaultListModel modelo = new DefaultListModel();
+
+            List<TipoMaquina> tipo = gestor.listarTipoMaquina();
+            for(int i=0;i<tipo.size();i++){
+                modelo.addElement(tipo.get(i));
+
+            lstDisponible.setModel(modelo);
+            lstDisponible.setSelectedIndex(-1);
+
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+      private boolean validar(){
+        return true;
+    }
+
 }
