@@ -31,7 +31,7 @@ public class TipoMaquina  implements java.io.Serializable {
      @Id
     @GeneratedValue
     @Column(name="ID_TMAQUINA", unique=true, nullable=false, precision=2, scale=0)
-     private byte idTmaquina;
+     private int idTmaquina;
      //_______________________________________________________________________________//
      @Column(name="NOMBRE", nullable=false, length=50)
      private String nombre;
@@ -76,7 +76,7 @@ public class TipoMaquina  implements java.io.Serializable {
     }
    
     
-    public byte getIdTmaquina() {
+    public int getIdTmaquina() {
         return this.idTmaquina;
     }
     

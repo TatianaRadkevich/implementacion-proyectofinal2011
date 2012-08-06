@@ -100,7 +100,7 @@ public class GestorTipoMaquina {
         interfaz.habilitarBaja(false, null, "");
         }
 
-        
+
 
         public void validar (TipoMaquina tmh) throws ExceptionGestor {
                     String mensage="";
@@ -120,7 +120,7 @@ public void ejecutarCU(TipoMaquina tmh) throws ExceptionGestor {
         finalizarCU();
         }
 
-  
+
     };
     /*************************************************************************/
     private gestor Modificar = new gestor() {
@@ -220,4 +220,14 @@ public void ejecutarCU(TipoMaquina tmh) throws ExceptionGestor {
         finalizarCU();
         }
     };
+
+    public void guardar(TipoMaquina tipoMaquina){
+         TipoMaquinaBD.guardar(tipoMaquina);
+    }
+
+
+    public void modificar(TipoMaquina tipoMaquina){
+         TipoMaquinaBD.modificar(tipoMaquina);
+    }
+    
 }

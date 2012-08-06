@@ -223,4 +223,16 @@ public void ejecutarCU(TipoHerramienta tmh) throws ExceptionGestor {
         finalizarCU();
         }
     };
+
+
+public void guardar(TipoHerramienta tipoMaquina){
+         TipoHerramientaBD.guardar(tipoMaquina);
+    }
+
+
+    public void modificar(TipoHerramienta tipoMaquina){
+         TipoHerramientaBD.modificar(tipoMaquina);
+    }
+
+
 }
