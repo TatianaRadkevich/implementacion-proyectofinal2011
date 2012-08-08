@@ -16,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -33,65 +34,67 @@ public class DetallePlanProduccion implements java.io.Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_DETALLE_PLAN", unique = true, nullable = false, precision = 8, scale = 0)
-    private int idDetallePlan;;
+    private int idDetallePlan;
     //___________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_ETAPA_PRODUCCION_ESPECIFICA", nullable = true)
-    private EtapaProduccionEspecifica TEtapasProduccionEspecifica;;
+    private EtapaProduccionEspecifica TEtapasProduccionEspecifica;
     //___________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EMPLEADO", nullable = true)
-    private Empleado TEmpleados;;
+    private Empleado TEmpleados;
+    //___________________________________________________________________________________________//
+    //    @ManyToOne(fetch = FetchType.LAZY)
+    //    @JoinColumn(name = "ID_PLAN_PRODUCCION", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+    @JoinColumn(name = "VERSION", referencedColumnName = "VERSION", insertable = false, updatable = false),
+    @JoinColumn(name = "ID_PEDIDO", referencedColumnName = "ID_PEDIDO", insertable = false, updatable = false)})
+    private PlanProduccion TPlanesProduccion;
     //___________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_PLAN_PRODUCCION", nullable = true)
-    private PlanProduccion TPlanesProduccion;;
+    @JoinColumn(name = "ID_DETALLE_PEDIDO", nullable = false)
+    private DetallePedido TDetallesPedido;
     //___________________________________________________________________________________________//
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_DETALLE_PEDIDO", nullable=false)
-    private DetallePedido TDetallesPedido;;
-    //___________________________________________________________________________________________//
-   
     @Column(name = "CANTIDAD_PLANIFICADA", nullable = true, precision = 5, scale = 0)
-    private Integer cantidadPlanificada;;
+    private Integer cantidadPlanificada;
     //___________________________________________________________________________________________//
     @Column(name = "CANTIDAD_PRODUCIDA", precision = 5, scale = 0)
-    private Integer cantidadProducida;;
+    private Integer cantidadProducida;
     //___________________________________________________________________________________________//
     @Column(name = "OBSERVACIONES", length = 200)
-    private String observaciones;;
+    private String observaciones;
     //___________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_PREVISTA_FIN", nullable = true, length = 23)
-    private Date fecHoraPrevistaFin;;
+    private Date fecHoraPrevistaFin;
     //___________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_PREVISTA_INICIO", nullable = true, length = 23)
-    private Date fecHoraPrevistaInicio;;
+    private Date fecHoraPrevistaInicio;
     //___________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_REAL_INICIO", nullable = true, length = 23)
-    private Date fecHoraRealInicio;;
+    private Date fecHoraRealInicio;
     //___________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_HORA_REAL_FIN", nullable = true, length = 23)
-    private Date fecHoraRealFin;;
+    private Date fecHoraRealFin;
     //___________________________________________________________________________________________//
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TDetallesPlan")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
     /*------------------------------------------------------------------------*/
-     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_ORDEN_TRABAJO", nullable=true)
-    private OrdenTrabajo TOrdenesTrabajo;;
-/*------------------------------------------------------------------------*/
-      @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_EDETALLE_PLAN", nullable=true)
-     private EstadoDetallePlan TEdetallePlan;
-      /*------------------------------------------------------------------------*/
-      @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TDetallesPlan")
-       private Set<MaqHerrPartXDetPlan> TMaqHerrPartXDetPlans = new HashSet<MaqHerrPartXDetPlan>(0);
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_ORDEN_TRABAJO", nullable = true)
+    private OrdenTrabajo TOrdenesTrabajo;
+    /*------------------------------------------------------------------------*/
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_EDETALLE_PLAN", nullable = true)
+    private EstadoDetallePlan TEdetallePlan;
+    /*------------------------------------------------------------------------*/
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TDetallesPlan")
+    private Set<MaqHerrPartXDetPlan> TMaqHerrPartXDetPlans = new HashSet<MaqHerrPartXDetPlan>(0);
 
     public DetallePlanProduccion() {
     }
@@ -101,7 +104,7 @@ public class DetallePlanProduccion implements java.io.Serializable {
         TEtapasProduccionEspecifica.addDetallePlanProduccion(this);
     }
 
-    public DetallePlanProduccion(int idDetallePlan, EtapaProduccionEspecifica TEtapasProduccionEspecifica, Empleado TEmpleados, PlanProduccion TPlanesProduccion, MaquinaParticular TMaquinasHerramientaParticular, int cantidad, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealInicio, Date fecHoraRealFin, OrdenTrabajo TOrdenesTrabajo,EstadoDetallePlan TEdetallePlan) {
+    public DetallePlanProduccion(int idDetallePlan, EtapaProduccionEspecifica TEtapasProduccionEspecifica, Empleado TEmpleados, PlanProduccion TPlanesProduccion, MaquinaParticular TMaquinasHerramientaParticular, int cantidad, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealInicio, Date fecHoraRealFin, OrdenTrabajo TOrdenesTrabajo, EstadoDetallePlan TEdetallePlan) {
         this.idDetallePlan = idDetallePlan;
         this.TEtapasProduccionEspecifica = TEtapasProduccionEspecifica;
         this.TEmpleados = TEmpleados;
@@ -115,7 +118,7 @@ public class DetallePlanProduccion implements java.io.Serializable {
         this.TEdetallePlan = TEdetallePlan;
     }
 
-    public DetallePlanProduccion(int idDetallePlan, EtapaProduccionEspecifica TEtapasProduccionEspecifica, Empleado TEmpleados, PlanProduccion TPlanesProduccion, MaquinaParticular TMaquinasHerramientaParticular, int cantidad, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealInicio, Date fecHoraRealFin, Set<Faltante> TFaltanteses, OrdenTrabajo TOrdenesTrabajo,EstadoDetallePlan TEdetallePlan) {
+    public DetallePlanProduccion(int idDetallePlan, EtapaProduccionEspecifica TEtapasProduccionEspecifica, Empleado TEmpleados, PlanProduccion TPlanesProduccion, MaquinaParticular TMaquinasHerramientaParticular, int cantidad, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealInicio, Date fecHoraRealFin, Set<Faltante> TFaltanteses, OrdenTrabajo TOrdenesTrabajo, EstadoDetallePlan TEdetallePlan) {
         this.idDetallePlan = idDetallePlan;
         this.TEtapasProduccionEspecifica = TEtapasProduccionEspecifica;
         this.TEmpleados = TEmpleados;
@@ -168,7 +171,8 @@ public class DetallePlanProduccion implements java.io.Serializable {
 
     public void setTDetallesPedido(DetallePedido TDetallesPedido) {
         this.TDetallesPedido = TDetallesPedido;
-    }    
+    }
+
     public Integer getCantidad() {
         return this.cantidadPlanificada;
     }
@@ -235,20 +239,19 @@ public class DetallePlanProduccion implements java.io.Serializable {
 
     public void generarFaltantes() {
         this.TFaltanteses.clear();
-        for( DetalleEtapaProduccion dep: this.getTEtapasProduccionEspecifica().getDetalleEtapaProduccion())
-            if(dep.getTDetallesProducto()!=null)
-            {
-                Material mat=dep.getTDetallesProducto().getTMateriales();
-                Faltante f=new Faltante();              
-                f.setCantidad((int)Math.ceil(1f*dep.getCantidadNecesaria()*this.getCantidad()/mat.getLogitud()));
+        for (DetalleEtapaProduccion dep : this.getTEtapasProduccionEspecifica().getDetalleEtapaProduccion()) {
+            if (dep.getTDetallesProducto() != null) {
+                Material mat = dep.getTDetallesProducto().getTMateriales();
+                Faltante f = new Faltante();
+                f.setCantidad((int) Math.ceil(1f * dep.getCantidadNecesaria() * this.getCantidad() / mat.getLogitud()));
                 f.setMaterial(mat);
                 f.setDetallePlan(this);
                 f.setFecGeneracion(Utilidades.getFechaActual());
                 f.setFecNecesidad(this.getFecHoraPrevistaInicio());
                 TFaltanteses.add(f);
             }
+        }
     }
-
 
     public OrdenTrabajo getTOrdenesTrabajo() {
         return this.TOrdenesTrabajo;
@@ -265,37 +268,35 @@ public class DetallePlanProduccion implements java.io.Serializable {
     public void setTEdetallePlan(EstadoDetallePlan TEdetallePlan) {
         this.TEdetallePlan = TEdetallePlan;
     }
-    
-    public void setMaquinaParticular(MaquinaParticular mq)
-    {      
-         MaqHerrPartXDetPlan aux=null;
-         for(MaqHerrPartXDetPlan item:this.TMaqHerrPartXDetPlans)            
-                if(item.getTMaquinasParticular()!=null)
-                    aux=item;
-         
-        if(mq==null)
-        {
-            if(aux!=null)
-                this.TMaqHerrPartXDetPlans.remove(aux);  
+
+    public void setMaquinaParticular(MaquinaParticular mq) {
+        MaqHerrPartXDetPlan aux = null;
+        for (MaqHerrPartXDetPlan item : this.TMaqHerrPartXDetPlans) {
+            if (item.getTMaquinasParticular() != null) {
+                aux = item;
+            }
         }
-        else
-        {
-             aux.setTMaquinasParticular(mq);
-        }    
+
+        if (mq == null) {
+            if (aux != null) {
+                this.TMaqHerrPartXDetPlans.remove(aux);
+            }
+        } else {
+            aux.setTMaquinasParticular(mq);
+        }
     }
 
-    public MaquinaParticular getMaquinaParticular()
-    {
-        for(MaqHerrPartXDetPlan item:this.TMaqHerrPartXDetPlans)
-        {
-            if(item.getTMaquinasParticular()!=null)
+    public MaquinaParticular getMaquinaParticular() {
+        for (MaqHerrPartXDetPlan item : this.TMaqHerrPartXDetPlans) {
+            if (item.getTMaquinasParticular() != null) {
                 return item.getTMaquinasParticular();
+            }
         }
         return null;
     }
 
     public void addHerramientaParticular(HerramientaParticular hp) {
-        MaqHerrPartXDetPlan aux=new MaqHerrPartXDetPlan(hp);
+        MaqHerrPartXDetPlan aux = new MaqHerrPartXDetPlan(hp);
         aux.setTDetallesPlan(this);
         this.TMaqHerrPartXDetPlans.add(aux);
     }
@@ -307,5 +308,4 @@ public class DetallePlanProduccion implements java.io.Serializable {
     public void setTMaqHerrPartXDetPlans(Set<MaqHerrPartXDetPlan> TMaqHerrPartXDetPlans) {
         this.TMaqHerrPartXDetPlans = TMaqHerrPartXDetPlans;
     }
-
 }

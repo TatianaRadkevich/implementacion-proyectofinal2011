@@ -9,8 +9,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,13 +33,21 @@ import org.hibernate.annotations.Cascade;
 @Table(name = "T_PLANES_PRODUCCION", schema = "dbo", catalog = "Ramaty")
 public class PlanProduccion implements java.io.Serializable {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "ID_PLAN_PRODUCCION", unique = true, nullable = false, precision = 8, scale = 0)
-    private int idPlanProduccion;
+//    @Id
+//    @GeneratedValue
+//    @Column(name = "ID_PLAN_PRODUCCION", unique = true, nullable = false, precision = 8, scale = 0)
+//    private int idPlanProduccion;
+
+    @EmbeddedId
+    @AttributeOverrides({
+        @AttributeOverride(name = "version", column =
+        @Column(name = "VERSION", nullable = false)),
+        @AttributeOverride(name = "idPedido", column =
+        @Column(name = "ID_PEDIDO", nullable = false, precision = 8, scale = 0))})
+    private PlanProduccionId id;
     //_______________________________________________________________________________________________//
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_EPLAN_PRODUCCION")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_EPLAN_PRODUCCION")
     private EstadoPlanProduccion TEplanProduccion;
     //_______________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,7 +55,7 @@ public class PlanProduccion implements java.io.Serializable {
     private Empleado TEmpleados;
     //_______________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_PEDIDO")//, nullable=false)
+    @JoinColumn(name = "ID_PEDIDO",insertable=false,updatable=false)//, nullable=false)
     private Pedido TPedidos;
     //_______________________________________________________________________________________________//
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -86,8 +97,8 @@ public class PlanProduccion implements java.io.Serializable {
         TPedidos.setPlanProduccion(this);
     }
 
-    public PlanProduccion(int idPlanProduccion, Empleado TEmpleados, Pedido TPedidos, Date fecGeneracion, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealFin, Date fecHoraRealInicio) {
-        this.idPlanProduccion = idPlanProduccion;
+    public PlanProduccion(PlanProduccionId idPlanProduccion, Empleado TEmpleados, Pedido TPedidos, Date fecGeneracion, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealFin, Date fecHoraRealInicio) {
+        this.id = idPlanProduccion;
         this.TEmpleados = TEmpleados;
         this.TPedidos = TPedidos;
         this.fecGeneracion = fecGeneracion;
@@ -97,8 +108,8 @@ public class PlanProduccion implements java.io.Serializable {
         this.fecHoraRealInicio = fecHoraRealInicio;
     }
 
-    public PlanProduccion(int idPlanProduccion, Empleado TEmpleados, Pedido TPedidos, Date fecGeneracion, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealFin, Date fecHoraRealInicio, String observaciones, Date fecUltimaModificacion, Set<DetallePlanProduccion> TDetallesPlans) {
-        this.idPlanProduccion = idPlanProduccion;
+    public PlanProduccion(PlanProduccionId idPlanProduccion, Empleado TEmpleados, Pedido TPedidos, Date fecGeneracion, Date fecHoraPrevistaFin, Date fecHoraPrevistaInicio, Date fecHoraRealFin, Date fecHoraRealInicio, String observaciones, Date fecUltimaModificacion, Set<DetallePlanProduccion> TDetallesPlans) {
+        this.id = idPlanProduccion;
         this.TEmpleados = TEmpleados;
         this.TPedidos = TPedidos;
         this.fecGeneracion = fecGeneracion;
@@ -111,12 +122,12 @@ public class PlanProduccion implements java.io.Serializable {
         this.TDetallesPlans = TDetallesPlans;
     }
 
-    public int getId() {
-        return this.idPlanProduccion;
+    public PlanProduccionId getId() {
+        return this.id;
     }
 
-    public void setId(int idPlanProduccion) {
-        this.idPlanProduccion = idPlanProduccion;
+    public void setId(PlanProduccionId idPlanProduccion) {
+        this.id = idPlanProduccion;
     }
 
     public Empleado getEmpleado() {
@@ -211,16 +222,16 @@ public class PlanProduccion implements java.io.Serializable {
         return salida;
     }
 
-    public DetallePlanProduccion getDetallePlan(EtapaProduccionEspecifica epe)
-    {
-        for(DetallePlanProduccion dpp:this.TDetallesPlans)
-            if(dpp.getTEtapasProduccionEspecifica().equals(epe))
+    public DetallePlanProduccion getDetallePlan(EtapaProduccionEspecifica epe) {
+        for (DetallePlanProduccion dpp : this.TDetallesPlans) {
+            if (dpp.getTEtapasProduccionEspecifica().equals(epe)) {
                 return dpp;
+            }
+        }
         return null;
     }
 
-
-     public List<DetallePlanProduccion> getDetallePlan(Empleado emp) {
+    public List<DetallePlanProduccion> getDetallePlan(Empleado emp) {
         List<DetallePlanProduccion> salida = new ArrayList<DetallePlanProduccion>();
         if (emp == null) {
             return salida;
@@ -235,10 +246,10 @@ public class PlanProduccion implements java.io.Serializable {
         return salida;
     }
 
-    public List<Empleado> getEmpleadosInvolucrados(){
+    public List<Empleado> getEmpleadosInvolucrados() {
 
-         List<Empleado> salida = new ArrayList<Empleado>();
-        
+        List<Empleado> salida = new ArrayList<Empleado>();
+
         for (DetallePlanProduccion dpp : this.TDetallesPlans) {
             if (!existe(dpp.getTEmpleados(), salida)) {
                 salida.add(dpp.getTEmpleados());
@@ -248,15 +259,14 @@ public class PlanProduccion implements java.io.Serializable {
         return salida;
     }
 
-
     private boolean existe(Empleado tEmpleados, List<Empleado> salida) {
-        for(int i=0; i<salida.size();i++){
-            if(tEmpleados.getId()==salida.get(i).getId())
+        for (int i = 0; i < salida.size(); i++) {
+            if (tEmpleados.getId() == salida.get(i).getId()) {
                 return true;
+            }
         }
         return false;
     }
-
 
     public void setDetallePlan(List<DetallePlanProduccion> detalle) {
         this.TDetallesPlans.clear();
@@ -266,7 +276,6 @@ public class PlanProduccion implements java.io.Serializable {
         }
 
     }
-
 
     public void addDetallePlan(DetallePlanProduccion detalle) {
         detalle.setTPlanesProduccion(this);
@@ -281,10 +290,10 @@ public class PlanProduccion implements java.io.Serializable {
 
     }
 
-    public void generarFaltantes()
-    {
-        for(DetallePlanProduccion dpp: this.TDetallesPlans)
+    public void generarFaltantes() {
+        for (DetallePlanProduccion dpp : this.TDetallesPlans) {
             dpp.generarFaltantes();
+        }
     }
 
     public EstadoPlanProduccion getEstado() {
@@ -294,8 +303,4 @@ public class PlanProduccion implements java.io.Serializable {
     public void setEstado(EstadoPlanProduccion estado) {
         this.TEplanProduccion = estado;
     }
-
-
-
-
 }
