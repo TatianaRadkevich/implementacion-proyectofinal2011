@@ -29,4 +29,16 @@ public class EAlmacenamientoProductoTerminadoBD {
 
         return result;
     }
+     
+     public static List<EAlmacenamientoProductoTerminado> devolverEstadoAlmacenamiento(int id)
+     {
+         List<EAlmacenamientoProductoTerminado> result = new ArrayList<EAlmacenamientoProductoTerminado>(0);
+         try{
+             String sql = "from EAlmacenamientoProductoTerminado where ID_EALMACENAMIENTO_PRODUCTO_TERMINADO = " + id;
+            result = HibernateUtil.ejecutarConsulta(sql);
+
+        }catch(Exception  ex) {}
+
+        return result;
+     }
 }

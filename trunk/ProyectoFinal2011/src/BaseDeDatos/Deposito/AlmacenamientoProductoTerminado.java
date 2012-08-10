@@ -86,4 +86,5 @@ public class AlmacenamientoProductoTerminado implements Serializable {
     public void setIdAlmacenamiento(int idAlmacenamiento) {
         this.idAlmacenamiento = idAlmacenamiento;
     }    
+
 }

@@ -181,4 +181,8 @@ public class PedidoBD {
     public static List<Pedido> getPedidosPendientesPago() {
         return HibernateUtil.ejecutarConsulta("FROM Pedido as p WHERE LOWER(p.TEpedido.nombre) like  LOWER('Pendiente de pago')");
     }
+    
+    public static List<Pedido> getPedidosTerminadoProduccion() {
+        return HibernateUtil.ejecutarConsulta("FROM Pedido as p WHERE ID_EPEDIDO in(6,7)");
+    }
 }
