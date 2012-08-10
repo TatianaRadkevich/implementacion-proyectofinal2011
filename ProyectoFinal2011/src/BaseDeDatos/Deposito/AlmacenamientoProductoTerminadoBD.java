@@ -54,5 +54,6 @@ public class AlmacenamientoProductoTerminadoBD {
    public static void eliminar (AlmacenamientoProductoTerminado r){
        HibernateUtil.EliminarObjeto(r);
    }
-    
+
+  
 }
