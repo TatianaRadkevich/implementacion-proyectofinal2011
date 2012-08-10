@@ -186,7 +186,6 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         Set<AlmacenamientoProductoTerminado> almacenado = seletedObject.getAlmacenado();
         if (almacenado != null && !almacenado.isEmpty())
         {
-            jComboBoxEstado.setSelectedItem(((AlmacenamientoProductoTerminado)almacenado.toArray()[almacenado.size() - 1]).getEstado());
             jTextFieldCantidad.setText(getCantAlmacenada(seletedObject)+"");
         } 
     }
@@ -200,7 +199,6 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
     }
 
     private void limpiarAlmacenamiento() {
-        jComboBoxEstado.setSelectedIndex(-1);
         jTextFieldCantidad.setText("");
     }
 
@@ -252,7 +250,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         alm.setFechaAlmacenamiento(new Date());
         alm.setTDetallesPedido(seletedObject);
         seletedObject.getAlmacenado().add(alm);
-        jButtonAceptarActionPerformed(null);
+        //jButtonAceptarActionPerformed(null);
     }
     
     private int getCantAlmacenada(DetallePedido seletedObject) {
@@ -335,9 +333,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         jScrollPane2 = new javax.swing.JScrollPane();
         tbDetalle = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBoxEstado = new javax.swing.JComboBox(cargarComboEstados());
         jTextFieldCantidad = new javax.swing.JTextField();
         jButtonGuardarAlmac = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
@@ -346,7 +342,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registrar Almacenamiento Producto Terminado");
 
-        pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", 0, 0, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -355,7 +351,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha Generación", 0, 0, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha Generación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Desde:");
@@ -440,7 +436,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        pnlPedidos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedidos", 0, 0, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        pnlPedidos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedidos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         tbPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -452,7 +448,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         ));
         jScrollPane1.setViewportView(tbPedidos);
 
-        pnlDetalle.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle pedido seleccionado", 0, 0, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        pnlDetalle.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle pedido seleccionado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         tbDetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -480,9 +476,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
                 .addContainerGap())
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Almacenamiento", 0, 0, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
-
-        jLabel6.setText("Estado:");
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Almacenamiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel7.setText("Cantidad:");
 
@@ -502,13 +496,9 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxEstado, 0, 98, Short.MAX_VALUE)
-                            .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)))
+                        .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 78, Short.MAX_VALUE)
                         .addComponent(jButtonGuardarAlmac)))
@@ -517,17 +507,12 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jComboBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonGuardarAlmac)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlPedidosLayout = new javax.swing.GroupLayout(pnlPedidos);
@@ -633,7 +618,6 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
     private void jButtonGuardarAlmacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarAlmacActionPerformed
         cargarAlmacenamiento(tmDetalle.getSeletedObject());
         tmDetalle.setDatos(tmDetalle.getDatos());
-        jComboBoxEstado.setSelectedIndex(-1);
         jTextFieldCantidad.setText("");
         tmDetalle.setSelectedRow(-1);
     }//GEN-LAST:event_jButtonGuardarAlmacActionPerformed
@@ -652,11 +636,9 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
     private com.toedter.calendar.JDateChooser dtcFechaGeneracionHasta;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonGuardarAlmac;
-    private javax.swing.JComboBox jComboBoxEstado;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
