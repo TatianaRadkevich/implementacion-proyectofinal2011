@@ -18,6 +18,7 @@ import Negocio.Deposito.ReajusteStock;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Mensajes;
 import Presentacion.*;
+import java.util.List;
 
 /**
  *
@@ -36,17 +37,37 @@ public class ReajustarStock extends javax.swing.JDialog {
         initComponents();
         gestor=new GestorReajustarStock();
 
+        inicializarComboMateriales();
+        limpiarDatos();
+    }
+
+    private void inicializarComboMateriales()
+    {
+        cmbNombreMaterial.removeAllItems();
+        List<Material> materiales = gestor.listarMaterial();
+        for(int i = 0; i < materiales.size(); i++)
+        {
+            cmbNombreMaterial.addItem(materiales.get(i));
+        }
     }
 
     public void cargarMaterial(Material obj)
     {
+        for(int i = 0; i < cmbNombreMaterial.getItemCount(); i++)
+        {
+            if(((Material)cmbNombreMaterial.getItemAt(i)).getCodigo().equals(obj.getCodigo()))
+            {
+                cmbNombreMaterial.setSelectedIndex(i);
+                break;
+            }
+        }
         txtCodigo.setText(obj.getCodigo());
-        txtNombre.setText(obj.getNombre());
         txtCant.setText(obj.getStockActual()+"");
     }
     
-     public void limpiarDatos(){
-         txtNombre.setText("");
+     private void limpiarDatos(){
+         cmbNombreMaterial.setSelectedItem(null);
+         txtCodigo.setText("");
          txtCant.setText("");
          txtCantDif.setText("");
          txtObs.setText("");
@@ -65,7 +86,6 @@ public class ReajustarStock extends javax.swing.JDialog {
         txtCodigo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtCant = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -78,6 +98,7 @@ public class ReajustarStock extends javax.swing.JDialog {
         txtCantDif = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtObs = new javax.swing.JTextArea();
+        cmbNombreMaterial = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Reajuste de Stock");
@@ -86,13 +107,6 @@ public class ReajustarStock extends javax.swing.JDialog {
         jLabel1.setText("Código:");
 
         jLabel2.setText("Nombre:");
-
-        txtNombre.setEditable(false);
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Cantidad:");
 
@@ -138,6 +152,13 @@ public class ReajustarStock extends javax.swing.JDialog {
         txtObs.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txtObs);
 
+        cmbNombreMaterial.setName("null"); // NOI18N
+        cmbNombreMaterial.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbNombreMaterialItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -164,7 +185,7 @@ public class ReajustarStock extends javax.swing.JDialog {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                                            .addComponent(cmbNombreMaterial, javax.swing.GroupLayout.Alignment.LEADING, 0, 167, Short.MAX_VALUE)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -188,10 +209,10 @@ public class ReajustarStock extends javax.swing.JDialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnBuscarMat)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbNombreMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
@@ -212,15 +233,11 @@ public class ReajustarStock extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-
-    }//GEN-LAST:event_txtNombreActionPerformed
 
     private void txtCantRealKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantRealKeyReleased
         try{
@@ -252,8 +269,6 @@ public class ReajustarStock extends javax.swing.JDialog {
             Mensajes.mensajeErrorGuardar("No se pudo ejecutar el Reajuste");
             e.printStackTrace();
         }
-
-         
     }//GEN-LAST:event_btnAceptarActionPerformed
 
 private void btnBuscarMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarMatActionPerformed
@@ -268,18 +283,28 @@ private void btnBuscarMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     {
         limpiarDatos();
         cargarMaterial(matActual);
-    }        
+    }
 }//GEN-LAST:event_btnBuscarMatActionPerformed
 
 private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
      this.dispose();
-    
 }//GEN-LAST:event_btnCancelarActionPerformed
+
+private void cmbNombreMaterialItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbNombreMaterialItemStateChanged
+    if(evt.getItem() != null){
+        matActual= (Material)evt.getItem();
+        cargarMaterial(matActual);
+    }
+    else{
+        limpiarDatos();
+    }
+}//GEN-LAST:event_cmbNombreMaterialItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnBuscarMat;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JComboBox cmbNombreMaterial;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -291,7 +316,6 @@ private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JTextField txtCantDif;
     private javax.swing.JTextField txtCantReal;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtNombre;
     private javax.swing.JTextArea txtObs;
     // End of variables declaration//GEN-END:variables
 
