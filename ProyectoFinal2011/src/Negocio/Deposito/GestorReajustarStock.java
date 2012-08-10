@@ -8,6 +8,7 @@ package Negocio.Deposito;
 import BaseDeDatos.Compras.MaterialBD;
 import BaseDeDatos.Deposito.ReajusteStockBD;
 import Negocio.Compras.Material;
+import java.util.List;
 //import Presentacion.Deposito.ReajustarStock;
 
 /**
@@ -27,6 +28,8 @@ public class GestorReajustarStock {
         
     }
 
-    
-
+    public List<Material> listarMaterial()
+    {
+        return MaterialBD.getMateriales("", "", true, false);
+    }
 }

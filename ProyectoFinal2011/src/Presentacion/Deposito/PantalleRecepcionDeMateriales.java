@@ -101,7 +101,7 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
 
     public void cargarRecepcion(DetalleOrdenCompra doc) {
         txtCantPedida.setText(doc.getCantidadPedida() + "");
-        txtCantRecibida.setText(doc.getCantidadRecibida() + "");
+        txtCantRecibida.setText(doc.getCantidadPedida() - doc.getCantidadRecibida() + "");
         txtMaterial.setText(doc.getMaterial().getMaterial().getNombre());
     }
 
@@ -490,7 +490,7 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         // TODO add your handling code here:
         try {
-            tmDetalleOrden.getSeletedObject().setCantidadRecibida(Integer.parseInt(txtCantRecibida.getText()));
+            tmDetalleOrden.getSeletedObject().setCantidadRecibida(tmDetalleOrden.getSeletedObject().getCantidadRecibida() + Integer.parseInt(txtCantRecibida.getText()));
             tmDetalleOrden.updateTabla();
         } catch (NumberFormatException ex) {
             Mensajes.mensajeErrorGenerico("El dato ingresado es invalido");
