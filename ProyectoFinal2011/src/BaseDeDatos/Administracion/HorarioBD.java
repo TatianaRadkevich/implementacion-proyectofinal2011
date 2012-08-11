@@ -24,9 +24,18 @@ public class HorarioBD {
     }
 
     public static List<Dia> listarDias(){
-
-    return HibernateUtil.ejecutarConsulta("from Dia");
-
+        List<Dia> l=HibernateUtil.ejecutarConsulta("from Dia");
+        if(l.isEmpty())
+        {
+            HibernateUtil.guardarObjeto(new Dia("Lunes"));
+            HibernateUtil.guardarObjeto(new Dia("Martes"));
+            HibernateUtil.guardarObjeto(new Dia("Miercoles"));
+            HibernateUtil.guardarObjeto(new Dia("Jueves"));
+            HibernateUtil.guardarObjeto(new Dia("Viernes"));
+            HibernateUtil.guardarObjeto(new Dia("Sabado"));
+            HibernateUtil.guardarObjeto(new Dia("Domingo"));
+        }
+        return HibernateUtil.ejecutarConsulta("from Dia");
     }
 
 

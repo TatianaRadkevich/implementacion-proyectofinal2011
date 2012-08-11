@@ -69,7 +69,7 @@ public class AsistenciaEmpleado implements java.io.Serializable {
     }
 
     public String getHoraEgreso() {
-        return horaEgreso;
+        return (horaEgreso==null)?"":horaEgreso;
     }
 
     public void setHoraEgreso(String horaEgreso) {

@@ -32,14 +32,6 @@ public class PedidoBD {
         return (Pedido) HibernateUtil.getObjeto(Pedido.class, id);
     }
 
-    public static int getUltimoNroFactura() {
-        try {
-            return (Integer) HibernateUtil.ejecutarConsulta("SELECT max(idFactura) FROM Factura").get(0);
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
     public static List<Pedido> getPedidos(
             String RazonSocial, String CUIL, String NroPedido,
             Date desde, Date hasta, boolean vigentes, boolean cancelados) {

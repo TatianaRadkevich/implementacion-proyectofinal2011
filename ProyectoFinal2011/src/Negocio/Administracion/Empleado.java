@@ -495,4 +495,14 @@ public class Empleado implements java.io.Serializable {
              }
          }catch(Exception e){}
     }
+
+   public void addAsistencia(AsistenciaEmpleado a) {
+       a.setEmpleado(this);
+        this.TAsistenciasEmpleados.add(a);
+    }
+
+   public void removeAsistencia(AsistenciaEmpleado a) {
+       a.setEmpleado(null);
+        this.TAsistenciasEmpleados.remove(a);
+    }
 }

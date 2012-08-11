@@ -91,13 +91,16 @@ public class PantallaAsistenciaEmpleadoRegistrar extends javax.swing.JFrame {
                 fila.add(elemento.getApellidoNombre());
                 String documento = elemento.getTipoDocumento() + ": " + elemento.getNumeroDocumento();
                 fila.add(documento);
-                try{
-                AsistenciaEmpleado ae = elemento.getUltimaAsistencia();
-                String fecha = Utilidades.parseFecha(ae.getFecAsistencia());
-                fila.add(fecha + " - " + ae.getHoraIngreso() + " Hs.");
-                fila.add(fecha + " - " + ae.getHoraEgreso() + " Hs.");
-                }catch(Exception e)
-                {
+                try {
+                    AsistenciaEmpleado ae = elemento.getUltimaAsistencia();
+                    String fecha = Utilidades.parseFecha(ae.getFecAsistencia());
+                    fila.add(fecha + " - " + ae.getHoraIngreso());
+                    if (ae.getHoraEgreso().isEmpty() == false) {
+                        fila.add(fecha + " - " + ae.getHoraEgreso());
+                    } else {
+                        fila.add("");
+                    }
+                } catch (Exception e) {
                     fila.add("");
                     fila.add("");
                 }
@@ -432,7 +435,7 @@ public class PantallaAsistenciaEmpleadoRegistrar extends javax.swing.JFrame {
 
             limpiarAsistencia();
             Utilidades.habilitarPanel(pnlIngresoEgreso, false);
-            tmEmpleados.updateTabla();
+            cargarEmpleados();
 
         } catch (NegocioException ne) {
             Mensajes.mensajeErrorGenerico(ne.getMessage());
@@ -498,11 +501,9 @@ public class PantallaAsistenciaEmpleadoRegistrar extends javax.swing.JFrame {
         });
     }
 
-    public static void iniciarRegistroAsistencia()
-    {
+    public static void iniciarRegistroAsistencia() {
         new PantallaAsistenciaEmpleadoRegistrar(new GestorAsistencia()).setVisible(true);
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;

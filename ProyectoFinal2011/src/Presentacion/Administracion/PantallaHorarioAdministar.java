@@ -34,7 +34,7 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
 
     private GestorHorario gestor;
     private TablaManager<AsignacionesDias> tmAsignacion;
-    private boolean banderaNuevo=true;
+    private boolean banderaNuevo = true;
 
     /** Creates new form PantallaMaquinaHerramientaTipoABM */
     public PantallaHorarioAdministar(GestorHorario g) {
@@ -44,7 +44,7 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
         inicializarTabla();
         //GUILocal.establecerGUILocal(this);
 
-        cmbDia.setModel(new DefaultComboBoxModel(gestor.listarDias().toArray()));
+        Utilidades.comboCargar(cmbDia, gestor.listarDias());
         habilitarCampos(false);
         cargarValidaciones();
         inicializarLista();
@@ -52,9 +52,8 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
         limpiar();
     }
 
-    private void inicializarTabla()
-    {
-            tmAsignacion = new TablaManager<AsignacionesDias>(tbDetalle) {
+    private void inicializarTabla() {
+        tmAsignacion = new TablaManager<AsignacionesDias>(tbDetalle) {
 
             @Override
             public Vector ObjetoFila(AsignacionesDias elemento) {
@@ -75,6 +74,7 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
             }
         };
         tmAsignacion.addSelectionListener(new ListSelectionListener() {
+
             public void valueChanged(ListSelectionEvent e) {
                 cargarDetalle(tmAsignacion.getSeletedObject());
             }
@@ -148,8 +148,7 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
     }
 
     public void cargarDetalle(AsignacionesDias as) {
-        if(as==null)
-        {
+        if (as == null) {
             limpiarDetalle();
             return;
         }
@@ -177,7 +176,6 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
     }
 
     public void habilitarDetalle(boolean b) {
-
     }
 
     /** This method is called from within the constructor to
@@ -332,8 +330,6 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
         jScrollPane3.setViewportView(tbDetalle);
 
         pnlDetalleCarga.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        cmbDia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo" }));
 
         btnAceptarDetalle.setText("Aceptar");
         btnAceptarDetalle.addActionListener(new java.awt.event.ActionListener() {
@@ -563,16 +559,34 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        // TODO add your handling code here:  
-        gestor.iniciarBaja((Horarios) lstDisponible.getSelectedValue());
+        // TODO add your handling code here:
+        try {
+            gestor.iniciarBaja((Horarios) lstDisponible.getSelectedValue());
+
+            if (Mensajes.mensajeConfirmacionGenerico("¿Realmente deseas eliminar este horario?")) {
+                gestor.ejecutarCU((Horarios) lstDisponible.getSelectedValue());
+            } else {
+                gestor.finalizarCU();
+            }
+
+            this.limpiar();
+            this.cargarLista();
+        } catch (ExceptionGestor ex) {
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+        }
 
 }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        gestor.iniciarModificar((Horarios) lstDisponible.getSelectedValue());
-         Utilidades.habilitarPanel(pnlCargo, true);
-        Utilidades.habilitarPanel(pnlDetalleCarga, false);
+        try {
+            gestor.iniciarModificar((Horarios) lstDisponible.getSelectedValue());
+            Utilidades.habilitarPanel(pnlCargo, true);
+            Utilidades.habilitarPanel(pnlDetalleCarga, false);
+            Utilidades.habilitarPanel(pnlDisponible, false);
+        } catch (ExceptionGestor ex) {
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -580,10 +594,14 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
         elemento.setNombre(txtNombre.getText());
         elemento.setDescripcion(txtDescripcion.getText());
         elemento.setTAsignacionesDiases(tmAsignacion.getDatos());
-        
+
         try {
             gestor.ejecutarCU(elemento);
+
+            this.limpiar();
             cargarLista();
+            Utilidades.habilitarPanel(pnlCargo, false);
+            Utilidades.habilitarPanel(pnlDisponible, true);
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
@@ -592,6 +610,11 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         gestor.finalizarCU();
+        this.limpiar();
+        cargarLista();
+        Utilidades.habilitarPanel(pnlCargo, false);
+        Utilidades.habilitarPanel(pnlDisponible, true);
+
 }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -599,6 +622,7 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
         gestor.iniciarNuevo();
         Utilidades.habilitarPanel(pnlCargo, true);
         Utilidades.habilitarPanel(pnlDetalleCarga, false);
+        Utilidades.habilitarPanel(pnlDisponible, false);
 
 }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -620,21 +644,30 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
         Utilidades.habilitarPanel(pnlDetalle, false);
         Utilidades.habilitarPanel(pnlDetalleCarga, true);
         limpiarDetalle();
-        banderaNuevo=true;
+        banderaNuevo = true;
     }//GEN-LAST:event_btnNuevoDetalleActionPerformed
 
     private void btnModificarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarDetalleActionPerformed
         // TODO add your handling code here:
+        if (tmAsignacion.getSeletedObject() == null) {
+            Mensajes.mensajeInformacion("Debe elejir un elemento");
+            return;
+        }
         Utilidades.habilitarPanel(pnlDetalle, false);
         Utilidades.habilitarPanel(pnlDetalleCarga, true);
-        banderaNuevo=false;
+        banderaNuevo = false;
 
     }//GEN-LAST:event_btnModificarDetalleActionPerformed
 
     private void btnEliminarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarDetalleActionPerformed
         // TODO add your handling code here:
-        if(Mensajes.mensajeConfirmacionGenerico("¿Desea eliminar el elemento seleccionado?"))
+        if (tmAsignacion.getSeletedObject() == null) {
+            Mensajes.mensajeInformacion("Debe elejir un elemento");
+            return;
+        }
+        if (Mensajes.mensajeConfirmacionGenerico("¿Desea eliminar el elemento seleccionado?")) {
             tmAsignacion.removeSelectedRow();
+        }
 
     }//GEN-LAST:event_btnEliminarDetalleActionPerformed
 
@@ -642,21 +675,23 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
         // TODO add your handling code here:
 
         AsignacionesDias ad;
-        
-        if(banderaNuevo)
-            ad=new AsignacionesDias();
-        else
-            ad=tmAsignacion.getSeletedObject();
+
+        if (banderaNuevo) {
+            ad = new AsignacionesDias();
+        } else {
+            ad = tmAsignacion.getSeletedObject();
+        }
 
         ad.setTDias((Dia) cmbDia.getSelectedItem());
         ad.setHoraDesde((Date) txtDesde.getValue());
         ad.setHoraHasta((Date) txtHasta.getValue());
 
-        if(banderaNuevo)
+        if (banderaNuevo) {
             tmAsignacion.add(ad);
-        else
+        } else {
             tmAsignacion.updateTabla();
-        
+        }
+
         limpiarDetalle();
         Utilidades.habilitarPanel(pnlDetalle, true);
         Utilidades.habilitarPanel(pnlDetalleCarga, false);
@@ -671,7 +706,7 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
 
             public void run() {
                 new GestorHorario().administar();
-               // new HorarioAdministracionPantalla(new GestorHorarios()).setVisible(true);
+                // new HorarioAdministracionPantalla(new GestorHorarios()).setVisible(true);
             }
         });
     }

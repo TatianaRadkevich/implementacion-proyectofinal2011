@@ -146,7 +146,7 @@ public class PantallaAsistenciaEmpleadoConsultar extends javax.swing.JDialog {
         
         Empleado emp=tmEmpleado.getSeletedObject();
         Date desde=dtcFechaDesde.getDate();
-        Date hasta=dtcFechaHasta.getDate();
+        Date hasta=Utilidades.agregarTiempoFecha(dtcFechaHasta.getDate(),1,0,0);
         if (emp == null)
              return;
 

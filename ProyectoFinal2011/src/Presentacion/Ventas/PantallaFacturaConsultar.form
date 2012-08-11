@@ -331,7 +331,7 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btnVer">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ver"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Ver&lt;br&gt;Factura&lt;html&gt;"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVerActionPerformed"/>

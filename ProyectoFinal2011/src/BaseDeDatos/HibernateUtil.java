@@ -80,6 +80,13 @@ public class HibernateUtil {
         session.flush();
     }
 
+    public static void guardarObjeto(Session ss, Object o) {
+        ss.beginTransaction();
+        ss.save(o);
+        ss.getTransaction().commit();
+        ss.flush();
+    }
+
     public static void guardarModificarObjeto(Object o) {
         session.beginTransaction();
         session.saveOrUpdate(o);
@@ -87,11 +94,26 @@ public class HibernateUtil {
         session.flush();
     }
 
+    public static void guardarModificarObjeto(Session ss, Object o) {
+        ss.beginTransaction();
+        ss.saveOrUpdate(o);
+        ss.getTransaction().commit();
+        ss.flush();
+    }
+
     public static Object getObjeto(Class type, Serializable srlzbl) {
         Object salida;
         session.beginTransaction();
         salida = session.get(type, srlzbl);
         session.getTransaction().commit();
+        return salida;
+    }
+
+    public static Object getObjeto(Session ss, Class type, Serializable srlzbl) {
+        Object salida;
+        ss.beginTransaction();
+        salida = ss.get(type, srlzbl);
+        ss.getTransaction().commit();
         return salida;
     }
 
@@ -103,6 +125,14 @@ public class HibernateUtil {
         session.flush();
     }
 
+    public static void modificarObjeto(Session ss, Object o) {
+
+        ss.beginTransaction();
+        ss.update(o);
+        ss.getTransaction().commit();
+        ss.flush();
+    }
+
     public static void EliminarObjeto(Object o) {
         session.beginTransaction();
         session.delete(o);
@@ -110,8 +140,20 @@ public class HibernateUtil {
         session.flush();
     }
 
+    public static void EliminarObjeto(Session ss, Object o) {
+        ss.beginTransaction();
+        ss.delete(o);
+        ss.getTransaction().commit();
+        ss.flush();
+    }
+
     public static List ejecutarConsulta(String HQL) {
         Query q = session.createQuery(HQL);
+        return q.list();
+    }
+
+    public static List ejecutarConsulta(Session ss, String HQL) {
+        Query q = ss.createQuery(HQL);
         return q.list();
     }
 }
