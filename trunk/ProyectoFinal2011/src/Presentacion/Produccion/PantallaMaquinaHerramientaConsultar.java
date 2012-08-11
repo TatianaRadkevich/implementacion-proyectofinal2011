@@ -107,7 +107,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gestión de Máquinas y Herramientas");
+        setTitle("Gestión de Máquinas");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Máquinas Y Herramientas"));
 
@@ -267,19 +267,24 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
              // TODO add your handling code here:
+        this.cargarTabla();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    
+    private void cargarTabla(){
         tablita.setDatos(MaquinaBD.getMaquinas(
                 txtCodigo.getText(),
                 txtModelo.getText(),
                 txtNombre.getText(),
                 chkMostrarVigentes.isSelected(),
                 chkMostrarEliminados.isSelected()));
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
+    }
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
    
 
 
         new GestorMaquinaAlta().iniciarCU();
+        this.cargarTabla();
 
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -292,6 +297,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
 
+               this.cargarTabla();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -302,7 +308,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
 
-
+        this.cargarTabla();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
