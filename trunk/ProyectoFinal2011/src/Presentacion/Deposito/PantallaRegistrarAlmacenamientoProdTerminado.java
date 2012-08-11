@@ -250,7 +250,7 @@ public class PantallaRegistrarAlmacenamientoProdTerminado extends javax.swing.JD
         alm.setFechaAlmacenamiento(new Date());
         alm.setTDetallesPedido(seletedObject);
         seletedObject.getAlmacenado().add(alm);
-        //jButtonAceptarActionPerformed(null);
+        jButtonAceptarActionPerformed(null);
     }
     
     private int getCantAlmacenada(DetallePedido seletedObject) {
