@@ -232,7 +232,7 @@ public class Utilidades {
     }
 
     public static void setToolTipText(JComponent componente, String sms) {
-        componente.setToolTipText(sms);        
+        componente.setToolTipText(sms);
         if (componente instanceof JDateChooser) {
             for (Component c : componente.getComponents()) {
                 try {
@@ -309,7 +309,7 @@ public class Utilidades {
 
         validarNULL(obj);
         if (obj.length() < minLen) {
-            throw new NegocioException("Eeste campo debe tener como mínimo " + minLen + " caracter/es.");
+            throw new NegocioException("Este campo debe tener como mínimo " + minLen + " caracter/es.");
         } else if (maxLen < obj.length()) {
             throw new NegocioException("Este campo puede tener como máximo " + maxLen + " caracter/es.");
         }
@@ -323,6 +323,32 @@ public class Utilidades {
         }
 
         return obj.trim();
+    }
+
+    public static void validarNumero(Integer num,Integer min, Integer max) {
+        validarNumero(num, min, max, false);
+    }
+    public static void validarNumero(Integer num,Integer min, Integer max, boolean permiteNull) {
+        if (num != null) {
+
+
+            if (max != null) {
+                if (num <= max == false) {
+                    throw new NegocioException("El valor númerico no debe superar el máximo establecido: " + max);
+                }
+
+            }
+            if (min != null) {
+                if (num >= min == false) {
+                    throw new NegocioException("El valor númerico no debe ser inferior al mínimo establecido: " + min);
+                }
+
+            }
+
+        }
+        else if (!permiteNull) {
+            throw new NegocioException("El valor ingresado no debe ser nulo");
+        }
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Reflexion">

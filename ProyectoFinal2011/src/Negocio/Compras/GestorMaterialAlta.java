@@ -20,9 +20,10 @@ public class GestorMaterialAlta extends GestorMaterial{
 
     @Override
     public void iniciarCU() {
-        interfaz=new PantallaMaterialABM(this);
         material=new Material();
+        interfaz=new PantallaMaterialABM(this);
         interfaz.setVisible(true);
+      
     }
 
     @Override

@@ -52,7 +52,7 @@ public class Material implements java.io.Serializable {
     private Boolean esMateriaPrima;
     //-----------------------------------------------------------------------------------
     @Column(name = "LOGITUD", precision = 6, scale = 0)
-    private Integer logitud;
+    private Integer longitud;
     //-----------------------------------------------------------------------------------
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "FEC_BAJA", length = 23)
@@ -105,7 +105,7 @@ public class Material implements java.io.Serializable {
         this.descripcion = descripcion;
         this.diametro = diametro;
         this.esMateriaPrima = esMateriaPrima;
-        this.logitud = logitud;
+        this.longitud = logitud;
         this.fecBaja = fecBaja;
         this.motivoBaja = motivoBaja;
         this.stockActual = stockActual;
@@ -129,6 +129,7 @@ public class Material implements java.io.Serializable {
     }
 
     public void setNombre(String nombre) {
+        Utilidades.validarString(nombre,false,50);
         this.nombre = nombre;
     }
 
@@ -145,6 +146,7 @@ public class Material implements java.io.Serializable {
     }
 
     public void setDiametro(Integer diametro) {
+         Utilidades.validarNumero(diametro,0 ,null, true);
         this.diametro = diametro;
     }
 
@@ -156,12 +158,13 @@ public class Material implements java.io.Serializable {
         this.esMateriaPrima = esMateriaPrima;
     }
 
-    public Integer getLogitud() {
-        return this.logitud;
+    public Integer getLongitud() {
+        return this.longitud;
     }
 
-    public void setLogitud(Integer logitud) {
-        this.logitud = logitud;
+    public void setLongitud(Integer logitud) {
+         Utilidades.validarNumero(longitud,0 ,null, true);
+        this.longitud = logitud;
     }
 
     public Date getFechaBaja() {
@@ -185,6 +188,7 @@ public class Material implements java.io.Serializable {
     }
 
     public void setStockActual(Integer stockActual) {
+        Utilidades.validarNumero(stockActual,0 ,null);
         this.stockActual = stockActual;
     }
 
@@ -193,6 +197,7 @@ public class Material implements java.io.Serializable {
     }
 
     public void setStockMinimo(Integer stockMinimo) {
+         Utilidades.validarNumero(stockMinimo,0 ,null);
         this.stockMinimo = stockMinimo;
     }
 
