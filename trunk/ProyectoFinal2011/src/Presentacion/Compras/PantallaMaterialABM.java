@@ -18,12 +18,16 @@ import Negocio.Compras.Material;
 import Negocio.Compras.MaterialesXProveedor;
 import Negocio.Compras.Proveedor;
 import Negocio.Exceptiones.ExceptionGestor;
+import Negocio.Exceptiones.NegocioException;
 import Negocio.Produccion.GestorUnidadMedida;
 import Negocio.Produccion.UnidadMedida;
+import Negocio.Ventas.Pedido;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
+import Presentacion.ZLinkers.ZLObject;
+import Presentacion.ZLinkers.ZLTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -39,13 +43,13 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     private GestorMaterial gestor;
     private GestorMaterialesXProveedor gestorMaterialXProveedor = new GestorMaterialesXProveedor();
     private TablaManager<MaterialesXProveedor> tmMaterialXProveedor;
-
+    private ZLObject<Material> zlo;
     /** Creates new form PantallaMaterialABM */
     private PantallaMaterialABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         cargarValidaciones();
-        pnlDetalleABM1.setVisible(true);
+        pnlDetalle.setVisible(true);
         
         pnlBaja.setVisible(false);        
     }
@@ -58,6 +62,18 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         cargarCombos();
         inicializarTablas();
         generarCodigo();
+
+        zlo = new ZLObject<Material>(gestor.getMaterial());
+        zlo.add("nombre", true, new ZLTextField(txtNombre));
+        zlo.add("codigo", true, new ZLTextField(txtCodigo));
+        zlo.add("descripcion", true, new ZLTextField(txtDescripcion));
+        zlo.add("diametro", true, new ZLTextField(txtDiametro));
+        zlo.add("stockactual", true, new ZLTextField(txtStockActual));
+        zlo.add("stockminimo", true, new ZLTextField(txtStockMinimo));
+        zlo.add("longi", true, new ZLTextField(txtLongitud));
+        
+        habilitarCargaDetalle(false);
+        if (cmbUnidadMedida.getItemCount()>0) cmbUnidadMedida.setSelectedIndex(0);
     }
 
     private void generarCodigo()
@@ -78,7 +94,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         cmbUnidadMedida.setSelectedItem(m.getUnidadMedida());
         txtDescripcion.setText(m.getDescripcion());
         txtDiametro.setText(Utilidades.parseString(m.getDiametro()));
-        txtLongitud.setText(Utilidades.parseString(m.getLogitud()));
+        txtLongitud.setText(Utilidades.parseString(m.getLongitud()));
         txtNombre.setText(m.getNombre());
         txtStockActual.setText(Utilidades.parseString(m.getStockActual()));
         txtStockMinimo.setText(Utilidades.parseString(m.getStockMinimo()));
@@ -168,7 +184,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         tbDetalle1 = new javax.swing.JTable();
         btnEliminarDetalle1 = new javax.swing.JButton();
         btnNuevoDetalle1 = new javax.swing.JButton();
-        pnlDetalleABM1 = new javax.swing.JPanel();
+        pnlDetalle = new javax.swing.JPanel();
         txtPresentacion = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         lblUnidad1 = new javax.swing.JLabel();
@@ -179,6 +195,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
         txtPrecioUnitario = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
+        lblUnidadMedida = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -244,6 +261,11 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         jLabel9.setText("Diametro:");
 
         cmbUnidadMedida.setName(""); // NOI18N
+        cmbUnidadMedida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbUnidadMedidaActionPerformed(evt);
+            }
+        });
 
         btnAgregarUnidad.setText("+");
         btnAgregarUnidad.addActionListener(new java.awt.event.ActionListener() {
@@ -441,7 +463,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
             }
         });
 
-        pnlDetalleABM1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        pnlDetalle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         txtPresentacion.setEnabled(false);
         txtPresentacion.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -500,13 +522,16 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         });
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel19.setText("Precio Unitario:");
+        jLabel19.setText("Precio:");
 
-        javax.swing.GroupLayout pnlDetalleABM1Layout = new javax.swing.GroupLayout(pnlDetalleABM1);
-        pnlDetalleABM1.setLayout(pnlDetalleABM1Layout);
-        pnlDetalleABM1Layout.setHorizontalGroup(
-            pnlDetalleABM1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetalleABM1Layout.createSequentialGroup()
+        lblUnidadMedida.setFont(new java.awt.Font("Tahoma", 1, 11));
+        lblUnidadMedida.setText("unidad");
+
+        javax.swing.GroupLayout pnlDetalleLayout = new javax.swing.GroupLayout(pnlDetalle);
+        pnlDetalle.setLayout(pnlDetalleLayout);
+        pnlDetalleLayout.setHorizontalGroup(
+            pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetalleLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel20)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -518,22 +543,24 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblUnidadMedida)
+                .addGap(81, 81, 81)
+                .addComponent(lblUnidadaPresentacion1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPrecioUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addComponent(lblUnidadaPresentacion1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(95, 95, 95)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addGap(20, 20, 20))
         );
-        pnlDetalleABM1Layout.setVerticalGroup(
-            pnlDetalleABM1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDetalleABM1Layout.createSequentialGroup()
+        pnlDetalleLayout.setVerticalGroup(
+            pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDetalleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlDetalleABM1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUnidad1)
                     .addComponent(lblUnidadaPresentacion1)
                     .addComponent(jLabel20)
@@ -542,8 +569,9 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
                     .addComponent(txtPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2)
                     .addComponent(jButton1)
-                    .addComponent(jLabel19)
-                    .addComponent(txtPrecioUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrecioUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblUnidadMedida)
+                    .addComponent(jLabel19))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -555,7 +583,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(pnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlDetalleABM1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlDetalle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnNuevoDetalle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -565,7 +593,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         pnlProveedoresLayout.setVerticalGroup(
             pnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProveedoresLayout.createSequentialGroup()
-                .addComponent(pnlDetalleABM1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlProveedoresLayout.createSequentialGroup()
@@ -616,29 +644,41 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+      try {
+        if (txtNombre.getText().isEmpty()) {
+            throw new NegocioException("Debe ingresar el nombre");
+        } else if(txtStockActual.getText().isEmpty())
+        {throw new NegocioException("Debe ingresar el stock actual");}
+        else if(txtStockMinimo.getText().isEmpty())
+        {throw new NegocioException("Debe ingresar el el stock mínimo");}
+
         Material material = gestor.getMaterial();
         generarCodigo();
         material.setCodigo(txtCodigo.getText());
         material.setNombre(txtNombre.getText());
         material.setDescripcion(txtDescripcion.getText());
         material.setDiametro(Utilidades.parseInteger(txtDiametro.getText()));
-        material.setLogitud(Utilidades.parseInteger(txtLongitud.getText()));
+        material.setLongitud(Utilidades.parseInteger(txtLongitud.getText()));
         material.setStockActual(Utilidades.parseInteger(txtStockActual.getText()));
         material.setStockMinimo(Utilidades.parseInteger(txtStockMinimo.getText()));
         material.setEsMateriaPrima(rdbMateriaPrima.isSelected());
        // material.setProveedores(lstProveedores.getSelectedItems());
         material.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
         material.setUnidadMedida((UnidadMedida) cmbUnidadMedida.getSelectedItem());
-        try {
+        
+
             gestor.ejecutarCU(material);
 
             for (MaterialesXProveedor mxp : tmMaterialXProveedor.getDatos()) {
+                mxp.setMaterial(material);
                  gestorMaterialXProveedor.guardar(mxp);
             }
 
             this.setVisible(false);
+            Mensajes.mensajeInformacion("El material ha sido guardado correctamente");
         } catch (ExceptionGestor ex) {
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+        }catch (NegocioException ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -679,6 +719,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
 
     private void btnNuevoDetalle1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoDetalle1ActionPerformed
   habilitarCargaDetalle(true);
+  txtPresentacion.requestFocus();
 
 }//GEN-LAST:event_btnNuevoDetalle1ActionPerformed
 
@@ -701,7 +742,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         try {
             new Short(txtPresentacion.getText());
         } catch (Exception e) {
-            Mensajes.mensajeErrorGenerico("La cantidad ingresada es incorrecta");
+            Mensajes.mensajeErrorGenerico("La presentación ingresada es incorrecta, debe ser un valor positivo");
             return;
             }
 
@@ -711,14 +752,15 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         mxp.setPrecio(Float.parseFloat(txtPrecioUnitario.getText()));
         Proveedor proveedor = (Proveedor)cmbProveedor.getSelectedItem();
         Material m = new Material();
-        m.setCodigo(MaterialBD.getUltimoID()+1 + "");
+      //  m.setCodigo(MaterialBD.getUltimoID()+1 + "");
 
         mxp.setProveedor(proveedor);
 
-        mxp.setMaterial(m);
+      //  mxp.setMaterial(m);
         tmMaterialXProveedor.add(mxp);
 
         limpiarCargaDetalle();
+        habilitarCargaDetalle(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -727,7 +769,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1MouseClicked
 
         public void habilitarCargaDetalle(boolean valor) {
-        Utilidades.habilitarPanel(pnlDetalleABM1, valor);
+        Utilidades.habilitarPanel(pnlDetalle, valor);
     }
     private void txtPrecioUnitarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioUnitarioKeyReleased
         // TODO add your handling code here:
@@ -745,13 +787,22 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEliminarDetalle1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        limpiarCargaDetalle();
+        habilitarCargaDetalle(false);
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         habilitarCargaDetalle(false);
         limpiarCargaDetalle();
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void cmbUnidadMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbUnidadMedidaActionPerformed
+        if (cmbUnidadMedida.getSelectedIndex()!=-1){
+            lblUnidadMedida.setText(cmbUnidadMedida.getSelectedItem().toString());
+            tmMaterialXProveedor.updateTabla();
+        }
+    }//GEN-LAST:event_cmbUnidadMedidaActionPerformed
 
     private void cargarCombos() {
         cmbProveedor.setModel(new DefaultComboBoxModel(gestor.getProveedores().toArray()));
@@ -774,25 +825,16 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregarUnidad;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnDetalleAceptar;
-    private javax.swing.JButton btnDetalleCancelar;
-    private javax.swing.JButton btnEliminarDetalle;
     private javax.swing.JButton btnEliminarDetalle1;
-    private javax.swing.JButton btnNuevoDetalle;
     private javax.swing.JButton btnNuevoDetalle1;
-    private javax.swing.JComboBox cmbPresentacion;
     private javax.swing.JComboBox cmbProveedor;
     private javax.swing.JComboBox cmbUnidadMedida;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -805,23 +847,17 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JLabel lblUnidad;
     private javax.swing.JLabel lblUnidad1;
-    private javax.swing.JLabel lblUnidadaPresentacion;
+    private javax.swing.JLabel lblUnidadMedida;
     private javax.swing.JLabel lblUnidadaPresentacion1;
     private javax.swing.JPanel pnlBaja;
     private javax.swing.JPanel pnlDetalle;
-    private javax.swing.JPanel pnlDetalleABM;
-    private javax.swing.JPanel pnlDetalleABM1;
     private javax.swing.JPanel pnlMaterial;
     private javax.swing.JPanel pnlProveedores;
     private javax.swing.JRadioButton rdbInsumo;
     private javax.swing.JRadioButton rdbMateriaPrima;
-    private javax.swing.JTable tbDetalle;
     private javax.swing.JTable tbDetalle1;
-    private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtDiametro;
@@ -833,8 +869,6 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
     private javax.swing.JTextField txtPresentacion;
     private javax.swing.JTextField txtStockActual;
     private javax.swing.JTextField txtStockMinimo;
-    private javax.swing.JTextField txtTotal;
-    private javax.swing.JTextField txtUnidades;
     // End of variables declaration//GEN-END:variables
 
     private void limpiarCargaDetalle() {
@@ -851,7 +885,9 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
                 ////////////////////////////////
                 Vector fila = new Vector();
                 fila.add(elemento.getProveedor().getRazonSocial());
-                fila.add(txtPresentacion.getText());
+                fila.add(elemento.getPresentacion());
+                fila.add(cmbUnidadMedida.getSelectedItem().toString());
+                fila.add(elemento.getPrecio());
                 return fila;
             }
 
@@ -860,6 +896,8 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
                 Vector cabecera = new Vector();
                 cabecera.add("Proveedor");
                 cabecera.add("Presentación");
+                cabecera.add("Unidad de medida");
+                cabecera.add("Precio");
                 return cabecera;
             }
         };
