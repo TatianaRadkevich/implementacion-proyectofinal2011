@@ -16,7 +16,7 @@ import java.util.List;
  * @author Ivan
  */
 public class GestorAsistencia {
-    
+
     private AsistenciaEmpleado asistencia;
 
     public void iniciarRegistrarInbreso(Empleado e) throws NegocioException {
@@ -58,12 +58,11 @@ public class GestorAsistencia {
         if (e.getUltimaAsistencia() != null) {
 
             if (e.getUltimaAsistencia().getHoraEgreso().trim().equals("") == false) {
-                Mensajes.mensajeErrorGenerico("Este empleado todabía no ingreso al establecimiento");
-                return;
+                throw new NegocioException("Este empleado todabía no ingreso al establecimiento");
+
             }
         } else {
-            Mensajes.mensajeErrorGenerico("Este empleado todabía no ingreso al establecimiento");
-            return;
+            throw new NegocioException("Este empleado todabía no ingreso al establecimiento");
         }
 
         if (this.asistencia != null) {
@@ -84,17 +83,20 @@ public class GestorAsistencia {
             throw new NegocioException("Gestor Asistencia: Estado Inválido");
         }
 
-        if(this.asistencia.getHoraEgreso()==null||this.asistencia.getHoraEgreso().trim().equals(""))
+        if (this.asistencia.getHoraEgreso() == null || this.asistencia.getHoraEgreso().trim().equals("")) {
             this.asistencia.setObservIngreso(observaciones);
-        else
+            this.asistencia.getEmpleado().addAsistencia(asistencia);
+        } else {
             this.asistencia.setObservEgreso(observaciones);
+        }
         AsistenciaEmpleadoBD.guardar(asistencia);
-         asistencia=null;
+        asistencia = null;
 
     }
 
     public void cancelar() {
-        asistencia=null;
+        asistencia.setEmpleado(null);
+        asistencia = null;
     }
 
     public void guardarAsistencia(AsistenciaEmpleado asistencia) {
@@ -105,8 +107,7 @@ public class GestorAsistencia {
         return EmpleadoBD.getEmpleadosVigentes();
     }
 
-    public AsistenciaEmpleado getAsistencia()
-    {
+    public AsistenciaEmpleado getAsistencia() {
         return this.asistencia;
     }
 }

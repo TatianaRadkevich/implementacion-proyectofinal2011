@@ -20,6 +20,8 @@ public class EstadoPedidoBD {
     private static final String EP_Cancelado = "Cancelado";
     private static final String EP_Produccion = "Produccion";
     private static final String EP_Pagado = "Pagado";
+    private static final String EP_PendientePagado = "Pendiente de Pago";
+    private static final String EP_PagoParcial = "Pago Parcial";
     private static final String EP_Retirado = "Retirado";
 
     public static EstadoPedido getEstadoProduccion() {
@@ -32,6 +34,13 @@ public class EstadoPedidoBD {
 
     public static EstadoPedido getEstadoCancelado() {
         return getEstoadoPedido(EP_Cancelado);
+    }
+
+    public static EstadoPedido getEstadoPagoParcialo() {
+        return getEstoadoPedido(EP_PagoParcial);
+    }
+    public static EstadoPedido getEstadoPendientePagado() {
+        return getEstoadoPedido(EP_PendientePagado);
     }
 
     public static EstadoPedido getEstadoRetirado() {

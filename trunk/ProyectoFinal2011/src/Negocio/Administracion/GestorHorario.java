@@ -6,6 +6,7 @@ package Negocio.Administracion;
 
 import BaseDeDatos.Administracion.HorarioBD;
 import Negocio.Exceptiones.ExceptionGestor;
+import Negocio.Exceptiones.NegocioException;
 import Presentacion.Administracion.PantallaHorarioAdministar;
 import Presentacion.Mensajes;
 import java.util.List;
@@ -46,12 +47,19 @@ public class GestorHorario {
     }
 
     public void iniciarModificar(Horarios tmh) {
+        if (tmh == null) {
+            throw new NegocioException("Debe elegir el un horario");
+        }
+
         elemento = tmh;
         comportamiento = Modificar;
         comportamiento.iniciarCU();
     }
 
     public void iniciarBaja(Horarios tmh) {
+        if (tmh == null) {
+            throw new NegocioException("Debe elegir el un horario");
+        }
         elemento = tmh;
         comportamiento = Baja;
         comportamiento.iniciarCU();
@@ -72,7 +80,6 @@ public class GestorHorario {
     }
 
     /*************************************************************************/
-
     public Horarios getElemento() {
         return elemento;
     }
@@ -84,7 +91,6 @@ public class GestorHorario {
     public List<Dia> listarDias() {
         return HorarioBD.listarDias();
     }
-
     /*************************************************************************/
     private gestor nuevo = new gestor() {
 
@@ -123,7 +129,7 @@ public class GestorHorario {
                 throw new RuntimeException("GestorHorariosModificar: Se debe definir el Horario a modificar");
             }
             interfaz.cargar(elemento);
-            interfaz.habilitarCampos(true);           
+            interfaz.habilitarCampos(true);
         }
 
         public void validar(Horarios tmh) throws ExceptionGestor {
@@ -144,7 +150,7 @@ public class GestorHorario {
     /*************************************************************************/
     private gestor Baja = new gestor() {
 
-        public void iniciarCU() {    
+        public void iniciarCU() {
             if (elemento == null) {
                 throw new RuntimeException("GestorHorariosBaja: Se debe definir el Horario a dar de baja");
             }
@@ -160,11 +166,10 @@ public class GestorHorario {
         }
 
         public void ejecutarCU(Horarios tmh) throws ExceptionGestor {
-            validar(tmh);           
+            validar(tmh);
             HorarioBD.elminiar(tmh);
             Mensajes.mensajeInformacion("El Horario \"" + tmh.getNombre() + "\" ha sido eliminado exitosamente.");
             finalizarCU();
         }
     };
-    
 }

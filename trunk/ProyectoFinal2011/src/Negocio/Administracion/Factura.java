@@ -4,6 +4,7 @@ package Negocio.Administracion;
 import BaseDeDatos.Administracion.EmpleadoBD;
 import BaseDeDatos.Administracion.FacturaBD;
 import BaseDeDatos.HibernateUtil;
+import BaseDeDatos.Ventas.EstadoPedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.Empleado;
 import Negocio.Administracion.Cobro;
@@ -46,7 +47,7 @@ import org.hibernate.annotations.Cascade;
 public class Factura implements java.io.Serializable {
 
     public static int getUltimoNro() {
-        return PedidoBD.getUltimoNroFactura();
+        return FacturaBD.getUltimoNroFactura();
     }
     @Id
     @GeneratedValue
@@ -81,7 +82,7 @@ public class Factura implements java.io.Serializable {
     private String motivoBaja;
     //
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_EPEDIDO")//, nullable=false)
+    @JoinColumn(name = "ID_EFACTURA")//, nullable=false)
     private EstadoFactura TEFactura;
     //
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TFacturas")
@@ -272,19 +273,20 @@ public class Factura implements java.io.Serializable {
     public void generar() {
         this.setFechaGeneracion(Utilidades.getFechaActual());
         this.setEmpleado(EmpleadoBD.listarEmpleado().get(0));
-        this.TEFactura=FacturaBD.getEstadoFactura(FacturaBD.Estado.GeneradaPendienteCobro);
+        this.TEFactura = FacturaBD.getEstadoFactura(FacturaBD.Estado.GeneradaPendienteCobro);
+        this.getPedido().setEstadoPedido(EstadoPedidoBD.getEstadoPendientePagado());
         HibernateUtil.guardarObjeto(this);
     }
 
-     public void anular(String motivo) {
-         this.fecBaja=Utilidades.getFechaActual();
-         this.motivoBaja=motivo;
-         this.TEFactura=FacturaBD.getEstadoFactura(FacturaBD.Estado.Anulada);
+    public void anular(String motivo) {
+        this.fecBaja = Utilidades.getFechaActual();
+        this.motivoBaja = motivo;
+        this.TEFactura = FacturaBD.getEstadoFactura(FacturaBD.Estado.Anulada);
 
         HibernateUtil.guardarObjeto(this);
     }
 
-    public void guardar() throws NegocioException{
-       HibernateUtil.modificarObjeto(this);
+    public void guardar() throws NegocioException {
+        HibernateUtil.modificarObjeto(this);
     }
 }

@@ -42,6 +42,7 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
         inicializarTablas();
         cargarValidaciones();
         Utilidades.iniciarVentana(this);
+        btnBuscarActionPerformed(null);
     }
 
     private void inicializarTablas() {
@@ -71,7 +72,7 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
                 fila.add(elemento.getCliente().getRazonSocial());
                 fila.add(elemento.getCliente().getCuit());
                 fila.add(elemento.getIdPedido());
-                fila.add("<te la debo>");
+                fila.add(elemento.getFactura().getEstadoFactura());
                 //calculo monto total
                 float montoTotal = 0f;
                 for (DetalleFactura dp : elemento.getFactura().getDetalleFactura()) {
@@ -310,7 +311,7 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tbFactura);
 
-        btnVer.setText("Ver");
+        btnVer.setText("<html>Ver<br>Factura<html>");
         btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerActionPerformed(evt);
@@ -351,7 +352,7 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(btnAnular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnVer)
+                .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
