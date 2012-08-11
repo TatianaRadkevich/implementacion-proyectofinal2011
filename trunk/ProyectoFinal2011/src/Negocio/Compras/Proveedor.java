@@ -117,7 +117,7 @@ public class Proveedor implements java.io.Serializable {
 
     public void setNombreResponsable(String nombre) throws TipoDatoException{
         if(nombre.trim().compareTo("")==0)
-            throw new TipoDatoException("Debe introduccir el nombre del responsable");
+            throw new TipoDatoException("Debe introducir el nombre del responsable");
         this.nombreResponsable = nombre;
     }
 
