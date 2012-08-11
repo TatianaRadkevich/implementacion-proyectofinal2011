@@ -17,6 +17,7 @@ import Negocio.Produccion.GestorOrdenTrabajo;
 import Negocio.Produccion.GestorAvanceProduccion;
 import Negocio.Produccion.GestorTipoHerramienta;
 import Negocio.Produccion.GestorTipoMaquina;
+import Negocio.UbicacionGeografica.gestorPais;
 import Presentacion.Administracion.*;
 import Presentacion.Compras.PantallaMaterialConsultar;
 import Presentacion.Compras.PantallaOrdenCompraConsultar;
@@ -27,9 +28,11 @@ import Presentacion.Produccion.PantallaConsultarPlanificarPedido;
 import Presentacion.Produccion.PantallaConsultarProducto;
 import Presentacion.Produccion.ProblemaMaquinaHerramientaParticular;
 import Presentacion.Produccion.ConsultaProblemasMHP;
+import Presentacion.Produccion.PantallaABMEtapaProduccion;
 import Presentacion.Produccion.PantallaMaquinaHerramientaConsultar;
 import Presentacion.Produccion.PantallaTipoHerramientaABM;
 import Presentacion.Produccion.PantallaTipoMaquinaABM;
+import Presentacion.UbicacionGeografica.PantallaABMPais;
 import Presentacion.Ventas.PantallaClienteConsultar;
 import Presentacion.Ventas.PantallaFacturaConsultar;
 
@@ -96,6 +99,7 @@ public class Principal extends javax.swing.JFrame {
         btnHorarios = new javax.swing.JButton();
         btnConsultarAsistencia = new javax.swing.JButton();
         btnConsultarAsistencia1 = new javax.swing.JButton();
+        btnConsultarAsistencia2 = new javax.swing.JButton();
         pnlVentas = new Presentacion.Fondo();
         txtVentas = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
@@ -119,6 +123,7 @@ public class Principal extends javax.swing.JFrame {
         btnConsultaProblemas = new javax.swing.JButton();
         btnTipoMaquina = new javax.swing.JButton();
         btnTipoHerramienta = new javax.swing.JButton();
+        btnTipoHerramienta1 = new javax.swing.JButton();
         pnlDeposito = new javax.swing.JPanel();
         txtVentas1 = new javax.swing.JTextField();
         btnRecepMat = new javax.swing.JButton();
@@ -249,6 +254,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnConsultarAsistencia2.setText("Pais");
+        btnConsultarAsistencia2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarAsistencia2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlAdministracionLayout = new javax.swing.GroupLayout(pnlAdministracion);
         pnlAdministracion.setLayout(pnlAdministracionLayout);
         pnlAdministracionLayout.setHorizontalGroup(
@@ -265,7 +277,10 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnConsultarAsistencia1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlAdministracionLayout.createSequentialGroup()
+                        .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnConsultarAsistencia2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnTipoDocumento1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(410, Short.MAX_VALUE))
@@ -287,7 +302,9 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConsultarAsistencia1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConsultarAsistencia2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnTipoDocumento1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -486,6 +503,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnTipoHerramienta1.setText("Etapa de Producción");
+        btnTipoHerramienta1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTipoHerramienta1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlProduccionLayout = new javax.swing.GroupLayout(pnlProduccion);
         pnlProduccion.setLayout(pnlProduccionLayout);
         pnlProduccionLayout.setHorizontalGroup(
@@ -515,7 +539,8 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(btnAvance, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTipoHerramienta1, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)))
                 .addGap(388, 388, 388))
         );
         pnlProduccionLayout.setVerticalGroup(
@@ -539,7 +564,9 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTipoHerramienta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTipoHerramienta1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -869,6 +896,18 @@ public class Principal extends javax.swing.JFrame {
         new PantallaTipoHerramientaABM(new GestorTipoHerramienta()).setVisible(true);
     }//GEN-LAST:event_btnTipoHerramientaActionPerformed
 
+    private void btnConsultarAsistencia2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAsistencia2ActionPerformed
+        // TODO add your handling code here:
+        PantallaABMPais pais=new PantallaABMPais(this,true);
+        pais.setVisible(true);
+    }//GEN-LAST:event_btnConsultarAsistencia2ActionPerformed
+
+    private void btnTipoHerramienta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoHerramienta1ActionPerformed
+        // TODO add your handling code here:
+        new PantallaABMEtapaProduccion(this, true).setVisible(true);
+        
+    }//GEN-LAST:event_btnTipoHerramienta1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -889,6 +928,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnConsultaProblemas;
     private javax.swing.JButton btnConsultarAsistencia;
     private javax.swing.JButton btnConsultarAsistencia1;
+    private javax.swing.JButton btnConsultarAsistencia2;
     private javax.swing.JButton btnDeposito;
     private javax.swing.JButton btnEmpleado;
     private javax.swing.JButton btnFactura;
@@ -905,6 +945,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnTipoDocumento;
     private javax.swing.JButton btnTipoDocumento1;
     private javax.swing.JButton btnTipoHerramienta;
+    private javax.swing.JButton btnTipoHerramienta1;
     private javax.swing.JButton btnTipoMaquina;
     private javax.swing.JButton btnTipoProducto;
     private javax.swing.JButton btnVenta;

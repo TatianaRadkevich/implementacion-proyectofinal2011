@@ -131,6 +131,10 @@ public class TipoHerramienta  implements java.io.Serializable {
 //        this.TDetallesEtapas = TDetallesEtapas;
 //    }
 
+    public String toString()
+    {
+        return this.getNombre();
+    }
 
 
 

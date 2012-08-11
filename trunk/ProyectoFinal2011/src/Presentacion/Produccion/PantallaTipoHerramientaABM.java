@@ -507,6 +507,8 @@ public class PantallaTipoHerramientaABM extends javax.swing.JDialog {
             this.lstDisponible.setSelectedIndex(-1);
             Mensajes.mensajeInformacion("El tipo de producto "+tipo_actual.getNombre()+"\n ha sido dado reactivado exitosamente");
         }
+
+         this.cargarTipoProductos();
         this.cancelar();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
