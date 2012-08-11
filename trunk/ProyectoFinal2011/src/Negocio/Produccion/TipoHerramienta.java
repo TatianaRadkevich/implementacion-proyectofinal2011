@@ -31,7 +31,7 @@ public class TipoHerramienta  implements java.io.Serializable {
     @Id
     @GeneratedValue
     @Column(name="ID_THERRAMIENTA", unique=true, nullable=false, precision=2, scale=0)
-     private byte idTherramienta;
+     private int idTherramienta;
       //_______________________________________________________________________________//
     @Column(name="NOMBRE", nullable=false, length=50)
      private String nombre;
@@ -58,11 +58,11 @@ public class TipoHerramienta  implements java.io.Serializable {
     }
 
 	
-    public TipoHerramienta(byte idTherramienta, String nombre) {
+    public TipoHerramienta(int idTherramienta, String nombre) {
         this.idTherramienta = idTherramienta;
         this.nombre = nombre;
     }
-    public TipoHerramienta(byte idTherramienta, String nombre, Date fecBaja, String motivoBaja, String descripcion, Set THerramientasParticulars /*, Set TDetallesEtapas*/) {
+    public TipoHerramienta(int idTherramienta, String nombre, Date fecBaja, String motivoBaja, String descripcion, Set THerramientasParticulars /*, Set TDetallesEtapas*/) {
        this.idTherramienta = idTherramienta;
        this.nombre = nombre;
        this.fecBaja = fecBaja;
@@ -73,11 +73,11 @@ public class TipoHerramienta  implements java.io.Serializable {
     }
    
      
-    public byte getIdTherramienta() {
+    public int getIdTherramienta() {
         return this.idTherramienta;
     }
     
-    public void setIdTherramienta(byte idTherramienta) {
+    public void setIdTherramienta(int idTherramienta) {
         this.idTherramienta = idTherramienta;
     }
     
