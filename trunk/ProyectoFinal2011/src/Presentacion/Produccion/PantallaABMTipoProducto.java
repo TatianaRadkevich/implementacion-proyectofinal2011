@@ -155,6 +155,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
             }
         });
 
+        btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed1(evt);
@@ -212,7 +213,7 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
-                    .addComponent(btnCancelar)))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pnlDisponible.setBorder(javax.swing.BorderFactory.createTitledBorder("Disponible"));
