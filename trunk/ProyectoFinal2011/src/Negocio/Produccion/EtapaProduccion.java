@@ -106,6 +106,7 @@ public class EtapaProduccion  implements java.io.Serializable {
         this.TEtapasProduccionEspecificas = TEtapasProduccionEspecificas;
     }
 
+    @Override
     public String toString(){
         return this.getNombre();
     }
