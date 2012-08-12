@@ -131,7 +131,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
                 salida.add("Stock Reservado");
                 salida.add("Stock Disponible");
                 salida.add("Stock Minimo");
-                salida.add("Stock Faltante");
+                salida.add("Stock Necesario");
 
                 return salida;
             }
