@@ -85,13 +85,13 @@ public class Material implements java.io.Serializable {
     private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
 
     public Material() {
-      esMateriaPrima=false;
+    
     }
 
     public Material(Short idMaterial, String nombre, boolean esMateriaPrima, Integer stockActual, Integer stockMinimo, Integer stockReservado, String codigo) {
         this.idMaterial = idMaterial;
         this.nombre = nombre;
-        this.esMateriaPrima = false;
+        this.esMateriaPrima = esMateriaPrima;
         this.stockActual = stockActual;
         this.stockMinimo = stockMinimo;
         this.stockReservado = stockReservado;

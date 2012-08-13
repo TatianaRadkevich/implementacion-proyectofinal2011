@@ -29,6 +29,7 @@ public class GestorMaterialAlta extends GestorMaterial{
     @Override
     public void ejecutarCU(Material m) throws ExceptionGestor {
        // m.setStockReservado((short)0);
+        
          validar(m);
         MaterialBD.guardar(m);
     }
