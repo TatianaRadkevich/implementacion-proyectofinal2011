@@ -243,7 +243,7 @@ public class DetallePlanProduccion implements java.io.Serializable {
             if (dep.getTDetallesProducto() != null) {
                 Material mat = dep.getTDetallesProducto().getTMateriales();
                 Faltante f = new Faltante();
-                f.setCantidad((int) Math.ceil(1f * dep.getCantidadNecesaria() * this.getCantidad() / mat.getLogitud()));
+                f.setCantidad((int) Math.ceil(1f * dep.getCantidadNecesaria() * this.getCantidad() / mat.getLongitud()));
                 f.setMaterial(mat);
                 f.setDetallePlan(this);
                 f.setFecGeneracion(Utilidades.getFechaActual());

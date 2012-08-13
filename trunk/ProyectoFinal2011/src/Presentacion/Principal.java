@@ -898,8 +898,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnConsultarAsistencia2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAsistencia2ActionPerformed
         // TODO add your handling code here:
-        PantallaABMPais pais=new PantallaABMPais(this,true);
-        pais.setVisible(true);
+        //PantallaABMPais pais=new PantallaABMPais(this,true);
+        //pais.setVisible(true);
     }//GEN-LAST:event_btnConsultarAsistencia2ActionPerformed
 
     private void btnTipoHerramienta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoHerramienta1ActionPerformed
