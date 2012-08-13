@@ -99,7 +99,6 @@ public class Principal extends javax.swing.JFrame {
         btnHorarios = new javax.swing.JButton();
         btnConsultarAsistencia = new javax.swing.JButton();
         btnConsultarAsistencia1 = new javax.swing.JButton();
-        btnConsultarAsistencia2 = new javax.swing.JButton();
         pnlVentas = new Presentacion.Fondo();
         txtVentas = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
@@ -254,13 +253,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnConsultarAsistencia2.setText("Pais");
-        btnConsultarAsistencia2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarAsistencia2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlAdministracionLayout = new javax.swing.GroupLayout(pnlAdministracion);
         pnlAdministracion.setLayout(pnlAdministracionLayout);
         pnlAdministracionLayout.setHorizontalGroup(
@@ -277,10 +269,7 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnConsultarAsistencia1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlAdministracionLayout.createSequentialGroup()
-                        .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnConsultarAsistencia2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTipoDocumento1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(410, Short.MAX_VALUE))
@@ -302,9 +291,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConsultarAsistencia1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConsultarAsistencia2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnTipoDocumento1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -896,12 +883,6 @@ public class Principal extends javax.swing.JFrame {
         new PantallaTipoHerramientaABM(new GestorTipoHerramienta()).setVisible(true);
     }//GEN-LAST:event_btnTipoHerramientaActionPerformed
 
-    private void btnConsultarAsistencia2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAsistencia2ActionPerformed
-        // TODO add your handling code here:
-        //PantallaABMPais pais=new PantallaABMPais(this,true);
-        //pais.setVisible(true);
-    }//GEN-LAST:event_btnConsultarAsistencia2ActionPerformed
-
     private void btnTipoHerramienta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoHerramienta1ActionPerformed
         // TODO add your handling code here:
         new PantallaABMEtapaProduccion(this, true).setVisible(true);
@@ -928,7 +909,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnConsultaProblemas;
     private javax.swing.JButton btnConsultarAsistencia;
     private javax.swing.JButton btnConsultarAsistencia1;
-    private javax.swing.JButton btnConsultarAsistencia2;
     private javax.swing.JButton btnDeposito;
     private javax.swing.JButton btnEmpleado;
     private javax.swing.JButton btnFactura;
