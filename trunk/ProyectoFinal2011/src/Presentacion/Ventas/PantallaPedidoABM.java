@@ -95,7 +95,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
             }
         });
         zlo.add("tipo", new ZLComboBox(cmbTipoPedido));
-        zlo.add("necesidad", new ZLCalendar(dtcFechaNecesidad).setMaxDate(Utilidades.getFechaActual()));
+        zlo.add("necesidad", new ZLCalendar(dtcFechaNecesidad).setMinDate(Utilidades.getFechaActual()));
         zlo.add("estimada", new ZLFormatedTextField(txtFechaEstimada, Formato.Date));
 
         zldp = new ZLObject<DetallePedido>(DetallePedido.class);
