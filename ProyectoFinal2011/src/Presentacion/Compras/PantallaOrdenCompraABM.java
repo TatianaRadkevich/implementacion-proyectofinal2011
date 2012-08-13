@@ -113,7 +113,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
 
                 Vector salida = new Vector();
                 salida.add(elemento.getNombre());
-                salida.add("Cada unidad hace referencia a " + elemento.getLogitud() + " " + elemento.getUnidadMedida().getNombre() + " de " + elemento.getNombre());
+                salida.add("Cada unidad hace referencia a " + elemento.getLongitud() + " " + elemento.getUnidadMedida().getNombre() + " de " + elemento.getNombre());
                 salida.add(elemento.getStockActual());
                 salida.add(elemento.getStockReservado());
                 salida.add(elemento.getStockDisponible());
@@ -287,7 +287,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
         try {
             int unid = Integer.parseInt(txtUnidades.getText());
             Material m = tmStock.getSeletedObject();
-            int cant = unid * m.getLogitud();
+            int cant = unid * m.getLongitud();
             txtCantidad.setText(cant + "");
 
 
