@@ -36,7 +36,7 @@ public abstract class GestorMaquina {
         return maquinaHerramienta;
     }
 
-    public List<TipoMaquina> getTipoMaquinaHerramienta() {
+    public List<TipoMaquina> getTipoMaquina() {
         return MaquinaBD.listarTipoMaquina();
     }
 

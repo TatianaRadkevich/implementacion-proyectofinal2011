@@ -6,6 +6,7 @@
 package Negocio.Produccion;
 
 
+import BaseDeDatos.Produccion.EstadoMaquinaBD;
 import BaseDeDatos.Produccion.MaquinaBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.PantallaEliminar;
@@ -55,7 +56,7 @@ public class GestorMaquinaBaja extends GestorMaquina
     public void ejecutarCU(MaquinaParticular mh) throws ExceptionGestor {
         validar(mh);
         
-        mh.setTEmaquina(null);
+        mh.setTEmaquina(EstadoMaquinaBD.getEstadoBaja());
         mh.setFecBaja(Utilidades.getFechaActual());
         MaquinaBD.modificar(mh);
     }

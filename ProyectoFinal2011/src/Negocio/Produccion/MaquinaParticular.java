@@ -2,6 +2,7 @@ package Negocio.Produccion;
 // Generated 18/03/2012 17:10:18 by Hibernate Tools 3.2.1.GA
 
 
+import Negocio.Exceptiones.TipoDatoException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -117,7 +118,9 @@ public class MaquinaParticular  implements java.io.Serializable {
         return this.TTmaquina;
     }
     
-    public void setTTmaquina(TipoMaquina TTmaquina) {
+    public void setTTmaquina(TipoMaquina TTmaquina) throws TipoDatoException{
+        if(TTmaquina==null)
+            throw new TipoDatoException("Debe seleccionar un tipo de maquina");
         this.TTmaquina = TTmaquina;
     }
 
@@ -152,7 +155,9 @@ public class MaquinaParticular  implements java.io.Serializable {
         return this.modelo;
     }
     
-    public void setModelo(String modelo) {
+    public void setModelo(String modelo) throws TipoDatoException {
+        if(modelo.trim().compareTo("")==0)
+            throw new TipoDatoException("Debe ingresar un modelo");
         this.modelo = modelo;
     }
     
@@ -161,7 +166,9 @@ public class MaquinaParticular  implements java.io.Serializable {
         return this.nombre;
     }
     
-    public void setNombre(String nombre) {
+    public void setNombre(String nombre) throws TipoDatoException {
+        if(nombre.trim().compareTo("")==0)
+            throw new TipoDatoException("Debe ingresar un nombre");
         this.nombre = nombre;
     }
     

@@ -12,20 +12,17 @@
 package Presentacion.Produccion;
 
 
-import BaseDeDatos.Compras.MaterialBD;
-import Negocio.Compras.Material;
+import Negocio.Compras.Proveedor;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Produccion.*;
 import Presentacion.Mensajes;
-import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
+import Presentacion.ZLinkers.ZLComboBox;
+import Presentacion.ZLinkers.ZLObject;
+import Presentacion.ZLinkers.ZLTextField;
 import java.util.Date;
-import java.util.Vector;
-import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,6 +32,7 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
 
     /** Creates new form PantallaABMMaquinaOHerramienta */
     private GestorMaquina gestor;
+    private ZLObject<Proveedor> linker;
 //    private TablaManager<CapacidadProductiva> tmCapacidad;
     private PantallaMaquinaABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);        
@@ -50,12 +48,22 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
 
         /////////// Precargas Necesarias //////////
         cargarValidaciones();
-        recargarComboTipoMaquina();        
+        recargarComboTipoMaquina();
+
+        linker=new ZLObject (MaquinaParticular.class,gestor.getMaquinaParticular());
+        linker.add("nombre", new ZLTextField(txtNombre));
+        linker.add("modelo", new ZLTextField(txtModelo));
+        linker.add("caracteristicas", new ZLTextField(txtCaracteristicas));
+        linker.add("observaciones", new ZLTextField(txtObservaciones));
+        linker.add("motivoBaja", new ZLTextField(txtMotivoBaja));
+        this.linker.add("TTmaquina", new ZLComboBox(cmbTipoMaquina));
+
     }   
 
     private void recargarComboTipoMaquina()
     {
-        cmbTipoMaquinaHerramienta.setModel(new DefaultComboBoxModel(gestor.getTipoMaquinaHerramienta().toArray()));
+        cmbTipoMaquina.setModel(new DefaultComboBoxModel(gestor.getTipoMaquina().toArray()));
+        cmbTipoMaquina.setSelectedIndex(-1);
     }
 
     public void cargarValidaciones()
@@ -88,7 +96,7 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
         txtModelo.setText(Utilidades.parseString(m.getModelo()));
         txtNombre.setText(Utilidades.parseString(m.getNombre()));
         txtObservaciones.setText(Utilidades.parseString(m.getObservaciones()));
-        cmbTipoMaquinaHerramienta.setSelectedItem(m.getTTmaquina());
+        cmbTipoMaquina.setSelectedItem(m.getTTmaquina());
              if(m.getFecBaja()!=null)
         {
             pnlBaja.setVisible(true);
@@ -104,14 +112,14 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
         txtModelo.setEditable(b);
         txtNombre.setEditable(b);
         txtObservaciones.setEditable(b);
-        cmbTipoMaquinaHerramienta.setEditable(b);
+        cmbTipoMaquina.setEditable(b);
     }
 
     private void generarCodigo()
     {
            String codigo="";
         try{
-        codigo+=cmbTipoMaquinaHerramienta.getSelectedItem().toString().charAt(0);
+        codigo+=cmbTipoMaquina.getSelectedItem().toString().charAt(0);
         codigo+=txtNombre.getText().charAt(0);
         txtCodigo.setText(codigo);
         }catch(Exception e){}
@@ -136,7 +144,7 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtObservaciones = new javax.swing.JTextArea();
-        cmbTipoMaquinaHerramienta = new javax.swing.JComboBox();
+        cmbTipoMaquina = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -180,10 +188,10 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
         txtObservaciones.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txtObservaciones);
 
-        cmbTipoMaquinaHerramienta.setName(""); // NOI18N
-        cmbTipoMaquinaHerramienta.addActionListener(new java.awt.event.ActionListener() {
+        cmbTipoMaquina.setName(""); // NOI18N
+        cmbTipoMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbTipoMaquinaHerramientaActionPerformed(evt);
+                cmbTipoMaquinaActionPerformed(evt);
             }
         });
 
@@ -223,7 +231,7 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(txtModelo, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbTipoMaquinaHerramienta, javax.swing.GroupLayout.Alignment.LEADING, 0, 154, Short.MAX_VALUE)
+                                    .addComponent(cmbTipoMaquina, javax.swing.GroupLayout.Alignment.LEADING, 0, 154, Short.MAX_VALUE)
                                     .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnAgregarTipo))))
@@ -247,7 +255,7 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(cmbTipoMaquinaHerramienta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbTipoMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarTipo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -359,20 +367,20 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
 
-        MaquinaParticular maq = gestor.getMaquinaParticular();
+//        MaquinaParticular maq = gestor.getMaquinaParticular();
 //        maqHer.setCapacidadProductiva(tmCapacidad.getDatos());
-        maq.setCaracteristicas(txtCaracteristicas.getText());
+//        maq.setCaracteristicas(txtCaracteristicas.getText());
 //        if(maqHer.getCapacidadProductiva().isEmpty())
 //            maqHer.getCapacidadProductiva().add(new CapacidadProductiva());
 //        maqHer.getCapacidadProductiva().get(0).setCapacidad(Utilidades.parseInteger(txtCapacidad.getText()));
-        maq.setCodigo(txtCodigo.getText());
-        maq.setModelo(txtModelo.getText());
-        maq.setNombre(txtNombre.getText());
-        maq.setObservaciones(txtObservaciones.getText());
-        maq.setTTmaquina((TipoMaquina) cmbTipoMaquinaHerramienta.getSelectedItem());
-        maq.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
+        gestor.getMaquinaParticular().setCodigo(txtCodigo.getText());
+//        maq.setModelo(txtModelo.getText());
+//        maq.setNombre(txtNombre.getText());
+//        maq.setObservaciones(txtObservaciones.getText());
+//        maq.setTTmaquina((TipoMaquina) cmbTipoMaquina.getSelectedItem());
+//        maq.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
         try {
-            gestor.ejecutarCU(maq);
+            gestor.ejecutarCU(gestor.getMaquinaParticular());
             this.setVisible(false);
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
@@ -391,10 +399,10 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
         recargarComboTipoMaquina();
     }//GEN-LAST:event_btnAgregarTipoActionPerformed
 
-    private void cmbTipoMaquinaHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoMaquinaHerramientaActionPerformed
+    private void cmbTipoMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoMaquinaActionPerformed
         // TODO add your handling code here:
 generarCodigo();
-    }//GEN-LAST:event_cmbTipoMaquinaHerramientaActionPerformed
+    }//GEN-LAST:event_cmbTipoMaquinaActionPerformed
 
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
         // TODO add your handling code here:
@@ -416,7 +424,7 @@ generarCodigo();
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregarTipo;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox cmbTipoMaquinaHerramienta;
+    private javax.swing.JComboBox cmbTipoMaquina;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

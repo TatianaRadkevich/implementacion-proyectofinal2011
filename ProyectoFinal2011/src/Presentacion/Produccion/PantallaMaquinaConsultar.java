@@ -14,9 +14,6 @@ package Presentacion.Produccion;
 
 import BaseDeDatos.Produccion.MaquinaBD;
 import Negocio.Produccion.*;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.ValidarTexbox;

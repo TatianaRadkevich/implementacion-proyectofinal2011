@@ -21,20 +21,14 @@ public class GestorMaquinaAlta extends GestorMaquina
 
     @Override
     public void iniciarCU() {
-
-        interfaz=new PantallaMaquinaABM(this);
         maquinaHerramienta=new MaquinaParticular();
+        interfaz=new PantallaMaquinaABM(this);        
         interfaz.setVisible(true);
     }
 
     private void validar(MaquinaParticular mh) throws ExceptionGestor
     {
         String mensage="";
-       
-//        if(p.getCliente()==null)
-//            mensage+="\n no se asigno un cliente al pedido";
-//
-
         if(mensage.isEmpty()==false)
             throw new ExceptionGestor("Problemas:"+mensage);
 
