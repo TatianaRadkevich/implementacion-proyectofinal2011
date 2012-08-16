@@ -423,7 +423,7 @@
                               <Component id="btnConsultaProblemas" pref="172" max="32767" attributes="1"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jButton5" min="-2" pref="150" max="-2" attributes="1"/>
+                              <Component id="btnMaquina" min="-2" pref="150" max="-2" attributes="1"/>
                               <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                               <Component id="btnTipoMaquina" pref="172" max="32767" attributes="1"/>
                           </Group>
@@ -439,7 +439,10 @@
                                   <Component id="jButton2" alignment="0" pref="150" max="32767" attributes="1"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnTipoHerramienta1" pref="172" max="32767" attributes="1"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="btnHerramienta" pref="172" max="32767" attributes="1"/>
+                                  <Component id="btnTipoHerramienta1" alignment="0" pref="172" max="32767" attributes="1"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace min="388" pref="388" max="-2" attributes="0"/>
@@ -462,7 +465,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton5" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnMaquina" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                           <Component id="btnTipoMaquina" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -476,7 +479,10 @@
                           <Component id="btnTipoHerramienta1" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButton7" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jButton7" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnHerramienta" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnAvance" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -508,12 +514,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTipoProductoActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton5">
+            <Component class="javax.swing.JButton" name="btnMaquina">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Maquina"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMaquinaActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton1">
@@ -586,6 +592,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTipoHerramienta1ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnHerramienta">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Herramienta"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHerramientaActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
