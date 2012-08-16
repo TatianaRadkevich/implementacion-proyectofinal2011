@@ -9,8 +9,6 @@ package Negocio.Produccion;
 import BaseDeDatos.Produccion.HerramientaBD;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Produccion.PantallaHerramientaABM;
-import Presentacion.Utilidades;
-import Presentacion.Ventas.PantallaPedidoABM;
 
 /**
  *
@@ -21,9 +19,8 @@ public class GestorHerramientaAlta extends GestorHerramienta
 
     @Override
     public void iniciarCU() {
-
-        interfaz=new PantallaHerramientaABM(this);
         HerramientaHerramienta=new HerramientaParticular();
+        interfaz=new PantallaHerramientaABM(this);
         interfaz.setVisible(true);
     }
 
@@ -42,7 +39,7 @@ public class GestorHerramientaAlta extends GestorHerramienta
 
     @Override
     public void ejecutarCU(HerramientaParticular mh) throws ExceptionGestor {
-        //mh.setTEHerramienta(EstadoHerramientaBD.getEstadoDisponible());
+//        mh.setTEHerramienta(EstadoHerramientaBD.getEstadoDisponible());
         validar(mh);
         //mh.setEstadoHerramienta(null);
         HerramientaBD.guardar(mh);

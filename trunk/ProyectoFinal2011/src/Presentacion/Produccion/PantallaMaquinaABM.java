@@ -32,7 +32,7 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
 
     /** Creates new form PantallaABMMaquinaOHerramienta */
     private GestorMaquina gestor;
-    private ZLObject<Proveedor> linker;
+    private ZLObject<MaquinaParticular> linker;
 //    private TablaManager<CapacidadProductiva> tmCapacidad;
     private PantallaMaquinaABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);        

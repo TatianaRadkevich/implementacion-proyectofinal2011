@@ -20,6 +20,9 @@ import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
+import Presentacion.ZLinkers.ZLComboBox;
+import Presentacion.ZLinkers.ZLObject;
+import Presentacion.ZLinkers.ZLTextField;
 import java.util.Date;
 import java.util.Vector;
 import javax.swing.DefaultCellEditor;
@@ -35,6 +38,7 @@ public class PantallaHerramientaABM extends javax.swing.JDialog {
 
     /** Creates new form PantallaABMHerramientaOHerramienta */
     private GestorHerramienta gestor;
+    private ZLObject<HerramientaParticular> linker;
 //    private TablaManager<CapacidadProductiva> tmCapacidad;
     private PantallaHerramientaABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);        
@@ -51,11 +55,20 @@ public class PantallaHerramientaABM extends javax.swing.JDialog {
         /////////// Precargas Necesarias //////////
         cargarValidaciones();
         recargarComboTipoHerramienta();
+
+        linker=new ZLObject (HerramientaParticular.class,gestor.getHerramientaParticular());
+        linker.add("nombre", new ZLTextField(txtNombre));
+        linker.add("modelo", new ZLTextField(txtModelo));
+        linker.add("caracteristicas", new ZLTextField(txtCaracteristicas));
+        linker.add("observaciones", new ZLTextField(txtObservaciones));
+        linker.add("motivoBaja", new ZLTextField(txtMotivoBaja));
+        this.linker.add("TTherramienta", new ZLComboBox(cmbTipoMaquinaHerramienta));
     }   
 
     private void recargarComboTipoHerramienta()
     {
         cmbTipoMaquinaHerramienta.setModel(new DefaultComboBoxModel(gestor.getTipoHerramientaHerramienta().toArray()));
+        cmbTipoMaquinaHerramienta.setSelectedIndex(-1);
     }
 
     public void cargarValidaciones()
@@ -324,20 +337,20 @@ public class PantallaHerramientaABM extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
 
-        HerramientaParticular maq = gestor.getHerramientaParticular();
+//        HerramientaParticular maq = gestor.getHerramientaParticular();
 //        maqHer.setCapacidadProductiva(tmCapacidad.getDatos());
-        maq.setCaracteristicas(txtCaracteristicas.getText());
+//        maq.setCaracteristicas(txtCaracteristicas.getText());
 //        if(maqHer.getCapacidadProductiva().isEmpty())
 //            maqHer.getCapacidadProductiva().add(new CapacidadProductiva());
 //        maqHer.getCapacidadProductiva().get(0).setCapacidad(Utilidades.parseInteger(txtCapacidad.getText()));
         //maq.setCodigo(txtCodigo.getText());
-        maq.setModelo(txtModelo.getText());
-        maq.setNombre(txtNombre.getText());
-        maq.setObservaciones(txtObservaciones.getText());
-        maq.setTTherramienta((TipoHerramienta) cmbTipoMaquinaHerramienta.getSelectedItem());
-        maq.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
+//        maq.setModelo(txtModelo.getText());
+//        maq.setNombre(txtNombre.getText());
+//        maq.setObservaciones(txtObservaciones.getText());
+//        maq.setTTherramienta((TipoHerramienta) cmbTipoMaquinaHerramienta.getSelectedItem());
+//        maq.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
         try {
-            gestor.ejecutarCU(maq);
+            gestor.ejecutarCU(gestor.getHerramientaParticular());
             this.setVisible(false);
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
