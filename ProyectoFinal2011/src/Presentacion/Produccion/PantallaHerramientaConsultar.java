@@ -12,11 +12,10 @@
 package Presentacion.Produccion;
 
 
+import BaseDeDatos.Produccion.HerramientaBD;
 import BaseDeDatos.Produccion.MaquinaBD;
 import Negocio.Produccion.*;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.ValidarTexbox;
@@ -27,14 +26,14 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author Heber Parrucci
  */
-public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
+public class PantallaHerramientaConsultar extends javax.swing.JDialog {
   
-    private TablaManager<MaquinaParticular> tablita;
+    private TablaManager<HerramientaParticular> tablita;
     /** Creates new form consultarMaquinaOHerramienta */
-    public PantallaMaquinaHerramientaConsultar(java.awt.Frame parent, boolean modal) {
+    public PantallaHerramientaConsultar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        tablita = new TablaManager<MaquinaParticular>(tbMaquinaHerramienta) {
+        tablita = new TablaManager<HerramientaParticular>(tbMaquinaHerramienta) {
 
             @Override
             public Vector getCabecera() {
@@ -47,12 +46,11 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
             }
 
             @Override
-            public Vector ObjetoFila(MaquinaParticular elemento) {
-                Vector fila = new Vector();
-                fila.add(elemento.getCodigo());
+            public Vector ObjetoFila(HerramientaParticular elemento) {
+                Vector fila = new Vector();               
                  fila.add(elemento.getNombre());
                   fila.add(elemento.getModelo());
-                   fila.add(elemento.getTEmaquina());
+                   fila.add(elemento.getTTherramienta());
                 return fila;
             }
         };
@@ -62,7 +60,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
     private void cargarValidaciones() {        
         ValidarTexbox.validarLongitud(txtModelo,50);
         ValidarTexbox.validarLongitud(txtNombre,50);
-        ValidarTexbox.validarLongitud(txtCodigo,2);
+     
         /************************Validacion de botones **********************************/
         btnEliminar.setEnabled(false);
         btnModificar.setEnabled(false);
@@ -96,8 +94,6 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         panelBusqueda = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        txtCodigo = new javax.swing.JTextField();
         txtModelo = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         chkMostrarVigentes = new javax.swing.JCheckBox();
@@ -107,9 +103,9 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gestión de Máquinas");
+        setTitle("Consultar Herramienta");
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Máquinas Y Herramientas"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Herramienta"));
 
         tbMaquinaHerramienta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -173,8 +169,6 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
 
         panelBusqueda.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
 
-        jLabel1.setText("Codigo:");
-
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,24 +193,22 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel1)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                    .addComponent(txtModelo, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtModelo)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(chkMostrarEliminados, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBuscar)
                     .addComponent(chkMostrarVigentes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         panelBusquedaLayout.setVerticalGroup(
             panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBusquedaLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBusquedaLayout.createSequentialGroup()
                         .addComponent(chkMostrarVigentes)
@@ -226,17 +218,12 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
                         .addComponent(btnBuscar))
                     .addGroup(panelBusquedaLayout.createSequentialGroup()
                         .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel3)))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -246,8 +233,8 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panelBusqueda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -255,7 +242,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(17, 17, 17)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -272,8 +259,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
 
     
     private void cargarTabla(){
-        tablita.setDatos(MaquinaBD.getMaquinas(
-                txtCodigo.getText(),
+        tablita.setDatos(HerramientaBD.getHerramientaParticular(
                 txtModelo.getText(),
                 txtNombre.getText(),
                 chkMostrarVigentes.isSelected(),
@@ -281,32 +267,31 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
     }
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
    
-
-
-        new GestorMaquinaAlta().iniciarCU();
-        this.cargarTabla();
+      new GestorHerramientaAlta().iniciarCU();
+      this.cargarTabla();
 
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
+        
+        
+             try {
+                    new GestorHerramientaModificar(tablita.getSeletedObject()).iniciarCU();
+                } catch (Exception ex) {  Mensajes.mensajeErrorGenerico(ex.getMessage());     }
+       
 
-               try {
-            new GestorMaquinaModificar(tablita.getSeletedObject()).iniciarCU();
-        } catch (Exception ex) {
-            Mensajes.mensajeErrorGenerico(ex.getMessage());
-        }
+    this.cargarTabla();          
 
-               this.cargarTabla();
+           
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
                              try {
-            new GestorMaquinaBaja(tablita.getSeletedObject()).iniciarCU();
+            new GestorHerramientaBaja(tablita.getSeletedObject()).iniciarCU();
         } catch (Exception ex) {
-            Mensajes.mensajeErrorGenerico(ex.getMessage());
-        }
+            Mensajes.mensajeErrorGenerico(ex.getMessage());        }
 
         this.cargarTabla();
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -317,7 +302,7 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PantallaMaquinaHerramientaConsultar dialog = new PantallaMaquinaHerramientaConsultar(new javax.swing.JFrame(), true);
+                PantallaHerramientaConsultar dialog = new PantallaHerramientaConsultar(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -335,16 +320,16 @@ public class PantallaMaquinaHerramientaConsultar extends javax.swing.JDialog {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JCheckBox chkMostrarEliminados;
     private javax.swing.JCheckBox chkMostrarVigentes;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel panelBusqueda;
     private javax.swing.JTable tbMaquinaHerramienta;
-    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
+
+   
 }

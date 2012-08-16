@@ -29,7 +29,8 @@ import Presentacion.Produccion.PantallaConsultarProducto;
 import Presentacion.Produccion.ProblemaMaquinaHerramientaParticular;
 import Presentacion.Produccion.ConsultaProblemasMHP;
 import Presentacion.Produccion.PantallaABMEtapaProduccion;
-import Presentacion.Produccion.PantallaMaquinaHerramientaConsultar;
+import Presentacion.Produccion.PantallaHerramientaConsultar;
+import Presentacion.Produccion.PantallaMaquinaConsultar;
 import Presentacion.Produccion.PantallaTipoHerramientaABM;
 import Presentacion.Produccion.PantallaTipoMaquinaABM;
 import Presentacion.UbicacionGeografica.PantallaABMPais;
@@ -113,7 +114,7 @@ public class Principal extends javax.swing.JFrame {
         txtProd = new javax.swing.JTextField();
         btnProducto = new javax.swing.JButton();
         btnTipoProducto = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnMaquina = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -123,6 +124,7 @@ public class Principal extends javax.swing.JFrame {
         btnTipoMaquina = new javax.swing.JButton();
         btnTipoHerramienta = new javax.swing.JButton();
         btnTipoHerramienta1 = new javax.swing.JButton();
+        btnHerramienta = new javax.swing.JButton();
         pnlDeposito = new javax.swing.JPanel();
         txtVentas1 = new javax.swing.JTextField();
         btnRecepMat = new javax.swing.JButton();
@@ -427,10 +429,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Maquina");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnMaquina.setText("Maquina");
+        btnMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnMaquinaActionPerformed(evt);
             }
         });
 
@@ -497,6 +499,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnHerramienta.setText("Herramienta");
+        btnHerramienta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHerramientaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlProduccionLayout = new javax.swing.GroupLayout(pnlProduccion);
         pnlProduccion.setLayout(pnlProduccionLayout);
         pnlProduccionLayout.setHorizontalGroup(
@@ -514,7 +523,7 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnConsultaProblemas, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
                     .addGroup(pnlProduccionLayout.createSequentialGroup()
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnTipoMaquina, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
                     .addGroup(pnlProduccionLayout.createSequentialGroup()
@@ -527,7 +536,9 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(btnTipoHerramienta1, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)))
+                        .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnHerramienta, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                            .addComponent(btnTipoHerramienta1, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))))
                 .addGap(388, 388, 388))
         );
         pnlProduccionLayout.setVerticalGroup(
@@ -544,7 +555,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btnConsultaProblemas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTipoMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -555,7 +566,9 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTipoHerramienta1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHerramienta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAvance, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -721,11 +734,11 @@ public class Principal extends javax.swing.JFrame {
         tipo.setVisible(true);
 }//GEN-LAST:event_btnTipoProductoActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaquinaActionPerformed
         // TODO add your handling code here:
-        PantallaMaquinaHerramientaConsultar pantalla = new PantallaMaquinaHerramientaConsultar(this, true);
+        PantallaMaquinaConsultar pantalla = new PantallaMaquinaConsultar(this, true);
         pantalla.setVisible(true);
-}//GEN-LAST:event_jButton5ActionPerformed
+}//GEN-LAST:event_btnMaquinaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -889,6 +902,12 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnTipoHerramienta1ActionPerformed
 
+    private void btnHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHerramientaActionPerformed
+        // TODO add your handling code here:
+        PantallaHerramientaConsultar pantalla = new PantallaHerramientaConsultar(this, true);
+        pantalla.setVisible(true);
+    }//GEN-LAST:event_btnHerramientaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -912,7 +931,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnDeposito;
     private javax.swing.JButton btnEmpleado;
     private javax.swing.JButton btnFactura;
+    private javax.swing.JButton btnHerramienta;
     private javax.swing.JButton btnHorarios;
+    private javax.swing.JButton btnMaquina;
     private javax.swing.JButton btnOrdenCompra;
     private javax.swing.JButton btnPedido;
     private javax.swing.JButton btnProblemas;
@@ -933,7 +954,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
