@@ -72,6 +72,9 @@ public class Material implements java.io.Serializable {
     //-----------------------------------------------------------------------------------
     @Column(name = "CODIGO", nullable = true, length = 6)
     private String codigo;
+    //-----------------------------------------------------------------------------------
+    @Column(name="ES_PENDIENTE")
+    private Boolean esPendiente;
 
     //-----------------------------------------------------------------------------------
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TMateriales")
@@ -85,6 +88,7 @@ public class Material implements java.io.Serializable {
     private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
 
     public Material() {
+        this.esPendiente=false;
     
     }
 
@@ -96,6 +100,7 @@ public class Material implements java.io.Serializable {
         this.stockMinimo = stockMinimo;
         this.stockReservado = stockReservado;
         this.codigo = codigo;
+        this.esPendiente=false;
        
     }
 
@@ -113,6 +118,7 @@ public class Material implements java.io.Serializable {
         this.stockReservado = stockReservado;
         this.codigo = codigo;
         this.TMaterialesXProveedors = TMaterialesXProveedors;
+        this.esPendiente=false;
 
     }
 
@@ -316,6 +322,14 @@ public class Material implements java.io.Serializable {
                 faltantesPendiente.add(f);
         }
         return faltantesPendiente;
+    }
+
+    public Boolean getEsPendiente() {
+        return this.esPendiente;
+    }
+
+    public void setEsPendiente(Boolean esPendiente) {
+        this.esPendiente = esPendiente;
     }
 
 //    public void setFaltantes(List<Faltante> faltantes) {
