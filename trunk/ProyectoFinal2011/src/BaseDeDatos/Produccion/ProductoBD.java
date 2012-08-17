@@ -6,6 +6,9 @@
 package BaseDeDatos.Produccion;
 
 import BaseDeDatos.HibernateUtil;
+import Negocio.Produccion.DetalleEtapaProduccion;
+import Negocio.Produccion.DetalleProducto;
+import Negocio.Produccion.EtapaProduccionEspecifica;
 import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
 import java.util.ArrayList;
@@ -25,6 +28,15 @@ public class ProductoBD{
 
     }
     public static Producto guardar(Producto producto){
+
+        for(EtapaProduccionEspecifica epe : producto.getEtapasProduccionEspecificas())
+        {
+            for(DetalleEtapaProduccion dep : epe.getDetalleEtapaProduccion())
+            {
+                if(dep.getTDetallesProducto() != null)
+                    HibernateUtil.guardarObjeto(dep.getTDetallesProducto());
+            }
+        }
 
         HibernateUtil.guardarObjeto(producto);
 

@@ -151,9 +151,19 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(DetalleEtapaProduccion elemento) {
                 Vector fila = new Vector();
-                fila.add((elemento.getTDetallesProducto() == null) ? "" : elemento.getTDetallesProducto().getTMateriales());
-                fila.add((elemento.getCantidadNecesaria() == null) ? "" : elemento.getCantidadNecesaria());
-                fila.add((elemento.getTDetallesProducto() == null) ? "" : elemento.getTDetallesProducto().getTMateriales().getUnidadMedida());
+                if(elemento.getTDetallesProducto() == null)
+                {
+                    fila.add(null);
+                    fila.add(1);
+                    fila.add("");
+                }
+                else {
+                    fila.add(elemento.getTDetallesProducto().getTMateriales());
+                    fila.add((elemento.getCantidadNecesaria() == null) ? "" : elemento.getCantidadNecesaria());
+                    fila.add((elemento.getTDetallesProducto().getTMateriales() == null) ?
+                    "" : elemento.getTDetallesProducto().getTMateriales().getUnidadMedida());
+                }
+
                 return fila;
             }
 
@@ -177,7 +187,11 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             public void fireTableCellUpdated(int row, int column) {
                 Object value = tbMaterial.getValueAt(row, column);
                 if (column == 0) {
+                    if(tmMateriales.getDato(row).getTDetallesProducto() == null)
+                        tmMateriales.getDato(row).setTDetallesProducto(new DetalleProducto());
                     tmMateriales.getDato(row).getTDetallesProducto().setTMateriales((Material) value);
+                    tmMateriales.getDato(row).getTDetallesProducto().setTProductos((Producto)cmbProducto.getSelectedItem());
+                    tmMateriales.getDato(row).getTDetallesProducto().setLongitud((short)0);
                 }
                 if (column == 1) {
                     tmMateriales.getDato(row).setCantidadNecesaria(new Integer(value.toString()));
@@ -341,6 +355,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         cmbTipoEtapa.setSelectedIndex(-1);
         cmbMaterial.setSelectedIndex(-1);
         tmMateriales.setDatos(new ArrayList<DetalleEtapaProduccion>());
+        tmHerramientas.setDatos(new ArrayList<DetalleEtapaProduccion>());
         cmbTipoMaquina.setSelectedIndex(-1);
 
     }
@@ -365,21 +380,50 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
     private boolean validarEtapa()
     {
         String mensaje="";
-       if(cmbTipoEtapa.getSelectedIndex()==-1)
+
+        Utilidades.componenteCorrecto(cmbTipoEtapa);
+        Utilidades.componenteCorrecto(cmbCargo);
+        Utilidades.componenteCorrecto(cmbTipoMaquina);
+        Utilidades.componenteCorrecto(txtDuracion);
+        Utilidades.componenteCorrecto(txtHorasHombre);
+
+        if(cmbTipoEtapa.getSelectedIndex()==-1)
+        {
             mensaje+="\nDebe seleccionar un tipo de etapa";
+            Utilidades.componenteError(cmbTipoEtapa, "Debe seleccionar un tipo de etapa");
+        }
         if(cmbCargo.getSelectedIndex()==-1)
+        {
             mensaje+="\nDebe seleccionar un cargo correcto";
+            Utilidades.componenteError(cmbCargo, "Debe seleccionar un cargo correcto");
+        }
         if(cmbTipoMaquina.getSelectedIndex()==-1)
+        {
             mensaje+="\nDebe seleccionar un tipo de maquina correcto";
+            Utilidades.componenteError(cmbTipoMaquina, "Debe seleccionar un tipo de maquina correcto");
+        }
         if(txtDuracion.getText().trim().isEmpty())
+        {
             mensaje+="\nDebe ingresar una duración determinada";
+            Utilidades.componenteError(txtDuracion, "Debe ingresar una duración determinada");
+        }
         if(txtHorasHombre.getText().trim().isEmpty())
+        {
             mensaje+="\nDebe ingresar las horas hombre requeridas";
+            Utilidades.componenteError(txtHorasHombre, "Debe ingresar las horas hombre requeridas");
+        }
         if(txtHorasHombre.getText().trim().isEmpty()==false)
             if(txtDuracion.getText().trim().isEmpty()==false)
-                if(txtDuracion.getText().compareTo(txtHorasHombre.getText())<0)
+            {
+                BigDecimal duracionEtapa = Utilidades.parseBigDecimal(txtDuracion.getText());
+                BigDecimal horasHombre = Utilidades.parseBigDecimal(txtHorasHombre.getText());
+                if(horasHombre.doubleValue() > duracionEtapa.doubleValue())
+                {
                     mensaje+="\nLas horas hombre no puede superar la duracion de la etapa";
-
+                    Utilidades.componenteError(txtHorasHombre, "Las horas hombre no puede superar la duracion de la etapa");
+                    Utilidades.componenteError(txtDuracion, "Las horas hombre no puede superar la duracion de la etapa");
+                }
+            }
         for(int i=0;i<tmHerramientas.getSize();i++)
         {
             DetalleEtapaProduccion dep=tmHerramientas.getDato(i);
@@ -494,12 +538,12 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
         pnlEtapaEspecifica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Etapa específica", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 11));
         txtDescripcion.setLineWrap(true);
         txtDescripcion.setWrapStyleWord(true);
         jScrollPane4.setViewportView(txtDescripcion);
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel15.setText("Descripción:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -508,7 +552,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel15)
-                .addContainerGap())
+                .addContainerGap(38, Short.MAX_VALUE))
             .addComponent(jScrollPane4)
         );
         jPanel2Layout.setVerticalGroup(
@@ -516,7 +560,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))
         );
 
         btnCargarCargo.setText("+");
@@ -526,10 +570,10 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         });
 
-        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel21.setText("Duración Etapa:");
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel14.setText("Cargo:");
 
         btnCargarTipoMaquina.setText("+");
@@ -539,10 +583,10 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         });
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel13.setText("Horas Hombre:");
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel17.setText("Nro de orden:");
 
         txtOrden.setEditable(false);
@@ -554,10 +598,10 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         });
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel16.setText("Tipo etapa:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Tipo máquina:");
 
         jLabel5.setText("min.");
@@ -657,7 +701,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Materiales necesarios:");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -727,7 +771,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Herramientas necesarias:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -798,10 +842,10 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
         pnlProducto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Producto:");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel6.setText("Tipo producto:");
 
         cmbTipoProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -829,7 +873,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(253, Short.MAX_VALUE))
         );
         pnlProductoLayout.setVerticalGroup(
             pnlProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -866,14 +910,14 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tbEtapas);
 
-        btnSubir.setText("Subir");
+        btnSubir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/up_green.png"))); // NOI18N
         btnSubir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSubirActionPerformed(evt);
             }
         });
 
-        btnBajar.setText("Bajar");
+        btnBajar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/down_green.png"))); // NOI18N
         btnBajar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBajarActionPerformed(evt);
@@ -909,13 +953,13 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(pnlEtapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlEtapasLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 425, Short.MAX_VALUE)
                         .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlEtapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -949,7 +993,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                     .addComponent(pnlEtapaEspecifica, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 575, Short.MAX_VALUE)
                         .addComponent(btnAceptar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCancelar)))
@@ -1104,10 +1148,12 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         etapa.setTTmaquina((TipoMaquina) cmbTipoMaquina.getSelectedItem());
 
         for (DetalleEtapaProduccion dep : tmMateriales.getDatos()) {
+            dep.setHorasMaquina(BigDecimal.ZERO);
             etapa.addDetalleEtapaProduccion(dep);
         }
 
         for (DetalleEtapaProduccion dep : tmHerramientas.getDatos()) {
+            dep.setHorasMaquina(BigDecimal.ZERO);
             etapa.addDetalleEtapaProduccion(dep);
             
         }

@@ -16,7 +16,7 @@ import Negocio.Produccion.GestorEtapaProduccion;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.Operacion;
-import gui.GUILocal;
+import Presentacion.Utilidades;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,20 +29,21 @@ import javax.swing.DefaultListModel;
  */
 public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
 
-        private int operacion;
-        private EtapaProduccion etapa_actual=null;
-        private GestorEtapaProduccion gestor=new GestorEtapaProduccion();
+    private int operacion;
+    private EtapaProduccion etapa_actual=null;
+    private GestorEtapaProduccion gestor=new GestorEtapaProduccion();
+
     /** Creates new form PantallaABMEtapaProduccion */
     public PantallaABMEtapaProduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-     
+
         initComponents();
-         this.activarCargo(false);
-       this.activarBaja(false);
-       this.activarDisponible(true);
-       this.activarBotones(true, true, true, false, false, true);
-       this.cargarEtapasProduccion();
-       IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+        this.activarCargo(false);
+        this.activarBaja(false);
+        this.activarDisponible(true);
+        this.activarBotones(true, true, true, false, false, true);
+        this.cargarEtapasProduccion();
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
     }
 
     /** This method is called from within the constructor to
@@ -75,7 +76,8 @@ public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
         btnBaja = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
-        btnReactivar = new javax.swing.JButton();
+        chkMostrarTodos = new javax.swing.JCheckBox();
+        chkMostrarDadosBaja = new javax.swing.JCheckBox();
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -198,6 +200,11 @@ public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
 
         pnlDisponible.setBorder(javax.swing.BorderFactory.createTitledBorder("Disponible"));
 
+        lstDisponible.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstDisponibleValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(lstDisponible);
 
         btnBaja.setText("Eliminar");
@@ -221,7 +228,22 @@ public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
             }
         });
 
-        btnReactivar.setText("Reactivar");
+        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11));
+        chkMostrarTodos.setSelected(true);
+        chkMostrarTodos.setText("Mostrar vigentes");
+        chkMostrarTodos.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkMostrarTodosStateChanged(evt);
+            }
+        });
+
+        chkMostrarDadosBaja.setFont(new java.awt.Font("Tahoma", 1, 11));
+        chkMostrarDadosBaja.setText("Mostrar dados de baja");
+        chkMostrarDadosBaja.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkMostrarDadosBajaStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlDisponibleLayout = new javax.swing.GroupLayout(pnlDisponible);
         pnlDisponible.setLayout(pnlDisponibleLayout);
@@ -229,32 +251,37 @@ public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
             pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDisponibleLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chkMostrarDadosBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chkMostrarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlDisponibleLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnReactivar)
-                    .addComponent(btnBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDisponibleLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         pnlDisponibleLayout.setVerticalGroup(
             pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDisponibleLayout.createSequentialGroup()
                 .addGroup(pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlDisponibleLayout.createSequentialGroup()
                         .addComponent(btnNuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBaja)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnReactivar)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                        .addComponent(btnBaja))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(chkMostrarTodos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkMostrarDadosBaja)
+                .addContainerGap())
         );
 
         btnSalir.setText("Salir");
@@ -347,43 +374,46 @@ public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
         if(validar()){
+            if(operacion==Operacion.nuevo){
+                EtapaProduccion tipo=new EtapaProduccion();
+                tipo.setNombre(txtNombre.getText().toUpperCase());
+                tipo.setDescripcion(txtDescripcion.getText());
 
-        }
-        if(operacion==Operacion.nuevo){
-            EtapaProduccion tipo=new EtapaProduccion();
-            tipo.setNombre(txtNombre.getText().toUpperCase());
-            tipo.setDescripcion(txtDescripcion.getText());
+                gestor.guardar(tipo);
+                Mensajes.mensajeInformacion("La etapa de producción "+tipo.getNombre()+"\n ha sido guardado exitosamente");
+                this.vaciar();
+                cancelar();
+                this.cargarEtapasProduccion();
+                return;
+            }
 
-            gestor.guardar(tipo);
-            Mensajes.mensajeInformacion("La etapa de producción "+tipo.getNombre()+"\n ha sido guardado exitosamente");
-            this.vaciar();
-            cancelar();
-            this.cargarEtapasProduccion();
-            return;
-        }
+            if(operacion==Operacion.modificar){
+                etapa_actual.setNombre(txtNombre.getText().toUpperCase());
+                etapa_actual.setDescripcion(txtDescripcion.getText());
+                gestor.modificar(etapa_actual);
 
-        if(operacion==Operacion.modificar){
-            etapa_actual.setNombre(txtNombre.getText().toUpperCase());
-            etapa_actual.setDescripcion(txtDescripcion.getText());
-            gestor.modificar(etapa_actual);
-            
-            Mensajes.mensajeInformacion("La etapa de producción "+etapa_actual.getNombre()+"\n ha sido modificado exitosamente");
-            this.vaciar();
-            cancelar();
-            etapa_actual=null;
-            return;
-        }
-        if(operacion==Operacion.baja){
-            etapa_actual.setFecBaja(new Date());
-            etapa_actual.setMotivoBaja(txtMotivoBaja.getText());
-            gestor.modificar(etapa_actual);
+                Mensajes.mensajeInformacion("La etapa de producción "+etapa_actual.getNombre()+"\n ha sido modificado exitosamente");
+                this.vaciar();
+                cancelar();
+                this.cargarEtapasProduccion();
+                etapa_actual=null;
+                return;
+            }
+            if(operacion==Operacion.baja){
+                etapa_actual.setFecBaja(new Date());
+                etapa_actual.setMotivoBaja(txtMotivoBaja.getText());
+                gestor.modificar(etapa_actual);
 
-            Mensajes.mensajeInformacion("La etapa de producción "+etapa_actual.getNombre()+"\n ha sido dado de baja exitosamente");
-            this.vaciar();
-            etapa_actual=null;
-            cancelar();
-            return;
+                Mensajes.mensajeInformacion("La etapa de producción "+etapa_actual.getNombre()+"\n ha sido dado de baja exitosamente");
+                this.vaciar();
+                etapa_actual=null;
+                cancelar();
+                this.cargarEtapasProduccion();
+                return;
+            }
         }
+        
+        this.cargarEtapasProduccion();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -398,8 +428,30 @@ public class PantallaABMEtapaProduccion extends javax.swing.JDialog {
 }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void chkMostrarTodosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkMostrarTodosStateChanged
+        this.cargarEtapasProduccion();
+    }//GEN-LAST:event_chkMostrarTodosStateChanged
+
+    private void chkMostrarDadosBajaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkMostrarDadosBajaStateChanged
+        this.cargarEtapasProduccion();
+    }//GEN-LAST:event_chkMostrarDadosBajaStateChanged
+
+    private void lstDisponibleValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstDisponibleValueChanged
+         // TODO add your handling code here:
+        EtapaProduccion etapaSeleccionada = (EtapaProduccion) lstDisponible.getSelectedValue();
+        this.cargarDatos(etapaSeleccionada);
+        if(etapaSeleccionada.getFecBaja() != null){
+            this.activarBaja(false);
+            this.activarDisponible(true);
+        }
+        else{
+            this.activarBaja(false);
+            this.activarDisponible(true);
+        }
+    }//GEN-LAST:event_lstDisponibleValueChanged
 
     /**
     * @param args the command line arguments
@@ -425,8 +477,9 @@ this.dispose();
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton btnReactivar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JCheckBox chkMostrarDadosBaja;
+    private javax.swing.JCheckBox chkMostrarTodos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -449,21 +502,20 @@ this.dispose();
 
     private void cargarEtapasProduccion(){
         try {
-            lstDisponible.removeAll();
             DefaultListModel modelo = new DefaultListModel();
-
-            List<EtapaProduccion> tipo = GestorEtapaProduccion.listarTipoProducto();
+            List<EtapaProduccion> tipo = GestorEtapaProduccion.listarEtapasDeProduccion(chkMostrarTodos.isSelected(), chkMostrarDadosBaja.isSelected());
+            
             for(int i=0;i<tipo.size();i++){
                 modelo.addElement(tipo.get(i));
+            }
 
             lstDisponible.setModel(modelo);
-
-
-            }
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             
         }
     }
+
     private void activarCargo(boolean flag){
         this.txtNombre.setEnabled(flag);
         this.txtDescripcion.setEnabled(flag);
@@ -492,10 +544,20 @@ this.dispose();
         this.txtNombre.setText("");
         this.txtFechaBaja.setText("");
         this.txtMotivoBaja.setText("");
+        Utilidades.componenteCorrecto(txtNombre);
 
     }
     private boolean validar(){
-        return true;
+        boolean hayError = false;
+
+        Utilidades.componenteCorrecto(txtNombre);
+
+        if(txtNombre.getText().equals("")) {
+            Utilidades.componenteError(txtNombre, "Por favor completar");
+            hayError = true;
+        }
+        
+        return !hayError;
     }
     private void cargarDatos(EtapaProduccion tipo){
 

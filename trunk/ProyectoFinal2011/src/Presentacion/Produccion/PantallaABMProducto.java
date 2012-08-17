@@ -10,10 +10,7 @@
  */
 package Presentacion.Produccion;
 
-import BaseDeDatos.Compras.MaterialBD;
-import Negocio.Compras.Material;
 import Negocio.Exceptiones.ExceptionGestor;
-import Negocio.Produccion.DetalleProducto;
 import Negocio.Produccion.GestorEstructura;
 import Negocio.Produccion.GestorProducto;
 import Negocio.Produccion.GestorTipoProducto;
@@ -21,11 +18,11 @@ import Negocio.Produccion.GestorUnidadMedida;
 import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
 import Negocio.Produccion.UnidadMedida;
-import Negocio.Ventas.DetallePedido;
+
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
-import Presentacion.TablaManager;
-import gui.GUILocal;
+import Presentacion.Utilidades;
+
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.math.BigDecimal;
@@ -33,10 +30,9 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
+
 
 /**
  *
@@ -205,7 +201,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                         .addComponent(cmbUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAgregarUnidadMedida)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -221,9 +217,9 @@ public class PantallaABMProducto extends javax.swing.JDialog {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -391,7 +387,49 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public boolean validar() {
-        return true;
+        boolean hayError = false;
+
+        Utilidades.componenteCorrecto(txtCodigo);
+        Utilidades.componenteCorrecto(txtNombre);
+        Utilidades.componenteCorrecto(txtPrecio);
+        Utilidades.componenteCorrecto(cmbTipoProducto);
+        Utilidades.componenteCorrecto(cmbUnidadMedida);
+
+        if(txtCodigo.getText().equals("")){
+            Utilidades.componenteError(txtCodigo, "Por favor completar");
+            hayError = true;
+        }
+
+        if(txtNombre.getText().equals("")){
+            Utilidades.componenteError(txtNombre, "Por favor completar");
+            hayError = true;
+        }
+
+        if(txtPrecio.getText().equals("")){
+            Utilidades.componenteError(txtPrecio, "Por favor completar");
+            hayError = true;
+        }
+        else{
+            BigDecimal precio = Utilidades.parseBigDecimal(txtPrecio.getText());
+
+            if(precio == null || precio.doubleValue() <= 0)
+            {
+                Utilidades.componenteError(txtPrecio, "El precio debe ser un valor numérico decimal mayor a 0");
+                hayError = true;
+            }
+        }
+
+        if(this.cmbTipoProducto.getSelectedItem() == null) {
+            Utilidades.componenteError(cmbTipoProducto, "Debe seleccionar un tipo de producto");
+            hayError = true;
+        }
+
+        if(this.cmbUnidadMedida.getSelectedItem() == null) {
+            Utilidades.componenteError(cmbUnidadMedida, "Debe seleccionar una unidad de medida");
+            hayError = true;
+        }
+
+        return !hayError;
     }
 
     /**
