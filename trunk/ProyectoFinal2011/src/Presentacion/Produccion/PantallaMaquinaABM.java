@@ -14,6 +14,7 @@ package Presentacion.Produccion;
 
 import Negocio.Compras.Proveedor;
 import Negocio.Exceptiones.ExceptionGestor;
+import Negocio.Exceptiones.TipoDatoException;
 import Negocio.Produccion.*;
 import Presentacion.Mensajes;
 import Presentacion.Utilidades;
@@ -367,6 +368,14 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
 
+
+         try {
+            // TODO add your handling code here:
+            gestor.getMaquinaParticular().validarOk();
+
+        } catch (TipoDatoException ex) {
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+      }
 //        MaquinaParticular maq = gestor.getMaquinaParticular();
 //        maqHer.setCapacidadProductiva(tmCapacidad.getDatos());
 //        maq.setCaracteristicas(txtCaracteristicas.getText());

@@ -2,6 +2,7 @@ package Negocio.Produccion;
 // Generated 18/03/2012 17:10:18 by Hibernate Tools 3.2.1.GA
 
 
+import Negocio.Exceptiones.TipoDatoException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -95,7 +96,9 @@ public class HerramientaParticular  implements java.io.Serializable {
         return this.TTherramienta;
     }
     
-    public void setTTherramienta(TipoHerramienta TTherramienta) {
+    public void setTTherramienta(TipoHerramienta TTherramienta) throws TipoDatoException{
+        if(this.TTherramienta==null)
+            throw new TipoDatoException("Debe seleccionar un tipo de herramienta");
         this.TTherramienta = TTherramienta;
     }
     
@@ -113,16 +116,20 @@ public class HerramientaParticular  implements java.io.Serializable {
         return this.modelo;
     }
     
-    public void setModelo(String modelo) {
+    public void setModelo(String modelo) throws TipoDatoException {
+        if(modelo.trim().compareTo("")==0)
+            throw new TipoDatoException("Debe ingresar un modelo");
         this.modelo = modelo;
     }
     
-    @Column(name="NOMBRE", nullable=false, length=50)
+   
     public String getNombre() {
         return this.nombre;
     }
     
-    public void setNombre(String nombre) {
+    public void setNombre(String nombre) throws TipoDatoException {
+        if(nombre.trim().compareTo("")==0)
+            throw new TipoDatoException("Debe ingresar un nombre");
         this.nombre = nombre;
     }
     
@@ -162,6 +169,16 @@ public class HerramientaParticular  implements java.io.Serializable {
     }
       */
 
+    public boolean validarOk() throws TipoDatoException{
+        String mje="Algunos campos no han sido ingresado correctamente.";
+        if(this.TTherramienta==null)
+            throw new TipoDatoException(mje);
+        if(this.modelo==null)
+            throw new TipoDatoException(mje);
+        if(this.nombre==null)
+            throw new TipoDatoException(mje);
+        return true;
+    }
 
 
 
