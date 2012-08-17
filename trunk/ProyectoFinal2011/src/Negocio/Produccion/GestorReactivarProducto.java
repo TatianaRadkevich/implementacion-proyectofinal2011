@@ -27,6 +27,7 @@ public class GestorReactivarProducto extends GestorProducto{
     public void reactivarProducto(Dialog parent,String codigo) {
         PantallaABMProducto pantalla_producto=new PantallaABMProducto(parent, true, this,"Modificar Producto");
         pantalla_producto.reactivar(ProductoBD.traerProducto(codigo));
+        pantalla_producto.show();
       
     }
 
