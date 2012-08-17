@@ -41,7 +41,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
         this.activarBotones(true, false, false, false, false);
-     
+        this.iniciarBusqueda();     
     }
 
 
@@ -107,16 +107,15 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         tabla_producto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Código", "Nombre", "Tipo Producto"
             }
         ));
-        tabla_producto.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tabla_producto.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabla_producto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -157,21 +156,20 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(553, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnReactivar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(554, 554, 554)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
                             .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(553, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnReactivar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -205,7 +203,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         pnlBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda"));
         pnlBuscar.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Tipo de producto:");
         pnlBuscar.add(jLabel1);
@@ -213,18 +211,23 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         pnlBuscar.add(txtNombre);
         txtNombre.setBounds(160, 50, 110, 20);
 
-        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11));
+        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkMostrarTodos.setSelected(true);
         chkMostrarTodos.setText("Mostrar vigentes");
+        chkMostrarTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkMostrarTodosActionPerformed(evt);
+            }
+        });
         pnlBuscar.add(chkMostrarTodos);
         chkMostrarTodos.setBounds(370, 20, 130, 23);
 
-        chkMostrarDadosBaja.setFont(new java.awt.Font("Tahoma", 1, 11));
+        chkMostrarDadosBaja.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkMostrarDadosBaja.setText("Mostrar dados de baja");
         pnlBuscar.add(chkMostrarDadosBaja);
         chkMostrarDadosBaja.setBounds(370, 50, 170, 23);
 
-        lblCodigoLinea.setFont(new java.awt.Font("Tahoma", 1, 18));
+        lblCodigoLinea.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblCodigoLinea.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCodigoLinea.setText("-");
         pnlBuscar.add(lblCodigoLinea);
@@ -241,7 +244,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         pnlBuscar.add(btnBuscar);
         btnBuscar.setBounds(560, 110, 80, 23);
 
-        lblCodigo.setFont(new java.awt.Font("Tahoma", 1, 11));
+        lblCodigo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblCodigo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblCodigo.setText("Código:");
         pnlBuscar.add(lblCodigo);
@@ -249,7 +252,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
         pnlBuscar.add(txtCodigoTipo);
         txtCodigoTipo.setBounds(160, 20, 40, 20);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Nombre:");
         pnlBuscar.add(jLabel2);
@@ -366,6 +369,10 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
 
        
     }//GEN-LAST:event_tabla_productoMouseClicked
+
+    private void chkMostrarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMostrarTodosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chkMostrarTodosActionPerformed
 
     /**
     * @param args the command line arguments

@@ -549,7 +549,7 @@ public class PantallaABMProducto extends javax.swing.JDialog {
     public void baja(Producto prod) {
 
 
-        this.producto = prod;
+        this.producto = prod; 
         this.activarProducto(false);
         this.activarBaja(true);
         this.activarBotones(true, true);

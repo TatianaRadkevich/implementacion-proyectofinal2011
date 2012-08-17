@@ -16,6 +16,7 @@ import Negocio.Produccion.TipoProducto;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.Operacion;
+import Presentacion.Utilidades;
 import gui.GUILocal;
 import java.awt.Dialog;
 import java.text.Format;
@@ -45,9 +46,8 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
        this.activarBaja(false);
        this.activarDisponible(true);
        this.activarBotones(true, false, false, false, false,false,true);
-       this.cargarTipoProductos();
+       this.cargarTipoProductos(chkMostrarTodos.isSelected(), chkMostrarDadosBaja.isSelected());
        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
-
     }
 
 
@@ -86,6 +86,8 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         btnModificar = new javax.swing.JButton();
         btnReactivar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
+        chkMostrarDadosBaja = new javax.swing.JCheckBox();
+        chkMostrarTodos = new javax.swing.JCheckBox();
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -93,26 +95,26 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
         pnlCargo.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo producto"));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Nombre:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Descripción:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Código:");
 
         txtDescripcion.setColumns(20);
-        txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 11));
+        txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         txtDescripcion.setRows(5);
         jScrollPane1.setViewportView(txtDescripcion);
 
         pnlBaja.setBorder(javax.swing.BorderFactory.createTitledBorder("Baja"));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Fecha:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Motivo:");
 
         txtMotivoBaja.setColumns(20);
@@ -187,12 +189,12 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCargoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCargoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlCargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlBaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCargoLayout.createSequentialGroup()
+                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         pnlCargoLayout.setVerticalGroup(
             pnlCargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,19 +255,40 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
             }
         });
 
+        chkMostrarDadosBaja.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkMostrarDadosBaja.setText("Mostrar dados de baja");
+        chkMostrarDadosBaja.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkMostrarDadosBajaStateChanged(evt);
+            }
+        });
+
+        chkMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkMostrarTodos.setSelected(true);
+        chkMostrarTodos.setText("Mostrar vigentes");
+        chkMostrarTodos.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkMostrarTodosStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlDisponibleLayout = new javax.swing.GroupLayout(pnlDisponible);
         pnlDisponible.setLayout(pnlDisponibleLayout);
         pnlDisponibleLayout.setHorizontalGroup(
             pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDisponibleLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReactivar))
+                    .addComponent(chkMostrarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chkMostrarDadosBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlDisponibleLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlDisponibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnReactivar))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDisponibleLayout.setVerticalGroup(
@@ -280,8 +303,11 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
                         .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnReactivar))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(chkMostrarTodos)
+                .addGap(7, 7, 7)
+                .addComponent(chkMostrarDadosBaja))
         );
 
         btnSalir.setText("Salir");
@@ -374,8 +400,8 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-        if(validar()){
-           
+        if(!validar()){
+           return;
         }
       if(operacion==Operacion.nuevo){
             TipoProducto tipo=new TipoProducto();
@@ -469,6 +495,24 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
         this.cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed1
 
+    private void chkMostrarTodosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkMostrarTodosStateChanged
+        // TODO add your handling code here:
+        try {
+            cargarTipoProductos(chkMostrarTodos.isSelected(), chkMostrarDadosBaja.isSelected());
+        } catch (Exception ex) {
+            Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_chkMostrarTodosStateChanged
+
+    private void chkMostrarDadosBajaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkMostrarDadosBajaStateChanged
+        // TODO add your handling code here:
+        try {
+            cargarTipoProductos(chkMostrarTodos.isSelected(), chkMostrarDadosBaja.isSelected());
+        } catch (Exception ex) {
+            Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_chkMostrarDadosBajaStateChanged
+
    
     /**
     * @param args the command line arguments
@@ -495,6 +539,8 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnReactivar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JCheckBox chkMostrarDadosBaja;
+    private javax.swing.JCheckBox chkMostrarTodos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -535,6 +581,43 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
             Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private void cargarTipoProductos(boolean activo, boolean bajas){
+        try {
+            lstDisponible.removeAll();
+            lstDisponible.setListData(new Object[0]);
+            DefaultListModel modelo = new DefaultListModel();
+
+            List<TipoProducto> tipo = GestorTipoProducto.listarTipoProducto();
+            if(!activo && !bajas)
+            {
+                return;
+            }
+            for(int i=0;i<tipo.size();i++){
+                if(activo == true && bajas == true)
+                {
+                    modelo.addElement(tipo.get(i));
+                }else
+                {
+                    if(activo)
+                    {
+                        if(tipo.get(i).getFecBaja() == null)
+                            modelo.addElement(tipo.get(i));
+                    }else{
+                        if(tipo.get(i).getFecBaja() != null)
+                            modelo.addElement(tipo.get(i));
+                    }
+                }
+
+            lstDisponible.setModel(modelo);
+            lstDisponible.setSelectedIndex(-1);
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PantallaABMProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void activarTipoProducto(boolean flag){
         this.txtCodigo.setEnabled(flag);
         this.txtNombre.setEnabled(flag);
@@ -571,10 +654,27 @@ public class PantallaABMTipoProducto extends javax.swing.JDialog {
 
     }
     private boolean validar(){
-        return true;
+        boolean hayError = false;
+        
+        Utilidades.componenteCorrecto(txtCodigo);
+        Utilidades.componenteCorrecto(txtNombre);
+        
+        if(txtCodigo.getText().equals("")){
+            Utilidades.componenteError(txtCodigo, "Por favor completar");
+            hayError = true;
+        }
+        
+        if(txtNombre.getText().equals("")){
+            Utilidades.componenteError(txtNombre, "Por favor completar");
+            hayError = true;
+        }
+        
+        return !hayError;
+
     }
     private void cargarDatos(TipoProducto tipo){
 
+        
         this.txtCodigo.setText(tipo.getCodigo());
         this.txtDescripcion.setText(tipo.getDescripcion());
         this.txtNombre.setText(tipo.getNombre());
