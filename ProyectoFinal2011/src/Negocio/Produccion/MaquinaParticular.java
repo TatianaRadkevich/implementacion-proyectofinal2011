@@ -225,6 +225,16 @@ public class MaquinaParticular  implements java.io.Serializable {
 //
 
 
+    public boolean validarOk() throws TipoDatoException{
+        String mje="Algunos campos no han sido ingresado correctamente.";
+        if(this.TTmaquina==null)
+            throw new TipoDatoException(mje);
+        if(this.modelo==null)
+            throw new TipoDatoException(mje);
+        if(this.nombre==null)
+            throw new TipoDatoException(mje);
+        return true;
+    }
 
 }
 

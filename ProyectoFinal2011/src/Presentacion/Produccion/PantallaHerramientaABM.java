@@ -15,6 +15,7 @@ package Presentacion.Produccion;
 import BaseDeDatos.Compras.MaterialBD;
 import Negocio.Compras.Material;
 import Negocio.Exceptiones.ExceptionGestor;
+import Negocio.Exceptiones.TipoDatoException;
 import Negocio.Produccion.*;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
@@ -337,6 +338,13 @@ public class PantallaHerramientaABM extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
 
+        try {
+            // TODO add your handling code here:
+            gestor.getHerramientaParticular().validarOk();
+
+        } catch (TipoDatoException ex) {
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+      }
 //        HerramientaParticular maq = gestor.getHerramientaParticular();
 //        maqHer.setCapacidadProductiva(tmCapacidad.getDatos());
 //        maq.setCaracteristicas(txtCaracteristicas.getText());
