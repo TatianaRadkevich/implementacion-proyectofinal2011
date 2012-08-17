@@ -73,7 +73,7 @@ public class Material implements java.io.Serializable {
     @Column(name = "CODIGO", nullable = true, length = 6)
     private String codigo;
     //-----------------------------------------------------------------------------------
-    @Column(name="ES_PENDIENTE")
+    @Column(name="ESPENDIENTE")
     private Boolean esPendiente;
 
     //-----------------------------------------------------------------------------------

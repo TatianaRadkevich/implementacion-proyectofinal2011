@@ -28,7 +28,6 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
     private TablaManager<EtapaProduccionEspecifica> tmEtapaEspecifica;
     private TablaManager<DetalleEtapaProduccion> tmHerramientas;
     private TablaManager<DetalleEtapaProduccion> tmMateriales;
-    private TablaManager<DetalleEtapaProduccion> tmComposicion;
     private JComboBox cmbMaterial;
     private JComboBox cmbHerramienta;
 
@@ -70,29 +69,29 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         });
 
-        tmComposicion = new TablaManager<DetalleEtapaProduccion>(tbComposicion) {
-
-            @Override
-            public Vector ObjetoFila(DetalleEtapaProduccion elemento) {
-                Vector fila = new Vector();
-                fila.add(elemento.getEtapaProduccionEspecifica().getNumeroOrden());
-                fila.add(elemento.getTDetallesProducto().getTMateriales().getNombre());
-                fila.add(elemento.getCantidadNecesaria());
-                fila.add(elemento.getTDetallesProducto().getTMateriales().getUnidadMedida().getNombre());;
-                return fila;
-            }
-
-            @Override
-            public Vector getCabecera() {
-                Vector cabecera = new Vector();
-                cabecera.add("Nro Etapa");
-                cabecera.add("Material");
-                cabecera.add("Cantidad");
-                cabecera.add("Unidad");
-
-                return cabecera;
-            }
-        };
+//        tmComposicion = new TablaManager<DetalleEtapaProduccion>(tbComposicion) {
+//
+//            @Override
+//            public Vector ObjetoFila(DetalleEtapaProduccion elemento) {
+//                Vector fila = new Vector();
+//                fila.add(elemento.getEtapaProduccionEspecifica().getNumeroOrden());
+//                fila.add(elemento.getTDetallesProducto().getTMateriales().getNombre());
+//                fila.add(elemento.getCantidadNecesaria());
+//                fila.add(elemento.getTDetallesProducto().getTMateriales().getUnidadMedida().getNombre());;
+//                return fila;
+//            }
+//
+//            @Override
+//            public Vector getCabecera() {
+//                Vector cabecera = new Vector();
+//                cabecera.add("Nro Etapa");
+//                cabecera.add("Material");
+//                cabecera.add("Cantidad");
+//                cabecera.add("Unidad");
+//
+//                return cabecera;
+//            }
+//        };
 
         iniciarTablaMaterial();
         iniciarTablaHerramientas();
@@ -152,10 +151,9 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(DetalleEtapaProduccion elemento) {
                 Vector fila = new Vector();
-                fila.add(elemento.getTDetallesProducto().getTMateriales());
+                fila.add((elemento.getTDetallesProducto() == null) ? "" : elemento.getTDetallesProducto().getTMateriales());
                 fila.add((elemento.getCantidadNecesaria() == null) ? "" : elemento.getCantidadNecesaria());
-                fila.add((elemento.getTDetallesProducto().getTMateriales() == null) ?
-                    "" : elemento.getTDetallesProducto().getTMateriales().getUnidadMedida());
+                fila.add((elemento.getTDetallesProducto() == null) ? "" : elemento.getTDetallesProducto().getTMateriales().getUnidadMedida());
                 return fila;
             }
 
@@ -357,24 +355,6 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
     private void actualizarContenido() {
 
-        tmComposicion.limpiar();
-        for (EtapaProduccionEspecifica epe : tmEtapaEspecifica.getDatos()) {
-            for (DetalleEtapaProduccion dep : epe.getDetalleEtapaProduccion()) {
-                if (dep.getTDetallesProducto() != null) {
-                    tmComposicion.add(dep);
-                }
-            }
-        }
-        Collections.sort(tmComposicion.getDatos(), new Comparator<DetalleEtapaProduccion>() {
-
-            public int compare(DetalleEtapaProduccion o1, DetalleEtapaProduccion o2) {
-                int nro1 = o1.getEtapaProduccionEspecifica().getNumeroOrden();
-                int nro2 = o2.getEtapaProduccionEspecifica().getNumeroOrden();
-                return nro2 - nro1;
-            }
-        });
-        tmComposicion.updateTabla();
-
     }
 
      public void setVisibleBuscadorProducto(boolean b) {
@@ -500,7 +480,6 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         cmbProducto = new javax.swing.JComboBox();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        pnlContenedor = new javax.swing.JPanel();
         pnlEtapas = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbEtapas = new javax.swing.JTable();
@@ -509,21 +488,18 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         btnEliminar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
-        jPanel7 = new javax.swing.JPanel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        tbComposicion = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Estructura de Producto");
 
         pnlEtapaEspecifica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Etapa específica", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 11));
+        txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         txtDescripcion.setLineWrap(true);
         txtDescripcion.setWrapStyleWord(true);
         jScrollPane4.setViewportView(txtDescripcion);
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel15.setText("Descripción:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -532,7 +508,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel15)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addContainerGap())
             .addComponent(jScrollPane4)
         );
         jPanel2Layout.setVerticalGroup(
@@ -540,7 +516,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
+                .addComponent(jScrollPane4))
         );
 
         btnCargarCargo.setText("+");
@@ -550,10 +526,10 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         });
 
-        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel21.setText("Duración Etapa:");
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel14.setText("Cargo:");
 
         btnCargarTipoMaquina.setText("+");
@@ -563,10 +539,10 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         });
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel13.setText("Horas Hombre:");
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel17.setText("Nro de orden:");
 
         txtOrden.setEditable(false);
@@ -578,10 +554,10 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         });
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel16.setText("Tipo etapa:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Tipo máquina:");
 
         jLabel5.setText("min.");
@@ -681,7 +657,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Materiales necesarios:");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -691,7 +667,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnEliminarMaterial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -710,7 +686,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminarMaterial)
                         .addContainerGap())
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)))
         );
 
         btnCancelarEtapa.setText("Cancelar etapa");
@@ -751,7 +727,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Herramientas necesarias:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -761,7 +737,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnEliminarHerramienta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -780,7 +756,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminarHerramienta)
                         .addContainerGap())
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout pnlEtapaEspecificaLayout = new javax.swing.GroupLayout(pnlEtapaEspecifica);
@@ -822,10 +798,10 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
         pnlProducto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Producto:");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("Tipo producto:");
 
         cmbTipoProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -853,17 +829,15 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(308, 308, 308))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlProductoLayout.setVerticalGroup(
             pnlProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlProductoLayout.createSequentialGroup()
-                .addGroup(pnlProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(cmbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(cmbProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnlProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel6)
+                .addComponent(cmbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1)
+                .addComponent(cmbProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         btnAceptar.setText("Aceptar");
@@ -879,8 +853,6 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
-
-        pnlContenedor.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         pnlEtapas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Etapas de producción del producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
@@ -933,77 +905,37 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         pnlEtapas.setLayout(pnlEtapasLayout);
         pnlEtapasLayout.setHorizontalGroup(
             pnlEtapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlEtapasLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEtapasLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(pnlEtapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlEtapasLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnModificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlEtapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnBajar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSubir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(pnlEtapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBajar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlEtapasLayout.setVerticalGroup(
             pnlEtapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEtapasLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(pnlEtapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlEtapasLayout.createSequentialGroup()
-                        .addGroup(pnlEtapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlEtapasLayout.createSequentialGroup()
-                                .addComponent(btnNuevo)
-                                .addGap(6, 6, 6)
-                                .addComponent(btnModificar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEliminar))
-                            .addGroup(pnlEtapasLayout.createSequentialGroup()
-                                .addComponent(btnSubir)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnBajar)))
-                        .addContainerGap(33, Short.MAX_VALUE))))
-        );
-
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Materiales", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
-
-        tbComposicion.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nro Etapa", "Material", "Cantidad", "Unidad"
-            }
-        ));
-        jScrollPane6.setViewportView(tbComposicion);
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout pnlContenedorLayout = new javax.swing.GroupLayout(pnlContenedor);
-        pnlContenedor.setLayout(pnlContenedorLayout);
-        pnlContenedorLayout.setHorizontalGroup(
-            pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlContenedorLayout.createSequentialGroup()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlEtapas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pnlContenedorLayout.setVerticalGroup(
-            pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlEtapas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSubir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBajar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlEtapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNuevo)
+                    .addComponent(btnModificar)
+                    .addComponent(btnEliminar)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1013,13 +945,14 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnlEtapas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlEtapaEspecifica, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 949, Short.MAX_VALUE)
+                    .addComponent(pnlProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnAceptar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCancelar))
-                    .addComponent(pnlContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnCancelar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -1028,7 +961,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(pnlProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlEtapas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlEtapaEspecifica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1080,12 +1013,10 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
         if (cmbProducto.getSelectedIndex() != -1) {
             tmEtapaEspecifica.setDatos(null);
-            tmComposicion.setDatos(null);
             limpiarEtapa();
             gestor.setProducto((Producto) cmbProducto.getSelectedItem());
         } else {
             tmEtapaEspecifica.setDatos(null);
-            tmComposicion.setDatos(null);           
             limpiarEtapa();
         }
 
@@ -1178,6 +1109,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
         for (DetalleEtapaProduccion dep : tmHerramientas.getDatos()) {
             etapa.addDetalleEtapaProduccion(dep);
+            
         }
 
 
@@ -1218,7 +1150,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         // TODO add your handling code here:
         if(cmbMaterial.getItemCount()<=0)
         {
-            Mensajes.mensajeErrorGenerico("No hay ningun mateterial cargado en el sistema");
+            Mensajes.mensajeErrorGenerico("No hay ningun material cargado en el sistema");
             return;
         }
         tmMateriales.add(new DetalleEtapaProduccion());
@@ -1330,17 +1262,13 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JPanel pnlContenedor;
     private javax.swing.JPanel pnlEtapaEspecifica;
     private javax.swing.JPanel pnlEtapas;
     private javax.swing.JPanel pnlProducto;
-    private javax.swing.JTable tbComposicion;
     private javax.swing.JTable tbEtapas;
     private javax.swing.JTable tbHerramientas;
     private javax.swing.JTable tbMaterial;
