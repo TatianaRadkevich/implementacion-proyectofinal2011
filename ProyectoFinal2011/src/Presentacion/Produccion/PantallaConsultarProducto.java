@@ -104,7 +104,7 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
             }
         });
 
-        tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tabla_producto.setFont(new java.awt.Font("Tahoma", 1, 11));
         tabla_producto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},

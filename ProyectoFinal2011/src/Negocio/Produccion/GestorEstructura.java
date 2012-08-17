@@ -92,7 +92,7 @@ public class GestorEstructura {
 
     public void ejecutarCU(ArrayList<EtapaProduccionEspecifica> e) throws ExceptionGestor {
         producto.setEtapasProduccionEspecificas(e);
-
+        
         if (grabar == true) {
             ProductoBD.guardar(producto);
         }

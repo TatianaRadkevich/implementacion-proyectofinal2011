@@ -8,6 +8,7 @@ package Negocio.Produccion;
 import BaseDeDatos.Produccion.EtapaProduccionBD;
 import Presentacion.Produccion.PantallaABMEtapaProduccion;
 import java.awt.Dialog;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,9 +30,15 @@ public class GestorEtapaProduccion {
     public static List<EtapaProduccion> listarTiposProductoAlta(){
         return EtapaProduccionBD.listarEtapaProduccionAlta();
     }
+
     public static List<EtapaProduccion> listarTipoProducto(){
         return EtapaProduccionBD.listarEtapaProduccion();
     }
+
+    public static List<EtapaProduccion> listarEtapasDeProduccion(boolean vigentes, boolean dadosDeBaja){
+        return EtapaProduccionBD.listarEtapasProduccion(vigentes, dadosDeBaja);
+    }
+
     public EtapaProduccion guardar(EtapaProduccion etapaProduccion){
         return EtapaProduccionBD.guardar(etapaProduccion);
     }

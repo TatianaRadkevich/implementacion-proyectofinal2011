@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
@@ -30,7 +30,7 @@
                   <Component id="pnlEtapaEspecifica" alignment="0" max="32767" attributes="1"/>
                   <Component id="pnlProducto" alignment="1" max="32767" attributes="1"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="575" max="32767" attributes="0"/>
                       <Component id="btnAceptar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
@@ -129,7 +129,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="38" max="32767" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane4" alignment="0" max="32767" attributes="1"/>
               </Group>
@@ -139,7 +139,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane4" max="32767" attributes="0"/>
+                      <Component id="jScrollPane4" pref="168" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -626,7 +626,7 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="cmbProducto" min="-2" pref="143" max="-2" attributes="1"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="253" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -714,14 +714,14 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="425" max="32767" attributes="0"/>
                           <Component id="btnNuevo" min="-2" pref="75" max="-2" attributes="1"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnModificar" min="-2" max="-2" attributes="1"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnEliminar" min="-2" pref="75" max="-2" attributes="1"/>
                       </Group>
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="670" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -778,7 +778,9 @@
         </Container>
         <Component class="javax.swing.JButton" name="btnSubir">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Subir"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/gui/up_green.png"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubirActionPerformed"/>
@@ -786,7 +788,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnBajar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Bajar"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/gui/down_green.png"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBajarActionPerformed"/>
