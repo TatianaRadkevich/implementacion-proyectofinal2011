@@ -136,7 +136,7 @@ public class FormaPago implements java.io.Serializable {
     public enum Tipo{Efectivo,Cheque;}
 
     public static FormaPago getFormaPago(Tipo t) {
-        String HQL = String.format("FROM FormaPago as fp WHERE LOWER(ep.nombre) = LOWER('%s')", t.name());
+        String HQL = String.format("FROM FormaPago as fp WHERE LOWER(fp.nombre) = LOWER('%s')", t.name());
         List<FormaPago> lst = HibernateUtil.ejecutarConsulta(HQL);
         if (lst.isEmpty()) {
             HibernateUtil.guardarObjeto(new FormaPago(t.name()));
