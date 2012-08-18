@@ -2,7 +2,6 @@
 
 /*SCRIPT DE CREACION RAMATY*/
 
-
 CREATE TABLE T_ALMACENAMIENTOS_PRODUCTO_TERMINADO (
        ID_ALMACENAMIENTO_PRODUCTO_TERMINADO numeric(8) IDENTITY,
        FEC_HORA_ALMACENAMIENTO datetime NOT NULL,
@@ -250,7 +249,7 @@ CREATE TABLE T_DETALLES_PEDIDO (
        ID_DETALLE_PEDIDO    numeric(8) IDENTITY,
        CANTIDAD             numeric(5) NOT NULL,
        PRECIO               numeric(6,2) NOT NULL,
-       ID_PEDIDO            numeric(8) NOT NULL,
+       ID_PEDIDO            numeric(8) NULL,
        ID_PRODUCTO          numeric(5) NOT NULL,
        ID_EDETALLE_PEDIDO   numeric(2) NOT NULL
 )
