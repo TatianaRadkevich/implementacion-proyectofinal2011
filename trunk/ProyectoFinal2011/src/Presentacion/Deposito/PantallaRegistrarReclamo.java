@@ -73,6 +73,7 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
         txtMotivo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Registrar Reclamo");
 
         lblTipoMoH3.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblTipoMoH3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -102,21 +103,21 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
 
         txtCodReclamo.setEditable(false);
 
-        lblTipoMoH2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblTipoMoH2.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblTipoMoH2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTipoMoH2.setText("Código Reclamo:");
 
-        lblTipoMoH1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblTipoMoH1.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblTipoMoH1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTipoMoH1.setText("Descripción:");
 
-        lblTipoMoH4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblTipoMoH4.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblTipoMoH4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTipoMoH4.setText("Nro Orden de Compra:");
 
         txtNroOrden.setEditable(false);
 
-        lblTipoMoH5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblTipoMoH5.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblTipoMoH5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTipoMoH5.setText("Motivo:");
 

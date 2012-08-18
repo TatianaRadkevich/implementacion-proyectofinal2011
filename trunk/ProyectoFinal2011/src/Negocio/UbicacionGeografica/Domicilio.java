@@ -215,7 +215,7 @@ public class Domicilio implements java.io.Serializable {
         salida+=(this.getTBarrios()==null)?"Bº ":this.getTBarrios().getNombre()+", ";
         salida+="calle "+this.getCalle()+" ";
         salida+=(this.getNumero()==null)?"":"Nro. "+this.getNumero().toString()+" ";
-        salida+=(this.getDepto().isEmpty()||this.getPiso()==0)?"Piso ":this.getPiso()+" Depto. "+this.getDepto();
+        salida+=(this.depto==null||this.getDepto().isEmpty()||this.getPiso()==0)?"":"Piso "+this.getPiso()+" Depto. "+this.getDepto();
         return salida;
     }
 
