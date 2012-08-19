@@ -138,7 +138,7 @@ public class Principal extends javax.swing.JFrame {
 
         pnlMenu.setLayout(new java.awt.GridLayout(1, 0));
 
-        btnAdministracion.setText("Administracion");
+        btnAdministracion.setText("Administración");
         btnAdministracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdministracionActionPerformed(evt);
@@ -162,7 +162,7 @@ public class Principal extends javax.swing.JFrame {
         });
         pnlMenu.add(btnProduccion);
 
-        btnVenta.setText("Venta");
+        btnVenta.setText("Ventas");
         btnVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVentaActionPerformed(evt);
