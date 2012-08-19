@@ -208,7 +208,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnTipoDocumento">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Tipo documento"/>
+                <Property name="text" type="java.lang.String" value="Tipo de Documento"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTipoDocumentoActionPerformed"/>
@@ -319,7 +319,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnFactura">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Facturas"/>
+                <Property name="text" type="java.lang.String" value="Factura"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFacturaActionPerformed"/>
@@ -382,7 +382,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnOrdenCompra">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Orden Compra"/>
+                <Property name="text" type="java.lang.String" value="Orden de Compra"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOrdenCompraActionPerformed"/>
@@ -508,7 +508,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnTipoProducto">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Tipo producto"/>
+                <Property name="text" type="java.lang.String" value="Tipo de Producto"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTipoProductoActionPerformed"/>
@@ -516,7 +516,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnMaquina">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Maquina"/>
+                <Property name="text" type="java.lang.String" value="M&#xe1;quina"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMaquinaActionPerformed"/>
@@ -524,7 +524,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Estructura de producto"/>
+                <Property name="text" type="java.lang.String" value="Estructura de Producto"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
@@ -572,7 +572,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnTipoMaquina">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Tipo M&#xe1;quina"/>
+                <Property name="text" type="java.lang.String" value="Tipo de M&#xe1;quina"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTipoMaquinaActionPerformed"/>
@@ -580,7 +580,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnTipoHerramienta">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Tipo Herramienta"/>
+                <Property name="text" type="java.lang.String" value="Tipo de Herramienta"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTipoHerramientaActionPerformed"/>

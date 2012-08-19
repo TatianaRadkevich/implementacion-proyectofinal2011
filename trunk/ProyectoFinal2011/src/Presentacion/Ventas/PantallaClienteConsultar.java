@@ -241,7 +241,7 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
                     .addComponent(txtApellido)
                     .addComponent(txtRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCUIT, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -295,7 +295,7 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
             }
         });
 
-        btnEliminar.setText("Cancelar");
+        btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -316,7 +316,7 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
             .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
             .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnVer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
         );
         pnlBotonesLayout.setVerticalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -455,7 +455,7 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
                 if (ped.getEstadoPedido().equals(EstadoPedidoBD.getEstadoPagado()) == false) {
                     if (ped.getEstadoPedido().equals(EstadoPedidoBD.getEstadoCancelado()) == false) {
                         throw new NegocioException(
-                                "No se puede eliminar el cliente selecsionado aun tiene pedidos vigentes sin finalizar");
+                                "No se puede eliminar el cliente seleccionado aún tiene pedidos vigentes sin finalizar.");
                     }
                 }
             }
