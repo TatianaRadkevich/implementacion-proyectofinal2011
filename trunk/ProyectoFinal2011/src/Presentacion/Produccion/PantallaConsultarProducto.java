@@ -35,13 +35,15 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
     /** Creates new form PantallaConsultarProducto */
     public PantallaConsultarProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-
+        
         initComponents();
         this.cargarTipoProductos();
         tabla_producto.setModel(new ModelerProducto(new ArrayList<Producto>(0)));
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
         this.activarBotones(true, false, false, false, false);
-        this.iniciarBusqueda();     
+        this.iniciarBusqueda();
+        this.btnConsultar.setVisible(false);
+        
     }
 
 
@@ -450,6 +452,6 @@ public class PantallaConsultarProducto extends javax.swing.JDialog {
           btnModificar.setEnabled(modificar);
           btnBaja.setEnabled(eliminar);
           btnReactivar.setEnabled(reactivar);
-          btnConsultar.setEnabled(consultar);
+         // btnConsultar.setEnabled(consultar);
       }
 }
