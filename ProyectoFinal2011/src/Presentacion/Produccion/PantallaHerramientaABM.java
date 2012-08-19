@@ -155,7 +155,7 @@ public class PantallaHerramientaABM extends javax.swing.JDialog {
         txtMotivoBaja = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Nueva Heramienta");
+        setTitle("Administrar Heramienta");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Heramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 

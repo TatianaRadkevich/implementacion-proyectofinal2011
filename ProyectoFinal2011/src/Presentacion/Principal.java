@@ -213,7 +213,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnTipoDocumento.setText("Tipo documento");
+        btnTipoDocumento.setText("Tipo de Documento");
         btnTipoDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTipoDocumentoActionPerformed(evt);
@@ -323,7 +323,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnFactura.setText("Facturas");
+        btnFactura.setText("Factura");
         btnFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFacturaActionPerformed(evt);
@@ -369,7 +369,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnOrdenCompra.setText("Orden Compra");
+        btnOrdenCompra.setText("Orden de Compra");
         btnOrdenCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOrdenCompraActionPerformed(evt);
@@ -422,21 +422,21 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnTipoProducto.setText("Tipo producto");
+        btnTipoProducto.setText("Tipo de Producto");
         btnTipoProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTipoProductoActionPerformed(evt);
             }
         });
 
-        btnMaquina.setText("Maquina");
+        btnMaquina.setText("Máquina");
         btnMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMaquinaActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Estructura de producto");
+        jButton1.setText("Estructura de Producto");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -478,14 +478,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnTipoMaquina.setText("Tipo Máquina");
+        btnTipoMaquina.setText("Tipo de Máquina");
         btnTipoMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTipoMaquinaActionPerformed(evt);
             }
         });
 
-        btnTipoHerramienta.setText("Tipo Herramienta");
+        btnTipoHerramienta.setText("Tipo de Herramienta");
         btnTipoHerramienta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTipoHerramientaActionPerformed(evt);

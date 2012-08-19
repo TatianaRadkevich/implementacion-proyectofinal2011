@@ -87,7 +87,7 @@
                       <Component id="txtRazonSocial" alignment="0" min="-2" pref="170" max="-2" attributes="1"/>
                       <Component id="txtCUIT" alignment="0" min="-2" pref="79" max="-2" attributes="1"/>
                   </Group>
-                  <EmptySpace pref="56" max="32767" attributes="0"/>
+                  <EmptySpace pref="67" max="32767" attributes="0"/>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -281,7 +281,7 @@
                   <Component id="btnNuevo" alignment="0" pref="75" max="32767" attributes="1"/>
                   <Component id="btnModificar" alignment="0" max="32767" attributes="1"/>
                   <Component id="btnVer" alignment="1" pref="75" max="32767" attributes="1"/>
-                  <Component id="btnEliminar" alignment="1" max="32767" attributes="1"/>
+                  <Component id="btnEliminar" alignment="1" pref="75" max="32767" attributes="1"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -318,7 +318,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnEliminar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cancelar"/>
+                <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarActionPerformed"/>
