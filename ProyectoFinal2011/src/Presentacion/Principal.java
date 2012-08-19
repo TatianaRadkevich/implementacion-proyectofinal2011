@@ -191,7 +191,7 @@ public class Principal extends javax.swing.JFrame {
         pnlContenerdor.setLayout(new java.awt.CardLayout());
 
         txtAdm.setEditable(false);
-        txtAdm.setText("Administracion");
+        txtAdm.setText("Administración");
         txtAdm.setFocusable(false);
         txtAdm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
