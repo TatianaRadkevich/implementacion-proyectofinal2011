@@ -275,7 +275,7 @@ CREATE TABLE T_DETALLES_PLAN (
        OBSERVACIONES        varchar(200) NULL,
        MOTIVO_CANCELACION   varchar(200) NULL,
        FEC_HORA_CANCELACION datetime NULL,
-       ID_ORDEN_TRABAJO     numeric(10) NOT NULL,
+       ID_ORDEN_TRABAJO     numeric(10) NULL,
        ID_DETALLE_PEDIDO    numeric(8) NOT NULL,
        ID_MAQUINA_PARTICULAR numeric(3) NULL,
        ID_PEDIDO            numeric(8) NULL,
