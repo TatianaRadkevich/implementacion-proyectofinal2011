@@ -20,11 +20,14 @@ import BaseDeDatos.Ventas.EstadoPedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.Empleado;
 import Negocio.Compras.Material;
+import Negocio.Exceptiones.NegocioException;
 import Negocio.Produccion.DetalleEtapaProduccion;
 import Negocio.Produccion.DetallePlanProduccion;
+import Negocio.Produccion.DetalleProducto;
 import Negocio.Produccion.EstadoDetallePlan;
 import Negocio.Produccion.EtapaProduccionEspecifica;
 import Negocio.Produccion.MaqHerrPartXDetPlan;
+import Negocio.Produccion.MaquinaParticular;
 import Negocio.Produccion.PlanProduccion;
 import Negocio.Produccion.PlanProduccionId;
 import Negocio.Ventas.DetallePedido;
@@ -37,6 +40,8 @@ import java.awt.Dialog;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -268,9 +273,24 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
 //        calFechaProduccion.setMaxSelectableDate(plan.getFecHoraPrevistaFin());
         calFechaProduccion.repaint();
         txtObservaciones.setText(plan.getObservaciones());
+
+//        ArrayList<MaterialInfo> matInf=new  ArrayList<MaterialInfo>();
+//        for(DetallePedido dp:plan.getPedido().getDetallePedido())
+//        {
+//            for(DetalleProducto detProd: dp.getProducto().getTDetallesProductos())
+//            {
+//                matInf.add(new MaterialInfo(detProd.getTMateriales(),detProd.getLongitud()*dp.getCantidad()));
+//            }
+//        }
+//        tmMaterial.setDatos(matInf);
+
     }
 
-    private PlanProduccion generarPlan(Pedido p) {
+    private PlanProduccion generarPlan(Pedido p) throws NegocioException {
+        List<Empleado> operarios = EmpleadoBD.getEmpleadosVigentes();
+        List<MaquinaParticular> maquinas = MaquinaBD.getMaquinas(null, true, false);
+        Date fecha;
+
         PlanProduccion plan = new PlanProduccion();
         plan.setId(new PlanProduccionId(1, p.getIdPedido()));
         plan.setFecGeneracion(Utilidades.getFechaActual());
@@ -279,13 +299,25 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
         plan.setFecHoraPrevistaInicio(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 1, 0, 0));
         plan.setPedido(p);
         p.setEstadoPedido(EstadoPedidoBD.getEstadoPlanificado());
-        Date fecha = plan.getFecHoraPrevistaInicio();
-        List<Empleado> operarios = EmpleadoBD.getEmpleadosVigentes();
+        fecha = plan.getFecHoraPrevistaInicio();
 
-        int empIndex = 0;
         for (DetallePedido dp : p.getDetallePedido()) {
+            if (dp.getProducto().getEtapasProduccionEspecificas().isEmpty()) {
+                throw new NegocioException("El producto " + dp.getProducto().toString() + " no tiene asociado ninguna estapa productiva");
+            }
+
             for (EtapaProduccionEspecifica e : dp.getProducto().getEtapasProduccionEspecificas()) {
-                int duracion = 0;
+
+                operarios = EmpleadoBD.getEmpleados(e.getCargo(), true, false);
+                if (operarios.isEmpty()) {
+                    throw new NegocioException("No hay registrado ningun empleado con un cargo de " + e.getCargo().getNombre());
+                }
+
+                maquinas = MaquinaBD.getMaquinas(e.getTTmaquina(), true, false);
+                if (maquinas.isEmpty()) {
+                    throw new NegocioException("No hay registrado ninguna maquina del tipo " + e.getTTmaquina().getNombre());
+                }
+
                 DetallePlanProduccion detPlan = new DetallePlanProduccion();
                 plan.addDetallePlan(detPlan);
                 detPlan.setPlanProduccion(plan);
@@ -293,21 +325,16 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
                 detPlan.setTEdetallePlan(EstadoDetallePlanBD.getEstadoPendiente());
                 detPlan.setTEtapasProduccionEspecifica(e);
 
-                if (empIndex >= operarios.size()) {
-                    empIndex = 0;
-                }
-
-                detPlan.setTEmpleados(EmpleadoBD.getEmpleadosVigentes().get(empIndex));
-                empIndex++;
+                detPlan.setTEmpleados(EmpleadoBD.getEmpleadosVigentes().get((int) Math.floor(Math.random() * operarios.size())));
 
                 detPlan.setCantidad(dp.getCantidad());
                 detPlan.setFecHoraPrevistaInicio(fecha);
 
-                duracion = e.getDuracion() * dp.getCantidad();//minutos
+                int duracion = e.getDuracion() * dp.getCantidad();//minutos
                 fecha = Utilidades.agregarTiempoFecha(fecha, duracion, 0, 0, 0, 0);
 
                 detPlan.setFecHoraPrevistaFin(fecha);
-                detPlan.setMaquinaParticular(MaquinaBD.getMaquinas(e.getTTmaquina(), true, false).get(0));
+                detPlan.setMaquinaParticular(maquinas.get((int) Math.floor(Math.random() * maquinas.size())));
                 detPlan.setTDetallesPedido(dp);
             }
         }
@@ -323,7 +350,7 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
         cargarDatosPlan(planActual);
     }
 
-    private void setPedido(Pedido p) {
+    private void setPedido(Pedido p) throws NegocioException {
         this.pedidoActual = p;
         cargarDatosPedidos(p);
         this.planActual = generarPlan(p);
@@ -1084,13 +1111,21 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
             return;
         }
 
-        pnlPedidoBuscar.setVisible(false);
-        pnlPedidoInfo.setVisible(true);
-        btnPedCancelar.setEnabled(true);
-        Utilidades.habilitarPanel(pnlPlanPrincipal, true);
-        dtcPlanFecInicioPrevista.setEnabled(false);
+        try {
 
-        setPedido(tmPedido.getSeletedObject());
+            setPedido(tmPedido.getSeletedObject());
+
+            pnlPedidoBuscar.setVisible(false);
+            pnlPedidoInfo.setVisible(true);
+            btnPedCancelar.setEnabled(true);
+            Utilidades.habilitarPanel(pnlPlanPrincipal, true);
+            dtcPlanFecInicioPrevista.setEnabled(false);
+            calFechaProduccion.updateUI();
+
+
+        } catch (NegocioException ne) {
+            Mensajes.mensajeErrorGenerico(ne.getMessage());
+        }
 
     }//GEN-LAST:event_btnPedidoAceptarActionPerformed
 
@@ -1133,8 +1168,7 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
 
     private void cmbPrioridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPrioridadActionPerformed
         // TODO add your handling code here:
-        if(cmbPrioridad.getSelectedIndex()!=-1)
-        {
+        if (cmbPrioridad.getSelectedIndex() != -1) {
             pedidoActual.setPrioridad((byte) cmbPrioridad.getSelectedIndex());
             txtPedPrioridad.setText(pedidoActual.getPrioridadTexto());
         }
@@ -1233,6 +1267,11 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
 
         private Material material;
         private int cantidad;
+
+        public MaterialInfo(Material material, int cantidad) {
+            this.material = material;
+            this.cantidad = cantidad;
+        }
 
         public int getCantidadNecesaria() {
             return cantidad;
