@@ -140,7 +140,7 @@ public class OrdenTrabajo  implements java.io.Serializable {
     public PlanProduccion obtenerPlanProduccion(){
 
         DetallePlanProduccion detalle=this.getTDetallesPlans().get(0);
-        return detalle.getTPlanesProduccion();
+        return detalle.getPlanProduccion();
     }
   
 

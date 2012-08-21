@@ -130,15 +130,13 @@ public class PedidoBD {
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 
-    public static List<Pedido> getPedidos(EstadoPedido estado)
-    {
+    public static List<Pedido> getPedidos(EstadoPedido estado) {
 
         String HQL = "FROM Pedido as p "
-                + "WHERE p.TEpedido.idEpedido = "+estado.getIdEstadoPedido();
+                + "WHERE p.TEpedido.idEpedido = " + estado.getIdEstadoPedido();
 
         return HibernateUtil.ejecutarConsulta(HQL);
     }
-
 
     public static List<Pedido> getPedidos(
             String RazonSocial, TipoPedido tp, int prioridad, boolean vigentes, boolean cancelados) {
@@ -170,10 +168,23 @@ public class PedidoBD {
         return HibernateUtil.ejecutarConsulta(HQL);
     }
 
+    public static List<Pedido> getPedidos(
+            String nro,String CUIT, String RazonSocial, Integer prioridad, EstadoPedido estado) {
+        String HQL =
+                "FROM Pedido as p WHERE "
+                + " LOWER(p.idPedido) like  LOWER('"+nro+"%')"
+                + " AND LOWER(p.TClientes.razonSocial) like  LOWER('"+RazonSocial+"%')"
+                + " AND LOWER(p.TClientes.cuit) like  LOWER('"+CUIT+"%')"
+                + ((prioridad==null)?"":" AND p.prioridad = "+prioridad)
+                + " AND p.TEpedido.idEpedido = "+estado.getIdEstadoPedido();
+
+        return HibernateUtil.ejecutarConsulta(HQL);
+    }
+
     public static List<Pedido> getPedidosPendientesPago() {
         return HibernateUtil.ejecutarConsulta("FROM Pedido as p WHERE LOWER(p.TEpedido.nombre) like  LOWER('Pendiente de pago')");
     }
-    
+
     public static List<Pedido> getPedidosTerminadoProduccion() {
         return HibernateUtil.ejecutarConsulta("FROM Pedido as p WHERE ID_EPEDIDO in(6,7)");
     }
