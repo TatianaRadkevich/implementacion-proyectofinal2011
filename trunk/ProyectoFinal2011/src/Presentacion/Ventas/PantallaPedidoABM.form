@@ -102,7 +102,7 @@
                                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cmbPrioridad" pref="247" max="32767" attributes="2"/>
+                                  <Component id="cmbPrioridad" pref="252" max="32767" attributes="2"/>
                                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -110,15 +110,15 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cmbTipoPedido" pref="247" max="32767" attributes="2"/>
+                                  <Component id="cmbTipoPedido" pref="252" max="32767" attributes="2"/>
                                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                                   <Component id="labelFechaEstimada" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="dtcFechaNecesidad" pref="168" max="32767" attributes="2"/>
-                              <Component id="txtFechaEstimada" pref="168" max="32767" attributes="0"/>
+                              <Component id="dtcFechaNecesidad" pref="174" max="32767" attributes="2"/>
+                              <Component id="txtFechaEstimada" pref="174" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -475,15 +475,15 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtNroPedido" pref="62" max="32767" attributes="0"/>
+                      <Component id="txtNroPedido" pref="67" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtFecha" pref="129" max="32767" attributes="0"/>
+                      <Component id="txtFecha" pref="132" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtEstado" pref="132" max="32767" attributes="0"/>
+                      <Component id="txtEstado" pref="135" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>

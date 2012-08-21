@@ -28,12 +28,12 @@ import javax.swing.DefaultComboBoxModel;
  *
  * @author Ivan
  */
-public class PantallaConsultarPlanificarPedido extends javax.swing.JDialog {
+public class PantallaPlanConsultar extends javax.swing.JDialog {
 
     private TablaManager<Pedido> tmPedido;
 
     /** Creates new form PantallaConsultarPedido */
-    public PantallaConsultarPlanificarPedido(java.awt.Frame parent, boolean modal) {
+    public PantallaPlanConsultar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         tmPedido = new TablaManager<Pedido>(tbPedidos) {
@@ -332,7 +332,7 @@ public class PantallaConsultarPlanificarPedido extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                PantallaConsultarPlanificarPedido dialog = new PantallaConsultarPlanificarPedido(new javax.swing.JFrame(), true);
+                PantallaPlanConsultar dialog = new PantallaPlanConsultar(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     public void windowClosing(java.awt.event.WindowEvent e) {

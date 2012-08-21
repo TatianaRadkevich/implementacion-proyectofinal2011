@@ -5,6 +5,7 @@ import Negocio.Administracion.Empleado;
 import Negocio.Compras.Material;
 import Negocio.Deposito.Faltante;
 import Negocio.Ventas.DetallePedido;
+import Negocio.Ventas.Pedido;
 import Presentacion.Utilidades;
 import java.util.Date;
 import java.util.HashSet;
@@ -51,6 +52,13 @@ public class DetallePlanProduccion implements java.io.Serializable {
     @JoinColumn(name = "VERSION", referencedColumnName = "VERSION", insertable = false, updatable = false),
     @JoinColumn(name = "ID_PEDIDO", referencedColumnName = "ID_PEDIDO", insertable = false, updatable = false)})
     private PlanProduccion TPlanesProduccion;
+        //___________________________________________________________________________________________//
+    @ManyToOne(fetch = FetchType.LAZY)
+     @JoinColumn(name = "ID_PEDIDO", nullable = false)
+    private Pedido pedido;
+            //___________________________________________________________________________________________//
+    @Column(name = "VERSION", nullable = false)
+    private Integer version;
     //___________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_DETALLE_PEDIDO", nullable = false)
@@ -157,12 +165,22 @@ public class DetallePlanProduccion implements java.io.Serializable {
         this.TEmpleados = TEmpleados;
     }
 
-    public PlanProduccion getTPlanesProduccion() {
+    public PlanProduccion getPlanProduccion() {
         return this.TPlanesProduccion;
     }
 
-    public void setTPlanesProduccion(PlanProduccion TPlanesProduccion) {
-        this.TPlanesProduccion = TPlanesProduccion;
+    public void setPlanProduccion(PlanProduccion plan) {
+        this.TPlanesProduccion = plan;
+        this.pedido=plan.getPedido();
+        this.version=plan.getVersion();
+    }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public Integer getVersion() {
+        return version;
     }
 
     public DetallePedido getTDetallesPedido() {
@@ -282,6 +300,11 @@ public class DetallePlanProduccion implements java.io.Serializable {
                 this.TMaqHerrPartXDetPlans.remove(aux);
             }
         } else {
+            if (aux == null) {
+                aux=new MaqHerrPartXDetPlan();
+                this.TMaqHerrPartXDetPlans.add(aux);
+                aux.setTDetallesPlan(this);
+            }
             aux.setTMaquinasParticular(mq);
         }
     }

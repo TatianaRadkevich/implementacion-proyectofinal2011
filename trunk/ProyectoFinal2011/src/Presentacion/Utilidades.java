@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -325,10 +326,11 @@ public class Utilidades {
         return obj.trim();
     }
 
-    public static void validarNumero(Integer num,Integer min, Integer max) {
+    public static void validarNumero(Integer num, Integer min, Integer max) {
         validarNumero(num, min, max, false);
     }
-    public static void validarNumero(Integer num,Integer min, Integer max, boolean permiteNull) {
+
+    public static void validarNumero(Integer num, Integer min, Integer max, boolean permiteNull) {
         if (num != null) {
 
 
@@ -345,8 +347,7 @@ public class Utilidades {
 
             }
 
-        }
-        else if (!permiteNull) {
+        } else if (!permiteNull) {
             throw new NegocioException("El valor ingresado no debe ser nulo");
         }
     }
@@ -429,6 +430,10 @@ public class Utilidades {
 
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Otros">
+    public static void comboCargar(JComboBox combo, Object[] array) {
+        comboCargar(combo, Arrays.asList(array));
+    }
+
     public static void comboCargar(JComboBox combo, Collection l) {
         String msg = "Cargue un item";
         String nullItem = "<Vacio>";

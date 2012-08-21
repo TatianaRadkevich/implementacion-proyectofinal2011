@@ -236,6 +236,14 @@ public class MaquinaParticular  implements java.io.Serializable {
         return true;
     }
 
+    @Override
+    public String toString() {
+       String salida="";
+        salida+=this.TTmaquina.getNombre();
+        salida+="-"+this.getModelo();
+        salida+="[cod. "+this.getCodigo()+"]";
+        return salida;
+    }
 }
 
 

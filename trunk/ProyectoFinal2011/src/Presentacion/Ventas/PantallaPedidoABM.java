@@ -74,24 +74,28 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         zlo.add("cliente", false, new ZLTextField(txtFechaBaja));
 
         //zlo.add("prioridad", new ZLComboBox(cmbPrioridad));
-        
+
         cmbPrioridad.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                try{
+                try {
                     Utilidades.componenteCorrecto(cmbPrioridad);
-                gestor.getPedido().setPrioridad((byte) cmbPrioridad.getSelectedIndex());
-                }catch(NegocioException ne){Utilidades.componenteError(cmbPrioridad, ne.getMessage());}
+                    gestor.getPedido().setPrioridad((byte) cmbPrioridad.getSelectedIndex());
+                } catch (NegocioException ne) {
+                    Utilidades.componenteError(cmbPrioridad, ne.getMessage());
+                }
             }
         });
         cmbPrioridad.addFocusListener(new FocusAdapter() {
 
             @Override
             public void focusLost(FocusEvent e) {
-                try{
+                try {
                     Utilidades.componenteCorrecto(cmbPrioridad);
-                gestor.getPedido().setPrioridad((byte) cmbPrioridad.getSelectedIndex());
-                }catch(NegocioException ne){Utilidades.componenteError(cmbPrioridad, ne.getMessage());}
+                    gestor.getPedido().setPrioridad((byte) cmbPrioridad.getSelectedIndex());
+                } catch (NegocioException ne) {
+                    Utilidades.componenteError(cmbPrioridad, ne.getMessage());
+                }
             }
         });
         zlo.add("tipo", new ZLComboBox(cmbTipoPedido));
@@ -788,8 +792,8 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
 
         limpiarDetalle();
         pnlDetalleCarga.setVisible(false);
-           btnDetalleAgregar.setEnabled(true);
-            btnDetalleElminar.setEnabled(true);
+        btnDetalleAgregar.setEnabled(true);
+        btnDetalleElminar.setEnabled(true);
 
 }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -912,7 +916,8 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
     }
 
     public static void iniciarVerPedido(Window parent, Pedido p) {
-        GestorPedido gestVer=new GestorPedido(p) {
+        GestorPedido gestVer = new GestorPedido(p) {
+
             @Override
             public void aceptar() {
             }

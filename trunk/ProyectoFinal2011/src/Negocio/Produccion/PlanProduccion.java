@@ -147,6 +147,11 @@ public class PlanProduccion implements java.io.Serializable {
         TPedidos.setPlanProduccion(this);
     }
 
+    public int getVersion()
+    {
+        return this.id.getVersion();
+    }
+
     public Date getFecGeneracion() {
         return this.fecGeneracion;
     }
@@ -271,20 +276,20 @@ public class PlanProduccion implements java.io.Serializable {
     public void setDetallePlan(List<DetallePlanProduccion> detalle) {
         this.TDetallesPlans.clear();
         for (DetallePlanProduccion dt : detalle) {
-            dt.setTPlanesProduccion(this);
+            dt.setPlanProduccion(this);
             this.TDetallesPlans.add(dt);
         }
 
     }
 
     public void addDetallePlan(DetallePlanProduccion detalle) {
-        detalle.setTPlanesProduccion(this);
+        detalle.setPlanProduccion(this);
         this.TDetallesPlans.add(detalle);
 
     }
 
     public void removeDetallePlan(DetallePlanProduccion detalle) {
-        detalle.setTPlanesProduccion(null);
+        detalle.setPlanProduccion(null);
         detalle.getTFaltanteses().clear();
         this.TDetallesPlans.remove(detalle);
 

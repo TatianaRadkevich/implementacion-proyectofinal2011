@@ -90,10 +90,10 @@ public abstract class GestorPedido {
 
     public static List getPrioridades() {
         ArrayList salida = new ArrayList();
-        salida.add("Muy Alta");
-        salida.add("Alta");
-        salida.add("Media");
         salida.add("Baja");
+        salida.add("Media");
+        salida.add("Alta");
+        salida.add("Muy Alta");
         return salida;
     }
 

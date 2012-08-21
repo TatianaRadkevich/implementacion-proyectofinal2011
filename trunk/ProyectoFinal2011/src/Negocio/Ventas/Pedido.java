@@ -1,4 +1,4 @@
-    package Negocio.Ventas;
+package Negocio.Ventas;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
 import BaseDeDatos.Ventas.EstadoDetallePedidoBD;
@@ -9,6 +9,8 @@ import Negocio.Administracion.Factura;
 import Negocio.Exceptiones.NegocioException;
 import Negocio.Produccion.PlanProduccion;
 import Presentacion.Utilidades;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -204,9 +206,25 @@ public class Pedido implements java.io.Serializable {
         return this.prioridad;
     }
 
+    public String getPrioridadTexto() {
+        switch (this.prioridad) {
+            case 0:
+                return "Baja";
+            case 1:
+                return "Media";
+            case 2:
+                return "Alta";
+            case 3:
+                return "Muy Alta";
+            default:
+                return "Valor inválido - " + this.prioridad;
+        }
+    }
+
     public void setPrioridad(byte prioridad) {
-        if(prioridad<0)
+        if (prioridad < 0) {
             throw new NegocioException("Valor incorrecto");
+        }
         this.prioridad = prioridad;
     }
 
@@ -328,7 +346,7 @@ public class Pedido implements java.io.Serializable {
 
         }
 
-        if (mensaje.isEmpty()==false) {
+        if (mensaje.isEmpty() == false) {
             throw new NegocioException(mensaje);
         }
     }
@@ -349,7 +367,7 @@ public class Pedido implements java.io.Serializable {
             mensaje += "Solo los pedidos 'No Autorizados', 'Autorizados/Pendientes' o 'Planificados'"
                     + "pueden ser procesados";
         }
-        if (mensaje.isEmpty()==false) {
+        if (mensaje.isEmpty() == false) {
             throw new NegocioException(mensaje);
         }
     }
@@ -377,5 +395,15 @@ public class Pedido implements java.io.Serializable {
         this.setMotivoBaja(motivoBaja);
         this.setEstadoPedido(EstadoPedidoBD.getEstadoCancelado());
         PedidoBD.modificar(this);
+    }
+
+    public BigDecimal getMontoTotal() {
+
+        float total = 0;
+        for (DetallePedido dp : this.getDetallePedido()) {
+            total += dp.getSubTotal();
+        }
+
+        return new BigDecimal(total, new MathContext(2));
     }
 }

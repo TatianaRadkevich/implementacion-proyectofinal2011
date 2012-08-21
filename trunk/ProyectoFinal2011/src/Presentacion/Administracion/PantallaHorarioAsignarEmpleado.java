@@ -38,28 +38,17 @@ import org.hibernate.Hibernate;
  */
 public class PantallaHorarioAsignarEmpleado extends javax.swing.JDialog {
 
-    private Empleado empleadoSel;
-    private AsignacionesHorario asignacionSel;
     private TablaManager<Empleado> tmEmpleados;
     private TablaManager<AsignacionesHorario> tmAsignaciones;
     private TablaManager<AsignacionesDias> tmHorario;
 
-    private enum Estado {
-
-        Nuevo, Modificar, Ninguno;
-    };
-    private Estado estadoActual;
-
-//    private GestorDiaHoraLaborable gestor=new GestorDiaHoraLaborable();
     /** Creates new form PantallaCalendarioEmpleado */
     public PantallaHorarioAsignarEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         configurarControles();
-        tmEmpleados.setDatos(EmpleadoBD.getEmpleadosVigentes());
-        Utilidades.comboCargar(cmbHorario, Horarios.getAllHorarios());
-        estadoActual = Estado.Ninguno;
-        btnModificar.setVisible(false);
+//        tmEmpleados.setDatos(EmpleadoBD.getEmpleadosVigentes());
+//        Utilidades.comboCargar(cmbHorario, Horarios.getAllHorarios());
 
     }
 
@@ -97,8 +86,6 @@ public class PantallaHorarioAsignarEmpleado extends javax.swing.JDialog {
             }
         });
 
-
-
         tmAsignaciones = new TablaManager<AsignacionesHorario>(tbAsignaciones) {
 
             @Override
@@ -119,7 +106,6 @@ public class PantallaHorarioAsignarEmpleado extends javax.swing.JDialog {
                 return salida;
             }
         };
-
         tmAsignaciones.addSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
@@ -150,27 +136,9 @@ public class PantallaHorarioAsignarEmpleado extends javax.swing.JDialog {
     }
 
     private void setAsignacionHorario(AsignacionesHorario ah) {
-        if (ah == null) {
-            dtcFechaInicio.setDate(null);
-            dtcFechaFin.setDate(null);
-            cmbHorario.setSelectedItem(null);
-            this.asignacionSel = null;
-            //tmHorario.setDatos(new ArrayList<AsignacionesDias>());
-            return;
-        }
-        dtcFechaInicio.setDate(ah.getFecDesde());
-        dtcFechaFin.setDate(ah.getFecHasta());
-        cmbHorario.setSelectedItem(ah.getHorario());
-        this.asignacionSel = ah;
     }
 
     private void setAsignacionHorarioEmpleado(Empleado e) {
-        if (e == null) {
-            return;
-        }
-        tmAsignaciones.setDatos(e.getAsignacionHorariasProximas());
-        empleadoSel = e;
-
     }
 
     /** This method is called from within the constructor to
@@ -482,36 +450,15 @@ public class PantallaHorarioAsignarEmpleado extends javax.swing.JDialog {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
-        this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        setAsignacionHorario(null);
-        Utilidades.habilitarPanel(pnlAsignacionHorario, false);
-      
-        estadoActual = Estado.Ninguno;
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        // TODO add your handling code here:
-
-        ArrayList<AsignacionesHorario> l = this.empleadoSel.getAsignacionHorariasProximas();
-        Date f;
-        if (l.isEmpty() == false) {
-            f = Utilidades.agregarTiempoFecha(l.get(l.size() - 1).getFecHasta(), 1, 0, 0);
-        } else {
-            f = Utilidades.getFechaActual();
-        }
-
-        AsignacionesHorario ah = new AsignacionesHorario();
-        ah.setFecDesde(f);
-
-        setAsignacionHorario(ah);
-        estadoActual = Estado.Nuevo;
-        Utilidades.habilitarPanel(pnlAsignacionHorario, true);
-        dtcFechaInicio.setEnabled(false);
-        //Utilidades.habilitarPanel(pnlAdministrarHorario, false);
+        // TODO add your handling code here:  
 
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -519,26 +466,7 @@ public class PantallaHorarioAsignarEmpleado extends javax.swing.JDialog {
         // TODO add your handling code here:
 
         try {
-            this.asignacionSel.setFecDesde(dtcFechaInicio.getDate());
-            this.asignacionSel.setFecHasta(dtcFechaFin.getDate());
-            this.asignacionSel.setTHorarios((Horarios) cmbHorario.getSelectedItem());
 
-            if (estadoActual == Estado.Nuevo) {
-                this.empleadoSel.addAsignacionHorario(this.asignacionSel);
-            } else if (estadoActual == Estado.Modificar) {
-                this.empleadoSel.updateAsignacionHorario(this.asignacionSel);
-            } else {
-                //nunca debe llegar
-                throw new NegocioException("Error: estadi invalido");
-            }
-
-            HibernateUtil.modificarObjeto(this.empleadoSel);
-            //////////////////////
-            setAsignacionHorario(null);
-            Utilidades.habilitarPanel(pnlAsignacionHorario, false);
-            estadoActual = Estado.Ninguno;
-            tmAsignaciones.setDatos(this.empleadoSel.getAsignacionHorariasProximas());
-            
         } catch (NegocioException ne) {
             Mensajes.mensajeErrorGenerico(ne.getMessage());
         }
@@ -547,28 +475,11 @@ public class PantallaHorarioAsignarEmpleado extends javax.swing.JDialog {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
 
-        AsignacionesHorario ah = tmAsignaciones.getSeletedObject();
-        if (ah != null) {
-            setAsignacionHorario(ah);
-            estadoActual = Estado.Modificar;
-            Utilidades.habilitarPanel(pnlAsignacionHorario, true);
-            dtcFechaInicio.setEnabled(false);
-
-        } else {
-            Mensajes.mensajeErrorGenerico("Debe seleccionar el elemento que desea modificar");
-        }
-
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void cmbHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbHorarioActionPerformed
         // TODO add your handling code here:
-
-        Horarios h=(Horarios) cmbHorario.getSelectedItem();
-        if(h!=null)
-        {
-            tmHorario.setDatos(h.getTAsignacionesDiases());
-        }    
-
+        
     }//GEN-LAST:event_cmbHorarioActionPerformed
 
     private void cmbHorarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbHorarioMousePressed
@@ -582,10 +493,16 @@ public class PantallaHorarioAsignarEmpleado extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                throw new UnsupportedOperationException("Not supported yet.");
+                iniciarAsignacionHorario();
             }
         });
     }
+
+    public static void iniciarAsignacionHorario()
+    {
+        new PantallaHorarioAsignarEmpleado(null, true).setVisible(true);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;

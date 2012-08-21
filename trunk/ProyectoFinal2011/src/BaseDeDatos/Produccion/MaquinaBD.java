@@ -70,10 +70,10 @@ public class MaquinaBD {
             return HibernateUtil.ejecutarConsulta(HQL);
 
         if(vigentes==true&&eliminados==false)
-            HQL+=" AND mh.fecBaja IS NULL ";
+            HQL+=" AND mp.fecBaja IS NULL ";
 
         if(vigentes==false&&eliminados==true)
-            HQL+=" AND mh.fecBaja IS NOT NULL ";
+            HQL+=" AND mp.fecBaja IS NOT NULL ";
 
         return HibernateUtil.ejecutarConsulta(HQL);
     }

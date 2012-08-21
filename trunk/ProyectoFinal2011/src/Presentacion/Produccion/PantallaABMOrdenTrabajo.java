@@ -615,8 +615,8 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
            
             gestor.actualizarDetalle(detalle);
 
-            gestor.modificarEstadoPedido(detalle.get(0).getTPlanesProduccion().getPedido());
-            gestor.modificarEstadoPlan(detalle.get(0).getTPlanesProduccion());
+            gestor.modificarEstadoPedido(detalle.get(0).getPlanProduccion().getPedido());
+            gestor.modificarEstadoPlan(detalle.get(0).getPlanProduccion());
 
         }
 
