@@ -7,6 +7,7 @@ package Negocio.Produccion;
 
 import BaseDeDatos.Produccion.ProblemasMhpBD;
 import BaseDeDatos.Produccion.TipoMaquinaBD;
+import Presentacion.Produccion.ProblemaMaquinaHerramientaParticular;
 import java.util.List;
 
 /**
@@ -36,6 +37,16 @@ public class GestorProblemasMhp {
 
     public ProblemasMhp modificar(ProblemasMhp pro){
         return ProblemasMhpBD.modificar(pro);
+    }
+
+//    public static inicarUC()
+//    {
+//    }
+    public static void iniciarUC(MaquinaParticular maquina)
+    {
+        ProblemaMaquinaHerramientaParticular ventana= new ProblemaMaquinaHerramientaParticular(null, true);
+        ventana.cargarMaquina(maquina);
+        ventana.setVisible(true);
     }
 
 }
