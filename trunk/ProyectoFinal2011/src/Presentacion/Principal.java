@@ -45,6 +45,7 @@ import gui.GUILocal;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 /**
  *
@@ -848,6 +849,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnReajustarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReajustarActionPerformed
 
+
        new ReajustarStock(this, true).setVisible(true);
 
 
@@ -933,6 +935,9 @@ public class Principal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
+                String[] li2 = {"Licensee=Jose Rolando Mamani", "LicenseRegistrationNumber=NCJM100903", "Product=SyntheticaAddons", "LicenseType=Non Commercial", "ExpireDate=--.--.----", "MaxVersion=1.999.999"};
+UIManager.put("SyntheticaAddons.license.info", li2);
+UIManager.put("SyntheticaAddons.license.key", "706FC55F-821A72A1-F46D7D49-1076473F-C9336002");
                 new Principal().setVisible(true);
             }
         });

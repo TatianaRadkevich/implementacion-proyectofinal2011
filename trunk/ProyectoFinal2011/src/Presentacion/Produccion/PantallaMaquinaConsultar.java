@@ -183,6 +183,12 @@ public class PantallaMaquinaConsultar extends javax.swing.JDialog {
 
         jLabel1.setText("Codigo:");
 
+        txtCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoActionPerformed(evt);
+            }
+        });
+
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -322,6 +328,10 @@ public class PantallaMaquinaConsultar extends javax.swing.JDialog {
         dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoActionPerformed
 
     /**
     * @param args the command line arguments
