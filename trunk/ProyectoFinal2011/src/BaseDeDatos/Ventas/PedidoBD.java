@@ -186,6 +186,6 @@ public class PedidoBD {
     }
 
     public static List<Pedido> getPedidosTerminadoProduccion() {
-        return HibernateUtil.ejecutarConsulta("FROM Pedido as p WHERE ID_EPEDIDO in(6,7)");
+        return HibernateUtil.ejecutarConsulta("FROM Pedido as p WHERE ID_EPEDIDO in(2,7)");
     }
 }
