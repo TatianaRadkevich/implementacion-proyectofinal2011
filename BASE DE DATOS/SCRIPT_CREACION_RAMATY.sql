@@ -650,7 +650,8 @@ CREATE TABLE T_HERRAMIENTAS_PARTICULAR (
        OBSERVACIONES        varchar(200) NULL,
        FEC_BAJA             datetime NULL,
        MOTIVO_BAJA          varchar(50) NULL,
-       ID_THERRAMIENTA      numeric(2) NOT NULL
+       ID_THERRAMIENTA      numeric(2) NOT NULL,
+       CANTIDAD             int NULL
 )
 go
 
@@ -744,6 +745,18 @@ go
 
 ALTER TABLE T_MATERIALES_X_PROVEEDOR
        ADD PRIMARY KEY (ID_MATERIAL_X_PROVEEDOR ASC)
+go
+
+
+CREATE TABLE T_MENUS (
+       ID_MENU              numeric(5) IDENTITY,
+       NOMBRE               varchar(50) NOT NULL
+)
+go
+
+
+ALTER TABLE T_MENUS
+       ADD PRIMARY KEY (ID_MENU ASC)
 go
 
 
@@ -967,6 +980,44 @@ go
 
 ALTER TABLE T_REVOCACIONES_PERMISO
        ADD PRIMARY KEY (ID_REVOCACION_PERMISO ASC)
+go
+
+
+CREATE TABLE T_ROLES (
+       ID_ROL               numeric(5) IDENTITY,
+       NOMBRE               varchar(50) NOT NULL
+)
+go
+
+
+ALTER TABLE T_ROLES
+       ADD PRIMARY KEY (ID_ROL ASC)
+go
+
+
+CREATE TABLE T_ROLES_X_MENU (
+       ID_ROL_X_MENU        numeric(5) IDENTITY,
+       ID_MENU              numeric(5) NULL,
+       ID_ROL               numeric(5) NULL
+)
+go
+
+
+ALTER TABLE T_ROLES_X_MENU
+       ADD PRIMARY KEY (ID_ROL_X_MENU ASC)
+go
+
+
+CREATE TABLE T_ROLES_X_USUARIO (
+       ID_ROL_X_USUARIO     numeric(5) IDENTITY,
+       ID_ROL               numeric(5) NOT NULL,
+       ID_USUARIO           numeric(5) NOT NULL
+)
+go
+
+
+ALTER TABLE T_ROLES_X_USUARIO
+       ADD PRIMARY KEY (ID_ROL_X_USUARIO ASC)
 go
 
 
@@ -1903,6 +1954,38 @@ ALTER TABLE T_REVOCACIONES_PERMISO
        ADD FOREIGN KEY (ID_CLIENTE_WEB)
                              REFERENCES T_CLIENTES_WEB  (
               ID_CLIENTE_WEB)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_ROLES_X_MENU
+       ADD FOREIGN KEY (ID_ROL)
+                             REFERENCES T_ROLES  (ID_ROL)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_ROLES_X_MENU
+       ADD FOREIGN KEY (ID_MENU)
+                             REFERENCES T_MENUS  (ID_MENU)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_ROLES_X_USUARIO
+       ADD FOREIGN KEY (ID_USUARIO)
+                             REFERENCES T_USUARIOS  (ID_USUARIO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_ROLES_X_USUARIO
+       ADD FOREIGN KEY (ID_ROL)
+                             REFERENCES T_ROLES  (ID_ROL)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
