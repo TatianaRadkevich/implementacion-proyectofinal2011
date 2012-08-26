@@ -56,6 +56,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
 
     public PantallaMaterialABM(GestorMaterial gm) {
         this(null, true);
+        setLocationRelativeTo(null);
         gestor = gm;
        // lstProveedores.setData(gestor.getProveedores());
         cmbUnidadMedida.setModel(new DefaultComboBoxModel(gestor.getUnidadMedida().toArray()));

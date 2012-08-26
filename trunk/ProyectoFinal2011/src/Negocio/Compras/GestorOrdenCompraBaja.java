@@ -37,6 +37,7 @@ public class GestorOrdenCompraBaja extends GestorOrdenCompra{
         interfaz.habilitarPanelBaja(true);
         interfaz.setTitle("Eliminar Orden de Compra");
         interfaz.setVisible(true);
+        interfaz.setLocationRelativeTo(null);
         
     }
 

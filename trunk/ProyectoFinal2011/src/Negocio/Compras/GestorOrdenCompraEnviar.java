@@ -34,6 +34,7 @@ public class GestorOrdenCompraEnviar extends GestorOrdenCompra {
        
         interfaz.setTitle("Registrar Envío De Orden de Compra");
         interfaz.setVisible(true);
+        interfaz.setLocationRelativeTo(null);
 
     }
 

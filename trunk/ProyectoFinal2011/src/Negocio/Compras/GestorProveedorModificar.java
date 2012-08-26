@@ -30,6 +30,8 @@ public class GestorProveedorModificar extends GestorProveedor{
         getInterfaz().cargar(proveedor);
         getInterfaz().setTitle("Modificar Proveedor");
         getInterfaz().setVisible(true);
+        getInterfaz().setLocationRelativeTo(null);
+        getInterfaz().setLocationRelativeTo(null);
     }
 
     private void validar(Proveedor p) throws ExceptionGestor

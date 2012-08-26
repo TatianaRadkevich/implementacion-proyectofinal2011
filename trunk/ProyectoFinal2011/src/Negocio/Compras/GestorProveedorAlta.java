@@ -17,7 +17,8 @@ import java.util.List;
  */
 public class GestorProveedorAlta extends GestorProveedor{
 
-     @Override
+
+    @Override
     public void iniciarCU() {
          //antes
 //        interfaz=new PantallaProveedorABM(this);
@@ -28,6 +29,8 @@ public class GestorProveedorAlta extends GestorProveedor{
 
         getInterfaz().setTitle("Registrar Proveedor");
         getInterfaz().setVisible(true);
+        getInterfaz().setLocationRelativeTo(null);
+        getInterfaz().setLocationRelativeTo(null);
     }
 
     private void validar(Proveedor p) throws ExceptionGestor

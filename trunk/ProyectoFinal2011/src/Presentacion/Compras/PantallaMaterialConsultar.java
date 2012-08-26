@@ -58,7 +58,8 @@ public class PantallaMaterialConsultar extends javax.swing.JDialog {
                 return fila;
             }
         };
-        cargarValidaciones();        
+        cargarValidaciones();
+        setLocationRelativeTo(null);
     }
 
     private void cargarValidaciones() {

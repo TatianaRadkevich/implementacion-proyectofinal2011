@@ -47,6 +47,7 @@ public class PantallaHorarioAsignarEmpleado extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         configurarControles();
+        setLocationRelativeTo(null);
 //        tmEmpleados.setDatos(EmpleadoBD.getEmpleadosVigentes());
 //        Utilidades.comboCargar(cmbHorario, Horarios.getAllHorarios());
 

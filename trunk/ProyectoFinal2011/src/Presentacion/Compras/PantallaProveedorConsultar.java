@@ -71,6 +71,8 @@ private TablaManager<Proveedor> tablita;
         };
         cargarValidaciones();
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
+        this.btnConsultar.setVisible(false);
+        setLocationRelativeTo(null);
     }
 
     private void cargarValidaciones() {
@@ -402,8 +404,7 @@ private TablaManager<Proveedor> tablita;
 //        if (tbEmpleados.getSelectedRow() == -1) {
 //            Mensajes.mensajeErrorGenerico("Debe seleccion un empleado");
 //            return;
-//        }
-//        PantallaABMEmpleado.iniciarVerEmpleado(this, tmEmpleado.getSeletedObject());
+//        }      PantallaABMEmpleado.iniciarVerEmpleado(this, tmEmpleado.getSeletedObject());
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**

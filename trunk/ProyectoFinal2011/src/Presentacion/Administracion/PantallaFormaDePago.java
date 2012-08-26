@@ -43,6 +43,7 @@ public class PantallaFormaDePago extends javax.swing.JDialog {
         inicializar();
         cargarFormaPago();
         this.setTitle("Forma de Pago");
+        setLocationRelativeTo(null);
     }
 
     /** This method is called from within the constructor to
