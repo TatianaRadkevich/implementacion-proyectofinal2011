@@ -147,7 +147,6 @@ public class Principal extends javax.swing.JFrame {
         });
         getContentPane().setLayout(null);
 
-        pnlSession.setAlignmentX(0.5F);
         pnlSession.setLayout(null);
 
         btnIniciarSession.setText("Iniciar Sesión");
@@ -159,7 +158,7 @@ public class Principal extends javax.swing.JFrame {
         pnlSession.add(btnIniciarSession);
         btnIniciarSession.setBounds(210, 120, 95, 23);
 
-        lblMensaje.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblMensaje.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblMensaje.setForeground(new java.awt.Color(255, 0, 0));
         lblMensaje.setText("jLabel1");
         pnlSession.add(lblMensaje);
@@ -195,7 +194,7 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().add(pnlSession);
         pnlSession.setBounds(250, 250, 390, 170);
 
-        lblMensajeInicio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblMensajeInicio.setFont(new java.awt.Font("Tahoma", 1, 14));
         getContentPane().add(lblMensajeInicio);
         lblMensajeInicio.setBounds(10, 10, 870, 30);
 
@@ -219,7 +218,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuSalir);
 
-        mnuAdministracion.setText("Aministración");
+        mnuAdministracion.setText("Administración");
 
         mnuCargo.setText("Cargo");
         mnuCargo.addActionListener(new java.awt.event.ActionListener() {
