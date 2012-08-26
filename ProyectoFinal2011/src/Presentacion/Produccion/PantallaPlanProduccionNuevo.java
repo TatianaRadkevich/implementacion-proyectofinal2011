@@ -26,7 +26,7 @@ import Negocio.Produccion.DetallePlanProduccion;
 import Negocio.Produccion.DetalleProducto;
 import Negocio.Produccion.EstadoDetallePlan;
 import Negocio.Produccion.EtapaProduccionEspecifica;
-import Negocio.Produccion.MaqHerrPartXDetPlan;
+import Negocio.Produccion.DetallePlanXHerramientaParticular;
 import Negocio.Produccion.MaquinaParticular;
 import Negocio.Produccion.PlanProduccion;
 import Negocio.Produccion.PlanProduccionId;
