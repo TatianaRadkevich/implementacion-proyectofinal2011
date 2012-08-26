@@ -45,6 +45,7 @@ public class PantallaRegistrarEntregaPedido extends javax.swing.JDialog {
     public PantallaRegistrarEntregaPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         //pantallaCliente  = new PantallaClienteConsultar(parent, true, true);
         //pantallaCliente.setVisible(true);
 

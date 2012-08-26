@@ -35,6 +35,7 @@ public class PantallaRegistrarReclamo extends javax.swing.JDialog {
     public PantallaRegistrarReclamo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         txtCodReclamo.setText(cod+"");
         txtNroOrden.setText("1");
         txtFechaActual.setText((Utilidades.parseFecha(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 0, 0, 0))));

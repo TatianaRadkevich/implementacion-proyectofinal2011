@@ -39,6 +39,7 @@ public class PantalleRecepcionDeMateriales extends javax.swing.JDialog {
        // Utilidades.habilitarPanel(pnlOrden, false);
         habilitarCarga(false);
         txtFechaActual.setText(Utilidades.parseFecha(Utilidades.getFechaActual()));
+        setLocationRelativeTo(null);
     }
 
     public void iniciarTablas() {
