@@ -3,9 +3,9 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-    <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=Ramaty</property>
-    <property name="hibernate.connection.username">proyecto</property>
-    <property name="hibernate.connection.password">sistema</property>
+    <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=Ramaty</property> 
+	<property name="hibernate.connection.username">proyecto</property> 
+	<property name="hibernate.connection.password">sistema</property> 
     <mapping class="Negocio.Administracion.AsistenciaEmpleado"/>
     <mapping class="Negocio.Administracion.Cargo"/>
     <mapping class="Negocio.Administracion.Cheque"/>
@@ -34,8 +34,14 @@
     <mapping class="Negocio.Deposito.Faltante"/>
     <mapping class="Negocio.Deposito.EstadoReclamo"/>
     <mapping class="Negocio.Deposito.Reclamo"/>
-     <mapping class="Negocio.Deposito.ReajusteStock"/>
+    <mapping class="Negocio.Deposito.ReajusteStock"/>
+    
     <mapping class="Negocio.GestionUsuario.Usuario"/>
+    <mapping class="Negocio.GestionUsuario.Menu"/>
+    <mapping class="Negocio.GestionUsuario.Rol"/>
+    <mapping class="Negocio.GestionUsuario.RolXMenu"/>
+    <mapping class="Negocio.GestionUsuario.RolXUsuario"/>
+        
     <mapping class="Negocio.Produccion.DetalleEtapaProduccion"/>
     <mapping class="Negocio.Produccion.DetallePlanProduccion"/>
     <mapping class="Negocio.Produccion.DetalleProducto"/>
