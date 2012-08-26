@@ -49,14 +49,14 @@ public class DetallePlanProduccion implements java.io.Serializable {
     //    @JoinColumn(name = "ID_PLAN_PRODUCCION", nullable = true)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
-    @JoinColumn(name = "VERSION", referencedColumnName = "VERSION", insertable = false, updatable = false),
-    @JoinColumn(name = "ID_PEDIDO", referencedColumnName = "ID_PEDIDO", insertable = false, updatable = false)})
+        @JoinColumn(name = "VERSION", referencedColumnName = "VERSION", insertable = false, updatable = false),
+        @JoinColumn(name = "ID_PEDIDO", referencedColumnName = "ID_PEDIDO", insertable = false, updatable = false)})
     private PlanProduccion TPlanesProduccion;
-        //___________________________________________________________________________________________//
+    //___________________________________________________________________________________________//
     @ManyToOne(fetch = FetchType.LAZY)
-     @JoinColumn(name = "ID_PEDIDO", nullable = false)
+    @JoinColumn(name = "ID_PEDIDO", nullable = false)
     private Pedido pedido;
-            //___________________________________________________________________________________________//
+    //___________________________________________________________________________________________//
     @Column(name = "VERSION", nullable = false)
     private Integer version;
     //___________________________________________________________________________________________//
@@ -101,8 +101,12 @@ public class DetallePlanProduccion implements java.io.Serializable {
     @JoinColumn(name = "ID_EDETALLE_PLAN", nullable = true)
     private EstadoDetallePlan TEdetallePlan;
     /*------------------------------------------------------------------------*/
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_MAQUINA_PARTICULAR", nullable = true)
+    private MaquinaParticular maquina;
+    /*------------------------------------------------------------------------*/
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TDetallesPlan")
-    private Set<MaqHerrPartXDetPlan> TMaqHerrPartXDetPlans = new HashSet<MaqHerrPartXDetPlan>(0);
+    private Set<DetallePlanXHerramientaParticular> TMaqHerrPartXDetPlans = new HashSet<DetallePlanXHerramientaParticular>(0);
 
     public DetallePlanProduccion() {
     }
@@ -171,8 +175,8 @@ public class DetallePlanProduccion implements java.io.Serializable {
 
     public void setPlanProduccion(PlanProduccion plan) {
         this.TPlanesProduccion = plan;
-        this.pedido=plan.getPedido();
-        this.version=plan.getVersion();
+        this.pedido = plan.getPedido();
+        this.version = plan.getVersion();
     }
 
     public Pedido getPedido() {
@@ -288,47 +292,24 @@ public class DetallePlanProduccion implements java.io.Serializable {
     }
 
     public void setMaquinaParticular(MaquinaParticular mq) {
-        MaqHerrPartXDetPlan aux = null;
-        for (MaqHerrPartXDetPlan item : this.TMaqHerrPartXDetPlans) {
-            if (item.getTMaquinasParticular() != null) {
-                aux = item;
-            }
-        }
-
-        if (mq == null) {
-            if (aux != null) {
-                this.TMaqHerrPartXDetPlans.remove(aux);
-            }
-        } else {
-            if (aux == null) {
-                aux=new MaqHerrPartXDetPlan();
-                this.TMaqHerrPartXDetPlans.add(aux);
-                aux.setTDetallesPlan(this);
-            }
-            aux.setTMaquinasParticular(mq);
-        }
+        this.maquina = mq;
     }
 
     public MaquinaParticular getMaquinaParticular() {
-        for (MaqHerrPartXDetPlan item : this.TMaqHerrPartXDetPlans) {
-            if (item.getTMaquinasParticular() != null) {
-                return item.getTMaquinasParticular();
-            }
-        }
-        return null;
+        return this.maquina;
     }
 
     public void addHerramientaParticular(HerramientaParticular hp) {
-        MaqHerrPartXDetPlan aux = new MaqHerrPartXDetPlan(hp);
+        DetallePlanXHerramientaParticular aux = new DetallePlanXHerramientaParticular(hp);
         aux.setTDetallesPlan(this);
         this.TMaqHerrPartXDetPlans.add(aux);
     }
 
-    public Set<MaqHerrPartXDetPlan> getTMaqHerrPartXDetPlans() {
+    public Set<DetallePlanXHerramientaParticular> getTMaqHerrPartXDetPlans() {
         return this.TMaqHerrPartXDetPlans;
     }
 
-    public void setTMaqHerrPartXDetPlans(Set<MaqHerrPartXDetPlan> TMaqHerrPartXDetPlans) {
+    public void setTMaqHerrPartXDetPlans(Set<DetallePlanXHerramientaParticular> TMaqHerrPartXDetPlans) {
         this.TMaqHerrPartXDetPlans = TMaqHerrPartXDetPlans;
     }
 }

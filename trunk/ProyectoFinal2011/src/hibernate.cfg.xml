@@ -37,10 +37,12 @@
     <mapping class="Negocio.Deposito.ReajusteStock"/>
     
     <mapping class="Negocio.GestionUsuario.Usuario"/>
-    <mapping class="Negocio.GestionUsuario.Menu"/>
+    <!--
+    <mapping class="Negocio.GestionUsuario.Menu"/
     <mapping class="Negocio.GestionUsuario.Rol"/>
     <mapping class="Negocio.GestionUsuario.RolXMenu"/>
     <mapping class="Negocio.GestionUsuario.RolXUsuario"/>
+    -->
         
     <mapping class="Negocio.Produccion.DetalleEtapaProduccion"/>
     <mapping class="Negocio.Produccion.DetallePlanProduccion"/>
@@ -59,7 +61,7 @@
     <mapping class="Negocio.Produccion.OrdenTrabajo"/>
     <mapping class="Negocio.Produccion.ProblemasMhp"/>
     <mapping class="Negocio.Produccion.EstadoPlanProduccion"/>
-    <mapping class="Negocio.Produccion.MaqHerrPartXDetPlan"/>
+    <mapping class="Negocio.Produccion.DetallePlanXHerramientaParticular"/>
     <mapping class="Negocio.Produccion.EstadoDetallePlan"/>
     <mapping class="Negocio.Produccion.TipoMaquina"/>
     <mapping class="Negocio.Produccion.TipoHerramienta"/>
