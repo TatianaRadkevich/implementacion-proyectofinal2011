@@ -58,5 +58,10 @@
   <table-filter match-name="T_THERRAMIENTA"/>
   <table-filter match-name="T_HERRAMIENTAS_PARTICULAR"/>
   <table-filter match-name="T_MAQUINAS_PARTICULAR"/>
-
+  
+  <table-filter match-name="T_ROLES"/>
+  <table-filter match-name="T_ROLES_X_MENU"/>
+  <table-filter match-name="T_ROLES_X_USUARIO"/>
+  <table-filter match-name="T_MENUS"/>
+  
 </hibernate-reverse-engineering>

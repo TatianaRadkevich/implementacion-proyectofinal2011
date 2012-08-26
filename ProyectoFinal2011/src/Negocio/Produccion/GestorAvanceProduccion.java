@@ -23,8 +23,6 @@ public class GestorAvanceProduccion {
     public void iniciarCU(JDialog dialog){
         PantallaABMAvanceProduccion pantalla=new PantallaABMAvanceProduccion(dialog, true, this);
         pantalla.setVisible(true);
-
-
     }
 
     public void registrarAvance(DetallePlanProduccion detalle, int cantidad_producida) {

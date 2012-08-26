@@ -39,10 +39,16 @@ import Presentacion.UbicacionGeografica.PantallaABMPais;
 import Presentacion.Ventas.PantallaClienteConsultar;
 import Presentacion.Ventas.PantallaFacturaConsultar;
 
+import BaseDeDatos.Usuario.UsuarioBD;
+import Negocio.Administracion.Cargo;
+import Negocio.Administracion.Empleado;
+import Negocio.GestionUsuario.*;
+
 
 import Presentacion.Ventas.PantallaPedidoConsultar;
 import gui.GUILocal;
 import java.awt.Graphics;
+import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -60,20 +66,14 @@ public class Principal extends javax.swing.JFrame {
         GUILocal.SyntheticaBlueIceLookAndFeel(this);
         this.setContentPane(new Fondo("fondo.png"));
         initComponents();
-        pnlAdministracion.setImagen("transparencia.png");
-        pnlCompras.setImagen("transparencia.png");
-        pnlProduccion.setImagen("transparencia.png");
-        pnlVentas.setImagen("transparencia.png");
-
+     
+        ocultarMenu();
+        
+        this.setExtendedState(this.getExtendedState() | MAXIMIZED_BOTH);
     }
 
     private void visible(boolean valor) {
-        pnlProduccion.setVisible(valor);
-        pnlVentas.setVisible(valor);
-        pnlCompras.setVisible(valor);
-        pnlAdministracion.setVisible(valor);
-        pnlDeposito.setVisible(valor);
-        
+             
     }
 
     /** This method is called from within the constructor to
@@ -85,102 +85,85 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlMenu = new javax.swing.JPanel();
-        btnAdministracion = new javax.swing.JButton();
-        btnCompras = new javax.swing.JButton();
-        btnProduccion = new javax.swing.JButton();
-        btnVenta = new javax.swing.JButton();
-        btnDeposito = new javax.swing.JButton();
+        pnlSession = new javax.swing.JPanel();
+        btnIniciarSession = new javax.swing.JButton();
+        lblMensaje = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
-        pnlContenerdor = new javax.swing.JPanel();
-        pnlAdministracion = new Presentacion.Fondo();
-        txtAdm = new javax.swing.JTextField();
-        btnEmpleado = new javax.swing.JButton();
-        btnCargo = new javax.swing.JButton();
-        btnTipoDocumento = new javax.swing.JButton();
-        btnTipoDocumento1 = new javax.swing.JButton();
-        btnAsistencia = new javax.swing.JButton();
-        btnHorarios = new javax.swing.JButton();
-        btnConsultarAsistencia = new javax.swing.JButton();
-        btnConsultarAsistencia1 = new javax.swing.JButton();
-        pnlVentas = new Presentacion.Fondo();
-        txtVentas = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        btnFactura = new javax.swing.JButton();
-        pnlCompras = new Presentacion.Fondo();
-        txtComp = new javax.swing.JTextField();
-        btnProveedor = new javax.swing.JButton();
-        btnOrdenCompra = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        pnlProduccion = new Presentacion.Fondo();
-        txtProd = new javax.swing.JTextField();
-        btnProducto = new javax.swing.JButton();
-        btnTipoProducto = new javax.swing.JButton();
-        btnMaquina = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        btnAvance = new javax.swing.JButton();
-        btnProblemas = new javax.swing.JButton();
-        btnConsultaProblemas = new javax.swing.JButton();
-        btnTipoMaquina = new javax.swing.JButton();
-        btnTipoHerramienta = new javax.swing.JButton();
-        btnTipoHerramienta1 = new javax.swing.JButton();
-        btnHerramienta = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        pnlDeposito = new javax.swing.JPanel();
-        txtVentas1 = new javax.swing.JTextField();
-        btnRecepMat = new javax.swing.JButton();
-        btnReajustar = new javax.swing.JButton();
-        btnPedido = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButtonAlmacenamientoProdTerminado = new javax.swing.JButton();
+        txtUsuario = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblMensajeInicio = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mnuSalir = new javax.swing.JMenu();
+        mnuIniciarSesion = new javax.swing.JMenuItem();
+        mnuExit = new javax.swing.JMenuItem();
+        mnuAdministracion = new javax.swing.JMenu();
+        mnuCargo = new javax.swing.JMenuItem();
+        mnuEmpleado = new javax.swing.JMenuItem();
+        mnuTipoDocumento = new javax.swing.JMenuItem();
+        mnuFormaPago = new javax.swing.JMenuItem();
+        mnuRegistrarAsistencia = new javax.swing.JMenuItem();
+        mnuHorarios = new javax.swing.JMenuItem();
+        mnuConsultarAsistencia = new javax.swing.JMenuItem();
+        mnuAsignarHorario = new javax.swing.JMenuItem();
+        mnuCompras = new javax.swing.JMenu();
+        mnuMaterial = new javax.swing.JMenuItem();
+        mnuProveedor = new javax.swing.JMenuItem();
+        mnuOrdenCompra = new javax.swing.JMenuItem();
+        mnuProduccion = new javax.swing.JMenu();
+        mnuTipoProducto = new javax.swing.JMenuItem();
+        mnuProducto = new javax.swing.JMenuItem();
+        mnuMaquina = new javax.swing.JMenuItem();
+        mnuEstructuraProducto = new javax.swing.JMenuItem();
+        mnuPlanificacionViejo = new javax.swing.JMenuItem();
+        mnuOrdenTrabajo = new javax.swing.JMenuItem();
+        mnuAvanceProduccion = new javax.swing.JMenuItem();
+        mnuProblemaMaquina = new javax.swing.JMenuItem();
+        mnuConsultarProblemas = new javax.swing.JMenuItem();
+        mnuTipoMaquina = new javax.swing.JMenuItem();
+        mnuTipoHerramienta = new javax.swing.JMenuItem();
+        mnuEtapaProduccion = new javax.swing.JMenuItem();
+        mnuHerramienta = new javax.swing.JMenuItem();
+        mnuPlanificacionNuevo = new javax.swing.JMenuItem();
+        mnuVentas = new javax.swing.JMenu();
+        mnuCliente = new javax.swing.JMenuItem();
+        mnuPedido = new javax.swing.JMenuItem();
+        mnuFactura = new javax.swing.JMenuItem();
+        mnuDeposito = new javax.swing.JMenu();
+        mnuReajustarStock = new javax.swing.JMenuItem();
+        mnuRecepcionMateriales = new javax.swing.JMenuItem();
+        mnuEntregarPedido = new javax.swing.JMenuItem();
+        mnuEntregaMaterialesProduccion = new javax.swing.JMenuItem();
+        mnuAlmacenamientoProductoTerminado = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pantalla Principal");
-
-        pnlMenu.setLayout(new java.awt.GridLayout(1, 0));
-
-        btnAdministracion.setText("Administración");
-        btnAdministracion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdministracionActionPerformed(evt);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
             }
         });
-        pnlMenu.add(btnAdministracion);
+        getContentPane().setLayout(null);
 
-        btnCompras.setText("Compras");
-        btnCompras.addActionListener(new java.awt.event.ActionListener() {
+        pnlSession.setAlignmentX(0.5F);
+        pnlSession.setLayout(null);
+
+        btnIniciarSession.setText("Iniciar Sesión");
+        btnIniciarSession.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnComprasActionPerformed(evt);
+                btnIniciarSessionActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnCompras);
+        pnlSession.add(btnIniciarSession);
+        btnIniciarSession.setBounds(210, 120, 95, 23);
 
-        btnProduccion.setText("Producción");
-        btnProduccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProduccionActionPerformed(evt);
-            }
-        });
-        pnlMenu.add(btnProduccion);
-
-        btnVenta.setText("Ventas");
-        btnVenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVentaActionPerformed(evt);
-            }
-        });
-        pnlMenu.add(btnVenta);
-
-        btnDeposito.setText("Depósito");
-        btnDeposito.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDepositoActionPerformed(evt);
-            }
-        });
-        pnlMenu.add(btnDeposito);
+        lblMensaje.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblMensaje.setForeground(new java.awt.Color(255, 0, 0));
+        lblMensaje.setText("jLabel1");
+        pnlSession.add(lblMensaje);
+        lblMensaje.setBounds(60, 150, 320, 14);
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -188,584 +171,414 @@ public class Principal extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnSalir);
+        pnlSession.add(btnSalir);
+        btnSalir.setBounds(310, 120, 53, 23);
+        pnlSession.add(txtUsuario);
+        txtUsuario.setBounds(150, 40, 220, 20);
+        pnlSession.add(txtPassword);
+        txtPassword.setBounds(150, 70, 220, 20);
 
-        pnlContenerdor.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        pnlContenerdor.setOpaque(false);
-        pnlContenerdor.setLayout(new java.awt.CardLayout());
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Usuario:");
+        pnlSession.add(jLabel1);
+        jLabel1.setBounds(90, 40, 60, 14);
 
-        txtAdm.setEditable(false);
-        txtAdm.setText("Administración");
-        txtAdm.setFocusable(false);
-        txtAdm.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Contraseña:");
+        pnlSession.add(jLabel2);
+        jLabel2.setBounds(70, 70, 80, 14);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/Inicio de sesion.png"))); // NOI18N
+        pnlSession.add(jLabel3);
+        jLabel3.setBounds(-10, 0, 410, 172);
+
+        getContentPane().add(pnlSession);
+        pnlSession.setBounds(250, 250, 390, 170);
+
+        lblMensajeInicio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(lblMensajeInicio);
+        lblMensajeInicio.setBounds(10, 10, 870, 30);
+
+        mnuSalir.setText("Sesión");
+
+        mnuIniciarSesion.setText("Iniciar Sesión");
+        mnuIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAdmActionPerformed(evt);
+                mnuIniciarSesionActionPerformed(evt);
             }
         });
+        mnuSalir.add(mnuIniciarSesion);
 
-        btnEmpleado.setText("Empleado");
-        btnEmpleado.addActionListener(new java.awt.event.ActionListener() {
+        mnuExit.setText("Cerrar Sesión");
+        mnuExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEmpleadoActionPerformed(evt);
+                mnuExitActionPerformed(evt);
             }
         });
+        mnuSalir.add(mnuExit);
 
-        btnCargo.setText("Cargo");
-        btnCargo.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBar1.add(mnuSalir);
+
+        mnuAdministracion.setText("Aministración");
+
+        mnuCargo.setText("Cargo");
+        mnuCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargoActionPerformed(evt);
+                mnuCargoActionPerformed(evt);
             }
         });
+        mnuAdministracion.add(mnuCargo);
 
-        btnTipoDocumento.setText("Tipo de Documento");
-        btnTipoDocumento.addActionListener(new java.awt.event.ActionListener() {
+        mnuEmpleado.setText("Empleado");
+        mnuEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTipoDocumentoActionPerformed(evt);
+                mnuEmpleadoActionPerformed(evt);
             }
         });
+        mnuAdministracion.add(mnuEmpleado);
 
-        btnTipoDocumento1.setText("Forma de Pago");
-        btnTipoDocumento1.addActionListener(new java.awt.event.ActionListener() {
+        mnuTipoDocumento.setText("Tipo de Documento");
+        mnuTipoDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTipoDocumento1ActionPerformed(evt);
+                mnuTipoDocumentoActionPerformed(evt);
             }
         });
+        mnuAdministracion.add(mnuTipoDocumento);
 
-        btnAsistencia.setText("Registrar Asistencia");
-        btnAsistencia.addActionListener(new java.awt.event.ActionListener() {
+        mnuFormaPago.setText("Forma de Pago");
+        mnuFormaPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAsistenciaActionPerformed(evt);
+                mnuFormaPagoActionPerformed(evt);
             }
         });
+        mnuAdministracion.add(mnuFormaPago);
 
-        btnHorarios.setText("Horarios");
-        btnHorarios.addActionListener(new java.awt.event.ActionListener() {
+        mnuRegistrarAsistencia.setText("Registrar Asistencia");
+        mnuRegistrarAsistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHorariosActionPerformed(evt);
+                mnuRegistrarAsistenciaActionPerformed(evt);
             }
         });
+        mnuAdministracion.add(mnuRegistrarAsistencia);
 
-        btnConsultarAsistencia.setText("Consultar Asistencia");
-        btnConsultarAsistencia.addActionListener(new java.awt.event.ActionListener() {
+        mnuHorarios.setText("Horarios");
+        mnuHorarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarAsistenciaActionPerformed(evt);
+                mnuHorariosActionPerformed(evt);
             }
         });
+        mnuAdministracion.add(mnuHorarios);
 
-        btnConsultarAsistencia1.setText("Asignar Horario");
-        btnConsultarAsistencia1.addActionListener(new java.awt.event.ActionListener() {
+        mnuConsultarAsistencia.setText("Consultar Asistencia");
+        mnuConsultarAsistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarAsistencia1ActionPerformed(evt);
+                mnuConsultarAsistenciaActionPerformed(evt);
             }
         });
+        mnuAdministracion.add(mnuConsultarAsistencia);
 
-        javax.swing.GroupLayout pnlAdministracionLayout = new javax.swing.GroupLayout(pnlAdministracion);
-        pnlAdministracion.setLayout(pnlAdministracionLayout);
-        pnlAdministracionLayout.setHorizontalGroup(
-            pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtAdm, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
-            .addGroup(pnlAdministracionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlAdministracionLayout.createSequentialGroup()
-                        .addComponent(btnCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnConsultarAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlAdministracionLayout.createSequentialGroup()
-                        .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnConsultarAsistencia1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTipoDocumento1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(410, Short.MAX_VALUE))
-            .addGroup(pnlAdministracionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnHorarios, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(578, Short.MAX_VALUE))
-        );
-        pnlAdministracionLayout.setVerticalGroup(
-            pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlAdministracionLayout.createSequentialGroup()
-                .addComponent(txtAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConsultarAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConsultarAsistencia1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnTipoDocumento1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnHorarios, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
-        );
-
-        pnlContenerdor.add(pnlAdministracion, "card2");
-
-        txtVentas.setEditable(false);
-        txtVentas.setText("Ventas");
-        txtVentas.setFocusable(false);
-
-        jButton4.setText("Pedido");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        mnuAsignarHorario.setText("Asignar Horario");
+        mnuAsignarHorario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                mnuAsignarHorarioActionPerformed(evt);
             }
         });
+        mnuAdministracion.add(mnuAsignarHorario);
 
-        jButton6.setText("Cliente");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBar1.add(mnuAdministracion);
+
+        mnuCompras.setText("Compras");
+
+        mnuMaterial.setText("Material");
+        mnuMaterial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                mnuMaterialActionPerformed(evt);
             }
         });
+        mnuCompras.add(mnuMaterial);
 
-        btnFactura.setText("Factura");
-        btnFactura.addActionListener(new java.awt.event.ActionListener() {
+        mnuProveedor.setText("Proveedor");
+        mnuProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFacturaActionPerformed(evt);
+                mnuProveedorActionPerformed(evt);
             }
         });
+        mnuCompras.add(mnuProveedor);
 
-        javax.swing.GroupLayout pnlVentasLayout = new javax.swing.GroupLayout(pnlVentas);
-        pnlVentas.setLayout(pnlVentasLayout);
-        pnlVentasLayout.setHorizontalGroup(
-            pnlVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
-            .addGroup(pnlVentasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(578, Short.MAX_VALUE))
-        );
-        pnlVentasLayout.setVerticalGroup(
-            pnlVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlVentasLayout.createSequentialGroup()
-                .addComponent(txtVentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(240, Short.MAX_VALUE))
-        );
-
-        pnlContenerdor.add(pnlVentas, "card5");
-
-        txtComp.setEditable(false);
-        txtComp.setText("Compras");
-        txtComp.setFocusable(false);
-
-        btnProveedor.setText("Proveedor");
-        btnProveedor.addActionListener(new java.awt.event.ActionListener() {
+        mnuOrdenCompra.setText("Orden de Compra");
+        mnuOrdenCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProveedorActionPerformed(evt);
+                mnuOrdenCompraActionPerformed(evt);
             }
         });
+        mnuCompras.add(mnuOrdenCompra);
 
-        btnOrdenCompra.setText("Orden de Compra");
-        btnOrdenCompra.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBar1.add(mnuCompras);
+
+        mnuProduccion.setText("Producción");
+
+        mnuTipoProducto.setText("Tipo de Producto");
+        mnuTipoProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOrdenCompraActionPerformed(evt);
+                mnuTipoProductoActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuTipoProducto);
 
-        jButton3.setText("Material");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        mnuProducto.setText("Producto");
+        mnuProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                mnuProductoActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuProducto);
 
-        javax.swing.GroupLayout pnlComprasLayout = new javax.swing.GroupLayout(pnlCompras);
-        pnlCompras.setLayout(pnlComprasLayout);
-        pnlComprasLayout.setHorizontalGroup(
-            pnlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtComp, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
-            .addGroup(pnlComprasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnOrdenCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(578, Short.MAX_VALUE))
-        );
-        pnlComprasLayout.setVerticalGroup(
-            pnlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlComprasLayout.createSequentialGroup()
-                .addComponent(txtComp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOrdenCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(240, 240, 240))
-        );
-
-        pnlContenerdor.add(pnlCompras, "card3");
-
-        txtProd.setEditable(false);
-        txtProd.setText("Producción");
-        txtProd.setFocusable(false);
-
-        btnProducto.setText("Producto");
-        btnProducto.addActionListener(new java.awt.event.ActionListener() {
+        mnuMaquina.setText("Máquina");
+        mnuMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProductoActionPerformed(evt);
+                mnuMaquinaActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuMaquina);
 
-        btnTipoProducto.setText("Tipo de Producto");
-        btnTipoProducto.addActionListener(new java.awt.event.ActionListener() {
+        mnuEstructuraProducto.setText("Estructura de Producto");
+        mnuEstructuraProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTipoProductoActionPerformed(evt);
+                mnuEstructuraProductoActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuEstructuraProducto);
 
-        btnMaquina.setText("Máquina");
-        btnMaquina.addActionListener(new java.awt.event.ActionListener() {
+        mnuPlanificacionViejo.setText("Planificación Viejo");
+        mnuPlanificacionViejo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMaquinaActionPerformed(evt);
+                mnuPlanificacionViejoActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuPlanificacionViejo);
 
-        jButton1.setText("Estructura de Producto");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        mnuOrdenTrabajo.setText("Orden de Trabajo");
+        mnuOrdenTrabajo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                mnuOrdenTrabajoActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuOrdenTrabajo);
 
-        jButton2.setText("Planificacion viejo");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        mnuAvanceProduccion.setText("Avance de Producción");
+        mnuAvanceProduccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                mnuAvanceProduccionActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuAvanceProduccion);
 
-        jButton7.setText(" Orden de Trabajo");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        mnuProblemaMaquina.setText("Problemas Maquinas");
+        mnuProblemaMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                mnuProblemaMaquinaActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuProblemaMaquina);
 
-        btnAvance.setText("Avance de Producción");
-        btnAvance.addActionListener(new java.awt.event.ActionListener() {
+        mnuConsultarProblemas.setText("Consultar Problemas");
+        mnuConsultarProblemas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAvanceActionPerformed(evt);
+                mnuConsultarProblemasActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuConsultarProblemas);
 
-        btnProblemas.setText("Problemas Máquina");
-        btnProblemas.addActionListener(new java.awt.event.ActionListener() {
+        mnuTipoMaquina.setText("Tipo de Maquina");
+        mnuTipoMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProblemasActionPerformed(evt);
+                mnuTipoMaquinaActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuTipoMaquina);
 
-        btnConsultaProblemas.setText("Consultar Problemas");
-        btnConsultaProblemas.addActionListener(new java.awt.event.ActionListener() {
+        mnuTipoHerramienta.setText("Tipo de Herramienta");
+        mnuTipoHerramienta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultaProblemasActionPerformed(evt);
+                mnuTipoHerramientaActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuTipoHerramienta);
 
-        btnTipoMaquina.setText("Tipo de Máquina");
-        btnTipoMaquina.addActionListener(new java.awt.event.ActionListener() {
+        mnuEtapaProduccion.setText("Etapa de Producción");
+        mnuEtapaProduccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTipoMaquinaActionPerformed(evt);
+                mnuEtapaProduccionActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuEtapaProduccion);
 
-        btnTipoHerramienta.setText("Tipo de Herramienta");
-        btnTipoHerramienta.addActionListener(new java.awt.event.ActionListener() {
+        mnuHerramienta.setText("Herramienta");
+        mnuHerramienta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTipoHerramientaActionPerformed(evt);
+                mnuHerramientaActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuHerramienta);
 
-        btnTipoHerramienta1.setText("Etapa de Producción");
-        btnTipoHerramienta1.addActionListener(new java.awt.event.ActionListener() {
+        mnuPlanificacionNuevo.setText("Planificación Nuevo");
+        mnuPlanificacionNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTipoHerramienta1ActionPerformed(evt);
+                mnuPlanificacionNuevoActionPerformed(evt);
             }
         });
+        mnuProduccion.add(mnuPlanificacionNuevo);
 
-        btnHerramienta.setText("Herramienta");
-        btnHerramienta.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBar1.add(mnuProduccion);
+
+        mnuVentas.setText("Ventas");
+
+        mnuCliente.setText("Cliente");
+        mnuCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHerramientaActionPerformed(evt);
+                mnuClienteActionPerformed(evt);
             }
         });
+        mnuVentas.add(mnuCliente);
 
-        jButton5.setText("Planificacion Nuevo");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        mnuPedido.setText("Pedido");
+        mnuPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                mnuPedidoActionPerformed(evt);
             }
         });
+        mnuVentas.add(mnuPedido);
 
-        javax.swing.GroupLayout pnlProduccionLayout = new javax.swing.GroupLayout(pnlProduccion);
-        pnlProduccion.setLayout(pnlProduccionLayout);
-        pnlProduccionLayout.setHorizontalGroup(
-            pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtProd, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
-            .addGroup(pnlProduccionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlProduccionLayout.createSequentialGroup()
-                        .addComponent(btnTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnProblemas, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProduccionLayout.createSequentialGroup()
-                        .addComponent(btnProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnConsultaProblemas, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
-                    .addGroup(pnlProduccionLayout.createSequentialGroup()
-                        .addComponent(btnMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnTipoMaquina, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
-                    .addGroup(pnlProduccionLayout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnTipoHerramienta, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
-                    .addGroup(pnlProduccionLayout.createSequentialGroup()
-                        .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnAvance, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                            .addComponent(btnHerramienta, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                            .addComponent(btnTipoHerramienta1, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))))
-                .addGap(388, 388, 388))
-        );
-        pnlProduccionLayout.setVerticalGroup(
-            pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlProduccionLayout.createSequentialGroup()
-                .addComponent(txtProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnProblemas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConsultaProblemas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTipoMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTipoHerramienta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTipoHerramienta1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnHerramienta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlProduccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAvance, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        pnlContenerdor.add(pnlProduccion, "card4");
-
-        txtVentas1.setEditable(false);
-        txtVentas1.setText("Depósito");
-        txtVentas1.setFocusable(false);
-        txtVentas1.addActionListener(new java.awt.event.ActionListener() {
+        mnuFactura.setText("Factura");
+        mnuFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtVentas1ActionPerformed(evt);
+                mnuFacturaActionPerformed(evt);
             }
         });
+        mnuVentas.add(mnuFactura);
 
-        btnRecepMat.setText("Recepción de Materiales");
-        btnRecepMat.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBar1.add(mnuVentas);
+
+        mnuDeposito.setText("Depósito");
+
+        mnuReajustarStock.setText("Reajustar Stock");
+        mnuReajustarStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRecepMatActionPerformed(evt);
+                mnuReajustarStockActionPerformed(evt);
             }
         });
+        mnuDeposito.add(mnuReajustarStock);
 
-        btnReajustar.setText("Reajustar Stock");
-        btnReajustar.addActionListener(new java.awt.event.ActionListener() {
+        mnuRecepcionMateriales.setText("Recepción de Materiales");
+        mnuRecepcionMateriales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReajustarActionPerformed(evt);
+                mnuRecepcionMaterialesActionPerformed(evt);
             }
         });
+        mnuDeposito.add(mnuRecepcionMateriales);
 
-        btnPedido.setText("Entregar Pedido");
-        btnPedido.addActionListener(new java.awt.event.ActionListener() {
+        mnuEntregarPedido.setText("Entregar Pedido");
+        mnuEntregarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPedidoActionPerformed(evt);
+                mnuEntregarPedidoActionPerformed(evt);
             }
         });
+        mnuDeposito.add(mnuEntregarPedido);
 
-        jButton8.setText("Entrega Materiales Producción");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        mnuEntregaMaterialesProduccion.setText("Entrega Materiales Producción");
+        mnuEntregaMaterialesProduccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                mnuEntregaMaterialesProduccionActionPerformed(evt);
             }
         });
+        mnuDeposito.add(mnuEntregaMaterialesProduccion);
 
-        jButtonAlmacenamientoProdTerminado.setText("Almacenamiento Producto Terminado");
-        jButtonAlmacenamientoProdTerminado.addActionListener(new java.awt.event.ActionListener() {
+        mnuAlmacenamientoProductoTerminado.setText("Almacenamiento Producto Terminado");
+        mnuAlmacenamientoProductoTerminado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAlmacenamientoProdTerminadoActionPerformed(evt);
+                mnuAlmacenamientoProductoTerminadoActionPerformed(evt);
             }
         });
+        mnuDeposito.add(mnuAlmacenamientoProductoTerminado);
 
-        javax.swing.GroupLayout pnlDepositoLayout = new javax.swing.GroupLayout(pnlDeposito);
-        pnlDeposito.setLayout(pnlDepositoLayout);
-        pnlDepositoLayout.setHorizontalGroup(
-            pnlDepositoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtVentas1, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
-            .addGroup(pnlDepositoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlDepositoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnRecepMat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPedido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonAlmacenamientoProdTerminado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnReajustar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(519, Short.MAX_VALUE))
-        );
-        pnlDepositoLayout.setVerticalGroup(
-            pnlDepositoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDepositoLayout.createSequentialGroup()
-                .addComponent(txtVentas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnReajustar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRecepMat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addComponent(btnPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonAlmacenamientoProdTerminado, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(99, Short.MAX_VALUE))
-        );
+        jMenuBar1.add(mnuDeposito);
 
-        pnlContenerdor.add(pnlDeposito, "card6");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlContenerdor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
-                    .addComponent(pnlMenu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(pnlContenerdor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProduccionActionPerformed
-        // TODO add your handling code here:
-        visible(false);
-        pnlProduccion.setVisible(true);
-    }//GEN-LAST:event_btnProduccionActionPerformed
-
-    private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
-        // TODO add your handling code here:
-        visible(false);
-        pnlVentas.setVisible(true);
-    }//GEN-LAST:event_btnVentaActionPerformed
-
-    private void btnComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprasActionPerformed
-        // TODO add your handling code here:
-        visible(false);
-        pnlCompras.setVisible(true);
-    }//GEN-LAST:event_btnComprasActionPerformed
-
-    private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
-        // TODO add your handling code here:
-        visible(false);
-        pnlAdministracion.setVisible(true);
-        ;
-    }//GEN-LAST:event_btnAdministracionActionPerformed
-
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
-        if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea salir?")) {
-            System.exit(0);
-        }
-    }//GEN-LAST:event_btnSalirActionPerformed
-
-    private void btnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadoActionPerformed
-        // TODO add your handling code here:
-        PantallaConsultarEmpleado empleado = new PantallaConsultarEmpleado(this, true);
-        empleado.setVisible(true);
-}//GEN-LAST:event_btnEmpleadoActionPerformed
-
-    private void btnCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargoActionPerformed
-        // TODO add your handling code here:
-        PantallaABMCargo cargo = new PantallaABMCargo(this, true);
-        cargo.setVisible(true);
-}//GEN-LAST:event_btnCargoActionPerformed
-
-    private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
-        // TODO add your handling code here:
-        PantallaConsultarProducto producto = new PantallaConsultarProducto(this, true);
-        producto.setVisible(true);
-}//GEN-LAST:event_btnProductoActionPerformed
-
-    private void btnTipoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoProductoActionPerformed
+    private void mnuTipoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuTipoProductoActionPerformed
         // TODO add your handling code here:
         PantallaABMTipoProducto tipo = new PantallaABMTipoProducto(this, true);
         tipo.setVisible(true);
-}//GEN-LAST:event_btnTipoProductoActionPerformed
+    }//GEN-LAST:event_mnuTipoProductoActionPerformed
 
-    private void btnMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaquinaActionPerformed
+    private void mnuCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCargoActionPerformed
         // TODO add your handling code here:
-        PantallaMaquinaConsultar pantalla = new PantallaMaquinaConsultar(this, true);
+        PantallaABMCargo cargo = new PantallaABMCargo(this, true);
+        cargo.setVisible(true);
+    }//GEN-LAST:event_mnuCargoActionPerformed
+
+    private void mnuEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEmpleadoActionPerformed
+        // TODO add your handling code here:
+        PantallaConsultarEmpleado empleado = new PantallaConsultarEmpleado(this, true);
+        empleado.setVisible(true);
+    }//GEN-LAST:event_mnuEmpleadoActionPerformed
+
+    private void mnuTipoDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuTipoDocumentoActionPerformed
+        // TODO add your handling code here:
+        PantallaABMTipoDocumento documento = new PantallaABMTipoDocumento(this, true);
+        documento.setVisible(true);
+    }//GEN-LAST:event_mnuTipoDocumentoActionPerformed
+
+    private void mnuFormaPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuFormaPagoActionPerformed
+        // TODO add your handling code here:
+        new PantallaFormaDePago(this, true).setVisible(true);
+    }//GEN-LAST:event_mnuFormaPagoActionPerformed
+
+    private void mnuRegistrarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRegistrarAsistenciaActionPerformed
+        // TODO add your handling code here:
+        PantallaAsistenciaEmpleadoRegistrar.iniciarRegistroAsistencia();
+    }//GEN-LAST:event_mnuRegistrarAsistenciaActionPerformed
+
+    private void mnuHorariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuHorariosActionPerformed
+        // TODO add your handling code here:
+        new PantallaHorarioAdministar(new GestorHorario()).setVisible(true);
+    }//GEN-LAST:event_mnuHorariosActionPerformed
+
+    private void mnuConsultarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuConsultarAsistenciaActionPerformed
+        // TODO add your handling code here:
+        new PantallaAsistenciaEmpleadoConsultar(this,true).setVisible(true);
+    }//GEN-LAST:event_mnuConsultarAsistenciaActionPerformed
+
+    private void mnuAsignarHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAsignarHorarioActionPerformed
+        // TODO add your handling code here:
+        new PantallaHorarioAsignarEmpleado(this,true).setVisible(true);
+    }//GEN-LAST:event_mnuAsignarHorarioActionPerformed
+
+    private void mnuClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuClienteActionPerformed
+        // TODO add your handling code here:
+        PantallaClienteConsultar.iniciarAdministrarCliente(this);
+    }//GEN-LAST:event_mnuClienteActionPerformed
+
+    private void mnuPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPedidoActionPerformed
+        // TODO add your handling code here:
+        PantallaPedidoConsultar.iniciarAdministracionPedidos(this);
+    }//GEN-LAST:event_mnuPedidoActionPerformed
+
+    private void mnuFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuFacturaActionPerformed
+        // TODO add your handling code here:
+        new PantallaFacturaConsultar(this,true).setVisible(true);
+    }//GEN-LAST:event_mnuFacturaActionPerformed
+
+    private void mnuMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMaterialActionPerformed
+        // TODO add your handling code here:
+        PantallaMaterialConsultar pantalla = new PantallaMaterialConsultar(this, true);
         pantalla.setVisible(true);
-}//GEN-LAST:event_btnMaquinaActionPerformed
+    }//GEN-LAST:event_mnuMaterialActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        new GestorEstructura().iniciarCU();
-}//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        PantallaPlanConsultar pantalla = new PantallaPlanConsultar(this, true);
-        pantalla.setVisible(true);
-}//GEN-LAST:event_jButton2ActionPerformed
-
-    private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
+    private void mnuProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProveedorActionPerformed
         // TODO add your handling code here:
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -780,153 +593,204 @@ public class Principal extends javax.swing.JFrame {
                 dialog.setVisible(true);
             }
         });
-    }//GEN-LAST:event_btnProveedorActionPerformed
+    }//GEN-LAST:event_mnuProveedorActionPerformed
 
-    private void btnOrdenCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenCompraActionPerformed
+    private void mnuOrdenCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOrdenCompraActionPerformed
         // TODO add your handling code here:
         new PantallaOrdenCompraConsultar(new javax.swing.JFrame(), true).setVisible(true);
+    }//GEN-LAST:event_mnuOrdenCompraActionPerformed
 
-    }//GEN-LAST:event_btnOrdenCompraActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void mnuProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProductoActionPerformed
         // TODO add your handling code here:
-        PantallaMaterialConsultar pantalla = new PantallaMaterialConsultar(this, true);
+        PantallaConsultarProducto producto = new PantallaConsultarProducto(this, true);
+        producto.setVisible(true);
+    }//GEN-LAST:event_mnuProductoActionPerformed
+
+    private void mnuMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMaquinaActionPerformed
+        // TODO add your handling code here:
+        PantallaMaquinaConsultar pantalla = new PantallaMaquinaConsultar(this, true);
         pantalla.setVisible(true);
-}//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_mnuMaquinaActionPerformed
 
-    private void btnTipoDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoDocumentoActionPerformed
+    private void mnuEstructuraProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEstructuraProductoActionPerformed
         // TODO add your handling code here:
-        PantallaABMTipoDocumento documento = new PantallaABMTipoDocumento(this, true);
-        documento.setVisible(true);
-}//GEN-LAST:event_btnTipoDocumentoActionPerformed
+        new GestorEstructura().iniciarCU();
+    }//GEN-LAST:event_mnuEstructuraProductoActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void mnuPlanificacionViejoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPlanificacionViejoActionPerformed
         // TODO add your handling code here:
-        PantallaPedidoConsultar.iniciarAdministracionPedidos(this);
-}//GEN-LAST:event_jButton4ActionPerformed
+        PantallaPlanConsultar pantalla = new PantallaPlanConsultar(this, true);
+        pantalla.setVisible(true);
+    }//GEN-LAST:event_mnuPlanificacionViejoActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void mnuOrdenTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOrdenTrabajoActionPerformed
         // TODO add your handling code here:
-
-        PantallaClienteConsultar.iniciarAdministrarCliente(this);
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         new GestorOrdenTrabajo();
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_mnuOrdenTrabajoActionPerformed
 
-    private void btnAvanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvanceActionPerformed
+    private void mnuAvanceProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAvanceProduccionActionPerformed
+        // TODO add your handling code here:
         new GestorAvanceProduccion().iniciarCU(null);
-    }//GEN-LAST:event_btnAvanceActionPerformed
+    }//GEN-LAST:event_mnuAvanceProduccionActionPerformed
 
-    private void btnProblemasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProblemasActionPerformed
+    private void mnuProblemaMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProblemaMaquinaActionPerformed
+        // TODO add your handling code here:
         new ProblemaMaquinaHerramientaParticular(this, true).setVisible(true);
+    }//GEN-LAST:event_mnuProblemaMaquinaActionPerformed
 
-    }//GEN-LAST:event_btnProblemasActionPerformed
-
-    private void btnConsultaProblemasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaProblemasActionPerformed
+    private void mnuConsultarProblemasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuConsultarProblemasActionPerformed
+        // TODO add your handling code here:
         new ConsultaProblemasMHP(this, true).setVisible(true);
-    }//GEN-LAST:event_btnConsultaProblemasActionPerformed
+    }//GEN-LAST:event_mnuConsultarProblemasActionPerformed
 
-    private void btnTipoDocumento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoDocumento1ActionPerformed
-        new PantallaFormaDePago(this, true).setVisible(true);
-    }//GEN-LAST:event_btnTipoDocumento1ActionPerformed
-
-    private void btnAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsistenciaActionPerformed
-        PantallaAsistenciaEmpleadoRegistrar.iniciarRegistroAsistencia();
-    }//GEN-LAST:event_btnAsistenciaActionPerformed
-
-    private void btnDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositoActionPerformed
-        visible(false);
-        pnlDeposito.setVisible(true);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDepositoActionPerformed
-
-    private void btnRecepMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecepMatActionPerformed
-
-        new GestorRecepcionMaterial();
-    }//GEN-LAST:event_btnRecepMatActionPerformed
-
-    private void btnReajustarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReajustarActionPerformed
-
-
-       new ReajustarStock(this, true).setVisible(true);
-
-
-
-
-
-
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnReajustarActionPerformed
-
-    private void txtVentas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVentas1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtVentas1ActionPerformed
-
-    private void btnPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidoActionPerformed
-     new PantallaRegistrarEntregaPedido(this, true).setVisible(true);
-    }//GEN-LAST:event_btnPedidoActionPerformed
-
-    private void txtAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAdmActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtAdmActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-      new PantallaRegistrarEntregaMaterialesProduccion(this, true).setVisible(true);
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void btnFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturaActionPerformed
-        // TODO add your handling code here:
-        new PantallaFacturaConsultar(this,true).setVisible(true);
-    }//GEN-LAST:event_btnFacturaActionPerformed
-
-    private void jButtonAlmacenamientoProdTerminadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlmacenamientoProdTerminadoActionPerformed
-        new PantallaRegistrarAlmacenamientoProdTerminado(this, true).setVisible(true);
-    }//GEN-LAST:event_jButtonAlmacenamientoProdTerminadoActionPerformed
-
-    private void btnHorariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHorariosActionPerformed
-        // TODO add your handling code here:
-        new PantallaHorarioAdministar(new GestorHorario()).setVisible(true);
-    }//GEN-LAST:event_btnHorariosActionPerformed
-
-    private void btnConsultarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAsistenciaActionPerformed
-        // TODO add your handling code here:
-        new PantallaAsistenciaEmpleadoConsultar(this,true).setVisible(true);
-    }//GEN-LAST:event_btnConsultarAsistenciaActionPerformed
-
-    private void btnConsultarAsistencia1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAsistencia1ActionPerformed
-        // TODO add your handling code here:
-        new PantallaHorarioAsignarEmpleado(this,true).setVisible(true);
-    }//GEN-LAST:event_btnConsultarAsistencia1ActionPerformed
-
-    private void btnTipoMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoMaquinaActionPerformed
+    private void mnuTipoMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuTipoMaquinaActionPerformed
         // TODO add your handling code here:
         new PantallaTipoMaquinaABM(new GestorTipoMaquina()).setVisible(true);
-    }//GEN-LAST:event_btnTipoMaquinaActionPerformed
+    }//GEN-LAST:event_mnuTipoMaquinaActionPerformed
 
-    private void btnTipoHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoHerramientaActionPerformed
+    private void mnuTipoHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuTipoHerramientaActionPerformed
         // TODO add your handling code here:
         new PantallaTipoHerramientaABM(new GestorTipoHerramienta()).setVisible(true);
-    }//GEN-LAST:event_btnTipoHerramientaActionPerformed
+    }//GEN-LAST:event_mnuTipoHerramientaActionPerformed
 
-    private void btnTipoHerramienta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoHerramienta1ActionPerformed
+    private void mnuEtapaProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEtapaProduccionActionPerformed
         // TODO add your handling code here:
         new PantallaABMEtapaProduccion(this, true).setVisible(true);
-        
-    }//GEN-LAST:event_btnTipoHerramienta1ActionPerformed
+    }//GEN-LAST:event_mnuEtapaProduccionActionPerformed
 
-    private void btnHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHerramientaActionPerformed
+    private void mnuHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuHerramientaActionPerformed
         // TODO add your handling code here:
         PantallaHerramientaConsultar pantalla = new PantallaHerramientaConsultar(this, true);
         pantalla.setVisible(true);
-    }//GEN-LAST:event_btnHerramientaActionPerformed
+    }//GEN-LAST:event_mnuHerramientaActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void mnuPlanificacionNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPlanificacionNuevoActionPerformed
         // TODO add your handling code here:
         new PantallaPlanProduccionPrincipal(this,true).setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_mnuPlanificacionNuevoActionPerformed
+
+    private void mnuReajustarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuReajustarStockActionPerformed
+        // TODO add your handling code here:
+        new ReajustarStock(this, true).setVisible(true);
+    }//GEN-LAST:event_mnuReajustarStockActionPerformed
+
+    private void mnuRecepcionMaterialesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRecepcionMaterialesActionPerformed
+        // TODO add your handling code here:
+        new GestorRecepcionMaterial();
+    }//GEN-LAST:event_mnuRecepcionMaterialesActionPerformed
+
+    private void mnuEntregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEntregarPedidoActionPerformed
+        // TODO add your handling code here:
+        new PantallaRegistrarEntregaPedido(this, true).setVisible(true);
+    }//GEN-LAST:event_mnuEntregarPedidoActionPerformed
+
+    private void mnuEntregaMaterialesProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEntregaMaterialesProduccionActionPerformed
+        // TODO add your handling code here:
+        new PantallaRegistrarEntregaPedido(this, true).setVisible(true);
+    }//GEN-LAST:event_mnuEntregaMaterialesProduccionActionPerformed
+
+    private void mnuAlmacenamientoProductoTerminadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAlmacenamientoProductoTerminadoActionPerformed
+        // TODO add your handling code here:
+        new PantallaRegistrarAlmacenamientoProdTerminado(this, true).setVisible(true);
+    }//GEN-LAST:event_mnuAlmacenamientoProductoTerminadoActionPerformed
+
+    private void mnuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExitActionPerformed
+        // TODO add your handling code here:
+        pnlSession.setVisible(true);
+        ocultarMenu();
+    }//GEN-LAST:event_mnuExitActionPerformed
+
+    private void btnIniciarSessionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSessionActionPerformed
+        // TODO add your handling code here:
+        Usuario uss;
+        
+        uss = UsuarioBD.getUsuario(txtUsuario.getText(), txtPassword.getText());
+
+        ocultarMenu();
+        
+        if(uss == null)
+        {
+            lblMensaje.setText("El Usuario y/o Contraseña son Incorrectos");
+            lblMensaje.setVisible(true);
+        }
+        else
+        {
+         
+            if(UsuarioBD.getEmpleado(uss) == null)
+            {
+                Mensajes.mensajeErrorGenerico("El Usuario no esta Asociado a un Empleado");
+                return;
+            }
+            
+            pnlSession.setVisible(false);
+            txtPassword.setText("");
+            txtUsuario.setText("");
+            
+            Empleado emp = UsuarioBD.getEmpleado(uss);
+            String strCargo = "";
+            
+            if(emp.getCargos().isEmpty())
+            {
+                strCargo = "Sin Cargo";
+            }
+            else
+            {
+                strCargo = ((Cargo) emp.getCargos().toArray()[0]).getNombre() ;
+            }
+            
+            
+            lblMensajeInicio.setText("Bienvenido: " + emp.getNumeroDocumento() + " - " + emp.getApellidoNombre() + " - " + strCargo);
+
+            for(RolXUsuario rolxuss : uss.getTRolXUsuario()){
+                Rol rol = rolxuss.getTRol();
+                for(RolXMenu rolxmenu : rol.getTRolXMenu())
+                {
+                    
+                    switch(rolxmenu.getTMenu().getIdMenu())
+                    {
+                        case 1:
+                            mnuAdministracion.setVisible(true);
+                            break;
+                       case 2:
+                            mnuCompras.setVisible(true);
+                            break;
+                       case 3:
+                            mnuProduccion.setVisible(true);
+                            break;
+                       case 4:
+                            mnuVentas.setVisible(true);
+                            break;
+                       case 5:
+                            mnuDeposito.setVisible(true);
+                            break;
+                          
+                    }
+                }
+            }
+            
+
+        }
+   
+    }//GEN-LAST:event_btnIniciarSessionActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea salir?")) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void mnuIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIniciarSesionActionPerformed
+        // TODO add your handling code here:
+        ocultarMenu();
+    }//GEN-LAST:event_mnuIniciarSesionActionPerformed
+
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        // TODO add your handling code here:
+
+        pnlSession.setLocation((this.getWidth() - pnlSession.getWidth())/2, (this.getHeight() - pnlSession.getHeight())/2);
+                
+    }//GEN-LAST:event_formComponentResized
 
     /**
      * @param args the command line arguments
@@ -943,56 +807,67 @@ UIManager.put("SyntheticaAddons.license.key", "706FC55F-821A72A1-F46D7D49-107647
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdministracion;
-    private javax.swing.JButton btnAsistencia;
-    private javax.swing.JButton btnAvance;
-    private javax.swing.JButton btnCargo;
-    private javax.swing.JButton btnCompras;
-    private javax.swing.JButton btnConsultaProblemas;
-    private javax.swing.JButton btnConsultarAsistencia;
-    private javax.swing.JButton btnConsultarAsistencia1;
-    private javax.swing.JButton btnDeposito;
-    private javax.swing.JButton btnEmpleado;
-    private javax.swing.JButton btnFactura;
-    private javax.swing.JButton btnHerramienta;
-    private javax.swing.JButton btnHorarios;
-    private javax.swing.JButton btnMaquina;
-    private javax.swing.JButton btnOrdenCompra;
-    private javax.swing.JButton btnPedido;
-    private javax.swing.JButton btnProblemas;
-    private javax.swing.JButton btnProduccion;
-    private javax.swing.JButton btnProducto;
-    private javax.swing.JButton btnProveedor;
-    private javax.swing.JButton btnReajustar;
-    private javax.swing.JButton btnRecepMat;
+    private javax.swing.JButton btnIniciarSession;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton btnTipoDocumento;
-    private javax.swing.JButton btnTipoDocumento1;
-    private javax.swing.JButton btnTipoHerramienta;
-    private javax.swing.JButton btnTipoHerramienta1;
-    private javax.swing.JButton btnTipoMaquina;
-    private javax.swing.JButton btnTipoProducto;
-    private javax.swing.JButton btnVenta;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButtonAlmacenamientoProdTerminado;
-    private Presentacion.Fondo pnlAdministracion;
-    private Presentacion.Fondo pnlCompras;
-    private javax.swing.JPanel pnlContenerdor;
-    private javax.swing.JPanel pnlDeposito;
-    private javax.swing.JPanel pnlMenu;
-    private Presentacion.Fondo pnlProduccion;
-    private Presentacion.Fondo pnlVentas;
-    private javax.swing.JTextField txtAdm;
-    private javax.swing.JTextField txtComp;
-    private javax.swing.JTextField txtProd;
-    private javax.swing.JTextField txtVentas;
-    private javax.swing.JTextField txtVentas1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel lblMensaje;
+    private javax.swing.JLabel lblMensajeInicio;
+    private javax.swing.JMenu mnuAdministracion;
+    private javax.swing.JMenuItem mnuAlmacenamientoProductoTerminado;
+    private javax.swing.JMenuItem mnuAsignarHorario;
+    private javax.swing.JMenuItem mnuAvanceProduccion;
+    private javax.swing.JMenuItem mnuCargo;
+    private javax.swing.JMenuItem mnuCliente;
+    private javax.swing.JMenu mnuCompras;
+    private javax.swing.JMenuItem mnuConsultarAsistencia;
+    private javax.swing.JMenuItem mnuConsultarProblemas;
+    private javax.swing.JMenu mnuDeposito;
+    private javax.swing.JMenuItem mnuEmpleado;
+    private javax.swing.JMenuItem mnuEntregaMaterialesProduccion;
+    private javax.swing.JMenuItem mnuEntregarPedido;
+    private javax.swing.JMenuItem mnuEstructuraProducto;
+    private javax.swing.JMenuItem mnuEtapaProduccion;
+    private javax.swing.JMenuItem mnuExit;
+    private javax.swing.JMenuItem mnuFactura;
+    private javax.swing.JMenuItem mnuFormaPago;
+    private javax.swing.JMenuItem mnuHerramienta;
+    private javax.swing.JMenuItem mnuHorarios;
+    private javax.swing.JMenuItem mnuIniciarSesion;
+    private javax.swing.JMenuItem mnuMaquina;
+    private javax.swing.JMenuItem mnuMaterial;
+    private javax.swing.JMenuItem mnuOrdenCompra;
+    private javax.swing.JMenuItem mnuOrdenTrabajo;
+    private javax.swing.JMenuItem mnuPedido;
+    private javax.swing.JMenuItem mnuPlanificacionNuevo;
+    private javax.swing.JMenuItem mnuPlanificacionViejo;
+    private javax.swing.JMenuItem mnuProblemaMaquina;
+    private javax.swing.JMenu mnuProduccion;
+    private javax.swing.JMenuItem mnuProducto;
+    private javax.swing.JMenuItem mnuProveedor;
+    private javax.swing.JMenuItem mnuReajustarStock;
+    private javax.swing.JMenuItem mnuRecepcionMateriales;
+    private javax.swing.JMenuItem mnuRegistrarAsistencia;
+    private javax.swing.JMenu mnuSalir;
+    private javax.swing.JMenuItem mnuTipoDocumento;
+    private javax.swing.JMenuItem mnuTipoHerramienta;
+    private javax.swing.JMenuItem mnuTipoMaquina;
+    private javax.swing.JMenuItem mnuTipoProducto;
+    private javax.swing.JMenu mnuVentas;
+    private javax.swing.JPanel pnlSession;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+    private void ocultarMenu() {
+        mnuAdministracion.setVisible(false);
+        mnuCompras.setVisible(false);
+        mnuProduccion.setVisible(false);
+        mnuVentas.setVisible(false);
+        mnuDeposito.setVisible(false);
+        lblMensaje.setVisible(false);
+        lblMensajeInicio.setText("");
+    }
 }
