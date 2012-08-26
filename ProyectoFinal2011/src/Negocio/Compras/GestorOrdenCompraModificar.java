@@ -34,6 +34,7 @@ public class GestorOrdenCompraModificar extends GestorOrdenCompra{
         interfaz.habilitarPanelBaja(false);
         interfaz.setTitle("Modificar Orden de Compra");
         interfaz.setVisible(true);
+        interfaz.setLocationRelativeTo(null);
         
     }
 

@@ -50,6 +50,7 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
         inicializarLista();
         cargarLista();
         limpiar();
+        setLocationRelativeTo(null);
     }
 
     private void inicializarTabla() {

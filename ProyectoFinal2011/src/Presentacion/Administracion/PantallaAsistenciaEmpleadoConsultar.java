@@ -42,6 +42,7 @@ public class PantallaAsistenciaEmpleadoConsultar extends javax.swing.JDialog {
         initComponents();
         inicializarTablas();
         cargarValidaciones();
+        setLocationRelativeTo(null);
     }
 
      private void cargarValidaciones() {

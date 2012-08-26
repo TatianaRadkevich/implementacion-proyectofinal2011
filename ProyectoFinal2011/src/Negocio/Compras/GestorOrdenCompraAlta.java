@@ -30,6 +30,7 @@ public class GestorOrdenCompraAlta extends GestorOrdenCompra{
         interfaz.setNro(getCodigo()+1);
         interfaz.habilitarPanelBaja(false);
         interfaz.setVisible(true);
+        interfaz.setLocationRelativeTo(null);
         
     }
 

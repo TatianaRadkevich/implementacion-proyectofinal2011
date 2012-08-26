@@ -34,7 +34,8 @@ public class PantallaOrdenCompraEnvio extends javax.swing.JDialog {
         super(parent, modal);
         //gestor=g;
         gestor=g;
-        initComponents();        
+        initComponents();
+        setLocationRelativeTo(null);
         
         txtFecha.setText(Utilidades.parseFecha(Utilidades.getFechaActual()));
         dtcFechaEnvio.setDate(Utilidades.getFechaActual());

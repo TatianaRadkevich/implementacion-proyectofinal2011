@@ -54,6 +54,7 @@ public class PantallaOrdenCompraABM extends javax.swing.JDialog {
     private PantallaOrdenCompraABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     public PantallaOrdenCompraABM(GestorOrdenCompra gestor) {

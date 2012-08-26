@@ -68,6 +68,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
 
         this.link.add("cargo", new ZLCheckList(lstCargos));
         this.link.add("domicilio", new ZLDomicilio(pnlDomicilio));
+        setLocationRelativeTo(null);
     }
 
     /** This method is called from within the constructor to
@@ -552,6 +553,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         i.btnSalir.setVisible(false);
         i.pack();
         i.setVisible(true);
+        i.setLocationRelativeTo(null);
     }
 
     public static void iniciarModificarEmpleado(Window parent, Empleado e) {
@@ -562,6 +564,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         i.btnSalir.setVisible(false);
         i.pack();
         i.setVisible(true);
+        i.setLocationRelativeTo(null);
     }
 
     public static void iniciarCancelarEmpleado(Window parent, Empleado e) {
@@ -574,6 +577,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         i.btnSalir.setVisible(false);
         i.pack();
         i.setVisible(true);
+        i.setLocationRelativeTo(null);
     }
 
     public static void iniciarVerEmpleado(Window parent, Empleado e) {
@@ -589,6 +593,7 @@ public class PantallaABMEmpleado extends javax.swing.JDialog {
         i.btnCancelar.setVisible(false);
         i.pack();
         i.setVisible(true);
+        i.setLocationRelativeTo(null);
 
     }
 

@@ -43,6 +43,7 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
     private PantallaProveedorABM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     public PantallaProveedorABM(GestorProveedor g) {
@@ -615,5 +616,6 @@ public class PantallaProveedorABM extends javax.swing.JDialog {
         i.iniciarBaja();
         i.pack();
         i.setVisible(true);
+        i.setLocationRelativeTo(null);
     }
 }
