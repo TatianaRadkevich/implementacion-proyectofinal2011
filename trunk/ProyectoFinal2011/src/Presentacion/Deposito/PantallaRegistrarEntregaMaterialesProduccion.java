@@ -43,6 +43,7 @@ public class PantallaRegistrarEntregaMaterialesProduccion extends javax.swing.JD
         gestor = new GestorOrdenTrabajo();
         initComponents();
         txtFechaActual.setText(Utilidades.parseFecha(Utilidades.getFechaActual()));
+        setLocationRelativeTo(null);
     }
 
     /** This method is called from within the constructor to

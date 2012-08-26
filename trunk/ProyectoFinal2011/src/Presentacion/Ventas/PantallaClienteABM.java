@@ -43,6 +43,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
         // cargarValidaciones();
         pnlDomicilio.inicializar();
         recargarComboTipoCleinte();
+        setLocationRelativeTo(null);
 
         linker = new ZLObject<Cliente>(Cliente.class, gestor.getCliente());
         linker.add("apellidoResponsable", new ZLTextField(txtApellido));

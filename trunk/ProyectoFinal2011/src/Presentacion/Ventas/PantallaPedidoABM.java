@@ -48,7 +48,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         super(parent, ModalityType.APPLICATION_MODAL);
         this.gestor = gestor;
         initComponents();
-
+        setLocationRelativeTo(null);
         auto = new AutoFill<Cliente>(txtBuscar) {
 
             @Override

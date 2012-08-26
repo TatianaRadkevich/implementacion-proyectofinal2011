@@ -685,7 +685,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void mnuEntregaMaterialesProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEntregaMaterialesProduccionActionPerformed
         // TODO add your handling code here:
-        new PantallaRegistrarEntregaPedido(this, true).setVisible(true);
+        new PantallaRegistrarEntregaMaterialesProduccion(this, true).setVisible(true);
     }//GEN-LAST:event_mnuEntregaMaterialesProduccionActionPerformed
 
     private void mnuAlmacenamientoProductoTerminadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAlmacenamientoProductoTerminadoActionPerformed

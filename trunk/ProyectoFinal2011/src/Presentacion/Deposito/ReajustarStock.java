@@ -39,6 +39,7 @@ public class ReajustarStock extends javax.swing.JDialog {
 
         inicializarComboMateriales();
         limpiarDatos();
+        setLocationRelativeTo(null);
     }
 
     private void inicializarComboMateriales()
