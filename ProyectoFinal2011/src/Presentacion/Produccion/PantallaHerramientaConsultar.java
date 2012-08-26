@@ -33,6 +33,7 @@ public class PantallaHerramientaConsultar extends javax.swing.JDialog {
     public PantallaHerramientaConsultar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         tablita = new TablaManager<HerramientaParticular>(tbMaquinaHerramienta) {
 
             @Override

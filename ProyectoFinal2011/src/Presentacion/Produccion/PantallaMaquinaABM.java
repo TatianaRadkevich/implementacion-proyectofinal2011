@@ -40,6 +40,7 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
         initComponents();
         //txtCapacidad.setVisible(false);
         pnlBaja.setVisible(false);
+        setLocationRelativeTo(null);
     }
 
     public PantallaMaquinaABM(GestorMaquina g)
