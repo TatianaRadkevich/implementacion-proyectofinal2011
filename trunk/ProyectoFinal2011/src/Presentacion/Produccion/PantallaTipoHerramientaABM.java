@@ -48,7 +48,7 @@ public class PantallaTipoHerramientaABM extends javax.swing.JDialog {
         habilitarConfirmacion(false);
         habilitarBaja(false, null, null);
         cargarValidaciones();
-        
+        setLocationRelativeTo(null);
         lstDisponible.setModel(new DefaultListModel());            
         lstDisponible.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 

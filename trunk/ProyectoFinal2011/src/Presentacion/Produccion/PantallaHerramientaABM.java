@@ -46,6 +46,7 @@ public class PantallaHerramientaABM extends javax.swing.JDialog {
         initComponents();
         //txtCapacidad.setVisible(false);
         pnlBaja.setVisible(false);
+        setLocationRelativeTo(null);
     }
 
     public PantallaHerramientaABM(GestorHerramienta g)
