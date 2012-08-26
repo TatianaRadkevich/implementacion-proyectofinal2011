@@ -310,7 +310,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jScrollPane2" alignment="0" pref="287" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="298" max="32767" attributes="0"/>
                           <Component id="jPanel8" alignment="1" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
@@ -337,7 +337,7 @@
                           <Component id="cmbHorario" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="62" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="68" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -389,11 +389,11 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="dtcFechaInicio" pref="94" max="32767" attributes="3"/>
+                          <Component id="dtcFechaInicio" pref="105" max="32767" attributes="3"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="dtcFechaFin" pref="94" max="32767" attributes="3"/>
+                          <Component id="dtcFechaFin" pref="105" max="32767" attributes="3"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
