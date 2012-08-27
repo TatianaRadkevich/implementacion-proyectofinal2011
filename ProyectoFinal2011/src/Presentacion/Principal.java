@@ -624,7 +624,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void mnuOrdenTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOrdenTrabajoActionPerformed
         // TODO add your handling code here:
-        new GestorOrdenTrabajo();
+        new GestorOrdenTrabajo().iniciarCU(null);
     }//GEN-LAST:event_mnuOrdenTrabajoActionPerformed
 
     private void mnuAvanceProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAvanceProduccionActionPerformed

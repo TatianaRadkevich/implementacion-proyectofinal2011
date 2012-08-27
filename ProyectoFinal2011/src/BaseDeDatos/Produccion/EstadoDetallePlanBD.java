@@ -54,6 +54,7 @@ public class EstadoDetallePlanBD {
     private static final String EP_Terminado="Terminado";
     private static final String EP_Pendiente="Pendiente";
     private static final String EP_Cancelado="Cancelado";
+    private static final String EP_Replanificar="Replanificar";
 
     public static EstadoDetallePlan getEstadoTerminado()
     {
@@ -68,6 +69,11 @@ public class EstadoDetallePlanBD {
           public static EstadoDetallePlan getEstadoCancelado()
     {
         return getEstadoDetallePlan(EP_Cancelado);
+    }
+
+    public static EstadoDetallePlan getEstadoReplanificar()
+    {
+        return getEstadoDetallePlan(EP_Replanificar);
     }
 
     private static EstadoDetallePlan getEstadoDetallePlan(String nombre)
