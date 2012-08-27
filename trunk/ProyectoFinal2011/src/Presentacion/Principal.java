@@ -97,7 +97,6 @@ public class Principal extends javax.swing.JFrame {
         lblMensajeInicio = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuSalir = new javax.swing.JMenu();
-        mnuIniciarSesion = new javax.swing.JMenuItem();
         mnuExit = new javax.swing.JMenuItem();
         mnuAdministracion = new javax.swing.JMenu();
         mnuCargo = new javax.swing.JMenuItem();
@@ -200,14 +199,7 @@ public class Principal extends javax.swing.JFrame {
 
         mnuSalir.setText("Sesión");
 
-        mnuIniciarSesion.setText("Iniciar Sesión");
-        mnuIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuIniciarSesionActionPerformed(evt);
-            }
-        });
-        mnuSalir.add(mnuIniciarSesion);
-
+        mnuExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/sesion.png"))); // NOI18N
         mnuExit.setText("Cerrar Sesión");
         mnuExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,6 +212,7 @@ public class Principal extends javax.swing.JFrame {
 
         mnuAdministracion.setText("Administración");
 
+        mnuCargo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/cargo.png"))); // NOI18N
         mnuCargo.setText("Cargo");
         mnuCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,6 +221,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuAdministracion.add(mnuCargo);
 
+        mnuEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/empleados.png"))); // NOI18N
         mnuEmpleado.setText("Empleado");
         mnuEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,6 +230,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuAdministracion.add(mnuEmpleado);
 
+        mnuTipoDocumento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/tipo_dni.png"))); // NOI18N
         mnuTipoDocumento.setText("Tipo de Documento");
         mnuTipoDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -244,6 +239,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuAdministracion.add(mnuTipoDocumento);
 
+        mnuFormaPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/forma_pago.png"))); // NOI18N
         mnuFormaPago.setText("Forma de Pago");
         mnuFormaPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,6 +248,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuAdministracion.add(mnuFormaPago);
 
+        mnuRegistrarAsistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/asistencia.png"))); // NOI18N
         mnuRegistrarAsistencia.setText("Registrar Asistencia");
         mnuRegistrarAsistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -260,6 +257,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuAdministracion.add(mnuRegistrarAsistencia);
 
+        mnuHorarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/horarios.png"))); // NOI18N
         mnuHorarios.setText("Horarios");
         mnuHorarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -268,6 +266,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuAdministracion.add(mnuHorarios);
 
+        mnuConsultarAsistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/consultar asistencia.png"))); // NOI18N
         mnuConsultarAsistencia.setText("Consultar Asistencia");
         mnuConsultarAsistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,6 +275,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuAdministracion.add(mnuConsultarAsistencia);
 
+        mnuAsignarHorario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/asignar_horarios.png"))); // NOI18N
         mnuAsignarHorario.setText("Asignar Horario");
         mnuAsignarHorario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -288,6 +288,7 @@ public class Principal extends javax.swing.JFrame {
 
         mnuCompras.setText("Compras");
 
+        mnuMaterial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/material.png"))); // NOI18N
         mnuMaterial.setText("Material");
         mnuMaterial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,6 +297,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuCompras.add(mnuMaterial);
 
+        mnuProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/proveedor.png"))); // NOI18N
         mnuProveedor.setText("Proveedor");
         mnuProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -304,6 +306,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuCompras.add(mnuProveedor);
 
+        mnuOrdenCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/orden_compra.png"))); // NOI18N
         mnuOrdenCompra.setText("Orden de Compra");
         mnuOrdenCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -316,6 +319,7 @@ public class Principal extends javax.swing.JFrame {
 
         mnuProduccion.setText("Producción");
 
+        mnuTipoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/tipo_producto.png"))); // NOI18N
         mnuTipoProducto.setText("Tipo de Producto");
         mnuTipoProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,6 +328,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuTipoProducto);
 
+        mnuProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/producto.png"))); // NOI18N
         mnuProducto.setText("Producto");
         mnuProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -332,6 +337,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuProducto);
 
+        mnuMaquina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/maquinaria.png"))); // NOI18N
         mnuMaquina.setText("Máquina");
         mnuMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -340,6 +346,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuMaquina);
 
+        mnuEstructuraProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/estructura_producto.png"))); // NOI18N
         mnuEstructuraProducto.setText("Estructura de Producto");
         mnuEstructuraProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -348,6 +355,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuEstructuraProducto);
 
+        mnuPlanificacionViejo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/plan_viejo.png"))); // NOI18N
         mnuPlanificacionViejo.setText("Planificación Viejo");
         mnuPlanificacionViejo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -356,6 +364,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuPlanificacionViejo);
 
+        mnuOrdenTrabajo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/orden_trabajo.png"))); // NOI18N
         mnuOrdenTrabajo.setText("Orden de Trabajo");
         mnuOrdenTrabajo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -364,6 +373,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuOrdenTrabajo);
 
+        mnuAvanceProduccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/avance_produccion.png"))); // NOI18N
         mnuAvanceProduccion.setText("Avance de Producción");
         mnuAvanceProduccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -372,6 +382,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuAvanceProduccion);
 
+        mnuProblemaMaquina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/problemas_maquinas.png"))); // NOI18N
         mnuProblemaMaquina.setText("Problemas Maquinas");
         mnuProblemaMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -380,6 +391,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuProblemaMaquina);
 
+        mnuConsultarProblemas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/consultar_problemas.png"))); // NOI18N
         mnuConsultarProblemas.setText("Consultar Problemas");
         mnuConsultarProblemas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -388,6 +400,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuConsultarProblemas);
 
+        mnuTipoMaquina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/tipo_maquina.png"))); // NOI18N
         mnuTipoMaquina.setText("Tipo de Maquina");
         mnuTipoMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -396,6 +409,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuTipoMaquina);
 
+        mnuTipoHerramienta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/tipo_herramienta.png"))); // NOI18N
         mnuTipoHerramienta.setText("Tipo de Herramienta");
         mnuTipoHerramienta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -404,6 +418,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuTipoHerramienta);
 
+        mnuEtapaProduccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/etapa_produccion.png"))); // NOI18N
         mnuEtapaProduccion.setText("Etapa de Producción");
         mnuEtapaProduccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -412,6 +427,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuEtapaProduccion);
 
+        mnuHerramienta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/herramientas.png"))); // NOI18N
         mnuHerramienta.setText("Herramienta");
         mnuHerramienta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -420,6 +436,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuHerramienta);
 
+        mnuPlanificacionNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/plan_nuevo.png"))); // NOI18N
         mnuPlanificacionNuevo.setText("Planificación Nuevo");
         mnuPlanificacionNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -432,6 +449,7 @@ public class Principal extends javax.swing.JFrame {
 
         mnuVentas.setText("Ventas");
 
+        mnuCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/clientes.png"))); // NOI18N
         mnuCliente.setText("Cliente");
         mnuCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -440,6 +458,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuVentas.add(mnuCliente);
 
+        mnuPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/pedidos.png"))); // NOI18N
         mnuPedido.setText("Pedido");
         mnuPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -448,6 +467,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuVentas.add(mnuPedido);
 
+        mnuFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/factura.png"))); // NOI18N
         mnuFactura.setText("Factura");
         mnuFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -460,6 +480,7 @@ public class Principal extends javax.swing.JFrame {
 
         mnuDeposito.setText("Depósito");
 
+        mnuReajustarStock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/reajustar_stock.png"))); // NOI18N
         mnuReajustarStock.setText("Reajustar Stock");
         mnuReajustarStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -468,6 +489,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuDeposito.add(mnuReajustarStock);
 
+        mnuRecepcionMateriales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/recepcion_materiales.png"))); // NOI18N
         mnuRecepcionMateriales.setText("Recepción de Materiales");
         mnuRecepcionMateriales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -476,6 +498,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuDeposito.add(mnuRecepcionMateriales);
 
+        mnuEntregarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/entrega_pedido.png"))); // NOI18N
         mnuEntregarPedido.setText("Entregar Pedido");
         mnuEntregarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -484,6 +507,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuDeposito.add(mnuEntregarPedido);
 
+        mnuEntregaMaterialesProduccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/entrega_materiales_produccion.png"))); // NOI18N
         mnuEntregaMaterialesProduccion.setText("Entrega Materiales Producción");
         mnuEntregaMaterialesProduccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -492,6 +516,7 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuDeposito.add(mnuEntregaMaterialesProduccion);
 
+        mnuAlmacenamientoProductoTerminado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/almacenamiento.png"))); // NOI18N
         mnuAlmacenamientoProductoTerminado.setText("Almacenamiento Producto Terminado");
         mnuAlmacenamientoProductoTerminado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -779,11 +804,6 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void mnuIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIniciarSesionActionPerformed
-        // TODO add your handling code here:
-        ocultarMenu();
-    }//GEN-LAST:event_mnuIniciarSesionActionPerformed
-
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         // TODO add your handling code here:
 
@@ -834,7 +854,6 @@ UIManager.put("SyntheticaAddons.license.key", "706FC55F-821A72A1-F46D7D49-107647
     private javax.swing.JMenuItem mnuFormaPago;
     private javax.swing.JMenuItem mnuHerramienta;
     private javax.swing.JMenuItem mnuHorarios;
-    private javax.swing.JMenuItem mnuIniciarSesion;
     private javax.swing.JMenuItem mnuMaquina;
     private javax.swing.JMenuItem mnuMaterial;
     private javax.swing.JMenuItem mnuOrdenCompra;
