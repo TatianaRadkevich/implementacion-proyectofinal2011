@@ -6,9 +6,11 @@ package BaseDeDatos.Administracion;
 
 import BaseDeDatos.HibernateUtil;
 import Negocio.Administracion.AsistenciaEmpleado;
+import Negocio.Administracion.Empleado;
 import Presentacion.Utilidades;
 import java.util.Date;
 import java.util.List;
+import org.springframework.beans.factory.ListableBeanFactory;
 
 /**
  *
@@ -29,8 +31,19 @@ public class AsistenciaEmpleadoBD {
         return HibernateUtil.ejecutarConsulta(HQL);
     }
     
-        public static AsistenciaEmpleado guardar(AsistenciaEmpleado asist){
+    public static AsistenciaEmpleado guardar(AsistenciaEmpleado asist){
         HibernateUtil.guardarObjeto(asist);
         return asist;
+    }
+
+    public static Boolean estaPresente(Empleado empleado) {
+        String HQL =
+                  " FROM AsistenciaEmpleado as asist " +
+                  " WHERE asist.TEmpleados.id = " + empleado.getId() +
+                  "   AND asist.horaEgreso is null ";
+
+        List<AsistenciaEmpleado> asistencias = HibernateUtil.ejecutarConsulta(HQL);
+        if(asistencias.size() == 0) return false;
+        return true;
     }
 }

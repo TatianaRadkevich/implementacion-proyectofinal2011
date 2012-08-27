@@ -14,7 +14,10 @@ import BaseDeDatos.Produccion.OrdenTrabajoBD;
 import BaseDeDatos.Ventas.EstadoPedidoBD;
 import Negocio.Ventas.Pedido;
 import Presentacion.Produccion.PantallaABMOrdenTrabajo;
+import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 
 /**
@@ -22,13 +25,15 @@ import javax.swing.JDialog;
  * @author Ivan
  */
 public class GestorOrdenTrabajo {
-
-
-
     public void iniciarCU(JDialog dialog){
-        PantallaABMOrdenTrabajo pantalla=new PantallaABMOrdenTrabajo(dialog, true,this);
-        pantalla.setVisible(true);
-
+        try {
+            PantallaABMOrdenTrabajo pantalla = new PantallaABMOrdenTrabajo(dialog, true, this);
+            pantalla.setVisible(true);
+        } catch (ExceptionInInitializerError ex) {
+            Logger.getLogger(GestorOrdenTrabajo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(GestorOrdenTrabajo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void ejecutarOperacion(OrdenTrabajo orden){
