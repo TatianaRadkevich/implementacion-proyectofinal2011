@@ -139,7 +139,7 @@ public class Principal extends javax.swing.JFrame {
         mnuAlmacenamientoProductoTerminado = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Pantalla Principal");
+        setTitle("Menú Principal");
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
