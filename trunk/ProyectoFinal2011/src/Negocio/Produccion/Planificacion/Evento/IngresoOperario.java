@@ -21,4 +21,9 @@ public class IngresoOperario  extends Evento {
 
     }
 
+    @Override
+    public void ejecutar() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

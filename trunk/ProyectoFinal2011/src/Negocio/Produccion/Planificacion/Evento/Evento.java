@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Dicsys
  */
-public class Evento {
+public abstract class Evento {
     private Date tiempo;
 
     public Evento()
@@ -30,5 +30,7 @@ public class Evento {
     public void setTiempo(Date tiempo) {
         this.tiempo = tiempo;
     }
+
+    public abstract void ejecutar();
 
 }
