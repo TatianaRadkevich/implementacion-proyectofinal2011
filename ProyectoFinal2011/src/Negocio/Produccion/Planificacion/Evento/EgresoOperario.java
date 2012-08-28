@@ -19,4 +19,9 @@ public class EgresoOperario extends Evento {
 
     }
 
+    @Override
+    public void ejecutar() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

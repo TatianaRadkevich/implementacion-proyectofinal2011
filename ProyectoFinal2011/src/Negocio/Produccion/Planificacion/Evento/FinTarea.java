@@ -22,4 +22,9 @@ public class FinTarea  extends Evento{
         this.tarea=tarea;
     }
 
+    @Override
+    public void ejecutar() {
+        
+    }
+
 }
