@@ -46,4 +46,10 @@ public class PlanProduccionBD {
 
         return ret;
     }
+
+    public static PlanProduccion guardar(PlanProduccion plan)
+    {
+        HibernateUtil.guardarObjeto(plan);
+        return plan;
+    }
 }

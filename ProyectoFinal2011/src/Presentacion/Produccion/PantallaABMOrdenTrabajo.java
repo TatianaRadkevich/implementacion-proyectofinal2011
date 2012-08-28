@@ -83,7 +83,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(PlanProduccion elemento) {
                 Vector fila = new Vector();
-                fila.add(elemento.getVersion());
+                fila.add(elemento.getVersion() + " - " + elemento.getPedido().getIdPedido());
                 fila.add(Utilidades.parseFechaHora(elemento.getFecHoraPrevistaInicio()));
                 fila.add(Utilidades.parseFechaHora(elemento.getFecHoraPrevistaFin()));
                 return fila;
@@ -343,6 +343,9 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         detallePlan.setTOrdenesTrabajo(ot);
 
         DetallePlanProduccionBD.guardar(detallePlan);
+        
+        PlanProduccion plan = tmPedido.getSeletedObject();
+        PlanProduccionBD.guardar(plan);
 
         Mensajes.mensajeInformacion("La orden de trabajo se generó exitosamente.\nNúmero de orden: " + ot.getIdOrdenTrabajo() + "\nEncargado: " + ot.getTEmpleados().getApellidoNombre());
   
