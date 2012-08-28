@@ -5,6 +5,7 @@
 
 package gui;
 
+import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaBlueIceLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaClassyLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaGreenDreamLookAndFeel;
@@ -78,10 +79,20 @@ public class GUILocal {
       e.printStackTrace();
     }
 
-
     }
 
+    public static void SyntheticaAluOxideLookAndFeel(Object frame){
+      try
+    {
 
+      UIManager.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+
+    }
     
     
     

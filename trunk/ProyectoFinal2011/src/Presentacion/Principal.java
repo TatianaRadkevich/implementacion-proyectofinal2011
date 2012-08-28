@@ -818,9 +818,9 @@ public class Principal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                String[] li2 = {"Licensee=Jose Rolando Mamani", "LicenseRegistrationNumber=NCJM100903", "Product=SyntheticaAddons", "LicenseType=Non Commercial", "ExpireDate=--.--.----", "MaxVersion=1.999.999"};
-UIManager.put("SyntheticaAddons.license.info", li2);
-UIManager.put("SyntheticaAddons.license.key", "706FC55F-821A72A1-F46D7D49-1076473F-C9336002");
+               String[] li = {"Licensee=Ivan Gutierrez", "LicenseRegistrationNumber=NCIG120827", "Product=Synthetica", "LicenseType=Non Commercial", "ExpireDate=--.--.----", "MaxVersion=2.999.999"};
+UIManager.put("Synthetica.license.info", li);
+UIManager.put("Synthetica.license.key", "1891309A-E215572F-9865495F-0E06D6A9-6164D0F9");
                 new Principal().setVisible(true);
             }
         });
