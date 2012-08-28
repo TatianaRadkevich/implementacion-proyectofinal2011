@@ -40,7 +40,8 @@ public class OrdenTrabajoBD {
     }
 
     public static OrdenTrabajo traerOrdenTrabajo(Long id){
-        //List<OrdenTrabajo> ordenTrabajo = HibernateUtil.ejecutarConsulta("from OrdenTrabajo where idOrdenTrabajo = " + id);
-        return (OrdenTrabajo) HibernateUtil.ejecutarConsulta("from OrdenTrabajo where idOrdenTrabajo = "+id).get(0);
+        List<OrdenTrabajo> ordenesTrabajo = HibernateUtil.ejecutarConsulta("from OrdenTrabajo where idOrdenTrabajo = " + id);
+        if(ordenesTrabajo.isEmpty()) return null;
+        return (OrdenTrabajo) ordenesTrabajo.get(0);
     }
 }

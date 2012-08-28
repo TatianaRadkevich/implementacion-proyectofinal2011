@@ -118,6 +118,10 @@ public class OrdenTrabajo  implements java.io.Serializable {
         this.observaciones = observaciones;
     }
 
+    public void addDetallePlan(DetallePlanProduccion detalle)
+    {
+        this.TDetallesPlans.add(detalle);
+    }
 
     public List<DetallePlanProduccion> getTDetallesPlans() {
 

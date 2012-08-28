@@ -331,24 +331,21 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         }
 
         Date fecha=Calendar.getInstance().getTime();
+
         detallePlan.setTEmpleados(empleado);
 
         OrdenTrabajo ot = new OrdenTrabajo();
         ot.setFecEmision(fecha);
-        ot.getTDetallesPlans().add(detallePlan);
         ot.setTEmpleados(empleado);
         ot.setTEordenTrabajo(EstadoOrdenTrabajoBD.traerEstadoGenerado());
-        OrdenTrabajoBD.guardar(ot);
+        ot.addDetallePlan(detallePlan);
+        ot = OrdenTrabajoBD.guardar(ot);
 
         detallePlan.setTOrdenesTrabajo(ot);
-
         DetallePlanProduccionBD.guardar(detallePlan);
-        
-        PlanProduccion plan = tmPedido.getSeletedObject();
-        PlanProduccionBD.guardar(plan);
 
         Mensajes.mensajeInformacion("La orden de trabajo se generó exitosamente.\nNúmero de orden: " + ot.getIdOrdenTrabajo() + "\nEncargado: " + ot.getTEmpleados().getApellidoNombre());
-  
+
         this.actualizarDetalles();
         if(tmEtapas.getDatos().isEmpty())
         {
