@@ -22,6 +22,7 @@ import javax.persistence.Table;
 public class EstadoPlanProduccion implements java.io.Serializable {
 
 
+
     @Id
     @GeneratedValue
     @Column(name = "ID_EPLAN_PRODUCCION", unique = true, nullable = false, precision = 2, scale = 0)
@@ -34,7 +35,6 @@ public class EstadoPlanProduccion implements java.io.Serializable {
     private Set<PlanProduccion> TPlanesProduccions = new HashSet<PlanProduccion>(0);
 
     private static final String EP_Iniciado="Iniciado";
-
     
     public EstadoPlanProduccion() {
     }
@@ -86,7 +86,7 @@ public class EstadoPlanProduccion implements java.io.Serializable {
     public static EstadoPlanProduccion getEstadoIniciado() {
         return getEstadoPlan(EP_Iniciado);
     }
-
+    
     private static EstadoPlanProduccion getEstadoPlan(String nombre)
     {
         String HQL=String.format("FROM EstadoPlanProduccion as ep WHERE LOWER(ep.nombre) = LOWER('%s')", nombre);

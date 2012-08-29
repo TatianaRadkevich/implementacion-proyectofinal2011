@@ -40,7 +40,7 @@ public class OrdenTrabajoBD {
     }
 
     public static OrdenTrabajo traerOrdenTrabajo(Long id){
-        List<OrdenTrabajo> ordenesTrabajo = HibernateUtil.ejecutarConsulta("from OrdenTrabajo where idOrdenTrabajo = " + id);
+        List<OrdenTrabajo> ordenesTrabajo = HibernateUtil.ejecutarConsulta("from OrdenTrabajo where TEordenTrabajo.nombre != 'Finalizado' and  idOrdenTrabajo = " + id);
         if(ordenesTrabajo.isEmpty()) return null;
         return (OrdenTrabajo) ordenesTrabajo.get(0);
     }

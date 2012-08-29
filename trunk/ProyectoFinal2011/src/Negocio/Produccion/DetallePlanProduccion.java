@@ -5,6 +5,7 @@ import Negocio.Administracion.Empleado;
 import Negocio.Compras.Material;
 import Negocio.Deposito.Faltante;
 import Negocio.Ventas.DetallePedido;
+import Negocio.Ventas.EstadoDetallePedido;
 import Negocio.Ventas.Pedido;
 import Presentacion.Utilidades;
 import java.util.Date;
@@ -312,4 +313,6 @@ public class DetallePlanProduccion implements java.io.Serializable {
     public void setTMaqHerrPartXDetPlans(Set<DetallePlanXHerramientaParticular> TMaqHerrPartXDetPlans) {
         this.TMaqHerrPartXDetPlans = TMaqHerrPartXDetPlans;
     }
+    
+    
 }

@@ -52,4 +52,10 @@ public class PlanProduccionBD {
         HibernateUtil.guardarObjeto(plan);
         return plan;
     }
+    
+    public static PlanProduccion Modificar(PlanProduccion plan)
+    {
+        HibernateUtil.modificarObjeto(plan);
+        return plan;
+    }
 }
