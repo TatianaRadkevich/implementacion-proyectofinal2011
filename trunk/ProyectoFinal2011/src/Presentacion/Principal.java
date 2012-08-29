@@ -26,7 +26,7 @@ import Presentacion.Deposito.*;
 import Presentacion.Produccion.PantallaABMTipoProducto;
 import Presentacion.Produccion.PantallaPlanConsultar;
 import Presentacion.Produccion.PantallaConsultarProducto;
-import Presentacion.Produccion.ProblemaMaquinaHerramientaParticular;
+import Presentacion.Produccion.ProblemaMaquinaParticular;
 import Presentacion.Produccion.ConsultaProblemasMHP;
 import Presentacion.Produccion.PantallaABMEtapaProduccion;
 import Presentacion.Produccion.PantallaHerramientaConsultar;
@@ -659,7 +659,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void mnuProblemaMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProblemaMaquinaActionPerformed
         // TODO add your handling code here:
-        new ProblemaMaquinaHerramientaParticular(this, true).setVisible(true);
+        new ProblemaMaquinaParticular(this, true).setVisible(true);
     }//GEN-LAST:event_mnuProblemaMaquinaActionPerformed
 
     private void mnuConsultarProblemasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuConsultarProblemasActionPerformed

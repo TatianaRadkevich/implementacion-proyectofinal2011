@@ -25,12 +25,12 @@ import javax.swing.*;
  *
  * @author Heber Parrucci
  */
-public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
+public class ProblemaMaquinaParticular extends javax.swing.JDialog {
 
     private ProblemasMhp problema_actual=null;
     private GestorProblemasMhp gestor=new GestorProblemasMhp();
             /** Creates new form ProblemaMaquinaHerramientaParticular */
-    public ProblemaMaquinaHerramientaParticular(java.awt.Frame parent, boolean modal) {
+    public ProblemaMaquinaParticular(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
       //  GUILocal.establecerGUILocal(this);
         initComponents();
@@ -324,7 +324,7 @@ public class ProblemaMaquinaHerramientaParticular extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ProblemaMaquinaHerramientaParticular dialog = new ProblemaMaquinaHerramientaParticular(new javax.swing.JFrame(), true);
+                ProblemaMaquinaParticular dialog = new ProblemaMaquinaParticular(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
