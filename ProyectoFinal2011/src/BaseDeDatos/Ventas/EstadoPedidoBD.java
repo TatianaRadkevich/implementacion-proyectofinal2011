@@ -23,6 +23,7 @@ public class EstadoPedidoBD {
     private static final String EP_PendientePagado = "Pendiente de Pago";
     private static final String EP_PagoParcial = "Pago Parcial";
     private static final String EP_Retirado = "Retirado";
+    private static final String EP_AlmacenadoYTerminado = "ALMACENADO Y TERMINADO";
 
     public static EstadoPedido getEstadoProduccion() {
         return getEstoadoPedido(EP_Produccion);
@@ -57,6 +58,10 @@ public class EstadoPedidoBD {
 
     public static EstadoPedido getEstadoPagado() {
         return getEstoadoPedido(EP_Pagado);
+    }
+    
+    public static EstadoPedido getEstadoAlmacenadoYTerminado() {
+        return getEstoadoPedido(EP_AlmacenadoYTerminado);
     }
 
     private static EstadoPedido getEstoadoPedido(String nombre) {

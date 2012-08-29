@@ -440,7 +440,8 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
         }
           
         DetallePlanProduccion detalle=tmEtapas.getSeletedObject();
-        gestor.registrarAvance(detalle,Integer.parseInt(txtCantidadProducida.getText()));
+        
+        gestor.registrarAvance(detalle,Integer.parseInt(txtCantidadProducida.getText()), txtAreaObservacion.getText());
 
        
         Mensajes.mensajeInformacion("El avance se registro exitosamente.");

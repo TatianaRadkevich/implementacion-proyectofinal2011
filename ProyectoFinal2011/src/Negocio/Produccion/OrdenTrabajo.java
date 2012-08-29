@@ -48,7 +48,7 @@ public class OrdenTrabajo  implements java.io.Serializable {
     @Column(name="FEC_EMISION", nullable=false, length=23)
      private Date fecEmision;
 
-         @Column(name="OBSERVACIONES", length=20)
+         @Column(name="OBSERVACIONES")
      private String observaciones;
 
          @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="TOrdenesTrabajo")
