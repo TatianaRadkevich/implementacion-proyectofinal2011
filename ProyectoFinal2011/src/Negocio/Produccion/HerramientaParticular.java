@@ -58,6 +58,9 @@ public class HerramientaParticular  implements java.io.Serializable {
      @Column(name="MOTIVO_BAJA", length=50)
      private String motivoBaja;
      //_________________________________________________________________________________________________//
+     @Column(name="CANTIDAD")
+     private Integer cantidad;
+
 //     private Set TMaqHerrPartXDetPlans = new HashSet(0);
 
     public HerramientaParticular() {
@@ -177,10 +180,21 @@ public class HerramientaParticular  implements java.io.Serializable {
             throw new TipoDatoException(mje);
         if(this.nombre==null)
             throw new TipoDatoException(mje);
+        if(this.cantidad==null || this.cantidad==0)
+             throw new TipoDatoException(mje);
         return true;
     }
 
 
+    public Integer getCantidad() {
+        return this.cantidad;
+    }
+
+    public void setCantidad(Integer cantidad)throws TipoDatoException {
+        if(this.cantidad==null || this.cantidad==0)
+            throw new TipoDatoException("Debe ingresar la cantidad existente de la herramienta");
+        this.cantidad = cantidad;
+    }
 
 }
 
