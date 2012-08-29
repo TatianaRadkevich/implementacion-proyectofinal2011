@@ -870,10 +870,11 @@ CREATE TABLE T_PROBLEMAS_MHP (
        ID_PROBLEMA_MHP      numeric(2) IDENTITY,
        DESCRIPCION          varchar(500) NOT NULL,
        FEC_HORA_PROBLEMA    datetime NOT NULL,
-       ID_MAQUINA_PARTICULAR numeric(3) NOT NULL,
+       ID_MAQUINA_PARTICULAR numeric(3) NULL,
        FEC_HORA_ESTIMADA_SOLUCION datetime NULL,
        FEC_HORA_REAL_SOLUCION datetime NULL,
-       OBSERVACIONES_SOLUCION varchar(500) NULL
+       OBSERVACIONES_SOLUCION varchar(500) NULL,
+       ID_HERRAMIENTA_PARTICULAR numeric(3) NULL
 )
 go
 
@@ -1862,6 +1863,15 @@ go
 ALTER TABLE T_PLANES_PRODUCCION
        ADD FOREIGN KEY (ID_ENCARGADO)
                              REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_PROBLEMAS_MHP
+       ADD FOREIGN KEY (ID_HERRAMIENTA_PARTICULAR)
+                             REFERENCES T_HERRAMIENTAS_PARTICULAR  (
+              ID_HERRAMIENTA_PARTICULAR)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
