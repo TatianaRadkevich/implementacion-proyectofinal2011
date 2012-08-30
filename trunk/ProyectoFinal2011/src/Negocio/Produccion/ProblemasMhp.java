@@ -25,13 +25,36 @@ import javax.persistence.TemporalType;
 public class ProblemasMhp  implements java.io.Serializable {
 
 
+     @Id
+    @GeneratedValue
+    @Column(name="ID_PROBLEMA_MHP", unique=true, nullable=false, precision=2, scale=0)
      private short idProblemaMhp;
+     //-----------------------------------------------------------------------------------
+     @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_MAQUINA_PARTICULAR")
      private MaquinaParticular TMaquinasParticular;
+     //-----------------------------------------------------------------------------------
+     @Column(name="DESCRIPCION", length=500)
      private String descripcion;
+     //-----------------------------------------------------------------------------------
+     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="FEC_HORA_PROBLEMA", length=23)
      private Date fecHoraProblema;
+     //-----------------------------------------------------------------------------------
+     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="FEC_HORA_ESTIMADA_SOLUCION", length=23)
      private Date fecHoraEstimadaSolucion;
+     //-----------------------------------------------------------------------------------
+     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="FEC_HORA_REAL_SOLUCION", length=23)
      private Date fecHoraRealSolucion;
+     //-----------------------------------------------------------------------------------
+     @Column(name="OBSERVACIONES_SOLUCION", length=500)
      private String observacionesSolucion;
+     //-----------------------------------------------------------------------------------
+     @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ID_HERRAMIENTA_PARTICULAR")
+     private HerramientaParticular THerramientasParticular;
 
     public ProblemasMhp() {
     }
@@ -60,8 +83,7 @@ public class ProblemasMhp  implements java.io.Serializable {
     public void setIdProblemaMhp(short idProblemaMhp) {
         this.idProblemaMhp = idProblemaMhp;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_MAQUINA_PARTICULAR")
+
     public MaquinaParticular getTMaquinasParticular() {
         return this.TMaquinasParticular;
     }
@@ -70,7 +92,7 @@ public class ProblemasMhp  implements java.io.Serializable {
         this.TMaquinasParticular = TMaquinasParticular;
     }
     
-    @Column(name="DESCRIPCION", length=500)
+    
     public String getDescripcion() {
         return this.descripcion;
     }
@@ -78,8 +100,7 @@ public class ProblemasMhp  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="FEC_HORA_PROBLEMA", length=23)
+    
     public Date getFecHoraProblema() {
         return this.fecHoraProblema;
     }
@@ -87,8 +108,7 @@ public class ProblemasMhp  implements java.io.Serializable {
     public void setFecHoraProblema(Date fecHoraProblema) {
         this.fecHoraProblema = fecHoraProblema;
     }
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="FEC_HORA_ESTIMADA_SOLUCION", length=23)
+    
     public Date getFecHoraEstimadaSolucion() {
         return this.fecHoraEstimadaSolucion;
     }
@@ -96,8 +116,7 @@ public class ProblemasMhp  implements java.io.Serializable {
     public void setFecHoraEstimadaSolucion(Date fecHoraEstimadaSolucion) {
         this.fecHoraEstimadaSolucion = fecHoraEstimadaSolucion;
     }
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="FEC_HORA_REAL_SOLUCION", length=23)
+    
     public Date getFecHoraRealSolucion() {
         return this.fecHoraRealSolucion;
     }
@@ -106,7 +125,7 @@ public class ProblemasMhp  implements java.io.Serializable {
         this.fecHoraRealSolucion = fecHoraRealSolucion;
     }
     
-    @Column(name="OBSERVACIONES_SOLUCION", length=500)
+    
     public String getObservacionesSolucion() {
         return this.observacionesSolucion;
     }
@@ -115,6 +134,13 @@ public class ProblemasMhp  implements java.io.Serializable {
         this.observacionesSolucion = observacionesSolucion;
     }
 
+    public HerramientaParticular getTHerramientasParticular() {
+        return this.THerramientasParticular;
+    }
+
+    public void setTHerramientasParticular(HerramientaParticular THerramientasParticular) {
+        this.THerramientasParticular = THerramientasParticular;
+    }
 
 
 
