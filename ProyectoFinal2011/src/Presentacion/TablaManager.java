@@ -19,6 +19,27 @@ import javax.swing.table.DefaultTableModel;
  */
 public abstract class TablaManager<E> {
 
+    public class ObjToCell<T>
+    {
+        private Comparable<T> id;
+        private String valor;
+        public ObjToCell(Comparable<T> id,String valor)
+        {
+            this.id=id;
+
+        }
+
+        @Override
+        public String toString() {
+            return valor;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return super.equals(o);
+        }
+    }
+
     private DefaultTableModel estructura;
     private List<E> contenido;
     private JTable tabla;
@@ -45,6 +66,11 @@ public abstract class TablaManager<E> {
         tabla.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         estructura.setColumnIdentifiers(getCabecera());
         tabla.setModel(estructura);
+        tabla.setAutoCreateRowSorter(true);
+    }
+
+    public void setAutoSort(boolean b) {
+        tabla.setAutoCreateRowSorter(b);
     }
 
     public boolean isCellEditable(int columna) {
@@ -72,6 +98,7 @@ public abstract class TablaManager<E> {
     }
 
     public void insert(int index, E objeto) {
+        index=tabla.convertRowIndexToModel(index);
         contenido.add(index, objeto);
         estructura.insertRow(index, ObjetoFila(objeto));
     }
@@ -85,16 +112,17 @@ public abstract class TablaManager<E> {
     }
 
     public E removeSelectedRow() {
-        return removeRow(tabla.getSelectedRow());
+        return removeRow(tabla.convertRowIndexToModel(tabla.getSelectedRow()));
     }
 
     public E removeRow(int index) {
-
+index=tabla.convertRowIndexToModel(index);
         estructura.removeRow(index);
         return contenido.remove(index);
     }
 
     public void replaceRow(int index, E objeto) {
+        index=tabla.convertRowIndexToModel(index);
         contenido.set(index, objeto);
         Vector fila = ObjetoFila(objeto);
         for (int i = 0; i < fila.size(); i++) {
@@ -126,7 +154,7 @@ public abstract class TablaManager<E> {
         if (tabla.getSelectedRow() == -1) {
             return null;
         }
-        return contenido.get(tabla.getSelectedRow());
+        return contenido.get(tabla.convertRowIndexToModel(tabla.getSelectedRow()));
     }
 
     public List<E> getDatos() {
@@ -144,6 +172,6 @@ public abstract class TablaManager<E> {
     }
 
      public void setSelectedRow(E o) {
-         setSelectedRow(contenido.indexOf(o));
+         setSelectedRow(tabla.convertColumnIndexToView(contenido.indexOf(o)));
     }
 }
