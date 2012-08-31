@@ -142,6 +142,27 @@ public class ProblemasMhp  implements java.io.Serializable {
         this.THerramientasParticular = THerramientasParticular;
     }
 
+    public String tipoProblema() {
+        if(this.THerramientasParticular==null)
+            return "Máquina";
+        else
+            return "Herramienta";
+    }
+
+    public String modelo() {
+        if(this.THerramientasParticular==null)
+            return this.TMaquinasParticular.getModelo();
+        else
+            return this.THerramientasParticular.getModelo();
+    }
+
+    public String nombre() {
+        if(this.THerramientasParticular==null)
+            return this.TMaquinasParticular.getNombre();
+        else
+            return this.THerramientasParticular.getNombre();
+    }
+
 
 
 }
