@@ -15,9 +15,10 @@ import java.util.List;
  */
 public class EstadoOrdenTrabajoBD {
 
-          public EstadoOrdenTrabajoBD() {
+    public EstadoOrdenTrabajoBD() {
 
     }
+
     public static EstadoOrdenTrabajo guardar(EstadoOrdenTrabajo estadoOrdenTrabajo){
 
         HibernateUtil.guardarObjeto(estadoOrdenTrabajo);
@@ -32,21 +33,24 @@ public class EstadoOrdenTrabajoBD {
         return estadoOrdenTrabajo;
     }
 
-
     public static List<EstadoOrdenTrabajo> listarProductos()throws ExceptionInInitializerError{
 
         List<EstadoOrdenTrabajo> var=HibernateUtil.ejecutarConsulta("from EstadoOrdenTrabajo");
         return var;
     }
 
-
     public static EstadoOrdenTrabajo traerEstadoGenerado(){
         List<EstadoOrdenTrabajo> var=HibernateUtil.ejecutarConsulta("from EstadoOrdenTrabajo where nombre like 'Generado'");
         return var.get(0);
     }
+
     public static EstadoOrdenTrabajo traerEstadoFinalizao(){
-        List<EstadoOrdenTrabajo> var=HibernateUtil.ejecutarConsulta("from EstadoOrdenTrabajo where nombre like 'Finalizado'");
+        List<EstadoOrdenTrabajo> var=HibernateUtil.ejecutarConsulta("from EstadoOrdenTrabajo where LOWER(nombre) = 'finalizado'");
         return var.get(0);
     }
 
+    public static EstadoOrdenTrabajo traerEstadoFinalizadoParcial(){
+        List<EstadoOrdenTrabajo> var=HibernateUtil.ejecutarConsulta("from EstadoOrdenTrabajo where LOWER(nombre) = 'finalizado parcial'");
+        return var.get(0);
+    }
 }
