@@ -46,7 +46,7 @@ public class GestorAvanceProduccion {
         else
         {
             detalle.getTOrdenesTrabajo().setTEordenTrabajo(EstadoOrdenTrabajoBD.traerEstadoFinalizao());
-            detalle.setTEdetallePlan(EstadoDetallePlanBD.traerEstadoFinalizado());
+            detalle.setTEdetallePlan(EstadoDetallePlanBD.getEstadoTerminado());
             detalle.getTDetallesPedido().setEstadoDetallePedido(EstadoDetallePedidoBD.getEstadoTerminado());
         }
 
