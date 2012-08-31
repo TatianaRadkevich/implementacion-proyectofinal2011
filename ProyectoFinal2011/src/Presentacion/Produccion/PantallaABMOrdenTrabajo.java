@@ -15,8 +15,11 @@ import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Produccion.DetallePlanProduccionBD;
 import BaseDeDatos.Produccion.EstadoDetallePlanBD;
 import BaseDeDatos.Produccion.EstadoOrdenTrabajoBD;
+import BaseDeDatos.Produccion.EstadoPlanBD;
 import BaseDeDatos.Produccion.OrdenTrabajoBD;
 import BaseDeDatos.Produccion.PlanProduccionBD;
+import BaseDeDatos.Ventas.EstadoDetallePedidoBD;
+import BaseDeDatos.Ventas.EstadoPedidoBD;
 import Negocio.Administracion.Empleado;
 import Negocio.Produccion.DetallePlanProduccion;
 import Negocio.Produccion.GestorOrdenTrabajo;
@@ -342,7 +345,14 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         ot = OrdenTrabajoBD.guardar(ot);
 
         detallePlan.setTOrdenesTrabajo(ot);
+        detallePlan.setTEdetallePlan(EstadoDetallePlanBD.getEstadoPendiente());
+        detallePlan.getTDetallesPedido().setEstadoDetallePedido(EstadoDetallePedidoBD.getEstadoProduccion());
         DetallePlanProduccionBD.guardar(detallePlan);
+
+        PlanProduccion plan = tmPedido.getSeletedObject();
+        plan.setEstado(EstadoPlanBD.getEstadoIniciado());
+        plan.getPedido().setEstadoPedido(EstadoPedidoBD.getEstadoProduccion());
+        PlanProduccionBD.guardar(plan);
 
         Mensajes.mensajeInformacion("La orden de trabajo se generó exitosamente.\nNúmero de orden: " + ot.getIdOrdenTrabajo() + "\nEncargado: " + ot.getTEmpleados().getApellidoNombre());
 

@@ -55,18 +55,19 @@ public class EstadoDetallePlanBD {
     private static final String EP_Pendiente="Pendiente";
     private static final String EP_Cancelado="Cancelado";
     private static final String EP_Replanificar="Replanificar";
+    private static final String EP_TerminadoParcial="Terminado Parcial";
 
     public static EstadoDetallePlan getEstadoTerminado()
     {
         return getEstadoDetallePlan(EP_Terminado);
     }
 
-       public static EstadoDetallePlan getEstadoPendiente()
+    public static EstadoDetallePlan getEstadoPendiente()
     {
         return getEstadoDetallePlan(EP_Pendiente);
     }
 
-          public static EstadoDetallePlan getEstadoCancelado()
+    public static EstadoDetallePlan getEstadoCancelado()
     {
         return getEstadoDetallePlan(EP_Cancelado);
     }
@@ -74,6 +75,10 @@ public class EstadoDetallePlanBD {
     public static EstadoDetallePlan getEstadoReplanificar()
     {
         return getEstadoDetallePlan(EP_Replanificar);
+    }
+
+    public static EstadoDetallePlan getEstadoPlanificadoParcial(){
+        return getEstadoDetallePlan(EP_TerminadoParcial);
     }
 
     private static EstadoDetallePlan getEstadoDetallePlan(String nombre)

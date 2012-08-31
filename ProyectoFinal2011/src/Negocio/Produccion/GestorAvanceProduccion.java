@@ -38,12 +38,21 @@ public class GestorAvanceProduccion {
     public void registrarAvance(DetallePlanProduccion detalle, int cantidad_producida, String observacion) {
         
         detalle.getTOrdenesTrabajo().setObservaciones(observacion.toString());
-        detalle.getTOrdenesTrabajo().setTEordenTrabajo(EstadoOrdenTrabajoBD.traerEstadoFinalizao());
+        if(cantidad_producida < detalle.getCantidad())
+        {
+            detalle.getTOrdenesTrabajo().setTEordenTrabajo(EstadoOrdenTrabajoBD.traerEstadoFinalizadoParcial());
+            detalle.setTEdetallePlan(EstadoDetallePlanBD.getEstadoPlanificadoParcial());
+        }
+        else
+        {
+            detalle.getTOrdenesTrabajo().setTEordenTrabajo(EstadoOrdenTrabajoBD.traerEstadoFinalizao());
+            detalle.setTEdetallePlan(EstadoDetallePlanBD.traerEstadoFinalizado());
+            detalle.getTDetallesPedido().setEstadoDetallePedido(EstadoDetallePedidoBD.getEstadoTerminado());
+        }
+
         OrdenTrabajoBD.modificar(detalle.getTOrdenesTrabajo());
         
-        detalle.setTEdetallePlan(EstadoDetallePlanBD.traerEstadoFinalizado());
         detalle.setCantidadProducida(cantidad_producida);
-        detalle.getTDetallesPedido().setEstadoDetallePedido(EstadoDetallePedidoBD.getEstadoTerminado());
         DetallePlanProduccionBD.modificar(detalle);
         
         List<DetallePlanProduccion> plan = detalle.getPlanProduccion().getDetallePlan();
