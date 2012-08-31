@@ -73,6 +73,7 @@ private TablaManager<Proveedor> tablita;
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(),this.getHeight());
         this.btnConsultar.setVisible(false);
         setLocationRelativeTo(null);
+        this.buscar();
     }
 
     private void cargarValidaciones() {
@@ -342,6 +343,10 @@ private TablaManager<Proveedor> tablita;
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
+       this.buscar();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    public void buscar(){
         tablita.setDatos(
                 ProveedorBD.getProveedores(
                 txtCUIT.getText(),
@@ -352,8 +357,7 @@ private TablaManager<Proveedor> tablita;
                 chkMostrarCancelados.isSelected()));
 
         lbl_resultado_busqueda.setText("Resultado de la busqueda: "+ tablita.getDatos().size());
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
+    }
     public void actualizarTabla(){
         tablita.setDatos(
                 ProveedorBD.getProveedores(
