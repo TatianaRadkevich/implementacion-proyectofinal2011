@@ -476,8 +476,9 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
         this.txtCantidadPlanificada.setText(tmEtapas.getSeletedObject().getCantidad()+"");
         this.txtCantidadProducida.setText(tmEtapas.getSeletedObject().getCantidadProducida()+"");
         this.txtCantidadProducida1.setText("");
-        this.txtCantidadProducida.setEnabled(true);
-        this.txtCantidadProducida.requestFocus();
+        this.txtCantidadProducida.setEnabled(false);
+        this.txtCantidadProducida1.setEnabled(true);
+        this.txtCantidadProducida1.requestFocus();
     }//GEN-LAST:event_tbDetalleOrdenTrabajoMouseClicked
 
     private void btnErrorMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnErrorMaquinaActionPerformed

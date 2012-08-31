@@ -347,6 +347,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         detallePlan.setTOrdenesTrabajo(ot);
         detallePlan.setTEdetallePlan(EstadoDetallePlanBD.getEstadoPendiente());
         detallePlan.getTDetallesPedido().setEstadoDetallePedido(EstadoDetallePedidoBD.getEstadoProduccion());
+        detallePlan.setCantidadProducida(0);
         DetallePlanProduccionBD.guardar(detallePlan);
 
         PlanProduccion plan = tmPedido.getSeletedObject();
