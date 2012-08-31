@@ -60,7 +60,7 @@ public class GestorAvanceProduccion {
         
         boolean terminado = true;
         
-        if(detalle.getPlanProduccion().getDetallePlan().toArray().length > 1)
+        if(detalle.getPlanProduccion().getDetallePlan().toArray().length > 0)
         {
             for(DetallePlanProduccion det : plan)
             {
@@ -79,7 +79,7 @@ public class GestorAvanceProduccion {
         }
         
         terminado = true;
-        if(detalle.getPedido().getDetallePedido().toArray().length > 1)
+        if(detalle.getPedido().getDetallePedido().toArray().length > 0)
         {
             for(DetallePedido det : pedido)
             {
