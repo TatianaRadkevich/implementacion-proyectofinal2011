@@ -296,6 +296,7 @@ public class ProblemaMaquinaParticular extends javax.swing.JDialog {
             gestor.guardar(problema_actual);
             Mensajes.mensajeInformacion("El problema ha sido registrado exitosamente, máquina no disponible");
             txtDescripcionProblema.setText("");
+            this.dispose();
             
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -371,7 +372,7 @@ public class ProblemaMaquinaParticular extends javax.swing.JDialog {
 
     private void cargarMaqYHerrParticulares() {
         if (cmbTipoMaqHerr.getSelectedIndex()!=-1)
-        cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getMaquinas((TipoMaquina) cmbTipoMaqHerr.getSelectedItem()).toArray()));
+        cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getMaquinasSinProblemas((TipoMaquina) cmbTipoMaqHerr.getSelectedItem()).toArray()));
         if (cmbMaqHerrParticular.getSelectedIndex()!=-1){
         txtNroSerie.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getCodigo());
         txtNombre.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getNombre());

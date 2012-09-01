@@ -54,6 +54,12 @@ public class GestorHerramientaModificar extends GestorHerramienta
         HerramientaBD.modificar(p);
     }
 
+    @Override
+    public String mensajeResultado(String nomHerramienta) {
+        return "La herramienta " + nomHerramienta + "\nha sido modificado exitosamente";
+
+    }
+
 
   
 

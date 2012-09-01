@@ -61,6 +61,11 @@ public class GestorMaquinaBaja extends GestorMaquina
         MaquinaBD.modificar(mh);
     }
 
+    @Override
+    public String mensajeResultado(String nombreProducto) {
+        return "La máquina "+nombreProducto+ " ha sido dado de baja exitosamente";
+    }
+
 
 
   

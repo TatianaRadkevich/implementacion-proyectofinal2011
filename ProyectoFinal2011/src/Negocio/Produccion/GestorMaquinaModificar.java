@@ -54,6 +54,11 @@ public class GestorMaquinaModificar extends GestorMaquina
         MaquinaBD.modificar(p);
     }
 
+    @Override
+    public String mensajeResultado(String nombreProducto) {
+         return "La máquina " + nombreProducto + "\nha sido modificado exitosamente";
+    }
+
 
   
 

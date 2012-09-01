@@ -73,9 +73,6 @@ public class ProblemasMhp  implements java.io.Serializable {
        this.observacionesSolucion = observacionesSolucion;
     }
    
-     @Id 
-    @GeneratedValue
-    @Column(name="ID_PROBLEMA_MHP", unique=true, nullable=false, precision=2, scale=0)
     public short getIdProblemaMhp() {
         return this.idProblemaMhp;
     }

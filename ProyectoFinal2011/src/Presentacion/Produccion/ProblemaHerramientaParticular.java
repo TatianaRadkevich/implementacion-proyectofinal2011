@@ -82,7 +82,7 @@ public class ProblemaHerramientaParticular extends javax.swing.JDialog {
 
         txtFechaActual.setEditable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Máquina", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Herramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         lblMoHPart.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblMoHPart.setText("Herramienta particular:");
@@ -174,7 +174,7 @@ public class ProblemaHerramientaParticular extends javax.swing.JDialog {
             }
         });
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de Máquina", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de Herramienta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("Cantidad:");
@@ -300,6 +300,7 @@ public class ProblemaHerramientaParticular extends javax.swing.JDialog {
             gestor.guardar(problema_actual);
             Mensajes.mensajeInformacion("El problema ha sido registrado exitosamente, máquina no disponible");
             txtDescripcionProblema.setText("");
+            this.dispose();
             
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -376,7 +377,7 @@ public class ProblemaHerramientaParticular extends javax.swing.JDialog {
 
     private void cargarHerrParticulares() {
         if (cmbTipoHerr.getSelectedIndex()!=-1)
-            cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getHerramientas((TipoHerramienta) cmbTipoHerr.getSelectedItem()).toArray()));
+            cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getHerramientasSinProblemas((TipoHerramienta) cmbTipoHerr.getSelectedItem()).toArray()));
         if (cmbMaqHerrParticular.getSelectedIndex()!=-1){
             HerramientaParticular temp=(HerramientaParticular)cmbMaqHerrParticular.getSelectedItem();
             txtCantidad.setText(temp.getCantidad()+"");

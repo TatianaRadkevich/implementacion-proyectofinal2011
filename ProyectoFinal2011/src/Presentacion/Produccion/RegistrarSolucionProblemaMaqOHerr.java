@@ -48,6 +48,7 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         if(tipoMaq!= -1)cmbTipoMaqHerr.setSelectedIndex(tipoMaq);
         
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
+        this.cargarTabla();
     }
 
     /** This method is called from within the constructor to
@@ -258,17 +259,17 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         Mensajes.mensajeInformacion("La solución ha sido registrada exitosamente");
         txtObservaciones.setText("");
 
-        if (cmbMaqHerrParticular.getSelectedIndex()!=-1){
-        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
-        if (tmProblemas.getSize()==0){
-        ((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).setTEmaquina(EstadoMaquinaBD.getEstadoDisponible());
-        Mensajes.mensajeInformacion("La máquina está disponible");
-        }
+            if (cmbMaqHerrParticular.getSelectedIndex()!=-1){
+            tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
+                if (tmProblemas.getSize()==0){
+                ((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).setTEmaquina(EstadoMaquinaBD.getEstadoDisponible());
+                Mensajes.mensajeInformacion("La máquina está disponible");
+                }
             }
-        else
-        {
-        tmProblemas.limpiar();
-        }
+            else
+            {
+            tmProblemas.limpiar();
+            }
         }
         else
         {
@@ -370,17 +371,17 @@ private void inicializarTablas() {
     }
 
     private void cargarMaqYHerrParticulares() {
-        if (cmbTipoMaqHerr.getSelectedIndex()!=-1){
-        cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getMaquinas((TipoMaquina) cmbTipoMaqHerr.getSelectedItem()).toArray()));
-        if(cmbMaqHerrParticular.getSelectedIndex()!=-1){
-        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
-            }
-        else
-        {
-        tmProblemas.limpiar();
-        }
-
-    }
+//        if (cmbTipoMaqHerr.getSelectedIndex()!=-1){
+//        cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getMaquinas((TipoMaquina) cmbTipoMaqHerr.getSelectedItem()).toArray()));
+//        if(cmbMaqHerrParticular.getSelectedIndex()!=-1){
+//        tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
+//            }
+//        else
+//        {
+//        tmProblemas.limpiar();
+//        }
+//
+//        }
     }
     
 
@@ -394,5 +395,8 @@ private void inicializarTablas() {
 
     
 
-
+    public void cargarTabla()
+    {
+            tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos());
+    }
 }

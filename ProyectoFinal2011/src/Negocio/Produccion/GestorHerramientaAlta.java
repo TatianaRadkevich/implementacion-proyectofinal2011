@@ -45,6 +45,11 @@ public class GestorHerramientaAlta extends GestorHerramienta
         HerramientaBD.guardar(mh);
     }
 
+    @Override
+    public String mensajeResultado(String nombreProducto) {
+        return "La herramienta "+nombreProducto+ "\nha sido dado de registrado exitosamente";
+    }
+
 
   
 

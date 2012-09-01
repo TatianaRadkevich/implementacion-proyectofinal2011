@@ -104,6 +104,7 @@ public class PantallaHerramientaABM extends javax.swing.JDialog {
         txtModelo.setText(Utilidades.parseString(m.getModelo()));
         txtNombre.setText(Utilidades.parseString(m.getNombre()));
         txtObservaciones.setText(Utilidades.parseString(m.getObservaciones()));
+        txtCantidad.setText(m.getCantidad()+"");
         cmbTipoMaquinaHerramienta.setSelectedItem(m.getTTherramienta());
              if(m.getFecBaja()!=null)
         {
@@ -382,7 +383,8 @@ public class PantallaHerramientaABM extends javax.swing.JDialog {
 //        maq.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
         try {
             gestor.ejecutarCU(gestor.getHerramientaParticular());
-            this.setVisible(false);
+            Mensajes.mensajeInformacion(gestor.mensajeResultado(gestor.getHerramientaParticular().getNombre()));
+            this.dispose();
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }

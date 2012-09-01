@@ -24,6 +24,7 @@ public abstract class GestorHerramienta {
     public abstract void iniciarCU();
     public abstract void ejecutarCU(HerramientaParticular p) throws ExceptionGestor;
 
+    public abstract String mensajeResultado(String nombreProducto);
     public void finalizarCU()
     {
         interfaz.setVisible(false);

@@ -32,6 +32,7 @@ public abstract class GestorMaquina {
         interfaz.dispose();
     }
 
+    public abstract String mensajeResultado(String nombreProducto); 
     public MaquinaParticular getMaquinaParticular() {
         return maquinaHerramienta;
     }

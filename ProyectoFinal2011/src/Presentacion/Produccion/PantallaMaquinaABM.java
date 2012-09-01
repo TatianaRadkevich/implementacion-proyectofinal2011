@@ -391,7 +391,8 @@ public class PantallaMaquinaABM extends javax.swing.JDialog {
 //        maq.setMotivoBaja(Utilidades.parseString(txtMotivoBaja.getText()));
         try {
             gestor.ejecutarCU(gestor.getMaquinaParticular());
-            this.setVisible(false);
+            Mensajes.mensajeInformacion(gestor.mensajeResultado(gestor.getMaquinaParticular().getNombre()));
+            this.dispose();
         } catch (ExceptionGestor ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
