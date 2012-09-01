@@ -68,8 +68,10 @@ public class ProblemasMhpBD {
         return var;
     }
 
+
+
     public static List<ProblemasMhp> listarProblemasNoResueltos(){
-        String hql=("from ProblemasMhp where fecHoraRealSolucion is null AND order by fecHoraProblema asc");
+        String hql=("from ProblemasMhp where fecHoraRealSolucion is null");
         return HibernateUtil.ejecutarConsulta(hql);
     }
 

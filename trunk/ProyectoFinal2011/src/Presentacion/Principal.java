@@ -43,6 +43,7 @@ import BaseDeDatos.Usuario.UsuarioBD;
 import Negocio.Administracion.Cargo;
 import Negocio.Administracion.Empleado;
 import Negocio.GestionUsuario.*;
+import Presentacion.Produccion.ProblemaHerramientaParticular;
 
 
 import Presentacion.Ventas.PantallaPedidoConsultar;
@@ -120,6 +121,7 @@ public class Principal extends javax.swing.JFrame {
         mnuOrdenTrabajo = new javax.swing.JMenuItem();
         mnuAvanceProduccion = new javax.swing.JMenuItem();
         mnuProblemaMaquina = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         mnuConsultarProblemas = new javax.swing.JMenuItem();
         mnuTipoMaquina = new javax.swing.JMenuItem();
         mnuTipoHerramienta = new javax.swing.JMenuItem();
@@ -390,6 +392,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         mnuProduccion.add(mnuProblemaMaquina);
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/consultar_problemas.png"))); // NOI18N
+        jMenuItem1.setText("Problemas Herramientas");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        mnuProduccion.add(jMenuItem1);
 
         mnuConsultarProblemas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/consultar_problemas.png"))); // NOI18N
         mnuConsultarProblemas.setText("Consultar Problemas");
@@ -811,6 +822,11 @@ public class Principal extends javax.swing.JFrame {
                 
     }//GEN-LAST:event_formComponentResized
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        new ProblemaHerramientaParticular(this, true).setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -832,6 +848,7 @@ UIManager.put("Synthetica.license.key", "1891309A-E215572F-9865495F-0E06D6A9-616
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblMensajeInicio;
     private javax.swing.JMenu mnuAdministracion;

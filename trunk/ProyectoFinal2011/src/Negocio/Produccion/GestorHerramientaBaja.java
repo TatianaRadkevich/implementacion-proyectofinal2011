@@ -60,6 +60,11 @@ public class GestorHerramientaBaja extends GestorHerramienta
         HerramientaBD.modificar(mh);
     }
 
+    @Override
+    public String mensajeResultado(String nombreProducto) {
+        return "La herramienta "+nombreProducto+ " ha sido dado de baja exitosamente";
+    }
+
 
 
   

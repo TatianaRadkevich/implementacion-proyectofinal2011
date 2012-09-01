@@ -56,6 +56,7 @@ public class PantallaHerramientaConsultar extends javax.swing.JDialog {
             }
         };
         cargarValidaciones();
+        this.cargarTabla();
     }
 
     private void cargarValidaciones() {        

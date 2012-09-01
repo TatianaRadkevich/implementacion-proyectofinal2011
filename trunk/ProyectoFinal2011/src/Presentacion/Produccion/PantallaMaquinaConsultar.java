@@ -55,6 +55,7 @@ public class PantallaMaquinaConsultar extends javax.swing.JDialog {
             }
         };
         cargarValidaciones();
+        this.cargarTabla();
     }
 
     private void cargarValidaciones() {        

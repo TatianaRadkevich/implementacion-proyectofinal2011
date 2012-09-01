@@ -42,6 +42,11 @@ public class GestorMaquinaAlta extends GestorMaquina
         MaquinaBD.guardar(mh);
     }
 
+    @Override
+    public String mensajeResultado(String nombreProducto) {
+        return "La máquina "+nombreProducto+ "\nha sido dado de registrado exitosamente";
+    }
+
 
   
 
