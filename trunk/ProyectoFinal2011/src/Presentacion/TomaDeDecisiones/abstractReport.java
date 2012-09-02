@@ -27,6 +27,8 @@ private final String login = HibernateUtil.getUser();
 private final String password = HibernateUtil.getPass();
 private final String URL = HibernateUtil.getUrl();
 
+Map parametro = new HashMap();
+
 public abstractReport(){
     try {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -36,6 +38,10 @@ public abstractReport(){
     } catch (SQLException ex) {
         ex.getMessage();
     }
+}
+
+public void addParameter(Object key, Object value){
+    parametro.put(key, value);
 }
 
 public void runReporte(String master){
@@ -54,7 +60,7 @@ public void runReporte(String master){
             System.out.println("Error cargando el reporte maestro " + e.getMessage());
             System.exit(3);
         }
-        Map parametro = new HashMap();
+        
         JasperPrint jasperPrint = JasperFillManager.fillReport(masterReport, parametro, conn);
         JasperViewer jviewer = new JasperViewer(jasperPrint, false);
         jviewer.setVisible(true);
