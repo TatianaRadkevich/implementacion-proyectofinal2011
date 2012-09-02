@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ac037866-1bbb-43da-b926-3517b77e42ce">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     T_MATERIALES."NOMBRE" AS T_MATERIALES_NOMBRE,
+     T_MATERIALES."DESCRIPCION" AS T_MATERIALES_DESCRIPCION,
+     T_MATERIALES."STOCK_ACTUAL" AS T_MATERIALES_STOCK_ACTUAL,
+     T_MATERIALES."ID_MATERIAL" AS T_MATERIALES_ID_MATERIAL,
+     T_MATERIALES."STOCK_MINIMO" AS T_MATERIALES_STOCK_MINIMO
+FROM
+     "dbo"."T_MATERIALES" T_MATERIALES
+ORDER BY
+     T_MATERIALES_STOCK_ACTUAL DESC]]>
+	</queryString>
+	<field name="T_MATERIALES_NOMBRE" class="java.lang.String"/>
+	<field name="T_MATERIALES_DESCRIPCION" class="java.lang.String"/>
+	<field name="T_MATERIALES_STOCK_ACTUAL" class="java.math.BigDecimal"/>
+	<field name="T_MATERIALES_ID_MATERIAL" class="java.math.BigDecimal"/>
+	<field name="T_MATERIALES_STOCK_MINIMO" class="java.math.BigDecimal"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="75">
+			<frame>
+				<reportElement uuid="10a802f7-5edc-46de-a8f4-f13ed76c1c0d" mode="Opaque" x="-20" y="-20" width="575" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement uuid="fc932a81-1c14-49ea-ab7f-a1d3b1f3c8a4" x="20" y="20" width="362" height="43" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Reporte de Materiales]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="375212d6-bd8b-41d4-8e12-0371e34fe14e" x="407" y="43" width="143" height="20" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Stock de materiales]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="26"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22">
+			<line>
+				<reportElement uuid="96e4ea25-9960-4b9d-968d-f656f0a0a33d" x="-20" y="20" width="595" height="1" forecolor="#666666"/>
+			</line>
+			<staticText>
+				<reportElement uuid="aaac1b1f-6df9-440e-a51f-f22061ffdac4" mode="Opaque" x="77" y="0" width="135" height="21" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a67c02ea-f90f-449f-9087-55d52f47f16d" mode="Opaque" x="212" y="1" width="90" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="117a988e-f08c-493f-997d-eee34e8e5939" mode="Opaque" x="412" y="0" width="121" height="21" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stock Actual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="0" y="0" width="77" height="21" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="117a988e-f08c-493f-997d-eee34e8e5939" mode="Opaque" x="302" y="1" width="110" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stock Mínimo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="97">
+			<line>
+				<reportElement uuid="d561431f-67b2-4ae6-af9c-8a166932a0b9" positionType="FixRelativeToBottom" x="0" y="0" width="555" height="1"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="933bb78f-fc92-42f2-a92a-9d3bc000d60f" x="12" y="13" width="65" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_MATERIALES_ID_MATERIAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="9c157921-a481-46fb-8b4b-af2886dbf69e" x="112" y="13" width="82" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_MATERIALES_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="dba5272d-9364-4d5d-b53f-8b0bfd4858bf" x="212" y="13" width="90" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_MATERIALES_DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="639d1084-b534-413c-baf8-eef8ad95807c" x="434" y="13" width="102" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_MATERIALES_STOCK_ACTUAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="639d1084-b534-413c-baf8-eef8ad95807c" x="314" y="13" width="73" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_MATERIALES_STOCK_MINIMO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="163">
+			<textField>
+				<reportElement uuid="53aaf6c6-b480-4428-a9ef-ed3b342e2962" mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="50f349c1-c854-4a77-8510-2740c966f9a3" mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="4203f117-f7d8-42a1-b967-d97233101eff" x="0" y="4" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
