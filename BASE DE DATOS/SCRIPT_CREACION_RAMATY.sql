@@ -587,7 +587,8 @@ CREATE TABLE T_FACTURAS (
        ID_EMPLEADO          numeric(5) NOT NULL,
        ID_EFACTURA          numeric(2) NOT NULL,
        FEC_BAJA             datetime NULL,
-       MOTIVO_BAJA          varchar(100) NULL
+       MOTIVO_BAJA          varchar(100) NULL,
+       ID_PEDIDO            numeric(8) NULL
 )
 go
 
@@ -819,7 +820,6 @@ CREATE TABLE T_PEDIDOS (
        FEC_BAJA             datetime NULL,
        MOTIVO_BAJA          varchar(100) NULL,
        ID_EMPLEADO          numeric(5) NULL,
-       ID_FACTURA           numeric(8) NULL,
        FEC_CLI_REC          datetime NULL
 )
 go
@@ -1652,6 +1652,14 @@ go
 
 
 ALTER TABLE T_FACTURAS
+       ADD FOREIGN KEY (ID_PEDIDO)
+                             REFERENCES T_PEDIDOS  (ID_PEDIDO)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_FACTURAS
        ADD FOREIGN KEY (ID_EFACTURA)
                              REFERENCES T_EFACTURA  (ID_EFACTURA)
                              ON DELETE NO ACTION
@@ -1798,14 +1806,6 @@ go
 ALTER TABLE T_ORDENES_TRABAJO
        ADD FOREIGN KEY (ID_EMPLEADO)
                              REFERENCES T_EMPLEADOS  (ID_EMPLEADO)
-                             ON DELETE NO ACTION
-                             ON UPDATE NO ACTION
-go
-
-
-ALTER TABLE T_PEDIDOS
-       ADD FOREIGN KEY (ID_FACTURA)
-                             REFERENCES T_FACTURAS  (ID_FACTURA)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
