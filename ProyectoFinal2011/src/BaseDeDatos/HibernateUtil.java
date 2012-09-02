@@ -5,7 +5,12 @@
 package BaseDeDatos;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Entity;
 import org.hibernate.CacheMode;
 import org.hibernate.FlushMode;
@@ -13,6 +18,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;
+import org.hibernate.impl.SessionFactoryImpl;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
@@ -26,26 +32,30 @@ public class HibernateUtil {
 
     private static final SessionFactory sessionFactory;
     private static Session session;
-    private static Session sessionQuery;
+    private static String user, pass, url;
 
     static {
         try {
             // Create the SessionFactory from standard
             sessionFactory = addClases(new AnnotationConfiguration()).configure().buildSessionFactory();
             session = sessionFactory.openSession();
-            //sessionQuery = sessionFactory.openSession();
             session.setFlushMode(FlushMode.COMMIT);
-            //sessionQuery.setFlushMode(FlushMode.MANUAL);            
+
+
+            ////////////////////////// obtener propiedades del SessionFactory por reflexion
+            Field f = SessionFactoryImpl.class.getDeclaredField("properties");
+            f.setAccessible(true);
+            Properties p = (Properties) f.get(sessionFactory);
+            user = p.getProperty(org.hibernate.cfg.Environment.USER);
+            pass = p.getProperty(org.hibernate.cfg.Environment.PASS);
+            url = p.getProperty(org.hibernate.cfg.Environment.URL);
+            ////////////////////////////
 
         } catch (Throwable ex) {
             // Log the exception.
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
-    }
-
-    public static Session getSession() {
-        return session;
     }
 
     private static AnnotationConfiguration addClases(AnnotationConfiguration ac) throws Exception {
@@ -63,6 +73,22 @@ public class HibernateUtil {
         } // for
 
         return ac;
+    }
+
+    public static String getPass() {
+        return pass;
+    }
+
+    public static String getUrl() {
+        return url;
+    }
+
+    public static String getUser() {
+        return user;
+    }
+
+    public static Session getSession() {
+        return session;
     }
 
     public static SessionFactory getSessionFactory() {
