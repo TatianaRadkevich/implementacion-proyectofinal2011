@@ -583,7 +583,6 @@ CREATE TABLE T_FACTURAS (
        DESCUENTO            numeric(6,4) NULL,
        FEC_FACTURA          datetime NOT NULL,
        NUMERO               numeric(8) NOT NULL,
-       RECARGO              numeric(6,4) NULL,
        ID_EMPLEADO          numeric(5) NOT NULL,
        ID_EFACTURA          numeric(2) NOT NULL,
        FEC_BAJA             datetime NULL,
