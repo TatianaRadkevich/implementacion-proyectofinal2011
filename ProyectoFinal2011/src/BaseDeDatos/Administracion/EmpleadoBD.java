@@ -50,6 +50,10 @@ public class EmpleadoBD {
         return var;
     }
 
+    public static List<Empleado> listarEmpleadosVigentes() throws ExceptionInInitializerError {
+        return getEmpleados("","","",true,false);
+    }
+
     public static List<Empleado> getEmpleados(Cargo c, boolean vigentes, boolean cancelados) {
 
         if (vigentes == false && cancelados == false) {
