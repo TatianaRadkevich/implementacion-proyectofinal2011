@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class Simulador {
 
-    private Recursos recursos;
+    //private Recursos recursos;
     private Jefe capo;
     private Date tiempo;
     private ArrayList<Evento> eventos;
@@ -40,13 +40,13 @@ public class Simulador {
     
     private void cargarRecursos()
     {
-        recursos =new Recursos();
+//        recursos =new Recursos();
         List<Empleado> le=EmpleadoBD.listarEmpleado();
         for(Empleado e: le)
         {
             if(e.getAsignacionHorariaVigente()!=null) 
             {
-                recursos.addOperario(e);
+  //              recursos.addOperario(e);
                 this.addEvento(getProximoIngresoEgreso(e));
             }
         }
