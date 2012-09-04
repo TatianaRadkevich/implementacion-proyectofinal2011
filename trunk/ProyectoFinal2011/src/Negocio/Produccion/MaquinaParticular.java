@@ -253,6 +253,10 @@ public class MaquinaParticular  implements java.io.Serializable {
         salida+="[cod. "+this.getCodigo()+"]";
         return salida;
     }
+
+    public boolean isOperativa(Date tiempo) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }
 
 

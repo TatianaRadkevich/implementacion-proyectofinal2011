@@ -505,4 +505,20 @@ public class Empleado implements java.io.Serializable {
        a.setEmpleado(null);
         this.TAsistenciasEmpleados.remove(a);
     }
+
+    public boolean isActivo() {
+        return this.fecBaja==null;
+    }
+
+    public boolean isPresente(Date tiempo) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public Date getIngreso(Date tiempo) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public Date getEgreso(Date tiempo) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

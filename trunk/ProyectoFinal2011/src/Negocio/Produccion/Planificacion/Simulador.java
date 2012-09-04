@@ -5,8 +5,11 @@
 package Negocio.Produccion.Planificacion;
 
 import BaseDeDatos.Administracion.EmpleadoBD;
+import BaseDeDatos.Produccion.MaquinaBD;
 import Negocio.Administracion.AsignacionesDias;
 import Negocio.Administracion.Empleado;
+import Negocio.Exceptiones.NegocioException;
+import Negocio.Produccion.MaquinaParticular;
 import Negocio.Produccion.Planificacion.Evento.*;
 import Negocio.Produccion.Planificacion.Recursos.*;
 import java.util.ArrayList;
@@ -19,62 +22,76 @@ import java.util.List;
  */
 public class Simulador {
 
-    //private Recursos recursos;
+    private Recursos recursos;
     private Jefe capo;
     private Date tiempo;
     private ArrayList<Evento> eventos;
 
     public void iniciar() {
-        
+
         cargarRecursos();
 
-        do
-        {
+        do {
             eventos.remove(0).ejecutar();
-            while(capo.hayTareas())
-               addEvento(new FinTarea(getTiempoActual(),capo.getProximaTarea()));
+            while (capo.hayTareas()) {
+                addEvento(new FinTarea(getTiempoActual(), capo.getProximaTarea()));
+            }
 
-        }while(eventos.isEmpty()==false);
+        } while (eventos.isEmpty() == false);
 
     }
-    
-    private void cargarRecursos()
-    {
-//        recursos =new Recursos();
-        List<Empleado> le=EmpleadoBD.listarEmpleado();
-        for(Empleado e: le)
-        {
-            if(e.getAsignacionHorariaVigente()!=null) 
-            {
-  //              recursos.addOperario(e);
-                this.addEvento(getProximoIngresoEgreso(e));
+
+    private void cargarRecursos() {
+        recursos = new Recursos();
+
+        //Empleador
+        for (Empleado e : EmpleadoBD.listarEmpleadosVigentes()) {
+            try {
+                Operario op;
+                Evento ev;
+
+                if (e.isPresente(tiempo)) {
+                    op = new Operario(e, true);
+                    ev = new EgresoOperario(this, op, e.getEgreso(tiempo));
+                } else {
+                    op = new Operario(e, false);
+                    ev = new IngresoOperario(this, op, e.getIngreso(tiempo));
+                }
+                this.addEvento(ev);
+                this.recursos.addOperario(op);
+
+            } catch (NegocioException ne) {
             }
         }
-    }
-    
-    private Evento getProximoIngresoEgreso(Empleado e)
-    {
-        throw new UnsupportedOperationException();
-//        for(AsignacionesDias ad:e.getAsignacionHorariaVigente().getHorario().getTAsignacionesDiases())
-//        {
+
+        //Maquinas
+        for (MaquinaParticular mp : MaquinaBD.listarMaquinasVigentes()) {
+            try {
+
+                Maquina maq;
+                Evento ev;
+
+//                if (mp.isOperativa(tiempo)) {//por el tema de problemas y esas cosas
+//                    op = new Operario(e, true);
+//                    ev = new EgresoOperario(this, op, e.getEgreso(tiempo));
+//                } else {
+//                    op = new Operario(e, false);
+//                    ev = new IngresoOperario(this, op, e.getIngreso(tiempo));
+//                }
 //
-//
-//        }
+//                this.addEvento(ev);
+//                this.recursos.addOperario(op);
+
+
+            } catch (NegocioException ne) {
+            }
+        }
+
+
     }
 
     public Date getTiempoActual() {
         return tiempo;
-    }
-
-
-    public void ingresoOperario(Operario op)
-    {
-        addEvento(new EgresoOperario(getTiempoActual(),op));
-    }
-
-    public void egresoOperario(Operario op)
-    {
-        addEvento(new IngresoOperario(getTiempoActual(),op));
     }
 
     public void addEvento(Evento e) {

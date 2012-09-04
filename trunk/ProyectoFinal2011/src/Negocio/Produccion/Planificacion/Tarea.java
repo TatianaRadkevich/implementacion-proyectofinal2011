@@ -22,8 +22,8 @@ public class Tarea {
 
     private Empleado operario;
     private MaquinaParticular maquina;
-    private ArrayList<Recurso<HerramientaParticular, Integer>> herramientas;
-    private ArrayList<Recurso<Material, Integer>> materiales;
+//    private ArrayList<Recurso<HerramientaParticular, Integer>> herramientas;
+//    private ArrayList<Recurso<Material, Integer>> materiales;
     private EtapaProduccionEspecifica etapa;
     private Pedido pedido;
     private Date fechaInicio,fechaFin;
