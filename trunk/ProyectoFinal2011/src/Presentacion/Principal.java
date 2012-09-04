@@ -44,6 +44,7 @@ import Negocio.Administracion.Cargo;
 import Negocio.Administracion.Empleado;
 import Negocio.GestionUsuario.*;
 import Presentacion.Produccion.ProblemaHerramientaParticular;
+import Presentacion.Produccion.RegistrarSolucionProblemaMaqOHerr;
 import Presentacion.TomaDeDecisiones.ReportesMateriales.PantallaReportesMateriales;
 
 
@@ -124,6 +125,7 @@ public class Principal extends javax.swing.JFrame {
         mnuProblemaMaquina = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         mnuConsultarProblemas = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         mnuTipoMaquina = new javax.swing.JMenuItem();
         mnuTipoHerramienta = new javax.swing.JMenuItem();
         mnuEtapaProduccion = new javax.swing.JMenuItem();
@@ -413,6 +415,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         mnuProduccion.add(mnuConsultarProblemas);
+
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/asistencia.png"))); // NOI18N
+        jMenuItem3.setText("Solución de problema");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        mnuProduccion.add(jMenuItem3);
 
         mnuTipoMaquina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/tipo_maquina.png"))); // NOI18N
         mnuTipoMaquina.setText("Tipo de Maquina");
@@ -848,6 +859,13 @@ public class Principal extends javax.swing.JFrame {
         pantalla.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        RegistrarSolucionProblemaMaqOHerr pantalla = new RegistrarSolucionProblemaMaqOHerr(this,true);
+        pantalla.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -872,6 +890,7 @@ UIManager.put("Synthetica.license.key", "1891309A-E215572F-9865495F-0E06D6A9-616
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblMensajeInicio;
     private javax.swing.JMenu mnuAdministracion;

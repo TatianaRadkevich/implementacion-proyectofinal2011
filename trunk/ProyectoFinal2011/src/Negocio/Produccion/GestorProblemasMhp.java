@@ -5,6 +5,7 @@
 
 package Negocio.Produccion;
 
+import BaseDeDatos.Produccion.EstadoMaquinaBD;
 import BaseDeDatos.Produccion.HerramientaBD;
 import BaseDeDatos.Produccion.MaquinaBD;
 import BaseDeDatos.Produccion.ProblemasMhpBD;
@@ -122,6 +123,21 @@ public class GestorProblemasMhp {
 
 
     public ProblemasMhp modificar(ProblemasMhp pro){
+        return ProblemasMhpBD.modificar(pro);
+    }
+
+
+    public ProblemasMhp registrarSolucion(ProblemasMhp pro){
+        if(pro.getTMaquinasParticular() != null)
+        {
+            pro.getTMaquinasParticular().setTEmaquina(EstadoMaquinaBD.getEstadoDisponible());
+            MaquinaBD.modificar(pro.getTMaquinasParticular());
+        }
+        else{
+            pro.getTHerramientasParticular().setCantidad(pro.getTHerramientasParticular().getCantidad()+1);
+            HerramientaBD.modificar(pro.getTHerramientasParticular());
+        }
+
         return ProblemasMhpBD.modificar(pro);
     }
 
