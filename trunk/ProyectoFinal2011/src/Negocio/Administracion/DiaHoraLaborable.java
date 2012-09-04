@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
     ,catalog="Ramaty"
 )
 public class DiaHoraLaborable  implements java.io.Serializable {
-
+// es una mentira no debe existir esta clase
 
         @Id
         @GeneratedValue

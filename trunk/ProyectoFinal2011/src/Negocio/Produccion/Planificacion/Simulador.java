@@ -4,13 +4,14 @@
  */
 package Negocio.Produccion.Planificacion;
 
-import Negocio.Produccion.Planificacion.Evento.EgresoOperario;
-import Negocio.Produccion.Planificacion.Evento.Evento;
-import Negocio.Produccion.Planificacion.Evento.FinTarea;
-import Negocio.Produccion.Planificacion.Evento.IngresoOperario;
-import Negocio.Produccion.Planificacion.Recursos.Operario;
+import BaseDeDatos.Administracion.EmpleadoBD;
+import Negocio.Administracion.AsignacionesDias;
+import Negocio.Administracion.Empleado;
+import Negocio.Produccion.Planificacion.Evento.*;
+import Negocio.Produccion.Planificacion.Recursos.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -18,11 +19,14 @@ import java.util.Date;
  */
 public class Simulador {
 
+    private Recursos recursos;
     private Jefe capo;
     private Date tiempo;
     private ArrayList<Evento> eventos;
 
     public void iniciar() {
+        
+        cargarRecursos();
 
         do
         {
@@ -32,6 +36,30 @@ public class Simulador {
 
         }while(eventos.isEmpty()==false);
 
+    }
+    
+    private void cargarRecursos()
+    {
+        recursos =new Recursos();
+        List<Empleado> le=EmpleadoBD.listarEmpleado();
+        for(Empleado e: le)
+        {
+            if(e.getAsignacionHorariaVigente()!=null) 
+            {
+                recursos.addOperario(e);
+                this.addEvento(getProximoIngresoEgreso(e));
+            }
+        }
+    }
+    
+    private Evento getProximoIngresoEgreso(Empleado e)
+    {
+        throw new UnsupportedOperationException();
+//        for(AsignacionesDias ad:e.getAsignacionHorariaVigente().getHorario().getTAsignacionesDiases())
+//        {
+//
+//
+//        }
     }
 
     public Date getTiempoActual() {
