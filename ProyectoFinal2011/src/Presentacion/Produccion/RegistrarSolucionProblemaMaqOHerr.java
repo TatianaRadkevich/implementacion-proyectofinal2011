@@ -51,6 +51,18 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         this.cargarTabla();
     }
 
+    public RegistrarSolucionProblemaMaqOHerr(java.awt.Frame parent, boolean modal){
+        super(parent, modal);
+        initComponents();
+        HibernateUtil.getSessionFactory();
+        inicializarTablas();
+        cargarTiposMaqYHerr();
+
+
+        IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
+        this.cargarTabla();
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -255,11 +267,11 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         if(txtObservaciones.getText().compareTo("")!=0)
         problema_actual.setObservacionesSolucion(txtObservaciones.getText());
 
-        ProblemasMhpBD.modificar(problema_actual);
+        gestor.registrarSolucion(problema_actual);
         Mensajes.mensajeInformacion("La solución ha sido registrada exitosamente");
         txtObservaciones.setText("");
 
-            if (cmbMaqHerrParticular.getSelectedIndex()!=-1){
+              if (cmbMaqHerrParticular.getSelectedIndex()!=-1){
             tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
                 if (tmProblemas.getSize()==0){
                 ((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).setTEmaquina(EstadoMaquinaBD.getEstadoDisponible());

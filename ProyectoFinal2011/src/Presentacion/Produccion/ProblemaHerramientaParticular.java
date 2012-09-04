@@ -298,7 +298,7 @@ public class ProblemaHerramientaParticular extends javax.swing.JDialog {
             problema_actual.setFecHoraProblema(Utilidades.getFechaActual());
             problema_actual.setTHerramientasParticular((HerramientaParticular)cmbMaqHerrParticular.getSelectedItem());           
             gestor.guardar(problema_actual);
-            Mensajes.mensajeInformacion("El problema ha sido registrado exitosamente, máquina no disponible");
+            Mensajes.mensajeInformacion("El problema ha sido registrado exitosamente");
             txtDescripcionProblema.setText("");
             this.dispose();
             
