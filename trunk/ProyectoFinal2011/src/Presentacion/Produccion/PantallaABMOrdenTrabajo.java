@@ -28,7 +28,9 @@ import Negocio.Produccion.PlanProduccion;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
+import Presentacion.TomaDeDecisiones.ReporteOrdenTrabajo.ReporteOrdenTrabajo;
 import Presentacion.Utilidades;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -182,6 +184,8 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Orden de Trabajo");
+        setModalExclusionType(null);
+        setModalityType(null);
 
         pnlPedidos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Planes de producción", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
@@ -356,6 +360,10 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         PlanProduccionBD.guardar(plan);
 
         Mensajes.mensajeInformacion("La orden de trabajo se generó exitosamente.\nNúmero de orden: " + ot.getIdOrdenTrabajo() + "\nEncargado: " + ot.getTEmpleados().getApellidoNombre());
+        ReporteOrdenTrabajo reporteOT = new ReporteOrdenTrabajo();
+        BigDecimal id = new BigDecimal(ot.getIdOrdenTrabajo());
+        reporteOT.addParameter("id_orden_trabajo", id);
+        reporteOT.runReporte();
 
         this.actualizarDetalles();
         if(tmEtapas.getDatos().isEmpty())
