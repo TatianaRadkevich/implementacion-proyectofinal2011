@@ -66,6 +66,7 @@ public class PantallaReportesProductosTerminados extends javax.swing.JDialog {
 
     private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
         PantallaParametros pp = new PantallaParametros(this, false);
+        pp.setLocationRelativeTo(this);
         pp.setVisible(true);
     }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
