@@ -12,22 +12,15 @@
 package Presentacion.Produccion;
 
 import BaseDeDatos.HibernateUtil;
-import BaseDeDatos.Produccion.EstadoMaquinaBD;
 import Presentacion.Utilidades;
 import Negocio.Produccion.ProblemasMhp;
 import BaseDeDatos.Produccion.ProblemasMhpBD;
 import Negocio.Produccion.GestorProblemasMhp;
-import Negocio.Produccion.MaquinaParticular;
-import Negocio.Produccion.TipoMaquina;
 import Presentacion.IniciadorDeVentanas;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
-import com.toedter.calendar.JTextFieldDateEditor;
-import gui.GUILocal;
-import java.util.List;
+import java.util.Date;
 import java.util.Vector;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFrame;
 /**
  *
  * @author Heber Parrucci
@@ -45,9 +38,10 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         HibernateUtil.getSessionFactory();
         inicializarTablas();
         cargarTiposMaqYHerr();
-        if(tipoMaq!= -1)cmbTipoMaqHerr.setSelectedIndex(tipoMaq);
+        
         
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
+        this.txtFechaActual.setText(Utilidades.parseFecha(new Date()));
         this.cargarTabla();
     }
 
@@ -60,6 +54,7 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
 
 
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
+        this.txtFechaActual.setText(Utilidades.parseFecha(new Date()));
         this.cargarTabla();
     }
 
@@ -73,11 +68,6 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
-        lblMoHPart = new javax.swing.JLabel();
-        cmbMaqHerrParticular = new javax.swing.JComboBox();
-        cmbTipoMaqHerr = new javax.swing.JComboBox();
-        lblTipoMoH = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnRegistrarSolucion = new javax.swing.JButton();
@@ -91,56 +81,6 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         txtFechaActual = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Máquina", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
-
-        lblMoHPart.setFont(new java.awt.Font("Tahoma", 1, 11));
-        lblMoHPart.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblMoHPart.setText("Máquina particular:");
-
-        cmbMaqHerrParticular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbMaqHerrParticularActionPerformed(evt);
-            }
-        });
-
-        cmbTipoMaqHerr.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbTipoMaqHerrActionPerformed(evt);
-            }
-        });
-
-        lblTipoMoH.setFont(new java.awt.Font("Tahoma", 1, 11));
-        lblTipoMoH.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTipoMoH.setText("Tipo de Máquina:");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblTipoMoH)
-                    .addComponent(lblMoHPart))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbMaqHerrParticular, 0, 195, Short.MAX_VALUE)
-                    .addComponent(cmbTipoMaqHerr, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(576, 576, 576))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTipoMoH)
-                    .addComponent(cmbTipoMaqHerr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMoHPart)
-                    .addComponent(cmbMaqHerrParticular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Problemas"));
 
@@ -168,6 +108,13 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         });
         jScrollPane3.setViewportView(tblProbActuales);
 
+        jButton3.setText("Salir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -181,11 +128,12 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 767, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(685, Short.MAX_VALUE)
+                .addContainerGap(596, Short.MAX_VALUE)
                 .addComponent(btnRegistrarSolucion)
-                .addGap(70, 70, 70))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,17 +147,12 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(112, 112, 112)
-                        .addComponent(btnRegistrarSolucion))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnRegistrarSolucion)
+                            .addComponent(jButton3)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
-
-        jButton3.setText("Salir");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Fecha Actual:");
@@ -222,38 +165,25 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addContainerGap())
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(62, 62, 62))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(715, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(4, 4, 4)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(11, 11, 11)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jButton3)
-                .addGap(40, 40, 40))
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -271,22 +201,23 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         Mensajes.mensajeInformacion("La solución ha sido registrada exitosamente");
         txtObservaciones.setText("");
 
-              if (cmbMaqHerrParticular.getSelectedIndex()!=-1){
-            tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
-                if (tmProblemas.getSize()==0){
-                ((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).setTEmaquina(EstadoMaquinaBD.getEstadoDisponible());
-                Mensajes.mensajeInformacion("La máquina está disponible");
-                }
-            }
-            else
-            {
-            tmProblemas.limpiar();
-            }
+//              if (cmbMaqHerrParticular.getSelectedIndex()!=-1){
+//            tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
+//                if (tmProblemas.getSize()==0){
+//                ((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).setTEmaquina(EstadoMaquinaBD.getEstadoDisponible());
+//                Mensajes.mensajeInformacion("La máquina está disponible");
+//                }
+//            }
+//            else
+//            {
+//            tmProblemas.limpiar();
+//            }
         }
         else
         {
             Mensajes.mensajeErrorGenerico("Debe seleccionar un problema");
         }
+        this.dispose();
 
     }//GEN-LAST:event_btnRegistrarSolucionActionPerformed
 
@@ -300,16 +231,6 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
       dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void cmbTipoMaqHerrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoMaqHerrActionPerformed
-        if (cmbTipoMaqHerr.getSelectedIndex()!=-1)
-            cargarMaqYHerrParticulares();
-}//GEN-LAST:event_cmbTipoMaqHerrActionPerformed
-
-    private void cmbMaqHerrParticularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMaqHerrParticularActionPerformed
-        if(cmbMaqHerrParticular.getSelectedIndex()!=-1)
-            tmProblemas.setDatos(ProblemasMhpBD.listarProblemasNoResueltos(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getIdMaquinaParticular()));
-}//GEN-LAST:event_cmbMaqHerrParticularActionPerformed
 
     /**
     * @param args the command line arguments
@@ -331,18 +252,13 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrarSolucion;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox cmbMaqHerrParticular;
-    private javax.swing.JComboBox cmbTipoMaqHerr;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel lblMoHPart;
-    private javax.swing.JLabel lblTipoMoH;
     private javax.swing.JTable tblProbActuales;
     private javax.swing.JTextField txtFechaActual;
     private javax.swing.JTextArea txtObservaciones;
@@ -398,11 +314,11 @@ private void inicializarTablas() {
     
 
     private void cargarTiposMaqYHerr() {
-       
-         cmbTipoMaqHerr.setModel(new DefaultComboBoxModel(gestor.listarTipoMaq().toArray()));
-        
-         if(cmbTipoMaqHerr.getSelectedIndex()!=-1)
-         cargarMaqYHerrParticulares();
+//
+//         cmbTipoMaqHerr.setModel(new DefaultComboBoxModel(gestor.listarTipoMaq().toArray()));
+//
+//         if(cmbTipoMaqHerr.getSelectedIndex()!=-1)
+//         cargarMaqYHerrParticulares();
     }
 
     
