@@ -13,13 +13,16 @@ package Presentacion.Ventas;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.DetalleFactura;
+import Negocio.Administracion.GestorCobroPedido;
 import Negocio.Exceptiones.NegocioException;
 import Negocio.Ventas.Pedido;
+import Presentacion.Administracion.PantallaCobroPedido;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import com.toedter.calendar.JTextFieldDateEditor;
+import java.math.BigDecimal;
 import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -78,7 +81,8 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
                 for (DetalleFactura dp : elemento.getFactura().getDetalleFactura()) {
                     montoTotal += dp.getCantidad() * dp.getPrecio();
                 }
-                fila.add("$ " + montoTotal);
+                
+                fila.add("$ " + elemento.getFactura().getTotalNeto());
                 return fila;
             }
         };
@@ -187,6 +191,7 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
         btnVer = new javax.swing.JButton();
         btnGenerar = new javax.swing.JButton();
         btnAnular = new javax.swing.JButton();
+        btnCobro = new javax.swing.JButton();
         pnlDetalle = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbDetalle = new javax.swing.JTable();
@@ -206,10 +211,10 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha Generación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Desde:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Hasta:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -242,13 +247,13 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Razón Social:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Nro. Pedido:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Nro. Factura");
 
         javax.swing.GroupLayout pnlBuscarLayout = new javax.swing.GroupLayout(pnlBuscar);
@@ -332,6 +337,13 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
             }
         });
 
+        btnCobro.setLabel("<html>Registrar<br>Cobro<html>");
+        btnCobro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCobroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBotonesLayout = new javax.swing.GroupLayout(pnlBotones);
         pnlBotones.setLayout(pnlBotonesLayout);
         pnlBotonesLayout.setHorizontalGroup(
@@ -341,7 +353,8 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
                 .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnGenerar, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
                     .addComponent(btnAnular, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
-                    .addComponent(btnVer, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))
+                    .addComponent(btnVer, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                    .addComponent(btnCobro, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlBotonesLayout.setVerticalGroup(
@@ -353,6 +366,8 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
                 .addComponent(btnAnular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnCobro, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -408,7 +423,9 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlPedidosLayout.createSequentialGroup()
+                        .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -506,6 +523,12 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnAnularActionPerformed
 
+    private void btnCobroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobroActionPerformed
+        // TODO add your handling code here:
+        PantallaCobroPedido pantalla = new PantallaCobroPedido(this, new GestorCobroPedido(tmPedido.getSeletedObject().getFactura()));
+        pantalla.setVisible(true);
+    }//GEN-LAST:event_btnCobroActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -527,6 +550,7 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCobro;
     private javax.swing.JButton btnGenerar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnVer;

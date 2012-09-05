@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
@@ -274,7 +274,10 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="pnlDetalle" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="pnlBotones" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="pnlBotones" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -309,6 +312,7 @@
                           <Component id="btnGenerar" alignment="0" pref="89" max="32767" attributes="1"/>
                           <Component id="btnAnular" alignment="0" pref="89" max="32767" attributes="0"/>
                           <Component id="btnVer" alignment="0" pref="89" max="32767" attributes="1"/>
+                          <Component id="btnCobro" alignment="0" pref="89" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -323,6 +327,8 @@
                       <Component id="btnAnular" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnVer" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnCobro" min="-2" pref="37" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -351,6 +357,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAnularActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnCobro">
+              <Properties>
+                <Property name="label" type="java.lang.String" value="&lt;html&gt;Registrar&lt;br&gt;Cobro&lt;html&gt;"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCobroActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

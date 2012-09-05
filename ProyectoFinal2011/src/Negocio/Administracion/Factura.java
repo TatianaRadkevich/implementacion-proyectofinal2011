@@ -64,16 +64,15 @@ public class Factura implements java.io.Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FEC_FACTURA", nullable = false, length = 23)
     private Date fecFactura;
+
     //
-    @OneToOne(mappedBy = "TFacturas")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_PEDIDO")//, nullable=false)
     private Pedido pedido;
     //
     @Column(name = "NUMERO", nullable = false, precision = 8, scale = 0)
     private int numero;
-    //
-    @Column(name = "RECARGO", precision = 6, scale = 4)
-    private BigDecimal recargo;
-    //
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FEC_BAJA")
     private Date fecBaja;
@@ -81,7 +80,7 @@ public class Factura implements java.io.Serializable {
     @Column(name = "MOTIVO_BAJA", length = 100)
     private String motivoBaja;
     //
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EFACTURA")//, nullable=false)
     private EstadoFactura TEFactura;
     //
@@ -92,6 +91,7 @@ public class Factura implements java.io.Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TFacturas")
     private Set<Cobro> TCobroses = new HashSet<Cobro>(0);
 
+    
     public Factura() {
     }
 
@@ -108,11 +108,11 @@ public class Factura implements java.io.Serializable {
         this.descuento = descuento;
         this.fecFactura = fecFactura;
         this.numero = numero;
-        this.recargo = recargo;
         this.TDetallesFacturas = TDetallesFacturas;
         this.TCobroses = TCobroses;
     }
 
+    
     public int getId() {
         return this.idFactura;
     }
@@ -133,21 +133,9 @@ public class Factura implements java.io.Serializable {
         this.descuento = descuento;
     }
 
-    public BigDecimal getRecargoPorcentaje() {
-        return this.recargo;
-    }
-
-    public void setRecargoPorcentaje(BigDecimal recargo) {
-        this.recargo = recargo;
-    }
 
     public BigDecimal getDescuentoMonto() {
-        float resultado = (this.getDescuentoPorcentaje().floatValue() * this.getTotalBruto()) * 100;
-        return new BigDecimal(resultado, new MathContext(2, RoundingMode.UP));
-    }
-
-    public BigDecimal getRecargoMonto() {
-        float resultado = (this.getRecargoPorcentaje().floatValue() * this.getTotalBruto()) * 100;
+        float resultado = (this.getDescuentoPorcentaje().floatValue() * this.getTotalBruto()) / 100;
         return new BigDecimal(resultado, new MathContext(2, RoundingMode.UP));
     }
 
@@ -160,7 +148,7 @@ public class Factura implements java.io.Serializable {
     }
 
     public float getTotalNeto() {
-        float salida = this.getTotalBruto() - this.getDescuentoMonto().floatValue() + this.getRecargoMonto().floatValue();
+        float salida = this.getTotalBruto() - this.getDescuentoMonto().floatValue();
         return new BigDecimal(salida).round(new MathContext(2, RoundingMode.UP)).floatValue();
     }
 
@@ -282,11 +270,12 @@ public class Factura implements java.io.Serializable {
         this.fecBaja = Utilidades.getFechaActual();
         this.motivoBaja = motivo;
         this.TEFactura = FacturaBD.getEstadoFactura(FacturaBD.Estado.Anulada);
-
+        this.pedido.setEstadoPedido(EstadoPedidoBD.getEstadoRetirado());
         HibernateUtil.guardarObjeto(this);
     }
 
     public void guardar() throws NegocioException {
         HibernateUtil.modificarObjeto(this);
     }
+
 }
