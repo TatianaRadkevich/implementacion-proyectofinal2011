@@ -46,6 +46,7 @@ import Negocio.GestionUsuario.*;
 import Presentacion.Produccion.ProblemaHerramientaParticular;
 import Presentacion.Produccion.RegistrarSolucionProblemaMaqOHerr;
 import Presentacion.TomaDeDecisiones.ReportesMateriales.PantallaReportesMateriales;
+import Presentacion.TomaDeDecisiones.ReportesProductosTerminados.PantallaReportesProductosTerminados;
 
 
 import Presentacion.Ventas.PantallaPedidoConsultar;
@@ -143,6 +144,7 @@ public class Principal extends javax.swing.JFrame {
         mnuAlmacenamientoProductoTerminado = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Principal");
@@ -553,6 +555,11 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(mnuDeposito);
 
         jMenu1.setText("Reportes");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
 
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/producto.png"))); // NOI18N
         jMenuItem2.setText("Materiales");
@@ -562,6 +569,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem2);
+
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/estructura_producto.png"))); // NOI18N
+        jMenuItem4.setText("Productos Terminados");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
 
@@ -855,7 +871,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        PantallaReportesMateriales pantalla = new PantallaReportesMateriales();
+        PantallaReportesMateriales pantalla = new PantallaReportesMateriales(this, false);
+        pantalla.setLocationRelativeTo(this);
         pantalla.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -865,6 +882,16 @@ public class Principal extends javax.swing.JFrame {
         pantalla.setVisible(true);
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+       PantallaReportesProductosTerminados pantalla = new PantallaReportesProductosTerminados(this, false);
+       pantalla.setLocationRelativeTo(this);
+       pantalla.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -891,6 +918,7 @@ UIManager.put("Synthetica.license.key", "1891309A-E215572F-9865495F-0E06D6A9-616
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblMensajeInicio;
     private javax.swing.JMenu mnuAdministracion;
