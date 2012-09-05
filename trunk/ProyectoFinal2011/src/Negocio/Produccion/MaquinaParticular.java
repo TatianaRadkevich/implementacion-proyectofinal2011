@@ -2,6 +2,7 @@ package Negocio.Produccion;
 // Generated 18/03/2012 17:10:18 by Hibernate Tools 3.2.1.GA
 
 
+import BaseDeDatos.Produccion.ProblemasMhpBD;
 import Negocio.Exceptiones.TipoDatoException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -213,11 +214,12 @@ public class MaquinaParticular  implements java.io.Serializable {
     }
 
     public List<ProblemasMhp> getTProblemasMhps() {
-        List<ProblemasMhp> pro= new ArrayList<ProblemasMhp>();
-        for(ProblemasMhp prob: this.TProblemasMhps ){
-            pro.add(prob);
-        }
-        return pro;
+        return ProblemasMhpBD.listarProblemasMaquinas(this);
+//        List<ProblemasMhp> pro= new ArrayList<ProblemasMhp>();
+//        for(ProblemasMhp prob: this.TProblemasMhps ){
+//            pro.add(prob);
+//        }
+       
     }
 
     public void setTProblemasMhps(Set TProblemasMhps) {

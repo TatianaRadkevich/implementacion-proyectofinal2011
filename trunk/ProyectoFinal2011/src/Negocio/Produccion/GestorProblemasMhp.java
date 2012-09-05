@@ -44,8 +44,9 @@ public class GestorProblemasMhp {
             throw new RuntimeException("GestorEstructura.getProductos\nTipo de producto null");
         }
         List<MaquinaParticular> maquina=new ArrayList<MaquinaParticular>();
-        
-        for(MaquinaParticular maq : BaseDeDatos.Produccion.MaquinaBD.getMaquinas(tm, true, false))
+        boolean ban=true;
+        List<MaquinaParticular> maquinaTemp=BaseDeDatos.Produccion.MaquinaBD.getMaquinas(tm, true, false);
+        for(MaquinaParticular maq : maquinaTemp)
         {
             List<ProblemasMhp> pro=maq.getTProblemasMhps();
             if(pro.isEmpty() || pro==null)
@@ -55,11 +56,15 @@ public class GestorProblemasMhp {
                 for(ProblemasMhp p : pro)
                 {
                     if(p.getFecHoraRealSolucion() == null)
-                    {   
+                    {
+                        ban=false;
                         break;
                     }
-                    maquina.add(maq);
+                    
                 }
+                if(ban){
+                        maquina.add(maq);
+                    }
             }
             
         }         
@@ -79,24 +84,14 @@ public class GestorProblemasMhp {
             throw new RuntimeException("GestorEstructura.getProductos\nTipo de herramienta null");
         }
         List<HerramientaParticular> herramienta=new ArrayList<HerramientaParticular>();
+        List<HerramientaParticular> herramientaTemp=BaseDeDatos.Produccion.HerramientaBD.getHerramientaParticular(th, true, false);
 
-        for(HerramientaParticular her : BaseDeDatos.Produccion.HerramientaBD.getHerramientaParticular(th, true, false))
+
+
+        for(HerramientaParticular her : herramientaTemp)
         {
-            List<ProblemasMhp> pro=her.getTProblemasMhps();
-            if(pro.isEmpty() || pro==null)
+            if(her.getCantidad()!=0)
                 herramienta.add(her);
-            else
-            {
-                for(ProblemasMhp p : pro)
-                {
-                    if(p.getFecHoraRealSolucion() == null)
-                    {                       
-                        break;
-                    }
-                    herramienta.add(her);
-                }
-            }
-
         }
         return herramienta;
     }
