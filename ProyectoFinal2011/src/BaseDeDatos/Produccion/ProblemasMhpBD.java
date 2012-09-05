@@ -6,6 +6,7 @@
 package BaseDeDatos.Produccion;
 
 import BaseDeDatos.HibernateUtil;
+import Negocio.Produccion.MaquinaParticular;
 import Negocio.Produccion.ProblemasMhp;
 import Presentacion.Utilidades;
 import java.util.ArrayList;
@@ -78,6 +79,12 @@ public class ProblemasMhpBD {
     public static ProblemasMhp traerProblema(int id){
 
         return (ProblemasMhp) HibernateUtil.getObjeto(ProblemasMhp.class, id);
+    }
+
+    public static List<ProblemasMhp> listarProblemasMaquinas(MaquinaParticular maquina){
+        String hql=("from ProblemasMhp where TMaquinasParticular.idMaquinaParticular = " + maquina.getIdMaquinaParticular());
+
+        return HibernateUtil.ejecutarConsulta(hql);
     }
 
 }
