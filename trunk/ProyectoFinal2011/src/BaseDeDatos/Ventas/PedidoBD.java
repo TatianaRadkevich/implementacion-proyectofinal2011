@@ -81,16 +81,23 @@ public class PedidoBD {
 
         String auxDesde = Utilidades.parseFecha(Utilidades.agregarTiempoFecha(desde, -1, 0, 0));
         String auxHasta = Utilidades.parseFecha(Utilidades.agregarTiempoFecha(hasta, 1, 0, 0));
-
-        String HQL =
-                "FROM Pedido as p "
-                + "WHERE LOWER(p.TClientes.razonSocial) like  LOWER('" + RazonSocial + "%') "
-                + "AND p.TFacturas.numero  like '" + nroFactura + "%' "
-                + "AND p.idPedido like '" + NroPedido + "%' "
-                + ((auxDesde == null) ? "" : "AND p.TFacturas.fecFactura >= '" + auxDesde + "' ")
-                + ((auxHasta == null) ? "" : "AND p.TFacturas.fecFactura <= '" + auxHasta + "' ");
-
-        return HibernateUtil.ejecutarConsulta(HQL);
+        
+        String HQL = String.format("FROM Pedido as p "
+                + "WHERE LOWER(p.TClientes.razonSocial) like  LOWER('%s%%') "
+                + "AND p.TFacturas.numero  like '%s%%' "
+                + "AND p.idPedido like '%s%%' ",RazonSocial,nroFactura,NroPedido);
+        
+        List<Pedido> pedidosADevolver = new ArrayList<Pedido>();
+        List<Pedido> pedidos = HibernateUtil.ejecutarConsulta(HQL);
+        
+        /* Recordar: Hacer la consulta HQL bien, por ahora la hago así para testing */
+        for(Pedido pedido : pedidos){
+            if(pedido.getFactura().getFechaGeneracion().before(hasta) && pedido.getFactura().getFechaGeneracion().after(desde))
+              {
+                 pedidosADevolver.add(pedido);
+              }
+           }
+        return pedidosADevolver;
     }
 
     public static List<Pedido> getPedidosPlanificados(

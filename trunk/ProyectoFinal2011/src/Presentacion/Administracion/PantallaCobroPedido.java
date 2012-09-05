@@ -23,7 +23,6 @@ import Presentacion.Utilidades;
 import Presentacion.ZLinkers.*;
 import Presentacion.ZLinkers.ZLFormatedTextField.Formato;
 import java.awt.Window;
-import java.math.BigDecimal;
 import java.util.Vector;
 
 /**
@@ -57,11 +56,9 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         linkFactura.add("domicilio", false, new ZLTextField(txtDomicilio));
         linkFactura.add("DescuentoMonto", false, new ZLTextField(txtDescuentoMonto));
         linkFactura.add("DescuentoPorcentaje", false, new ZLTextField(txtDescuentoPorcentaje));
-        linkFactura.add("RecargoMonto", false, new ZLTextField(txtRecargoMonto));
-        linkFactura.add("RecargoPorcentaje", false, new ZLTextField(txtRecargoPorcentaje));
         linkFactura.add("neto", false, new ZLTextField(txtTotalNeto));
         linkFactura.add("bruto", false, new ZLTextField(txtTotalBruto));
-
+        
         this.tmCobros = new TablaManager<Cobro>(tbCobros) {
 
             @Override
@@ -93,13 +90,17 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         linkCobro.add("observacion", new ZLTextField(txtDescripcionCobro));
         linkCobro.add("formaPago", new ZLComboBox(cmbFormaPagoCobro));
 
-        linkCheque = new ZLObject<Cheque>(Cheque.class);
-        linkCobro.add("cuit", new ZLTextField(txtChequeCUIT));
-        linkCobro.add("razonSocial", new ZLTextField(txtChequeRazonSocial));
-        linkCobro.add("NroSucursal", new ZLTextField(txtChequeNroSucursal));
-        linkCobro.add("Banco", new ZLTextField(txtChequeBanco));
-        linkCobro.add("Emision", new ZLCalendar(dtcChequeFechaEmision));
-        linkCobro.add("Vencimiento", new ZLCalendar(dtcChequeFechaVencimiento));
+        
+        
+        
+        
+//        linkCheque = new ZLObject<Cheque>(Cheque.class);
+//        linkCobro.add("cuit", new ZLTextField(txtChequeCUIT));
+//        linkCobro.add("razonSocial", new ZLTextField(txtChequeRazonSocial));
+//        linkCobro.add("NroSucursal", new ZLTextField(txtChequeNroSucursal));
+//        linkCobro.add("Banco", new ZLTextField(txtChequeBanco));
+//        linkCobro.add("Emision", new ZLCalendar(dtcChequeFechaEmision));
+//        linkCobro.add("Vencimiento", new ZLCalendar(dtcChequeFechaVencimiento));
     }
 
     private void setFactura(Factura f) {
@@ -156,11 +157,6 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         txtDescuentoPorcentaje = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        pnlRecargo = new javax.swing.JPanel();
-        txtRecargoMonto = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        txtRecargoPorcentaje = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
         pnlTotal = new javax.swing.JPanel();
         txtTotalNeto = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -200,7 +196,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         txtMontoCobro = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtNroCobro = new javax.swing.JTextField();
-        txtFechaCobro = new javax.swing.JFormattedTextField();
+        dtcFechaGeneracion = new com.toedter.calendar.JDateChooser();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -220,19 +216,19 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
 
         pnlFactura.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Factura (Vista previa)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Nro. Factura:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Fecha generación:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Razón Social:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("CUIT:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Domicilio:");
 
         txtNroFactura.setEditable(false);
@@ -250,13 +246,13 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
 
         txtDescuentoMonto.setEditable(false);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("%");
 
         txtDescuentoPorcentaje.setEditable(false);
         txtDescuentoPorcentaje.setToolTipText("Precionar Enter para que las modificaciones tomen efecto");
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel11.setText("  $");
 
         javax.swing.GroupLayout pnlDescuentoLayout = new javax.swing.GroupLayout(pnlDescuento);
@@ -281,52 +277,17 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                 .addComponent(jLabel11))
         );
 
-        pnlRecargo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recargo (+)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
-
-        txtRecargoMonto.setEditable(false);
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel8.setText("%");
-
-        txtRecargoPorcentaje.setEditable(false);
-        txtRecargoPorcentaje.setToolTipText("Precionar Enter para que las modificaciones tomen efecto");
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11));
-        jLabel12.setText("  $");
-
-        javax.swing.GroupLayout pnlRecargoLayout = new javax.swing.GroupLayout(pnlRecargo);
-        pnlRecargo.setLayout(pnlRecargoLayout);
-        pnlRecargoLayout.setHorizontalGroup(
-            pnlRecargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlRecargoLayout.createSequentialGroup()
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtRecargoPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtRecargoMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        pnlRecargoLayout.setVerticalGroup(
-            pnlRecargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlRecargoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtRecargoPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel8)
-                .addComponent(txtRecargoMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel12))
-        );
-
         pnlTotal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         txtTotalNeto.setEditable(false);
         txtTotalNeto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel10.setText("Neto:  $ ");
 
         txtTotalBruto.setEditable(false);
 
-        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel24.setText("Bruto:  $ ");
 
         javax.swing.GroupLayout pnlTotalLayout = new javax.swing.GroupLayout(pnlTotal);
@@ -357,14 +318,11 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             pnlResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlResumenLayout.createSequentialGroup()
                 .addComponent(pnlDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlRecargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pnlTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlResumenLayout.setVerticalGroup(
             pnlResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlRecargo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnlDescuento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnlTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -385,7 +343,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 418, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 440, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtFechaGeneracion, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -402,7 +360,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                         .addGap(30, 30, 30)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDomicilio, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)))
+                        .addComponent(txtDomicilio, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlFacturaLayout.setVerticalGroup(
@@ -439,14 +397,14 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tbCobros);
 
-        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel22.setText("Saldo actual:");
 
         txtSaldoActual.setEditable(false);
 
         txtSaldoRestante.setEditable(false);
 
-        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel23.setText("Saldo restante:");
 
         javax.swing.GroupLayout pnlCobrosRegistradosLayout = new javax.swing.GroupLayout(pnlCobrosRegistrados);
@@ -455,7 +413,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             pnlCobrosRegistradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCobrosRegistradosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlCobrosRegistradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlCobrosRegistradosLayout.createSequentialGroup()
@@ -487,24 +445,24 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
 
         pnlCheque.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Cheque", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel16.setText("Fecha Emision:");
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel17.setText("   Fecha Vencimiento:");
 
-        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel18.setText("Nro Sucursal:");
 
-        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel19.setText("Banco:");
 
         pnlClienteCheque.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel20.setText("CUIT:");
 
-        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel21.setText("Razon social:");
 
         txtChequeCUIT.setEditable(false);
@@ -518,7 +476,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             .addGroup(pnlClienteChequeLayout.createSequentialGroup()
                 .addComponent(jLabel21)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtChequeRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                .addComponent(txtChequeRazonSocial)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel20)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -543,15 +501,15 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlChequeLayout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dtcChequeFechaEmision, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                        .addComponent(dtcChequeFechaEmision, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dtcChequeFechaVencimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
+                        .addComponent(dtcChequeFechaVencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(pnlChequeLayout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtChequeBanco, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                        .addComponent(txtChequeBanco)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel18)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -577,7 +535,6 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        txtDescripcionCobro.setBackground(new java.awt.Color(255, 255, 255));
         txtDescripcionCobro.setLineWrap(true);
         txtDescripcionCobro.setWrapStyleWord(true);
         jScrollPane2.setViewportView(txtDescripcionCobro);
@@ -589,19 +546,19 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             }
         });
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel14.setText("  Monto:  $");
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel15.setText("Descripción:");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("Fecha:");
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel13.setText("Forma pago:");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Nro. Cobro:");
 
@@ -620,26 +577,28 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(cmbFormaPagoCobro, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(cmbFormaPagoCobro, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtMontoCobro, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtMontoCobro))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txtNroCobro, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFechaCobro, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(dtcFechaGeneracion, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtNroCobro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFechaCobro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(txtNroCobro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9))
+                    .addComponent(dtcFechaGeneracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtMontoCobro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -659,7 +618,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCobroLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlCheque, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -668,7 +627,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlCobroLayout.createSequentialGroup()
                 .addComponent(pnlCheque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         btnAceptar.setText("Aceptar");
@@ -724,7 +683,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (cmbFormaPagoCobro.getSelectedItem() != null && cmbFormaPagoCobro.getSelectedItem() instanceof FormaPago) {
             FormaPago fp = (FormaPago) cmbFormaPagoCobro.getSelectedItem();
-            if (fp.equals(FormaPago.getFormaPago(FormaPago.Tipo.Efectivo))) {
+            if (!fp.equals(FormaPago.getFormaPago(FormaPago.Tipo.Efectivo))) {
                 Utilidades.habilitarPanel(pnlCheque, true);
                 setCheque(new Cheque());
             } else {
@@ -738,15 +697,19 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
         try{
-        linkCobro.save();
-        if(linkCobro.getObjeto().getFormaPago().equals(FormaPago.getFormaPago(FormaPago.Tipo.Cheque)))
-        {
-            linkCheque.save();
-            linkCobro.getObjeto().setCheque(linkCheque.getObjeto());
-        }
-        gestor.getFactura().addCobro(linkCobro.getObjeto());
-        gestor.getFactura().guardar();
-        Mensajes.mensajeInformacion("El Cobro ha sido guardado con exito");
+            linkCobro.getObjeto().setImporte(Utilidades.parseBigDecimal(txtMontoCobro.getText()));
+            linkCobro.getObjeto().setgetEmpleado(gestor.getFactura().getEmpleado());
+            linkCobro.getObjeto().setFechaCobro(dtcFechaGeneracion.getDate());
+            linkCobro.getObjeto().setObservaciones(txtDescripcionCobro.getText());
+            linkCobro.save();
+            if(linkCobro.getObjeto().getFormaPago().equals(FormaPago.getFormaPago(FormaPago.Tipo.Cheque)))
+            {
+                linkCheque.save();
+                linkCobro.getObjeto().setCheque(linkCheque.getObjeto());
+            }
+            gestor.getFactura().addCobro(linkCobro.getObjeto());
+            gestor.getFactura().guardar();
+            Mensajes.mensajeInformacion("El Cobro ha sido guardado con exito");
         }catch(NegocioException ne){Mensajes.mensajeErrorGenerico(ne.getMessage());}
 
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -776,10 +739,10 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
     private javax.swing.JComboBox cmbFormaPagoCobro;
     private com.toedter.calendar.JDateChooser dtcChequeFechaEmision;
     private com.toedter.calendar.JDateChooser dtcChequeFechaVencimiento;
+    private com.toedter.calendar.JDateChooser dtcFechaGeneracion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -798,7 +761,6 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -810,7 +772,6 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
     private javax.swing.JPanel pnlCobrosRegistrados;
     private javax.swing.JPanel pnlDescuento;
     private javax.swing.JPanel pnlFactura;
-    private javax.swing.JPanel pnlRecargo;
     private javax.swing.JPanel pnlResumen;
     private javax.swing.JPanel pnlTotal;
     private javax.swing.JTable tbCobros;
@@ -823,14 +784,11 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
     private javax.swing.JTextField txtDescuentoMonto;
     private javax.swing.JTextField txtDescuentoPorcentaje;
     private javax.swing.JTextField txtDomicilio;
-    private javax.swing.JFormattedTextField txtFechaCobro;
     private javax.swing.JFormattedTextField txtFechaGeneracion;
     private javax.swing.JTextField txtMontoCobro;
     private javax.swing.JTextField txtNroCobro;
     private javax.swing.JTextField txtNroFactura;
     private javax.swing.JTextField txtRazonSocial;
-    private javax.swing.JTextField txtRecargoMonto;
-    private javax.swing.JTextField txtRecargoPorcentaje;
     private javax.swing.JTextField txtSaldoActual;
     private javax.swing.JTextField txtSaldoRestante;
     private javax.swing.JTextField txtTotalBruto;

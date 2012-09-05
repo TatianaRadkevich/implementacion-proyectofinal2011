@@ -42,6 +42,7 @@ import Presentacion.Ventas.PantallaFacturaConsultar;
 import BaseDeDatos.Usuario.UsuarioBD;
 import Negocio.Administracion.Cargo;
 import Negocio.Administracion.Empleado;
+import Negocio.Administracion.GestorCobroPedido;
 import Negocio.GestionUsuario.*;
 import Presentacion.Produccion.ProblemaHerramientaParticular;
 import Presentacion.Produccion.RegistrarSolucionProblemaMaqOHerr;
@@ -166,7 +167,7 @@ public class Principal extends javax.swing.JFrame {
         pnlSession.add(btnIniciarSession);
         btnIniciarSession.setBounds(210, 120, 95, 23);
 
-        lblMensaje.setFont(new java.awt.Font("Tahoma", 1, 11));
+        lblMensaje.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblMensaje.setForeground(new java.awt.Color(255, 0, 0));
         lblMensaje.setText("jLabel1");
         pnlSession.add(lblMensaje);
@@ -202,7 +203,7 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().add(pnlSession);
         pnlSession.setBounds(250, 250, 390, 170);
 
-        lblMensajeInicio.setFont(new java.awt.Font("Tahoma", 1, 14));
+        lblMensajeInicio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(lblMensajeInicio);
         lblMensajeInicio.setBounds(10, 10, 870, 30);
 
