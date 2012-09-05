@@ -6,7 +6,7 @@
 /*
  * PantallaReportesMateriales.java
  *
- * Created on 01-sep-2012, 17:57:42
+ * Created on 04-sep-2012, 22:59:47
  */
 
 package Presentacion.TomaDeDecisiones.ReportesMateriales;
@@ -15,10 +15,11 @@ package Presentacion.TomaDeDecisiones.ReportesMateriales;
  *
  * @author Heber Parrucci
  */
-public class PantallaReportesMateriales extends javax.swing.JFrame {
+public class PantallaReportesMateriales extends javax.swing.JDialog {
 private reporteMateriales jasper;
     /** Creates new form PantallaReportesMateriales */
-    public PantallaReportesMateriales() {
+    public PantallaReportesMateriales(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
         jasper = new reporteMateriales();
     }
@@ -32,15 +33,15 @@ private reporteMateriales jasper;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        btnGenerarReporte = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Reportes de Materiales");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Reporte de Materiales");
 
-        jButton1.setText("Reporte de Stock de Materiales");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnGenerarReporte.setText("Reporte de Stock de Materiales");
+        btnGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnGenerarReporteActionPerformed(evt);
             }
         });
 
@@ -49,24 +50,24 @@ private reporteMateriales jasper;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addComponent(jButton1)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addGap(100, 100, 100)
+                .addComponent(btnGenerarReporte)
+                .addContainerGap(117, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(jButton1)
-                .addContainerGap(218, Short.MAX_VALUE))
+                .addGap(76, 76, 76)
+                .addComponent(btnGenerarReporte)
+                .addContainerGap(108, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    jasper.runReporte();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
+       jasper.runReporte();
+    }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
     /**
     * @param args the command line arguments
@@ -74,13 +75,19 @@ private reporteMateriales jasper;
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PantallaReportesMateriales().setVisible(true);
+                PantallaReportesMateriales dialog = new PantallaReportesMateriales(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnGenerarReporte;
     // End of variables declaration//GEN-END:variables
 
 }
