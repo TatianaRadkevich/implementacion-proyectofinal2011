@@ -42,7 +42,7 @@ public class PantallaHerramientaConsultar extends javax.swing.JDialog {
                 cabcera.add("Codigo");//col 1
                 cabcera.add("Nombre");//col 2
                 cabcera.add("Modelo");//col 3
-                cabcera.add("Estado");//col 4
+                cabcera.add("Cantidad disponible");//col 4
                 return cabcera;
             }
 
@@ -52,6 +52,7 @@ public class PantallaHerramientaConsultar extends javax.swing.JDialog {
                  fila.add(elemento.getNombre());
                   fila.add(elemento.getModelo());
                    fila.add(elemento.getTTherramienta());
+                   fila.add(elemento.getCantidad());
                 return fila;
             }
         };

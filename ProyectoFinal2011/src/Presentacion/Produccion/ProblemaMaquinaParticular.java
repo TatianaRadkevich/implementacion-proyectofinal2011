@@ -363,7 +363,7 @@ public class ProblemaMaquinaParticular extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void cargarTiposMaqYHerr() {
-        
+        cmbTipoMaqHerr.removeAllItems();
          cmbTipoMaqHerr.setModel(new DefaultComboBoxModel(gestor.listarTipoMaq().toArray()));
  
          if(cmbTipoMaqHerr.getSelectedIndex()!=-1)
@@ -371,13 +371,14 @@ public class ProblemaMaquinaParticular extends javax.swing.JDialog {
     }
 
     private void cargarMaqYHerrParticulares() {
+        cmbMaqHerrParticular.removeAllItems();
         if (cmbTipoMaqHerr.getSelectedIndex()!=-1)
-        cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getMaquinasSinProblemas((TipoMaquina) cmbTipoMaqHerr.getSelectedItem()).toArray()));
+            cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getMaquinasSinProblemas((TipoMaquina) cmbTipoMaqHerr.getSelectedItem()).toArray()));
         if (cmbMaqHerrParticular.getSelectedIndex()!=-1){
-        txtNroSerie.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getCodigo());
-        txtNombre.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getNombre());
-        txtModelo.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getModelo());
-        txtCapacidadProductiva.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getCaracteristicas());
+            txtNroSerie.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getCodigo());
+            txtNombre.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getNombre());
+            txtModelo.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getModelo());
+            txtCapacidadProductiva.setText(((MaquinaParticular)cmbMaqHerrParticular.getSelectedItem()).getCaracteristicas());
         }
         else
         {
