@@ -22,6 +22,7 @@ import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.Pedido;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
+import Presentacion.TomaDeDecisiones.ReporteFactura.ReporteFactura;
 import Presentacion.Utilidades;
 import Presentacion.ValidarTexbox;
 import java.awt.Window;
@@ -306,7 +307,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         pnlPedidos.setLayout(pnlPedidosLayout);
         pnlPedidosLayout.setHorizontalGroup(
             pnlPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
         );
         pnlPedidosLayout.setVerticalGroup(
             pnlPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,18 +316,18 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
 
         pnlFactura.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Factura (Vista previa)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("Nro. Factura:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel2.setText("Fecha generacion:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Razón Social:");
 
         jLabel4.setText("CUIT:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel5.setText("Domicilio:");
 
         txtNroFactura.setEditable(false);
@@ -353,7 +354,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         txtSubTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtSubTotal.setText("XXXXX");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel6.setText("Sub-Total:  $");
 
         tbDetalleFactura.setModel(new javax.swing.table.DefaultTableModel(
@@ -391,7 +392,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
 
         txtDescuentoMonto.setEditable(false);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel7.setText("%");
 
         txtDescuentoPorcentaje.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -400,7 +401,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel11.setText("  $");
 
         javax.swing.GroupLayout pnlDescuentoLayout = new javax.swing.GroupLayout(pnlDescuento);
@@ -431,7 +432,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         txtTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtTotal.setText("XXXXX");
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel10.setText("$");
 
         javax.swing.GroupLayout pnlTotalLayout = new javax.swing.GroupLayout(pnlTotal);
@@ -456,7 +457,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
             pnlResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlResumenLayout.createSequentialGroup()
                 .addComponent(pnlDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
                 .addComponent(pnlTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlResumenLayout.setVerticalGroup(
@@ -478,7 +479,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtFechaGeneracion, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -496,7 +497,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
                         .addGap(30, 30, 30)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDomicilio)))
+                        .addComponent(txtDomicilio, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlFacturaLayout.setVerticalGroup(
@@ -545,10 +546,10 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
 
         txtFechaBaja.setEditable(false);
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel9.setText("Fecha:");
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel13.setText("Motivo:");
 
         javax.swing.GroupLayout pnlAnularLayout = new javax.swing.GroupLayout(pnlAnular);
@@ -639,8 +640,15 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
             f.setDescuentoPorcentaje(new BigDecimal(txtDescuentoMonto.getText()));
             f.setNumero(new Integer(txtNroFactura.getText()));
             f.generar();
-            Mensajes.mensajeInformacion("Factura generada correctamente!!!");
+            Mensajes.mensajeInformacion("Factura generada correctamente");
+
             this.dispose();
+
+            BigDecimal id = new BigDecimal(f.getId());
+            ReporteFactura reporteFactura = new ReporteFactura();
+            reporteFactura.addParameter("id_factura", id);
+            reporteFactura.runReporte();
+
         //} catch (Exception e) {
             //Mensajes.mensajeErrorGenerico("Datos incorrectos");
         //}
