@@ -1,6 +1,7 @@
 package Negocio.Administracion;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
+import BaseDeDatos.HibernateUtil;
 import Negocio.Administracion.Cobro;
 import Negocio.Ventas.Cliente;
 import java.math.BigDecimal;
@@ -52,7 +53,7 @@ public class Cheque implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CLIENTE", nullable = false)
     private Cliente cliente;
-
+    
     public Cheque() {
     }
 
@@ -124,4 +125,9 @@ public class Cheque implements java.io.Serializable {
     public String getRazonSocialCliente() {
         return cliente.getRazonSocial();
     }
+    
+    public void grabar(){
+        HibernateUtil.guardarObjeto(this);
+    }
+
 }

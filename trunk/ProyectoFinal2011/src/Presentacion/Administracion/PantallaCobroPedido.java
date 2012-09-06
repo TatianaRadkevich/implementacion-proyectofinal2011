@@ -10,9 +10,14 @@
  */
 package Presentacion.Administracion;
 
+import BaseDeDatos.Administracion.CobroBD;
+import BaseDeDatos.Administracion.FacturaBD;
+import BaseDeDatos.Ventas.EstadoPedidoBD;
+import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.GestorCobroPedido;
 import Negocio.Administracion.Cheque;
 import Negocio.Administracion.Cobro;
+import Negocio.Administracion.EstadoFactura;
 import Negocio.Administracion.Factura;
 import Negocio.Administracion.FormaPago;
 import Negocio.Exceptiones.NegocioException;
@@ -23,6 +28,8 @@ import Presentacion.Utilidades;
 import Presentacion.ZLinkers.*;
 import Presentacion.ZLinkers.ZLFormatedTextField.Formato;
 import java.awt.Window;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Vector;
 
 /**
@@ -41,6 +48,10 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
     public PantallaCobroPedido(Window parent, GestorCobroPedido gestor) {
         super(parent, ModalityType.APPLICATION_MODAL);
         this.gestor = gestor;
+         if (gestor.getFactura().getEstadoFactura().equals(FacturaBD.getEstadoFactura(FacturaBD.Estado.Cobrada)) == true
+                || gestor.getFactura().getEstadoFactura().equals(FacturaBD.getEstadoFactura(FacturaBD.Estado.Anulada)) == true) {
+            throw new NegocioException("No se encuentra ninguna factura pendiente de cobro");
+        }
         initComponents();
         cofigurarControles();
         Utilidades.comboCargar(cmbFormaPagoCobro, gestor.getFormaPagos());
@@ -85,22 +96,18 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
 
         linkCobro = new ZLObject<Cobro>(Cobro.class);
         linkCobro.add("lastId", false, new ZLTextField(txtNroCobro));
-        //linkCobro.add("fecha", false, new ZLFormatedTextField(txtFechaCobro, Formato.Date));
+        linkCobro.add("fecha", false, new ZLCalendar(dtcFechaGeneracion));
         linkCobro.add("importe", new ZLTextField(txtMontoCobro));
         linkCobro.add("observacion", new ZLTextField(txtDescripcionCobro));
         linkCobro.add("formaPago", new ZLComboBox(cmbFormaPagoCobro));
-
         
-        
-        
-        
-//        linkCheque = new ZLObject<Cheque>(Cheque.class);
-//        linkCobro.add("cuit", new ZLTextField(txtChequeCUIT));
-//        linkCobro.add("razonSocial", new ZLTextField(txtChequeRazonSocial));
-//        linkCobro.add("NroSucursal", new ZLTextField(txtChequeNroSucursal));
-//        linkCobro.add("Banco", new ZLTextField(txtChequeBanco));
-//        linkCobro.add("Emision", new ZLCalendar(dtcChequeFechaEmision));
-//        linkCobro.add("Vencimiento", new ZLCalendar(dtcChequeFechaVencimiento));
+        linkCheque = new ZLObject<Cheque>(Cheque.class);
+        linkCheque.add("cuit", new ZLTextField(txtChequeCUIT));
+        linkCheque.add("razonSocial", new ZLTextField(txtChequeRazonSocial));
+        linkCheque.add("NroSucursal", new ZLTextField(txtChequeNroSucursal));
+        linkCheque.add("Banco", new ZLTextField(txtChequeBanco));
+        linkCheque.add("Emision", new ZLCalendar(dtcChequeFechaEmision));
+        linkCheque.add("Vencimiento", new ZLCalendar(dtcChequeFechaVencimiento));
     }
 
     private void setFactura(Factura f) {
@@ -108,11 +115,15 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         linkFactura.load();
         tmCobros.setDatos(f.getCobros());
         setCobroFactura(new Cobro(f));
+        txtSaldoActual.setText(f.getTotalCobrado() + "");
+        txtSaldoRestante.setText(f.getTotalAdeudado() + "");
     }
 
     private void setCobroFactura(Cobro c) {
         linkCobro.setObjeto(c);
         linkCobro.load();
+        txtNroCobro.setText(linkCobro.getObjeto().getLastId()+ 1 + "");
+        dtcFechaGeneracion.setDate(Utilidades.getFechaActual());
     }
 
     private void setCheque(Cheque c) {
@@ -128,6 +139,9 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         }
         linkCheque.setObjeto(c);
         linkCobro.load();
+        txtChequeCUIT.setText(gestor.getFactura().getCUITCliente());
+        txtChequeRazonSocial.setText(gestor.getFactura().getRazonSocialCliente());
+        dtcFechaGeneracion.setDate(Utilidades.getFechaActual());
     }
 
 
@@ -343,7 +357,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 440, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtFechaGeneracion, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -360,7 +374,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
                         .addGap(30, 30, 30)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDomicilio, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)))
+                        .addComponent(txtDomicilio)))
                 .addContainerGap())
         );
         pnlFacturaLayout.setVerticalGroup(
@@ -413,7 +427,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             pnlCobrosRegistradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCobrosRegistradosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addGap(18, 18, 18)
                 .addGroup(pnlCobrosRegistradosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlCobrosRegistradosLayout.createSequentialGroup()
@@ -498,14 +512,14 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             .addComponent(pnlClienteCheque, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlChequeLayout.createSequentialGroup()
                 .addGroup(pnlChequeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlChequeLayout.createSequentialGroup()
+                    .addGroup(pnlChequeLayout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dtcChequeFechaEmision, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dtcChequeFechaEmision, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dtcChequeFechaVencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dtcChequeFechaVencimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
                     .addGroup(pnlChequeLayout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -617,9 +631,9 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             pnlCobroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCobroLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlCheque, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlCheque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         pnlCobroLayout.setVerticalGroup(
@@ -697,6 +711,9 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
         try{
+
+            gestor.getFactura().getPedido().setEstadoPedido(EstadoPedidoBD.getEstadoPagado());
+            
             linkCobro.getObjeto().setImporte(Utilidades.parseBigDecimal(txtMontoCobro.getText()));
             linkCobro.getObjeto().setgetEmpleado(gestor.getFactura().getEmpleado());
             linkCobro.getObjeto().setFechaCobro(dtcFechaGeneracion.getDate());
@@ -704,10 +721,30 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             linkCobro.save();
             if(linkCobro.getObjeto().getFormaPago().equals(FormaPago.getFormaPago(FormaPago.Tipo.Cheque)))
             {
+                linkCheque.getObjeto().setCliente(gestor.getFactura().getPedido().getCliente());
+                linkCheque.getObjeto().setFechaEmision(dtcChequeFechaEmision.getDate());
+                linkCheque.getObjeto().setFechaVencimiento(dtcChequeFechaVencimiento.getDate());
+                linkCheque.getObjeto().setMonto(Utilidades.parseBigDecimal(txtMontoCobro.getText()));
+                linkCheque.getObjeto().setNombreBanco(txtChequeBanco.getText());
+                linkCheque.getObjeto().setNroSucursal(Utilidades.parseInteger(txtChequeNroSucursal.getText()));
                 linkCheque.save();
+                linkCheque.getObjeto().grabar();
                 linkCobro.getObjeto().setCheque(linkCheque.getObjeto());
             }
             gestor.getFactura().addCobro(linkCobro.getObjeto());
+
+            if(gestor.getFactura().getTotalCobrado() < gestor.getFactura().getTotalNeto())
+            {
+                gestor.getFactura().getPedido().setEstadoPedido(EstadoPedidoBD.getEstadoPagoParcialo());
+                gestor.getFactura().setTEFactura(FacturaBD.getEstadoFactura(FacturaBD.Estado.ParcialmenteCobrada));
+            }
+            else
+            {
+                gestor.getFactura().getPedido().setEstadoPedido(EstadoPedidoBD.getEstadoPagado());
+                gestor.getFactura().setTEFactura(FacturaBD.getEstadoFactura(FacturaBD.Estado.Cobrada));
+                
+            }
+
             gestor.getFactura().guardar();
             Mensajes.mensajeInformacion("El Cobro ha sido guardado con exito");
         }catch(NegocioException ne){Mensajes.mensajeErrorGenerico(ne.getMessage());}

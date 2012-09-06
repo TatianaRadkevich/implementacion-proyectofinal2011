@@ -527,8 +527,18 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
 
     private void btnCobroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobroActionPerformed
         // TODO add your handling code here:
-        PantallaCobroPedido pantalla = new PantallaCobroPedido(this, new GestorCobroPedido(tmPedido.getSeletedObject().getFactura()));
-        pantalla.setVisible(true);
+        try {
+            Pedido p = tmPedido.getSeletedObject();
+            if (p == null||p.getFactura()==null) {
+                throw new NegocioException("Elija una factura");
+            }
+            PantallaCobroPedido pantalla = new PantallaCobroPedido(this, new GestorCobroPedido(tmPedido.getSeletedObject().getFactura()));
+            pantalla.setVisible(true);
+            tbFactura.clearSelection();
+            btnBuscarActionPerformed(evt);
+        } catch (Exception ex) {
+            Mensajes.mensajeErrorGenerico(ex.getMessage());
+        }
     }//GEN-LAST:event_btnCobroActionPerformed
 
     /**
