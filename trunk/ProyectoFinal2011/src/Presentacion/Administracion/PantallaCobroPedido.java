@@ -85,7 +85,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
 
         linkCobro = new ZLObject<Cobro>(Cobro.class);
         linkCobro.add("lastId", false, new ZLTextField(txtNroCobro));
-        linkCobro.add("fecha", false, new ZLFormatedTextField(txtFechaCobro, Formato.Date));
+        //linkCobro.add("fecha", false, new ZLFormatedTextField(txtFechaCobro, Formato.Date));
         linkCobro.add("importe", new ZLTextField(txtMontoCobro));
         linkCobro.add("observacion", new ZLTextField(txtDescripcionCobro));
         linkCobro.add("formaPago", new ZLComboBox(cmbFormaPagoCobro));

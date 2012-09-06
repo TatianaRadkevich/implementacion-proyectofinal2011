@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28" uuid="dcc38e86-9508-4789-b774-bc7de62b2f67">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_factura" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     F."FEC_FACTURA" AS FEC_FACTURA,
+     F."DESCUENTO" AS DESCUENTO,
+     E."NOMBRE" AS NOMBRE,
+     E."APELLIDO" AS APELLIDO,
+     E."NUMERO_DOCUMENTO" AS APELLIDO,
+     DF."CANTIDAD" AS CANTIDAD,
+     DF."PRECIO" AS PRECIO,
+     C."RAZON_SOCIAL" AS RAZON_SOCIAL,
+     C."CUIT" AS CUIT,
+     PROD."NOMBRE" AS NOMBRE_PRODUCTO,
+     DF."CANTIDAD" * DF."PRECIO" AS TOTAL_DETALLE
+FROM
+     "dbo"."T_FACTURAS" F LEFT OUTER JOIN "dbo"."T_EMPLEADOS" E
+          ON F."ID_EMPLEADO" = E."ID_EMPLEADO"
+     INNER JOIN "dbo"."T_DETALLES_FACTURA" DF
+          ON F."ID_FACTURA" = DF."ID_FACTURA"
+     INNER JOIN "dbo"."T_PEDIDOS" P
+          ON F."ID_PEDIDO" = P."ID_PEDIDO"
+     INNER JOIN "dbo"."T_CLIENTES" C
+          ON P."ID_CLIENTE" = C."ID_CLIENTE"
+     INNER JOIN "dbo"."T_DETALLES_PEDIDO" DP
+          ON P."ID_PEDIDO" = DP."ID_PEDIDO"
+     INNER JOIN "dbo"."T_PRODUCTOS" PROD
+          ON DP."ID_PRODUCTO" = PROD."ID_PRODUCTO"
+WHERE F."ID_FACTURA" = $P{id_factura}]]>
+	</queryString>
+	<field name="FEC_FACTURA" class="java.sql.Timestamp"/>
+	<field name="DESCUENTO" class="java.math.BigDecimal"/>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="APELLIDO" class="java.lang.String"/>
+	<field name="CANTIDAD" class="java.math.BigDecimal"/>
+	<field name="PRECIO" class="java.math.BigDecimal"/>
+	<field name="RAZON_SOCIAL" class="java.lang.String"/>
+	<field name="CUIT" class="java.lang.String"/>
+	<field name="NOMBRE_PRODUCTO" class="java.lang.String"/>
+	<field name="TOTAL_DETALLE" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="184" splitType="Stretch">
+			<textField>
+				<reportElement uuid="61d8c339-13cb-4464-9941-b83dbf3c4b36" x="364" y="84" width="175" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{FEC_FACTURA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2ae40744-bd97-4095-a923-1e8e3ab1b64a" x="70" y="140" width="469" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{RAZON_SOCIAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="35ca4260-376c-484e-9301-191c0746ed96" x="70" y="160" width="469" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{CUIT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement uuid="49ccfd75-7235-4f02-a7a5-cf03edebc284" x="0" y="0" width="239" height="28"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE_PRODUCTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4faf6593-8fcb-408b-a975-f23f01929f73" x="239" y="0" width="100" height="28"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PRECIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8da81d1f-9424-4904-8dc6-ceae50a50f0a" x="339" y="0" width="100" height="28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a9277226-7adc-4267-972a-1e25c1f8146d" x="439" y="0" width="100" height="28"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOTAL_DETALLE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="85" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement uuid="db0f6ece-d481-4898-b1c4-7633eb6fb8b8" x="0" y="0" width="539" height="28"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Impreso por: " + $F{NOMBRE} + " " + $F{APELLIDO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
