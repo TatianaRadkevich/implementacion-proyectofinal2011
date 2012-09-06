@@ -3,6 +3,68 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<subDataset name="detalle" uuid="2ddbf95c-e625-4782-beb2-166d276363dc">
+		<parameter name="id_factura" class="java.math.BigDecimal">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString language="SQL">
+			<![CDATA[SELECT
+     DF."CANTIDAD" AS CANTIDAD,
+     DF."PRECIO" AS PRECIO,
+     PROD."NOMBRE" AS NOMBRE_PRODUCTO,
+     DF."CANTIDAD" * DF."PRECIO" AS TOTAL_DETALLE
+FROM "dbo"."T_DETALLES_FACTURA" DF
+		INNER JOIN "dbo"."T_DETALLES_PEDIDO" DP
+			INNER JOIN "dbo"."T_PRODUCTOS" PROD
+				ON DP."ID_PRODUCTO" = PROD."ID_PRODUCTO"
+				ON DP."ID_DETALLE_PEDIDO" = DF."ID_DETALLE_PEDIDO"
+WHERE DF."ID_FACTURA" = $P{id_factura}]]>
+		</queryString>
+		<field name="CANTIDAD" class="java.math.BigDecimal"/>
+		<field name="PRECIO" class="java.math.BigDecimal"/>
+		<field name="NOMBRE_PRODUCTO" class="java.lang.String"/>
+		<field name="TOTAL_DETALLE" class="java.math.BigDecimal"/>
+	</subDataset>
 	<parameter name="id_factura" class="java.math.BigDecimal">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -13,37 +75,34 @@
      E."NOMBRE" AS NOMBRE,
      E."APELLIDO" AS APELLIDO,
      E."NUMERO_DOCUMENTO" AS APELLIDO,
-     DF."CANTIDAD" AS CANTIDAD,
-     DF."PRECIO" AS PRECIO,
      C."RAZON_SOCIAL" AS RAZON_SOCIAL,
      C."CUIT" AS CUIT,
-     PROD."NOMBRE" AS NOMBRE_PRODUCTO,
-     DF."CANTIDAD" * DF."PRECIO" AS TOTAL_DETALLE
+     SUM(DF."CANTIDAD" * DF."PRECIO") AS SUB_TOTAL,
+     SUM(DF."CANTIDAD" * DF."PRECIO") - F."DESCUENTO" AS TOTAL
 FROM
      "dbo"."T_FACTURAS" F LEFT OUTER JOIN "dbo"."T_EMPLEADOS" E
           ON F."ID_EMPLEADO" = E."ID_EMPLEADO"
-     INNER JOIN "dbo"."T_DETALLES_FACTURA" DF
-          ON F."ID_FACTURA" = DF."ID_FACTURA"
      INNER JOIN "dbo"."T_PEDIDOS" P
-          ON F."ID_PEDIDO" = P."ID_PEDIDO"
-     INNER JOIN "dbo"."T_CLIENTES" C
-          ON P."ID_CLIENTE" = C."ID_CLIENTE"
-     INNER JOIN "dbo"."T_DETALLES_PEDIDO" DP
-          ON P."ID_PEDIDO" = DP."ID_PEDIDO"
-     INNER JOIN "dbo"."T_PRODUCTOS" PROD
-          ON DP."ID_PRODUCTO" = PROD."ID_PRODUCTO"
-WHERE F."ID_FACTURA" = $P{id_factura}]]>
+		INNER JOIN "dbo"."T_CLIENTES" C
+			ON C."ID_CLIENTE" = P."ID_CLIENTE"
+			ON P."ID_PEDIDO" = F."ID_PEDIDO"
+	INNER JOIN "dbo"."T_DETALLES_FACTURA" DF
+		INNER JOIN "dbo"."T_DETALLES_PEDIDO" DP
+			INNER JOIN "dbo"."T_PRODUCTOS" PROD
+				ON DP."ID_PRODUCTO" = PROD."ID_PRODUCTO"
+				ON DP."ID_DETALLE_PEDIDO" = DF."ID_DETALLE_PEDIDO"
+				ON DF."ID_FACTURA" = F."ID_FACTURA"
+WHERE F."ID_FACTURA" = $P{id_factura}
+GROUP BY F."FEC_FACTURA", F."DESCUENTO", E."NOMBRE", E."APELLIDO", E."NUMERO_DOCUMENTO", C."RAZON_SOCIAL", C."CUIT"]]>
 	</queryString>
 	<field name="FEC_FACTURA" class="java.sql.Timestamp"/>
 	<field name="DESCUENTO" class="java.math.BigDecimal"/>
 	<field name="NOMBRE" class="java.lang.String"/>
 	<field name="APELLIDO" class="java.lang.String"/>
-	<field name="CANTIDAD" class="java.math.BigDecimal"/>
-	<field name="PRECIO" class="java.math.BigDecimal"/>
 	<field name="RAZON_SOCIAL" class="java.lang.String"/>
 	<field name="CUIT" class="java.lang.String"/>
-	<field name="NOMBRE_PRODUCTO" class="java.lang.String"/>
-	<field name="TOTAL_DETALLE" class="java.math.BigDecimal"/>
+	<field name="SUB_TOTAL" class="java.math.BigDecimal"/>
+	<field name="TOTAL" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -74,41 +133,83 @@ WHERE F."ID_FACTURA" = $P{id_factura}]]>
 	</columnHeader>
 	<detail>
 		<band height="28" splitType="Stretch">
-			<textField>
-				<reportElement uuid="49ccfd75-7235-4f02-a7a5-cf03edebc284" x="0" y="0" width="239" height="28"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{NOMBRE_PRODUCTO}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="4faf6593-8fcb-408b-a975-f23f01929f73" x="239" y="0" width="100" height="28"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{PRECIO}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="8da81d1f-9424-4904-8dc6-ceae50a50f0a" x="339" y="0" width="100" height="28"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="a9277226-7adc-4267-972a-1e25c1f8146d" x="439" y="0" width="100" height="28"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{TOTAL_DETALLE}]]></textFieldExpression>
-			</textField>
+			<componentElement>
+				<reportElement uuid="cdb2a155-c09b-4d4f-8516-4c302b1998ac" key="table 1" style="table 1" x="0" y="0" width="539" height="28"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="detalle" uuid="387d8d9d-b7ba-45ae-a277-4b65b22e917f">
+						<datasetParameter name="id_factura">
+							<datasetParameterExpression><![CDATA[$P{id_factura}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column uuid="5336d546-9b54-4e2f-a55a-6f3f1fd0ddde" width="239">
+						<jr:detailCell style="table 1_TD" height="28" rowSpan="1">
+							<textField>
+								<reportElement uuid="aa4dd028-dbd4-48f7-9618-c28239855228" x="0" y="0" width="239" height="28"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_PRODUCTO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column uuid="b13ec725-e9d5-435b-89c6-3c76ca709d50" width="100">
+						<jr:detailCell style="table 1_TD" height="28" rowSpan="1">
+							<textField>
+								<reportElement uuid="2faef3d3-20ef-4adb-b098-1f4ce46e2a0b" x="0" y="0" width="100" height="28"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column uuid="4b45e321-8229-4619-ba2d-8837c2761c52" width="100">
+						<jr:detailCell style="table 1_TD" height="28" rowSpan="1">
+							<textField>
+								<reportElement uuid="96ba9283-5470-4a0c-81a1-f92157fa1de7" x="0" y="0" width="100" height="28"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{PRECIO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column uuid="f37c72eb-a9c0-40fe-9f2c-5ab7657fdfed" width="100">
+						<jr:detailCell style="table 1_TD" height="28" rowSpan="1">
+							<textField>
+								<reportElement uuid="52abc6cc-e721-4064-a84a-e2befb000754" x="0" y="0" width="100" height="28"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{TOTAL_DETALLE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
 		</band>
 	</detail>
 	<columnFooter>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="85" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="28" splitType="Stretch">
+		<band height="84" splitType="Stretch">
 			<textField>
-				<reportElement uuid="db0f6ece-d481-4898-b1c4-7633eb6fb8b8" x="0" y="0" width="539" height="28"/>
+				<reportElement uuid="10c03af6-8faf-4bec-bd58-f78cecb2844b" x="439" y="0" width="100" height="28"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SUB_TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b784c949-09fd-46fe-bf20-7bd145135e12" x="439" y="28" width="100" height="28"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DESCUENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="be23fadf-9af1-462e-aaf4-6a7c5503f4ac" x="439" y="56" width="100" height="28"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="db0f6ece-d481-4898-b1c4-7633eb6fb8b8" x="0" y="56" width="256" height="28"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["Impreso por: " + $F{NOMBRE} + " " + $F{APELLIDO}]]></textFieldExpression>
 			</textField>
 		</band>
+	</pageFooter>
+	<summary>
+		<band height="28" splitType="Stretch"/>
 	</summary>
 </jasperReport>
