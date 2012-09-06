@@ -5,13 +5,17 @@
 package Negocio.Produccion.Planificacion;
 
 import BaseDeDatos.Administracion.EmpleadoBD;
+import BaseDeDatos.Compras.MaterialBD;
 import BaseDeDatos.Produccion.MaquinaBD;
 import Negocio.Administracion.AsignacionesDias;
 import Negocio.Administracion.Empleado;
+import Negocio.Compras.Material;
+import Negocio.Compras.MaterialesXProveedor;
 import Negocio.Exceptiones.NegocioException;
 import Negocio.Produccion.MaquinaParticular;
 import Negocio.Produccion.Planificacion.Evento.*;
 import Negocio.Produccion.Planificacion.Recursos.*;
+import Negocio.Produccion.ProblemasMhp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,14 +51,14 @@ public class Simulador {
         //Empleador
         for (Empleado e : EmpleadoBD.listarEmpleadosVigentes()) {
             try {
-                Operario op;
+                OperarioPlan op;
                 Evento ev;
 
                 if (e.isPresente(tiempo)) {
-                    op = new Operario(e, true);
+                    op = new OperarioPlan(e, true);
                     ev = new EgresoOperario(this, op, e.getEgreso(tiempo));
                 } else {
-                    op = new Operario(e, false);
+                    op = new OperarioPlan(e, false);
                     ev = new IngresoOperario(this, op, e.getIngreso(tiempo));
                 }
                 this.addEvento(ev);
@@ -68,24 +72,33 @@ public class Simulador {
         for (MaquinaParticular mp : MaquinaBD.listarMaquinasVigentes()) {
             try {
 
-                Maquina maq;
+                MaquinaPlan maq;
                 Evento ev;
-
-//                if (mp.isOperativa(tiempo)) {//por el tema de problemas y esas cosas
-//                    op = new Operario(e, true);
-//                    ev = new EgresoOperario(this, op, e.getEgreso(tiempo));
-//                } else {
-//                    op = new Operario(e, false);
-//                    ev = new IngresoOperario(this, op, e.getIngreso(tiempo));
-//                }
-//
-//                this.addEvento(ev);
-//                this.recursos.addOperario(op);
-
+                ProblemasMhp p=mp.getProblemaMaquina(tiempo);
+                if (p==null) {//por el tema de problemas y esas cosas
+                    maq = new MaquinaPlan(mp, true);
+                } else {
+                    maq = new MaquinaPlan(mp, false);
+                    Date d=(p.getFecHoraRealSolucion()==null)?p.getFecHoraRealSolucion():p.getFecHoraEstimadaSolucion();
+                   this.addEvento(new ReparacionMaquina(this, maq, d));
+                }
+                this.recursos.addMaquina(maq);
 
             } catch (NegocioException ne) {
             }
         }
+
+        //materiales
+
+        for (Material mat : MaterialBD.listarMaterialesVigentes()) {
+            try {              
+                this.recursos.addMaterial(new MaterialPlan(mat));
+
+            } catch (NegocioException ne) {
+            }
+        }
+
+        //Herramientas
 
 
     }

@@ -11,14 +11,15 @@ import Negocio.Administracion.Empleado;
  *
  * @author Dicsys
  */
-public class Operario {
+public class OperarioPlan {
 
     private  Empleado empleado;
-    private  boolean presente;
+    private  boolean presente,ocupado;
 
-    public Operario(Empleado e, boolean b) {
+    public OperarioPlan(Empleado e, boolean presente) {
         this.empleado=e;
-        this.presente=b;
+        this.presente=presente;
+        this.ocupado=false;
     }
 
     public boolean isPresente() {
@@ -28,4 +29,14 @@ public class Operario {
     public void setPresente(boolean presente) {
         this.presente = presente;
     }
+
+    public boolean isOcupado() {
+        return ocupado;
+    }
+
+    public void setOcupado(boolean ocupado) {
+        this.ocupado = ocupado;
+    }
+
+
 }

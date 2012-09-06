@@ -360,7 +360,7 @@ private TablaManager<AsignacionesDias> tablita1;
     private void cnbHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnbHorarioActionPerformed
         // TODO add your handling code here:
         Horarios hora= (Horarios) cnbHorario.getSelectedItem();
-        tablita1.setDatos(hora.getTAsignacionesDiases());
+        tablita1.setDatos(hora.getDiasAsignados());
 
     }//GEN-LAST:event_cnbHorarioActionPerformed
 

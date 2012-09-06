@@ -16,26 +16,36 @@ import java.util.List;
  */
 public class HorarioBD {
 
-    public static List<Horarios> listarHorarios(){
-
-        return HibernateUtil.ejecutarConsulta("from Horarios");
-
-
-    }
-
-    public static List<Dia> listarDias(){
+    static
+    {
         List<Dia> l=HibernateUtil.ejecutarConsulta("from Dia");
         if(l.isEmpty())
         {
-            HibernateUtil.guardarObjeto(new Dia("Lunes"));
-            HibernateUtil.guardarObjeto(new Dia("Martes"));
-            HibernateUtil.guardarObjeto(new Dia("Miercoles"));
-            HibernateUtil.guardarObjeto(new Dia("Jueves"));
-            HibernateUtil.guardarObjeto(new Dia("Viernes"));
-            HibernateUtil.guardarObjeto(new Dia("Sabado"));
-            HibernateUtil.guardarObjeto(new Dia("Domingo"));
+            HibernateUtil.guardarObjeto(new Dia(DiaSemana.Lunes.name()));
+            HibernateUtil.guardarObjeto(new Dia(DiaSemana.Martes.name()));
+            HibernateUtil.guardarObjeto(new Dia(DiaSemana.Miercoles.name()));
+            HibernateUtil.guardarObjeto(new Dia(DiaSemana.Jueves.name()));
+            HibernateUtil.guardarObjeto(new Dia(DiaSemana.Viernes.name()));
+            HibernateUtil.guardarObjeto(new Dia(DiaSemana.Sabado.name()));
+            HibernateUtil.guardarObjeto(new Dia(DiaSemana.Domingo.name()));
         }
+    }
+
+    public static List<Horarios> listarHorarios(){
+        return HibernateUtil.ejecutarConsulta("from Horarios");
+    }
+
+    public static enum DiaSemana
+    {
+        Lunes,Martes,Miercoles,Jueves,Viernes,Sabado,Domingo
+    }
+
+    public static List<Dia> listarDias(){
         return HibernateUtil.ejecutarConsulta("from Dia");
+    }
+
+    public static Dia getDia(DiaSemana dia){   
+        return (Dia) HibernateUtil.ejecutarConsulta("from Dia d WHERE d.nombre LIKE '"+dia.name()+"'").get(0);
     }
 
 

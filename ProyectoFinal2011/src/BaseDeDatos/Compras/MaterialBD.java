@@ -7,6 +7,7 @@ package BaseDeDatos.Compras;
 
 import BaseDeDatos.HibernateUtil;
 import Negocio.Compras.Material;
+import Negocio.Produccion.MaquinaParticular;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,5 +82,10 @@ public class MaterialBD {
              return false;
          else
              return true;
+    }
+
+    public static List<Material> listarMaterialesVigentes() {
+         String HQL="FROM Material as m WHERE m.fecBaja IS NULL ";
+         return HibernateUtil.ejecutarConsulta(HQL);
     }
 }
