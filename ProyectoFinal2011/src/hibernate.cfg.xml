@@ -4,8 +4,8 @@
   <session-factory>
     <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
     <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=Ramaty</property>
-    <property name="hibernate.connection.username">proyecto</property>
-    <property name="hibernate.connection.password">sistema</property>
+    <property name="hibernate.connection.username">sa</property>
+    <property name="hibernate.connection.password">monza.sql</property>
     <mapping class="Negocio.Administracion.AsistenciaEmpleado"/>
     <mapping class="Negocio.Administracion.Cargo"/>
     <mapping class="Negocio.Administracion.Cheque"/>
