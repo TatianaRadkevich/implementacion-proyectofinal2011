@@ -24,6 +24,7 @@ import Negocio.Exceptiones.NegocioException;
 import Negocio.Ventas.Pedido;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
+import Presentacion.TomaDeDecisiones.ReporteRecibo.ReporteRecibo;
 import Presentacion.Utilidades;
 import Presentacion.ZLinkers.*;
 import Presentacion.ZLinkers.ZLFormatedTextField.Formato;
@@ -747,6 +748,11 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
 
             gestor.getFactura().guardar();
             Mensajes.mensajeInformacion("El Cobro ha sido guardado con exito");
+            this.dispose();
+            ReporteRecibo reporteRecibo = new ReporteRecibo();
+            BigDecimal id = new BigDecimal(linkCobro.getObjeto().getId());
+            reporteRecibo.addParameter("id_recibo", id);
+            reporteRecibo.runReporte();
         }catch(NegocioException ne){Mensajes.mensajeErrorGenerico(ne.getMessage());}
 
     }//GEN-LAST:event_btnAceptarActionPerformed
