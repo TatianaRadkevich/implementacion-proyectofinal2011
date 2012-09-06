@@ -4,6 +4,7 @@ package Negocio.Administracion;
 import BaseDeDatos.HibernateUtil;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -81,11 +82,11 @@ public class Horarios implements java.io.Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<AsignacionesDias> getTAsignacionesDiases() {
+    public List<AsignacionesDias> getDiasAsignados() {
         return new ArrayList<AsignacionesDias>(this.TAsignacionesDiases);
     }
 
-    public void setTAsignacionesDiases(List<AsignacionesDias> datos) {
+    public void setDiasAsignados(List<AsignacionesDias> datos) {
         this.TAsignacionesDiases.clear();
 
         for (AsignacionesDias item : datos) {
@@ -118,6 +119,10 @@ public class Horarios implements java.io.Serializable {
 
     public static List<Horarios> getAllHorarios() {
         return HibernateUtil.ejecutarConsulta("FROM Horarios");
+    }
+
+    public boolean isPresete(Date tiempo) {
+        throw new UnsupportedOperationException("");
     }
 //@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="THorarios")
 //    public Set getTAsignacionesHorarios() {

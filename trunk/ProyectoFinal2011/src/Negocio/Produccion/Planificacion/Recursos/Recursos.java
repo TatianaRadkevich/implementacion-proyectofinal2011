@@ -12,9 +12,19 @@ import java.util.ArrayList;
  */
 public class Recursos {
 
-    private ArrayList<Operario> operarios;
+    private ArrayList<OperarioPlan> operarios = new ArrayList<OperarioPlan>();
+    private ArrayList<MaquinaPlan> maquinas = new ArrayList<MaquinaPlan>();
+    private ArrayList<MaterialPlan> materiales = new ArrayList<MaterialPlan>();
 
-    public void addOperario(Operario op) {
+    public void addOperario(OperarioPlan op) {
         operarios.add(op);
+    }
+
+    public void addMaquina(MaquinaPlan maq) {
+        maquinas.add(maq);
+    }
+
+    public void addMaterial(MaterialPlan material) {
+        materiales.add(material);
     }
 }

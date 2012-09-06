@@ -256,8 +256,19 @@ public class MaquinaParticular  implements java.io.Serializable {
         return salida;
     }
 
-    public boolean isOperativa(Date tiempo) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public ProblemasMhp getProblemaMaquina(Date tiempo) {
+        for(ProblemasMhp prob:TProblemasMhps)
+        {
+            if(tiempo.compareTo(prob.getFecHoraProblema())>0)
+            {
+                if(prob.getFecHoraRealSolucion()==null || tiempo.compareTo(prob.getFecHoraRealSolucion())<0)
+                {
+                    return prob;
+                }
+            }
+
+        }
+         return null;
     }
 }
 

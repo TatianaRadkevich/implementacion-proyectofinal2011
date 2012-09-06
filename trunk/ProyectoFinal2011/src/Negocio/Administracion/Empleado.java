@@ -126,7 +126,7 @@ public class Empleado implements java.io.Serializable {
     /*---------------------------------------------------------------------------------------------*/
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "empleado")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-    private Set<AsignacionesHorario> asignacionesHorarias = new HashSet(0);;
+    private Set<AsignacionesHorario> asignacionesHorarias = new HashSet(0);
     /*---------------------------------------------------------------------------------------------*/
 // </editor-fold>
 
@@ -511,7 +511,19 @@ public class Empleado implements java.io.Serializable {
     }
 
     public boolean isPresente(Date tiempo) {
-        throw new UnsupportedOperationException("Not yet implemented");
+
+        for(AsignacionesHorario ah: asignacionesHorarias)
+        {
+            if(tiempo.compareTo(ah.getFecDesde())>=0&&tiempo.compareTo(ah.getFecHasta())<=0)
+            {
+               if(ah.getHorario().isPresete(tiempo))
+               {
+                   return true;
+               }
+
+            }
+        }
+        return false;
     }
 
     public Date getIngreso(Date tiempo) {

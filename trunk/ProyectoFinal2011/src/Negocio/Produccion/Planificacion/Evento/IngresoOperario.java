@@ -5,7 +5,7 @@
 package Negocio.Produccion.Planificacion.Evento;
 
 import Negocio.Exceptiones.NegocioException;
-import Negocio.Produccion.Planificacion.Recursos.Operario;
+import Negocio.Produccion.Planificacion.Recursos.OperarioPlan;
 import Negocio.Produccion.Planificacion.Simulador;
 import java.util.Date;
 
@@ -15,11 +15,11 @@ import java.util.Date;
  */
 public class IngresoOperario extends Evento {
 
-    private Operario operario;
+    private OperarioPlan operario;
     private Date ingreso;
     private Simulador sim;
 
-    public IngresoOperario(Simulador simu, Operario op, Date ingreso) {
+    public IngresoOperario(Simulador simu, OperarioPlan op, Date ingreso) {
         if (ingreso == null) {
             throw new NegocioException("Fecha ingreso no puede ser null");
         }

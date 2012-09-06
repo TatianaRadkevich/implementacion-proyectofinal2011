@@ -5,6 +5,7 @@
 package Negocio.Produccion.Planificacion.Evento;
 
 import Negocio.Exceptiones.NegocioException;
+import Negocio.Produccion.Planificacion.Recursos.MaquinaPlan;
 import Negocio.Produccion.Planificacion.Recursos.OperarioPlan;
 import Negocio.Produccion.Planificacion.Simulador;
 import java.util.Date;
@@ -13,18 +14,18 @@ import java.util.Date;
  *
  * @author Dicsys
  */
-public class EgresoOperario extends Evento {
+public class ReparacionMaquina extends Evento {
 
-    private OperarioPlan operario;
-    private Date egreso;
+    private MaquinaPlan maq;
+    private Date reparacion;
     private Simulador sim;
 
-    public EgresoOperario(Simulador simu, OperarioPlan op, Date egreso) {
-        if(egreso==null)
+    public ReparacionMaquina(Simulador simu, MaquinaPlan maq, Date reparacion) {
+        if(reparacion==null)
             throw new NegocioException("Fecha egreso no puede ser null");
         this.sim = simu;
-        this.operario = op;
-        this.egreso = egreso;
+        this.maq = maq;
+        this.reparacion = reparacion;
     }
 
     @Override

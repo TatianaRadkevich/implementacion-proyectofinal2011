@@ -88,8 +88,13 @@ public class Material implements java.io.Serializable {
     private Set<Faltante> TFaltanteses = new HashSet<Faltante>(0);
 
     public Material() {
+        this.esPendiente=false;    
+    }
+
+    public Material(String nombre,int stock) {
         this.esPendiente=false;
-    
+        this.stockActual=stock;
+        this.nombre=nombre;
     }
 
     public Material(Short idMaterial, String nombre, boolean esMateriaPrima, Integer stockActual, Integer stockMinimo, Integer stockReservado, String codigo) {

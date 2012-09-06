@@ -145,7 +145,7 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
     public void cargar(Horarios tmh) {
         txtNombre.setText(tmh.getNombre());
         txtDescripcion.setText(tmh.getDescripcion());
-        tmAsignacion.setDatos(tmh.getTAsignacionesDiases());
+        tmAsignacion.setDatos(tmh.getDiasAsignados());
     }
 
     public void cargarDetalle(AsignacionesDias as) {
@@ -594,7 +594,7 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
         Horarios elemento = gestor.getElemento();
         elemento.setNombre(txtNombre.getText());
         elemento.setDescripcion(txtDescripcion.getText());
-        elemento.setTAsignacionesDiases(tmAsignacion.getDatos());
+        elemento.setDiasAsignados(tmAsignacion.getDatos());
 
         try {
             gestor.ejecutarCU(elemento);
