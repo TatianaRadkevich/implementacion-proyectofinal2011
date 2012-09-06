@@ -164,6 +164,7 @@ public class Factura implements java.io.Serializable {
         return TEFactura;
     }
 
+    
     public Date getFechaBaja() {
         return fecBaja;
     }
@@ -261,7 +262,7 @@ public class Factura implements java.io.Serializable {
     public void generar() {
         this.setFechaGeneracion(Utilidades.getFechaActual());
         this.setEmpleado(EmpleadoBD.listarEmpleado().get(0));
-        this.TEFactura = FacturaBD.getEstadoFactura(FacturaBD.Estado.GeneradaPendienteCobro);
+        this.setTEFactura(FacturaBD.getEstadoFactura(FacturaBD.Estado.GeneradaPendienteCobro));
         this.getPedido().setEstadoPedido(EstadoPedidoBD.getEstadoPendientePagado());
         HibernateUtil.guardarObjeto(this);
     }
@@ -269,13 +270,17 @@ public class Factura implements java.io.Serializable {
     public void anular(String motivo) {
         this.fecBaja = Utilidades.getFechaActual();
         this.motivoBaja = motivo;
-        this.TEFactura = FacturaBD.getEstadoFactura(FacturaBD.Estado.Anulada);
+        this.setTEFactura(FacturaBD.getEstadoFactura(FacturaBD.Estado.Anulada));
         this.pedido.setEstadoPedido(EstadoPedidoBD.getEstadoRetirado());
         HibernateUtil.guardarObjeto(this);
     }
 
     public void guardar() throws NegocioException {
         HibernateUtil.modificarObjeto(this);
+    }
+
+    public void setTEFactura(EstadoFactura TEFactura) {
+        this.TEFactura = TEFactura;
     }
 
 }
