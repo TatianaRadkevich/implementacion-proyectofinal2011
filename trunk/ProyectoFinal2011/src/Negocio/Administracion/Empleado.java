@@ -484,53 +484,58 @@ public class Empleado implements java.io.Serializable {
     }
 
     public void updateAsignacionHorario(AsignacionesHorario asignacionSel) {
-         asignacionSel.setEmpleado(this);
-         List aux=getAsignacionHorariasProximas();
-         int index=aux.indexOf(this);
+        asignacionSel.setEmpleado(this);
+        List aux = getAsignacionHorariasProximas();
+        int index = aux.indexOf(this);
 
-         try{
-             for(int i=index+1;i<aux.size();i++)
-             {
-
-             }
-         }catch(Exception e){}
+        try {
+            for (int i = index + 1; i < aux.size(); i++) {
+            }
+        } catch (Exception e) {
+        }
     }
 
-   public void addAsistencia(AsistenciaEmpleado a) {
-       a.setEmpleado(this);
+    public void addAsistencia(AsistenciaEmpleado a) {
+        a.setEmpleado(this);
         this.TAsistenciasEmpleados.add(a);
     }
 
-   public void removeAsistencia(AsistenciaEmpleado a) {
-       a.setEmpleado(null);
+    public void removeAsistencia(AsistenciaEmpleado a) {
+        a.setEmpleado(null);
         this.TAsistenciasEmpleados.remove(a);
     }
 
     public boolean isActivo() {
-        return this.fecBaja==null;
+        return this.fecBaja == null;
     }
 
     public boolean isPresente(Date tiempo) {
-
-        for(AsignacionesHorario ah: asignacionesHorarias)
-        {
-            if(tiempo.compareTo(ah.getFecDesde())>=0&&tiempo.compareTo(ah.getFecHasta())<=0)
-            {
-               if(ah.getHorario().isPresete(tiempo))
-               {
-                   return true;
-               }
-
+        for (AsignacionesHorario ah : asignacionesHorarias) {
+            if (tiempo.compareTo(ah.getFecDesde()) >= 0 && tiempo.compareTo(ah.getFecHasta()) <= 0) {
+                return ah.getHorario().isPresete(tiempo);
             }
         }
         return false;
     }
 
     public Date getIngreso(Date tiempo) {
-        throw new UnsupportedOperationException("Not yet implemented");
+//        for (AsignacionesHorario ah : asignacionesHorarias) {
+//            if (tiempo.compareTo(ah.getFecDesde()) >= 0 && tiempo.compareTo(ah.getFecHasta()) <= 0) {
+//                Date d=ah.getHorario().getProximoIngreso(tiempo);
+//                if(ah.getFecHasta().compareTo(d)<0)
+//                {
+//                    this.getNextHorario(ah).getProximoIngreso(ah.getFecHasta());
+//                }
+//            }
+//        }
+        return new Date();
     }
 
     public Date getEgreso(Date tiempo) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    private Object getNextHorario(AsignacionesHorario ah) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }
