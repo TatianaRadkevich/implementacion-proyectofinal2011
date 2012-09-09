@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e3f6589a-1208-4e7a-88f0-d45b56502e8e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ID_PROVINCIA" class="java.lang.Integer"/>
+	<parameter name="FECHA_DESDE" class="java.util.Date"/>
+	<parameter name="FECHA_HASTA" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT TOP 10
+     SUM(T_DETALLES_FACTURA."PRECIO"*T_DETALLES_FACTURA."CANTIDAD") AS 'MONTO_TOTAL_COBRADO',
+     T_PROVINCIAS."NOMBRE" AS T_PROVINCIAS_NOMBRE,
+     T_CLIENTES."ID_CLIENTE" AS T_CLIENTES_ID_CLIENTE,
+     T_CLIENTES."RAZON_SOCIAL" AS T_CLIENTES_RAZON_SOCIAL,
+     T_TCLIENTE."NOMBRE" AS T_TCLIENTE_NOMBRE
+FROM
+     "dbo"."T_DOMICILIOS" T_DOMICILIOS INNER JOIN "dbo"."T_CLIENTES" T_CLIENTES ON T_DOMICILIOS."ID_DOMICILIO" = T_CLIENTES."ID_DOMICILIO"
+     INNER JOIN "dbo"."T_PEDIDOS" T_PEDIDOS ON T_CLIENTES."ID_CLIENTE" = T_PEDIDOS."ID_CLIENTE"
+     INNER JOIN "dbo"."T_TCLIENTE" T_TCLIENTE ON T_CLIENTES."ID_TCLIENTE" = T_TCLIENTE."ID_TCLIENTE"
+     INNER JOIN "dbo"."T_FACTURAS" T_FACTURAS ON T_PEDIDOS."ID_PEDIDO" = T_FACTURAS."ID_PEDIDO"
+     INNER JOIN "dbo"."T_DETALLES_FACTURA" T_DETALLES_FACTURA ON T_FACTURAS."ID_FACTURA" = T_DETALLES_FACTURA."ID_FACTURA"
+     INNER JOIN "dbo"."T_EFACTURA" T_EFACTURA ON T_FACTURAS."ID_EFACTURA" = T_EFACTURA."ID_EFACTURA"
+     INNER JOIN "dbo"."T_PROVINCIAS" T_PROVINCIAS ON T_DOMICILIOS."ID_PROVINCIA" = T_PROVINCIAS."ID_PROVINCIA"
+WHERE
+     T_PROVINCIAS."ID_PROVINCIA" = $P{ID_PROVINCIA}
+ AND T_FACTURAS."FEC_FACTURA" BETWEEN $P{FECHA_DESDE} AND $P{FECHA_HASTA}
+ AND T_FACTURAS."ID_EFACTURA" = ( SELECT "T_EFACTURA"."ID_EFACTURA" FROM "T_EFACTURA" WHERE T_EFACTURA."NOMBRE" LIKE 'Cobrada' )
+GROUP BY
+     T_CLIENTES."ID_CLIENTE",
+     T_CLIENTES."RAZON_SOCIAL",
+     T_TCLIENTE."NOMBRE",
+     T_PROVINCIAS."NOMBRE"
+ORDER BY
+     MONTO_TOTAL_COBRADO DESC]]>
+	</queryString>
+	<field name="MONTO_TOTAL_COBRADO" class="java.math.BigDecimal"/>
+	<field name="T_PROVINCIAS_NOMBRE" class="java.lang.String"/>
+	<field name="T_CLIENTES_ID_CLIENTE" class="java.math.BigDecimal"/>
+	<field name="T_CLIENTES_RAZON_SOCIAL" class="java.lang.String"/>
+	<field name="T_TCLIENTE_NOMBRE" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement uuid="bfba2a1d-ba2c-4c38-b24a-769d5c52bc96" mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement uuid="996016c0-54db-4cb9-8b29-702f166c61f5" x="20" y="20" width="293" height="43" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Reporte Clientes]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="7ae66cc2-f54a-4d19-8ba4-0ca576332754" x="368" y="32" width="207" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Clientes que más compraron en:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="7ae66cc2-f54a-4d19-8ba4-0ca576332754" x="20" y="72" width="56" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Período: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="a8822c25-191b-4bc5-a64b-990f6dec1c8b" x="76" y="72" width="44" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{FECHA_DESDE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="945bb675-5991-46f3-9201-4ed1aec37b20" x="140" y="72" width="43" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{FECHA_HASTA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="7ae66cc2-f54a-4d19-8ba4-0ca576332754" x="120" y="72" width="20" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[al]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="fffd2632-8949-406d-962e-c356ac8fb17b" x="368" y="63" width="162" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{T_PROVINCIAS_NOMBRE}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement uuid="116f1c5b-ddb5-40e3-857f-efd98d88d1f7" x="-20" y="20" width="595" height="1" forecolor="#666666"/>
+			</line>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="3" y="0" width="65" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="68" y="0" width="125" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Razón Social]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="193" y="0" width="126" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="319" y="0" width="236" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto Total Cobrado al Cliente]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="91">
+			<line>
+				<reportElement uuid="85795d59-7cd6-4531-84a8-0331e6b89de6" positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="f45b40e7-ac68-4c55-9c2e-93f739c49bee" x="3" y="20" width="57" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{T_CLIENTES_ID_CLIENTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e08ca2a5-9b5e-455d-b268-7b606f5c6aba" x="73" y="20" width="120" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{T_CLIENTES_RAZON_SOCIAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e5c6dc60-a865-4687-b52d-492606863e68" x="193" y="19" width="112" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{T_TCLIENTE_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5fcf733c-b711-442f-950d-8d60edf4a305" x="319" y="19" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{MONTO_TOTAL_COBRADO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="168">
+			<textField>
+				<reportElement uuid="08c085e8-b8ec-4fa0-858c-803df8b67ada" mode="Opaque" x="0" y="139" width="515" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="6b6e91a4-112c-4789-8edc-d6b4f9fb3d2c" mode="Opaque" x="515" y="139" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="abdb4c12-1315-4ecf-b006-3fa7ce22b9e5" x="0" y="139" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
