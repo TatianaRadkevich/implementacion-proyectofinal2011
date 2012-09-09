@@ -150,6 +150,7 @@ private reporteOrdenesDeCompra jasper = new reporteOrdenesDeCompra();
         jasper.addParameter("FECHA_DESDE", dtcFechaDesde.getDate());
         jasper.addParameter("FECHA_HASTA", dtcFechaHasta.getDate());
         jasper.runReporte();
+        this.setVisible(false);
         }
     }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
