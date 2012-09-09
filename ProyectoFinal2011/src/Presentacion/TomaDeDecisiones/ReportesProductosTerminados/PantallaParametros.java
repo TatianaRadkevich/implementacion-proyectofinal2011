@@ -147,6 +147,14 @@ private reporteProductosTerminados jasper = new reporteProductosTerminados();
     // End of variables declaration//GEN-END:variables
 
     private boolean validar() {
+        if(dtcFechaDesde.getDate()==null){
+        Mensajes.mensajeErrorGenerico("Debe seleccionar la fecha \"Desde\"");
+        return false;
+        }
+        if(dtcFechaHasta.getDate()==null){
+        Mensajes.mensajeErrorGenerico("Debe seleccionar la fecha \"Hasta\"");
+        return false;
+        }
         if(dtcFechaDesde.getDate().after(dtcFechaHasta.getDate())){
         Mensajes.mensajeErrorGenerico("La fecha \"desde\" debe ser inferior a la fecha \"hasta\"");
         return false;
