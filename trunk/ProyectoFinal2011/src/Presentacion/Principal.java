@@ -48,6 +48,7 @@ import Presentacion.Produccion.ProblemaHerramientaParticular;
 import Presentacion.Produccion.RegistrarSolucionProblemaMaqOHerr;
 import Presentacion.TomaDeDecisiones.ReportesClientes.PantallaReporteClientes;
 import Presentacion.TomaDeDecisiones.ReportesMateriales.PantallaReportesMateriales;
+import Presentacion.TomaDeDecisiones.ReportesOrdenDeCompra.PantallaReporteOrdenDeCompra;
 import Presentacion.TomaDeDecisiones.ReportesProductosTerminados.PantallaReportesProductosTerminados;
 
 
@@ -148,6 +149,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Principal");
@@ -595,6 +597,15 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem5);
 
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/orden_compra.png"))); // NOI18N
+        jMenuItem6.setText("Órdenes de Compra");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem6);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -915,6 +926,12 @@ public class Principal extends javax.swing.JFrame {
     pantalla.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        PantallaReporteOrdenDeCompra pantalla = new PantallaReporteOrdenDeCompra(this, false);
+        pantalla.setLocationRelativeTo(this);
+        pantalla.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -942,6 +959,7 @@ UIManager.put("Synthetica.license.key", "1891309A-E215572F-9865495F-0E06D6A9-616
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblMensajeInicio;
     private javax.swing.JMenu mnuAdministracion;
