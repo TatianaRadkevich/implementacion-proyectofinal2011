@@ -15,7 +15,7 @@ import java.util.List;
  * @author Sebastian
  */
 public class HorarioBD {
-
+    
     static
     {
         List<Dia> l=HibernateUtil.ejecutarConsulta("from Dia");
