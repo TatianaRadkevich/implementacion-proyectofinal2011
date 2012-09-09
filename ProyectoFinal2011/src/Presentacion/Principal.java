@@ -46,6 +46,7 @@ import Negocio.Administracion.GestorCobroPedido;
 import Negocio.GestionUsuario.*;
 import Presentacion.Produccion.ProblemaHerramientaParticular;
 import Presentacion.Produccion.RegistrarSolucionProblemaMaqOHerr;
+import Presentacion.TomaDeDecisiones.ReportesClientes.PantallaReporteClientes;
 import Presentacion.TomaDeDecisiones.ReportesMateriales.PantallaReportesMateriales;
 import Presentacion.TomaDeDecisiones.ReportesProductosTerminados.PantallaReportesProductosTerminados;
 
@@ -146,6 +147,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Principal");
@@ -167,7 +169,7 @@ public class Principal extends javax.swing.JFrame {
         pnlSession.add(btnIniciarSession);
         btnIniciarSession.setBounds(210, 120, 95, 23);
 
-        lblMensaje.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblMensaje.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblMensaje.setForeground(new java.awt.Color(255, 0, 0));
         lblMensaje.setText("jLabel1");
         pnlSession.add(lblMensaje);
@@ -181,8 +183,12 @@ public class Principal extends javax.swing.JFrame {
         });
         pnlSession.add(btnSalir);
         btnSalir.setBounds(310, 120, 53, 23);
+
+        txtUsuario.setText("Administrador");
         pnlSession.add(txtUsuario);
         txtUsuario.setBounds(150, 40, 220, 20);
+
+        txtPassword.setText("admin123");
         pnlSession.add(txtPassword);
         txtPassword.setBounds(150, 70, 220, 20);
 
@@ -203,7 +209,7 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().add(pnlSession);
         pnlSession.setBounds(250, 250, 390, 170);
 
-        lblMensajeInicio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblMensajeInicio.setFont(new java.awt.Font("Tahoma", 1, 14));
         getContentPane().add(lblMensajeInicio);
         lblMensajeInicio.setBounds(10, 10, 870, 30);
 
@@ -580,6 +586,15 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem4);
 
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/clientes.png"))); // NOI18N
+        jMenuItem5.setText("Clientes");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -885,7 +900,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-        
+
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -893,6 +908,12 @@ public class Principal extends javax.swing.JFrame {
        pantalla.setLocationRelativeTo(this);
        pantalla.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    PantallaReporteClientes pantalla = new PantallaReporteClientes(this, false);
+    pantalla.setLocationRelativeTo(this);
+    pantalla.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -920,6 +941,7 @@ UIManager.put("Synthetica.license.key", "1891309A-E215572F-9865495F-0E06D6A9-616
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblMensajeInicio;
     private javax.swing.JMenu mnuAdministracion;
