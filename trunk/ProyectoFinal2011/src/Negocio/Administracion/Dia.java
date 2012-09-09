@@ -20,18 +20,6 @@ import javax.persistence.Table;
 @Table(name = "T_DIAS", schema = "dbo", catalog = "Ramaty")
 public class Dia implements java.io.Serializable {
 
-    public static final Dia Lunes,Martes,Miercoles,Jueves,Viernes,Sabado,Domingo;
-
-    static{
-        Lunes=HorarioBD.getDia(HorarioBD.DiaSemana.Lunes);
-        Martes=HorarioBD.getDia(HorarioBD.DiaSemana.Martes);
-        Miercoles=HorarioBD.getDia(HorarioBD.DiaSemana.Miercoles);
-        Jueves=HorarioBD.getDia(HorarioBD.DiaSemana.Jueves);
-        Viernes=HorarioBD.getDia(HorarioBD.DiaSemana.Viernes);
-        Sabado=HorarioBD.getDia(HorarioBD.DiaSemana.Sabado);
-        Domingo=HorarioBD.getDia(HorarioBD.DiaSemana.Domingo);
-    }
-
     @Id
     @GeneratedValue
     @Column(name = "ID_DIA", unique = true, nullable = false, precision = 2, scale = 0)
