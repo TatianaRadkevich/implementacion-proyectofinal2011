@@ -5,9 +5,11 @@
 
 package Negocio.Compras;
 
+import BaseDeDatos.Compras.ProveedorBD;
 import Negocio.Compras.Proveedor;
 import Negocio.Exceptiones.ExceptionGestor;
 import Presentacion.Compras.PantallaProveedorABM;
+import java.util.List;
 
 /**
  *
@@ -51,6 +53,8 @@ public abstract class GestorProveedor {
 
     public boolean existeProveedor(String text) { return false;}
 
-    
+    public static List<Proveedor> listarProveedores() {
+    return ProveedorBD.listarProveedores();
+    }
 
 }
