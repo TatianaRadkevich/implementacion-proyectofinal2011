@@ -154,7 +154,7 @@ public class DetallePlanProduccion implements java.io.Serializable {
         this.idDetallePlan = idDetallePlan;
     }
 
-    public EtapaProduccionEspecifica getTEtapasProduccionEspecifica() {
+    public EtapaProduccionEspecifica getEtapaProduccionEspecifica() {
         return this.TEtapasProduccionEspecifica;
     }
 
@@ -162,7 +162,7 @@ public class DetallePlanProduccion implements java.io.Serializable {
         this.TEtapasProduccionEspecifica = TEtapasProduccionEspecifica;
     }
 
-    public Empleado getTEmpleados() {
+    public Empleado getEmpleado() {
         return this.TEmpleados;
     }
 
@@ -262,7 +262,7 @@ public class DetallePlanProduccion implements java.io.Serializable {
 
     public void generarFaltantes() {
         this.TFaltanteses.clear();
-        for (DetalleEtapaProduccion dep : this.getTEtapasProduccionEspecifica().getDetalleEtapaProduccion()) {
+        for (DetalleEtapaProduccion dep : this.getEtapaProduccionEspecifica().getDetalleEtapaProduccion()) {
             if (dep.getTDetallesProducto() != null) {
                 Material mat = dep.getTDetallesProducto().getTMateriales();
                 Faltante f = new Faltante();

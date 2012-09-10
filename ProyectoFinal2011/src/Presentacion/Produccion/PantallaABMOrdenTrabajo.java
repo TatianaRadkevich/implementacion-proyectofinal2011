@@ -119,10 +119,10 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(DetallePlanProduccion elemento) {
                 Vector fila = new Vector();
-                fila.add(elemento.getTEtapasProduccionEspecifica().getProducto().getNombre());
-                fila.add(elemento.getTEtapasProduccionEspecifica().getNumeroOrden());
-                fila.add(elemento.getTEtapasProduccionEspecifica().getEtapaProduccion().getNombre());
-                fila.add(elemento.getTEmpleados().getApellido() +", "+ elemento.getTEmpleados().getNombre());
+                fila.add(elemento.getEtapaProduccionEspecifica().getProducto().getNombre());
+                fila.add(elemento.getEtapaProduccionEspecifica().getNumeroOrden());
+                fila.add(elemento.getEtapaProduccionEspecifica().getEtapaProduccion().getNombre());
+                fila.add(elemento.getEmpleado().getApellido() +", "+ elemento.getEmpleado().getNombre());
                 fila.add(elemento.getMaquinaParticular().getNombre());
                 fila.add(Utilidades.parseFechaHora(elemento.getFecHoraPrevistaInicio()));
                 fila.add(elemento.getCantidad());
@@ -324,7 +324,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
             return;
         }
 
-        Empleado empleado = detallePlan.getTEmpleados();
+        Empleado empleado = detallePlan.getEmpleado();
         if(!AsistenciaEmpleadoBD.estaPresente(empleado))
         {
             DialogoModificarEmpleado d = new DialogoModificarEmpleado(null, true);

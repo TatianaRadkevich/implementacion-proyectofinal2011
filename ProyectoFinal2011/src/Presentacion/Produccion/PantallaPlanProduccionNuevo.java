@@ -30,6 +30,7 @@ import Negocio.Produccion.DetallePlanXHerramientaParticular;
 import Negocio.Produccion.MaquinaParticular;
 import Negocio.Produccion.PlanProduccion;
 import Negocio.Produccion.PlanProduccionId;
+import Negocio.Produccion.Planificacion.GanttManager;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.Pedido;
 import Presentacion.Mensajes;
@@ -215,9 +216,9 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
                 salida.add(Utilidades.parseFecha(elemento.getFecHoraPrevistaInicio()));
                 salida.add(Utilidades.parseHora(elemento.getFecHoraPrevistaInicio()));
                 salida.add(Utilidades.parseHora(elemento.getFecHoraPrevistaFin()));
-                salida.add(elemento.getTEmpleados().getApellidoNombre());
-                salida.add(elemento.getTEtapasProduccionEspecifica().getProducto());
-                salida.add(elemento.getTEtapasProduccionEspecifica().getEtapaProduccion().getNombre());
+                salida.add(elemento.getEmpleado().getApellidoNombre());
+                salida.add(elemento.getEtapaProduccionEspecifica().getProducto());
+                salida.add(elemento.getEtapaProduccionEspecifica().getEtapaProduccion().getNombre());
                 salida.add(elemento.getMaquinaParticular());
 
                 return salida;
@@ -268,6 +269,8 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
         aux = (plan.getFecHoraRealInicio() == null) ? "----" : Utilidades.parseFecha(plan.getFecHoraRealInicio());
         txtPlanFecInicioReal.setText(aux);
         tmDetallePlan.setDatos(plan.getDetallePlan());
+            pnlGantt.removeAll();
+        pnlGantt.add(GanttManager.getPnlGantt(plan));
         calFechaProduccion.setSelectableDateRange(plan.getFecHoraPrevistaInicio(), plan.getFecHoraPrevistaFin());
 //        calFechaProduccion.setMinSelectableDate(plan.getFecHoraPrevistaInicio());
 //        calFechaProduccion.setMaxSelectableDate(plan.getFecHoraPrevistaFin());
@@ -416,11 +419,13 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
         btnPedBuscar = new javax.swing.JButton();
         pnlPlanPrincipal = new javax.swing.JPanel();
         pnlPlanDetalle = new javax.swing.JPanel();
+        pnlFiltro = new javax.swing.JPanel();
+        calFechaProduccion = new com.toedter.calendar.JCalendar();
+        pnlPestania = new javax.swing.JTabbedPane();
         pnlActividades = new javax.swing.JPanel();
         scrlTablaActividades = new javax.swing.JScrollPane();
         tbActividades = new javax.swing.JTable();
-        pnlFiltro = new javax.swing.JPanel();
-        calFechaProduccion = new com.toedter.calendar.JCalendar();
+        pnlGantt = new javax.swing.JPanel();
         pnlPlanDatosGeneral = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtObservaciones = new javax.swing.JTextArea();
@@ -804,6 +809,22 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
 
         pnlPlanDetalle.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle del Pan de Produccion"));
 
+        pnlFiltro.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtro"));
+
+        calFechaProduccion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        calFechaProduccion.setWeekOfYearVisible(false);
+
+        javax.swing.GroupLayout pnlFiltroLayout = new javax.swing.GroupLayout(pnlFiltro);
+        pnlFiltro.setLayout(pnlFiltroLayout);
+        pnlFiltroLayout.setHorizontalGroup(
+            pnlFiltroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(calFechaProduccion, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+        );
+        pnlFiltroLayout.setVerticalGroup(
+            pnlFiltroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(calFechaProduccion, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+        );
+
         pnlActividades.setBorder(javax.swing.BorderFactory.createTitledBorder("Actividades"));
 
         tbActividades.setModel(new javax.swing.table.DefaultTableModel(
@@ -822,29 +843,19 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
             pnlActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlActividadesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrlTablaActividades, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
+                .addComponent(scrlTablaActividades, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlActividadesLayout.setVerticalGroup(
             pnlActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrlTablaActividades, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+            .addComponent(scrlTablaActividades, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
         );
 
-        pnlFiltro.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtro"));
+        pnlPestania.addTab("Actividades", pnlActividades);
 
-        calFechaProduccion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        calFechaProduccion.setWeekOfYearVisible(false);
-
-        javax.swing.GroupLayout pnlFiltroLayout = new javax.swing.GroupLayout(pnlFiltro);
-        pnlFiltro.setLayout(pnlFiltroLayout);
-        pnlFiltroLayout.setHorizontalGroup(
-            pnlFiltroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(calFechaProduccion, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-        );
-        pnlFiltroLayout.setVerticalGroup(
-            pnlFiltroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(calFechaProduccion, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
-        );
+        pnlGantt.setBorder(javax.swing.BorderFactory.createTitledBorder("Gantt"));
+        pnlGantt.setLayout(new java.awt.GridLayout());
+        pnlPestania.addTab("Gantt", pnlGantt);
 
         javax.swing.GroupLayout pnlPlanDetalleLayout = new javax.swing.GroupLayout(pnlPlanDetalle);
         pnlPlanDetalle.setLayout(pnlPlanDetalleLayout);
@@ -852,20 +863,23 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
             pnlPlanDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPlanDetalleLayout.createSequentialGroup()
                 .addComponent(pnlFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlActividades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addComponent(pnlPestania, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pnlPlanDetalleLayout.setVerticalGroup(
             pnlPlanDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlActividades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlPlanDetalleLayout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(pnlPestania, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                .addGap(11, 11, 11))
         );
 
         pnlPlanDatosGeneral.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Generales"));
         pnlPlanDatosGeneral.setMinimumSize(new java.awt.Dimension(600, 0));
 
-        txtObservaciones.setBackground(new java.awt.Color(255, 255, 255));
-        txtObservaciones.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        txtObservaciones.setFont(new java.awt.Font("Tahoma", 0, 11));
         txtObservaciones.setLineWrap(true);
         txtObservaciones.setWrapStyleWord(true);
         txtObservaciones.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -876,8 +890,6 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
         jScrollPane2.setViewportView(txtObservaciones);
 
         jLabel19.setText("Observaciones:");
-
-        dtcPlanFecInicioPrevista.setDateFormatString("dd/MM/yyyy");
 
         txtPlanFecFinPrevista.setEditable(false);
 
@@ -1224,6 +1236,7 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pnlActividades;
     private javax.swing.JPanel pnlFiltro;
+    private javax.swing.JPanel pnlGantt;
     private javax.swing.JPanel pnlMateriales;
     private javax.swing.JPanel pnlPedCliente;
     private javax.swing.JPanel pnlPedDetalle;
@@ -1233,6 +1246,7 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
     private javax.swing.JPanel pnlPedido;
     private javax.swing.JPanel pnlPedidoBuscar;
     private javax.swing.JPanel pnlPedidoInfo;
+    private javax.swing.JTabbedPane pnlPestania;
     private javax.swing.JPanel pnlPlanDatosGeneral;
     private javax.swing.JPanel pnlPlanDetalle;
     private javax.swing.JPanel pnlPlanPrincipal;

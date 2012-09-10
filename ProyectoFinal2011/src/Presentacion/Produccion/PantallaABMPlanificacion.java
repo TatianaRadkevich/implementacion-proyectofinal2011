@@ -362,7 +362,7 @@ public class PantallaABMPlanificacion extends javax.swing.JDialog {
         tmMaquina.setSelectedRow(detalle.getMaquinaParticular());
 
 //        tmEmpleado.setDatos(EmpleadoBD.getEmpleados(detalle.getTEtapasProduccionEspecifica().getCargo(), true, false));
-        tmEmpleado.setSelectedRow(detalle.getTEmpleados());
+        tmEmpleado.setSelectedRow(detalle.getEmpleado());
 
         txtObservaciones.setText(detalle.getObservaciones());
     }
