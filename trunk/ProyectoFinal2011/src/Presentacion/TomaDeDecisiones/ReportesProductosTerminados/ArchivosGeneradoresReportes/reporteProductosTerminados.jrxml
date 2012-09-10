@@ -35,40 +35,40 @@ WHERE
 			<frame>
 				<reportElement uuid="fd75a5cf-08d7-4b0e-9e49-ddfc5616aa50" mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699"/>
 				<staticText>
-					<reportElement uuid="6b68db2f-f377-42d4-93c8-e441950ffa09" x="0" y="20" width="381" height="43" forecolor="#FFFFFF"/>
+					<reportElement uuid="6b68db2f-f377-42d4-93c8-e441950ffa09" x="20" y="20" width="381" height="43" forecolor="#FFFFFF"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Reporte de Productos]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="850780ee-b130-4613-be84-b44c308097ee" x="381" y="63" width="214" height="20" forecolor="#FFFFFF"/>
+					<reportElement uuid="850780ee-b130-4613-be84-b44c308097ee" x="361" y="72" width="214" height="20" forecolor="#FFFFFF"/>
 					<textElement textAlignment="Right">
 						<font size="14" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Productos terminados por pedido]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="7ae66cc2-f54a-4d19-8ba4-0ca576332754" x="100" y="72" width="20" height="20" forecolor="#FFFFFF"/>
+					<reportElement uuid="7ae66cc2-f54a-4d19-8ba4-0ca576332754" x="120" y="72" width="20" height="20" forecolor="#FFFFFF"/>
 					<textElement>
 						<font size="14" isBold="false"/>
 					</textElement>
 					<text><![CDATA[al]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="7ae66cc2-f54a-4d19-8ba4-0ca576332754" x="0" y="72" width="56" height="20" forecolor="#FFFFFF"/>
+					<reportElement uuid="7ae66cc2-f54a-4d19-8ba4-0ca576332754" x="20" y="72" width="56" height="20" forecolor="#FFFFFF"/>
 					<textElement>
 						<font size="14" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Período: ]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="945bb675-5991-46f3-9201-4ed1aec37b20" x="120" y="72" width="43" height="20"/>
+					<reportElement uuid="945bb675-5991-46f3-9201-4ed1aec37b20" x="141" y="72" width="43" height="20"/>
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$P{FECHA_HASTA}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="a8822c25-191b-4bc5-a64b-990f6dec1c8b" x="56" y="72" width="44" height="20"/>
+					<reportElement uuid="a8822c25-191b-4bc5-a64b-990f6dec1c8b" x="76" y="72" width="44" height="20"/>
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$P{FECHA_DESDE}]]></textFieldExpression>
 				</textField>

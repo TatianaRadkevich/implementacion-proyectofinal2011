@@ -53,7 +53,7 @@ ORDER BY
 					<text><![CDATA[Reporte Clientes]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="7ae66cc2-f54a-4d19-8ba4-0ca576332754" x="368" y="32" width="207" height="20" forecolor="#FFFFFF"/>
+					<reportElement uuid="7ae66cc2-f54a-4d19-8ba4-0ca576332754" x="213" y="72" width="207" height="20" forecolor="#FFFFFF"/>
 					<textElement>
 						<font size="14" isBold="false"/>
 					</textElement>
@@ -84,8 +84,8 @@ ORDER BY
 					<text><![CDATA[al]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="fffd2632-8949-406d-962e-c356ac8fb17b" x="368" y="63" width="162" height="20"/>
-					<textElement/>
+					<reportElement uuid="fffd2632-8949-406d-962e-c356ac8fb17b" x="433" y="72" width="162" height="20"/>
+					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{T_PROVINCIAS_NOMBRE}]]></textFieldExpression>
 				</textField>
 			</frame>
