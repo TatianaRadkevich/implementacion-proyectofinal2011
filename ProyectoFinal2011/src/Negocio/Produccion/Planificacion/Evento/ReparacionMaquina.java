@@ -20,16 +20,16 @@ public class ReparacionMaquina extends Evento {
     private Date reparacion;
     private Simulador sim;
 
-    public ReparacionMaquina(Simulador simu, MaquinaPlan maq, Date reparacion) {
-        if(reparacion==null)
+    public ReparacionMaquina(Simulador simu, MaquinaPlan maq, Date finRep) {
+        if(finRep==null)
             throw new NegocioException("Fecha egreso no puede ser null");
         this.sim = simu;
         this.maq = maq;
-        this.reparacion = reparacion;
+        this.reparacion = finRep;
     }
 
     @Override
     public void ejecutar() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        maq.setOperativa(true);
     }
 }

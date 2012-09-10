@@ -108,8 +108,9 @@ public class GanttManager {
      * @return The chart.
      */
     private static JFreeChart createChart(final IntervalCategoryDataset dataset) {
+
         final JFreeChart chart = ChartFactory.createGanttChart(
-                "Gantt Chart Demo", // chart title
+                "", // chart title
                 "Task", // domain axis label
                 "Date", // range axis label
                 dataset, // data
