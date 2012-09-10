@@ -78,7 +78,7 @@ private TablaManager<AsignacionesDias> tablita1;
             @Override
             public Vector ObjetoFila(AsignacionesDias elemento) {
                 Vector fila = new Vector();
-                fila.add(elemento.getTDias());
+                fila.add(elemento.getDia());
                 fila.add(elemento.getHoraDesde());//col 3
                 fila.add(elemento.getHoraHasta());//col 4
 

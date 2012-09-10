@@ -56,10 +56,10 @@ public class Simulador {
 
                 if (e.isPresente(tiempo)) {
                     op = new OperarioPlan(e, true);
-                    ev = new EgresoOperario(this, op, e.getEgreso(tiempo));
+                    ev = new EgresoOperario(this, op, e.getProxEgreso(tiempo));
                 } else {
                     op = new OperarioPlan(e, false);
-                    ev = new IngresoOperario(this, op, e.getIngreso(tiempo));
+                    ev = new IngresoOperario(this, op, e.getProxIngreso(tiempo));
                 }
                 this.addEvento(ev);
                 this.recursos.addOperario(op);
