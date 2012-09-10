@@ -26,7 +26,7 @@ ORDER BY
 	<title>
 		<band height="75">
 			<frame>
-				<reportElement uuid="10a802f7-5edc-46de-a8f4-f13ed76c1c0d" mode="Opaque" x="-20" y="-20" width="575" height="92" backcolor="#006699"/>
+				<reportElement uuid="10a802f7-5edc-46de-a8f4-f13ed76c1c0d" mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699"/>
 				<staticText>
 					<reportElement uuid="fc932a81-1c14-49ea-ab7f-a1d3b1f3c8a4" x="20" y="20" width="362" height="43" forecolor="#FFFFFF"/>
 					<textElement>
