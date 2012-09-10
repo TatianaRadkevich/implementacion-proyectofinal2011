@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e0683f36-b87e-4dac-8d6f-af3b31a0ecda">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="ID_CLIENTE" class="java.lang.Integer"/>
 	<parameter name="FECHA_DESDE" class="java.util.Date"/>
 	<parameter name="FECHA_HASTA" class="java.util.Date"/>
@@ -175,7 +175,7 @@ WHERE
 	<detail>
 		<band height="36">
 			<line>
-				<reportElement uuid="8f228774-43bc-4a52-897f-992bf1b72b17" positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
+				<reportElement uuid="8f228774-43bc-4a52-897f-992bf1b72b17" positionType="FixRelativeToBottom" x="-20" y="19" width="595" height="1"/>
 			</line>
 			<textField>
 				<reportElement uuid="9b8f02df-00e0-4dba-9d26-518d80144b0b" x="-10" y="-1" width="36" height="20"/>
