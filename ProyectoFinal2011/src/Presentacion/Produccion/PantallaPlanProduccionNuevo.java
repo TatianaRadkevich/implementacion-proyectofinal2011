@@ -299,7 +299,8 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
         plan.setFecGeneracion(Utilidades.getFechaActual());
         plan.setEmpleado(EmpleadoBD.getEmpleadosVigentes().get(0));
         plan.setEstado(EstadoPlanBD.getEstadoGenerado());
-        plan.setFecHoraPrevistaInicio(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 1, 0, 0));
+//        plan.setFecHoraPrevistaInicio(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 1, 0, 0));
+        plan.setFecHoraPrevistaInicio(Utilidades.getFechaActual());
         plan.setPedido(p);
         p.setEstadoPedido(EstadoPedidoBD.getEstadoPlanificado());
         fecha = plan.getFecHoraPrevistaInicio();
