@@ -148,8 +148,10 @@ public class Factura implements java.io.Serializable {
     }
 
     public float getTotalNeto() {
-        float salida = this.getTotalBruto() - this.getDescuentoMonto();
-        return new BigDecimal(salida).round(new MathContext(2, RoundingMode.UP)).floatValue();
+        float subtotal = this.getTotalBruto();
+        float totalDescuento = subtotal * (this.getDescuentoPorcentaje().floatValue()/100f);
+        float total = subtotal - totalDescuento;
+        return new BigDecimal(total).setScale(8, RoundingMode.UP).floatValue();
     }
 
     public Date getFechaGeneracion() {

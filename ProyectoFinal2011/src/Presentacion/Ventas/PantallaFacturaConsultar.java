@@ -83,6 +83,7 @@ public class PantallaFacturaConsultar extends javax.swing.JDialog {
                 }
                 
                 fila.add("$ " + elemento.getFactura().getTotalNeto());
+                //fila.add("$ " + (montoTotal - elemento.getFactura().getDescuentoMonto()));
                 return fila;
             }
         };
