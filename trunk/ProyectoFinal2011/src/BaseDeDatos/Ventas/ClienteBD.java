@@ -25,6 +25,10 @@ public class ClienteBD {
         HibernateUtil.guardarObjeto(c);
     }
 
+    public static List<Cliente> listarClientes(){
+        return HibernateUtil.ejecutarConsulta("FROM Cliente");
+    }
+
     public static Cliente getClientePorCUIT(String cuit) {
         String HQL = "FROM Cliente as c "
                 + "WHERE LOWER(c.cuit) like  LOWER('" + cuit + "') ";

@@ -36,6 +36,10 @@ public abstract class GestorClienteABM {
         return TipoClienteBD.listarTiposClientes();
     }
 
+    public static List<Cliente> listarClientes(){
+    return ClienteBD.listarClientes();
+    }
+
     public abstract void aceptar() throws NegocioException;
 
     // <editor-fold defaultstate="collapsed" desc="Iniciadores">
