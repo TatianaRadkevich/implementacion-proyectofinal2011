@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e63ddf29-f932-4670-8808-93b8fd945a07">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="5"/>
+	<property name="ireport.y" value="155"/>
 	<parameter name="ID_PROVEEDOR" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -57,48 +57,51 @@ $P!{WHERE_ID_PROVEEDOR}]]>
 	<columnHeader>
 		<band height="21">
 			<line>
-				<reportElement uuid="3fff6677-3ae3-414c-9716-fe0eacbe7aa8" x="-20" y="20" width="595" height="1" forecolor="#666666"/>
+				<reportElement uuid="3fff6677-3ae3-414c-9716-fe0eacbe7aa8" x="0" y="20" width="555" height="1" forecolor="#666666"/>
 			</line>
 			<staticText>
-				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="-20" y="0" width="78" height="21" forecolor="#006699" backcolor="#E6E6E6"/>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="0" y="0" width="82" height="21" forecolor="#006699" backcolor="#E6E6E6"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="58" y="0" width="142" height="21" forecolor="#006699" backcolor="#E6E6E6"/>
-				<textElement>
-					<font size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Fecha generación]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="200" y="0" width="375" height="21" forecolor="#006699" backcolor="#E6E6E6"/>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="224" y="0" width="331" height="21" forecolor="#006699" backcolor="#E6E6E6"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Proveedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="82" y="0" width="142" height="21" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha generación]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="43">
 			<textField>
-				<reportElement uuid="d2ef3401-dd1e-4544-a971-7732b6942110" x="0" y="23" width="58" height="20"/>
+				<reportElement uuid="d2ef3401-dd1e-4544-a971-7732b6942110" x="14" y="23" width="58" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{T_ORDENES_COMPRA_ID_ORDEN_COMPRA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="05e4c407-857f-4fa9-bcef-43958290b4c8" x="58" y="23" width="100" height="20"/>
+				<reportElement uuid="05e4c407-857f-4fa9-bcef-43958290b4c8" x="82" y="23" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{T_ORDENES_COMPRA_FEC_GENERACION}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="d683e867-a255-4cf3-9753-12dedf0533d1" x="200" y="23" width="100" height="20"/>
+				<reportElement uuid="d683e867-a255-4cf3-9753-12dedf0533d1" x="224" y="23" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{T_PROVEEDORES_RAZON_SOCIAL}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement uuid="d561431f-67b2-4ae6-af9c-8a166932a0b9" positionType="FixRelativeToBottom" x="0" y="10" width="555" height="1"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
