@@ -70,39 +70,60 @@ WHERE DF."ID_FACTURA" = $P{id_factura}]]>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
+     SUM(DF."CANTIDAD"*DF."PRECIO") AS SUB_TOTAL, SUM(DF."CANTIDAD"*DF."PRECIO") - (F."DESCUENTO"*SUM(DF."CANTIDAD"*DF."PRECIO")/100) AS TOTAL,
      F."FEC_FACTURA" AS FEC_FACTURA,
-     F."DESCUENTO" AS DESCUENTO,
+     (F."DESCUENTO"*SUM(DF."CANTIDAD"*DF."PRECIO")/100) AS DESCUENTO,
      E."NOMBRE" AS NOMBRE,
      E."APELLIDO" AS APELLIDO,
      E."NUMERO_DOCUMENTO" AS APELLIDO,
      C."RAZON_SOCIAL" AS RAZON_SOCIAL,
      C."CUIT" AS CUIT,
-     SUM(DF."CANTIDAD" * DF."PRECIO") AS SUB_TOTAL,
-     SUM(DF."CANTIDAD" * DF."PRECIO") - F."DESCUENTO" AS TOTAL
+     D."CALLE" AS CALLE,
+     D."NUMERO" AS NUMERO,
+     D."PISO" AS PISO,
+     D."DEPTO" AS DEPTO,
+     L."NOMBRE" AS NOMBRE_LOCALIDAD
 FROM
-     "dbo"."T_FACTURAS" F LEFT OUTER JOIN "dbo"."T_EMPLEADOS" E
-          ON F."ID_EMPLEADO" = E."ID_EMPLEADO"
-     INNER JOIN "dbo"."T_PEDIDOS" P
-		INNER JOIN "dbo"."T_CLIENTES" C
-			ON C."ID_CLIENTE" = P."ID_CLIENTE"
-			ON P."ID_PEDIDO" = F."ID_PEDIDO"
-	INNER JOIN "dbo"."T_DETALLES_FACTURA" DF
-		INNER JOIN "dbo"."T_DETALLES_PEDIDO" DP
-			INNER JOIN "dbo"."T_PRODUCTOS" PROD
-				ON DP."ID_PRODUCTO" = PROD."ID_PRODUCTO"
-				ON DP."ID_DETALLE_PEDIDO" = DF."ID_DETALLE_PEDIDO"
-				ON DF."ID_FACTURA" = F."ID_FACTURA"
-WHERE F."ID_FACTURA" = $P{id_factura}
-GROUP BY F."FEC_FACTURA", F."DESCUENTO", E."NOMBRE", E."APELLIDO", E."NUMERO_DOCUMENTO", C."RAZON_SOCIAL", C."CUIT"]]>
+     "dbo"."T_FACTURAS" F LEFT OUTER JOIN "dbo"."T_EMPLEADOS" E ON F."ID_EMPLEADO" = E."ID_EMPLEADO"
+     INNER JOIN "dbo"."T_PEDIDOS" P ON F."ID_PEDIDO" = P."ID_PEDIDO"
+     INNER JOIN "dbo"."T_DETALLES_FACTURA" DF ON F."ID_FACTURA" = DF."ID_FACTURA"
+     INNER JOIN "dbo"."T_DETALLES_PEDIDO" DP ON DF."ID_DETALLE_PEDIDO" = DP."ID_DETALLE_PEDIDO"
+     INNER JOIN "dbo"."T_PRODUCTOS" PROD ON DP."ID_PRODUCTO" = PROD."ID_PRODUCTO"
+     INNER JOIN "dbo"."T_CLIENTES" C
+     	INNER JOIN "dbo"."T_DOMICILIOS" D
+     		INNER JOIN "dbo"."T_LOCALIDADES" L
+			ON D."ID_LOCALIDAD" = L."ID_LOCALIDAD"
+			ON C."ID_DOMICILIO" = D."ID_DOMICILIO"
+			ON P."ID_CLIENTE" = C."ID_CLIENTE"
+WHERE
+     F."ID_FACTURA" = $P{id_factura}
+GROUP BY
+     F."FEC_FACTURA",
+     F."DESCUENTO",
+     E."NOMBRE",
+     E."APELLIDO",
+     E."NUMERO_DOCUMENTO",
+     C."RAZON_SOCIAL",
+     C."CUIT",
+     D."CALLE",
+     D."NUMERO",
+     D."PISO",
+     D."DEPTO",
+     L."NOMBRE"]]>
 	</queryString>
+	<field name="SUB_TOTAL" class="java.math.BigDecimal"/>
+	<field name="TOTAL" class="java.math.BigDecimal"/>
 	<field name="FEC_FACTURA" class="java.sql.Timestamp"/>
 	<field name="DESCUENTO" class="java.math.BigDecimal"/>
 	<field name="NOMBRE" class="java.lang.String"/>
 	<field name="APELLIDO" class="java.lang.String"/>
 	<field name="RAZON_SOCIAL" class="java.lang.String"/>
 	<field name="CUIT" class="java.lang.String"/>
-	<field name="SUB_TOTAL" class="java.math.BigDecimal"/>
-	<field name="TOTAL" class="java.math.BigDecimal"/>
+	<field name="CALLE" class="java.lang.String"/>
+	<field name="NUMERO" class="java.math.BigDecimal"/>
+	<field name="PISO" class="java.math.BigDecimal"/>
+	<field name="DEPTO" class="java.lang.String"/>
+	<field name="NOMBRE_LOCALIDAD" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -117,14 +138,19 @@ GROUP BY F."FEC_FACTURA", F."DESCUENTO", E."NOMBRE", E."APELLIDO", E."NUMERO_DOC
 				<textFieldExpression><![CDATA[$F{FEC_FACTURA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2ae40744-bd97-4095-a923-1e8e3ab1b64a" x="70" y="140" width="469" height="20"/>
+				<reportElement uuid="2ae40744-bd97-4095-a923-1e8e3ab1b64a" x="70" y="124" width="469" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{RAZON_SOCIAL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="35ca4260-376c-484e-9301-191c0746ed96" x="70" y="160" width="469" height="20"/>
+				<reportElement uuid="35ca4260-376c-484e-9301-191c0746ed96" x="70" y="144" width="469" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{CUIT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ad45be06-344a-4f2b-b55b-1e6cb92cf680" x="70" y="164" width="469" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{CALLE} + " " + $F{NUMERO} + ($F{PISO} != null ? ". Piso: " + $F{PISO} : "") + ($F{DEPTO} != null ? " Depto: " + $F{DEPTO} : "") + ". " + $F{NOMBRE_LOCALIDAD}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
