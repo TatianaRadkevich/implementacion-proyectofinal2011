@@ -124,8 +124,8 @@ public class Principal extends javax.swing.JFrame {
         mnuProducto = new javax.swing.JMenuItem();
         mnuMaquina = new javax.swing.JMenuItem();
         mnuEstructuraProducto = new javax.swing.JMenuItem();
-        mnuPlanificacionViejo = new javax.swing.JMenuItem();
         mnuOrdenTrabajo = new javax.swing.JMenuItem();
+        mnuPlanificacionNuevo = new javax.swing.JMenuItem();
         mnuAvanceProduccion = new javax.swing.JMenuItem();
         mnuProblemaMaquina = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -135,7 +135,6 @@ public class Principal extends javax.swing.JFrame {
         mnuTipoHerramienta = new javax.swing.JMenuItem();
         mnuEtapaProduccion = new javax.swing.JMenuItem();
         mnuHerramienta = new javax.swing.JMenuItem();
-        mnuPlanificacionNuevo = new javax.swing.JMenuItem();
         mnuVentas = new javax.swing.JMenu();
         mnuCliente = new javax.swing.JMenuItem();
         mnuPedido = new javax.swing.JMenuItem();
@@ -375,15 +374,6 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuProduccion.add(mnuEstructuraProducto);
 
-        mnuPlanificacionViejo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/plan_viejo.png"))); // NOI18N
-        mnuPlanificacionViejo.setText("Planificación Viejo");
-        mnuPlanificacionViejo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuPlanificacionViejoActionPerformed(evt);
-            }
-        });
-        mnuProduccion.add(mnuPlanificacionViejo);
-
         mnuOrdenTrabajo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/orden_trabajo.png"))); // NOI18N
         mnuOrdenTrabajo.setText("Orden de Trabajo");
         mnuOrdenTrabajo.addActionListener(new java.awt.event.ActionListener() {
@@ -392,6 +382,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         mnuProduccion.add(mnuOrdenTrabajo);
+
+        mnuPlanificacionNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/plan_nuevo.png"))); // NOI18N
+        mnuPlanificacionNuevo.setText("Planificación");
+        mnuPlanificacionNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuPlanificacionNuevoActionPerformed(evt);
+            }
+        });
+        mnuProduccion.add(mnuPlanificacionNuevo);
 
         mnuAvanceProduccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/avance_produccion.png"))); // NOI18N
         mnuAvanceProduccion.setText("Avance de Producción");
@@ -473,15 +472,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         mnuProduccion.add(mnuHerramienta);
-
-        mnuPlanificacionNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/plan_nuevo.png"))); // NOI18N
-        mnuPlanificacionNuevo.setText("Planificación Nuevo");
-        mnuPlanificacionNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuPlanificacionNuevoActionPerformed(evt);
-            }
-        });
-        mnuProduccion.add(mnuPlanificacionNuevo);
 
         jMenuBar1.add(mnuProduccion);
 
@@ -732,12 +722,6 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         new GestorEstructura().iniciarCU();
     }//GEN-LAST:event_mnuEstructuraProductoActionPerformed
-
-    private void mnuPlanificacionViejoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPlanificacionViejoActionPerformed
-        // TODO add your handling code here:
-        PantallaPlanConsultar pantalla = new PantallaPlanConsultar(this, true);
-        pantalla.setVisible(true);
-    }//GEN-LAST:event_mnuPlanificacionViejoActionPerformed
 
     private void mnuOrdenTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOrdenTrabajoActionPerformed
         // TODO add your handling code here:
@@ -1006,7 +990,6 @@ UIManager.put("Synthetica.license.key", "1891309A-E215572F-9865495F-0E06D6A9-616
     private javax.swing.JMenuItem mnuOrdenTrabajo;
     private javax.swing.JMenuItem mnuPedido;
     private javax.swing.JMenuItem mnuPlanificacionNuevo;
-    private javax.swing.JMenuItem mnuPlanificacionViejo;
     private javax.swing.JMenuItem mnuProblemaMaquina;
     private javax.swing.JMenu mnuProduccion;
     private javax.swing.JMenuItem mnuProducto;
