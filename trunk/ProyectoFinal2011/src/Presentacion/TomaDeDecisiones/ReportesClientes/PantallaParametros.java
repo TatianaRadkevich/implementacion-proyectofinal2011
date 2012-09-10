@@ -54,6 +54,7 @@ public class PantallaParametros extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Parámetros del reporte");
 
         btnGenerarReporte.setText("Generar Reporte");
         btnGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +187,7 @@ public class PantallaParametros extends javax.swing.JDialog {
             jasper.addParameter("FECHA_DESDE", dtcFechaDesde.getDate());
             jasper.addParameter("FECHA_HASTA", dtcFechaHasta.getDate());
             jasper.runReporte();
+            this.setVisible(false);
         }
 }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
