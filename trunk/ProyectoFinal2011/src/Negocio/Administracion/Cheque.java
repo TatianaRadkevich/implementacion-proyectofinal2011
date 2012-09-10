@@ -41,7 +41,7 @@ public class Cheque implements java.io.Serializable {
     @Column(name = "FEC_VENCIMIENTO", nullable = false, length = 23)
     private Date fecVencimiento;
     //
-    @Column(name = "MONTO", nullable = false, precision = 6, scale = 4)
+    @Column(name = "MONTO", nullable = false, precision = 8, scale = 4)
     private BigDecimal monto;
     //
     @Column(name = "NOMBRE_BANCO", nullable = false, length = 50)

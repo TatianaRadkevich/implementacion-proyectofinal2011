@@ -13,6 +13,7 @@ package Presentacion.Ventas;
 import BaseDeDatos.Administracion.EmpleadoBD;
 import BaseDeDatos.Administracion.FacturaBD;
 import BaseDeDatos.Administracion.FacturaBD.Estado;
+import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.EstadoPedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Administracion.DetalleFactura;
@@ -30,10 +31,12 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.hibernate.Hibernate;
 
 /**
  *
@@ -637,9 +640,10 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
                 Mensajes.mensajeErrorGenerico("No se ha cargado ningun empleado");
                 return;
             }
-            f.setDescuentoPorcentaje(new BigDecimal(txtDescuentoMonto.getText()));
+            f.setDescuentoPorcentaje(new BigDecimal(txtDescuentoPorcentaje.getText()));
             f.setNumero(new Integer(txtNroFactura.getText()));
             f.generar();
+            
             Mensajes.mensajeInformacion("Factura generada correctamente");
 
             this.dispose();
