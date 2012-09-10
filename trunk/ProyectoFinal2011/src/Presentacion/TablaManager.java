@@ -98,7 +98,10 @@ public abstract class TablaManager<E> {
     }
 
     public void insert(int index, E objeto) {
-        index=tabla.convertRowIndexToModel(index);
+        try{
+             index=tabla.convertRowIndexToModel(index);
+        }catch(IndexOutOfBoundsException ee){}
+       
         contenido.add(index, objeto);
         estructura.insertRow(index, ObjetoFila(objeto));
     }

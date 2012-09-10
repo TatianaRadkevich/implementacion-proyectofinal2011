@@ -38,7 +38,7 @@ public class Simulador {
         do {
             eventos.remove(0).ejecutar();
             while (capo.hayTareas()) {
-                addEvento(new FinTarea(getTiempoActual(), capo.getProximaTarea()));
+                addEvento(new FinTarea(this, capo.getProximaTarea(),getTiempoActual()));
             }
 
         } while (eventos.isEmpty() == false);

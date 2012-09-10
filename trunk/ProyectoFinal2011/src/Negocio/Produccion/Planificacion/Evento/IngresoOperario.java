@@ -30,6 +30,8 @@ public class IngresoOperario extends Evento {
 
     @Override
     public void ejecutar() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        operario.setPresente(true);
+        operario.setOcupado(false);
+        sim.addEvento(new EgresoOperario(sim, operario, operario.getEmpleado().getProxEgreso(this.getTiempo())));
     }
 }

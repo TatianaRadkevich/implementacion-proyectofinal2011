@@ -38,5 +38,10 @@ public class OperarioPlan {
         this.ocupado = ocupado;
     }
 
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+
 
 }
