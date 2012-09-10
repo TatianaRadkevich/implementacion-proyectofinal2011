@@ -13,11 +13,15 @@ package Presentacion.Produccion;
 import BaseDeDatos.HibernateUtil;
 import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Produccion.PlanProduccion;
+import Negocio.Produccion.Planificacion.GanttManager;
 import Presentacion.Mensajes;
 import Presentacion.TablaManager;
 import Presentacion.Utilidades;
 import java.util.Vector;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import org.hibernate.Hibernate;
+import org.jfree.ui.ApplicationFrame;
 
 /**
  *
@@ -39,7 +43,7 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
                 String aux = "";
                 salida.add(elemento.getPedido().getIdPedido());
                 salida.add(elemento.getPedido().getCliente().getRazonSocial());
-                salida.add(elemento.getPedido().getCliente().getCuit());              
+                salida.add(elemento.getPedido().getCliente().getCuit());
                 salida.add(Utilidades.parseFecha(elemento.getFecGeneracion()));
                 salida.add(elemento.getPedido().getPrioridadTexto());
                 salida.add(Utilidades.parseFecha(elemento.getFecHoraPrevistaInicio()));
@@ -67,12 +71,13 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
 
     public void actualizar() {
         tmPlan.setDatos(HibernateUtil.ejecutarConsulta("FROM PlanProduccion"));
-        if(tmPlan.getSize()==0)
+        if (tmPlan.getSize() == 0) {
             lblMensaje.setText("No se encontró ningún plan vigente.");
-        else if(tmPlan.getSize()==1)
+        } else if (tmPlan.getSize() == 1) {
             lblMensaje.setText("Se encontró un plan vigente.");
-        else if(tmPlan.getSize()==1)
-            lblMensaje.setText("Se encontró "+tmPlan.getSize()+" planes vigentes.");
+        } else if (tmPlan.getSize() == 1) {
+            lblMensaje.setText("Se encontró " + tmPlan.getSize() + " planes vigentes.");
+        }
     }
 
     /** This method is called from within the constructor to
@@ -90,6 +95,7 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
         btnPlanificar = new javax.swing.JButton();
         btnPlanificar1 = new javax.swing.JButton();
         lblMensaje = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -123,6 +129,13 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
 
         lblMensaje.setText("XXX");
 
+        jButton1.setText("Gantt");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlPlanesLayout = new javax.swing.GroupLayout(pnlPlanes);
         pnlPlanes.setLayout(pnlPlanesLayout);
         pnlPlanesLayout.setHorizontalGroup(
@@ -134,8 +147,10 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(pnlPlanesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnPlanificar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnPlanificar1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                            .addGroup(pnlPlanesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnPlanificar, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                .addComponent(btnPlanificar1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))))
                     .addComponent(lblMensaje))
                 .addContainerGap())
         );
@@ -146,8 +161,10 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
                     .addGroup(pnlPlanesLayout.createSequentialGroup()
                         .addComponent(btnPlanificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPlanificar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
+                        .addComponent(btnPlanificar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblMensaje))
         );
@@ -175,7 +192,7 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlPlanes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
                 .addContainerGap())
         );
@@ -186,7 +203,7 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
     private void btnPlanificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanificarActionPerformed
         // TODO add your handling code here:
         PantallaPlanProduccionNuevo.generarNuevoPlan(this);
-         actualizar();
+        actualizar();
     }//GEN-LAST:event_btnPlanificarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -196,14 +213,20 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
 
     private void btnPlanificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanificar1ActionPerformed
         // TODO add your handling code here:
-        if(tmPlan.getSeletedObject()==null)
-        {
+        if (tmPlan.getSeletedObject() == null) {
             Mensajes.mensajeErrorGenerico("Debe elegir un plan.");
             return;
         }
-         PantallaPlanProduccionNuevo.ModificarPlan(this,tmPlan.getSeletedObject());
-         actualizar();
+        PantallaPlanProduccionNuevo.ModificarPlan(this, tmPlan.getSeletedObject());
+        actualizar();
     }//GEN-LAST:event_btnPlanificar1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if (tmPlan.getSeletedObject() != null) {
+            GanttManager.getFrameGantt("Gantt", tmPlan.getSeletedObject(),this).setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -226,6 +249,7 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPlanificar;
     private javax.swing.JButton btnPlanificar1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblMensaje;

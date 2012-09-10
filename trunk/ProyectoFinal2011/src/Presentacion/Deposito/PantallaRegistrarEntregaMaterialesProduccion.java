@@ -284,7 +284,7 @@ this.dispose();
         {
             for (DetallePlanProduccion det : detallesPlan)
             {
-                List<DetalleEtapaProduccion> detallesEstapa = det.getTEtapasProduccionEspecifica().getDetalleEtapaProduccion();
+                List<DetalleEtapaProduccion> detallesEstapa = det.getEtapaProduccionEspecifica().getDetalleEtapaProduccion();
                 for (DetalleEtapaProduccion detEtapa : detallesEstapa)
                 {
                     if (mapa.containsKey(detEtapa.getTDetallesProducto().getTMateriales())) // Si el material ya existe voy sumando

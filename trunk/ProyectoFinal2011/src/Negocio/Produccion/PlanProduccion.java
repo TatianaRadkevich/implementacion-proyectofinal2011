@@ -21,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -86,6 +87,7 @@ public class PlanProduccion implements java.io.Serializable {
     private Date fecUltimaModificacion;
     //_______________________________________________________________________________________________//
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TPlanesProduccion")
+    @OrderBy("fecHoraPrevistaInicio ASC")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<DetallePlanProduccion> TDetallesPlans = new HashSet<DetallePlanProduccion>(0);
 
@@ -219,7 +221,7 @@ public class PlanProduccion implements java.io.Serializable {
         }
 
         for (DetallePlanProduccion dpp : this.TDetallesPlans) {
-            if (dpp.getTEtapasProduccionEspecifica().getProducto().getIdProducto() == p.getIdProducto()) {
+            if (dpp.getEtapaProduccionEspecifica().getProducto().getIdProducto() == p.getIdProducto()) {
                 salida.add(dpp);
             }
         }
@@ -229,7 +231,7 @@ public class PlanProduccion implements java.io.Serializable {
 
     public DetallePlanProduccion getDetallePlan(EtapaProduccionEspecifica epe) {
         for (DetallePlanProduccion dpp : this.TDetallesPlans) {
-            if (dpp.getTEtapasProduccionEspecifica().equals(epe)) {
+            if (dpp.getEtapaProduccionEspecifica().equals(epe)) {
                 return dpp;
             }
         }
@@ -243,7 +245,7 @@ public class PlanProduccion implements java.io.Serializable {
         }
 
         for (DetallePlanProduccion dpp : this.TDetallesPlans) {
-            if (dpp.getTEmpleados().getId() == emp.getId()) {
+            if (dpp.getEmpleado().getId() == emp.getId()) {
                 salida.add(dpp);
             }
         }
@@ -256,8 +258,8 @@ public class PlanProduccion implements java.io.Serializable {
         List<Empleado> salida = new ArrayList<Empleado>();
 
         for (DetallePlanProduccion dpp : this.TDetallesPlans) {
-            if (!existe(dpp.getTEmpleados(), salida)) {
-                salida.add(dpp.getTEmpleados());
+            if (!existe(dpp.getEmpleado(), salida)) {
+                salida.add(dpp.getEmpleado());
             }
         }
 

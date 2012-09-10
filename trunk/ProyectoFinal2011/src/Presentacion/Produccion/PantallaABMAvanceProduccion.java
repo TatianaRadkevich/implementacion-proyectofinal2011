@@ -59,9 +59,9 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
             public Vector ObjetoFila(DetallePlanProduccion elemento) {
                 Vector fila = new Vector();
 
-                fila.add(elemento.getTEtapasProduccionEspecifica().getNumeroOrden());
-                fila.add(elemento.getTEtapasProduccionEspecifica().getEtapaProduccion().getNombre());
-                fila.add(elemento.getTEmpleados().getApellido() +", "+ elemento.getTEmpleados().getNombre());
+                fila.add(elemento.getEtapaProduccionEspecifica().getNumeroOrden());
+                fila.add(elemento.getEtapaProduccionEspecifica().getEtapaProduccion().getNombre());
+                fila.add(elemento.getEmpleado().getApellido() +", "+ elemento.getEmpleado().getNombre());
                 fila.add(elemento.getMaquinaParticular().getNombre());
                 fila.add(Utilidades.parseFechaHora(elemento.getFecHoraPrevistaInicio()));
                 fila.add(elemento.getTEdetallePlan().getNombre());
