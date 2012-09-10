@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e0683f36-b87e-4dac-8d6f-af3b31a0ecda">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<parameter name="ID_CLIENTE" class="java.lang.Integer"/>
+	<parameter name="FECHA_DESDE" class="java.util.Date"/>
+	<parameter name="FECHA_HASTA" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT
+     T_COBROS."FEC_HORA_COBRO" AS T_COBROS_FEC_HORA_COBRO,
+     T_COBROS."IMPORTE" AS T_COBROS_IMPORTE,
+     T_COBROS."ID_FACTURA" AS T_COBROS_ID_FACTURA,
+     T_EMPLEADOS."APELLIDO" AS T_EMPLEADOS_APELLIDO,
+     T_FORMAS_PAGO."NOMBRE" AS T_FORMAS_PAGO_NOMBRE,
+     T_CHEQUES."ID_CHEQUE" AS T_CHEQUES_ID_CHEQUE,
+     T_CHEQUES."FEC_EMISION" AS T_CHEQUES_FEC_EMISION,
+     T_CHEQUES."FEC_VENCIMIENTO" AS T_CHEQUES_FEC_VENCIMIENTO,
+     T_CHEQUES."MONTO" AS T_CHEQUES_MONTO,
+     T_CHEQUES."NOMBRE_BANCO" AS T_CHEQUES_NOMBRE_BANCO,
+     T_CHEQUES."NRO_SUCURSAL" AS T_CHEQUES_NRO_SUCURSAL,
+     T_CLIENTES."RAZON_SOCIAL" AS T_CLIENTES_RAZON_SOCIAL
+FROM
+     "dbo"."T_FACTURAS" T_FACTURAS INNER JOIN "dbo"."T_COBROS" T_COBROS ON T_FACTURAS."ID_FACTURA" = T_COBROS."ID_FACTURA"
+     INNER JOIN "dbo"."T_EMPLEADOS" T_EMPLEADOS ON T_COBROS."ID_ENCARGADO" = T_EMPLEADOS."ID_EMPLEADO"
+     AND T_EMPLEADOS."ID_EMPLEADO" = T_FACTURAS."ID_EMPLEADO"
+     INNER JOIN "dbo"."T_PEDIDOS" T_PEDIDOS ON T_EMPLEADOS."ID_EMPLEADO" = T_PEDIDOS."ID_EMPLEADO"
+     AND T_PEDIDOS."ID_PEDIDO" = T_FACTURAS."ID_PEDIDO"
+     INNER JOIN "dbo"."T_CLIENTES" T_CLIENTES ON T_PEDIDOS."ID_CLIENTE" = T_CLIENTES."ID_CLIENTE"
+     INNER JOIN "dbo"."T_CHEQUES" T_CHEQUES ON T_CLIENTES."ID_CLIENTE" = T_CHEQUES."ID_CLIENTE"
+     AND T_COBROS."ID_CHEQUE" = T_CHEQUES."ID_CHEQUE"
+     INNER JOIN "dbo"."T_FORMAS_PAGO" T_FORMAS_PAGO ON T_COBROS."ID_FORMA_PAGO" = T_FORMAS_PAGO."ID_FORMA_PAGO"
+WHERE
+     T_PEDIDOS."ID_CLIENTE" = $P{ID_CLIENTE}
+ AND T_COBROS."FEC_HORA_COBRO" BETWEEN $P{FECHA_DESDE} AND $P{FECHA_HASTA}]]>
+	</queryString>
+	<field name="T_COBROS_FEC_HORA_COBRO" class="java.sql.Timestamp"/>
+	<field name="T_COBROS_IMPORTE" class="java.math.BigDecimal"/>
+	<field name="T_COBROS_ID_FACTURA" class="java.math.BigDecimal"/>
+	<field name="T_EMPLEADOS_APELLIDO" class="java.lang.String"/>
+	<field name="T_FORMAS_PAGO_NOMBRE" class="java.lang.String"/>
+	<field name="T_CHEQUES_ID_CHEQUE" class="java.math.BigDecimal"/>
+	<field name="T_CHEQUES_FEC_EMISION" class="java.sql.Timestamp"/>
+	<field name="T_CHEQUES_FEC_VENCIMIENTO" class="java.sql.Timestamp"/>
+	<field name="T_CHEQUES_MONTO" class="java.math.BigDecimal"/>
+	<field name="T_CHEQUES_NOMBRE_BANCO" class="java.lang.String"/>
+	<field name="T_CHEQUES_NRO_SUCURSAL" class="java.math.BigDecimal"/>
+	<field name="T_CLIENTES_RAZON_SOCIAL" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement uuid="3eb1ea0f-c49f-4df6-bbd9-8f54123b6c68" mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement uuid="bd9f4d6d-c804-40a3-bb99-26901636d88e" x="0" y="20" width="333" height="43" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Reporte de cobros]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="f839b004-98f4-4565-a4ab-f92593704ce0" x="475" y="43" width="120" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Cliente:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="e15bbdea-ee63-431d-ad20-b709281821b4" x="475" y="72" width="120" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{T_CLIENTES_RAZON_SOCIAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="a8822c25-191b-4bc5-a64b-990f6dec1c8b" x="56" y="72" width="44" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{FECHA_DESDE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="7ae66cc2-f54a-4d19-8ba4-0ca576332754" x="100" y="72" width="20" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[al]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="945bb675-5991-46f3-9201-4ed1aec37b20" x="120" y="72" width="43" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{FECHA_HASTA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="7ae66cc2-f54a-4d19-8ba4-0ca576332754" x="0" y="72" width="56" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Período: ]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="7"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36">
+			<line>
+				<reportElement uuid="4f1b1cd1-eeca-4f1a-8395-6ce223dc421c" x="-20" y="20" width="595" height="1" forecolor="#666666"/>
+			</line>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="-20" y="10" width="56" height="18" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Factura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="36" y="10" width="64" height="18" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha cobro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="100" y="10" width="55" height="18" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Importe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="155" y="10" width="67" height="18" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empleado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="285" y="10" width="67" height="18" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cod. cheque]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="352" y="10" width="67" height="18" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vencimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="419" y="10" width="77" height="18" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto cheque]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="496" y="10" width="79" height="18" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Banco]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a1af198-0803-41e7-97c5-f0cb4690f314" mode="Opaque" x="222" y="10" width="63" height="18" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Forma Pago]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36">
+			<line>
+				<reportElement uuid="8f228774-43bc-4a52-897f-992bf1b72b17" positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="9b8f02df-00e0-4dba-9d26-518d80144b0b" x="-10" y="-1" width="36" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{T_COBROS_ID_FACTURA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="42c9d028-45cc-4e6e-b630-4683cf794f01" x="100" y="-1" width="55" height="22"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{T_COBROS_IMPORTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6e6d407d-f05a-4d57-b639-9a6721b9cd25" x="36" y="-1" width="64" height="21"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{T_COBROS_FEC_HORA_COBRO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3b6547e7-8d92-4d7d-8d13-913ff84ad8b6" x="155" y="-1" width="67" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{T_EMPLEADOS_APELLIDO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ce9c972b-56f4-41e9-aabd-017fd9afa268" x="496" y="0" width="79" height="19"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{T_CHEQUES_NOMBRE_BANCO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f66d8b18-a299-40c2-b71a-505deed26f8e" x="222" y="-1" width="63" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{T_FORMAS_PAGO_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="41ba4928-4b24-447b-b9ac-ea565fd4e2ab" x="352" y="0" width="67" height="19"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{T_CHEQUES_FEC_VENCIMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9968b320-9a9f-4ea3-90c0-c8120f0f7b80" x="285" y="0" width="67" height="19"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{T_CHEQUES_ID_CHEQUE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e036518d-951b-4006-9882-cd7c28ae0b9e" x="419" y="0" width="77" height="19"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{T_CHEQUES_MONTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="144">
+			<textField>
+				<reportElement uuid="3702e0c3-5122-4798-ad7a-55033749298b" mode="Opaque" x="0" y="125" width="515" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="841665e0-ddaf-409e-b91e-324d995f210b" mode="Opaque" x="515" y="125" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="5ff565b7-1cc6-417a-a613-d6b2e6337a8d" x="0" y="125" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
