@@ -56,7 +56,7 @@ public class Cobro implements java.io.Serializable {
     @Column(name = "FEC_HORA_COBRO", nullable = false, length = 23)
     private Date fecCobro;
     //
-    @Column(name = "IMPORTE", nullable = false, precision = 6, scale = 4)
+    @Column(name = "IMPORTE", nullable = false, precision = 8, scale = 4)
     private BigDecimal importe;
     //
     @Column(name = "OBSERVACIONES", length = 200)

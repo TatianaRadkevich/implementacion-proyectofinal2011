@@ -90,6 +90,9 @@ public class PedidoBD {
         List<Pedido> pedidosADevolver = new ArrayList<Pedido>();
         List<Pedido> pedidos = HibernateUtil.ejecutarConsulta(HQL);
         
+        hasta.setDate(hasta.getDate()+1);
+        desde.setDate(desde.getDate() - 1);
+        
         /* Recordar: Hacer la consulta HQL bien, por ahora la hago así para testing */
         for(Pedido pedido : pedidos){
             if(pedido.getFactura().getFechaGeneracion().before(hasta) && pedido.getFactura().getFechaGeneracion().after(desde))

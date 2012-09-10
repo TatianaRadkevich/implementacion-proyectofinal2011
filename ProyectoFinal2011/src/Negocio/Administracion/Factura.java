@@ -134,9 +134,9 @@ public class Factura implements java.io.Serializable {
     }
 
 
-    public BigDecimal getDescuentoMonto() {
+    public float getDescuentoMonto() {
         float resultado = (this.getDescuentoPorcentaje().floatValue() * this.getTotalBruto()) / 100;
-        return new BigDecimal(resultado, new MathContext(2, RoundingMode.UP));
+        return new BigDecimal(resultado).round(new MathContext(2, RoundingMode.UP)).floatValue();
     }
 
     public float getTotalBruto() {
@@ -148,7 +148,7 @@ public class Factura implements java.io.Serializable {
     }
 
     public float getTotalNeto() {
-        float salida = this.getTotalBruto() - this.getDescuentoMonto().floatValue();
+        float salida = this.getTotalBruto() - this.getDescuentoMonto();
         return new BigDecimal(salida).round(new MathContext(2, RoundingMode.UP)).floatValue();
     }
 
@@ -265,6 +265,7 @@ public class Factura implements java.io.Serializable {
         this.setTEFactura(FacturaBD.getEstadoFactura(FacturaBD.Estado.GeneradaPendienteCobro));
         this.getPedido().setEstadoPedido(EstadoPedidoBD.getEstadoPendientePagado());
         HibernateUtil.guardarObjeto(this);
+        HibernateUtil.getSession().flush();
     }
 
     public void anular(String motivo) {
