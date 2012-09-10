@@ -111,7 +111,7 @@ CREATE TABLE T_CHEQUES (
        ID_CHEQUE            numeric(5) IDENTITY,
        FEC_EMISION          datetime NOT NULL,
        FEC_VENCIMIENTO      datetime NOT NULL,
-       MONTO                numeric(6,4) NOT NULL,
+       MONTO                numeric(8,4) NOT NULL,
        NOMBRE_BANCO         varchar(50) NOT NULL,
        NRO_SUCURSAL         numeric(5) NOT NULL,
        ID_CLIENTE           numeric(5) NOT NULL
@@ -166,7 +166,7 @@ CREATE TABLE T_COBROS (
        ID_COBRO             numeric(8) IDENTITY,
        ID_ENCARGADO         numeric(5) NOT NULL,
        FEC_HORA_COBRO       datetime NOT NULL,
-       IMPORTE              numeric(6,4) NOT NULL,
+       IMPORTE              numeric(8,4) NOT NULL,
        OBSERVACIONES        varchar(200) NULL,
        ID_FORMA_PAGO        numeric(2) NOT NULL,
        ID_CHEQUE            numeric(5) NULL,
@@ -586,7 +586,8 @@ CREATE TABLE T_FACTURAS (
        ID_EMPLEADO          numeric(5) NOT NULL,
        ID_EFACTURA          numeric(2) NOT NULL,
        FEC_BAJA             datetime NULL,
-       MOTIVO_BAJA          varchar(100) NULL
+       MOTIVO_BAJA          varchar(100) NULL,
+       ID_PEDIDO            numeric(8) NULL
 )
 go
 
@@ -1645,6 +1646,14 @@ ALTER TABLE T_ETAPAS_PRODUCCION_ESPECIFICA
        ADD FOREIGN KEY (ID_ETAPA_PRODUCCION)
                              REFERENCES T_ETAPAS_PRODUCCION  (
               ID_ETAPA_PRODUCCION)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE T_FACTURAS
+       ADD FOREIGN KEY (ID_PEDIDO)
+                             REFERENCES T_PEDIDOS  (ID_PEDIDO)
                              ON DELETE NO ACTION
                              ON UPDATE NO ACTION
 go
