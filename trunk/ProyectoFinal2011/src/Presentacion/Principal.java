@@ -47,6 +47,7 @@ import Negocio.GestionUsuario.*;
 import Presentacion.Produccion.ProblemaHerramientaParticular;
 import Presentacion.Produccion.RegistrarSolucionProblemaMaqOHerr;
 import Presentacion.TomaDeDecisiones.ReportesClientes.PantallaReporteClientes;
+import Presentacion.TomaDeDecisiones.ReportesCobro.PantallaReporteCobro;
 import Presentacion.TomaDeDecisiones.ReportesMateriales.PantallaReportesMateriales;
 import Presentacion.TomaDeDecisiones.ReportesOrdenDeCompra.PantallaReporteOrdenDeCompra;
 import Presentacion.TomaDeDecisiones.ReportesProductosTerminados.PantallaReportesProductosTerminados;
@@ -150,6 +151,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Principal");
@@ -606,6 +608,15 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem6);
 
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/forma_pago.png"))); // NOI18N
+        jMenuItem7.setText("Cobro");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem7);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -932,6 +943,12 @@ public class Principal extends javax.swing.JFrame {
         pantalla.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    PantallaReporteCobro pantalla = new PantallaReporteCobro(this, false);
+    pantalla.setLocationRelativeTo(this);
+    pantalla.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -960,6 +977,7 @@ UIManager.put("Synthetica.license.key", "1891309A-E215572F-9865495F-0E06D6A9-616
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblMensajeInicio;
     private javax.swing.JMenu mnuAdministracion;
