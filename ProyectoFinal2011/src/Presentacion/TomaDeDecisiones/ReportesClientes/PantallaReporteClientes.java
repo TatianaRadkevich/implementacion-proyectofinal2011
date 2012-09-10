@@ -58,7 +58,7 @@ public class PantallaReporteClientes extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(66, 66, 66)
                 .addComponent(jButton1)
-                .addContainerGap(211, Short.MAX_VALUE))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
         pack();
