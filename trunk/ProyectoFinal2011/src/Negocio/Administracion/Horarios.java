@@ -2,10 +2,15 @@ package Negocio.Administracion;
 // Generated 21/10/2011 13:42:06 by Hibernate Tools 3.2.1.GA
 
 import BaseDeDatos.HibernateUtil;
+import Presentacion.Utilidades;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -82,10 +87,9 @@ public class Horarios implements java.io.Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<AsignacionesDias> getDiasAsignados() {
-        return new ArrayList<AsignacionesDias>(this.TAsignacionesDiases);
-    }
-
+//    public List<AsignacionesDias> getDiasAsignados() {
+//        return new ArrayList<AsignacionesDias>(this.TAsignacionesDiases);
+//    }
     public void setDiasAsignados(List<AsignacionesDias> datos) {
         this.TAsignacionesDiases.clear();
 
@@ -122,7 +126,78 @@ public class Horarios implements java.io.Serializable {
     }
 
     public boolean isPresete(Date tiempo) {
-        throw new UnsupportedOperationException("");
+        for (AsignacionesDias ad : this.TAsignacionesDiases) {
+            if (ad.isPresente(tiempo)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Date getProximoIngreso(Date tiempo) {
+        Date salida = null;
+        List<AsignacionesDias> l = this.getDiasAsignados();
+
+        Dia d = Dia.parseDia(tiempo);
+        Hora ht = new Hora(tiempo);
+        AsignacionesDias ad;
+
+        int x = 0;
+        for (int i = 0; i < l.size(); i++) {
+            x = (i == l.size() - 1) ? 0 : i;
+            if (d.isEntre(l.get(i).getDia(), l.get(x).getDia())) {
+                Hora haux1 = new Hora(l.get(i).getHoraDesde());
+                Hora haux2 = new Hora(l.get(x).getHoraDesde());
+                if (haux1.compareTo(ht) <= 0 || haux2.compareTo(ht) >= 0) {
+                    salida = Utilidades.agregarTiempoFecha(tiempo, d.cuantosDiasFaltan(l.get(x).getDia()), 0, 0);
+                    salida.setHours(haux2.getHora());
+                    salida.setMinutes(haux2.getMinuto());
+                    salida.setSeconds(haux2.getSegundo());
+                    return salida;
+                }
+            }
+        }
+
+        return salida;
+    }
+
+     public Date getProximoEgreso(Date tiempo) {
+        Date salida = null;
+        List<AsignacionesDias> l = this.getDiasAsignados();
+
+        Dia d = Dia.parseDia(tiempo);
+        Hora ht = new Hora(tiempo);
+        AsignacionesDias ad;
+
+        int x = 0;
+        for (int i = 0; i < l.size(); i++) {
+            x = (i == l.size() - 1) ? 0 : i;
+            if (d.isEntre(l.get(i).getDia(), l.get(x).getDia())) {
+                Hora haux1 = new Hora(l.get(i).getHoraHasta());
+                Hora haux2 = new Hora(l.get(x).getHoraHasta());
+                if (haux1.compareTo(ht) <= 0 || haux2.compareTo(ht) >= 0) {
+                    salida = Utilidades.agregarTiempoFecha(tiempo, d.cuantosDiasFaltan(l.get(x).getDia()), 0, 0);
+                    salida.setHours(haux2.getHora());
+                    salida.setMinutes(haux2.getMinuto());
+                    salida.setSeconds(haux2.getSegundo());
+                    return salida;
+                }
+            }
+        }
+
+        return salida;
+    }
+
+    public List<AsignacionesDias> getDiasAsignados() {
+        AsignacionesDias[] ad = (AsignacionesDias[]) TAsignacionesDiases.toArray();
+        Arrays.sort(ad, new Comparator<AsignacionesDias>() {
+
+            public int compare(AsignacionesDias o1, AsignacionesDias o2) {
+                return o1.compareTo(o2);
+            }
+        });
+
+        return Arrays.asList(ad);
     }
 //@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="THorarios")
 //    public Set getTAsignacionesHorarios() {

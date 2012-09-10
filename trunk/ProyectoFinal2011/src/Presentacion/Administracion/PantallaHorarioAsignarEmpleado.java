@@ -119,7 +119,7 @@ public class PantallaHorarioAsignarEmpleado extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(AsignacionesDias elemento) {
                 Vector salida = new Vector();
-                salida.add(elemento.getTDias());
+                salida.add(elemento.getDia());
                 salida.add(Utilidades.parseHora(elemento.getHoraDesde()));
                 salida.add(Utilidades.parseHora(elemento.getHoraHasta()));
                 return salida;

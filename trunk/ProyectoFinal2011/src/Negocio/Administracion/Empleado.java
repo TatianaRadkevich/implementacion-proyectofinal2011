@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -25,6 +26,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -125,6 +127,7 @@ public class Empleado implements java.io.Serializable {
     private EstadosEmpleado TEstadosEmpleado;
     /*---------------------------------------------------------------------------------------------*/
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "empleado")
+    @OrderBy("fecDesde ASC")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<AsignacionesHorario> asignacionesHorarias = new HashSet(0);
     /*---------------------------------------------------------------------------------------------*/
@@ -518,24 +521,44 @@ public class Empleado implements java.io.Serializable {
         return false;
     }
 
-    public Date getIngreso(Date tiempo) {
-//        for (AsignacionesHorario ah : asignacionesHorarias) {
-//            if (tiempo.compareTo(ah.getFecDesde()) >= 0 && tiempo.compareTo(ah.getFecHasta()) <= 0) {
-//                Date d=ah.getHorario().getProximoIngreso(tiempo);
-//                if(ah.getFecHasta().compareTo(d)<0)
-//                {
-//                    this.getNextHorario(ah).getProximoIngreso(ah.getFecHasta());
-//                }
-//            }
-//        }
-        return new Date();
+    public Date getProxIngreso(Date tiempo) {
+        Date salida = null;
+        for (AsignacionesHorario ah : asignacionesHorarias) {
+            if (tiempo.compareTo(ah.getFecDesde()) >= 0 && tiempo.compareTo(ah.getFecHasta()) <= 0) {
+                salida = ah.getHorario().getProximoIngreso(tiempo);
+                if (ah.getFecHasta().compareTo(salida) < 0) {
+                    AsignacionesHorario aux = this.getProximaAsignacion(ah);
+                    salida=aux.getHorario().getProximoIngreso(aux.getFecDesde());
+                }
+            }
+        }
+        return salida;
     }
 
-    public Date getEgreso(Date tiempo) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public Date getProxEgreso(Date tiempo) {
+                Date salida = null;
+        for (AsignacionesHorario ah : asignacionesHorarias) {
+            if (tiempo.compareTo(ah.getFecDesde()) >= 0 && tiempo.compareTo(ah.getFecHasta()) <= 0) {
+                salida = ah.getHorario().getProximoEgreso(tiempo);
+                if (ah.getFecHasta().compareTo(salida) < 0) {
+                    AsignacionesHorario aux = this.getProximaAsignacion(ah);
+                    salida=aux.getHorario().getProximoEgreso(aux.getFecDesde());
+                }
+            }
+        }
+        return salida;
     }
 
-    private Object getNextHorario(AsignacionesHorario ah) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    private AsignacionesHorario getProximaAsignacion(AsignacionesHorario ah) {
+        Iterator<AsignacionesHorario> i = asignacionesHorarias.iterator();
+        while (i.hasNext()) {
+            AsignacionesHorario aux = i.next();
+            if (ah.equals(aux)) {
+                if (i.hasNext()) {
+                    return i.next();
+                }
+            }
+        }
+        return null;
     }
 }

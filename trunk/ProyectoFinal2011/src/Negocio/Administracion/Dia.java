@@ -2,6 +2,9 @@ package Negocio.Administracion;
 // Generated 21/10/2011 13:42:06 by Hibernate Tools 3.2.1.GA
 
 import BaseDeDatos.Administracion.HorarioBD;
+import Negocio.Exceptiones.NegocioException;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -18,7 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "T_DIAS", schema = "dbo", catalog = "Ramaty")
-public class Dia implements java.io.Serializable {
+public class Dia implements java.io.Serializable ,Comparable<Dia>{
 
     @Id
     @GeneratedValue
@@ -70,10 +73,89 @@ public class Dia implements java.io.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        try{
-            return ((Dia)obj).nombre.toLowerCase().trim().equals(this.nombre.toLowerCase().trim());
-        }catch(Exception e){}
+        try {
+            return ((Dia) obj).nombre.toLowerCase().trim().equals(this.nombre.toLowerCase().trim());
+        } catch (Exception e) {
+        }
         return false;
     }
 
+    public static Dia parseDia(Date tiempo) {
+        if (tiempo == null) {
+            throw new NegocioException("Fecha no puede ser null");
+        }
+
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.setTime(tiempo);
+        switch (gc.get(GregorianCalendar.DAY_OF_WEEK)) {
+            case GregorianCalendar.MONDAY://lunes
+                return HorarioBD.getDia(HorarioBD.DiaSemana.Lunes);
+            case GregorianCalendar.TUESDAY://martes
+                return HorarioBD.getDia(HorarioBD.DiaSemana.Martes);
+            case GregorianCalendar.WEDNESDAY://miercoles
+                return HorarioBD.getDia(HorarioBD.DiaSemana.Miercoles);
+            case GregorianCalendar.THURSDAY://jueves
+                return HorarioBD.getDia(HorarioBD.DiaSemana.Jueves);
+            case GregorianCalendar.FRIDAY://viernes
+                return HorarioBD.getDia(HorarioBD.DiaSemana.Viernes);
+            case GregorianCalendar.SATURDAY://sabado
+                return HorarioBD.getDia(HorarioBD.DiaSemana.Sabado);
+            case GregorianCalendar.SUNDAY://domingo
+                return HorarioBD.getDia(HorarioBD.DiaSemana.Domingo);
+            default:
+                throw new NegocioException("Fecha con dia invalido");
+        }
+    }
+
+    public Dia nextDay() {
+
+        if (this.getNombre().equals(HorarioBD.DiaSemana.Lunes)) {
+            return HorarioBD.getDia(HorarioBD.DiaSemana.Martes);
+        } else if (this.getNombre().equals(HorarioBD.DiaSemana.Martes)) {
+            return HorarioBD.getDia(HorarioBD.DiaSemana.Miercoles);
+        } else if (this.getNombre().equals(HorarioBD.DiaSemana.Miercoles)) {
+            return HorarioBD.getDia(HorarioBD.DiaSemana.Jueves);
+        } else if (this.getNombre().equals(HorarioBD.DiaSemana.Jueves)) {
+            return HorarioBD.getDia(HorarioBD.DiaSemana.Viernes);
+        } else if (this.getNombre().equals(HorarioBD.DiaSemana.Viernes)) {
+            return HorarioBD.getDia(HorarioBD.DiaSemana.Sabado);
+        } else if (this.getNombre().equals(HorarioBD.DiaSemana.Sabado)) {
+            return HorarioBD.getDia(HorarioBD.DiaSemana.Domingo);
+        } else if (this.getNombre().equals(HorarioBD.DiaSemana.Domingo)) {
+            return HorarioBD.getDia(HorarioBD.DiaSemana.Lunes);
+        }
+
+        return null;
+
+    }
+
+
+    public int cuantosDiasFaltan(Dia dia) {
+        Dia d = this;
+        int x=0;
+        do {
+            if(d.equals(dia))
+                return x;
+            d = d.nextDay();
+            x++;
+        } while (true);
+
+    }
+
+    public boolean isEntre(Dia dMin, Dia dMax) {
+        Dia d = dMin;
+        do {
+            if (d.equals(this)) {
+                return true;
+            }
+            if(d.equals(dMax))
+                return false;
+            d = d.nextDay();
+        } while (true);
+       
+    }
+@Override
+    public int compareTo(Dia dia) {
+        return this.getIdDia()-dia.getIdDia();
+    }
 }

@@ -59,7 +59,7 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(AsignacionesDias elemento) {
                 Vector salida = new Vector();
-                salida.add(elemento.getTDias().getNombre());
+                salida.add(elemento.getDia().getNombre());
                 salida.add(Utilidades.parseHora(elemento.getHoraDesde()));
                 salida.add(Utilidades.parseHora(elemento.getHoraHasta()));
                 return salida;
@@ -153,7 +153,7 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
             limpiarDetalle();
             return;
         }
-        cmbDia.setSelectedItem(as.getTDias());
+        cmbDia.setSelectedItem(as.getDia());
         txtDesde.setValue(as.getHoraDesde());
         txtHasta.setValue(as.getHoraHasta());
 
@@ -683,7 +683,7 @@ public class PantallaHorarioAdministar extends javax.swing.JDialog {
             ad = tmAsignacion.getSeletedObject();
         }
 
-        ad.setTDias((Dia) cmbDia.getSelectedItem());
+        ad.setDia((Dia) cmbDia.getSelectedItem());
         ad.setHoraDesde((Date) txtDesde.getValue());
         ad.setHoraHasta((Date) txtHasta.getValue());
 
