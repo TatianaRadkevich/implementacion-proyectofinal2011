@@ -130,7 +130,7 @@ ORDER BY
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="91">
+		<band height="53">
 			<line>
 				<reportElement uuid="85795d59-7cd6-4531-84a8-0331e6b89de6" positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
 			</line>
