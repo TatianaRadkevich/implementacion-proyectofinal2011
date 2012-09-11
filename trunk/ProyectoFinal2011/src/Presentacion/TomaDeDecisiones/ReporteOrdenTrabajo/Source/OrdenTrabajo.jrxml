@@ -17,12 +17,18 @@
      DP."FEC_HORA_PREVISTA_INICIO" AS FEC_HORA_PREVISTA_INICIO,
      DP."FEC_HORA_PREVISTA_FIN" AS FEC_HORA_PREVISTA_FIN,
      DP."CANTIDAD_PLANIFICADA" AS CANTIDAD,
-     DP."OBSERVACIONES" AS OBSERVACIONES
-FROM "dbo"."T_ORDENES_TRABAJO" OT
-     INNER JOIN "dbo"."T_EMPLEADOS" E
-         ON E."ID_EMPLEADO" = OT."ID_EMPLEADO"
+     DP."OBSERVACIONES" AS OBSERVACIONES,
+     P."NOMBRE" AS NOMBRE_PRODUCTO
+FROM
+     "dbo"."T_EMPLEADOS" E
+     INNER JOIN "dbo"."T_ORDENES_TRABAJO" OT
+        ON E."ID_EMPLEADO" = OT."ID_EMPLEADO"
      INNER JOIN "dbo"."T_DETALLES_PLAN" DP
-         ON OT."ID_ORDEN_TRABAJO" = DP."ID_ORDEN_TRABAJO"
+        INNER JOIN "dbo"."T_DETALLES_PEDIDO" DPED
+           INNER JOIN "dbo"."T_PRODUCTOS" P
+	    ON DPED."ID_PRODUCTO" = P."ID_PRODUCTO"
+	    ON DP."ID_DETALLE_PEDIDO" = DPED."ID_DETALLE_PEDIDO"
+	    ON OT."ID_ORDEN_TRABAJO" = DP."ID_ORDEN_TRABAJO"
 WHERE
      OT.ID_ORDEN_TRABAJO = $P{id_orden_trabajo}]]>
 	</queryString>
@@ -36,6 +42,7 @@ WHERE
 	<field name="FEC_HORA_PREVISTA_FIN" class="java.sql.Timestamp"/>
 	<field name="CANTIDAD" class="java.math.BigDecimal"/>
 	<field name="OBSERVACIONES" class="java.lang.String"/>
+	<field name="NOMBRE_PRODUCTO" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -98,9 +105,9 @@ WHERE
 				<text><![CDATA[Fecha - Hora Fin: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="b4473434-6f8d-4c25-9a39-4aa300f40c46" x="118" y="76" width="115" height="16"/>
+				<reportElement uuid="b4473434-6f8d-4c25-9a39-4aa300f40c46" x="118" y="76" width="365" height="16"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CANTIDAD} + "  " + $F{NOMBRE_PRODUCTO}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="8350ff1f-6c04-4d3c-939d-e4e17e816d72" x="20" y="76" width="98" height="16"/>
@@ -119,7 +126,7 @@ WHERE
 			<textField>
 				<reportElement uuid="a5ebd370-b5c3-43b5-a953-59a1333395d3" x="40" y="124" width="453" height="36"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{OBSERVACIONES}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{OBSERVACIONES} != null ? $F{OBSERVACIONES} : "")]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
