@@ -196,7 +196,7 @@ WHERE
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{T_EMPLEADOS_APELLIDO}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement uuid="ce9c972b-56f4-41e9-aabd-017fd9afa268" x="496" y="0" width="79" height="19"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{T_CHEQUES_NOMBRE_BANCO}]]></textFieldExpression>
@@ -206,17 +206,17 @@ WHERE
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{T_FORMAS_PAGO_NOMBRE}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement uuid="41ba4928-4b24-447b-b9ac-ea565fd4e2ab" x="352" y="0" width="67" height="19"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{T_CHEQUES_FEC_VENCIMIENTO}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement uuid="9968b320-9a9f-4ea3-90c0-c8120f0f7b80" x="285" y="0" width="67" height="19"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{T_CHEQUES_ID_CHEQUE}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement uuid="e036518d-951b-4006-9882-cd7c28ae0b9e" x="419" y="0" width="77" height="19"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{T_CHEQUES_MONTO}]]></textFieldExpression>
