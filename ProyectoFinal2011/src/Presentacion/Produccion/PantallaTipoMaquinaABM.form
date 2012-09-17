@@ -73,7 +73,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" pref="299" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" pref="281" max="32767" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -120,10 +120,10 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="btnModificar" alignment="0" max="32767" attributes="1"/>
-                          <Component id="btnNuevo" alignment="0" pref="75" max="32767" attributes="1"/>
-                          <Component id="btnBaja" alignment="0" pref="75" max="32767" attributes="1"/>
-                          <Component id="btnAlta" alignment="0" pref="75" max="32767" attributes="1"/>
+                          <Component id="btnModificar" alignment="0" pref="93" max="32767" attributes="1"/>
+                          <Component id="btnNuevo" alignment="0" pref="93" max="32767" attributes="1"/>
+                          <Component id="btnBaja" alignment="0" pref="93" max="32767" attributes="1"/>
+                          <Component id="btnAlta" alignment="0" pref="93" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -172,7 +172,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnAlta">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Alta"/>
+                <Property name="text" type="java.lang.String" value="Reactivar"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAltaActionPerformed"/>
