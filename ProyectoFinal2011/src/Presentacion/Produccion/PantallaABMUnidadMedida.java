@@ -71,6 +71,7 @@ public class PantallaABMUnidadMedida extends javax.swing.JDialog {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Unidad de Medida");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Unidad de Medida", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 

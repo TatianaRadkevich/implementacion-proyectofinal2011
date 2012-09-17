@@ -199,7 +199,7 @@ public class PantallaMaterialABM extends javax.swing.JDialog {
         lblUnidadMedida = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Registrar Material");
+        setTitle("Administrar Material");
 
         pnlMaterial.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Material", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
