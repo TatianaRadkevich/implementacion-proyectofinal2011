@@ -378,7 +378,9 @@ public class ProblemaHerramientaParticular extends javax.swing.JDialog {
 
     private void cargarHerrParticulares() {
         if (cmbTipoHerr.getSelectedIndex()!=-1)
+            try{
             cmbMaqHerrParticular.setModel(new DefaultComboBoxModel(gestor.getHerramientasSinProblemas((TipoHerramienta) cmbTipoHerr.getSelectedItem()).toArray()));
+            }catch(Exception e){cmbMaqHerrParticular.removeAllItems();}
         if (cmbMaqHerrParticular.getSelectedIndex()!=-1){
             HerramientaParticular temp=(HerramientaParticular)cmbMaqHerrParticular.getSelectedItem();
             txtCantidad.setText(temp.getCantidad()+"");
