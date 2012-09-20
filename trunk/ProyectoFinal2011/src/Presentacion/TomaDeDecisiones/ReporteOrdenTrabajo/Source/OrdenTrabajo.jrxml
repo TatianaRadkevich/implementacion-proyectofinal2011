@@ -67,66 +67,57 @@ WHERE
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="170" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="3678bf7c-ba00-41ef-8b14-4aedfdb95ac1" x="20" y="12" width="57" height="16"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Encargado:]]></text>
-			</staticText>
+		<band height="184" splitType="Stretch">
 			<textField>
-				<reportElement uuid="c9eb6e7d-e43b-46b0-8b13-75ae360d64da" x="77" y="12" width="406" height="16"/>
+				<reportElement uuid="c9eb6e7d-e43b-46b0-8b13-75ae360d64da" x="20" y="12" width="463" height="16"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{NUMERO_DOCUMENTO} + " - " + $F{APELLIDO} + ", " + $F{NOMBRE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Encargado: " + $F{NUMERO_DOCUMENTO} + " - " + $F{APELLIDO} + ", " + $F{NOMBRE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="edfd770f-fa49-4004-a339-50a2558315c0" x="20" y="44" width="98" height="16"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Fecha - Hora Inicio: ]]></text>
-			</staticText>
-			<textField>
-				<reportElement uuid="a1504ba3-c67d-4744-ad36-8e63e311c6e9" x="118" y="44" width="115" height="16"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{FEC_HORA_PREVISTA_INICIO}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="0495c30a-560a-4961-b624-ec4cd6954a66" x="366" y="44" width="111" height="16"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{FEC_HORA_PREVISTA_FIN}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement uuid="54f20146-7b61-4a64-8f49-4a92d2fdbbf0" x="283" y="44" width="83" height="16"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Fecha - Hora Fin: ]]></text>
-			</staticText>
-			<textField>
-				<reportElement uuid="b4473434-6f8d-4c25-9a39-4aa300f40c46" x="118" y="76" width="365" height="16"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{CANTIDAD} + "  " + $F{NOMBRE_PRODUCTO}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement uuid="8350ff1f-6c04-4d3c-939d-e4e17e816d72" x="20" y="76" width="98" height="16"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Cantidad a producir: ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="49f937d0-5e51-4dfc-9578-c6f3fed908a9" x="20" y="108" width="81" height="16"/>
+				<reportElement uuid="49f937d0-5e51-4dfc-9578-c6f3fed908a9" x="20" y="96" width="81" height="16"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Observaciones: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="a5ebd370-b5c3-43b5-a953-59a1333395d3" x="40" y="124" width="453" height="36"/>
+				<reportElement uuid="a5ebd370-b5c3-43b5-a953-59a1333395d3" x="40" y="112" width="443" height="38"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[($F{OBSERVACIONES} != null ? $F{OBSERVACIONES} : "")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="54f20146-7b61-4a64-8f49-4a92d2fdbbf0" x="245" y="52" width="238" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha - Hora Fin real: ........................................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="edfd770f-fa49-4004-a339-50a2558315c0" x="20" y="52" width="225" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha - Hora Inicio real: ................................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d1f91556-1fa9-41ee-9a97-a3a1182c99fd" x="245" y="160" width="238" height="20"/>
+				<textElement/>
+				<text><![CDATA[Firma:_________________________________]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8aca6884-c113-49a0-a54b-ff3c19961c85" x="20" y="32" width="225" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Fecha - Hora Inicio:" + $F{FEC_HORA_PREVISTA_INICIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0ed672a4-99c1-48a5-88a8-9bb4f2e6787b" x="245" y="32" width="238" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Fecha - Hora Fin: " + $F{FEC_HORA_PREVISTA_FIN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="05a9a571-933f-4471-811a-f17293d5d3b9" x="20" y="73" width="463" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Cantidad a producir: " + $F{CANTIDAD} + "  " + $F{NOMBRE_PRODUCTO}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

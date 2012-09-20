@@ -17,6 +17,7 @@ import BaseDeDatos.Ventas.PedidoBD;
 import Negocio.Ventas.DetallePedido;
 import Negocio.Ventas.EstadoDetallePedido;
 import Presentacion.Produccion.PantallaABMAvanceProduccion;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JDialog;
 
@@ -35,7 +36,7 @@ public class GestorAvanceProduccion {
         pantalla.setVisible(true);
     }
 
-    public void registrarAvance(DetallePlanProduccion detalle, int cantidad_producida, String observacion) {
+    public void registrarAvance(DetallePlanProduccion detalle, int cantidad_producida, String observacion, Date fechaInicio, Date fechaFin) {
         
         detalle.getTOrdenesTrabajo().setObservaciones(observacion.toString());
         if(cantidad_producida < detalle.getCantidad())
@@ -53,6 +54,8 @@ public class GestorAvanceProduccion {
         OrdenTrabajoBD.modificar(detalle.getTOrdenesTrabajo());
         
         detalle.setCantidadProducida(cantidad_producida);
+        detalle.setFecHoraRealInicio(fechaInicio);
+        detalle.setFecHoraRealFin(fechaFin);
         DetallePlanProduccionBD.modificar(detalle);
         
         List<DetallePlanProduccion> plan = detalle.getPlanProduccion().getDetallePlan();
