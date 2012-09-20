@@ -81,6 +81,7 @@ public class RegistrarSolucionProblemaMaqOHerr extends javax.swing.JDialog {
         txtFechaActual = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Registrar Solución Problema Máquina o Herramienta");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Problemas"));
 
