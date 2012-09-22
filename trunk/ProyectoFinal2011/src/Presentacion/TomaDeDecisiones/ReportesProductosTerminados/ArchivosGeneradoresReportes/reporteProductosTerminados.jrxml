@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="f308057c-3150-4639-a46b-8c515644bd94">
-	<property name="ireport.zoom" value="1.399522140629201"/>
+	<property name="ireport.zoom" value="0.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="812"/>
+	<property name="ireport.y" value="10"/>
 	<parameter name="FECHA_DESDE" class="java.util.Date"/>
 	<parameter name="FECHA_HASTA" class="java.util.Date"/>
 	<queryString>
@@ -179,23 +179,80 @@ T_PEDIDOS."ID_EPEDIDO"=( SELECT "T_EPEDIDO"."ID_EPEDIDO" FROM "T_EPEDIDO" WHERE 
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="450">
+		<band height="802">
 			<pie3DChart>
 				<chart>
-					<reportElement uuid="48e14f1b-4618-4ae3-8fee-5472730a9c24" x="0" y="100" width="555" height="330"/>
+					<reportElement uuid="48e14f1b-4618-4ae3-8fee-5472730a9c24" x="0" y="208" width="555" height="330"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<pieDataset>
-					<keyExpression><![CDATA[""]]></keyExpression>
-					<valueExpression><![CDATA[new Double(0)]]></valueExpression>
+					<keyExpression><![CDATA["Pedido: " + $F{T_PEDIDOS_ID_PEDIDO} + ", Producto: "+$F{T_PRODUCTOS_NOMBRE}]]></keyExpression>
+					<valueExpression><![CDATA[$F{T_DETALLES_PEDIDO_CANTIDAD}]]></valueExpression>
+					<labelExpression><![CDATA["Pedido: "+$F{T_PEDIDOS_ID_PEDIDO}+"  Producto: "+$F{T_PRODUCTOS_NOMBRE}+"  Cantidad: "+$F{T_DETALLES_PEDIDO_CANTIDAD}]]></labelExpression>
 				</pieDataset>
 				<pie3DPlot>
 					<plot/>
 					<itemLabel/>
 				</pie3DPlot>
 			</pie3DChart>
+			<frame>
+				<reportElement uuid="fd75a5cf-08d7-4b0e-9e49-ddfc5616aa50" mode="Opaque" x="-20" y="-17" width="595" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement uuid="6b68db2f-f377-42d4-93c8-e441950ffa09" x="20" y="20" width="381" height="43" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Reporte de Productos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="850780ee-b130-4613-be84-b44c308097ee" x="361" y="72" width="214" height="20" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Productos terminados por pedido]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="7ae66cc2-f54a-4d19-8ba4-0ca576332754" x="120" y="72" width="20" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[al]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="7ae66cc2-f54a-4d19-8ba4-0ca576332754" x="20" y="72" width="56" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Período: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="945bb675-5991-46f3-9201-4ed1aec37b20" x="141" y="72" width="43" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{FECHA_HASTA}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="a8822c25-191b-4bc5-a64b-990f6dec1c8b" x="76" y="72" width="44" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{FECHA_DESDE}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField>
+				<reportElement uuid="cae8ec7a-aa8f-4d80-b8e3-b96e72ae8c41" mode="Opaque" x="0" y="789" width="515" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="0d92d71f-aada-40a5-8f2b-fbb800e7ab3f" x="0" y="789" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="03a0694c-4c19-4285-90f2-b961e67105b4" mode="Opaque" x="515" y="789" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
