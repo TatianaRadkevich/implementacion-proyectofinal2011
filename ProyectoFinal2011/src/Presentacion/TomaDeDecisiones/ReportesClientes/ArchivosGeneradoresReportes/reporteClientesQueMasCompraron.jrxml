@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="e3f6589a-1208-4e7a-88f0-d45b56502e8e">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="0.75"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="215"/>
+	<property name="ireport.y" value="0"/>
 	<style name="style1"/>
 	<parameter name="ID_PROVINCIA" class="java.lang.Integer"/>
 	<parameter name="FECHA_DESDE" class="java.util.Date"/>
@@ -131,7 +131,7 @@ ORDER BY
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="47">
+		<band height="42">
 			<line>
 				<reportElement uuid="85795d59-7cd6-4531-84a8-0331e6b89de6" positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
 			</line>
@@ -181,24 +181,24 @@ ORDER BY
 	</pageFooter>
 	<summary>
 		<band height="802">
-			<pieChart>
+			<pie3DChart>
 				<chart>
-					<reportElement uuid="62742d59-f6f1-475c-a0d7-465b4218f739" x="60" y="214" width="442" height="364"/>
+					<reportElement uuid="92937516-41cd-4783-9201-6dba58a1b1d0" x="31" y="205" width="469" height="372"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<pieDataset>
-					<keyExpression><![CDATA[$F{T_CLIENTES_RAZON_SOCIAL}]]></keyExpression>
+					<keyExpression><![CDATA["Cliente :" + $F{T_CLIENTES_RAZON_SOCIAL}]]></keyExpression>
 					<valueExpression><![CDATA[$F{MONTO_TOTAL_COBRADO}]]></valueExpression>
-					<labelExpression><![CDATA[$F{T_CLIENTES_RAZON_SOCIAL} + "-" + $F{MONTO_TOTAL_COBRADO}
+					<labelExpression><![CDATA["Cliente :" + $F{T_CLIENTES_RAZON_SOCIAL} + "- Monto: " + $F{MONTO_TOTAL_COBRADO}
 ]]></labelExpression>
 				</pieDataset>
-				<piePlot isCircular="true">
+				<pie3DPlot>
 					<plot/>
 					<itemLabel/>
-				</piePlot>
-			</pieChart>
+				</pie3DPlot>
+			</pie3DChart>
 			<textField>
 				<reportElement uuid="08c085e8-b8ec-4fa0-858c-803df8b67ada" mode="Opaque" x="0" y="776" width="515" height="13" backcolor="#E6E6E6"/>
 				<textElement textAlignment="Right"/>
