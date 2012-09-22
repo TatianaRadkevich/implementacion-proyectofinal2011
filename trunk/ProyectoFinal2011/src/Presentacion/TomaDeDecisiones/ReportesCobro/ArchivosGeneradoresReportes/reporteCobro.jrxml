@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e0683f36-b87e-4dac-8d6f-af3b31a0ecda">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="ID_CLIENTE" class="java.lang.Integer"/>
 	<parameter name="FECHA_DESDE" class="java.util.Date"/>
 	<parameter name="FECHA_HASTA" class="java.util.Date"/>
@@ -172,7 +172,7 @@ WHERE
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="24">
+		<band height="23">
 			<line>
 				<reportElement uuid="8f228774-43bc-4a52-897f-992bf1b72b17" positionType="FixRelativeToBottom" x="-20" y="19" width="595" height="1"/>
 			</line>
@@ -227,35 +227,36 @@ WHERE
 		<band/>
 	</columnFooter>
 	<pageFooter>
-		<band height="144">
+		<band height="51">
 			<textField>
-				<reportElement uuid="3702e0c3-5122-4798-ad7a-55033749298b" mode="Opaque" x="0" y="125" width="515" height="13" backcolor="#E6E6E6"/>
+				<reportElement uuid="3702e0c3-5122-4798-ad7a-55033749298b" mode="Opaque" x="0" y="33" width="515" height="13" backcolor="#E6E6E6"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="841665e0-ddaf-409e-b91e-324d995f210b" mode="Opaque" x="515" y="125" width="40" height="13" backcolor="#E6E6E6"/>
+				<reportElement uuid="841665e0-ddaf-409e-b91e-324d995f210b" mode="Opaque" x="515" y="33" width="40" height="13" backcolor="#E6E6E6"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement uuid="5ff565b7-1cc6-417a-a613-d6b2e6337a8d" x="0" y="125" width="100" height="13"/>
+				<reportElement uuid="5ff565b7-1cc6-417a-a613-d6b2e6337a8d" x="0" y="33" width="100" height="13"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e761be0e-7a77-494d-96c4-70a0532b0085" x="100" y="0" width="55" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{T_COBROS_IMPORTE}.plus()]]></textFieldExpression>
+				<reportElement uuid="8de712b7-a714-4dd5-bb95-a7f3ba638a3c" x="405" y="2" width="91" height="31"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total: $"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="8de712b7-a714-4dd5-bb95-a7f3ba638a3c" x="48" y="0" width="39" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[Total: $]]></textFieldExpression>
+				<reportElement uuid="e761be0e-7a77-494d-96c4-70a0532b0085" x="496" y="2" width="56" height="31"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_COBROS_IMPORTE}.plus()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band/>
-	</summary>
 </jasperReport>
