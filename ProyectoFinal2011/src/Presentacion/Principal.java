@@ -104,8 +104,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         lblMensajeInicio = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        mnuSalir = new javax.swing.JMenu();
-        mnuExit = new javax.swing.JMenuItem();
         mnuAdministracion = new javax.swing.JMenu();
         mnuCargo = new javax.swing.JMenuItem();
         mnuEmpleado = new javax.swing.JMenuItem();
@@ -151,6 +149,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        mnuSalir = new javax.swing.JMenu();
+        mnuExit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Principal");
@@ -188,6 +188,11 @@ public class Principal extends javax.swing.JFrame {
         btnSalir.setBounds(310, 120, 53, 23);
 
         txtUsuario.setText("Administrador");
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuarioActionPerformed(evt);
+            }
+        });
         pnlSession.add(txtUsuario);
         txtUsuario.setBounds(150, 40, 220, 20);
 
@@ -215,19 +220,6 @@ public class Principal extends javax.swing.JFrame {
         lblMensajeInicio.setFont(new java.awt.Font("Tahoma", 1, 14));
         getContentPane().add(lblMensajeInicio);
         lblMensajeInicio.setBounds(10, 10, 870, 30);
-
-        mnuSalir.setText("Sesión");
-
-        mnuExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/sesion.png"))); // NOI18N
-        mnuExit.setText("Cerrar Sesión");
-        mnuExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuExitActionPerformed(evt);
-            }
-        });
-        mnuSalir.add(mnuExit);
-
-        jMenuBar1.add(mnuSalir);
 
         mnuAdministracion.setText("Administración");
 
@@ -609,6 +601,19 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        mnuSalir.setText("Sesión");
+
+        mnuExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/sesion.png"))); // NOI18N
+        mnuExit.setText("Cerrar Sesión");
+        mnuExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuExitActionPerformed(evt);
+            }
+        });
+        mnuSalir.add(mnuExit);
+
+        jMenuBar1.add(mnuSalir);
+
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -863,7 +868,11 @@ public class Principal extends javax.swing.JFrame {
                        case 5:
                             mnuDeposito.setVisible(true);
                             break;
-                          
+                        case 6:
+                            jMenu1.setVisible(true);
+                            break;
+                        case 7:
+                            mnuSalir.setVisible(true);
                     }
                 }
             }
@@ -932,6 +941,10 @@ public class Principal extends javax.swing.JFrame {
     pantalla.setLocationRelativeTo(this);
     pantalla.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1014,6 +1027,8 @@ UIManager.put("Synthetica.license.key", "1891309A-E215572F-9865495F-0E06D6A9-616
         mnuProduccion.setVisible(false);
         mnuVentas.setVisible(false);
         mnuDeposito.setVisible(false);
+        jMenu1.setVisible(false);
+        mnuSalir.setVisible(false);
         lblMensaje.setVisible(false);
         lblMensajeInicio.setText("");
     }
