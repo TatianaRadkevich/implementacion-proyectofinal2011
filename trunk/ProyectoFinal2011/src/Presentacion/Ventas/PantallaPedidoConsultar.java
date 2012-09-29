@@ -357,7 +357,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
             }
         });
 
-        btnVer.setText("Ver");
+        btnVer.setText("Consultar");
         btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerActionPerformed(evt);
@@ -368,10 +368,10 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
         pnlBotones.setLayout(pnlBotonesLayout);
         pnlBotonesLayout.setHorizontalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnVer, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+            .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+            .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+            .addComponent(btnVer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlBotonesLayout.setVerticalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -404,7 +404,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
             pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetalleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlDetalleLayout.setVerticalGroup(
@@ -422,7 +422,7 @@ public class PantallaPedidoConsultar extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(pnlPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPedidosLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())

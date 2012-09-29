@@ -302,7 +302,7 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
             }
         });
 
-        btnVer.setText("Ver");
+        btnVer.setText("Consultar");
         btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerActionPerformed(evt);
@@ -313,10 +313,10 @@ public class PantallaClienteConsultar extends javax.swing.JDialog {
         pnlBotones.setLayout(pnlBotonesLayout);
         pnlBotonesLayout.setHorizontalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnVer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+            .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+            .addComponent(btnVer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
         );
         pnlBotonesLayout.setVerticalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

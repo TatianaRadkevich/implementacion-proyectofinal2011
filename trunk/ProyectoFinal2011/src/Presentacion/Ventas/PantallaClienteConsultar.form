@@ -278,10 +278,10 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnNuevo" alignment="0" pref="75" max="32767" attributes="1"/>
-                  <Component id="btnModificar" alignment="0" max="32767" attributes="1"/>
-                  <Component id="btnVer" alignment="1" pref="75" max="32767" attributes="1"/>
-                  <Component id="btnEliminar" alignment="1" pref="75" max="32767" attributes="1"/>
+                  <Component id="btnNuevo" alignment="0" pref="79" max="32767" attributes="1"/>
+                  <Component id="btnModificar" alignment="0" pref="79" max="32767" attributes="1"/>
+                  <Component id="btnVer" alignment="1" max="32767" attributes="1"/>
+                  <Component id="btnEliminar" alignment="1" pref="79" max="32767" attributes="1"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -326,7 +326,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnVer">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ver"/>
+                <Property name="text" type="java.lang.String" value="Consultar"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVerActionPerformed"/>
