@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entity" namespace="Entity.Persistente">
+  <class name="Pedido" table="T_PEDIDOS">
+    <id name="Id" column ="ID_PEDIDO" type="Int64" unsaved-value="0">
+        <generator class="identity" />
+    </id>
+
+    <property name="FechaEstimadaEntrega" column="FEC_HORA_ESTIMADA_ENTREGA" type="DateTime" />
+    <property name="FechaHoraGeneracion" column="FEC_HORA_GENERACION" type="DateTime" />
+    <property name="FechaHoraRealEntrega" column="FEC_HORA_REAL_ENTREGA" type="DateTime" />
+    <property name="FechaSolicitada" column="FEC_SOLICITADA" type="DateTime" />
+    <many-to-one name="Estado" column="ID_EPEDIDO" class="Entity.ReadOnly.EstadoPedido" />
+    <property name="TipoPedido" column="ID_TPEDIDO" type="Int16" />
+    <many-to-one name="Cliente" column="ID_CLIENTE" class="Entity.ReadOnly.Cliente" />
+    <property name="FechaBaja" column="FEC_BAJA" type="DateTime" />
+    <property name="MotivoBaja" column="MOTIVO_BAJA" type="System.String" />
+    <property name="FechaClienteRecibio" column="FEC_CLI_REC" type="DateTime" />
+    <property name="Prioridad" column="PRIORIDAD" type="Int32" />
+    
+    <bag name="DetallesPedido" cascade="all-delete-orphan" lazy="true">
+      <key column="ID_PEDIDO"/>
+      <one-to-many class="Entity.Persistente.DetallePedido"/>
+    </bag>
+  </class>
+</hibernate-mapping>

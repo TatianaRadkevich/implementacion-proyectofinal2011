@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entity" namespace="Entity.Persistente">
+  <class name="Sesion" table="T_SESION">
+    <id name="Id" column ="ID_SESION" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+
+   <property name="FechaHoraInicio" column="FECHA_HORA_INICIO" type="DateTime" />
+    <property name="FechaHoraFin" column="FECHA_HORA_FIN" type="DateTime" />
+    <many-to-one name="Usuario" column="ID_USUARIO" class="Entity.Persistente.Usuario" />
+  </class>
+</hibernate-mapping>

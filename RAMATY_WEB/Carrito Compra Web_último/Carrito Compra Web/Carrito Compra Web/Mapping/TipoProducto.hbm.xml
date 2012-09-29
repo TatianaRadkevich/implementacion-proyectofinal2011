@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entity" namespace="Entity.ReadOnly">
+  <class name="TipoProducto" table="T_TPRODUCTO">
+    <id name="Id" column ="ID_TPRODUCTO" type="Int16" unsaved-value="0" >
+      <generator class="increment" />
+    </id>
+    <property name="Nombre" column="NOMBRE" type="System.String" />
+    <property name="Descripcion" column="DESCRIPCION" type="System.String" />
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entity" namespace="Entity.ReadOnly">
+  <class name="Producto" table="T_PRODUCTOS">
+    <id name="Codigo" column ="ID_PRODUCTO" type="Int32" unsaved-value="0" >
+      <generator class="increment" />
+    </id>
+    <property name="Nombre" column="NOMBRE" type="System.String" />
+    <property name="Descripcion" column="DESCRIPCION" type="System.String" />
+    <property name="PrecioUnitario" column="PRECIO_UNITARIO" type="Double" />
+    <property name="FechaBaja" column="FEC_BAJA" type="DateTime" />
+    
+    <many-to-one name="TipoProducto" column="ID_TPRODUCTO" class="Entity.ReadOnly.TipoProducto" />
+    <many-to-one name="UnidadDeMedida" column="ID_UNIDAD_MEDIDA" class="Entity.ReadOnly.UnidadMedida" />
+    
+    <bag name="DetallesProducto" cascade="all-delete-orphan" lazy="true">
+      <key column="ID_DETALLE_PRODUCTO"/>
+      <one-to-many class="Entity.ReadOnly.DetalleProducto"/>
+    </bag>
+  </class>
+</hibernate-mapping>

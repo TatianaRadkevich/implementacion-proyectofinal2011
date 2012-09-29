@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "ConsultarPedidos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="left-column-text">
+    <table id="pedido_list"></table>
+    <div id="p_pedido_list" ></div>
+</div>
+
+<script type="text/javascript">
+
+
+    jQuery("#pedido_list").jqGrid(
+    {    
+        sord: "desc",
+        type: "POST",
+        url: '@Url.Content("~/Pedidos/ListarPedidos")',
+        datatype: 'json',
+        autowidth: true,
+        height: 300,
+        colNames: [' ', 'Fecha Requerida', 'Fecha Estimada', 'Total', 'Estado'],
+        colModel: [
+        { name: 'Id', index: 'Id', align: 'center', width: 5 },
+        { name: 'FechaSolicitada', align:'center', index: 'FechaSolicitada', width: 20 },
+        { name: 'FechaEstimadaEntrega', align: 'center', index: 'FechaEstimadaEntrega', width: 20 },
+        { name: 'TotalString', align: 'right', index: 'TotalString', sortable: false, width: 15 },
+        { name: 'Estado', index: 'e.Nombre', align: 'center', width: 20}],
+        sortname: 'Id',
+        sortorder: "desc",
+        rowNum: 25,
+        scroll: 1,
+        loadonce: false,
+        mtype: "POST",
+        rownumbers: false,
+        rownumWidth: 15,
+        gridview: true,
+        pager: '#p_pedido_list',
+        viewrecords: true
+    });
+    
+    jQuery("#pedido_list").jqGrid(
+		'navGrid',
+		'#p_pedido_list',
+		{ del: false, add: false, edit: false, view: false, search: false },
+		{},
+		{},
+		{},
+		{},
+		{},
+		{ multipleSearch: false }
+	);
+
+	jQuery("#pedido_list").navButtonAdd('#p_pedido_list', {
+		title: "Cancelar pedido",
+		caption: "",
+		buttonicon: "ui-icon-trash",
+		onClickButton: function () {
+		    var id = jQuery("#pedido_list").jqGrid("getGridParam", "selrow");
+		    if (id == null) {
+		        showError("Mensaje del sistema", "Debe seleccionar un pedido");
+		    }
+		    else {
+		        showAceptAndCancel("Mensaje del sistema", "¿Está seguro que desea cancelar el pedido?", cancelarPedido, noCancelarPedido);
+		    }
+		},
+		position: "first"
+	});
+
+    function noCancelarPedido() {
+        
+    }
+
+    function cancelarPedido() {
+        var objData = {
+            id_pedido: jQuery("#pedido_list").jqGrid("getGridParam", "selrow")
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Content("~/Pedidos/CancelarPedido")',
+            contentType: "application/json",
+            crossDomain: true,
+            data: JSON.stringify(objData),
+            success: function (data) {
+                if (data.Success) {
+                    showMessage("Mensaje del sistema", "Su pedido ha sido cancelado.");
+                    jQuery("#pedido_list").trigger("reloadGrid");
+                }
+                else {
+                    showError("Mensaje del sistema", "Su pedido no ha podido eliminarse por el siguiente motivo: " + data.ErrorDesc);
+                }
+            },
+            error: function (objeto, error, objeto2) {
+                showError("Mensaje del sistema", "Se generó un error:\n" + error);
+            }
+        });
+    }
+</script>
