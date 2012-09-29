@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entity" namespace="Entity.ReadOnly">
+  <class name="DetalleProducto" table="T_DETALLES_PRODUCTO">
+    <id name="Id" column ="ID_DETALLE_PRODUCTO" type="Int64" unsaved-value="0" >
+      <generator class="increment" />
+    </id>
+   
+    <property name="Medida" column="LONGITUD" type="System.String" />
+  
+  </class>
+</hibernate-mapping>

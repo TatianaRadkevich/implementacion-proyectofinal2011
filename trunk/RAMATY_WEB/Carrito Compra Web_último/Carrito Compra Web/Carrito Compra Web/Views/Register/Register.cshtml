@@ -1,0 +1,193 @@
+﻿@model Carrito_Compra_Web.Models.Register
+
+@{
+    ViewBag.Title = "Registrar nuevo usuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    ViewBag.NombreEmpresa = "Nombre Empresa";
+    ViewBag.Url = HttpContext.Current.Request.Url.Host;
+    ViewBag.Alias = "Nombre Empresa";
+}
+
+<div id="terms">
+    <div class="left-column-title">Políticas de privacidad</div>
+    <div class="left-column-text">
+        <p>
+        La presente Política de Privacidad de @ViewBag.NombreEmpresa, en adelante @ViewBag.Alias, tiene por objeto la protección integral de los datos personales de los Usuarios, en adelante “Datos Personales”, asentados en archivos, registros, bancos de datos u otros medios técnicos de tratamiento de datos recolectados en el sitio @ViewBag.Url, para garantizar el derecho al honor y a la intimidad de los Usuarios, así como también el acceso a la información que sobre los mismos se registre, de conformidad a lo establecido en el artículo 43, párrafo tercero, de la Constitución de la República Argentina y en la Ley Nacional de Protección de los Datos Personales N° 25.326.
+        </p>
+        <p>
+        En lo que respecta al alcance y significado de los términos aquí utilizados, el Usuario se deberá remitir a las definiciones mencionadas en los Términos y Condiciones de Uso de @ViewBag.Alias y a las detalladas en el artículo segundo de la ley 25.326.
+        </p>
+        <p>
+        Los Datos Personales que el Usuario voluntariamente proporcione a @ViewBag.Alias deberán ser ciertos, adecuados y pertinentes. El Usuario reconoce y acepta ser la única persona capaz de discernir y establecer qué datos proporcionados son adecuados y no excesivos en relación con el ámbito y la finalidad de los Servicios y Contenidos brindados por @ViewBag.Alias y/o Terceros. Asimismo, el Usuario se responsabiliza de informar de modo fehaciente a @ViewBag.Alias de cualquier cambio, modificación o alteración de sus Datos Personales brindados anteriormente a @ViewBag.Alias, la cual procederá lo antes posible a su actualización.
+        </p>
+        <p>
+        @ViewBag.Alias instrumenta la recolección de datos mediante formularios de suscripción o alta en algunos de los Servicios y/o Contenidos ofrecidos y/o promocionados por @ViewBag.Alias y/o Terceros en el Sitio @ViewBag.Url. Asimismo, el Sitio puede utilizar cookies cuando el Usuario ingresa y navega, las que sólo se asocian con el navegador de una computadora determinada sin que proporcionen el nombre y apellido del Usuario.
+        </p>
+    </div>
+    <br />
+    <div class="left-column-title">Terminos y condiciones</div>
+    <div class="left-column-text">
+        Al registrarse Ud. para utilizar el Sitio Web, se le pedirá que cree un nombre de usuario y una contraseña. Deberá Ud. mantener su nombre de usuario y su contraseña de forma confidencial y no revelarlos a ninguna persona ni compartirlos con nadie. Será Ud. responsable de todas las actividades y solicitudes de la Sección que se produzcan o se presenten bajo su nombre de usuario y contraseña. Si sabe Ud. o sospecha que alguna otra persona conoce su nombre de usuario y su contraseña, deberá Ud. notificarlo inmediatamente a RAMATY usando los datos de contacto en la página "Contáctenos" del Sitio.
+        <br />
+        
+    </div>
+    <br />
+    <div id="botonera" class="left-column-text" style="text-align:center;">
+        <button class="text-button" id="btn_accept">Estoy de acuerdo con las reglas</button>
+        <button class="text-button" id="btn_dont_accept">No estoy de acuerdo</button>
+    </div>
+</div>
+
+<div id="pnl_register">
+    <form action="@Url.Content("~/Register/Registrar")" method="post">
+        <div class="left-column-title">Formulario de registro</div>
+        <div class="left-column-text">
+		    @{
+                if(Model.IsGeneralError)
+                {
+                    <p class="ui-state-error">
+                        @Model.ErrorGeneral
+                    </p>
+                }
+            }
+            
+            <p>
+            <label for="txt_nro_cliente" id="lbl_nro_cliente" class="ui-label">Número de Cliente:</label>
+            <br />
+            @{
+                if(Model.NumeroCliente.IsError)
+                {
+                    <input name="nro_cliente" type="text" id="nro_cliente" class="ui-state-error ui-input-text text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.NumeroCliente.Value" maxlength="5"/>
+                    <br />
+                    <label style="color:#FF0000">* @Model.NumeroCliente.ErrorDesc</label>
+                }
+                else
+                {
+                    <input name="nro_cliente" type="text" id="nro_cliente" class="ui-input-text text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.NumeroCliente.Value" maxlength="5"/>
+                }
+            }   
+            
+            </p>
+
+            <p>
+            <label for="nro_documento" id="lbl_nro_documento" class="ui-label">Número de Documento:</label>
+            <br />
+            @{
+                if(Model.Dni.IsError)
+                {
+                    <input name="nro_documento" type="text" id="nro_documento" class="ui-state-error ui-input-text text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.Dni.Value" maxlength="20"/>
+                    <br />
+                    <label style="color:#FF0000">* @Model.Dni.ErrorDesc</label>
+                }
+                else
+                {
+                    <input name="nro_documento" type="text" id="nro_documento" class="ui-input-text text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.Dni.Value" maxlength="20"/>
+                }
+            }
+            </p>
+            
+            <p>
+            <label for="user_name" id="lbl_user_name_nvo_registro" class="ui-label">Usuario:</label>
+            <br />
+            @{
+                if(Model.NombreUsuario.IsError)
+                {
+                    <input name="user_name" type="text" id="user_name" class="ui-state-error ui-input-text text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.NombreUsuario.Value" maxlength="50"/>
+                    <br />
+                    <label style="color:#FF0000">* @Model.NombreUsuario.ErrorDesc</label>
+                }
+                else
+                {
+                    <input name="user_name" type="text" id="user_name" class="ui-input-text text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.NombreUsuario.Value" maxlength="50"/>
+                }
+            }
+            </p>
+
+            <p>
+            <label for="password" id="lbl_password_nvo_registro" class="ui-label">Contraseña:</label>
+            <br />
+            @{
+                if(Model.Password.IsError)
+                {
+                    <input name="user_password" type="password" id="password" class="ui-state-error ui-input-password text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.Password.Value" maxlength="50"/>
+                    <br />
+                    <label style="color:#FF0000">* @Model.Password.ErrorDesc</label>
+                }
+                else
+                {
+                    <input name="user_password" type="password" id="password" class="ui-input-text text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.Password.Value" maxlength="50"/>
+                }
+            }
+            </p>
+
+            <p>
+            <label for="confirmacion_password" id="lbl_confirmacion_password_nvo_registro" class="ui-label">Repetir Contraseña:</label>
+            <br />
+            @{
+                if(Model.Password.IsError)
+                {
+                    <input name="confirmacion_password" type="password" id="confirmacion_password" class="ui-state-error ui-input-password text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.Password.Value" maxlength="50"/>
+                    <br />
+                    <label style="color:#FF0000">* @Model.Password.ErrorDesc</label>
+                }
+                else
+                {
+                    <input name="confirmacion_password" type="password" id="confirmacion_password" class="ui-input-text text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.Password.Value" maxlength="50"/>
+                }
+            }
+            </p>
+
+            <div style="width:100%; text-align:center; margin-top:5px;">
+                <button id="btn_register" class="text-button">Registrar</button>
+            </div>
+        </div>
+    </form>
+</div>
+@{
+    if (!Model.AcceptTerms)
+    {
+        <script type="text/javascript">
+            $("#pnl_register").hide();
+            $("#terms").show();        
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            $("#pnl_register").show();
+            $("#terms").hide();        
+        </script>
+    }
+}
+
+<script type="text/javascript">
+
+    var path = '@Url.Content("~/Home/Index")';
+    $(window).ready(function (handler) {
+        $("#btn_accept").button();
+        $("#btn_dont_accept").button();
+
+        $("#btn_accept").click(function () {
+            hide_terms();
+            return false;
+        });
+
+        $("#btn_dont_accept").click(function (){
+            window.location = path;
+        });
+
+        $("#btn_register").button();
+    });
+
+    function hide_terms() {
+        var options = {};
+        $("#terms").hide("highlight", options, 1000, show_register_form);
+    }
+
+    function show_register_form() {
+        var options = {};
+        window.scrollTo(0, 250);
+        $("#pnl_register").show("highlight", options, 1000);
+    }
+</script>

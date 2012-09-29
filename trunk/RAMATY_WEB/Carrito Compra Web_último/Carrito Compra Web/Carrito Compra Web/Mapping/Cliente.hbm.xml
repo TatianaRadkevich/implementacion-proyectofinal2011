@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entity" namespace="Entity.ReadOnly">
+  <class name="Cliente" table="T_CLIENTES">
+    <id name="NumeroCliente" column ="ID_CLIENTE" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Email" column="CORREO_ELECTRONICO" type="System.String" />
+    <many-to-one name="Usuario" column="ID_USUARIO" class="Entity.Persistente.Usuario" />
+    <property name="Nombre" column="NOMBRE_RESPONSABLE" type="System.String" />
+    <property name="Apellido" column="APELLIDO_RESPONSABLE" type="System.String" />
+    <property name="NumeroTelefono" column="TELEFONO_RESPONSABLE" type="Int64" />
+    <property name="FechaBaja" column="FEC_BAJA" type="DateTime" />
+    <property name="NumeroDocumento" column="CUIT" type="System.String" />
+  </class>
+</hibernate-mapping>

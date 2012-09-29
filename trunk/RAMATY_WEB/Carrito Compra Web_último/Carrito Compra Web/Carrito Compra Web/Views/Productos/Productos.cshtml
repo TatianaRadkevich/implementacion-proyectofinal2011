@@ -1,0 +1,198 @@
+﻿@{
+    ViewBag.Title = "Productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="Search_Product" class="left-column-text">
+    <label for="product_name" id="lbl_nombre_producto_buscado" class="ui-label">Nombre:</label>
+    <input name="product_name" type="text" id="product_name" class="ui-input-text text ui-widget-content ui-corner-all" style="width:398px;padding-top:2px;padding-bottom:3px;" value=""/>
+    <button id="btn_find" class="text-button">Buscar</button>
+</div>
+
+<div id="wrap_products_list" class="left-column-text">
+    <div class="wrap-paginacion">
+        <div id='paginacion_top' class='paginacion'> </div> 
+    </div>
+
+    <div id="product_list">
+    </div>
+
+    <div class="wrap-paginacion">
+        <div id='paginacion_bottom' class='paginacion'> </div>
+    </div>
+</div> 
+
+<script type="text/javascript">
+    //total de productos en la BD
+    //dependiendo de la cantidad de total y de la cantidad de paginas armar numerador de paginas
+    
+    //Variable global que indica la pagina actual.
+    var current_page = 0;
+    var un_solo_click = 0;
+
+    function ListarProducto(inicio, fin)
+    {
+        var strFiltro = $("#product_name").val();
+        
+        var objData = {
+            inicio:inicio,
+            fin: fin,
+            filtro: strFiltro, 
+            columna_orden: "Nombre"
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Content("~/Productos/ListarProductos")',
+            contentType: "application/json",
+            data: JSON.stringify(objData),
+            crossDomain: true,
+            success: function (data) {
+                var str = "";
+                var impar = 0;
+                if (!data.HayError && data != null) 
+                {
+                    for (var i = 0; i < data.Productos.length; i++) 
+                    {
+                        if (impar == 0) 
+                        {
+                            str += "<div class='product-lightblue-item'>";
+                            impar = 1;
+                        }
+                        else 
+                        {
+                            str += "<div class='product-gray-item'>";
+                            impar = 0;
+                        }
+                        str += "<div class='cabecera-producto'> ";
+                        str += data.Productos[i].Nombre;
+                        str += "</div>"; //Cierra la cabecera del producto
+                        str += "<div class='cuerpo-producto'> ";
+                        str += '<img alt="Imagen del producto" src="@Url.Content("~/Images/imagen_no_disponible.png")"/>';
+                        str += data.Productos[i].Descripcion;
+                        str += "</div>"; //Cierra el cuerpo del producto
+                        str += "<div style='clear:both;'></div>";
+                        if (data.Logeado)
+                        {
+                            str += "<div class='pie-producto'>";
+                            str += "<label for='cant_prod' id='lbl_cant_prod' class='ui-label'>Cantidad:</label>";
+                            str += "<input name='cant_prod'  type='text' id='cant_prod_" + data.Productos[i].Codigo + "' class='ui-input-text text ui-widget-content ui-corner-all' value='1' maxlength='8'/>";
+                            str += '<a href="javascript:void(0)" id="btn_add_' + data.Productos[i].Codigo + '" onClick="add_ToKart(' + data.Productos[i].Codigo + ')"><img src="@Url.Content("~/Images/Carrito.png")" alt="Agregar Al Carrito"/></a>';
+                            str += "</div>"; //Fin del pie de producto.
+                        }
+                        str += "</div>"; //Cierra el producto.
+                        if (i < data.Productos.length - 1) str += "<br />";
+                    }
+                    $("#product_list").html(str);
+                }
+                else 
+                {
+                    showError("Mensaje del sistema", data.DescripcionError);
+                }
+            }
+        });
+    }
+
+    function paginado()
+    {
+        var cant_paginas;
+        var str = "";
+        var strFiltro = $("#product_name").val();
+        var objData = { filtro: strFiltro };
+
+        $.ajax({
+                type: "POST",
+                url: '@Url.Content("~/Productos/CantidadProductos")',
+                contentType: "application/json",
+                crossDomain: true,
+                data: JSON.stringify(objData),
+                success: function (data) 
+                {
+                    cant_paginas = data / 10;
+
+                    for(var i = 0; i< cant_paginas; i++)
+                    {
+                        if(i == current_page)
+                        {
+                            str += "<span>" + (i + 1) + "</span>";
+                        }
+                        else
+                        {
+                            str += "<a href='javascript:void(0)' onClick='irPagina(" + (i + 1)  + ")'>" + (i + 1) + "</a>" 
+                        }
+                    }
+                    
+                    $("#paginacion_top").html(str);
+                    $("#paginacion_bottom").html(str);
+                }
+            });
+    }
+
+    function irPagina(pagina)
+    {
+        current_page = pagina-1;
+        paginado();
+        $("#product_list").html("");
+        ListarProducto(((pagina - 1) * 10), 10);
+    }
+
+    $(window).ready(function (handler) 
+    {
+        $("#btn_find").button();
+        irPagina(1);
+
+        $("#btn_find").click(function () 
+        {
+            irPagina(1);
+            return false;
+        });
+    });
+
+    function add_ToKart(codigo) {
+        if (un_solo_click == 1) return;
+        un_solo_click = 1;
+
+        var cantidad = $("#cant_prod_" + codigo).val();
+
+        if (!is_number_greater_than(cantidad, 0) || !is_integer(cantidad)) {
+            un_solo_click = 0;
+            showError("Carrito de compra", "Se debe ingresar un valor numérico y mayor a 0.");
+            return;
+        }
+
+        var location = $('#btn_add_' + codigo).attr("href");
+        $('#btn_add_' + codigo).removeAttr('href');
+
+        var objData = {
+            codigo: codigo,
+            cantidad: cantidad
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Content("~/Productos/addProducto")',
+            contentType: "application/json",
+            crossDomain: true,
+            data: JSON.stringify(objData),
+            success: function (data) {
+                if (!data.HayError) {
+                    showMessage("Carrito de compra", "El producto se agrego correctamente.");
+                    $("#cant_prod_" + codigo).val("1");
+                }
+                else {
+                    showError("Carrito de compra", data.DescripcionError);
+                }
+
+                $('#btn_add_' + codigo).attr("href", location);
+                un_solo_click = 0;
+            },
+            error: function (objeto, error, objeto2) {
+                $('#btn_add_' + codigo).attr("href", location);
+                un_solo_click = 0;
+                showError("Mensaje del sistema", "Se generó un error:\n" + error);
+            }
+        });
+    }
+
+</script>
+

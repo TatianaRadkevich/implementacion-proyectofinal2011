@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Entity" namespace="Entity.Persistente">
+  <class name="DetallePedido" table="T_DETALLES_PEDIDO">
+    <id name="Id" column ="ID_DETALLE_PEDIDO" type="Int64" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Cantidad" column="CANTIDAD" type="Int32" />
+    <property name="Precio" column="PRECIO" type="double" />
+    <property name="EstadoDetallePedido" column="ID_EDETALLE_PEDIDO" type="Int16" />
+    <many-to-one name="Producto" column="ID_PRODUCTO" class="Entity.ReadOnly.Producto" />
+  </class>
+</hibernate-mapping>

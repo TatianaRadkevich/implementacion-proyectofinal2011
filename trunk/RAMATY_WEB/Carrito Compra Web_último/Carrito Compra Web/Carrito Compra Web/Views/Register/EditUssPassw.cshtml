@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "EditUssPassw";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cambiar Usuario/Contraseña</h2>
+<div id="pnl_register">
+    <form action="@Url.Content("~/Register/CambiarDatosRegistro")" method="post">
+
+ <p>
+<label for="user_name" id="lbl_user_name_nvo_registro" class="ui-label">Usuario:</label>
+<br />
+@{
+if(Model.NombreUsuario.IsError)
+{
+<input name="user_name" type="text" id="user_name" class="ui-state-error ui-input-text text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.NombreUsuario.Value" maxlength="50"/>
+<br />
+<label style="color:#FF0000">* @Model.NombreUsuario.ErrorDesc</label>
+}
+else
+{
+<input name="user_name" type="text" id="user_name" class="ui-input-text text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.NombreUsuario.Value" maxlength="50"/>
+}
+}
+</p>
+
+<p>
+<label for="password" id="lbl_old_password" class="ui-label">Actual Contraseña:</label>
+<br />
+@{
+if (Model.OldPassword.IsError)
+{
+<input name="user_old_password" type="password" id="old_password" class="ui-state-error ui-input-password text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.Password.Value" maxlength="50"/>
+<br />
+<label style="color:#FF0000">* @Model.OldPassword.ErrorDesc</label>
+}
+else
+{
+<input name="user_old_password" type="password" id="old_password" class="ui-input-text text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.Password.Value" maxlength="50"/>
+}
+}
+</p>
+
+<p>
+<label for="new_password" id="lbl_new_password" class="ui-label">Nueva Contraseña:</label>
+<br />
+@{
+if(Model.Password.IsError)
+{
+<input name="user_new_password" type="password" id="new_password" class="ui-state-error ui-input-password text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.Password.Value" maxlength="50"/>
+<br />
+<label style="color:#FF0000">* @Model.Password.ErrorDesc</label>
+}
+else
+{
+<input name="user_new_password" type="password" id="new_password" class="ui-input-text text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.Password.Value" maxlength="50"/>
+}
+}
+</p>
+
+<p>
+<label for="confirmacion_password" id="lbl_confirmacion_password" class="ui-label">Repetir Nueva Contraseña:</label>
+<br />
+@{
+if(Model.Password.IsError)
+{
+<input name="confirmacion_new_password" type="password" id="confirmacion_password" class="ui-state-error ui-input-password text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.Password.Value" maxlength="50"/>
+<br />
+<label style="color:#FF0000">* @Model.Password.ErrorDesc</label>
+}
+else
+{
+<input name="confirmacion_new_password" type="password" id="confirmacion_password" class="ui-input-text text ui-widget-content ui-corner-all" style="width:100%;" value="@Model.Password.Value" maxlength="50"/>
+}
+}
+</p>
+
+
+<div style="width:100%; text-align:center; margin-top:5px;">
+<button id="btn_confirm" class="text-button">Cambiar</button>
+</div>
+
+    </form>
+</div>
+<script type="text/javascript">
+    $("#btn_confirm").button();
+</script>
