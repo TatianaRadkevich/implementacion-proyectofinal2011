@@ -145,7 +145,8 @@ namespace Carrito_Compra_Web.Controllers
                         {
                             ErrorMessage = "",
                             IsLogged = true,
-                            Usuario = new Models.Entities.Usuario { Id = user.Id, NombreDeUsuario = user.NombreDeUsuario }
+                            Usuario = new Models.Entities.Usuario { Id = user.Id, NombreDeUsuario = user.NombreDeUsuario },
+                            Cliente = new Models.Entities.Cliente { Apellido = cliente.Apellido, Email = cliente.Email, Nombre = cliente.Nombre, NumeroCliente = cliente.NumeroCliente, NumeroDocumento = cliente.NumeroDocumento, FechaBaja = cliente.FechaBaja, NumeroTelefono = cliente.NumeroTelefono }
                         };
 
                         session.Close();

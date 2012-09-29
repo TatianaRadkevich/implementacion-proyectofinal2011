@@ -1,5 +1,0 @@
-D:\backup_C\Users\RAMATY_WEB\Carrito Compra Web_último\Carrito Compra Web\Entity\bin\Debug\Entity.dll
-D:\backup_C\Users\RAMATY_WEB\Carrito Compra Web_último\Carrito Compra Web\Entity\bin\Debug\Entity.pdb
-D:\backup_C\Users\RAMATY_WEB\Carrito Compra Web_último\Carrito Compra Web\Entity\obj\Debug\ResolveAssemblyReference.cache
-D:\backup_C\Users\RAMATY_WEB\Carrito Compra Web_último\Carrito Compra Web\Entity\obj\Debug\Entity.dll
-D:\backup_C\Users\RAMATY_WEB\Carrito Compra Web_último\Carrito Compra Web\Entity\obj\Debug\Entity.pdb
