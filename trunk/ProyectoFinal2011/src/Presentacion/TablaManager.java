@@ -19,13 +19,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public abstract class TablaManager<E> {
 
-    public class ObjToCell<T>
-    {
+    public class ObjToCell<T> {
+
         private Comparable<T> id;
         private String valor;
-        public ObjToCell(Comparable<T> id,String valor)
-        {
-            this.id=id;
+
+        public ObjToCell(Comparable<T> id, String valor) {
+            this.id = id;
 
         }
 
@@ -39,7 +39,6 @@ public abstract class TablaManager<E> {
             return super.equals(o);
         }
     }
-
     private DefaultTableModel estructura;
     private List<E> contenido;
     private JTable tabla;
@@ -98,10 +97,11 @@ public abstract class TablaManager<E> {
     }
 
     public void insert(int index, E objeto) {
-        try{
-             index=tabla.convertRowIndexToModel(index);
-        }catch(IndexOutOfBoundsException ee){}
-       
+        try {
+            index = tabla.convertRowIndexToModel(index);
+        } catch (IndexOutOfBoundsException ee) {
+        }
+
         contenido.add(index, objeto);
         estructura.insertRow(index, ObjetoFila(objeto));
     }
@@ -119,13 +119,13 @@ public abstract class TablaManager<E> {
     }
 
     public E removeRow(int index) {
-index=tabla.convertRowIndexToModel(index);
+        index = tabla.convertRowIndexToModel(index);
         estructura.removeRow(index);
         return contenido.remove(index);
     }
 
     public void replaceRow(int index, E objeto) {
-        index=tabla.convertRowIndexToModel(index);
+        index = tabla.convertRowIndexToModel(index);
         contenido.set(index, objeto);
         Vector fila = ObjetoFila(objeto);
         for (int i = 0; i < fila.size(); i++) {
@@ -146,10 +146,11 @@ index=tabla.convertRowIndexToModel(index);
     }
 
     public void setDatos(List<E> data) {
-        if(data==null)
-            contenido=new ArrayList<E>();
-        else
+        if (data == null) {
+            contenido = new ArrayList<E>();
+        } else {
             contenido = data;
+        }
         updateTabla();
     }
 
@@ -169,12 +170,13 @@ index=tabla.convertRowIndexToModel(index);
     }
 
     public void setSelectedRow(int i) {
-        if(i<0||i>=contenido.size())
+        if (i < 0 || i >= contenido.size()) {
             return;
+        }
         tabla.setRowSelectionInterval(i, i);
     }
 
-     public void setSelectedRow(E o) {
-         setSelectedRow(tabla.convertColumnIndexToView(contenido.indexOf(o)));
+    public void setSelectedRow(E o) {
+        setSelectedRow(tabla.convertColumnIndexToView(contenido.indexOf(o)));
     }
 }
