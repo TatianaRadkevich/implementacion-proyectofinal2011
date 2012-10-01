@@ -923,7 +923,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
             }
         };
         PantallaPedidoABM interfaz = new PantallaPedidoABM(parent, gestVer);
-        interfaz.setTitle("Ver Pedido");
+        interfaz.setTitle("Consulta Pedido");
 
         Utilidades.habilitarPanel(interfaz.pnlPedido, false);
         Utilidades.habilitarPanel(interfaz.pnlBaja, false);
