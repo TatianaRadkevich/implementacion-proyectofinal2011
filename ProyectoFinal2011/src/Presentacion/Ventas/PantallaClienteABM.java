@@ -476,7 +476,7 @@ public class PantallaClienteABM extends javax.swing.JDialog {
             interfaz.pnlBaja.setVisible(false);
         }
 
-        interfaz.setTitle("Ver Cliente");
+        interfaz.setTitle("Consulta Cliente");
         interfaz.pack();
         interfaz.setVisible(true);
     }
