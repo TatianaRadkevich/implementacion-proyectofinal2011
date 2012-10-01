@@ -69,31 +69,31 @@ WHERE
 	<detail>
 		<band height="184" splitType="Stretch">
 			<textField>
-				<reportElement uuid="c9eb6e7d-e43b-46b0-8b13-75ae360d64da" x="20" y="12" width="463" height="16"/>
+				<reportElement uuid="c9eb6e7d-e43b-46b0-8b13-75ae360d64da" x="20" y="22" width="463" height="16"/>
 				<textElement/>
 				<textFieldExpression><![CDATA["Encargado: " + $F{NUMERO_DOCUMENTO} + " - " + $F{APELLIDO} + ", " + $F{NOMBRE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="49f937d0-5e51-4dfc-9578-c6f3fed908a9" x="20" y="96" width="81" height="16"/>
+				<reportElement uuid="49f937d0-5e51-4dfc-9578-c6f3fed908a9" x="20" y="106" width="81" height="16"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Observaciones: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="a5ebd370-b5c3-43b5-a953-59a1333395d3" x="40" y="112" width="443" height="38"/>
+				<reportElement uuid="a5ebd370-b5c3-43b5-a953-59a1333395d3" x="40" y="122" width="443" height="38"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[($F{OBSERVACIONES} != null ? $F{OBSERVACIONES} : "")]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="54f20146-7b61-4a64-8f49-4a92d2fdbbf0" x="245" y="52" width="238" height="16"/>
+				<reportElement uuid="54f20146-7b61-4a64-8f49-4a92d2fdbbf0" x="245" y="62" width="238" height="16"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha - Hora Fin real: ........................................]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="edfd770f-fa49-4004-a339-50a2558315c0" x="20" y="52" width="225" height="16"/>
+				<reportElement uuid="edfd770f-fa49-4004-a339-50a2558315c0" x="20" y="62" width="225" height="16"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -105,19 +105,29 @@ WHERE
 				<text><![CDATA[Firma:_________________________________]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="8aca6884-c113-49a0-a54b-ff3c19961c85" x="20" y="32" width="225" height="16"/>
+				<reportElement uuid="8aca6884-c113-49a0-a54b-ff3c19961c85" x="20" y="42" width="225" height="16"/>
 				<textElement/>
 				<textFieldExpression><![CDATA["Fecha - Hora Inicio:" + $F{FEC_HORA_PREVISTA_INICIO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="0ed672a4-99c1-48a5-88a8-9bb4f2e6787b" x="245" y="32" width="238" height="16"/>
+				<reportElement uuid="0ed672a4-99c1-48a5-88a8-9bb4f2e6787b" x="245" y="42" width="238" height="16"/>
 				<textElement/>
 				<textFieldExpression><![CDATA["Fecha - Hora Fin: " + $F{FEC_HORA_PREVISTA_FIN}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="05a9a571-933f-4471-811a-f17293d5d3b9" x="20" y="73" width="463" height="16"/>
+				<reportElement uuid="05a9a571-933f-4471-811a-f17293d5d3b9" x="20" y="83" width="463" height="16"/>
 				<textElement/>
 				<textFieldExpression><![CDATA["Cantidad a producir: " + $F{CANTIDAD} + "  " + $F{NOMBRE_PRODUCTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a276bbb4-2188-4d7f-9377-5ff8ac26a9b8" x="20" y="0" width="130" height="20"/>
+				<textElement/>
+				<text><![CDATA["Nro de Orden de Trabajo:"]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0cb4b42d-2ed9-4047-af3c-d0f8570848c4" x="150" y="0" width="75" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ID_ORDEN_TRABAJO}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
