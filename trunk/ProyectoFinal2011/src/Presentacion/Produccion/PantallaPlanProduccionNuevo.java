@@ -61,6 +61,7 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
 
     public static void generarNuevoPlan(Window parent) {
         PantallaPlanProduccionNuevo interfaz = new PantallaPlanProduccionNuevo(parent);
+        interfaz.setLocationRelativeTo(parent);
         interfaz.pnlPedidoBuscar.setVisible(true);
         interfaz.pnlPedidoInfo.setVisible(false);
         interfaz.btnPedCancelar.setEnabled(false);

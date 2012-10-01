@@ -63,7 +63,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
 
     public static void iniciarVerFactura(Window parent, Factura factura) {
         PantallaFacturaGenerar interfaz = new PantallaFacturaGenerar(parent);
-        interfaz.setTitle("Ver Factura");
+        interfaz.setTitle("Consulta Factura");
         interfaz.pnlPedidos.setVisible(false);
         interfaz.btnAceptar.setVisible(false);
         interfaz.btnCancelar.setText("Salir");
