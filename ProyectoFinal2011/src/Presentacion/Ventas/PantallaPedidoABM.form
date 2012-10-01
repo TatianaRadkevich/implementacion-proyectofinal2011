@@ -222,12 +222,12 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <EmptySpace pref="393" max="32767" attributes="0"/>
+                                      <EmptySpace pref="404" max="32767" attributes="0"/>
                                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="txtSubTotal" min="-2" pref="82" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jScrollPane2" pref="537" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane2" pref="548" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
@@ -332,8 +332,8 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="cmbTipoProducto" alignment="1" pref="272" max="32767" attributes="3"/>
-                              <Component id="cmbProducto" alignment="1" pref="272" max="32767" attributes="3"/>
+                              <Component id="cmbTipoProducto" alignment="1" pref="283" max="32767" attributes="3"/>
+                              <Component id="cmbProducto" alignment="1" pref="283" max="32767" attributes="3"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -570,7 +570,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtBuscar" pref="275" max="32767" attributes="0"/>
+                              <Component id="txtBuscar" pref="286" max="32767" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnBusquedaAvanzada" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -639,11 +639,11 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtCUIT" pref="186" max="32767" attributes="0"/>
+                          <Component id="txtCUIT" pref="192" max="32767" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtRazonSocial" pref="272" max="32767" attributes="0"/>
+                          <Component id="txtRazonSocial" pref="277" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>

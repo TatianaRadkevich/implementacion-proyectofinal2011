@@ -26,7 +26,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.List;
 import java.util.Vector;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -146,7 +145,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
         Utilidades.comboCargar(cmbTipoProducto, gestor.getTipoProductos());
         Utilidades.comboCargar(cmbPrioridad, gestor.getPrioridades());
         Utilidades.comboCargar(cmbTipoPedido, gestor.getTipoPedidos());
-        txtFechaEstimada.setValue(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 20, 0, 0));
+
         btnSalir.setVisible(false);
         zlo.load();
         cmbPrioridad.setSelectedIndex(gestor.getPedido().getPrioridad());
@@ -782,7 +781,7 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
             pnlDetalleCarga.setVisible(false);
             tmDetalle.setDatos(gestor.getPedido().getDetallePedido());
             btnCancelarActionPerformed(evt);
-
+            txtFechaEstimada.setValue(Utilidades.agregarTiempoFecha(Utilidades.getFechaActual(), 5, 0, 0));
         } catch (NegocioException ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }
