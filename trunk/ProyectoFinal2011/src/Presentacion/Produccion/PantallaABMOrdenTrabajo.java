@@ -61,7 +61,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         HibernateUtil.getSessionFactory();
         inicializarTablas();
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
-        gestor=orden;
+        gestor = orden;
     }
 
     public PantallaABMOrdenTrabajo(JDialog parent, boolean modal, GestorOrdenTrabajo orden) throws ExceptionInInitializerError, ParseException {
@@ -71,11 +71,12 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         HibernateUtil.getSessionFactory();
         inicializarTablas();
         IniciadorDeVentanas.iniciarVentana(this, this.getWidth(), this.getHeight());
-        gestor=orden;
+        gestor = orden;
     }
 
     private void inicializarTablas() throws ExceptionInInitializerError, ParseException {
         tmPedido = new TablaManager<PlanProduccion>(tbPedidos) {
+
             @Override
             public Vector getCabecera() {
                 Vector cabcera = new Vector();
@@ -96,12 +97,14 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         };
 
         tmPedido.addSelectionListener(new ListSelectionListener() {
+
             public void valueChanged(ListSelectionEvent e) {
                 actualizarDetalles();
             }
         });
 
         tmEtapas = new TablaManager<DetallePlanProduccion>(tbEtapasPlanificadas) {
+
             @Override
             public Vector getCabecera() {
                 Vector cabcera = new Vector();
@@ -122,7 +125,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
                 fila.add(elemento.getEtapaProduccionEspecifica().getProducto().getNombre());
                 fila.add(elemento.getEtapaProduccionEspecifica().getNumeroOrden());
                 fila.add(elemento.getEtapaProduccionEspecifica().getEtapaProduccion().getNombre());
-                fila.add(elemento.getEmpleado().getApellido() +", "+ elemento.getEmpleado().getNombre());
+                fila.add(elemento.getEmpleado().getApellido() + ", " + elemento.getEmpleado().getNombre());
                 fila.add(elemento.getMaquinaParticular().getNombre());
                 fila.add(Utilidades.parseFechaHora(elemento.getFecHoraPrevistaInicio()));
                 fila.add(elemento.getCantidad());
@@ -133,8 +136,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         this.actualizarPlanes();
     }
 
-    public void actualizarPlanes()
-    {
+    public void actualizarPlanes() {
         List<PlanProduccion> planes = new ArrayList<PlanProduccion>();
         try {
             planes = PlanProduccionBD.listarPlanesPendientesActual();
@@ -146,22 +148,18 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         this.tmPedido.setDatos(planes);
     }
 
-    public void actualizarDetalles()
-    {
-        if(tmPedido.getSeletedObject()!=null)
-        {
-          List<DetallePlanProduccion> detalles = new ArrayList<DetallePlanProduccion>();
-          for(DetallePlanProduccion dp : tmPedido.getSeletedObject().getDetallePlan())
-          {
-              if(dp.getTEdetallePlan().getIdEdetallePlan() == 5 && dp.getTOrdenesTrabajo() == null)
-              {
-                detalles.add(dp);
-              }
-          }
-          tmEtapas.setDatos(detalles);
+    public void actualizarDetalles() {
+        if (tmPedido.getSeletedObject() != null) {
+            List<DetallePlanProduccion> detalles = new ArrayList<DetallePlanProduccion>();
+            for (DetallePlanProduccion dp : tmPedido.getSeletedObject().getDetallePlan()) {
+                if (dp.getTEdetallePlan().getIdEdetallePlan() == 5 && dp.getTOrdenesTrabajo() == null) {
+                    detalles.add(dp);
+                }
+            }
+            tmEtapas.setDatos(detalles);
+        } else {
+            tmEtapas.limpiar();
         }
-        else
-          tmEtapas.limpiar();
     }
 
     /** This method is called from within the constructor to
@@ -300,44 +298,46 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         DetallePlanProduccion detallePlan = tmEtapas.getSeletedObject();
-        if(detallePlan == null)
-        {
+        if (detallePlan == null) {
             Mensajes.mensajeErrorGenerico("Debe seleccionar un detalle de plan");
             return;
         }
 
-        if(detallePlan.getMaquinaParticular().getFecBaja() != null)
-        {
+        if (detallePlan.getMaquinaParticular().getFecBaja() != null) {
             Mensajes.mensajeErrorGenerico("La máquina especificada en el detalle no se encuentra disponible, se colocará en estado 'Replanificar'");
             detallePlan.setTEdetallePlan(EstadoDetallePlanBD.getEstadoReplanificar());
             DetallePlanProduccionBD.guardar(detallePlan);
             this.actualizarDetalles();
-            if(tmEtapas.getDatos().size() == 0)
+            if (tmEtapas.getDatos().size() == 0) {
                 this.actualizarPlanes();
+            }
 
             return;
         }
 
+        if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea generar esta orden de trabajo?") == false) {
+            return;
+        }
+
         Empleado empleado = detallePlan.getEmpleado();
-        if(!AsistenciaEmpleadoBD.estaPresente(empleado))
-        {
+        if (!AsistenciaEmpleadoBD.estaPresente(empleado)) {
             DialogoModificarEmpleado d = new DialogoModificarEmpleado(null, true);
             Utilidades.iniciarVentana(d);
             empleado = d.ejecutar();
         }
 
-        if(empleado == null)
-        {
+
+        if (empleado == null) {
             return;
         }
 
-        Date fecha=Calendar.getInstance().getTime();
+        Date fecha = Calendar.getInstance().getTime();
 
         detallePlan.setTEmpleados(empleado);
 
@@ -366,8 +366,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
         reporteOT.runReporte();
 
         this.actualizarDetalles();
-        if(tmEtapas.getDatos().isEmpty())
-        {
+        if (tmEtapas.getDatos().isEmpty()) {
             this.actualizarPlanes();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -393,6 +392,7 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
                     Logger.getLogger(PantallaABMOrdenTrabajo.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
@@ -401,7 +401,6 @@ public class PantallaABMOrdenTrabajo extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton jButton1;

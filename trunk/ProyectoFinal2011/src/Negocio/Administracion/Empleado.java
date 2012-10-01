@@ -3,6 +3,7 @@ package Negocio.Administracion;
 
 import BaseDeDatos.Administracion.EmpleadoBD;
 import BaseDeDatos.HibernateUtil;
+import Negocio.Exceptiones.HorarioNoVigenteException;
 import Negocio.Exceptiones.NegocioException;
 import Negocio.GestionUsuario.Usuario;
 import Negocio.Produccion.DetallePlanProduccion;
@@ -512,53 +513,55 @@ public class Empleado implements java.io.Serializable {
         return this.fecBaja == null;
     }
 
-    public boolean isPresente(Date tiempo) {
+    public AsignacionesHorario getAsignacionHorarioVigente(Date tiempo) throws HorarioNoVigenteException {
         for (AsignacionesHorario ah : asignacionesHorarias) {
-            if (tiempo.compareTo(ah.getFecDesde()) >= 0 && tiempo.compareTo(ah.getFecHasta()) <= 0) {
-                return ah.getHorario().isPresete(tiempo);
+            if (ah.isVigente(tiempo)) {
+                return ah;
             }
         }
-        return false;
+        throw new HorarioNoVigenteException();
     }
 
-    public Date getProxIngreso(Date tiempo) {
-        Date salida = null;
-        for (AsignacionesHorario ah : asignacionesHorarias) {
-            if (tiempo.compareTo(ah.getFecDesde()) >= 0 && tiempo.compareTo(ah.getFecHasta()) <= 0) {
-                salida = ah.getHorario().getProximoIngreso(tiempo);
-                if (ah.getFecHasta().compareTo(salida) < 0) {
-                    AsignacionesHorario aux = this.getProximaAsignacion(ah);
-                    salida=aux.getHorario().getProximoIngreso(aux.getFecDesde());
-                }
-            }
-        }
-        return salida;
+    public boolean isPresente(Date tiempo) throws HorarioNoVigenteException {
+        return getAsignacionHorarioVigente(tiempo).getHorario().isPresete(tiempo);
     }
 
-    public Date getProxEgreso(Date tiempo) {
-                Date salida = null;
-        for (AsignacionesHorario ah : asignacionesHorarias) {
-            if (tiempo.compareTo(ah.getFecDesde()) >= 0 && tiempo.compareTo(ah.getFecHasta()) <= 0) {
-                salida = ah.getHorario().getProximoEgreso(tiempo);
-                if (ah.getFecHasta().compareTo(salida) < 0) {
-                    AsignacionesHorario aux = this.getProximaAsignacion(ah);
-                    salida=aux.getHorario().getProximoEgreso(aux.getFecDesde());
-                }
-            }
+    public Date getProxIngreso(Date tiempo) throws HorarioNoVigenteException {
+
+        AsignacionesHorario ah = getAsignacionHorarioVigente(tiempo);
+        Date ingreso = ah.getHorario().getProximoIngreso(tiempo);
+
+        //verifica que la fecha de ingreso este dentro de la fecha  de vigencia
+        AsignacionesHorario aux = getAsignacionHorarioVigente(ingreso);
+        if (aux.getHorario().equals(ah.getHorario()) == false) {
+            ingreso = aux.getHorario().getProximoIngreso(aux.getFecDesde());
         }
-        return salida;
+        return ingreso;
+
     }
 
-    private AsignacionesHorario getProximaAsignacion(AsignacionesHorario ah) {
-        Iterator<AsignacionesHorario> i = asignacionesHorarias.iterator();
-        while (i.hasNext()) {
-            AsignacionesHorario aux = i.next();
-            if (ah.equals(aux)) {
-                if (i.hasNext()) {
-                    return i.next();
-                }
-            }
+    public Date getProxEgreso(Date tiempo) throws HorarioNoVigenteException {
+        AsignacionesHorario ah = getAsignacionHorarioVigente(tiempo);
+        Date egreso = ah.getHorario().getProximoEgreso(tiempo);
+
+        //verifica que la fecha de ingreso este dentro de la fecha  de vigencia
+        AsignacionesHorario aux = getAsignacionHorarioVigente(egreso);
+        if (aux.getHorario().equals(ah.getHorario()) == false) {
+            egreso = aux.getHorario().getProximoEgreso(aux.getFecDesde());
         }
-        return null;
+        return egreso;
     }
+
+//    private AsignacionesHorario getProximaAsignacion(AsignacionesHorario ah) {
+//        Iterator<AsignacionesHorario> i = asignacionesHorarias.iterator();
+//        while (i.hasNext()) {
+//            AsignacionesHorario aux = i.next();
+//            if (ah.equals(aux)) {
+//                if (i.hasNext()) {
+//                    return i.next();
+//                }
+//            }
+//        }
+//        return null;
+//    }
 }

@@ -172,7 +172,7 @@ public class PantallaParametros extends javax.swing.JDialog {
                 .addGap(29, 29, 29)
                 .addComponent(pnlZonaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(54, 54, 54)
                 .addComponent(btnGenerarReporte)
                 .addContainerGap(25, Short.MAX_VALUE))
@@ -200,8 +200,7 @@ public class PantallaParametros extends javax.swing.JDialog {
 }//GEN-LAST:event_dtcFechaDesdeMouseClicked
 
     private void cmbPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPaisActionPerformed
-        cmbProvincia.removeAll();
-        Utilidades.comboCargar(cmbProvincia, GestorProvincia.listarProvincias((Pais) cmbPais.getSelectedItem()));
+           Utilidades.comboCargar(cmbProvincia, GestorProvincia.listarProvincias((Pais) cmbPais.getSelectedItem()));
     }//GEN-LAST:event_cmbPaisActionPerformed
 
     /**

@@ -5,10 +5,10 @@
     <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="title" type="java.lang.String" value="Orden de Trabajo"/>
     <Property name="modalExclusionType" type="java.awt.Dialog$ModalExclusionType" editor="org.netbeans.modules.form.editors.EnumEditor">
-      <Value id="nulo"/>
+      <Value id="null"/>
     </Property>
     <Property name="modalityType" type="java.awt.Dialog$ModalityType" editor="org.netbeans.modules.form.editors.EnumEditor">
-      <Value id="nulo"/>
+      <Value id="null"/>
     </Property>
   </Properties>
   <SyntheticProperties>

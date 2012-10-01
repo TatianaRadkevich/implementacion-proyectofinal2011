@@ -269,7 +269,7 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
         aux = (plan.getFecHoraRealInicio() == null) ? "----" : Utilidades.parseFecha(plan.getFecHoraRealInicio());
         txtPlanFecInicioReal.setText(aux);
         tmDetallePlan.setDatos(plan.getDetallePlan());
-            pnlGantt.removeAll();
+        pnlGantt.removeAll();
         pnlGantt.add(GanttManager.getPnlGantt(plan));
         calFechaProduccion.setSelectableDateRange(plan.getFecHoraPrevistaInicio(), plan.getFecHoraPrevistaFin());
 //        calFechaProduccion.setMinSelectableDate(plan.getFecHoraPrevistaInicio());
@@ -449,7 +449,7 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
         btnPlanAceptar = new javax.swing.JButton();
         btnPlanCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Generar Plan de Produccion");
 
         pnlPedido.setLayout(new java.awt.CardLayout());
@@ -855,7 +855,7 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
         pnlPestania.addTab("Actividades", pnlActividades);
 
         pnlGantt.setBorder(javax.swing.BorderFactory.createTitledBorder("Gantt"));
-        pnlGantt.setLayout(new java.awt.GridLayout());
+        pnlGantt.setLayout(new java.awt.GridLayout(1, 0));
         pnlPestania.addTab("Gantt", pnlGantt);
 
         javax.swing.GroupLayout pnlPlanDetalleLayout = new javax.swing.GroupLayout(pnlPlanDetalle);
@@ -1173,6 +1173,9 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
 
     private void btnPlanAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanAceptarActionPerformed
         // TODO add your handling code here:
+        if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea planificar este pedido?") == false) {
+            return;
+        }
         HibernateUtil.guardarModificarObjeto(planActual);
         Mensajes.mensajeInformacion("Se ha guardado corectamente");
         this.dispose();

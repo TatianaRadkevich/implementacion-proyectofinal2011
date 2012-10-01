@@ -6,6 +6,7 @@ package Negocio.Ventas;
 
 import BaseDeDatos.Ventas.*;
 import Negocio.Exceptiones.NegocioException;
+import Negocio.Exceptiones.OperacionCancelada;
 import Presentacion.Mensajes;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public abstract class GestorClienteABM {
 
     protected Cliente cliente;
     protected String motivoBaja;
-    protected boolean correcto=false;
+    protected boolean correcto = false;
 
     public GestorClienteABM(Cliente cliente) {
         this.cliente = cliente;
@@ -27,7 +28,6 @@ public abstract class GestorClienteABM {
         return cliente;
     }
 
-
     public void setMotivoBaja(String motivoBaja) {
         this.motivoBaja = motivoBaja;
     }
@@ -36,11 +36,11 @@ public abstract class GestorClienteABM {
         return TipoClienteBD.listarTiposClientes();
     }
 
-    public static List<Cliente> listarClientes(){
-    return ClienteBD.listarClientes();
+    public static List<Cliente> listarClientes() {
+        return ClienteBD.listarClientes();
     }
 
-    public abstract void aceptar() throws NegocioException;
+    public abstract void aceptar() throws OperacionCancelada, NegocioException;
 
     // <editor-fold defaultstate="collapsed" desc="Iniciadores">
     public static GestorClienteABM getGestorClienteAlta() {
@@ -48,9 +48,12 @@ public abstract class GestorClienteABM {
 
             @Override
             public void aceptar() throws NegocioException {
+                if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea guardar este cliente?") == false) {
+                    throw new OperacionCancelada();
+                }
                 this.getCliente().guardar();
                 Mensajes.mensajeInformacion("El Cliente \"" + this.getCliente().getRazonSocial() + "\" ha sido guardado exitosamente.");
-                this.correcto=true;
+                this.correcto = true;
             }
         };
     }
@@ -59,12 +62,14 @@ public abstract class GestorClienteABM {
         return correcto;
     }
 
-
     public static GestorClienteABM getGestorClienteModificar(Cliente cli) {
         return new GestorClienteABM(cli) {
 
             @Override
-            public void aceptar() throws NegocioException {
+            public void aceptar() throws OperacionCancelada, NegocioException {
+                if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea modificar este cliente?") == false) {
+                    throw new OperacionCancelada();
+                }
                 this.getCliente().guardar();
                 Mensajes.mensajeInformacion("El Cliente \"" + this.getCliente().getRazonSocial() + "\" ha sido modificado exitosamente.");
             }
@@ -76,7 +81,10 @@ public abstract class GestorClienteABM {
         return new GestorClienteABM(cli) {
 
             @Override
-            public void aceptar() throws NegocioException {
+            public void aceptar() throws OperacionCancelada, NegocioException {
+                if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea eliminar este cliente?") == false) {
+                    throw new OperacionCancelada();
+                }
                 this.getCliente().eliminar(motivoBaja);
                 Mensajes.mensajeInformacion("El Cliente \"" + this.getCliente().getRazonSocial() + "\" ha sido eliminado exitosamente.");
 
@@ -86,8 +94,8 @@ public abstract class GestorClienteABM {
     }
 
     public void cancelar() {
-        this.correcto=false;
-        this.cliente=null;
+        this.correcto = false;
+        this.cliente = null;
     }
     // </editor-fold>
 }

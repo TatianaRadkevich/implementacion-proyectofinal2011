@@ -29,6 +29,11 @@ public class HerramientaBD {
         return HibernateUtil.ejecutarConsulta("FROM TipoHerramienta");
     }
 
+    public static List<HerramientaParticular> listarHerramientaVigentes()
+    {
+        return HibernateUtil.ejecutarConsulta("FROM HerramientaParticular WHERE fecBaja IS NULL");
+    }
+
     public static List<HerramientaParticular> getHerramientaParticular(String modelo ,String nombre,boolean vigentes,boolean eliminados) {
         String HQL=String.format(
                 "FROM HerramientaParticular as mh "
