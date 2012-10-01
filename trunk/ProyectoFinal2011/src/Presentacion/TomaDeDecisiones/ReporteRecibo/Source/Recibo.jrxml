@@ -118,11 +118,11 @@ WHERE R.ID_COBRO = $P{id_recibo}]]>
 				<reportElement uuid="b7f42e35-340f-4c10-83dc-44e1500b72d1" x="354" y="32" width="175" height="1"/>
 			</line>
 			<textField>
-				<reportElement uuid="52db14b5-d6ca-4a15-be55-c61b9c40155d" x="429" y="34" width="31" height="20"/>
-				<textElement>
+				<reportElement uuid="52db14b5-d6ca-4a15-be55-c61b9c40155d" x="313" y="13" width="41" height="20"/>
+				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[Firma]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Firma:"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
