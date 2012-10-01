@@ -771,7 +771,9 @@ public class Principal extends javax.swing.JFrame {
 
     private void mnuPlanificacionNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPlanificacionNuevoActionPerformed
         // TODO add your handling code here:
-        new PantallaPlanProduccionPrincipal(this,true).setVisible(true);
+        PantallaPlanProduccionPrincipal pantalla=new PantallaPlanProduccionPrincipal(this,true);
+        pantalla.setLocationRelativeTo(this);
+        pantalla.setVisible(true);
     }//GEN-LAST:event_mnuPlanificacionNuevoActionPerformed
 
     private void mnuReajustarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuReajustarStockActionPerformed
@@ -786,7 +788,9 @@ public class Principal extends javax.swing.JFrame {
 
     private void mnuEntregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEntregarPedidoActionPerformed
         // TODO add your handling code here:
+       try{
         new PantallaRegistrarEntregaPedido(this, true).setVisible(true);
+        }catch(Exception e){};
     }//GEN-LAST:event_mnuEntregarPedidoActionPerformed
 
     private void mnuEntregaMaterialesProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEntregaMaterialesProduccionActionPerformed

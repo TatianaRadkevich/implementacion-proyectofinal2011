@@ -137,11 +137,11 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             }
         };
         cmbHerramienta = new JComboBox();
-        tbHerramientas.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(cmbHerramienta));        
+        tbHerramientas.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(cmbHerramienta));
         JTextField txt = new JTextField();
         ValidarTexbox.validarInt(txt);
         ValidarTexbox.validarLongitud(txt, 3);
-        tbHerramientas.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(txt));        
+        tbHerramientas.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(txt));
         tbHerramientas.setRowHeight((int) cmbHerramienta.getPreferredSize().getHeight());
     }
 
@@ -151,17 +151,15 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             @Override
             public Vector ObjetoFila(DetalleEtapaProduccion elemento) {
                 Vector fila = new Vector();
-                if(elemento.getTDetallesProducto() == null)
-                {
+                if (elemento.getTDetallesProducto() == null) {
                     fila.add(null);
                     fila.add(1);
                     fila.add("");
-                }
-                else {
+                } else {
                     fila.add(elemento.getTDetallesProducto().getTMateriales());
                     fila.add((elemento.getCantidadNecesaria() == null) ? "" : elemento.getCantidadNecesaria());
-                    fila.add((elemento.getTDetallesProducto().getTMateriales() == null) ?
-                    "" : elemento.getTDetallesProducto().getTMateriales().getUnidadMedida());
+                    fila.add((elemento.getTDetallesProducto().getTMateriales() == null)
+                            ? "" : elemento.getTDetallesProducto().getTMateriales().getUnidadMedida());
                 }
 
                 return fila;
@@ -178,8 +176,9 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
             @Override
             public boolean isCellEditable(int columna) {
-                if(columna==2)
+                if (columna == 2) {
                     return false;
+                }
                 return true;
             }
 
@@ -187,11 +186,12 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             public void fireTableCellUpdated(int row, int column) {
                 Object value = tbMaterial.getValueAt(row, column);
                 if (column == 0) {
-                    if(tmMateriales.getDato(row).getTDetallesProducto() == null)
+                    if (tmMateriales.getDato(row).getTDetallesProducto() == null) {
                         tmMateriales.getDato(row).setTDetallesProducto(new DetalleProducto());
+                    }
                     tmMateriales.getDato(row).getTDetallesProducto().setTMateriales((Material) value);
-                    tmMateriales.getDato(row).getTDetallesProducto().setTProductos((Producto)cmbProducto.getSelectedItem());
-                    tmMateriales.getDato(row).getTDetallesProducto().setLongitud((short)0);
+                    tmMateriales.getDato(row).getTDetallesProducto().setTProductos((Producto) cmbProducto.getSelectedItem());
+                    tmMateriales.getDato(row).getTDetallesProducto().setLongitud((short) 0);
                 }
                 if (column == 1) {
                     tmMateriales.getDato(row).setCantidadNecesaria(new Integer(value.toString()));
@@ -202,7 +202,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         cmbMaterial.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                int index=tmMateriales.getSelectedRow();
+                int index = tmMateriales.getSelectedRow();
                 tmMateriales.updateTabla();
                 tmMateriales.setSelectedRow(index);
             }
@@ -247,7 +247,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
                 cmbProducto.setSelectedIndex(-1);
 
             }
-        });        
+        });
         cmbHerramienta.setModel(new DefaultComboBoxModel(gestor.listarTipoHerramientas().toArray()));
     }
 
@@ -307,8 +307,8 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         }
 
         txtDescripcion.setText(Utilidades.parseString(ep.getDescripcion()));
-        txtHorasHombre.setText(ep.getHorasHombre().intValueExact()+"");
-        txtDuracion.setText(ep.getDuracion() +"");
+        txtHorasHombre.setText(ep.getHorasHombre().intValueExact() + "");
+        txtDuracion.setText(ep.getDuracion() + "");
 
         txtOrden.setText(Utilidades.parseString(ep.getNumeroOrden()));
 
@@ -327,14 +327,14 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
             if (det.getTipoMaquinaHerramienta() != null) {
                 herramientas.add(det);
             }
-            if (det.getTDetallesProducto()!= null) {
+            if (det.getTDetallesProducto() != null) {
                 materiales.add(det);
             }
-         
+
         }
         tmHerramientas.setDatos(herramientas);
         tmMateriales.setDatos(materiales);
-      
+
 
     }
 
@@ -369,17 +369,15 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
     }
 
     private void actualizarContenido() {
-
     }
 
-     public void setVisibleBuscadorProducto(boolean b) {
+    public void setVisibleBuscadorProducto(boolean b) {
         pnlProducto.setVisible(b);
         this.pack();
     }
 
-    private boolean validarEtapa()
-    {
-        String mensaje="";
+    private boolean validarEtapa() {
+        String mensaje = "";
 
         Utilidades.componenteCorrecto(cmbTipoEtapa);
         Utilidades.componenteCorrecto(cmbCargo);
@@ -387,84 +385,77 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         Utilidades.componenteCorrecto(txtDuracion);
         Utilidades.componenteCorrecto(txtHorasHombre);
 
-        if(cmbTipoEtapa.getSelectedIndex()==-1)
-        {
-            mensaje+="\nDebe seleccionar un tipo de etapa";
+        if (cmbTipoEtapa.getSelectedIndex() == -1) {
+            mensaje += "\nDebe seleccionar un tipo de etapa";
             Utilidades.componenteError(cmbTipoEtapa, "Debe seleccionar un tipo de etapa");
         }
-        if(cmbCargo.getSelectedIndex()==-1)
-        {
-            mensaje+="\nDebe seleccionar un cargo correcto";
+        if (cmbCargo.getSelectedIndex() == -1) {
+            mensaje += "\nDebe seleccionar un cargo correcto";
             Utilidades.componenteError(cmbCargo, "Debe seleccionar un cargo correcto");
         }
-        if(cmbTipoMaquina.getSelectedIndex()==-1)
-        {
-            mensaje+="\nDebe seleccionar un tipo de maquina correcto";
+        if (cmbTipoMaquina.getSelectedIndex() == -1) {
+            mensaje += "\nDebe seleccionar un tipo de maquina correcto";
             Utilidades.componenteError(cmbTipoMaquina, "Debe seleccionar un tipo de maquina correcto");
         }
-        if(txtDuracion.getText().trim().isEmpty())
-        {
-            mensaje+="\nDebe ingresar una duración determinada";
+        if (txtDuracion.getText().trim().isEmpty()) {
+            mensaje += "\nDebe ingresar una duración determinada";
             Utilidades.componenteError(txtDuracion, "Debe ingresar una duración determinada");
         }
-        if(txtHorasHombre.getText().trim().isEmpty())
-        {
-            mensaje+="\nDebe ingresar las horas hombre requeridas";
+        if (txtHorasHombre.getText().trim().isEmpty()) {
+            mensaje += "\nDebe ingresar las horas hombre requeridas";
             Utilidades.componenteError(txtHorasHombre, "Debe ingresar las horas hombre requeridas");
         }
-        if(txtHorasHombre.getText().trim().isEmpty()==false)
-            if(txtDuracion.getText().trim().isEmpty()==false)
-            {
+        if (txtHorasHombre.getText().trim().isEmpty() == false) {
+            if (txtDuracion.getText().trim().isEmpty() == false) {
                 BigDecimal duracionEtapa = Utilidades.parseBigDecimal(txtDuracion.getText());
                 BigDecimal horasHombre = Utilidades.parseBigDecimal(txtHorasHombre.getText());
-                if(horasHombre.doubleValue() > duracionEtapa.doubleValue())
-                {
-                    mensaje+="\nLas horas hombre no puede superar la duracion de la etapa";
+                if (horasHombre.doubleValue() > duracionEtapa.doubleValue()) {
+                    mensaje += "\nLas horas hombre no puede superar la duracion de la etapa";
                     Utilidades.componenteError(txtHorasHombre, "Las horas hombre no puede superar la duracion de la etapa");
                     Utilidades.componenteError(txtDuracion, "Las horas hombre no puede superar la duracion de la etapa");
                 }
             }
-        for(int i=0;i<tmHerramientas.getSize();i++)
-        {
-            DetalleEtapaProduccion dep=tmHerramientas.getDato(i);
-            if(dep.getCantidadNecesaria()==null||dep.getCantidadNecesaria()<=0)
-                mensaje+="\nHerramientas fila "+i+1+": La cantidad ingresada es invalida";
+        }
+        for (int i = 0; i < tmHerramientas.getSize(); i++) {
+            DetalleEtapaProduccion dep = tmHerramientas.getDato(i);
+            if (dep.getCantidadNecesaria() == null || dep.getCantidadNecesaria() <= 0) {
+                mensaje += "\nHerramientas fila " + i + 1 + ": La cantidad ingresada es invalida";
+            }
 
-            if(dep.getTipoMaquinaHerramienta()==null)
-                 mensaje+="\nHerramientas fila "+i+1+": No se eligió una herramienta correcta";
-            else
-            for(int x=0;x<tmHerramientas.getSize();x++)
-            {
-                if(x<i && dep.getTipoMaquinaHerramienta().equals(tmHerramientas.getDato(x)))
-                {
-                    mensaje+="\nHerramientas fila "+i+1+": Se ha elegido más de una vez la misma herramienta";
-                    break;
+            if (dep.getTipoMaquinaHerramienta() == null) {
+                mensaje += "\nHerramientas fila " + i + 1 + ": No se eligió una herramienta correcta";
+            } else {
+                for (int x = 0; x < tmHerramientas.getSize(); x++) {
+                    if (x < i && dep.getTipoMaquinaHerramienta().equals(tmHerramientas.getDato(x))) {
+                        mensaje += "\nHerramientas fila " + i + 1 + ": Se ha elegido más de una vez la misma herramienta";
+                        break;
+                    }
                 }
             }
         }
 
 
-        for(int i=0;i<tmMateriales.getSize();i++)
-        {
-            DetalleEtapaProduccion dep=tmMateriales.getDato(i);
-            if(dep.getCantidadNecesaria()==null||dep.getCantidadNecesaria()<=0)
-                mensaje+="\nMaterial fila "+i+1+": La cantidad ingresada es invalida";
+        for (int i = 0; i < tmMateriales.getSize(); i++) {
+            DetalleEtapaProduccion dep = tmMateriales.getDato(i);
+            if (dep.getCantidadNecesaria() == null || dep.getCantidadNecesaria() <= 0) {
+                mensaje += "\nMaterial fila " + i + 1 + ": La cantidad ingresada es invalida";
+            }
 
-            if(dep.getTDetallesProducto()==null)
-                 mensaje+="\nMaterial fila "+i+1+": No se eligió un Material correcto";
-            else
-            for(int x=0;x<tmMateriales.getSize();x++)
-            {
-                if(x<i && dep.getTDetallesProducto().getTMateriales().equals(tmMateriales.getDato(x)))
-                {
-                    mensaje+="\nMaterial fila "+i+1+": Se ha elegido más de una vez el mismo material";
-                    break;
+            if (dep.getTDetallesProducto() == null) {
+                mensaje += "\nMaterial fila " + i + 1 + ": No se eligió un Material correcto";
+            } else {
+                for (int x = 0; x < tmMateriales.getSize(); x++) {
+                    if (x < i && dep.getTDetallesProducto().getTMateriales().equals(tmMateriales.getDato(x))) {
+                        mensaje += "\nMaterial fila " + i + 1 + ": Se ha elegido más de una vez el mismo material";
+                        break;
+                    }
                 }
             }
         }
 
-        if(mensaje.isEmpty())
+        if (mensaje.isEmpty()) {
             return true;
+        }
 
         Mensajes.mensajeErrorGenerico(mensaje);
         return false;
@@ -1076,6 +1067,9 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         try {
             // TODO add your handling code here:
+            if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea guardar esta estructura?") == false) {
+                return;
+            }
             gestor.ejecutarCU((ArrayList<EtapaProduccionEspecifica>) tmEtapaEspecifica.getDatos());
             Mensajes.mensajeInformacion("Se ha guardado con exito");
             gestor.finalizarCU();
@@ -1119,10 +1113,11 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
     private void btnAceptarEtapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarEtapaActionPerformed
         // TODO add your handling code here:
 
-        if(validarEtapa()==false)
+        if (validarEtapa() == false) {
             return;
+        }
 
-        EtapaProduccionEspecifica etapa;       
+        EtapaProduccionEspecifica etapa;
 
         if (nuevo) {
             etapa = new EtapaProduccionEspecifica();
@@ -1155,7 +1150,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
         for (DetalleEtapaProduccion dep : tmHerramientas.getDatos()) {
             dep.setHorasMaquina(BigDecimal.ZERO);
             etapa.addDetalleEtapaProduccion(dep);
-            
+
         }
 
 
@@ -1194,8 +1189,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
     private void btnNuevoMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoMaterialActionPerformed
         // TODO add your handling code here:
-        if(cmbMaterial.getItemCount()<=0)
-        {
+        if (cmbMaterial.getItemCount() <= 0) {
             Mensajes.mensajeErrorGenerico("No hay ningun material cargado en el sistema");
             return;
         }
@@ -1244,8 +1238,7 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
 
     private void btnNuevaHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaHerramientaActionPerformed
         // TODO add your handling code here:
-        if(cmbHerramienta.getItemCount()<=0)
-        {
+        if (cmbHerramienta.getItemCount() <= 0) {
             Mensajes.mensajeErrorGenerico("No hay ninguna herramienta cargada en el sistema");
             return;
         }
@@ -1323,6 +1316,4 @@ public class PantallaEstructuraProductoABM extends javax.swing.JDialog {
     private javax.swing.JTextField txtHorasHombre;
     private javax.swing.JTextField txtOrden;
     // End of variables declaration//GEN-END:variables
-
-
 }
