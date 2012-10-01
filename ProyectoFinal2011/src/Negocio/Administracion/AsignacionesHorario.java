@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "T_ASIGNACIONES_HORARIO", schema = "dbo", catalog = "Ramaty")
-public class AsignacionesHorario implements java.io.Serializable,Comparable<AsignacionesHorario> {
+public class AsignacionesHorario implements java.io.Serializable, Comparable<AsignacionesHorario> {
 
     @Id
     @GeneratedValue
@@ -43,8 +43,8 @@ public class AsignacionesHorario implements java.io.Serializable,Comparable<Asig
     /*---------------------------------------------------------------------------------------------*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_EMPLEADO")
-     private Empleado empleado;
-    
+    private Empleado empleado;
+
     public AsignacionesHorario() {
     }
 
@@ -61,8 +61,6 @@ public class AsignacionesHorario implements java.io.Serializable,Comparable<Asig
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
-
-
 
     public short getIdAsignacionHorario() {
         return this.idAsignacionHorario;
@@ -94,6 +92,13 @@ public class AsignacionesHorario implements java.io.Serializable,Comparable<Asig
 
     public void setFecDesde(Date fecDesde) {
         this.fecDesde = fecDesde;
+    }
+
+    public boolean isVigente(Date tiempo) {
+        if (tiempo.compareTo(this.getFecDesde()) >= 0 & (this.getFecHasta() == null || tiempo.compareTo(this.getFecHasta()) <= 0)) {
+            return true;
+        }
+        return false;
     }
 
     public int compareTo(AsignacionesHorario o) {

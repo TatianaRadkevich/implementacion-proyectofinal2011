@@ -719,6 +719,8 @@ public class PantallaPedidoABM extends javax.swing.JDialog {
             gestor.setMotivoBaja(txtMotivoBaja.getText());
             gestor.aceptar();
             this.dispose();
+        } catch (OperacionCancelada ex) {
+            // Mensajes.mensajeInformacion(ex.getMessage());
         } catch (NegocioException ex) {
             Mensajes.mensajeErrorGenerico(ex.getMessage());
         }

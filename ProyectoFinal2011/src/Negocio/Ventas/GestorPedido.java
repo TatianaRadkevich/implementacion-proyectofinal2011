@@ -8,6 +8,7 @@ import BaseDeDatos.Produccion.*;
 import BaseDeDatos.Ventas.*;
 import Negocio.Exceptiones.ExceptionGestor;
 import Negocio.Exceptiones.NegocioException;
+import Negocio.Exceptiones.OperacionCancelada;
 import Negocio.Produccion.Producto;
 import Negocio.Produccion.TipoProducto;
 import Presentacion.Mensajes;
@@ -25,7 +26,10 @@ public abstract class GestorPedido {
         return new GestorPedido(new Pedido()) {
 
             @Override
-            public void aceptar() throws NegocioException {
+            public void aceptar() throws OperacionCancelada, NegocioException {
+                if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea registrar este pedido?")==false) {
+                    throw new OperacionCancelada();
+                }
                 this.pedido.guardarModificar();
                 Mensajes.mensajeInformacion("El Pedido Nro. '" + this.pedido.getIdPedido() + "' ha sido registrado exitosamente.");
             }
@@ -38,6 +42,9 @@ public abstract class GestorPedido {
 
             @Override
             public void aceptar() throws NegocioException {
+                if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea modificar este pedido?")==false) {
+                    throw new OperacionCancelada();
+                }
                 this.pedido.guardarModificar();
                 Mensajes.mensajeInformacion("El Pedido Nro. '" + this.pedido.getIdPedido() + "' ha sido modificado exitosamente.");
             }
@@ -49,6 +56,9 @@ public abstract class GestorPedido {
 
             @Override
             public void aceptar() throws NegocioException {
+                if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea cancelar este pedido?")==false) {
+                    throw new OperacionCancelada();
+                }
                 this.pedido.cancelar(motivoBaja);
                 Mensajes.mensajeInformacion("El Pedido Nro. '" + this.pedido.getIdPedido() + "' ha sido eliminado exitosamente.");
             }
@@ -108,14 +118,17 @@ public abstract class GestorPedido {
             @Override
             public void aceptar() throws NegocioException {
 
-                String mensaje="";
-                if(detalle.getProducto()==null)
-                    mensaje+="Debe elegir un producto\n";
-                if(detalle.getCantidad()<=0)
-                    mensaje+="Debe ingresar una cantidad mayor a cero";
+                String mensaje = "";
+                if (detalle.getProducto() == null) {
+                    mensaje += "Debe elegir un producto\n";
+                }
+                if (detalle.getCantidad() <= 0) {
+                    mensaje += "Debe ingresar una cantidad mayor a cero";
+                }
 
-                if(mensaje.isEmpty()==false)
+                if (mensaje.isEmpty() == false) {
                     throw new NegocioException(mensaje);
+                }
 
                 for (DetallePedido dp : pedido.getDetallePedido()) {
                     if (dp.getProducto().getNombre().equals(detalle.getProducto().getNombre())) {
@@ -145,8 +158,9 @@ public abstract class GestorPedido {
     }
 
     public void eliminarDetallePedido(DetallePedido dp) throws NegocioException {
-        if(dp==null)
+        if (dp == null) {
             throw new NegocioException("Debe elegir un detalle");
+        }
         this.pedido.removeDetallePedido(dp);
     }
 

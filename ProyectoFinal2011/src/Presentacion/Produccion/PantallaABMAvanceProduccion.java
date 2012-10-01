@@ -8,7 +8,6 @@
  *
  * Created on 22/10/2011, 21:13:56
  */
-
 package Presentacion.Produccion;
 
 import BaseDeDatos.Produccion.OrdenTrabajoBD;
@@ -37,12 +36,12 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
     private TablaManager<DetallePlanProduccion> tmEtapas;
     private GestorAvanceProduccion gestor;
 
-    public PantallaABMAvanceProduccion(JDialog dialog, boolean focus,GestorAvanceProduccion gestor) {
+    public PantallaABMAvanceProduccion(JDialog dialog, boolean focus, GestorAvanceProduccion gestor) {
         initComponents();
-        
-        this.gestor=gestor;
 
-         tmEtapas = new TablaManager<DetallePlanProduccion>(tbDetalleOrdenTrabajo) {
+        this.gestor = gestor;
+
+        tmEtapas = new TablaManager<DetallePlanProduccion>(tbDetalleOrdenTrabajo) {
 
             @Override
             public Vector getCabecera() {
@@ -64,7 +63,7 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
 
                 fila.add(elemento.getEtapaProduccionEspecifica().getNumeroOrden());
                 fila.add(elemento.getEtapaProduccionEspecifica().getEtapaProduccion().getNombre());
-                fila.add(elemento.getEmpleado().getApellido() +", "+ elemento.getEmpleado().getNombre());
+                fila.add(elemento.getEmpleado().getApellido() + ", " + elemento.getEmpleado().getNombre());
                 fila.add(elemento.getMaquinaParticular().getNombre());
                 fila.add(Utilidades.parseFechaHora(elemento.getFecHoraPrevistaInicio()));
                 fila.add(elemento.getTEdetallePlan().getNombre());
@@ -449,17 +448,16 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        ordenActual=OrdenTrabajoBD.traerOrdenTrabajo(Long.parseLong(txtNumeroOrden.getText()));
-        if(ordenActual == null)
-        {
+        ordenActual = OrdenTrabajoBD.traerOrdenTrabajo(Long.parseLong(txtNumeroOrden.getText()));
+        if (ordenActual == null) {
             Mensajes.mensajeError("Número de orden", " El número de orden buscado no existe");
             return;
         }
-        PlanProduccion plan=ordenActual.obtenerPlanProduccion();
-        lblNumeroPedido.setText(plan.getPedido().getIdPedido()+"");
+        PlanProduccion plan = ordenActual.obtenerPlanProduccion();
+        lblNumeroPedido.setText(plan.getPedido().getIdPedido() + "");
         lblFechaPlanificacion.setText(Utilidades.parseFecha(plan.getFecGeneracion()));
         lblCliente.setText(plan.getPedido().getCliente().getRazonSocial());
-        lblEmpleado.setText(ordenActual.getTEmpleados().getApellido()+ ", " +ordenActual.getTEmpleados().getNombre());
+        lblEmpleado.setText(ordenActual.getTEmpleados().getApellido() + ", " + ordenActual.getTEmpleados().getNombre());
 
         tmEtapas.setDatos(ordenActual.getTDetallesPlans());
 
@@ -467,24 +465,26 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
 
     private void btnRegistrarAvanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAvanceActionPerformed
         // TODO add your handling code here:
-        if(validar())
-        {
+
+        if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea registrar este avance?") == false) {
+            return;
+        }
+
+        if (validar()) {
             int cantProdAnterior = Utilidades.parseInteger(txtCantidadProducida.getText());
             int cantPlan = Utilidades.parseInteger(txtCantidadPlanificada.getText());
             int cantProdActual = Utilidades.parseInteger(txtCantidadProducida1.getText());
             Date inicio = fechaAvanceInicio.getDate();
             Date fin = fechaAvanceFin.getDate();
 
-            if (!pnlObservaciones.isVisible())
-            {
-                if((cantProdAnterior + cantProdActual) != cantPlan)
-                {
+            if (!pnlObservaciones.isVisible()) {
+                if ((cantProdAnterior + cantProdActual) != cantPlan) {
                     pnlObservaciones.setVisible(true);
                     return;
                 }
             }
-          
-            DetallePlanProduccion detalle=tmEtapas.getSeletedObject();
+
+            DetallePlanProduccion detalle = tmEtapas.getSeletedObject();
 
             gestor.registrarAvance(detalle, cantProdActual + cantProdAnterior, txtAreaObservacion.getText(), inicio, fin);
 
@@ -500,11 +500,11 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
 
     private void tbDetalleOrdenTrabajoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDetalleOrdenTrabajoMouseClicked
         // TODO add your handling code here:
-        
+
         btnErrorMaquina.setEnabled(true);
-        
-        this.txtCantidadPlanificada.setText(tmEtapas.getSeletedObject().getCantidad()+"");
-        this.txtCantidadProducida.setText(tmEtapas.getSeletedObject().getCantidadProducida()+"");
+
+        this.txtCantidadPlanificada.setText(tmEtapas.getSeletedObject().getCantidad() + "");
+        this.txtCantidadProducida.setText(tmEtapas.getSeletedObject().getCantidadProducida() + "");
         this.txtCantidadProducida1.setText("");
         this.txtCantidadProducida.setEnabled(false);
         this.txtCantidadProducida1.setEnabled(true);
@@ -519,16 +519,16 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnErrorMaquinaActionPerformed
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
-                new PantallaABMAvanceProduccion(null,true,new GestorAvanceProduccion()).setVisible(true);
+                new PantallaABMAvanceProduccion(null, true, new GestorAvanceProduccion()).setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnErrorMaquina;
     private javax.swing.JButton btnRegistrarAvance;
@@ -570,29 +570,26 @@ public class PantallaABMAvanceProduccion extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private boolean validar() {
-        String mensaje="";
-        boolean bandera=true;
-        try{
+        String mensaje = "";
+        boolean bandera = true;
+        try {
 
             Utilidades.componenteCorrecto(txtCantidadProducida);
-            
-            if(txtCantidadProducida.getText().equals(""))
-            {
+
+            if (txtCantidadProducida.getText().equals("")) {
                 Utilidades.componenteError(txtCantidadProducida, "El formato de la cantidad producida ingresada es incorrecta");
                 bandera = false;
-            }
-            else
-            {
-                if(Utilidades.parseInteger(txtCantidadProducida1.getText())<0 )
-                {
+            } else {
+                if (Utilidades.parseInteger(txtCantidadProducida1.getText()) < 0) {
                     Utilidades.componenteError(txtCantidadProducida, "El formato de la cantidad producida ingresada es incorrecta");
                     bandera = false;
                 }
             }
-                        
-        }catch(Exception e){ bandera=false;}
+
+        } catch (Exception e) {
+            bandera = false;
+        }
 
         return bandera;
     }
-
 }

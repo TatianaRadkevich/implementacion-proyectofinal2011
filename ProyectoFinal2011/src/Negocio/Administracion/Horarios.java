@@ -47,6 +47,8 @@ public class Horarios implements java.io.Serializable {
 //     private Set TAsignacionesHorarios = new HashSet(0);
      /*---------------------------------------------------------------------------------------------*/
 
+
+
     public Horarios() {
     }
 

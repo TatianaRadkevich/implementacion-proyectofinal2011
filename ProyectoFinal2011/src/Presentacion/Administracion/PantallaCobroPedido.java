@@ -49,7 +49,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
     public PantallaCobroPedido(Window parent, GestorCobroPedido gestor) {
         super(parent, ModalityType.APPLICATION_MODAL);
         this.gestor = gestor;
-         if (gestor.getFactura().getEstadoFactura().equals(FacturaBD.getEstadoFactura(FacturaBD.Estado.Cobrada)) == true
+        if (gestor.getFactura().getEstadoFactura().equals(FacturaBD.getEstadoFactura(FacturaBD.Estado.Cobrada)) == true
                 || gestor.getFactura().getEstadoFactura().equals(FacturaBD.getEstadoFactura(FacturaBD.Estado.Anulada)) == true) {
             throw new NegocioException("No se encuentra ninguna factura pendiente de cobro");
         }
@@ -72,7 +72,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         linkFactura.add("DescuentoPorcentaje", false, new ZLTextField(txtDescuentoPorcentaje));
         linkFactura.add("neto", false, new ZLTextField(txtTotalNeto));
         linkFactura.add("bruto", false, new ZLTextField(txtTotalBruto));
-        
+
         this.tmCobros = new TablaManager<Cobro>(tbCobros) {
 
             @Override
@@ -103,7 +103,7 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         linkCobro.add("importe", new ZLTextField(txtMontoCobro));
         linkCobro.add("observacion", new ZLTextField(txtDescripcionCobro));
         linkCobro.add("formaPago", new ZLComboBox(cmbFormaPagoCobro));
-        
+
         linkCheque = new ZLObject<Cheque>(Cheque.class);
         linkCheque.add("cuit", new ZLTextField(txtChequeCUIT));
         linkCheque.add("razonSocial", new ZLTextField(txtChequeRazonSocial));
@@ -125,13 +125,12 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
     private void setCobroFactura(Cobro c) {
         linkCobro.setObjeto(c);
         linkCobro.load();
-        txtNroCobro.setText(linkCobro.getObjeto().getLastId()+ 1 + "");
+        txtNroCobro.setText(linkCobro.getObjeto().getLastId() + 1 + "");
         dtcFechaGeneracion.setDate(Utilidades.getFechaActual());
     }
 
     private void setCheque(Cheque c) {
-        if(c==null)
-        {
+        if (c == null) {
             txtChequeCUIT.setText("");
             txtChequeRazonSocial.setText("");
             txtChequeBanco.setText("");
@@ -146,7 +145,6 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
         txtChequeRazonSocial.setText(gestor.getFactura().getRazonSocialCliente());
         dtcFechaGeneracion.setDate(Utilidades.getFechaActual());
     }
-
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -713,17 +711,21 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-        try{
+        try {
+
+
+            if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea registrar este cobro?") == false) {
+                return;
+            }
 
             gestor.getFactura().getPedido().setEstadoPedido(EstadoPedidoBD.getEstadoPagado());
-            
+
             linkCobro.getObjeto().setImporte(Utilidades.parseBigDecimal(txtMontoCobro.getText()));
             linkCobro.getObjeto().setgetEmpleado(gestor.getFactura().getEmpleado());
             linkCobro.getObjeto().setFechaCobro(dtcFechaGeneracion.getDate());
             linkCobro.getObjeto().setObservaciones(txtDescripcionCobro.getText());
             linkCobro.save();
-            if(linkCobro.getObjeto().getFormaPago().equals(FormaPago.getFormaPago(FormaPago.Tipo.Cheque)))
-            {
+            if (linkCobro.getObjeto().getFormaPago().equals(FormaPago.getFormaPago(FormaPago.Tipo.Cheque))) {
                 linkCheque.getObjeto().setCliente(gestor.getFactura().getPedido().getCliente());
                 linkCheque.getObjeto().setFechaEmision(dtcChequeFechaEmision.getDate());
                 linkCheque.getObjeto().setFechaVencimiento(dtcChequeFechaVencimiento.getDate());
@@ -736,16 +738,13 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             }
             gestor.getFactura().addCobro(linkCobro.getObjeto());
 
-            if(gestor.getFactura().getTotalCobrado() < gestor.getFactura().getTotalNeto())
-            {
+            if (gestor.getFactura().getTotalCobrado() < gestor.getFactura().getTotalNeto()) {
                 gestor.getFactura().getPedido().setEstadoPedido(EstadoPedidoBD.getEstadoPagoParcialo());
                 gestor.getFactura().setTEFactura(FacturaBD.getEstadoFactura(FacturaBD.Estado.ParcialmenteCobrada));
-            }
-            else
-            {
+            } else {
                 gestor.getFactura().getPedido().setEstadoPedido(EstadoPedidoBD.getEstadoPagado());
                 gestor.getFactura().setTEFactura(FacturaBD.getEstadoFactura(FacturaBD.Estado.Cobrada));
-                
+
             }
 
             gestor.getFactura().guardar();
@@ -755,7 +754,9 @@ public class PantallaCobroPedido extends javax.swing.JDialog {
             BigDecimal id = new BigDecimal(linkCobro.getObjeto().getId());
             reporteRecibo.addParameter("id_recibo", id);
             reporteRecibo.runReporte();
-        }catch(NegocioException ne){Mensajes.mensajeErrorGenerico(ne.getMessage());}
+        } catch (NegocioException ne) {
+            Mensajes.mensajeErrorGenerico(ne.getMessage());
+        }
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 

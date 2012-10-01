@@ -52,9 +52,10 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         interfaz.setTitle("Generar Factura");
         interfaz.pnlAnular.setVisible(false);
         interfaz.limpiarCampos();
-        List<Pedido> lp=PedidoBD.getPedidos(EstadoPedidoBD.getEstadoRetirado());
-        if(lp.isEmpty())
+        List<Pedido> lp = PedidoBD.getPedidos(EstadoPedidoBD.getEstadoRetirado());
+        if (lp.isEmpty()) {
             throw new NegocioException("No se encuentra ningun pedido en estado Retirado");
+        }
 
         interfaz.tmPedido.setDatos(lp);
         interfaz.setVisible(true);
@@ -100,7 +101,7 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         initComponents();
         Utilidades.iniciarVentana(this);
 
-        inicializarTablas();        
+        inicializarTablas();
         ValidarTexbox.validarNumero(txtDescuentoPorcentaje, 5, 2, 100f, 0f);
         ValidarTexbox.validarLongitud(txtMotivoBaja, 100);
         btnAnular.setVisible(false);
@@ -215,8 +216,15 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
         }
         txtRazonSocial.setText(p.getCliente().getRazonSocial());
         txtSubTotal.setText("" + subTotal);
-        txtDescuentoPorcentaje.setText(p.getFactura().getDescuentoPorcentaje().round(new MathContext(2, RoundingMode.UP)).toString());
-       
+        float total= subTotal;
+        try {
+            float desc = p.getFactura().getDescuentoPorcentaje().round(new MathContext(2, RoundingMode.UP)).floatValue();
+            txtDescuentoPorcentaje.setText(desc + "");
+            total=subTotal - ((desc * subTotal) / 100);
+        } catch (Exception ex) {
+        }
+        txtTotal.setText("" + total);
+
         actualizarTotal();
     }
 
@@ -631,30 +639,35 @@ public class PantallaFacturaGenerar extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
         //try {
-            Factura f = new Factura();
-            f.setPedido(tmPedido.getSeletedObject());
-            f.setDetalleFactura(tmDetFac.getDatos());
-            try {
-                f.setEmpleado(EmpleadoBD.listarEmpleado().get(0));
-            } catch (IndexOutOfBoundsException e) {
-                Mensajes.mensajeErrorGenerico("No se ha cargado ningun empleado");
-                return;
-            }
-            f.setDescuentoPorcentaje(new BigDecimal(txtDescuentoPorcentaje.getText()));
-            f.setNumero(new Integer(txtNroFactura.getText()));
-            f.generar();
-            
-            Mensajes.mensajeInformacion("Factura generada correctamente");
 
-            this.dispose();
+        if (Mensajes.mensajeConfirmacionGenerico("¿Realmente desea generar esta factura?") == false) {
+            return;
+        }
 
-            BigDecimal id = new BigDecimal(f.getId());
-            ReporteFactura reporteFactura = new ReporteFactura();
-            reporteFactura.addParameter("id_factura", id);
-            reporteFactura.runReporte();
+        Factura f = new Factura();
+        f.setPedido(tmPedido.getSeletedObject());
+        f.setDetalleFactura(tmDetFac.getDatos());
+        try {
+            f.setEmpleado(EmpleadoBD.listarEmpleado().get(0));
+        } catch (IndexOutOfBoundsException e) {
+            Mensajes.mensajeErrorGenerico("No se ha cargado ningun empleado");
+            return;
+        }
+        f.setDescuentoPorcentaje(new BigDecimal(txtDescuentoPorcentaje.getText()));
+        f.setNumero(new Integer(txtNroFactura.getText()));
+        f.generar();
+
+        Mensajes.mensajeInformacion("Factura generada correctamente");
+
+        this.dispose();
+
+        BigDecimal id = new BigDecimal(f.getId());
+        ReporteFactura reporteFactura = new ReporteFactura();
+        reporteFactura.addParameter("id_factura", id);
+        reporteFactura.runReporte();
 
         //} catch (Exception e) {
-            //Mensajes.mensajeErrorGenerico("Datos incorrectos");
+        //Mensajes.mensajeErrorGenerico("Datos incorrectos");
         //}
     }//GEN-LAST:event_btnAceptarActionPerformed
 

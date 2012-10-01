@@ -15,6 +15,7 @@ public class Recursos {
     private ArrayList<OperarioPlan> operarios = new ArrayList<OperarioPlan>();
     private ArrayList<MaquinaPlan> maquinas = new ArrayList<MaquinaPlan>();
     private ArrayList<MaterialPlan> materiales = new ArrayList<MaterialPlan>();
+    private ArrayList<HerramientaPlan> herramientas = new ArrayList<HerramientaPlan>();
 
     public void addOperario(OperarioPlan op) {
         operarios.add(op);
@@ -26,5 +27,9 @@ public class Recursos {
 
     public void addMaterial(MaterialPlan material) {
         materiales.add(material);
+    }
+
+    public void addHerramienta(HerramientaPlan herramienta) {
+        herramientas.add(herramienta);
     }
 }
