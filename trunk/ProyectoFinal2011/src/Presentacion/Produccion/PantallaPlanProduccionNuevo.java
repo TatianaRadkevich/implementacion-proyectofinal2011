@@ -18,6 +18,7 @@ import BaseDeDatos.Produccion.MaquinaBD;
 import BaseDeDatos.Ventas.EstadoDetallePedidoBD;
 import BaseDeDatos.Ventas.EstadoPedidoBD;
 import BaseDeDatos.Ventas.PedidoBD;
+import Negocio.Administracion.Cargo;
 import Negocio.Administracion.Empleado;
 import Negocio.Compras.Material;
 import Negocio.Exceptiones.NegocioException;
@@ -290,6 +291,37 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
 
     }
 
+    private Empleado getEmpleadoDisponible(Cargo c, Date fecha) {
+        List<Empleado> operarios = EmpleadoBD.getEmpleados(c, true, false);        
+        if (operarios.isEmpty()) {
+            throw new NegocioException("No hay registrado ningun empleado con un cargo de " + c.getNombre());
+        }
+
+        for (Empleado e : operarios) {
+            try {
+                if (e.isPresente(fecha)) {
+                    return e;
+                }
+            } catch (Exception ex) {
+            }
+        }
+
+        operarios = EmpleadoBD.listarEmpleado();
+        if (operarios.isEmpty()) {
+            throw new NegocioException("No hay ningun empleado registrado");
+        }
+
+        for (Empleado e : operarios) {
+            try {
+                if (e.isPresente(fecha)) {
+                    return e;
+                }
+            } catch (Exception ex) {
+            }
+        }
+        return operarios.get(0);
+    }
+
     private PlanProduccion generarPlan(Pedido p) throws NegocioException {
         List<Empleado> operarios = EmpleadoBD.getEmpleadosVigentes();
         List<MaquinaParticular> maquinas = MaquinaBD.getMaquinas(null, true, false);
@@ -330,7 +362,8 @@ public class PantallaPlanProduccionNuevo extends javax.swing.JDialog {
                 detPlan.setTEdetallePlan(EstadoDetallePlanBD.getEstadoPendiente());
                 detPlan.setTEtapasProduccionEspecifica(e);
 
-                detPlan.setTEmpleados(EmpleadoBD.getEmpleadosVigentes().get((int) Math.floor(Math.random() * operarios.size())));
+                //detPlan.setTEmpleados(EmpleadoBD.getEmpleadosVigentes().get((int) Math.floor(Math.random() * operarios.size())));
+                detPlan.setTEmpleados(getEmpleadoDisponible(e.getCargo(), fecha));
 
                 detPlan.setCantidad(dp.getCantidad());
                 detPlan.setFecHoraPrevistaInicio(fecha);

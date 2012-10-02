@@ -69,16 +69,16 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
         actualizar();
     }
 
-    public void actualizar() {
-        tmPlan.setDatos(HibernateUtil.ejecutarConsulta("FROM PlanProduccion"));
-        if (tmPlan.getSize() == 0) {
-            lblMensaje.setText("No se encontró ningún plan vigente.");
-        } else if (tmPlan.getSize() == 1) {
-            lblMensaje.setText("Se encontró un plan vigente.");
-        } else if (tmPlan.getSize() == 1) {
-            lblMensaje.setText("Se encontró " + tmPlan.getSize() + " planes vigentes.");
-        }
-    }
+   public void actualizar() {
+       tmPlan.setDatos(HibernateUtil.ejecutarConsulta("FROM PlanProduccion"));
+//        if (tmPlan.getSize() == 0) {
+//            lblMensaje.setText("No se encontró ningún plan vigente.");
+//        } else if (tmPlan.getSize() == 1) {
+//            lblMensaje.setText("Se encontró un plan vigente.");
+//        } else if (tmPlan.getSize() > 1) {
+//            lblMensaje.setText("Se encontró " + tmPlan.getSize() + " planes vigentes.");
+//        }
+   }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -94,7 +94,6 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
         tbPlan = new javax.swing.JTable();
         btnPlanificar = new javax.swing.JButton();
         btnPlanificar1 = new javax.swing.JButton();
-        lblMensaje = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
@@ -127,8 +126,6 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
             }
         });
 
-        lblMensaje.setText("XXX");
-
         jButton1.setText("Gantt");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,16 +139,13 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
             pnlPlanesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPlanesLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(pnlPlanesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPlanesLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlPlanesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                            .addGroup(pnlPlanesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnPlanificar, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                                .addComponent(btnPlanificar1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))))
-                    .addComponent(lblMensaje))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                    .addGroup(pnlPlanesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnPlanificar, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                        .addComponent(btnPlanificar1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlPlanesLayout.setVerticalGroup(
@@ -164,9 +158,8 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
                         .addComponent(btnPlanificar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblMensaje))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jButton4.setText("Salir");
@@ -252,7 +245,6 @@ public class PantallaPlanProduccionPrincipal extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblMensaje;
     private javax.swing.JPanel pnlPlanes;
     private javax.swing.JTable tbPlan;
     // End of variables declaration//GEN-END:variables

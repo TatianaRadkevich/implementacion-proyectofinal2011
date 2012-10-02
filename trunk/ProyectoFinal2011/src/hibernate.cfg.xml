@@ -6,8 +6,11 @@
     <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=Ramaty</property>
     <property name="hibernate.connection.username">proyecto</property>
     <property name="hibernate.connection.password">sistema</property>
+    <mapping class="BaseDeDatos.Deposito.AlmacenamientoProductoTerminado"/>
+    <mapping class="BaseDeDatos.Deposito.EAlmacenamientoProductoTerminado"/>
     <mapping class="Negocio.Administracion.AsistenciaEmpleado"/>
     <mapping class="Negocio.Administracion.Cargo"/>
+    <mapping class="Negocio.Administracion.EstadoFactura"/>
     <mapping class="Negocio.Administracion.Cheque"/>
     <mapping class="Negocio.Administracion.Cobro"/>
     <mapping class="Negocio.Administracion.DetalleFactura"/>
