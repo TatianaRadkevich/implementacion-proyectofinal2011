@@ -1,6 +1,7 @@
 package Negocio.Administracion;
 // Generated 12/08/2011 13:27:23 by Hibernate Tools 3.2.1.GA
 
+import Presentacion.Utilidades;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,7 +49,7 @@ public class AsistenciaEmpleado implements java.io.Serializable {
     public AsistenciaEmpleado() {
     }
 
-     public int getId() {
+    public int getId() {
         return id;
     }
 
@@ -69,7 +70,7 @@ public class AsistenciaEmpleado implements java.io.Serializable {
     }
 
     public String getHoraEgreso() {
-        return (horaEgreso==null)?"":horaEgreso;
+        return (horaEgreso == null) ? "" : horaEgreso;
     }
 
     public void setHoraEgreso(String horaEgreso) {
@@ -100,5 +101,54 @@ public class AsistenciaEmpleado implements java.io.Serializable {
         this.observIngreso = observIngreso;
     }
 
+    public Date getFechaIngreso() {
+        Date f = this.getFecAsistencia();
+        String hs = this.getHoraIngreso();
 
+        if (hs == null || hs.trim().isEmpty()) {
+            return null;
+        }
+        hs = hs.trim();
+        int minuto = 0, hora = 0;
+        for (int aux = 0, i = 0; i < hs.length(); i++) {
+            if (hs.charAt(i) == ':') {
+                aux = i;
+                hora = Integer.parseInt(hs.substring(0, i).trim());
+            }
+
+            if (hs.charAt(i) == ' ') {
+                minuto = Integer.parseInt(hs.substring(++aux, i).trim());
+            }
+        }
+        return Utilidades.agregarTiempoFecha(f, minuto, hora, 0, 0, 0);
+    }
+
+    public Date getFechaEgreso() {
+        Date f = this.getFecAsistencia();
+        String hs = this.getHoraEgreso();
+
+        if (hs == null || hs.trim().isEmpty()) {
+            return null;
+        }
+        hs = hs.trim();
+        int minuto = 0, hora = 0;
+        for (int aux = 0, i = 0; i < hs.length(); i++) {
+            if (hs.charAt(i) == ':') {
+                aux = i;
+                hora = Integer.parseInt(hs.substring(0, i).trim());
+            }
+
+            if (hs.charAt(i) == ' ') {
+                minuto = Integer.parseInt(hs.substring(++aux, i).trim());
+            }
+        }
+        return Utilidades.agregarTiempoFecha(f, minuto, hora, 0, 0, 0);
+    }
+
+    boolean isPresente(Date tiempo) {
+        if (tiempo.compareTo(this.getFechaIngreso()) >= 0 & (this.getFechaEgreso() == null || tiempo.compareTo(this.getFechaEgreso()) <= 0)) {
+            return true;
+        }
+        return false;
+    }
 }

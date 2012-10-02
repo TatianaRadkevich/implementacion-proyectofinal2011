@@ -523,6 +523,11 @@ public class Empleado implements java.io.Serializable {
     }
 
     public boolean isPresente(Date tiempo) throws HorarioNoVigenteException {
+        for (AsistenciaEmpleado as : getAsistencias()) {
+            if (as.isPresente(tiempo)) {
+                return true;
+            }
+        }
         return getAsignacionHorarioVigente(tiempo).getHorario().isPresete(tiempo);
     }
 
@@ -551,7 +556,6 @@ public class Empleado implements java.io.Serializable {
         }
         return egreso;
     }
-
 //    private AsignacionesHorario getProximaAsignacion(AsignacionesHorario ah) {
 //        Iterator<AsignacionesHorario> i = asignacionesHorarias.iterator();
 //        while (i.hasNext()) {
